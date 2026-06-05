@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-earth-space.jpg"
 header-mask: 0.25
 title: "harness-engineering"

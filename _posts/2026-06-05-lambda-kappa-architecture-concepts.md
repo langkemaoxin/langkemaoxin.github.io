@@ -5,7 +5,7 @@ header-mask: 0.25
 title:      "Lambda 与 Kappa 架构：关键概念学习笔记"
 subtitle:   "从批流分离到统一日志，大数据架构选型的概念清单与对照图"
 date:       2026-06-05
-author:     "Hux"
+author:     "Corey"
 catalog: true
 tags:
     - Lambda

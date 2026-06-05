@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-forest-path.jpg"
 header-mask: 0.25
 title: "学习HAMi的路线图"

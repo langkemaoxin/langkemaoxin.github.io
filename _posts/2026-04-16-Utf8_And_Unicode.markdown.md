@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-unix-linux.jpg"
 header-mask: 0.25
 title: "UTF-8 和 Unicode的区别是什么？"

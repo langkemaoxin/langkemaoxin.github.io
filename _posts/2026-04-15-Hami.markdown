@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-universe.jpg"
 header-mask: 0.25
 title: "究竟什么是HAMI，能做什么"

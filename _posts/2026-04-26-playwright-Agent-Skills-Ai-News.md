@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-ai-chips.jpg"
 header-mask: 0.25
 title: 三阶段实战：Playwright CLI + Skills 打造自动 AI 简报系统

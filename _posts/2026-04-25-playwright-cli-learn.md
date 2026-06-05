@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-web.jpg"
 header-mask: 0.25
 title: "手把手15练：从零学会Playwright CLI浏览器自动化"

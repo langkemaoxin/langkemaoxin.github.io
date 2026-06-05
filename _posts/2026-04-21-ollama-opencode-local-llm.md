@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-desk-coding.jpg"
 header-mask: 0.25
 title: "Ollama + OpenCode 本地大模型配置全攻略：免费使用 AI 编程助手"

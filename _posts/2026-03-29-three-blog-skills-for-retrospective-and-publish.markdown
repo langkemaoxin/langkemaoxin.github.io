@@ -5,7 +5,7 @@ header-mask: 0.25
 title:      "我把博客复盘工作流拆成了 3 个 Skill"
 subtitle:   "从内容复盘、仓库发布到总入口编排，一次把博客自动化工作流讲清楚"
 date:       2026-03-29
-author:     "Hux"
+author:     "Corey"
 catalog: true
 tags:
     - Skill

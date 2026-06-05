@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-data-center.jpg"
 header-mask: 0.25
 title: "HAMi的使用情况"

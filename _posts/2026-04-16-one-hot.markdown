@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-abstract-gradient.jpg"
 header-mask: 0.25
 title: "什么是One-hot编码"

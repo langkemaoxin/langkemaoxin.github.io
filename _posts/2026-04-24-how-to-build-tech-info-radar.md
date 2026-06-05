@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-galaxy-stars.jpg"
 header-mask: 0.25
 title: "如何做到全公司第一个发现技术动态？——构建你的技术信息雷达"

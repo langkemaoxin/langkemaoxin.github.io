@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-night-city.jpg"
 header-mask: 0.25
 title: "如何使用HAMI赚钱?"

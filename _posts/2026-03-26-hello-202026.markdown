@@ -4,7 +4,7 @@ header-img: "img/post-bg-dreamer.jpg"
 header-mask: 0.25
 title:      "Hello 2026"
 subtitle:   " \"Hello World, Hello Blog\""
-author:     "Hux"
+author:     "Corey"
 catalog: true
 tags:
     - Meta

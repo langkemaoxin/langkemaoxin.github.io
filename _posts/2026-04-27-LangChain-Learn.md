@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-desk-coding.jpg"
 header-mask: 0.25
 title: 告别重复劳动：Playwright CLI + Skills 实战案例大全

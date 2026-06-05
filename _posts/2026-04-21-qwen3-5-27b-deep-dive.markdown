@@ -1,5 +1,6 @@
 ---
 layout: post
+author:     "Corey"
 header-img: "img/post-bg-ai-chips.jpg"
 header-mask: 0.25
 title: "Qwen3.5-27B 深度解析：本地免费大模型的崛起之路"

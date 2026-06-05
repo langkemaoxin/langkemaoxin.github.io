@@ -5,7 +5,7 @@ header-mask: 0.25
 title:      "从零开始：程序员如何搭建一套自动仓储管理系统"
 subtitle:   "从 WMS 到机器人对接，一个程序员的自动仓储入门实战记录"
 date:       2026-04-22
-author:     "Hux"
+author:     "Corey"
 catalog: true
 tags:
     - WMS
