@@ -368,6 +368,128 @@ http://localhost:50070
 
 ---
 
+## 第六部分：节点启动成功 —— Web UI 截图与功能说明
+
+容器启动后，在 Windows 浏览器访问 **NameNode 管理界面**：
+
+```text
+http://localhost:50070
+```
+
+页面会自动跳转到 `dfshealth.html`。当前集群实测状态（JMX API）：
+
+- **Hadoop 版本**：2.7.4
+- **NameNode 状态**：active（活跃）
+- **Safemode**：off（已退出安全模式，可正常读写）
+- **Live Nodes**：1（1 个 DataNode 在线）
+- **Dead Nodes**：0
+- **HDFS 已用空间**：约 28 KB（刚启动，几乎为空）
+
+> 说明：`harisekhon/hadoop:2.7` 镜像 tag 是 2.7，容器内实际运行的是 **2.7.4** 小版本，这是正常现象。
+
+### 6.1 Overview（集群总览）
+
+![](/img/post-hadoop/hdfs-namenode-overview.png)
+
+顶部导航栏功能：
+
+| 菜单 | 作用 |
+|------|------|
+| **Overview** | 集群总览：版本、容量、节点数、内存、日志状态 |
+| **Datanodes** | 查看每个 DataNode 的磁盘使用率与健康状态 |
+| **Datanode Volume Failures** | 磁盘卷故障统计 |
+| **Snapshot** | HDFS 快照管理 |
+| **Startup Progress** | NameNode 启动各阶段进度 |
+| **Utilities → Browse the file system** | 图形化浏览 HDFS 目录 |
+| **Utilities → Logs** | 查看 NameNode 日志 |
+
+Overview 页核心指标解读：
+
+| 区域 | 关键字段 | 含义 |
+|------|----------|------|
+| Overview 表格 | Started / Version / Cluster ID | 启动时间、Hadoop 版本、集群唯一标识 |
+| Summary | Safemode is off | 集群已就绪，可执行 `hdfs dfs` 读写 |
+| Summary | Live Nodes: 1 | 至少有 1 个 DataNode 注册成功，**说明 HDFS 存储层已连通** |
+| 容量表 | Configured Capacity ~1006 GB | 容器可见的总磁盘容量 |
+| 容量表 | DFS Used 28 KB (0%) | HDFS 实际存储占用，新集群几乎为空 |
+| 容量表 | DFS Remaining ~951 GB | 可用于 HDFS 的剩余空间 |
+| Journal Status | Current transaction ID | 元数据编辑日志事务 ID，反映 NameNode 元数据变更进度 |
+| NameNode Storage | IMAGE_AND_EDITS | 元数据镜像（fsimage）与编辑日志（edits）存储正常 |
+
+### 6.2 Datanodes（存储节点）
+
+![](/img/post-hadoop/hdfs-namenode-datanodes.png)
+
+这一页是验证 **「HDFS 真的跑起来了」** 的关键证据：
+
+| 字段 | 当前值 | 说明 |
+|------|--------|------|
+| Node | `2083fa0650f3:50010 (172.17.0.2:50010)` | DataNode 主机名与 Docker 内网 IP |
+| Last Contact | 2 sec | 与 NameNode 心跳间隔，越小越健康 |
+| Admin State | **In Service** | 节点处于服务中，可接收数据块 |
+| Capacity | 1006.85 GB | 该节点可用总容量 |
+| Used | 28 KB | 该节点 HDFS 已用空间 |
+| Blocks | 0 | 尚未写入数据块（空集群正常） |
+| Version | 2.7.4 | 与 NameNode 版本一致 |
+
+上方 **Disk usage histogram** 显示各 DataNode 磁盘使用率分布。当前仅 1 个节点，使用率接近 0%。
+
+### 6.3 Browse Directory（HDFS 文件浏览器）
+
+![](/img/post-hadoop/hdfs-explorer-root.png)
+
+路径：`Utilities → Browse the file system`，或直接访问 `http://localhost:50070/explorer.html`
+
+| 功能 | 说明 |
+|------|------|
+| 路径输入框 + Go! | 输入 HDFS 路径（如 `/user`）后跳转 |
+| Permission / Owner / Group | 文件权限与所属用户、组 |
+| Size / Replication / Block Size | 文件大小、副本数、块大小 |
+| Name | 文件或目录名，可点击进入子目录 |
+
+当前根目录 `/` 为空，表示 HDFS 已初始化但尚未写入业务数据。可通过命令验证：
+
+```bash
+# 进入容器
+docker exec -it hdfs bash
+
+# 创建目录并上传测试文件
+hdfs dfs -mkdir -p /user/test
+echo "hello hdfs" | hdfs dfs -put - /user/test/hello.txt
+hdfs dfs -ls /
+hdfs dfs -cat /user/test/hello.txt
+```
+
+刷新 Explorer 页面即可看到新建目录和文件。
+
+### 6.4 其他 Web 界面（需额外映射端口）
+
+`harisekhon/hadoop` 镜像在同一容器内还启动了 YARN 等组件，常用端口如下：
+
+| 服务 | 容器端口 | 说明 |
+|------|----------|------|
+| HDFS NameNode UI | **50070** | 本文已映射，可直接访问 |
+| HDFS RPC | **9000** | 客户端连接 HDFS 的 RPC 端口 |
+| YARN ResourceManager UI | 8088 | 查看 MapReduce/Spark 作业与队列 |
+| YARN NodeManager UI | 8042 | 单个 NodeManager 状态 |
+| MapReduce JobHistory | 19888 | 历史作业查看 |
+
+若需从 Windows 浏览器访问 YARN，启动时需额外映射：
+
+```bash
+docker run -d --name hdfs \
+  -p 50070:50070 \
+  -p 9000:9000 \
+  -p 8088:8088 \
+  -p 8042:8042 \
+  -p 19888:19888 \
+  harisekhon/hadoop:2.7
+```
+
+然后访问 `http://localhost:8088/cluster` 查看 YARN 集群页面。
+
+---
+
 ## 相关知识点
 
 ### WSL 与 Docker 的关系
@@ -416,6 +538,8 @@ docker tag docker.1ms.run/namespace/image:tag namespace/image:tag
 - 国内镜像加速已配置
 - Hadoop 容器通过 `harisekhon/hadoop:2.7` 成功启动
 - HDFS NameNode Web UI 可通过 `http://localhost:50070` 访问
+- Overview 显示 **Live Nodes: 1**、**Safemode off**，DataNode 状态 **In Service**
+- Web UI 截图已保存至 `img/post-hadoop/` 并写入本文第六部分
 
 ---
 
