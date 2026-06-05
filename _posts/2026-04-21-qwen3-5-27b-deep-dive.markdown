@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-ai-chips.jpg"
+header-mask: 0.25
 title: "Qwen3.5-27B 深度解析：本地免费大模型的崛起之路"
 date: 2026-04-21 21:30
 tags: [Qwen, 大模型，本地部署，开源]

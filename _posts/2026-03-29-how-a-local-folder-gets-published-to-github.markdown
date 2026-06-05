@@ -1,10 +1,11 @@
 ---
-layout:     post
+layout: post
+header-img: "img/post-bg-night-city.jpg"
+header-mask: 0.25
 title:      "把一个本地文件夹发布到 GitHub，中间到底发生了什么？"
 subtitle:   "从 git、gh 到 GitHub MCP，再到 OpenCode 的一次完整拆解"
 date:       2026-03-29
 author:     "Hux"
-header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
     - GitHub

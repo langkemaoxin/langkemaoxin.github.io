@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-galaxy-stars.jpg"
+header-mask: 0.25
 title: "如何做到全公司第一个发现技术动态？——构建你的技术信息雷达"
 date: 2026-04-24 09:00
 tags: [技术前沿, 信息获取, AI资讯, 效率方法]

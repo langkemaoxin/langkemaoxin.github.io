@@ -1,10 +1,11 @@
- ---
+---
 layout:     post
 title:      "项目中所需的知识点"
 subtitle:   "智能体系统的搭建"
 date:       2026-04-01
 author:     "Corey"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-galaxy-stars.jpg"
+header-mask: 0.25
 catalog: true
 tags:
     - Aegra 

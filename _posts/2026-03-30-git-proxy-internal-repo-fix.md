@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-circuit-board.jpg"
+header-mask: 0.25
 title: "Git 全局代理导致内网仓库拉取失败的解决过程"
 date: 2026-03-30
 tags: [Git, 代理, 内网仓库, 问题解决]

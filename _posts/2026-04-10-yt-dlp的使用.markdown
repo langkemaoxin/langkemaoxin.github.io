@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-web.jpg"
+header-mask: 0.25
 title: "yt-dlp的使用记录"
 date: 2026-04-10
 tags: [yt-dlp]

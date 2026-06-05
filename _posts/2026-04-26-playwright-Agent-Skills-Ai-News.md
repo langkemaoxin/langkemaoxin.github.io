@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-ai-chips.jpg"
+header-mask: 0.25
 title: 三阶段实战：Playwright CLI + Skills 打造自动 AI 简报系统
 date: 2026-04-26 20:22
 tags: [Playwright CLI,Skills,AI Brief]

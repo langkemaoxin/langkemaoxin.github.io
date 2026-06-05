@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-forest-path.jpg"
+header-mask: 0.25
 title: "学习HAMi的路线图"
 date: 2026-04-15
 tags: [HAMi]

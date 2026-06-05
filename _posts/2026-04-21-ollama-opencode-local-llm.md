@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-desk-coding.jpg"
+header-mask: 0.25
 title: "Ollama + OpenCode 本地大模型配置全攻略：免费使用 AI 编程助手"
 date: 2026-04-21 20:00
 tags: [Ollama, OpenCode, 大模型，本地部署]

@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-night-city.jpg"
+header-mask: 0.25
 title: "如何使用HAMI赚钱?"
 date: 2026-04-15
 tags: [HAMi]

@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-unix-linux.jpg"
+header-mask: 0.25
 title: "UTF-8 和 Unicode的区别是什么？"
 date: 2026-04-16 11:27
 tags: [UTF-8，Unicode]

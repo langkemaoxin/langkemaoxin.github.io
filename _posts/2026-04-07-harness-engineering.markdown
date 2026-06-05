@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-earth-space.jpg"
+header-mask: 0.25
 title: "harness-engineering"
 date: 2026-04-07
 tags: [harness-engineering]

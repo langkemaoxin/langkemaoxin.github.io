@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-unix-linux.jpg"
+header-mask: 0.25
 title: "Clash Verge TUN 模式下 Git SSH 连接失败的解决过程"
 date: 2026-03-30
 tags: [Git, GitHub, Clash Verge, TUN 模式, 问题解决]

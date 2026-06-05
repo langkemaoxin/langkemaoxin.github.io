@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-abstract-gradient.jpg"
+header-mask: 0.25
 title: "什么是One-hot编码"
 date: 2026-04-16 11:27
 tags: [one-hot编码]

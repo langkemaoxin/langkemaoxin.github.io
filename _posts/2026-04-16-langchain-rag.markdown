@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-ai-chips.jpg"
+header-mask: 0.25
 title: "LangChain 如何构建 RAG 问答应用：从直觉到工业级落地"
 date: 2026-04-16 12:10
 tags: [LangChain, RAG, 问答系统]

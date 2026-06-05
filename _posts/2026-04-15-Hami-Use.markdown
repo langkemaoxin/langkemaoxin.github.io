@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-data-center.jpg"
+header-mask: 0.25
 title: "HAMi的使用情况"
 date: 2026-04-15
 tags: [HAMi]

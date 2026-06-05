@@ -1,10 +1,11 @@
 ---
-layout:     post
+layout: post
+header-img: "img/post-bg-unix-linux.jpg"
+header-mask: 0.25
 title:      "修好这台机器的 Jekyll 构建环境：从缺 Ruby 到 build 成功"
 subtitle:   "一次 Windows 上 Ruby、Bundler、Jekyll 与 YAML 配置错误的完整排障记录"
 date:       2026-03-29
 author:     "Hux"
-header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
     - Jekyll

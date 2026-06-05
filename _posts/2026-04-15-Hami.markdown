@@ -1,4 +1,7 @@
 ---
+layout: post
+header-img: "img/post-bg-universe.jpg"
+header-mask: 0.25
 title: "究竟什么是HAMI，能做什么"
 date: 2026-04-15
 tags: [HAMi]

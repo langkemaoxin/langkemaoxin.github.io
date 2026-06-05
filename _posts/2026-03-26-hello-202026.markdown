@@ -1,9 +1,10 @@
 ---
-layout:     post
+layout: post
+header-img: "img/post-bg-dreamer.jpg"
+header-mask: 0.25
 title:      "Hello 2026"
 subtitle:   " \"Hello World, Hello Blog\""
 author:     "Hux"
-header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
     - Meta
