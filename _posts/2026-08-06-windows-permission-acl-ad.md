@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 author:     "Corey"
 header-img: "img/post-bg-circuit-board.jpg"
@@ -1171,10 +1171,11 @@ icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
 
 ## 工具站：`icacls` 完整用法与输出标志解读
 
-前面各站已经用过 `icacls` 查看、授权、备份。本节按 Microsoft Learn 把**命令用法**和**输出里括号标志**集中讲全，方便对照真实共享输出（如 `(I)(OI)(CI)(RX,WD,WEA,WA)`）。  
+前面各站已经用过 `icacls` 查看、授权、备份。本节按 Microsoft Learn 把**命令用法**和**输出里括号标志**集中讲全，并用本机目录 `E:\WindowsTest` **从 0 搭树、分组合实测**。  
 来源全文：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（替代已过时的 `cacls`）
 
-> 本站是**工具手册**：可随时回来查表。概念递进仍以第 9～12 站为准。
+> 本站是**工具手册**：可随时回来查表。概念递进仍以第 9～12 站为准。  
+> **练习约定：** 所有 `/grant`、改 ACL 只在 `E:\WindowsTest\...` 上做。主体用 `%USERNAME%`（域环境输出里常显示为 `域名\用户名`，下文实测为 `JZFZ\chengongyi`）。
 
 ### T.1 它是干什么的
 
@@ -1189,26 +1190,19 @@ icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
 
 ### T.2 怎么读一行输出
 
-真实样例（节选）：
+练习树里常见一行（Lab04 的 `Sub` 上）：
 
 ```text
-JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+JZFZ\chengongyi:(I)(OI)(CI)(RX)
 ```
 
 拆开读：
 
 ```text
-JZFZ\CD-2013388_项目组   ← 安全主体（账户或组）
-                 :       ← 分隔
-        (I)(OI)(CI)      ← 继承相关标志（可多个）
-        (RX,WD,WEA,WA)   ← 权限掩码（基本缩写 或 高级权利列表）
-```
-
-再如：
-
-```text
-JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
-JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
+JZFZ\chengongyi   ← 安全主体（账户或组）
+             :    ← 分隔
+    (I)(OI)(CI)   ← 继承相关标志（可多个）
+    (RX)          ← 权限掩码（基本缩写 或 高级权利列表）
 ```
 
 | 输出片段 | 白话 |
@@ -1220,28 +1214,19 @@ JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
 文档说明：`<perm>` 可以是**基本权利**（可不用括号的简单序列）、**高级权利**（必须用括号、逗号分隔）、或**继承权利**（必须用括号）。  
 来源：同上 icacls Remarks。
 
-### T.3 继承标志（括号）
+### T.3 继承标志：用 `E:\WindowsTest` 从 0 实测
 
-后面每个标志都对着**同一条真实共享树**想（第 9 / 10 站同路径）：
+目标：把 `(I)` / `(OI)` / `(CI)` / `(IO)` / `(NP)` **每种组合单独一棵树**跑一遍，互不污染。
 
-```text
-\\jzfz18\协同设计平台-18\CD-2013388\          ← 项目根
-└── XREF\
-    └── A\                                    ← 更深一层（样例输出见第 9 站）
-```
-
-> **安全约定：** 对本路径**只做 `icacls` 查看与解读**。  
-> 文中所有 `/grant` 演示一律写在本地练习树 `D:\Share\Root`——**切勿**在 `\\jzfz18\...` 生产共享上练授予。
-
-速查表（细节见下面各例）：
+速查表：
 
 | 标志 | Learn 含义 | 白话 |
 |------|------------|------|
-| `(I)` | Inherit. ACE inherited from the parent container. | **继承来的**（结果标记） |
-| `(OI)` | Object inherit. Objects inherit this ACE. Directories only. | **对象继承** → 子**文件** |
-| `(CI)` | Container inherit. Containers inherit this ACE. Directories only. | **容器继承** → 子**文件夹** |
-| `(IO)` | Inherit only. Doesn't apply to the object itself. | **仅继承**：当前对象自己不吃 |
-| `(NP)` | Don't propagate inherit. | **不传播**：只到直接子级 |
+| `(I)` | Inherit. ACE inherited from the parent container. | **继承来的**（结果标记，不是你授予时手写的） |
+| `(OI)` | Object inherit | **对象继承** → 子**文件** |
+| `(CI)` | Container inherit | **容器继承** → 子**文件夹** |
+| `(IO)` | Inherit only | **仅继承**：当前对象自己不当访问权 |
+| `(NP)` | Don't propagate inherit | **不传播**：只到直接子级 |
 
 来源：[icacls Remarks - inheritance rights](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
 
@@ -1253,236 +1238,206 @@ JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
 | `(OI)` | `InheritanceFlags.ObjectInherit` |
 | `(IO)` | `PropagationFlags.InheritOnly` |
 | `(NP)` | `PropagationFlags.NoPropagateInherit` |
-| `(I)` | 显示「这条是继承结果」，不是授予时勾的「适用于」本身 |
+| `(I)` | 显示「这条是继承结果」 |
 
 ---
 
-#### `(I)` ——「这条是继承来的」（结果标记）
+#### 步骤 0：一次建好 8 棵练习树
 
-**白话：** 你在**当前对象**上看到 `(I)`，表示这条 ACE **不是在本层新写的显式规则**，而是从**父文件夹**流下来的。
-
-**真实路径：只查看**
-
-```bat
-icacls "\\jzfz18\协同设计平台-18\CD-2013388"
-icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
-```
-
-`XREF\A` 上真实样例（节选，完整见第 9 站）：
+每棵树同一深度：
 
 ```text
-JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
-JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
-BUILTIN\Administrators:(I)(F)
+LabXX\
+├── file-root.txt
+└── Sub\
+    ├── file-sub.txt
+    └── Sub1\
+        └── file-sub1.txt
 ```
 
-| 位置 | 典型样子 |
-|------|----------|
-| 父级上**新写**的显式 ACE | 常是 `(OI)(CI)(RX)`，**没有** `(I)` |
-| `CD-2013388` / `XREF\A` 等子层 | 大量行带 `(I)` → 继承来的 ACE |
+PowerShell（整段复制）：
 
-> **`(I)` 不是你授予时勾选的选项**，而是系统告诉你：「这条是爸传下来的。」  
-> 对本例：项目组 / 只读组 / 设总等在 `XREF\A` 上几乎全是 `(I)…`，说明策略写在更上层，再往下传。
+```powershell
+$labs = @(
+  'Lab00_baseline','Lab01_plain','Lab02_OI','Lab03_CI',
+  'Lab04_OI_CI','Lab05_OI_CI_IO','Lab06_OI_CI_NP','Lab07_OI_CI_IO_NP'
+)
+foreach ($lab in $labs) {
+  $root = "E:\WindowsTest\$lab"
+  New-Item -ItemType Directory -Force -Path "$root\Sub\Sub1" | Out-Null
+  '' | Set-Content "$root\file-root.txt"
+  '' | Set-Content "$root\Sub\file-sub.txt"
+  '' | Set-Content "$root\Sub\Sub1\file-sub1.txt"
+}
+```
 
-**本地练习（可 `/grant`，勿用于 jzfz18）：**
+查看时**只盯你新加的那一行**（含 `%USERNAME%` / `域名\用户名`）。  
+同目录上还可能有从 `E:\` 继承下来的其它 ACE——当作背景噪声，不要和本次实验搅在一起。
+
+统一查看四层（后面每步都用）：
 
 ```bat
-icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
-icacls D:\Share\Root\SubA
-:: SubA 上常出现 CONTOSO\FinanceRO:(I)(OI)(CI)(RX)
+icacls E:\WindowsTest\LabXX
+icacls E:\WindowsTest\LabXX\file-root.txt
+icacls E:\WindowsTest\LabXX\Sub
+icacls E:\WindowsTest\LabXX\Sub\file-sub.txt
+icacls E:\WindowsTest\LabXX\Sub\Sub1
+icacls E:\WindowsTest\LabXX\Sub\Sub1\file-sub1.txt
 ```
+
+下面「期望」表均指：**你刚授予的那条 ACE 是否出现、括号长什么样**（作者机实测主体为 `JZFZ\chengongyi`）。
 
 ---
 
-#### `(OI)` ——对象继承（文件向）
-
-**白话：** 写在**文件夹**上时，表示希望**里面的文件（非容器对象）**继承这条 ACE。
-
-**真实路径怎么读：** 看到 `(OI)` 就知道——这条规则会冲着**子文件**去（例如 `XREF\A` 下的图纸文件也会吃到带 `(OI)` 的继承 ACE）。
+#### Lab00 —— 基线：先看默认长什么样
 
 ```bat
-icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
-:: 例：JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
-::                              ↑ 含 OI → 子文件可读执行方向会继承
+icacls E:\WindowsTest\Lab00_baseline
+icacls E:\WindowsTest\Lab00_baseline\file-root.txt
 ```
 
-树上直觉（映射到真实树）：
-
-```text
-...\CD-2013388          ← 文件夹（策略常写在这一层或更上）
-...\CD-2013388\某文件   ← 文件 = object，会吃 (OI)
-...\XREF\A\某文件       ← 更深文件仍可能吃到带 (OI) 的继承规则
-```
-
-**本地练习（只开 OI）：**
-
-```bat
-icacls D:\Share\Root /grant CONTOSO\FileReaders:(OI)RX
-```
-
-> 只记：`(OI)` = **冲着文件去**。隔代细节见第 12 站；要截断用 `(NP)`。
+你还没 `/grant`。文件上常看到带 `(I)` 的行——那是从父目录继承来的默认 ACE。  
+**记下：`(I)` =「爸传下来的」，不是授予语法里要你手写的标志。**
 
 ---
 
-#### `(CI)` ——容器继承（文件夹向）
-
-**白话：** 写在文件夹上时，表示希望**子文件夹**继承这条 ACE。
-
-**真实路径怎么读：** `(CI)` 保证 `XREF`、`XREF\A` 这类**子文件夹**继续带着规则往下走。
+#### Lab01 —— 无继承标志：只贴在当前文件夹
 
 ```bat
-icacls "\\jzfz18\协同设计平台-18\CD-2013388"
-icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
-:: 两侧都能看到带 (CI) 的组 ACE → 容器链在传
+icacls E:\WindowsTest\Lab01_plain /grant %USERNAME%:RX
 ```
 
-树上直觉：
+| 路径 | 你的 ACE（实测） |
+|------|------------------|
+| `Lab01_plain` | `(RX)`，**无** `(I)` → 显式，只作用于本文件夹 |
+| `file-root.txt` / `Sub` / `Sub1` / 更深文件 | **没有**你这条 |
 
-```text
-CD-2013388 / XREF / XREF\A     ← 文件夹链可以吃到 (CI)
-其下的 .dwg / .pdf 等文件      ← 不会因为「只有 CI」而获得文件权；要文件还得有 (OI)
-```
-
-**本地练习（只开 CI）：**
-
-```bat
-icacls D:\Share\Root /grant CONTOSO\FolderWalkers:(CI)RX
-```
-
-> 只记：`(CI)` = **冲着子文件夹去**。真实项目共享里几乎总是 `(OI)(CI)` 成对出现。
+结论：不加 `(OI)`/`(CI)`，权限**不会**自动流到子对象。
 
 ---
 
-#### `(OI)(CI)` ——文件和文件夹都传（最常见）
-
-**白话：** 整棵目录树都要同一套权限时的默认组合——本项目共享几乎全是这种。
-
-**真实路径：只查看**
+#### Lab02 —— 仅 `(OI)`：冲着文件去
 
 ```bat
-icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+icacls E:\WindowsTest\Lab02_OI /grant %USERNAME%:(OI)RX
 ```
 
-```text
-JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
-JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
-JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
+| 路径 | 你的 ACE（实测） |
+|------|------------------|
+| `Lab02_OI` | `(OI)(RX)`（显式） |
+| `file-root.txt` | `(I)(RX)` → 子**文件**吃到 |
+| `Sub` | `(I)(OI)(IO)(RX)` → 子文件夹多半只当「继续传给文件的模板」，自身带 `(IO)` |
+| `file-sub.txt` / `file-sub1.txt` | `(I)(RX)` |
+| `Sub1` | 同 `Sub`，`(I)(OI)(IO)(RX)` |
+
+结论：`(OI)` = **对象（文件）向**。子文件夹上出现 `(IO)` 是正常现象——它主要负责把文件向规则接着往下送。
+
+---
+
+#### Lab03 —— 仅 `(CI)`：冲着子文件夹去
+
+```bat
+icacls E:\WindowsTest\Lab03_CI /grant %USERNAME%:(CI)RX
 ```
 
-拆开读一行：
+| 路径 | 你的 ACE（实测） |
+|------|------------------|
+| `Lab03_CI` | `(CI)(RX)` |
+| `file-root.txt` / `file-sub.txt` / `file-sub1.txt` | **没有** |
+| `Sub` / `Sub1` | `(I)(CI)(RX)` |
+
+结论：`(CI)` = **容器（文件夹）向**。只要文件夹能进、文件另授权限时，常见做法是再加一条 `(OI)`。
+
+---
+
+#### Lab04 —— `(OI)(CI)`：整树都传（最常用）
+
+```bat
+icacls E:\WindowsTest\Lab04_OI_CI /grant %USERNAME%:(OI)(CI)RX
+```
+
+| 路径 | 你的 ACE（实测） |
+|------|------------------|
+| `Lab04_OI_CI` | `(OI)(CI)(RX)`（显式，无 `(I)`） |
+| `file-root.txt` | `(I)(RX)` |
+| `Sub` / `Sub1` | `(I)(OI)(CI)(RX)` |
+| `file-sub.txt` / `file-sub1.txt` | `(I)(RX)` |
+
+拆开读子文件夹那一行：
 
 | 片段 | 含义 |
 |------|------|
 | `(I)` | 继承来的 |
-| `(OI)(CI)` | 继续传给子**文件**和子**文件夹** |
-| `(RX,WD,…)` / `(F)` / `(RX)` | 权限掩码（见 T.4 / T.5） |
+| `(OI)(CI)` | 还会继续传给更下面的文件和文件夹 |
+| `(RX)` | 读执行 |
 
-**本地练习（可 `/grant`）：**
-
-```bat
-icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
-```
+这就是「整目录树同一套权限」最常见的写法。
 
 ---
 
-#### `(IO)` ——仅继承（当前对象自己不吃）
-
-**白话：** ACE 只当「给子孙的种子」，**不**作为当前文件夹自己的访问权。
-
-**真实路径已有现成样例**——`CREATOR OWNER` 那一行：
+#### Lab05 —— `(OI)(CI)(IO)`：当前自己不吃，只种给子孙
 
 ```bat
-icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+icacls E:\WindowsTest\Lab05_OI_CI_IO /grant %USERNAME%:(OI)(CI)(IO)RX
 ```
 
-```text
-CREATOR OWNER:(I)(OI)(CI)(IO)(F)
-```
+| 路径 | 你的 ACE（实测） |
+|------|------------------|
+| `Lab05_OI_CI_IO` | `(OI)(CI)(IO)(RX)` → 行还在，但 `(IO)` 表示**本文件夹访问检查不拿它当权限** |
+| `file-root.txt` | `(I)(RX)` |
+| `Sub` / `Sub1` | `(I)(OI)(CI)(RX)`（子孙侧已变成可继续传播的生效形式） |
+| 更深文件 | `(I)(RX)` |
 
-| 片段 | 含义 |
-|------|------|
-| `(I)` | 这条也是继承来的 |
-| `(OI)(CI)` | 会继续传给子文件/子文件夹 |
-| `(IO)` | **当前这个 `XREF\A` 文件夹自己，不拿这条当访问权** |
-| `(F)` | 子孙侧按创建 Owner 机制可拿到完全控制（直觉即可；细节见 Owner / 创建 Owner） |
-
-适用：挂载点、入口目录「自己不当主体，只把规则种给下面」。
-
-**本地练习（可 `/grant`）：**
-
-```bat
-icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)(IO)RX
-icacls D:\Share\Root
-icacls D:\Share\Root\SubA
-```
+适用：入口目录只当挂载点，策略只想约束下面的内容。
 
 ---
 
-#### `(NP)` ——不传播（只传一层）
-
-**白话：** 子级继承后**不再**把继承标志继续传给孙子。
-
-**真实路径备注：** 当前 `CD-2013388` / `XREF\A` 样例里，项目组与只读组是 `(I)(OI)(CI)…`，**未见** `(NP)`——说明策略 intentionally 往深层传，而不是「只包一层」。
-
-若某处出现 `(NP)`，直觉是：
-
-```text
-父文件夹（写了 NP）
-├── 直接子文件夹 / 直接子文件   ← 可以拿到
-└── 孙子级（如 XREF\A 再往下） ← 不再因这条继续获得
-```
-
-适用：临时目录、外包目录「只包一层，别污染更深业务树」。
-
-**本地练习（可 `/grant`）：**
+#### Lab06 —— `(OI)(CI)(NP)`：只传一层，不进孙子
 
 ```bat
-icacls D:\Share\Root /grant CONTOSO\Temp:(OI)(CI)(NP)RX
+icacls E:\WindowsTest\Lab06_OI_CI_NP /grant %USERNAME%:(OI)(CI)(NP)RX
 ```
 
-可与 `(IO)` 组合：`(OI)(CI)(IO)(NP)` = 当前不吃 + 只影响直接子级。
+| 路径 | 你的 ACE（实测） |
+|------|------------------|
+| `Lab06_OI_CI_NP` | `(OI)(CI)(NP)(RX)` |
+| `file-root.txt` | `(I)(RX)` ← 直接子**文件**拿到 |
+| `Sub` | `(I)(RX)` ← 直接子**文件夹**拿到，且**不再带** `(OI)(CI)`（停传播） |
+| `Sub\file-sub.txt` / `Sub1` / `file-sub1.txt` | **没有**你这条 |
+
+结论：`(NP)` = 直接子级可以吃到，**孙子级不再因这条继续获得**。
 
 ---
 
-#### 五分钟对照实验
-
-**A. 真实共享：只读查看（推荐先做）**
+#### Lab07 —— `(OI)(CI)(IO)(NP)`：自己不吃 + 只包一层
 
 ```bat
-icacls "\\jzfz18\协同设计平台-18\CD-2013388"
-icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+icacls E:\WindowsTest\Lab07_OI_CI_IO_NP /grant %USERNAME%:(OI)(CI)(IO)(NP)RX
 ```
 
-对照清单：哪些行有 `(I)`？哪些有 `(OI)(CI)`？有没有 `(IO)`（如 CREATOR OWNER）？有没有 `(NP)`？
+| 路径 | 你的 ACE（实测） |
+|------|------------------|
+| `Lab07_...` | `(OI)(CI)(NP)(IO)(RX)` |
+| `file-root.txt` / `Sub` | `(I)(RX)` |
+| `Sub` 以下更深层 | **没有** |
 
-**B. 本地练习树：才允许 `/grant`（勿对 jzfz18 执行）**
+= Lab05 的「当前不吃」+ Lab06 的「只传一层」。
 
-先准备：
+---
 
-```text
-D:\Share\Root\
-├── file-root.txt
-└── SubA\
-    ├── file-a.txt
-    └── SubA1\
-        └── file-a1.txt
-```
+#### 一张总表（对照用）
 
-```bat
-icacls D:\Share\Root /grant CONTOSO\G_OI:(OI)RX
-icacls D:\Share\Root /grant CONTOSO\G_CI:(CI)RX
-icacls D:\Share\Root /grant CONTOSO\G_BOTH:(OI)(CI)RX
-icacls D:\Share\Root /grant CONTOSO\G_IO:(OI)(CI)(IO)RX
-icacls D:\Share\Root /grant CONTOSO\G_NP:(OI)(CI)(NP)RX
+| Lab | 授予写法 | 根上典型样子 | 直接子文件 | 直接子文件夹 | 孙子级 |
+|-----|----------|--------------|------------|--------------|--------|
+| 01 | `:RX` | `(RX)` | 无 | 无 | 无 |
+| 02 | `:(OI)RX` | `(OI)(RX)` | `(I)(RX)` | `(I)(OI)(IO)(RX)` | 文件有 / 文件夹继续模板 |
+| 03 | `:(CI)RX` | `(CI)(RX)` | 无 | `(I)(CI)(RX)` | 文件夹有、文件无 |
+| 04 | `:(OI)(CI)RX` | `(OI)(CI)(RX)` | `(I)(RX)` | `(I)(OI)(CI)(RX)` | 都有 |
+| 05 | `:(OI)(CI)(IO)RX` | `…(IO)…` | 有 | 有 | 有 |
+| 06 | `:(OI)(CI)(NP)RX` | `…(NP)…` | 有 | 有（停传） | **无** |
+| 07 | `:(OI)(CI)(IO)(NP)RX` | `…(IO)(NP)…` | 有 | 有（停传） | **无** |
 
-icacls D:\Share\Root
-icacls D:\Share\Root\file-root.txt
-icacls D:\Share\Root\SubA
-icacls D:\Share\Root\SubA\file-a.txt
-icacls D:\Share\Root\SubA\SubA1
-```
-
-看每一层有没有对应组、有没有 `(I)`，再回头对照 `\\jzfz18\...\XREF\A` 的真实输出，五个标志就对上了。
+重做某棵树时：删掉对应 `LabXX` 文件夹，用步骤 0 再建，再执行该 Lab 的 `/grant`。
 
 ### T.4 基本权限（简单权利）
 
@@ -1501,8 +1456,8 @@ icacls D:\Share\Root\SubA\SubA1
 例子：
 
 ```bat
-icacls D:\Share\Q1.xlsx /grant CONTOSO\FinanceRO:RX
-icacls D:\Share\Q1.xlsx /grant CONTOSO\Alice:F
+icacls E:\WindowsTest\Lab01_plain\file-root.txt /grant %USERNAME%:RX
+icacls E:\WindowsTest\Lab01_plain\file-root.txt /grant %USERNAME%:F
 ```
 
 ### T.5 高级权限（括号内、逗号分隔）
@@ -1546,6 +1501,12 @@ icacls test1 /grant User1:(d,wdac)
 icacls TestFile /grant *S-1-1-0:(d,wdac)
 ```
 
+练习树上写高级掩码：
+
+```bat
+icacls E:\WindowsTest\Lab04_OI_CI /grant %USERNAME%:(OI)(CI)(RX,WD,WEA,WA)
+```
+
 来源：同上 icacls Examples。
 
 ### T.6 常用命令（每个都带例子）
@@ -1562,27 +1523,27 @@ icacls TestFile /grant *S-1-1-0:(d,wdac)
 #### 查看
 
 ```bat
-icacls "\\jzfz18\协同设计平台-18\CD-2013388"
-icacls D:\Share\Q1.xlsx
+icacls E:\WindowsTest\Lab04_OI_CI
+icacls E:\WindowsTest\Lab04_OI_CI\Sub\file-sub.txt
 ```
 
 #### 授予 / 拒绝 / 移除
 
 ```bat
 :: 追加授予（默认加到已有显式允许上）
-icacls D:\Share\Q1.xlsx /grant CONTOSO\FinanceRO:R
+icacls E:\WindowsTest\Lab01_plain\file-root.txt /grant %USERNAME%:R
 
 :: 替换该用户已有显式授予（:r）
-icacls D:\Share\Q1.xlsx /grant:r CONTOSO\FinanceRO:RX
+icacls E:\WindowsTest\Lab01_plain\file-root.txt /grant:r %USERNAME%:RX
 
 :: 显式拒绝（并会从显式授予中去掉相同权限）
-icacls D:\Share\Q1.xlsx /deny CONTOSO\TempVendor:M
+icacls E:\WindowsTest\Lab01_plain\file-root.txt /deny %USERNAME%:W
 
 :: 带继承地授予（目录上常用）
-icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
+icacls E:\WindowsTest\Lab04_OI_CI /grant %USERNAME%:(OI)(CI)RX
 
-:: 移除某 SID 的所有 ACE
-icacls D:\Share\Q1.xlsx /remove CONTOSO\TempVendor
+:: 移除某用户的所有 ACE
+icacls E:\WindowsTest\Lab01_plain\file-root.txt /remove %USERNAME%
 ```
 
 文档还保留 ACE **规范顺序**：显式拒绝 → 显式允许 → 继承拒绝 → 继承允许。  
@@ -1592,13 +1553,13 @@ icacls D:\Share\Q1.xlsx /remove CONTOSO\TempVendor
 
 ```bat
 :: e = 启用继承
-icacls D:\Share\Root /inheritance:e
+icacls E:\WindowsTest\Lab04_OI_CI\Sub /inheritance:e
 
 :: d = 禁用继承，并复制当前 ACE
-icacls D:\Share\Root /inheritance:d
+icacls E:\WindowsTest\Lab04_OI_CI\Sub /inheritance:d
 
 :: r = 禁用继承，并移除仅继承来的 ACE
-icacls D:\Share\Root /inheritance:r
+icacls E:\WindowsTest\Lab04_OI_CI\Sub /inheritance:r
 ```
 
 （Learn 参数名写作 `/inheritancelevel:`；实际环境中也常见 `/inheritance:e|d|r` 写法，以你机器 `icacls /?` 为准。）
@@ -1606,8 +1567,8 @@ icacls D:\Share\Root /inheritance:r
 #### 备份与还原
 
 ```bat
-icacls D:\Share\* /save D:\Share-acl-backup.txt /t
-icacls D:\Share\ /restore D:\Share-acl-backup.txt
+icacls E:\WindowsTest\* /save E:\WindowsTest\acl-backup.txt /t
+icacls E:\WindowsTest\ /restore E:\WindowsTest\acl-backup.txt
 ```
 
 对照官方：
@@ -1621,34 +1582,34 @@ icacls c:\windows\ /restore aclfile
 
 ```bat
 :: 重设为默认继承 ACL
-icacls D:\Share\Root /reset /t
+icacls E:\WindowsTest\Lab00_baseline /reset /t
 
 :: 改所有者
-icacls D:\Share\Q1.xlsx /setowner CONTOSO\Alice
+icacls E:\WindowsTest\Lab01_plain\file-root.txt /setowner %USERNAME%
 
 :: 查找 DACL 里显式提到某 SID 的文件
-icacls D:\Share\* /findsid *S-1-5-21-...-1103 /t
+icacls E:\WindowsTest\* /findsid *S-1-5-21-...-1103 /t
 ```
 
-### T.7 用真实一行做「翻译练习」
+### T.7 翻译练习（用 Lab04 实测一行）
 
 ```text
-JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+JZFZ\chengongyi:(I)(OI)(CI)(RX)
 ```
 
 逐项翻译：
 
-1. **谁**：域组 `JZFZ\CD-2013388_项目组`  
-2. **`(I)`**：这条是从父目录**继承**下来的  
-3. **`(OI)(CI)`**：作为目录规则时，会继续传给子**文件**和子**文件夹**  
-4. **`(RX,WD,WEA,WA)`**：读执行 + 写数据 + 写扩展属性 + 写属性  
+1. **谁**：账户 `JZFZ\chengongyi`（你机器上可能是别的 `域名\%USERNAME%`）  
+2. **`(I)`**：从父目录**继承**下来的  
+3. **`(OI)(CI)`**：还会继续传给子**文件**和子**文件夹**  
+4. **`(RX)`**：读取和执行  
 
-对比只读组 `(I)(OI)(CI)(RX)`：同样会继承传播，但权限更窄，主要是读执行。  
-对比设总 `(I)(OI)(CI)(F)`：完全控制。
+对比 Lab01 根上的 `:(RX)`：没有继承标志 → 只贴在当前对象。  
+对比 Lab06 的 `Sub` 上 `(I)(RX)`：有继承结果，但已不再带 `(OI)(CI)` → `(NP)` 截断了继续传播。
 
 ### 收束
 
-**你现在会了：** 读懂 `icacls` 一行输出；会用查看/授权/拒绝/继承/备份还原。  
+**你现在会了：** 在 `E:\WindowsTest` 上从 0 实测每一种继承标志组合；会读 `icacls` 一行输出；会用查看/授权/拒绝/继承/备份还原。  
 **下一站：** 有效权限——规则太多时如何看「最终能不能访问」。
 
 ---
@@ -1662,10 +1623,10 @@ JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
 建议：改完继承后，对深层文件跑一次有效访问；也可用命令直接查看该路径上的 ACE 列表：
 
 ```bat
-icacls D:\Share\Root\SubA\file-a.txt
+icacls E:\WindowsTest\Lab04_OI_CI\Sub\file-sub.txt
 ```
 
-或在 PowerShell 中：`Get-Acl D:\Share\Root\SubA\file-a.txt | Format-List`
+或在 PowerShell 中：`Get-Acl E:\WindowsTest\Lab04_OI_CI\Sub\file-sub.txt | Format-List`
 
 ### 收束
 
@@ -1673,7 +1634,6 @@ icacls D:\Share\Root\SubA\file-a.txt
 **下一站才需要：** 如何记录「谁碰过」，而不只是「能不能碰」。
 
 ---
-
 ## 第 14 站：SACL——审计
 
 **SACL（System ACL）** 管审计：成功/失败访问是否记安全日志。与 DACL 分槽，避免「权限」和「审计」缠死。  
