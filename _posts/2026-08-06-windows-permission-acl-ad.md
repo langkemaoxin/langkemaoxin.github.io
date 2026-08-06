@@ -41,7 +41,7 @@ tags: [Windows, ACL, NTFS, Active Directory, 权限, InheritanceFlags, Propagati
 第 12 站 继承：从最小实验一步步发明（OI/CI/IO/NP）（重点）
 第 13 站 有效权限
 第 14 站 SACL：审计
-第 15 站 域与域控：目录树、OU/CN、新建组细节
+第 15 站 域与域控：从「一本公共账」推到加域与目录树
 第 16 站 用户权利 ≠ 对象权限；UAC 双令牌
 总图    串回全链路
 ```
@@ -1742,110 +1742,226 @@ Security Descriptor
 
 ### 麻烦
 
-每台机器本地建用户/组：入职要跑很多台，策略不一致。  
-第 8 站已经发明「组」；可是组建在哪台机器上？一百台工作站各建一遍「设计组」，仍会疯。
+公司里不止一台电脑。
 
-### 这一站只发明：域 + 域控制器（DC）
+- 小王在 PC-A 上有账户，换到 PC-B 又要再建一遍；  
+- 第 8 站的「设计组」若建在 PC-A 本地，PC-B 根本不认这个组；  
+- 共享盘上的 ACE 写了 `某台机器\某人`，人一换机就对不上。
 
-**Active Directory 域**把账户、组、计算机等集中放进一份**目录**；**域控制器（DC）**是这份目录的权威应答机——认证、名字↔SID、组成员查询，常落在它身上。  
-人用域账户登录加入域的机器；ACL 里的主体可以是 `域\用户` 或 `域\组`。
+第 1～8 站的模型（账户 → SID → 令牌 → 组 → ACE）仍然成立。  
+缺的是：**让很多台机器共用同一本「人/组账本」**，而不是每台各写一本。
 
-回扣第 3、4 站（本站不再重讲 LSA 细节）：
-
-- `Translate("JZFZ\\chengongyi")` 常问域控  
-- 登录域账户时 LSA 联系域的安全权威核验  
-
-> 本站要补的是：**目录里长什么样、OU/CN 是什么、新建一个组时目录写了什么。**  
-> ACL 求值模型不变——变的是「主体从哪台权威机器来」。
+> 本站严格按西蒙节奏：先发明「公共账本 / 答账的服务器 / 电脑挂上账本」，  
+> 再发明「账本里怎么分层、新建一个组时多了什么」。  
+> **专有缩写一律后出现。**
 
 ---
 
-### 15.1 想做什么：集中账本不能是一锅粥
+### 15.1 先发明：一本公共账 + 一台答账的服务器
 
-若域里几千个用户、几百个组全平铺在一个列表里，找人、授权、委派都会糊。  
-需要先发明：**目录是一棵树**——对象挂在容器下，就像文件挂在文件夹下。
+#### 想做什么
+
+希望：小王在任何已挂上这本账的电脑上，都是同一个人（同一个 SID）；  
+「设计组」只建一次，一百台机器授权时都能引用。
+
+#### 推导（还不用官方名）
+
+1. 账本必须放在**大家都能问到的地方**——通常是一台常开的服务器。  
+2. 别人问「小王的 SID？」「密码对不对？」「他在不在设计组？」时，由这台机器**权威作答**。  
+3. 普通办公电脑变成：**本地仍可有自己的小账本**，但「公司员工」这类问题改问公共账。
+
+#### 给发明贴官方标签（此刻才出现）
+
+| 刚才发明的东西 | 常见叫法 |
+|----------------|----------|
+| 这本公共账 + 围绕它的身份范围 | **域（Domain）**；微软产品名常叫 **Active Directory 域** |
+| 放账本、常负责答认证/查询的那台服务器 | **域控制器（Domain Controller，DC）** |
+| 本机自己的小账本 | 前几站已会的 **SAM**（本地用户/组） |
+
+回扣第 3、4 站（不重讲过程）：
+
+- `Translate("公司\\小王")` → 本机 LSA 常去问这台答账服务器；  
+- 用公司账户登录 → 验密也常问它。
+
+来源（身份存在哪）：[Understand security principals](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)  
+（域里的账户/组是目录对象；本机本地账户/组由该机 SAM 管，只约束本机资源。）
+
+来源（加域后 SAM 与域的分工）：[Credentials processes - SAM](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)  
+（每台 Windows 仍有 SAM；计算机加入域后，**域账户**由 Active Directory 管；客户机用域账户参与网络时会与域控交互。）
+
+---
+
+### 15.2 想做什么：世界上出现第一台「答账服务器」
+
+实验室/小环境：先有一台 Windows Server，再让它背上公共账本。
+
+#### 标记预告（两步就够建立直觉）
+
+**第一步：装上「能管目录身份」的服务器角色**
+
+```powershell
+# 在准备当答账服务器的 Windows Server 上，管理员 PowerShell
+Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+```
+
+来源：[Core Network Guide](https://learn.microsoft.com/en-us/windows-server/networking/core-network-guide/core-network-guide)
+
+**第二步：创建「第一本」公共账（新林的根域）**
+
+```powershell
+# 域名换成你的环境，例如 jzfz.local；过程会要「目录服务还原模式」密码，完成后重启
+Install-ADDSForest -DomainName "jzfz.local"
+```
+
+来源：[Install AD DS](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/install-active-directory-domain-services--level-100-)  
+（`Install-ADDSForest` 安装新林；默认常一并安装 DNS。）  
+另见：[Install a new Windows Server Active Directory forest](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/install-a-new-windows-server-2012-active-directory-forest--level-200-)
+
+#### 现象 → 推导
+
+重启之后你会感到：
+
+- 这台机器**不再只是「普通文件服务器」**，而变成了「账本所在地」；  
+- 登录选项里开始出现**域账户**体系；  
+- 别人要找到这台答账服务器，网络上常靠 **DNS**（所以新林安装默认爱带上 DNS）。
+
+> **搭域控 ≠ 搭文件共享。**  
+> 共享盘可以稍后另做；本步只解决「身份权威在哪」。
+
+（生产环境还有第二台域控、备份、时间同步等——本站不展开，以免抢走「公共账」这一条主线。）
+
+---
+
+### 15.3 想做什么：新买的电脑如何挂上这本账
+
+新电脑出厂时是**单机/工作组**：只认自己的 SAM。  
+要让它问公共账，需要一次「挂靠」。
+
+#### 前置（用已经会的网络直觉）
+
+1. 电脑能 ping 通答账服务器；  
+2. **DNS 指向能解析域名的那台**（常常就是域控自己）——否则它连「域叫什么、服务器在哪」都找不到；  
+3. 你有**本机管理员**权限，以及域里一个允许加电脑的账户。
+
+#### 命令（官方路径之一）
+
+```powershell
+# 在新电脑上：本机管理员身份运行；按提示输入域用户名密码；然后重启
+Add-Computer -DomainName "jzfz.local"
+```
+
+或命令行：`netdom join %COMPUTERNAME% /domain:jzfz.local /userd:域名\用户 /passwordd:*`  
+来源：[Join a computer to a domain](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/join-computer-to-domain)、[Core Network Guide - joining](https://learn.microsoft.com/en-us/windows-server/networking/core-network-guide/core-network-guide)
+
+GUI 等价：系统设置 → 关于 → 重命名此电脑（高级）→ 加入域。
+
+#### 推导：挂靠成功时，账本上多了什么？
+
+不是「电脑里多装了一个 AD」，而是：
+
+1. **公共账本里多了一条「这台电脑」的记录**（计算机账户）；  
+2. 电脑与域控之间建立起可互相认证的关系（后文运维常说安全通道）；  
+3. 重启后，登录界面可以选 **域\用户**，而不只是本机用户。
+
+> **加域 = 这台电脑在公共账上登记自己，并同意身份问题去问答账服务器。**
+
+---
+
+### 15.4 对照：单机 vs 已挂上公共账的电脑
+
+用前几站已会的词对比——仍尽量少堆新名词：
+
+| 问题 | 单机（工作组） | 已加入域 |
+|------|----------------|----------|
+| 「小王」存在哪？ | 只在本机 SAM；换机要重建 | 在公共账；各成员机共用 |
+| `whoami` 常见样子 | `电脑名\用户` | 常为 `域名\用户` |
+| `Translate("域名\小王")` | 往往失败或与域无关 | 本机 LSA 可去问域控 |
+| 第 8 站的组建在哪？ | 本地组，别的电脑不认 | 可建**域组**，多机 ACE 共用 |
+| 文件 ACE 写谁？ | `电脑名\用户` 或本机组 | 还可写 `域名\用户` / `域名\组` |
+| 本机管理员还在吗？ | 就是日常最高权 | **还在**；另多了域管理员等身份 |
+| 公司统一锁屏/软件策略？ | 每台手调 | 可从域下发（**组策略**；本站只点到「能统一管」，不展开） |
+
+最小自检（加域后的电脑）：
+
+```bat
+whoami
+whoami /groups
+systeminfo | findstr /i "Domain"
+```
+
+若 `Domain` 一行已是域名（不是 `WORKGROUP`），说明挂靠成功。
+
+---
+
+### 15.5 想做什么：公共账不能是一锅粥 → 发明「文件夹」
+
+账本里人一多：研发、行政、外包挤在一个平面列表里，授权和委派都会糊。  
+需要：**像资源管理器一样，用文件夹把对象归类**。
 
 #### 现象预告
 
-| 你在 GUI 里看到的 | 目录里对应的感觉 |
-|------------------|------------------|
-| 「Active Directory 用户和计算机」里的文件夹 | **容器**（常见是 OU） |
-| 某个用户 / 组 / 计算机一行 | **叶子对象**（或还能再嵌容器） |
-| 右键 → 属性 → 一堆字段 | 对象的 **属性（attributes）** |
+打开「Active Directory 用户和计算机」这类工具，你会看到左边像树：  
+有的节点像**文件夹**，下面挂用户、组、电脑。
 
-#### 推导出三个缩写（CN / OU / DC）
+#### 推导后再贴标签
 
-树要有**全路径名**，LDAP 世界里叫 **DN（Distinguished Name，可分辨名称）**。  
-一条 DN 从叶子拼到域根，中间每一段是「相对名 + 类型」：
+| 先理解成 | 官方常叫 |
+|----------|----------|
+| 人为建的「文件夹」，用来归类、方便委派 | **组织单位（OU）** |
+| 树里某个叶子（用户/组/电脑）在这一层的名字 | 常用属性叫 **CN**（Common Name，通用名） |
+| 域名拆开写进路径（`jzfz` + `local`） | **DC**（Domain Component，域分量）——注意：这里的 DC **不是**「域控制器」缩写撞车 |
+
+整条「住址」拼起来，目录术语叫 **DN（可分辨名称）**，例如：
 
 ```text
 CN=设计组,OU=项目组,DC=jzfz,DC=local
-│         │         └─ DC = Domain Component（域名拆段）
-│         └─ OU = Organizational Unit（组织单位，像文件夹）
-└─ CN = Common Name（常见叶子对象的相对名属性）
+   ↑叶子名   ↑文件夹   ↑域名拆段
 ```
 
-白话对照：
+来源：[Object names and identities](https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities)  
+（相对名 RDN、完整 DN；多数对象类用 **cn** 作命名属性；DN 随移动/改名会变。）
 
-| 缩写 | 全称直觉 | 本站用途 |
-|------|----------|----------|
-| **CN** | Common Name | 多数用户/组对象的「这一层叫什么」 |
-| **OU** | Organizational Unit | 人为划的组织/委派容器（可嵌套） |
-| **DC** | Domain Component | 把 `jzfz.local` 拆成 `DC=jzfz,DC=local` |
+#### 查改这棵树的「电话协议」（一句就够）
 
-还有一个默认容器常写成 `CN=Users,DC=...`（注意：这里的 `Users` 也是 **CN**，不是 OU）。新建对象时若没指定 Path，工具常丢进这类默认容器。
+工具、脚本、甚至第 3 站的查找，背后常常通过一套叫 **LDAP** 的约定去读写目录树。  
+本站不背报文；你只要知道：
 
-来源：[Object names and identities](https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities)（RDN / DN；多数类以 **cn** 为命名属性；DN 随移动/改名会变）
-
-#### LDAP 在本站只发明到这一句
-
-**LDAP**（Lightweight Directory Access Protocol）是客户端**查询/修改这棵目录树**时常用的协议与命名习惯。  
-你不必先背协议报文；先记住：
-
-> **GUI / PowerShell / `Translate` 背后，常常是在对域控上的目录做「按 DN 或按属性查找」。**
-
-域控还负责认证等；本站焦点是**目录对象怎么摆**，不是 Kerberos 票据细节。
+> **GUI 里拖用户进 OU、PowerShell 建组，本质都是在改这棵公共树上的节点。**
 
 ---
 
-### 15.2 最小观察：拆开「人」在目录里的身份
+### 15.6 最小观察：同一个人，为什么有好几个「名字」？
 
-安全主体（用户、组、计算机）在目录里**不止一个名字**。Learn 把它们拆开：
+挂上域之后，小王在账本里不是只有一个字符串：
 
-| 身份 | 变不变 | 给谁用 |
-|------|--------|--------|
-| **DN**（`distinguishedName`） | 移动/改名会变 | 目录路径定位 |
-| **objectGUID** | 创建后不变 | 程序里长期引用对象 |
-| **objectSid** | 主体 SID（第 2 站） | ACL / 令牌真正比对的东西 |
-| **sAMAccountName** | 可改，但常用 | `域\名` 里的「名」一侧 |
+| 你关心的用途 | 对应什么（后贴名） |
+|--------------|-------------------|
+| 在树里找到他、看他在哪个文件夹 | 完整住址 **DN**（搬家会变） |
+| 程序长期引用「就是他」 | **objectGUID**（创建后一般不变） |
+| ACE / 令牌真正比对 | **objectSid**（第 2 站的 SID） |
+| 人口头说的 `域名\小王` | 常靠 **sAMAccountName** 那一侧 |
 
-来源：同上 [Object names and identities](https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities)（Other Identities：`sAMAccountName`、`objectSid` 等对 Windows 很重要，但从「目录对象身份」视角与 DN/GUID 分层）
+来源：同上 [Object names and identities](https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities)
 
-现象：你在资源管理器 ACE 里写 `JZFZ\某组`，系统最终要的是 **组的 objectSid**；DN 只是「组在树上的住址」。
-
-若本机已加入域且装了 AD 模块，可对自己账户做只读观察（把域名换成你的环境）：
+只读自检（需 RSAT / ActiveDirectory 模块）：
 
 ```powershell
-# 需要 RSAT / ActiveDirectory 模块；只读查看，不改任何东西
 Get-ADUser -Identity $env:USERNAME -Properties DistinguishedName,ObjectSID,SamAccountName |
   Format-List DistinguishedName, ObjectSID, SamAccountName
 ```
 
-推导：
-
-> **同一人**：DN 告诉你「挂在哪个 OU」；SID 告诉 ACL「核对哪张身份证」。  
-> 第 3 站的 `Translate`，问到域控时，权威答案就在这类目录属性里。
+> **住址（DN）给人/工具找位置；SID 给权限系统对表。** 别混成一个概念。
 
 ---
 
-### 15.3 想做什么：新建一个业务组——目录里究竟多了什么？
+### 15.7 想做什么：新建一个「设计组」——账本上多了什么？
 
-场景：项目要给「协同设计平台某目录」授权，不想对每个人写 ACE → 建组 `CD-平台-设计`，人进组，ACE 授给组（回扣第 8、9 站）。
+场景：共享盘不想对 30 个人各写一条 ACE → 建组，人进组，ACE 只写组（第 8、9 站）。
 
-#### 标记预告
+#### 操作（示意）
 
-管理员在「AD 用户和计算机」里：选中某个 **OU** → 新建 → 组。  
-或 PowerShell（示意，按你环境改 Path/名）：
+在某个「文件夹」（OU）上：新建 → 组。  
+或：
 
 ```powershell
 New-ADGroup `
@@ -1856,87 +1972,73 @@ New-ADGroup `
   -Path "OU=项目组,DC=jzfz,DC=local"
 ```
 
-来源：[New-ADGroup](https://learn.microsoft.com/en-us/powershell/module/activedirectory/new-adgroup)（`Path` = 容器/OU；`GroupCategory`；`GroupScope`；`SamAccountName`）
+来源：[New-ADGroup](https://learn.microsoft.com/en-us/powershell/module/activedirectory/new-adgroup)
 
-#### 推导：创建瞬间目录侧发生了什么
-
-按「已经会的概念」拆开，**不要**当成魔法按钮：
+#### 用已经会的概念逐步推导（创建瞬间）
 
 ```text
-1) 在指定容器下新增一个 class = group 的对象
-2) 写出相对名 → 常见即 CN=CD-平台-设计
-3) 拼出完整 DN
-     例：CN=CD-平台-设计,OU=项目组,DC=jzfz,DC=local
-4) 分配 objectGUID（目录对象身份证，长期引用用它）
-5) 分配 objectSid（安全主体 SID —— 以后进令牌、进 ACE）
-6) 记下 sAMAccountName（人们说的 JZFZ\CD-平台-设计）
-7) member 属性起初为空（还没人）
-8) groupType 等标志：安全组还是通讯组、作用域等
+1) 公共树上多了一个「组」节点（挂在你选的文件夹下）
+2) 它有一层显示名 / 相对名
+3) 拼出完整住址（DN）
+4) 分到一个新的 SID ← 以后进令牌、进 ACE
+5) 人们口头说的 域名\CD-平台-设计 对上这个节点
+6) 「组员列表」一开始是空的
 ```
 
-组对象关键属性直觉（schema 层）：`cn`、`member`、`objectSid`、`sAMAccountName`、`groupType`。  
-来源：[Group class](https://learn.microsoft.com/en-us/windows/win32/adschema/c-group) 相关属性说明
-
-#### 把人加进组 = 改目录属性，不是改文件 ACL
+把人加进去：
 
 ```powershell
 Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
 ```
 
-现象：改的是组的 **`member`**（以及用户侧常看到的 memberOf 视图）；  
-**文件 DACL 一行都还没动。**
+现象：**改的是账本里组的成员关系**；共享盘 DACL **一行都还没动**。
 
-要让权限生效，还缺两步（你已经会）：
+要权限真正放开，还是老两步：
 
-1. 在文件/共享上对 `JZFZ\CD-平台-设计` 写 ACE（第 9、10 站）  
-2. 用户**重新登录**（或刷新令牌）后，令牌组 SID 列表里才稳定带上该组（第 5、8 站）
+1. 文件/共享 ACE 授给 `域名\CD-平台-设计`；  
+2. 用户重新登录（令牌带上组 SID）。
 
 ```text
-新建组 ──► 目录多一个带 SID 的 group 对象
-加人入组 ──► 改 member（身份打包）
-写 ACE   ──► 对象 DACL 引用该组 SID
-登录     ──► 令牌携带组 SID → Access Check 才认账
+新建组 → 账本多一个带 SID 的组
+加人   → 只改「谁属于组」
+写 ACE → 门上才贴规则
+登录   → 令牌带组 SID → 第 10 站对表才认账
 ```
 
-> **「域控上新建一个组」= 在目录树某容器下创建一个带新 SID 的安全主体对象。**  
-> 它本身不自动打开任何文件夹；打开文件夹的仍是第 10 站那套对表。
+> **域控上新建组 ≠ 自动打开某个文件夹。**  
+> 它只是多造了一个可被 ACE 引用的主体。
+
+建组向导里还会问「安全组还是通讯组」：
+
+| 你想… | 选… |
+|-------|-----|
+| 把组写进文件 ACE | **安全组** |
+| 只为发邮件打包 | **通讯组**（不能当 ACL 授权主体） |
+
+「作用域」影响能嵌套/授权到哪——选错会出现「人进了组却套不上某资源」；细表见官方，本站不背。  
+来源：[Understand security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)
 
 ---
 
-### 15.4 两个旋钮：安全组 vs 通讯组；作用域点到为止
+### 15.8 高特权组点到为止
 
-建组向导里会问类别与作用域——用「想解决的麻烦」发明，不背考试表。
+有一种组默认能量极大（常译 **Domain Admins / 域管理员**）：  
+几乎相当于「域里很多机器上的本地管理员血统」。日常办公账户**不要**长期放在里面。
 
-| 你想做的事 | 该发明的旋钮 |
-|------------|--------------|
-| 把组写进文件/共享 **ACE** | 必须是 **安全组（Security）** |
-| 只为发邮件通讯录打包 | **通讯组（Distribution）**——不能当 ACL 主体来授权 |
-| 组能在哪些范围嵌套/授权 | **作用域（Domain Local / Global / Universal）**——影响「能授到哪、能嵌谁」 |
-
-本站对作用域只留一句：选错会导致「组加了人，但某些资源上套不上」；细表见官方文档。  
-来源：[Understand security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)  
-（该文讲：安全组/通讯组、组作用域、特殊身份组、默认安全组，以及组如何通过 SID 参与 ACL。）
-
----
-
-### 15.5 高特权组：为什么 Domain Admins 要另眼看待
-
-业务组 `CD-平台-设计` 授一个目录；**Domain Admins（DA）** 默认等价于「域内几乎所有成员机上的本地 Administrators 血统」——一台失守，横向面极大。
-
-因此运维上常：**日常账户不要待在 DA**；用 GPO 限制 DA 在成员机上的多种登录方式；审计 DA 成员变更。  
 来源：[Securing Domain Admins](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-f--securing-domain-admins-groups-in-active-directory)  
-（该文讲：DA 风险、清空日常成员、Deny 登录类用户权利、审计成员变更——**不是**讲 LDAP/OU 命名。）
+（讲如何收权与审计；**不是**讲目录树命名。）
 
-> 两个来源分工记清楚：  
-> - *Understand security groups* → 组是什么、怎么分类/用  
-> - *Securing Domain Admins* → DA 为何危险、怎么锁  
+两个文档分工：
+
+- *Understand security groups* → 组怎么分类、怎么用在授权；  
+- *Securing Domain Admins* → 域管理员组为何要锁。
 
 ---
 
 ### 收束
 
 **你现在会了：**  
-域把身份收进目录树；**CN/OU/DC** 拼出 DN；**新建组**是在某容器创建带 **objectSid** 的 group 对象；加人改 `member`；ACE 与登录令牌仍按前几站模型工作。  
+多机要共用身份 → 发明公共账与答账服务器（域 / 域控）→ 新电脑挂靠（加域）→ 单机与加域后差别 → 账本用文件夹分层（再认 OU/CN/路径）→ 新建组只是多一个带 SID 的主体，权限仍走 ACE + 令牌。  
 
 **下一站才需要：** 「能备份整盘」这类能力，和「某个文件 ACE」不是同一旋钮；以及管理员为何还弹 UAC。
 
@@ -1980,7 +2082,7 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
   → 继承（最小实验发明 OI/CI/IO/NP，再对接两套旋钮）
   → 有效权限
   → SACL
-  → 域与域控
+  → 域与域控（公共账→搭 DC→加域→树与新建组）
   → 用户权利 ≠ 对象权限；UAC
 ```
 
@@ -2016,9 +2118,16 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
 - [icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)  
 - [cacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cacls)  
 - [SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)  
-- [Understand security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)  
 - [FileSystemAclExtensions](https://learn.microsoft.com/en-us/dotnet/api/system.io.filesystemaclextensions.setaccesscontrol)  
 - .NET：`NTAccount` / `SecurityIdentifier` / `FileSystemAccessRule` / `InheritanceFlags` / `PropagationFlags`
+
+### 域 / 目录 / 组
+
+- [Object names and identities](https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities)（RDN / DN / GUID；sAMAccountName、objectSid）  
+- [Understand security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)（安全组/通讯组、作用域、默认组）  
+- [Securing Domain Admins](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-f--securing-domain-admins-groups-in-active-directory)（DA 收权与审计）  
+- [New-ADGroup](https://learn.microsoft.com/en-us/powershell/module/activedirectory/new-adgroup)  
+- [Group class (AD schema)](https://learn.microsoft.com/en-us/windows/win32/adschema/c-group)
 
 ---
 
