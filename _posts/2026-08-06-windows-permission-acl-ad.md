@@ -907,7 +907,8 @@ Learn 对 **Domain Admins** 的提醒很明确：成员对域内计算机有广�
 
 - [Windows logon scenarios](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-logon-scenarios)（认证 vs 授权；interactive / network logon）  
 - [Windows Authentication Architecture - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-architecture)  
-- [Credentials processes in Windows authentication - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)  
+- [Credentials processes in Windows authentication](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)（Winlogon、Credential Provider、SAM/AD、缓存凭据）  
+- [LSA_AP_LOGON_USER](https://learn.microsoft.com/en-us/windows/win32/api/ntsecpkg/nc-ntsecpkg-lsa_ap_logon_user)（认证成功 → logon session / token 信息）  
 - [Understand security principals - Access tokens / access control](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)  
 - [Understand security identifiers](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers)（令牌中的 SID / SIDHistory / 组 SID）  
 - [whoami](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/whoami)（`whoami /all` 查看令牌）  
