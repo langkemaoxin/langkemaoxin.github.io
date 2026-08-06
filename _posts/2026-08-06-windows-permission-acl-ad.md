@@ -1254,11 +1254,11 @@ icacls E:\WindowsTest\Lab03 /grant "JZFZ\chengongyi:(CI)RX"
 ```
 
 ```text
-E:\WindowsTest\Lab03              JZFZ\chengongyi:(CI)(RX)
-E:\WindowsTest\Lab03\file-root.txt → 没有
-E:\WindowsTest\Lab03\Sub          JZFZ\chengongyi:(I)(CI)(RX)
-E:\WindowsTest\Lab03\Sub\file-sub.txt → 没有
-E:\WindowsTest\Lab03\Sub\Sub1     JZFZ\chengongyi:(I)(CI)(RX)
+icacls E:\WindowsTest\Lab03              JZFZ\chengongyi:(CI)(RX)
+icacls E:\WindowsTest\Lab03\file-root.txt → 没有
+icacls E:\WindowsTest\Lab03\Sub          JZFZ\chengongyi:(I)(CI)(RX)
+icacls E:\WindowsTest\Lab03\Sub\file-sub.txt → 没有
+icacls E:\WindowsTest\Lab03\Sub\Sub1     JZFZ\chengongyi:(I)(CI)(RX)
 （file-sub1.txt 同样没有）
 ```
 
@@ -1326,8 +1326,14 @@ JZFZ\chengongyi:(I)(OI)(CI)(RX)
 
 ### 12.6 实验 5：加上 `(IO)`——当前自己不吃
 
-**想做什么：** 入口 / 挂载点文件夹**自己不要**这条访问权，但希望**下面的内容**仍然按规则受约束。  
-**标记预告：** 在 `(OI)(CI)` 上再加 `(IO)`。字面像 Inherit Only（「仅继承」）——先验证它是否等于「当前不生效、只当种子」。
+**想做什么：**  
+实验 4 是「当前文件夹**自己有权**，下面也有权」。  
+有时你要的是反过来的一种：
+
+> `Lab05` 这个入口目录，**我不靠这条规则开门**；  
+> 但我仍希望这条规则**种给下面的**文件 / 子文件夹。
+
+**标记预告：** 在 `(OI)(CI)` 上再加 `(IO)`。字面像 Inherit Only（「仅继承」）——先当「只负责往下传、不当自己通行证」的按钮，做完再下完整结论。
 
 ```bat
 icacls E:\WindowsTest\Lab05 /grant "JZFZ\chengongyi:(OI)(CI)(IO)RX"
@@ -1338,6 +1344,17 @@ icacls E:\WindowsTest\Lab05 /grant "JZFZ\chengongyi:(OI)(CI)(IO)RX"
 已成功处理 1 个文件; 处理 0 个文件时失败
 ```
 
+```bat
+icacls E:\WindowsTest\Lab05
+icacls E:\WindowsTest\Lab05\file-root.txt
+icacls E:\WindowsTest\Lab05\Sub
+icacls E:\WindowsTest\Lab05\Sub\file-sub.txt
+icacls E:\WindowsTest\Lab05\Sub\Sub1
+icacls E:\WindowsTest\Lab05\Sub\Sub1\file-sub1.txt
+```
+
+关键输出（实测）：
+
 ```text
 E:\WindowsTest\Lab05                         JZFZ\chengongyi:(OI)(CI)(IO)(RX)
 E:\WindowsTest\Lab05\file-root.txt           JZFZ\chengongyi:(I)(RX)
@@ -1347,14 +1364,33 @@ E:\WindowsTest\Lab05\Sub\Sub1                JZFZ\chengongyi:(I)(OI)(CI)(RX)
 E:\WindowsTest\Lab05\Sub\Sub1\file-sub1.txt  JZFZ\chengongyi:(I)(RX)
 ```
 
-**现象：** 根上**仍有**你的行，但多了 `(IO)`；子孙与实验 4 类似，能吃到规则。
+**现象：** 根上**仍有**你的行，但多了 `(IO)`；下面的文件 / `Sub` 仍然吃到规则（和实验 4 的子孙侧很像）。
+
+**先和实验 4 对照（差别只在「根自己」）：**
+
+| | 实验 4 `(OI)(CI)` | 实验 5 `(OI)(CI)(IO)` |
+|--|------------------|----------------------|
+| 根上 `icacls` 看不看得到你的行 | 看得到 | 也看得到 |
+| 根上这一行有没有 `(IO)` | 没有 | **有** |
+| 访问检查时：这条算不算「当前文件夹自己的权限」 | **算** | **不算** |
+| 下面的 `Sub` / 文件 | 有 | 有 |
+
+一句话：**看得到 ACE ≠ 自己能用这条 ACE 通过访问检查。**  
+有 `(IO)` 时：行还在，但是「种子说明书」，不是「本层门禁卡」。
+
+**生活比喻：**
+
+- **没有 IO**：大门上的告示既管大门，也复印给里面每间房。  
+- **有 IO**：大门上贴的是「请把复印件发给里面房间」的**通知模板**；大门自己**不按这张告示放行**，里面房间才按复印件执行。
+
+`icacls` 仍会在大门上显示那行字（所以你看得到 `(IO)`），但系统判断「你能不能进大门」时，**不会拿这张带 `(IO)` 的当本层允许**。
 
 **推导：**
 
-- `(IO)` 的完整直觉：**Inherit Only**——ACE 主要当给子孙的**种子**；**当前对象做访问检查时，不拿它当自己的权限**。  
-- 所以根上「看得到行」≠「自己吃到权」；关键看有没有 `(IO)`。  
-- 回头看实验 2：子文件夹上自动出现的 `(I)(OI)(IO)…`，就是同一机制——中转模板，自己不当（或不完全当）这条的访问主体。  
-- 适用：入口目录只挂载、策略只想约束下面业务内容。
+- `(IO)` 的完整名字：**Inherit Only（仅继承）**——ACE 主要当给子孙的**种子**；**当前对象做访问检查时，不拿它当自己的权限**。  
+- 记住口诀：`(IO)` = **当前不拿来开门，专给子孙用。**  
+- 回头看实验 2：子文件夹上自动出现的 `(I)(OI)(IO)…`，就是同一味道——文件夹常常只是**中转站**，把「给文件的规则」接着往下送，自己不一定拿这条当访问权。  
+- 适用：共享根 / 挂载点只是入口结构；或者「规则必须写在父对象上才能继承」，又不想让父对象因这条而变宽。
 
 **你现在会了：** 如何让规则「跳过当前、种给下面」。  
 **下一步才问：** 能不能只影响直接子级，别污染孙子？
