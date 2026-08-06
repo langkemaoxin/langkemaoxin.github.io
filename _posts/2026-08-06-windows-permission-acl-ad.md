@@ -725,35 +725,20 @@ icacls D:\Share\ /restore D:\Share-acl-backup.txt
 ```
 
 ```bat
-:: 查看文件的权限
-PS C:\Users\chengongyi> icacls \\jzfz18\协同设计平台-18\CD-2013388\XREF\A
+:: 查看文件的权限（真实共享样例；第 10 站会用这份 DACL 与 whoami /groups 对表）
+icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+```
+
+示例输出：
+
+```text
 \\jzfz18\协同设计平台-18\CD-2013388\XREF\A BUILTIN\Administrators:(I)(F)
                                      CREATOR OWNER:(I)(OI)(CI)(IO)(F)
                                      JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
-                                     JZFZ\zhaojiaju:(I)(OI)(CI)(RX)
-                                     JZFZ\quangongshu:(I)(OI)(CI)(RX)
-                                     JZFZ\liuzhiyi:(I)(OI)(CI)(RX)
-                                     JZFZ\chenbei:(I)(OI)(CI)(RX)
                                      JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
-                                     JZFZ\yetingyao:(I)(OI)(CI)(RX)
-                                     JZFZ\wangqi8:(I)(OI)(CI)(RX)
-                                     JZFZ\libensheng:(I)(OI)(CI)(RX)
-                                     JZFZ\qinyu1:(I)(OI)(CI)(RX)
-                                     JZFZ\bitservice:(I)(OI)(CI)(F)
-                                     JZFZ\huangjian3:(I)(OI)(CI)(RX)
-                                     JZFZ\zhushuhua:(I)(OI)(CI)(RX)
-                                     JZFZ\nichangjin:(I)(OI)(CI)(RX)
-                                     JZFZ\gaoyawei:(I)(OI)(CI)(RX)
-                                     JZFZ\wuchuanjiang:(I)(OI)(CI)(RX)
-                                     JZFZ\sunxuchu:(I)(OI)(CI)(RX)
-                                     NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
                                      JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
-                                     JZFZ\成都协同平台管理组:(I)(OI)(CI)(F)
-                                     JZFZ\AUTO_RESTORE_CLIENT_GP:(I)(OI)(CI)(F)
-                                     JZFZ\Administrator:(I)(OI)(CI)(F)
-                                     BUILTIN\Administrators:(I)(OI)(CI)(IO)(F)
-
-已成功处理 1 个文件; 处理 0 个文件时失败
+                                     NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
+                                     ...（另有若干个人账户的 (RX)/(F) 行，此处从略）
 ```
 
 
@@ -850,6 +835,59 @@ file.SetAccessControl(security);
 - 令牌里**任一相关 SID**（用户或组）都可能命中某条 ACE  
 - 无匹配 ACE → 不能访问；Deny 通常压过 Allow（第 9 站）
 
+### 10.0 先认两个词：UNC 与 SMB
+
+第 10 站的例子会用到 `\\jzfz18\...` 这种路径。动手对表之前，先把两个词立住——**只讲「是什么」**，权限两道门仍留到第 16 站。
+
+#### 本机路径 vs 网络路径
+
+| 写法 | 文件实际在哪 |
+|------|----------------|
+| `D:\Share\Q1.xlsx` | **本机**磁盘上的文件夹 |
+| `\\jzfz18\协同设计平台-18\CD-2013388` | **另一台电脑**（`jzfz18`）上的文件夹 |
+
+资源管理器里两者看起来都像「打开文件夹」，但第二种要**经网络**去别人机器上取目录列表。
+
+#### UNC 是什么
+
+**UNC（Universal Naming Convention，通用命名约定）** 是 Windows 里书写「网络上某个共享位置」的标准格式，常见形态：
+
+```text
+\\服务器名\共享名\后面的目录或文件...
+```
+
+对照本例：
+
+```text
+\\jzfz18\协同设计平台-18\CD-2013388
+   │         │                │
+   │         │                └─ 共享里面的子路径（项目文件夹）
+   │         └─ 共享名（服务器上「挂出来」给别人用的入口名）
+   └─ 服务器计算机名（或主机名）
+```
+
+所以：UNC **不是一种权限**，而是一种**地址写法**——告诉系统「去哪台机器、进哪个共享、再往下哪条路径」。
+
+#### SMB 是什么
+
+**SMB（Server Message Block）** 是 Windows 环境里做**文件共享与数据访问**的核心协议：让客户端像访问本地文件夹一样，去读写服务器上共享出来的文件。  
+来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)（开篇：SMB protocol is a core component for file sharing and data access in Windows environments）
+
+直觉分工：
+
+| 概念 | 角色 |
+|------|------|
+| **共享（Share）** | 管理员在服务器上把某个本地文件夹「挂出去」，起一个共享名 |
+| **SMB** | 本机与服务器之间，用来传「列目录、读文件」等请求的协议 |
+| **UNC** | 你在地址栏里写的那个 `\\服务器\共享\...` 地址 |
+
+串成一句：
+
+> **UNC 是门牌号；SMB 是路上跑的协议；共享名是服务器上开给别人的入口。**
+
+管理员在 `jzfz18` 上把某个目录共享为 `协同设计平台-18` 之后，你在本机用 UNC 访问，底层通常就是走 SMB。  
+（加密、签名、共享权限 ∩ NTFS 等 → 第 16 站再展开。）
+
 ### 10.1 例子：本机打开 `\\jzfz18\协同设计平台-18\CD-2013388`
 
 假设你在本机资源管理器地址栏输入（或双击）：
@@ -862,14 +900,14 @@ file.SetAccessControl(security);
 
 #### ① 这不是「只读本机硬盘」
 
-`\\jzfz18\...` 是 **UNC 网络路径**：目标在服务器 `jzfz18` 上，经 SMB 共享出去。  
+由上一小节可知：这是 **UNC 地址**，目标在服务器 `jzfz18` 的共享 `协同设计平台-18` 下，访问时经 **SMB** 协议到达对方机器。  
 因此流程比打开 `D:\某文件夹` 多半步——本机先要向服务器证明「我是谁」（网络登录），服务器再用**你的身份**做授权。  
 
 > **本站只把「对表」讲透。**  
 > 共享权限 ∩ NTFS、Kerberos/NTLM 等细节 → **第 16 站**。  
 > 这里先记住：最终打开文件夹时，服务器仍要对**该文件夹的 NTFS DACL** 做 Access Check。
 
-SMB 文档也写明：访问控制由 **NTFS permissions** 与 **share permissions** 共同管理。  
+SMB 侧文档也写明：访问控制由 **NTFS permissions** 与 **share permissions** 共同管理（两道门的细讲后置）。  
 来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)
 
 #### ② 时序（小白话）
@@ -981,6 +1019,7 @@ icacls "\\jzfz18\协同设计平台-18\CD-2013388"
 
 **你现在会了：**
 
+- UNC = 网络路径写法；SMB = Windows 文件共享协议；共享名 = 服务器入口；  
 - Access Check = 每次访问时用令牌 SID 对对象 DACL；  
 - 对 UNC，先在服务器侧认身份，再对 NTFS DACL 对表；  
 - 用 `whoami /groups` + `icacls` 就能自查「我能不能打开」。
