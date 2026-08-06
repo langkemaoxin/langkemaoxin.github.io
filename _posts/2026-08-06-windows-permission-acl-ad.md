@@ -482,6 +482,13 @@ file.SetAccessControl(security);
 | 完全控制 | 一切，含改权限 |
 
 `icacls` 里常见缩写：`F` 完全控制、`RX` 读执行、`N` 无访问等。  
+本站还不改 ACL，只先认识缩写；查看某个文件当前权限时可这样看输出里的字母：
+
+```bat
+icacls D:\Share\Q1.xlsx
+:: 输出里可能出现类似：(F)、(RX)、(R) —— 对应完全控制 / 读执行 / 读取
+```
+
 来源：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
 
 > 本站只发明「有哪些开关」。  
@@ -590,8 +597,19 @@ Learn 的表述是：安全描述符是与每个可保护对象**关联（associ
 - ❌ 不是写进 `.xlsx` / `.txt` 的用户数据字节里  
 - 复制到**不支持这套安全描述符**的介质时，NTFS ACL 常常带不过去——也说明权限不在「内容」里，而在文件系统元数据里  
 
-`icacls ... /save` 能把目录下各文件的 DACL **导出成另一个文件做备份**，进一步说明：平时 DACL 贴在对象上，需要时才另存。  
-来源：[icacls /save](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
+`icacls` 可以把目录下各文件的 DACL **导出成另一个文件做备份**，需要时再还原——进一步说明：平时 DACL 贴在对象上，可以另存成独立备份文件。  
+官方文档示例风格如下（路径改成与本文一致的练习目录）：
+
+```bat
+:: 保存：把 D:\Share 下匹配项及其子目录的 DACL 写入备份文件（/t = 递归）
+icacls D:\Share\* /save D:\Share-acl-backup.txt /t
+
+:: 还原：按备份文件，把 DACL 写回 D:\Share\ 目录树
+icacls D:\Share\ /restore D:\Share-acl-backup.txt
+```
+
+对照 Learn 原文例子：`icacls c:\windows\* /save aclfile /t` 与 `icacls c:\windows\ /restore aclfile`。  
+来源：[icacls - Examples（save / restore）](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
 
 换对象类型，**模型一样，载体不同**：
 
@@ -701,6 +719,9 @@ icacls D:\Share\Q1.xlsx /grant CONTOSO\FinanceRO:R
 :: 拒绝：显式 Deny（会加入 Deny ACE；文档说明还会从显式授予中去掉相同权限）
 icacls D:\Share\Q1.xlsx /deny CONTOSO\TempVendor:M
 
+:: 备份 / 还原整个目录树的 DACL（与 9.2 节同思路）
+icacls D:\Share\* /save D:\Share-acl-backup.txt /t
+icacls D:\Share\ /restore D:\Share-acl-backup.txt
 ```
 
 ```bat
@@ -737,7 +758,7 @@ PS C:\Users\chengongyi> icacls \\jzfz18\协同设计平台-18\CD-2013388\XREF\A
 
 
 
-来源：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（`/grant`、`/deny`）
+来源：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（`/grant`、`/deny`、`/save`、`/restore`）
 
 **C#（构造一条 ACE 并加入）：**
 
@@ -979,7 +1000,13 @@ icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
 
 资源管理器高级安全设置里的 **有效访问（Effective Access）** 是求值结果的可视化，不是新的权限类型。
 
-建议：改完继承后，对深层文件跑一次有效访问；或 `icacls` / `Get-Acl` 核对。
+建议：改完继承后，对深层文件跑一次有效访问；也可用命令直接查看该路径上的 ACE 列表：
+
+```bat
+icacls D:\Share\Root\SubA\file-a.txt
+```
+
+或在 PowerShell 中：`Get-Acl D:\Share\Root\SubA\file-a.txt | Format-List`
 
 ### 收束
 
