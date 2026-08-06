@@ -1057,7 +1057,7 @@ Security Descriptor
 前面你会：用 `icacls` 看/改**某一个**对象上的 DACL。  
 本站假设你**还没听过** OI、CI、InheritanceFlags 这些词——我们只带着已经会的东西，做最小实验，根据现象再起名字。
 
-> **练习约定：** 只在 `E:\WindowsTest\...` 上改 ACL。主体用 `%USERNAME%`（域环境输出常为 `域名\用户名`；下文实测 `JZFZ\chengongyi`）。  
+> **练习约定：** 只在 `E:\WindowsTest\...` 上改 ACL。主体固定为作者环境账户 `JZFZ\chengongyi`（你机器上请换成自己的 `域名\用户名`）。  
 > 看结果时**只盯你刚加上的那一行**；同路径上从 `E:\` 继承来的其它行一律从略。  
 > `icacls` 文档：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
 
@@ -1136,7 +1136,7 @@ E:\WindowsTest\Lab00 BUILTIN\Administrators:(I)(F)
 在干净的 `Lab01` 上，对当前文件夹授读执行，**不加任何其它括号**：
 
 ```bat
-icacls E:\WindowsTest\Lab01 /grant %USERNAME%:RX
+icacls E:\WindowsTest\Lab01 /grant JZFZ\chengongyi:RX
 ```
 
 回显（实测）：
@@ -1179,7 +1179,7 @@ E:\WindowsTest\Lab01\Sub\file-sub.txt → 没有
 文档和别人的脚本里常出现 `(OI)`。先**当黑盒按钮**试——只关心现象。
 
 ```bat
-icacls E:\WindowsTest\Lab02 /grant %USERNAME%:(OI)RX
+icacls E:\WindowsTest\Lab02 /grant JZFZ\chengongyi:(OI)RX
 ```
 
 ```text
@@ -1226,7 +1226,7 @@ E:\WindowsTest\Lab02\Sub\Sub1\file-sub1.txt  JZFZ\chengongyi:(I)(RX)
 ### 12.4 实验 3：对称地试 `:(CI)RX`
 
 ```bat
-icacls E:\WindowsTest\Lab03 /grant %USERNAME%:(CI)RX
+icacls E:\WindowsTest\Lab03 /grant JZFZ\chengongyi:(CI)RX
 ```
 
 ```text
@@ -1260,7 +1260,7 @@ E:\WindowsTest\Lab03\Sub\Sub1     JZFZ\chengongyi:(I)(CI)(RX)
 ### 12.5 实验 4：两个按钮一起按 `:(OI)(CI)RX`
 
 ```bat
-icacls E:\WindowsTest\Lab04 /grant %USERNAME%:(OI)(CI)RX
+icacls E:\WindowsTest\Lab04 /grant JZFZ\chengongyi:(OI)(CI)RX
 ```
 
 ```text
@@ -1298,7 +1298,7 @@ JZFZ\chengongyi:(I)(OI)(CI)(RX)
 场景：入口目录只想约束下面的内容，自己不当这条的主体。
 
 ```bat
-icacls E:\WindowsTest\Lab05 /grant %USERNAME%:(OI)(CI)(IO)RX
+icacls E:\WindowsTest\Lab05 /grant JZFZ\chengongyi:(OI)(CI)(IO)RX
 ```
 
 ```text
@@ -1328,7 +1328,7 @@ E:\WindowsTest\Lab05\Sub\Sub1\file-sub1.txt  JZFZ\chengongyi:(I)(RX)
 ### 12.7 实验 6：加上 `(NP)`——只传一层
 
 ```bat
-icacls E:\WindowsTest\Lab06 /grant %USERNAME%:(OI)(CI)(NP)RX
+icacls E:\WindowsTest\Lab06 /grant JZFZ\chengongyi:(OI)(CI)(NP)RX
 ```
 
 ```text
@@ -1357,7 +1357,7 @@ E:\WindowsTest\Lab06\Sub\Sub1\file-sub1.txt  → 没有
 ### 12.8 实验 7：`(IO)` + `(NP)`
 
 ```bat
-icacls E:\WindowsTest\Lab07 /grant %USERNAME%:(OI)(CI)(IO)(NP)RX
+icacls E:\WindowsTest\Lab07 /grant JZFZ\chengongyi:(OI)(CI)(IO)(NP)RX
 ```
 
 ```text
@@ -1430,7 +1430,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 
 var rule = new FileSystemAccessRule(
-    new NTAccount(Environment.UserDomainName + "\\" + Environment.UserName),
+    new NTAccount(@"JZFZ\chengongyi"),
     FileSystemRights.ReadAndExecute,
     InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
     PropagationFlags.None,
@@ -1445,7 +1445,7 @@ Directory.SetAccessControl(path, acl);
 等价于：
 
 ```bat
-icacls E:\WindowsTest\Lab04 /grant %USERNAME%:(OI)(CI)RX
+icacls E:\WindowsTest\Lab04 /grant JZFZ\chengongyi:(OI)(CI)RX
 ```
 
 ### 12.12 附：icacls 常用操作
@@ -1455,10 +1455,10 @@ icacls E:\WindowsTest\Lab04 /grant %USERNAME%:(OI)(CI)RX
 
 ```bat
 icacls E:\WindowsTest\Lab04\Sub\file-sub.txt
-icacls E:\WindowsTest\Lab01\file-root.txt /grant %USERNAME%:R
-icacls E:\WindowsTest\Lab01\file-root.txt /grant:r %USERNAME%:RX
-icacls E:\WindowsTest\Lab01\file-root.txt /deny %USERNAME%:W
-icacls E:\WindowsTest\Lab01\file-root.txt /remove %USERNAME%
+icacls E:\WindowsTest\Lab01\file-root.txt /grant JZFZ\chengongyi:R
+icacls E:\WindowsTest\Lab01\file-root.txt /grant:r JZFZ\chengongyi:RX
+icacls E:\WindowsTest\Lab01\file-root.txt /deny JZFZ\chengongyi:W
+icacls E:\WindowsTest\Lab01\file-root.txt /remove JZFZ\chengongyi
 icacls E:\WindowsTest\Lab04\Sub /inheritance:d
 icacls E:\WindowsTest\* /save E:\WindowsTest\acl-backup.txt /t
 icacls E:\WindowsTest\ /restore E:\WindowsTest\acl-backup.txt
