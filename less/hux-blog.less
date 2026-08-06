@@ -1102,3 +1102,11 @@ img::-moz-selection {
 .no-scroll {
   overflow-y: hidden;
 }
+
+/* Wider post body on large screens */
+@media (min-width: 1200px) {
+  .post-view > .container,
+  header.intro-header .container {
+    width: 1360px;
+  }
+}
