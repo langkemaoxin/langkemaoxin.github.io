@@ -1222,16 +1222,16 @@ JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
 
 ### T.3 继承标志（括号）
 
-先固定同一棵树（后面每个标志都对着它想）：
+后面每个标志都对着**同一条真实共享树**想（第 9 / 10 站同路径）：
 
 ```text
-Root\
-├── file-root.txt
-├── SubA\
-│   ├── file-a.txt
-│   └── SubA1\
-│       └── file-a1.txt
+\\jzfz18\协同设计平台-18\CD-2013388\          ← 项目根
+└── XREF\
+    └── A\                                    ← 更深一层（样例输出见第 9 站）
 ```
+
+> **安全约定：** 对本路径**只做 `icacls` 查看与解读**。  
+> 文中所有 `/grant` 演示一律写在本地练习树 `D:\Share\Root`——**切勿**在 `\\jzfz18\...` 生产共享上练授予。
 
 速查表（细节见下面各例）：
 
@@ -1261,28 +1261,36 @@ Root\
 
 **白话：** 你在**当前对象**上看到 `(I)`，表示这条 ACE **不是在本层新写的显式规则**，而是从**父文件夹**流下来的。
 
-**操作例子：**
+**真实路径：只查看**
 
 ```bat
-:: 在 Root 上写一条会下传的规则（注意：授予时你写的是 OI/CI，不会手写 I）
-icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
-
-:: 再去看子文件夹——这里会出现 (I)
-icacls D:\Share\Root\SubA
+icacls "\\jzfz18\协同设计平台-18\CD-2013388"
+icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
 ```
 
-`SubA` 上可能看到类似：
+`XREF\A` 上真实样例（节选，完整见第 9 站）：
 
 ```text
-CONTOSO\FinanceRO:(I)(OI)(CI)(RX)
+JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
+BUILTIN\Administrators:(I)(F)
 ```
 
 | 位置 | 典型样子 |
 |------|----------|
-| `Root`（你刚授予的那层） | 常是 `(OI)(CI)(RX)`，**没有** `(I)` → 显式 ACE |
-| `SubA` / `file-a.txt` | 带 `(I)` → 继承来的 ACE |
+| 父级上**新写**的显式 ACE | 常是 `(OI)(CI)(RX)`，**没有** `(I)` |
+| `CD-2013388` / `XREF\A` 等子层 | 大量行带 `(I)` → 继承来的 ACE |
 
-> **`(I)` 不是你授予时勾选的选项**，而是系统告诉你：「这条是爸传下来的。」
+> **`(I)` 不是你授予时勾选的选项**，而是系统告诉你：「这条是爸传下来的。」  
+> 对本例：项目组 / 只读组 / 设总等在 `XREF\A` 上几乎全是 `(I)…`，说明策略写在更上层，再往下传。
+
+**本地练习（可 `/grant`，勿用于 jzfz18）：**
+
+```bat
+icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
+icacls D:\Share\Root\SubA
+:: SubA 上常出现 CONTOSO\FinanceRO:(I)(OI)(CI)(RX)
+```
 
 ---
 
@@ -1290,19 +1298,26 @@ CONTOSO\FinanceRO:(I)(OI)(CI)(RX)
 
 **白话：** 写在**文件夹**上时，表示希望**里面的文件（非容器对象）**继承这条 ACE。
 
-**操作例子（只开 OI）：**
+**真实路径怎么读：** 看到 `(OI)` 就知道——这条规则会冲着**子文件**去（例如 `XREF\A` 下的图纸文件也会吃到带 `(OI)` 的继承 ACE）。
+
+```bat
+icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+:: 例：JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
+::                              ↑ 含 OI → 子文件可读执行方向会继承
+```
+
+树上直觉（映射到真实树）：
+
+```text
+...\CD-2013388          ← 文件夹（策略常写在这一层或更上）
+...\CD-2013388\某文件   ← 文件 = object，会吃 (OI)
+...\XREF\A\某文件       ← 更深文件仍可能吃到带 (OI) 的继承规则
+```
+
+**本地练习（只开 OI）：**
 
 ```bat
 icacls D:\Share\Root /grant CONTOSO\FileReaders:(OI)RX
-```
-
-树上直觉（简化）：
-
-```text
-Root              ← 通常自己也吃这条（未加 IO 时）
-file-root.txt     ← 会继承（文件 = object）
-SubA              ← 子文件夹：常拿到「继续往下传给文件」的模板；自身访问权另说
-file-a.txt        ← 仍可能吃到（OI 可经子文件夹把「文件向」规则送下去）
 ```
 
 > 只记：`(OI)` = **冲着文件去**。隔代细节见第 12 站；要截断用 `(NP)`。
@@ -1313,40 +1328,60 @@ file-a.txt        ← 仍可能吃到（OI 可经子文件夹把「文件向」�
 
 **白话：** 写在文件夹上时，表示希望**子文件夹**继承这条 ACE。
 
-**操作例子（只开 CI）：**
+**真实路径怎么读：** `(CI)` 保证 `XREF`、`XREF\A` 这类**子文件夹**继续带着规则往下走。
 
 ```bat
-icacls D:\Share\Root /grant CONTOSO\FolderWalkers:(CI)RX
+icacls "\\jzfz18\协同设计平台-18\CD-2013388"
+icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+:: 两侧都能看到带 (CI) 的组 ACE → 容器链在传
 ```
 
 树上直觉：
 
 ```text
-Root / SubA / SubA1     ← 文件夹链可以吃到
-file-root.txt / file-a  ← 不会因为「只有 CI」而获得这条文件权限
+CD-2013388 / XREF / XREF\A     ← 文件夹链可以吃到 (CI)
+其下的 .dwg / .pdf 等文件      ← 不会因为「只有 CI」而获得文件权；要文件还得有 (OI)
 ```
 
-> 只记：`(CI)` = **冲着子文件夹去**。只要文件夹能进、文件权限另写时，常用「一条 CI + 一条 OI」。
+**本地练习（只开 CI）：**
+
+```bat
+icacls D:\Share\Root /grant CONTOSO\FolderWalkers:(CI)RX
+```
+
+> 只记：`(CI)` = **冲着子文件夹去**。真实项目共享里几乎总是 `(OI)(CI)` 成对出现。
 
 ---
 
 #### `(OI)(CI)` ——文件和文件夹都传（最常见）
 
-**白话：** 整棵目录树都要同一套权限时的默认组合。
+**白话：** 整棵目录树都要同一套权限时的默认组合——本项目共享几乎全是这种。
 
-**操作例子：**
+**真实路径：只查看**
+
+```bat
+icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+```
+
+```text
+JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
+JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
+```
+
+拆开读一行：
+
+| 片段 | 含义 |
+|------|------|
+| `(I)` | 继承来的 |
+| `(OI)(CI)` | 继续传给子**文件**和子**文件夹** |
+| `(RX,WD,…)` / `(F)` / `(RX)` | 权限掩码（见 T.4 / T.5） |
+
+**本地练习（可 `/grant`）：**
 
 ```bat
 icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
 ```
-
-真实共享里常见：
-
-```text
-JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
-```
-
-= 继承来的 + 会继续传给子文件/子文件夹 + 后面是权限掩码。
 
 ---
 
@@ -1354,31 +1389,32 @@ JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
 
 **白话：** ACE 只当「给子孙的种子」，**不**作为当前文件夹自己的访问权。
 
-**操作例子：**
+**真实路径已有现成样例**——`CREATOR OWNER` 那一行：
 
 ```bat
-:: Root 自己不生效；下面的子文件夹/文件才吃
-icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)(IO)RX
+icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
 ```
-
-对比查看：
-
-```bat
-icacls D:\Share\Root
-:: Root 上可能看到带 (IO) 的条目：表示「我不拿这条当自己的访问权」
-
-icacls D:\Share\Root\SubA
-:: SubA 上常变成带 (I) 的生效/继续传播形式（具体以输出为准）
-```
-
-树上直觉：
 
 ```text
-Root              ← 不因这条而获得访问权（IO）
-SubA / 文件们     ← 会继承到
+CREATOR OWNER:(I)(OI)(CI)(IO)(F)
 ```
 
-适用：Root 只是挂载点/入口，策略只想约束「下面的内容」。
+| 片段 | 含义 |
+|------|------|
+| `(I)` | 这条也是继承来的 |
+| `(OI)(CI)` | 会继续传给子文件/子文件夹 |
+| `(IO)` | **当前这个 `XREF\A` 文件夹自己，不拿这条当访问权** |
+| `(F)` | 子孙侧按创建 Owner 机制可拿到完全控制（直觉即可；细节见 Owner / 创建 Owner） |
+
+适用：挂载点、入口目录「自己不当主体，只把规则种给下面」。
+
+**本地练习（可 `/grant`）：**
+
+```bat
+icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)(IO)RX
+icacls D:\Share\Root
+icacls D:\Share\Root\SubA
+```
 
 ---
 
@@ -1386,37 +1422,59 @@ SubA / 文件们     ← 会继承到
 
 **白话：** 子级继承后**不再**把继承标志继续传给孙子。
 
-**操作例子：**
+**真实路径备注：** 当前 `CD-2013388` / `XREF\A` 样例里，项目组与只读组是 `(I)(OI)(CI)…`，**未见** `(NP)`——说明策略 intentionally 往深层传，而不是「只包一层」。
+
+若某处出现 `(NP)`，直觉是：
+
+```text
+父文件夹（写了 NP）
+├── 直接子文件夹 / 直接子文件   ← 可以拿到
+└── 孙子级（如 XREF\A 再往下） ← 不再因这条继续获得
+```
+
+适用：临时目录、外包目录「只包一层，别污染更深业务树」。
+
+**本地练习（可 `/grant`）：**
 
 ```bat
 icacls D:\Share\Root /grant CONTOSO\Temp:(OI)(CI)(NP)RX
 ```
 
-树上直觉：
-
-```text
-Root                 ← 按是否含 IO 决定自己吃不吃
-SubA、file-root.txt  ← 直接子级可以拿到
-SubA1、file-a.txt    ← 不再因这条继续获得（停在一层）
-```
-
-适用：临时目录、外包目录「只包一层，别污染更深业务树」。
-
 可与 `(IO)` 组合：`(OI)(CI)(IO)(NP)` = 当前不吃 + 只影响直接子级。
 
 ---
 
-#### 五分钟对照实验（建议按序跑）
+#### 五分钟对照实验
+
+**A. 真实共享：只读查看（推荐先做）**
 
 ```bat
-:: 准备：对练习树分别授不同组，避免互相干扰
+icacls "\\jzfz18\协同设计平台-18\CD-2013388"
+icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
+```
+
+对照清单：哪些行有 `(I)`？哪些有 `(OI)(CI)`？有没有 `(IO)`（如 CREATOR OWNER）？有没有 `(NP)`？
+
+**B. 本地练习树：才允许 `/grant`（勿对 jzfz18 执行）**
+
+先准备：
+
+```text
+D:\Share\Root\
+├── file-root.txt
+└── SubA\
+    ├── file-a.txt
+    └── SubA1\
+        └── file-a1.txt
+```
+
+```bat
 icacls D:\Share\Root /grant CONTOSO\G_OI:(OI)RX
 icacls D:\Share\Root /grant CONTOSO\G_CI:(CI)RX
 icacls D:\Share\Root /grant CONTOSO\G_BOTH:(OI)(CI)RX
 icacls D:\Share\Root /grant CONTOSO\G_IO:(OI)(CI)(IO)RX
 icacls D:\Share\Root /grant CONTOSO\G_NP:(OI)(CI)(NP)RX
 
-:: 分别查看
 icacls D:\Share\Root
 icacls D:\Share\Root\file-root.txt
 icacls D:\Share\Root\SubA
@@ -1424,7 +1482,7 @@ icacls D:\Share\Root\SubA\file-a.txt
 icacls D:\Share\Root\SubA\SubA1
 ```
 
-看每一层有没有对应组、有没有 `(I)`，就能把五个标志「长在肌肉记忆里」。
+看每一层有没有对应组、有没有 `(I)`，再回头对照 `\\jzfz18\...\XREF\A` 的真实输出，五个标志就对上了。
 
 ### T.4 基本权限（简单权利）
 
