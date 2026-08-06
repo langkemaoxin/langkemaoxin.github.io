@@ -1222,15 +1222,30 @@ JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
 
 ### T.3 继承标志（括号）
 
+先固定同一棵树（后面每个标志都对着它想）：
+
+```text
+Root\
+├── file-root.txt
+├── SubA\
+│   ├── file-a.txt
+│   └── SubA1\
+│       └── file-a1.txt
+```
+
+速查表（细节见下面各例）：
+
 | 标志 | Learn 含义 | 白话 |
 |------|------------|------|
-| `(I)` | Inherit. ACE inherited from the parent container. | **继承来的**（结果标记：这条不是在本对象上新写的显式 ACE） |
-| `(OI)` | Object inherit. Objects in this container inherit this ACE. Directories only. | **对象继承**：容器里的**文件**会继承 |
-| `(CI)` | Container inherit. Containers inherit this ACE. Directories only. | **容器继承**：子**文件夹**会继承 |
-| `(IO)` | Inherit only. Doesn't apply to the object itself. Directories only. | **仅继承**：不作用于当前对象，只当子孙模板 |
-| `(NP)` | Don't propagate inherit. Doesn't propagate to nested containers. | **不传播**：只到直接子级，不再往深层传 |
+| `(I)` | Inherit. ACE inherited from the parent container. | **继承来的**（结果标记） |
+| `(OI)` | Object inherit. Objects inherit this ACE. Directories only. | **对象继承** → 子**文件** |
+| `(CI)` | Container inherit. Containers inherit this ACE. Directories only. | **容器继承** → 子**文件夹** |
+| `(IO)` | Inherit only. Doesn't apply to the object itself. | **仅继承**：当前对象自己不吃 |
+| `(NP)` | Don't propagate inherit. | **不传播**：只到直接子级 |
 
-与第 12 站对照（直觉）：
+来源：[icacls Remarks - inheritance rights](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
+
+与第 12 站对照：
 
 | icacls | .NET 侧常对应 |
 |--------|----------------|
@@ -1238,12 +1253,178 @@ JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
 | `(OI)` | `InheritanceFlags.ObjectInherit` |
 | `(IO)` | `PropagationFlags.InheritOnly` |
 | `(NP)` | `PropagationFlags.NoPropagateInherit` |
-| `(I)` | 显示「这条是继承结果」，不是你授予时勾的「适用于」本身 |
+| `(I)` | 显示「这条是继承结果」，不是授予时勾的「适用于」本身 |
 
-因此对项目组那一行：
+---
 
-> `(I)(OI)(CI)(RX,WD,WEA,WA)` ≈  
-> 从父级继承来的；会继续向子文件/子文件夹传；权限是 RX+WD+WEA+WA。
+#### `(I)` ——「这条是继承来的」（结果标记）
+
+**白话：** 你在**当前对象**上看到 `(I)`，表示这条 ACE **不是在本层新写的显式规则**，而是从**父文件夹**流下来的。
+
+**操作例子：**
+
+```bat
+:: 在 Root 上写一条会下传的规则（注意：授予时你写的是 OI/CI，不会手写 I）
+icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
+
+:: 再去看子文件夹——这里会出现 (I)
+icacls D:\Share\Root\SubA
+```
+
+`SubA` 上可能看到类似：
+
+```text
+CONTOSO\FinanceRO:(I)(OI)(CI)(RX)
+```
+
+| 位置 | 典型样子 |
+|------|----------|
+| `Root`（你刚授予的那层） | 常是 `(OI)(CI)(RX)`，**没有** `(I)` → 显式 ACE |
+| `SubA` / `file-a.txt` | 带 `(I)` → 继承来的 ACE |
+
+> **`(I)` 不是你授予时勾选的选项**，而是系统告诉你：「这条是爸传下来的。」
+
+---
+
+#### `(OI)` ——对象继承（文件向）
+
+**白话：** 写在**文件夹**上时，表示希望**里面的文件（非容器对象）**继承这条 ACE。
+
+**操作例子（只开 OI）：**
+
+```bat
+icacls D:\Share\Root /grant CONTOSO\FileReaders:(OI)RX
+```
+
+树上直觉（简化）：
+
+```text
+Root              ← 通常自己也吃这条（未加 IO 时）
+file-root.txt     ← 会继承（文件 = object）
+SubA              ← 子文件夹：常拿到「继续往下传给文件」的模板；自身访问权另说
+file-a.txt        ← 仍可能吃到（OI 可经子文件夹把「文件向」规则送下去）
+```
+
+> 只记：`(OI)` = **冲着文件去**。隔代细节见第 12 站；要截断用 `(NP)`。
+
+---
+
+#### `(CI)` ——容器继承（文件夹向）
+
+**白话：** 写在文件夹上时，表示希望**子文件夹**继承这条 ACE。
+
+**操作例子（只开 CI）：**
+
+```bat
+icacls D:\Share\Root /grant CONTOSO\FolderWalkers:(CI)RX
+```
+
+树上直觉：
+
+```text
+Root / SubA / SubA1     ← 文件夹链可以吃到
+file-root.txt / file-a  ← 不会因为「只有 CI」而获得这条文件权限
+```
+
+> 只记：`(CI)` = **冲着子文件夹去**。只要文件夹能进、文件权限另写时，常用「一条 CI + 一条 OI」。
+
+---
+
+#### `(OI)(CI)` ——文件和文件夹都传（最常见）
+
+**白话：** 整棵目录树都要同一套权限时的默认组合。
+
+**操作例子：**
+
+```bat
+icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
+```
+
+真实共享里常见：
+
+```text
+JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+```
+
+= 继承来的 + 会继续传给子文件/子文件夹 + 后面是权限掩码。
+
+---
+
+#### `(IO)` ——仅继承（当前对象自己不吃）
+
+**白话：** ACE 只当「给子孙的种子」，**不**作为当前文件夹自己的访问权。
+
+**操作例子：**
+
+```bat
+:: Root 自己不生效；下面的子文件夹/文件才吃
+icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)(IO)RX
+```
+
+对比查看：
+
+```bat
+icacls D:\Share\Root
+:: Root 上可能看到带 (IO) 的条目：表示「我不拿这条当自己的访问权」
+
+icacls D:\Share\Root\SubA
+:: SubA 上常变成带 (I) 的生效/继续传播形式（具体以输出为准）
+```
+
+树上直觉：
+
+```text
+Root              ← 不因这条而获得访问权（IO）
+SubA / 文件们     ← 会继承到
+```
+
+适用：Root 只是挂载点/入口，策略只想约束「下面的内容」。
+
+---
+
+#### `(NP)` ——不传播（只传一层）
+
+**白话：** 子级继承后**不再**把继承标志继续传给孙子。
+
+**操作例子：**
+
+```bat
+icacls D:\Share\Root /grant CONTOSO\Temp:(OI)(CI)(NP)RX
+```
+
+树上直觉：
+
+```text
+Root                 ← 按是否含 IO 决定自己吃不吃
+SubA、file-root.txt  ← 直接子级可以拿到
+SubA1、file-a.txt    ← 不再因这条继续获得（停在一层）
+```
+
+适用：临时目录、外包目录「只包一层，别污染更深业务树」。
+
+可与 `(IO)` 组合：`(OI)(CI)(IO)(NP)` = 当前不吃 + 只影响直接子级。
+
+---
+
+#### 五分钟对照实验（建议按序跑）
+
+```bat
+:: 准备：对练习树分别授不同组，避免互相干扰
+icacls D:\Share\Root /grant CONTOSO\G_OI:(OI)RX
+icacls D:\Share\Root /grant CONTOSO\G_CI:(CI)RX
+icacls D:\Share\Root /grant CONTOSO\G_BOTH:(OI)(CI)RX
+icacls D:\Share\Root /grant CONTOSO\G_IO:(OI)(CI)(IO)RX
+icacls D:\Share\Root /grant CONTOSO\G_NP:(OI)(CI)(NP)RX
+
+:: 分别查看
+icacls D:\Share\Root
+icacls D:\Share\Root\file-root.txt
+icacls D:\Share\Root\SubA
+icacls D:\Share\Root\SubA\file-a.txt
+icacls D:\Share\Root\SubA\SubA1
+```
+
+看每一层有没有对应组、有没有 `(I)`，就能把五个标志「长在肌肉记忆里」。
 
 ### T.4 基本权限（简单权利）
 
