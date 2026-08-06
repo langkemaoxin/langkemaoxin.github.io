@@ -18,7 +18,7 @@ tags: [Windows, ACL, NTFS, Active Directory, 权限, InheritanceFlags, Propagati
 本文按**设计演进**往下走，建议按这个顺序读：
 
 ```text
-① 多用户同机 → 身份与所有者
+① 多用户同机 → Security Principal / SID / Owner（含 C#）
 ② 粗粒度不够 → 权限位（读/写/改）
 ③ 人太多 → 组
 ④ 规则冲突 → ACL（Allow/Deny 列表）
