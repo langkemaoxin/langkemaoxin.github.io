@@ -1,0 +1,32 @@
+name: Cancel Stuck Pages Deployment
+
+# 仅用于清掉卡住的 Pages 发布；用完可忽略
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_id:
+        description: "卡住的 Pages deployment id（一般是 commit sha）"
+        required: true
+        default: "1a55148a4a14466c865ca39e76c869196360aa1f"
+
+permissions:
+  pages: write
+  deployments: write
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Pages deployment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOYMENT_ID: ${{ inputs.deployment_id }}
+        run: |
+          set -e
+          echo "Cancelling: $DEPLOYMENT_ID"
+          curl -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/pages/deployments/${DEPLOYMENT_ID}/cancel" \
+            -w "\nHTTP %{http_code}\n"
