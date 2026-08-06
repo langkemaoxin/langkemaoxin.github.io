@@ -228,22 +228,128 @@ Windows 文档把登录相关流程拆成两段（见 [Windows logon scenarios](
 
 ### 2.2 谁在验你的身份？——LSA（本地安全机构）
 
-验身份不是资源管理器自己干的，而是一个受保护的系统组件：**LSA（Local Security Authority）**。
+验身份不是资源管理器自己干的，而是一个受保护的系统组件：**LSA（Local Security Authority）**。它通常跑在受保护的 **LSASS** 进程里，负责认证用户、维护本地安全策略、提供「名字 ↔ SID」翻译等。  
+来源：[Windows Authentication Architecture - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-architecture)、[Credentials Protection - LSA](https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/credentials-protection-and-management)
 
-资料怎么说：
+下面用一个**完整小例子**，把「点登录之后到验完身份」走一遍。
 
-- LSA 负责认证用户、维护本地安全策略、提供「名字 ↔ SID」翻译，并参与对象访问校验与审计。  
-  来源：[Windows Authentication Architecture - Local Security Authority](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-architecture)  
-- 它会查**本机 SAM 数据库**，或者联系**域的安全权威**（域控）来验证你。  
-  来源：[Credentials processes in Windows authentication - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
+#### 例子设定
 
-小白直觉：
+> 电脑 `PC01` 已加入域 `CONTOSO`。  
+> 员工 **Alice** 在登录界面输入：`CONTOSO\Alice` + 密码，点击登录。
+
+目标：弄清 **谁收密码、谁判真假、去哪对答案**。
+
+#### 过程（按时间顺序）
+
+**① 唤起登录界面**
+
+你按下安全注意序列（常见是 Ctrl+Alt+Del）或机器开机进入登录桌面。  
+**Winlogon** 负责安全交互，并拉起安全桌面上的 **Logon UI**。  
+来源：[Credentials processes - Winlogon](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
+
+**② 选登录方式并输入账号密码**
+
+Logon UI 会询问各个已注册的 **Credential Provider（凭据提供程序）**：密码、PIN、Windows Hello、智能卡……各出一块「磁贴」。  
+Alice 点「密码」磁贴，输入 `CONTOSO\Alice` 和密码。
+
+这里有个关键分工（很多人误会）：
+
+| 角色 | 干什么 | 不干什么 |
+|------|--------|----------|
+| Credential Provider | 采集、打包凭据，告诉界面「需要哪些字段」 | **不做最终放行** |
+| LSA + 认证包（authentication packages） | **真正验真假、执法** | — |
+
+来源：[Credential provider architecture](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)  
+原文要点：提交认证后，安全执法由 LSA 与认证包处理，**不是** Credential Provider。
+
+**③ 凭据交给本机 LSA**
+
+Winlogon 把安全桌面上收集到的凭据，通过 **`secur32.dll`** 交给 **LSA**。  
+来源：同上文 Winlogon 组件说明。
+
+到这一步，密码已经离开「你看见的登录框」，进入本机安全子系统；后面判对错的是 LSA，不是资源管理器，也不是你要打开的那个共享文件夹。
+
+**④ LSA 决定「去哪里对答案」**
+
+Windows 默认会对照：
+
+- **本机 SAM 数据库**（本地账户），或  
+- **Active Directory**（已加入域的机器上的域账户）
+
+来源：[Credentials processes - overview](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
+
+对 Alice 这个例子：
 
 ```text
-你输入凭据
-    → LSA 验真假（本机账户 or 问域控）
-    → 验过了，才进入「给你发通行证」的阶段
+账户写成 CONTOSO\Alice
+        │
+        ▼
+本机 LSA：「这是域账户，不是 PC01 本地用户」
+        │
+        ▼
+联系域 CONTOSO 的安全权威（域控制器）核验密码/账户状态
+        │
+        ├─ 成功 → 认证通过
+        └─ 失败 → 密码错、账户禁用、登录时段/工作站限制等
 ```
+
+若 Alice 输入的是 **`PC01\Bob`（本机账户）**，同一套 LSA 会改去查 **本机 SAM**，而不是问域控。  
+LSA 查本机 SAM、或联系域的安全权威，正是官方对 LSA 职责的描述。  
+来源：[Credentials processes - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
+
+**⑤ 认证成功之后 LSA 还会做什么（先看到门槛）**
+
+认证包在初始登录成功时，会**创建 logon session（登录会话）**，并返回后续用来构造「你的安全上下文 / 令牌」所需的信息。  
+来源：[LSA_AP_LOGON_USER](https://learn.microsoft.com/en-us/windows/win32/api/ntsecpkg/nc-ntsecpkg-lsa_ap_logon_user)（成功则创建 logon session，并返回构建 token 的信息）
+
+下一节会专门讲那张「通行证」（Access Token）。本节先记住：
+
+> **LSA 验过了 = 认证通过；还没到「每个文件夹能不能开」的授权检查。**
+
+**⑥ 分支：域控暂时连不上怎么办？**
+
+若 `PC01` 一时联系不到域控，但 Alice **以前在这台机器上成功用域账户登录过**，Windows 可能使用**缓存的域登录凭据**做校验，让你在离线/断网时仍能进桌面。  
+每次成功的域登录后，相关信息会缓存在本机安全相关存储里，供断连时使用。  
+来源：[Cached credentials and validation](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
+
+注意：缓存能让你「进本机桌面」，并不等于此时一定能访问所有网络共享（共享还要能连上服务器并再做认证/授权）。
+
+#### 一张图看 Alice 这次登录
+
+```text
+Alice 输入 CONTOSO\Alice + 密码
+        │
+        ▼
+ Logon UI + Credential Provider   （采集、打包）
+        │
+        ▼
+ Winlogon ──(secur32.dll)──► 本机 LSA（LSASS）
+        │
+        ▼
+ 认证包：这是域账户？
+        │
+        ├─ 能连域控 → 问 CONTOSO 域控：密码对不对？账户是否可用？
+        │                 ├─ 对 → 创建 logon session →（下一节）发 Access Token
+        │                 └─ 错 → 登录失败，回到登录界面
+        │
+        └─ 暂时连不上域控 → 尝试本机「缓存的域登录凭据」
+                              ├─ 命中且校验过 → 仍可进桌面（离线登录）
+                              └─ 没有缓存/校验失败 → 登录失败
+```
+
+#### 对照：本机账户 vs 域账户（同一套 LSA）
+
+| Alice 输入 | LSA 主要去哪对答案 |
+|------------|-------------------|
+| `PC01\Bob` | 本机 **SAM** |
+| `CONTOSO\Alice` | **域控（AD）**；必要时用**本机缓存凭据** |
+| 密码磁贴 vs Hello | 都是 Provider 采集；**最终仍由 LSA 执法** |
+
+小白收束：
+
+> **登录框只负责收齐「你声称是谁 + 证明」；LSA 才是验钞机。**  
+> 域账户的「标准答案」在域控；本机账户的「标准答案」在本机 SAM。
 
 ### 2.3 登录成功后发什么？——访问令牌（Access Token）
 
