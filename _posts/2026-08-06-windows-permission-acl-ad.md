@@ -1527,42 +1527,107 @@ E:\WindowsTest\Lab07\Sub                     JZFZ\chengongyi:(I)(RX)
 
 来源：[icacls Remarks](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)。
 
-与 GUI「适用于」对照（这时再看才不懵）：
+与 GUI「适用于」对照（这时再看才不懵；命令与上文各实验一致）：
 
-| 适用于（GUI） | 对应实验 |
-|---------------|----------|
-| 只有该文件夹 | 实验 1 |
-| 该文件夹和文件 | 实验 2（记子文件夹上的 IO 模板） |
-| 该文件夹和子文件夹 | 实验 3 |
-| 该文件夹、子文件夹和文件 | 实验 4 |
-| 只有子文件夹和文件 | 实验 5 |
-| （只要直接一层） | 实验 6 / 7 |
+| 适用于（GUI） | 对应实验 | 等价命令 |
+|---------------|----------|----------|
+| 只有该文件夹 | 实验 1 | `icacls E:\WindowsTest\Lab01 /grant "JZFZ\chengongyi:RX"` |
+| 该文件夹和文件 | 实验 2（记子文件夹上的 IO 模板） | `icacls E:\WindowsTest\Lab02 /grant "JZFZ\chengongyi:(OI)RX"` |
+| 该文件夹和子文件夹 | 实验 3 | `icacls E:\WindowsTest\Lab03 /grant "JZFZ\chengongyi:(CI)RX"` |
+| 该文件夹、子文件夹和文件 | 实验 4 | `icacls E:\WindowsTest\Lab04 /grant "JZFZ\chengongyi:(OI)(CI)RX"` |
+| 只有子文件夹和文件 | 实验 5 | `icacls E:\WindowsTest\Lab05 /grant "JZFZ\chengongyi:(OI)(CI)(IO)RX"` |
+| （只要直接一层；常配合「不传播」） | 实验 6 | `icacls E:\WindowsTest\Lab06 /grant "JZFZ\chengongyi:(OI)(CI)(NP)RX"` |
+| （当前不吃 + 只一层） | 实验 7 | `icacls E:\WindowsTest\Lab07 /grant "JZFZ\chengongyi:(OI)(CI)(IO)(NP)RX"` |
 
-### 12.11 C#：写出与实验 4 等价的规则
+### 12.11 C#：用代码复现实验 1～7
+
+`icacls` 括号 ↔ .NET 两套枚举（与 12.10 同一张心智图）。下面每个实验对应一棵 `Lab0N` 树；跑之前请先按 12.0 建好目录。
 
 ```csharp
 using System.IO;
 using System.Security.AccessControl;
 using System.Security.Principal;
 
-var rule = new FileSystemAccessRule(
-    new NTAccount(@"JZFZ\chengongyi"),
-    FileSystemRights.ReadAndExecute,
+static void Grant(
+    string path,
+    InheritanceFlags inheritance,
+    PropagationFlags propagation)
+{
+    var rule = new FileSystemAccessRule(
+        new NTAccount(@"JZFZ\chengongyi"),
+        FileSystemRights.ReadAndExecute,
+        inheritance,
+        propagation,
+        AccessControlType.Allow);
+
+    var acl = Directory.GetAccessControl(path);
+    acl.AddAccessRule(rule);
+    Directory.SetAccessControl(path, acl);
+}
+
+// 实验 1：只有该文件夹（无 OI/CI）
+// 等价：icacls ...\Lab01 /grant "JZFZ\chengongyi:RX"
+Grant(
+    @"E:\WindowsTest\Lab01",
+    InheritanceFlags.None,
+    PropagationFlags.None);
+
+// 实验 2：该文件夹和文件 → (OI)
+// 等价：icacls ...\Lab02 /grant "JZFZ\chengongyi:(OI)RX"
+Grant(
+    @"E:\WindowsTest\Lab02",
+    InheritanceFlags.ObjectInherit,
+    PropagationFlags.None);
+
+// 实验 3：该文件夹和子文件夹 → (CI)
+// 等价：icacls ...\Lab03 /grant "JZFZ\chengongyi:(CI)RX"
+Grant(
+    @"E:\WindowsTest\Lab03",
+    InheritanceFlags.ContainerInherit,
+    PropagationFlags.None);
+
+// 实验 4：该文件夹、子文件夹和文件 → (OI)(CI)
+// 等价：icacls ...\Lab04 /grant "JZFZ\chengongyi:(OI)(CI)RX"
+Grant(
+    @"E:\WindowsTest\Lab04",
     InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-    PropagationFlags.None,
-    AccessControlType.Allow);
+    PropagationFlags.None);
 
-var path = @"E:\WindowsTest\Lab04";
-var acl = Directory.GetAccessControl(path);
-acl.AddAccessRule(rule);
-Directory.SetAccessControl(path, acl);
+// 实验 5：只有子文件夹和文件 → (OI)(CI)(IO)
+// 等价：icacls ...\Lab05 /grant "JZFZ\chengongyi:(OI)(CI)(IO)RX"
+Grant(
+    @"E:\WindowsTest\Lab05",
+    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+    PropagationFlags.InheritOnly);
+
+// 实验 6：只传一层 → (OI)(CI)(NP)
+// 等价：icacls ...\Lab06 /grant "JZFZ\chengongyi:(OI)(CI)(NP)RX"
+Grant(
+    @"E:\WindowsTest\Lab06",
+    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+    PropagationFlags.NoPropagateInherit);
+
+// 实验 7：当前不吃 + 只一层 → (OI)(CI)(IO)(NP)
+// 等价：icacls ...\Lab07 /grant "JZFZ\chengongyi:(OI)(CI)(IO)(NP)RX"
+Grant(
+    @"E:\WindowsTest\Lab07",
+    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+    PropagationFlags.InheritOnly | PropagationFlags.NoPropagateInherit);
 ```
 
-等价于：
+对照速查：
 
-```bat
-icacls E:\WindowsTest\Lab04 /grant JZFZ\chengongyi:(OI)(CI)RX
-```
+| 实验 | InheritanceFlags | PropagationFlags | icacls 括号 |
+|------|------------------|------------------|------------|
+| 1 | `None` | `None` | （无） |
+| 2 | `ObjectInherit` | `None` | `(OI)` |
+| 3 | `ContainerInherit` | `None` | `(CI)` |
+| 4 | `CI \| OI` | `None` | `(OI)(CI)` |
+| 5 | `CI \| OI` | `InheritOnly` | `(OI)(CI)(IO)` |
+| 6 | `CI \| OI` | `NoPropagateInherit` | `(OI)(CI)(NP)` |
+| 7 | `CI \| OI` | `InheritOnly \| NoPropagateInherit` | `(OI)(CI)(IO)(NP)` |
+
+写完后用前文同一套 `icacls E:\WindowsTest\Lab0N\...` 查看，应看到与对应实验相同的关键行（只盯 `JZFZ\chengongyi`）。
 
 ### 12.12 附：icacls 常用操作
 
