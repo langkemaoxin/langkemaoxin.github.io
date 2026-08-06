@@ -1,0 +1,4 @@
+User-agent:*
+Disallow:
+
+Sitemap: https://www.code-corey.com/sitemap.xml
