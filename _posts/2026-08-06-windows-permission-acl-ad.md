@@ -548,14 +548,52 @@ Microsoft Learn（Appendix B）把 **Permissions（权限）** 说成：施加�
 > 人带着令牌去敲门；门上贴的是 DACL。  
 > 本站先把「门上的字」写清楚；下一站再讲系统怎么对照令牌读这些字。
 
-### 9.2 ACE 解剖：一行规则里有什么
+### 9.2 DACL 保存在哪里？——跟对象走的元数据，不是文件正文
+
+常见疑问：**DACL 是写在文件内容里的吗？**
+
+短答：对 NTFS 上的文件/文件夹，DACL 在该对象的 **安全描述符（Security Descriptor）** 里，由文件系统作为**安全元数据**保存，和对象绑在一起；**不是**塞进你用 Word/记事本打开的那种「文件正文」。
+
+Learn 的表述是：安全描述符是与每个可保护对象**关联（associated）**的数据结构，其中可含 DACL（谁能碰）与 SACL（审计）等。  
+来源：[Understand security principals - Security descriptors](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)
+
+NTFS 的能力明确包括 **security descriptors**，并用 ACL 对文件/文件夹做访问控制。  
+来源：[NTFS overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview)
+
+可以这样对照：
+
+| 东西 | 存哪 |
+|------|------|
+| 文件内容（报表文字、图片像素） | 数据流（你打开文件看到的） |
+| Owner、DACL、SACL… | NTFS 为该文件维护的**安全描述符元数据** |
+
+因此：
+
+- ✅ 保存在「这个文件对象」旁边（由 NTFS 管理）  
+- ❌ 不是写进 `.xlsx` / `.txt` 的用户数据字节里  
+- 复制到**不支持这套安全描述符**的介质时，NTFS ACL 常常带不过去——也说明权限不在「内容」里，而在文件系统元数据里  
+
+`icacls ... /save` 能把目录下各文件的 DACL **导出成另一个文件做备份**，进一步说明：平时 DACL 贴在对象上，需要时才另存。  
+来源：[icacls /save](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
+
+换对象类型，**模型一样，载体不同**：
+
+| 对象 | DACL 跟谁走 |
+|------|-------------|
+| NTFS 文件/文件夹 | 该文件的文件系统安全元数据 |
+| 注册表键 | 跟那个注册表键 |
+| AD 对象 | 跟目录里那个对象 |
+
+都是「对象自带安全描述符」，不是 Windows 另外一张与文件无关的全局「权限总表」。
+
+### 9.3 ACE 解剖：一行规则里有什么
 
 一条 ACE，可以先记成三个格子：
 
 ```text
 ┌──────────────┬──────────┬────────────────────┐
-│ 对谁（SID）   │ 允许/拒绝 │ 哪些权限位（操作）   │
-│ 用户或组…    │ Allow/Deny│ 读 / 写 / 完全控制… │
+│ 对谁（SID）    │ 允许/拒绝 │ 哪些权限位（操作）     │
+│ 用户或组…      │ Allow/Deny│ 读 / 写 / 完全控制… │
 └──────────────┴──────────┴────────────────────┘
 ```
 
@@ -565,7 +603,7 @@ Microsoft Learn（Appendix B）把 **Permissions（权限）** 说成：施加�
 
 多条 ACE 排在一起，就是该对象的 **DACL**。
 
-### 9.3 用一张示意表走读
+### 9.4 用一张示意表走读
 
 假设文件 `D:\Share\Q1.xlsx` 的 DACL 是：
 
@@ -587,7 +625,7 @@ Microsoft Learn（Appendix B）把 **Permissions（权限）** 说成：施加�
 Appendix B 原文要点：**若 ACL 里有一条 Deny，且其 SID 出现在访问者令牌中，该 Deny 通常覆盖冲突的 Allow。**  
 来源：同上 [Appendix B - Permissions](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory)
 
-### 9.4 三条必须先建立的直觉
+### 9.5 三条必须先建立的直觉
 
 在进入第 10 站「完整对表」之前，先把 Appendix B 里的判定直觉立住：
 
@@ -613,7 +651,7 @@ Appendix B 还举了 AD 里的常见模式：许多对象的 ACL 含有允许 **
 > 这说明：DACL 里经常有一条「很宽、但权限很浅」的 Allow；  
 > 真正敏感的操作，要靠更细的 ACE（或不给 Allow）来收紧。
 
-### 9.5 Permissions ≠ User rights（本站只点破，不展开）
+### 9.6 Permissions ≠ User rights（本站只点破，不展开）
 
 Appendix B 特意区分：
 
@@ -632,7 +670,7 @@ Appendix B 特意区分：
 
 （Appendix B 后半关于 Enterprise Admins、Domain Admins 等内置高权组的大表，属于域与高权专题，**不在本站展开**。）
 
-### 9.6 怎么看见、怎么改 DACL
+### 9.7 怎么看见、怎么改 DACL
 
 **命令行（改的就是 ACE）：**
 
@@ -678,11 +716,12 @@ file.SetAccessControl(security);
 
 （继承相关参数下一站之后的「继承专章」再加；这里先写「作用于当前对象」的最简 ACE。）
 
-### 9.7 本站概念图
+### 9.8 本站概念图
 
 ```text
 可保护对象（文件 / 注册表 / AD 对象…）
         │
+        │  NTFS 等以「安全元数据」形式保存（不是文件正文）
         ▼
    Security Descriptor（后文拼全）
         │
@@ -696,7 +735,7 @@ file.SetAccessControl(security);
 
 **你现在会了：**
 
-- Permissions 是对象上的访问控制；  
+- Permissions 是对象上的访问控制；DACL 是跟对象走的安全元数据（不是文件正文）；  
 - ACE 是一行（谁 × 允许/拒绝 × 操作）；DACL 是整张表；  
 - 无匹配 ACE → 不能访问；Deny 通常压过 Allow；组 SID 可命中 ACE；  
 - 权限与用户权利不是同一旋钮（细节后置）。
