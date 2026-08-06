@@ -11,3 +11,10 @@ node_modules
 .jekyll-cache
 */.DS_Store
 */*/.DS_Store
+
+# VuePress
+node_modules/
+src/.vuepress/.temp/
+src/.vuepress/.cache/
+src/.vuepress/dist/
+.firecrawl/
