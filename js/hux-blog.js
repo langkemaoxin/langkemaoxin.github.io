@@ -75,9 +75,13 @@ jQuery(document).ready(function($) {
                 //adjust the appearance of side-catalog
                 $catalog.show()
                 if (currentTop > (bannerHeight + 41)) {
-                    $catalog.addClass('fixed')
+                    if (!$catalog.hasClass('fixed')) {
+                        $catalog.css('width', $catalog.parent().width());
+                        $catalog.addClass('fixed')
+                    }
                 } else {
                     $catalog.removeClass('fixed')
+                    $catalog.css('width', '');
                 }
             });
     }

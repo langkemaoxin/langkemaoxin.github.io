@@ -4,16 +4,17 @@
   padding: 0px;
 }
 
-// Higher contrast than generic sidebar gray
+// Higher contrast than generic sidebar gray; flush to container right edge
 .catalog-container.sidebar-container {
-  color: #404040;
+  color: #222222;
+  padding-right: 0;
   h5,
   h5 a {
-    color: #333333 !important;
+    color: #111111 !important;
     font-weight: 600;
   }
   a {
-    color: #404040 !important;
+    color: #222222 !important;
     &:hover,
     &:active {
       color: #0085a1 !important;
@@ -44,7 +45,7 @@
   overflow: auto;
   height: 100%;
   padding-bottom: 40px;
-  width: 280px;
+  width: 100%;
   .catalog-body {
     position: relative;
     list-style: none;
@@ -58,7 +59,7 @@
       list-style: none;
       a {
         padding-left: 10px;
-        max-width: 260px;
+        max-width: calc(100% - 10px);
         display: inline-block;
         vertical-align: middle;
         height: 30px;
@@ -84,14 +85,14 @@
       margin-left: 12px;
       font-size: 12px;
       a {
-        max-width: 248px;
+        max-width: calc(100% - 22px);
       }
     }
     .h5_nav .h6_nav {
       margin-left: 18px;
       font-size: 12px;
       a {
-        max-width: 236px;
+        max-width: calc(100% - 28px);
       }
     }
     .active {
