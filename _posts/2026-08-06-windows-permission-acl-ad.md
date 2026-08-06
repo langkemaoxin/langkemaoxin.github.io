@@ -41,7 +41,7 @@ tags: [Windows, ACL, NTFS, Active Directory, 权限, InheritanceFlags, Propagati
 第 12 站 继承：从最小实验一步步发明（OI/CI/IO/NP）（重点）
 第 13 站 有效权限
 第 14 站 SACL：审计
-第 15 站 域与域控：很多台机器如何共用身份
+第 15 站 域与域控：目录树、OU/CN、新建组细节
 第 16 站 用户权利 ≠ 对象权限；UAC 双令牌
 总图    串回全链路
 ```
@@ -1742,23 +1742,202 @@ Security Descriptor
 
 ### 麻烦
 
-每台机器本地建用户/组：入职要跑很多台，策略不一致。
+每台机器本地建用户/组：入职要跑很多台，策略不一致。  
+第 8 站已经发明「组」；可是组建在哪台机器上？一百台工作站各建一遍「设计组」，仍会疯。
 
 ### 这一站只发明：域 + 域控制器（DC）
 
-**Active Directory 域**集中存放账户、组等；**域控制器**应答认证与查询。人用域账户登录加入域的机器；ACL 里的主体可以是 `域\用户` 或 `域\组`。
+**Active Directory 域**把账户、组、计算机等集中放进一份**目录**；**域控制器（DC）**是这份目录的权威应答机——认证、名字↔SID、组成员查询，常落在它身上。  
+人用域账户登录加入域的机器；ACL 里的主体可以是 `域\用户` 或 `域\组`。
 
-回扣第 3、4 站：
+回扣第 3、4 站（本站不再重讲 LSA 细节）：
 
-- `Translate("CONTOSO\\Alice")` 常问域控  
+- `Translate("JZFZ\\chengongyi")` 常问域控  
 - 登录域账户时 LSA 联系域的安全权威核验  
 
-安全组授权限、高特权组（如 Domain Admins）需严控。  
-来源：[Understand security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)、[Securing Domain Admins](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-f--securing-domain-admins-groups-in-active-directory)
+> 本站要补的是：**目录里长什么样、OU/CN 是什么、新建一个组时目录写了什么。**  
+> ACL 求值模型不变——变的是「主体从哪台权威机器来」。
+
+---
+
+### 15.1 想做什么：集中账本不能是一锅粥
+
+若域里几千个用户、几百个组全平铺在一个列表里，找人、授权、委派都会糊。  
+需要先发明：**目录是一棵树**——对象挂在容器下，就像文件挂在文件夹下。
+
+#### 现象预告
+
+| 你在 GUI 里看到的 | 目录里对应的感觉 |
+|------------------|------------------|
+| 「Active Directory 用户和计算机」里的文件夹 | **容器**（常见是 OU） |
+| 某个用户 / 组 / 计算机一行 | **叶子对象**（或还能再嵌容器） |
+| 右键 → 属性 → 一堆字段 | 对象的 **属性（attributes）** |
+
+#### 推导出三个缩写（CN / OU / DC）
+
+树要有**全路径名**，LDAP 世界里叫 **DN（Distinguished Name，可分辨名称）**。  
+一条 DN 从叶子拼到域根，中间每一段是「相对名 + 类型」：
+
+```text
+CN=设计组,OU=项目组,DC=jzfz,DC=local
+│         │         └─ DC = Domain Component（域名拆段）
+│         └─ OU = Organizational Unit（组织单位，像文件夹）
+└─ CN = Common Name（常见叶子对象的相对名属性）
+```
+
+白话对照：
+
+| 缩写 | 全称直觉 | 本站用途 |
+|------|----------|----------|
+| **CN** | Common Name | 多数用户/组对象的「这一层叫什么」 |
+| **OU** | Organizational Unit | 人为划的组织/委派容器（可嵌套） |
+| **DC** | Domain Component | 把 `jzfz.local` 拆成 `DC=jzfz,DC=local` |
+
+还有一个默认容器常写成 `CN=Users,DC=...`（注意：这里的 `Users` 也是 **CN**，不是 OU）。新建对象时若没指定 Path，工具常丢进这类默认容器。
+
+来源：[Object names and identities](https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities)（RDN / DN；多数类以 **cn** 为命名属性；DN 随移动/改名会变）
+
+#### LDAP 在本站只发明到这一句
+
+**LDAP**（Lightweight Directory Access Protocol）是客户端**查询/修改这棵目录树**时常用的协议与命名习惯。  
+你不必先背协议报文；先记住：
+
+> **GUI / PowerShell / `Translate` 背后，常常是在对域控上的目录做「按 DN 或按属性查找」。**
+
+域控还负责认证等；本站焦点是**目录对象怎么摆**，不是 Kerberos 票据细节。
+
+---
+
+### 15.2 最小观察：拆开「人」在目录里的身份
+
+安全主体（用户、组、计算机）在目录里**不止一个名字**。Learn 把它们拆开：
+
+| 身份 | 变不变 | 给谁用 |
+|------|--------|--------|
+| **DN**（`distinguishedName`） | 移动/改名会变 | 目录路径定位 |
+| **objectGUID** | 创建后不变 | 程序里长期引用对象 |
+| **objectSid** | 主体 SID（第 2 站） | ACL / 令牌真正比对的东西 |
+| **sAMAccountName** | 可改，但常用 | `域\名` 里的「名」一侧 |
+
+来源：同上 [Object names and identities](https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities)（Other Identities：`sAMAccountName`、`objectSid` 等对 Windows 很重要，但从「目录对象身份」视角与 DN/GUID 分层）
+
+现象：你在资源管理器 ACE 里写 `JZFZ\某组`，系统最终要的是 **组的 objectSid**；DN 只是「组在树上的住址」。
+
+若本机已加入域且装了 AD 模块，可对自己账户做只读观察（把域名换成你的环境）：
+
+```powershell
+# 需要 RSAT / ActiveDirectory 模块；只读查看，不改任何东西
+Get-ADUser -Identity $env:USERNAME -Properties DistinguishedName,ObjectSID,SamAccountName |
+  Format-List DistinguishedName, ObjectSID, SamAccountName
+```
+
+推导：
+
+> **同一人**：DN 告诉你「挂在哪个 OU」；SID 告诉 ACL「核对哪张身份证」。  
+> 第 3 站的 `Translate`，问到域控时，权威答案就在这类目录属性里。
+
+---
+
+### 15.3 想做什么：新建一个业务组——目录里究竟多了什么？
+
+场景：项目要给「协同设计平台某目录」授权，不想对每个人写 ACE → 建组 `CD-平台-设计`，人进组，ACE 授给组（回扣第 8、9 站）。
+
+#### 标记预告
+
+管理员在「AD 用户和计算机」里：选中某个 **OU** → 新建 → 组。  
+或 PowerShell（示意，按你环境改 Path/名）：
+
+```powershell
+New-ADGroup `
+  -Name "CD-平台-设计" `
+  -SamAccountName "CD-平台-设计" `
+  -GroupCategory Security `
+  -GroupScope Global `
+  -Path "OU=项目组,DC=jzfz,DC=local"
+```
+
+来源：[New-ADGroup](https://learn.microsoft.com/en-us/powershell/module/activedirectory/new-adgroup)（`Path` = 容器/OU；`GroupCategory`；`GroupScope`；`SamAccountName`）
+
+#### 推导：创建瞬间目录侧发生了什么
+
+按「已经会的概念」拆开，**不要**当成魔法按钮：
+
+```text
+1) 在指定容器下新增一个 class = group 的对象
+2) 写出相对名 → 常见即 CN=CD-平台-设计
+3) 拼出完整 DN
+     例：CN=CD-平台-设计,OU=项目组,DC=jzfz,DC=local
+4) 分配 objectGUID（目录对象身份证，长期引用用它）
+5) 分配 objectSid（安全主体 SID —— 以后进令牌、进 ACE）
+6) 记下 sAMAccountName（人们说的 JZFZ\CD-平台-设计）
+7) member 属性起初为空（还没人）
+8) groupType 等标志：安全组还是通讯组、作用域等
+```
+
+组对象关键属性直觉（schema 层）：`cn`、`member`、`objectSid`、`sAMAccountName`、`groupType`。  
+来源：[Group class](https://learn.microsoft.com/en-us/windows/win32/adschema/c-group) 相关属性说明
+
+#### 把人加进组 = 改目录属性，不是改文件 ACL
+
+```powershell
+Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
+```
+
+现象：改的是组的 **`member`**（以及用户侧常看到的 memberOf 视图）；  
+**文件 DACL 一行都还没动。**
+
+要让权限生效，还缺两步（你已经会）：
+
+1. 在文件/共享上对 `JZFZ\CD-平台-设计` 写 ACE（第 9、10 站）  
+2. 用户**重新登录**（或刷新令牌）后，令牌组 SID 列表里才稳定带上该组（第 5、8 站）
+
+```text
+新建组 ──► 目录多一个带 SID 的 group 对象
+加人入组 ──► 改 member（身份打包）
+写 ACE   ──► 对象 DACL 引用该组 SID
+登录     ──► 令牌携带组 SID → Access Check 才认账
+```
+
+> **「域控上新建一个组」= 在目录树某容器下创建一个带新 SID 的安全主体对象。**  
+> 它本身不自动打开任何文件夹；打开文件夹的仍是第 10 站那套对表。
+
+---
+
+### 15.4 两个旋钮：安全组 vs 通讯组；作用域点到为止
+
+建组向导里会问类别与作用域——用「想解决的麻烦」发明，不背考试表。
+
+| 你想做的事 | 该发明的旋钮 |
+|------------|--------------|
+| 把组写进文件/共享 **ACE** | 必须是 **安全组（Security）** |
+| 只为发邮件通讯录打包 | **通讯组（Distribution）**——不能当 ACL 主体来授权 |
+| 组能在哪些范围嵌套/授权 | **作用域（Domain Local / Global / Universal）**——影响「能授到哪、能嵌谁」 |
+
+本站对作用域只留一句：选错会导致「组加了人，但某些资源上套不上」；细表见官方文档。  
+来源：[Understand security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)  
+（该文讲：安全组/通讯组、组作用域、特殊身份组、默认安全组，以及组如何通过 SID 参与 ACL。）
+
+---
+
+### 15.5 高特权组：为什么 Domain Admins 要另眼看待
+
+业务组 `CD-平台-设计` 授一个目录；**Domain Admins（DA）** 默认等价于「域内几乎所有成员机上的本地 Administrators 血统」——一台失守，横向面极大。
+
+因此运维上常：**日常账户不要待在 DA**；用 GPO 限制 DA 在成员机上的多种登录方式；审计 DA 成员变更。  
+来源：[Securing Domain Admins](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-f--securing-domain-admins-groups-in-active-directory)  
+（该文讲：DA 风险、清空日常成员、Deny 登录类用户权利、审计成员变更——**不是**讲 LDAP/OU 命名。）
+
+> 两个来源分工记清楚：  
+> - *Understand security groups* → 组是什么、怎么分类/用  
+> - *Securing Domain Admins* → DA 为何危险、怎么锁  
+
+---
 
 ### 收束
 
-**你现在会了：** 域让身份集中；ACL 模型不变，变的是主体从哪来。  
+**你现在会了：**  
+域把身份收进目录树；**CN/OU/DC** 拼出 DN；**新建组**是在某容器创建带 **objectSid** 的 group 对象；加人改 `member`；ACE 与登录令牌仍按前几站模型工作。  
+
 **下一站才需要：** 「能备份整盘」这类能力，和「某个文件 ACE」不是同一旋钮；以及管理员为何还弹 UAC。
 
 ---
