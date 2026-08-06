@@ -39,6 +39,7 @@ tags: [Windows, ACL, NTFS, Active Directory, 权限, InheritanceFlags, Propagati
 第 10 站 访问检查：令牌如何对上规则
 第 11 站 安全描述符：把 Owner 与 DACL 放进同一份档案
 第 12 站 继承与 InheritanceFlags / PropagationFlags（重点）
+工具站  icacls 完整用法与 (I)(OI)(CI)(RX,WD…) 标志解读
 第 13 站 有效权限
 第 14 站 SACL：审计
 第 15 站 域与域控：很多台机器如何共用身份
@@ -743,7 +744,7 @@ icacls "\\jzfz18\协同设计平台-18\CD-2013388\XREF\A"
 
 
 
-来源：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（`/grant`、`/deny`、`/save`、`/restore`）
+来源：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（`/grant`、`/deny`、`/save`、`/restore`；**完整标志表见工具站**）
 
 **C#（构造一条 ACE 并加入）：**
 
@@ -948,12 +949,12 @@ NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
 ... 以及若干个人账户的 (RX) ...
 ```
 
-怎么读这些记号（本站够用）：
+怎么读这些记号（完整表见后文**工具站**；本处够用）：
 
 | 记号 | 含义 |
 |------|------|
 | `(I)` | 继承来的 ACE |
-| `(OI)(CI)` | 可继续向子文件/子文件夹继承（第 12 站细讲） |
+| `(OI)(CI)` | 可继续向子文件/子文件夹继承（第 12 站 / 工具站细讲） |
 | `(F)` | 完全控制 |
 | `(RX)` | 读取和执行（通常够「打开文件夹、列目录、读文件」） |
 | `(RX,WD,…)` | 在读执行之外还有写数据等（项目组比「只读组」更宽） |
@@ -1060,7 +1061,7 @@ Security Descriptor
 
 ### 12.1 先发明：继承
 
-父对象上的 ACE 可以**流向子对象**。`icacls` / 文档里常见标志：
+父对象上的 ACE 可以**流向子对象**。`icacls` / 文档里常见标志（完整表 → **工具站**）：
 
 | 标志 | 含义（直觉） |
 |------|----------------|
@@ -1163,7 +1164,253 @@ icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
 ### 收束
 
 **你现在会了：** 继承两套标志如何组合、如何验证。  
-**下一站才需要：** 规则叠太多时，如何一眼看到「最终能不能访问」。
+**下一站（工具站）才需要：** 把 `icacls` 的用法与 `(I)(OI)(CI)(RX,WD,WEA,WA)` 一类输出**查全**。  
+**再下一站：** 规则叠太多时，如何一眼看到「最终能不能访问」。
+
+---
+
+## 工具站：`icacls` 完整用法与输出标志解读
+
+前面各站已经用过 `icacls` 查看、授权、备份。本节按 Microsoft Learn 把**命令用法**和**输出里括号标志**集中讲全，方便对照真实共享输出（如 `(I)(OI)(CI)(RX,WD,WEA,WA)`）。  
+来源全文：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（替代已过时的 `cacls`）
+
+> 本站是**工具手册**：可随时回来查表。概念递进仍以第 9～12 站为准。
+
+### T.1 它是干什么的
+
+`icacls`：**显示或修改**指定文件上的 **DACL**，也可把存好的 DACL **应用到**目录中的文件。
+
+常用场景：
+
+- 看门上贴了谁：`icacls 路径`  
+- 改门上的字：`/grant`、`/deny`、`/remove`  
+- 备份/还原整树 DACL：`/save`、`/restore`  
+- 开/关继承：`/inheritance:e|d|r`
+
+### T.2 怎么读一行输出
+
+真实样例（节选）：
+
+```text
+JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+```
+
+拆开读：
+
+```text
+JZFZ\CD-2013388_项目组   ← 安全主体（账户或组）
+                 :       ← 分隔
+        (I)(OI)(CI)      ← 继承相关标志（可多个）
+        (RX,WD,WEA,WA)   ← 权限掩码（基本缩写 或 高级权利列表）
+```
+
+再如：
+
+```text
+JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
+JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
+```
+
+| 输出片段 | 白话 |
+|----------|------|
+| `(RX)` | 基本权利：读取和执行 |
+| `(F)` | 基本权利：完全控制 |
+| `(RX,WD,WEA,WA)` | 高级权利列表：读执行 + 写数据 + 写扩展属性 + 写属性 |
+
+文档说明：`<perm>` 可以是**基本权利**（可不用括号的简单序列）、**高级权利**（必须用括号、逗号分隔）、或**继承权利**（必须用括号）。  
+来源：同上 icacls Remarks。
+
+### T.3 继承标志（括号）
+
+| 标志 | Learn 含义 | 白话 |
+|------|------------|------|
+| `(I)` | Inherit. ACE inherited from the parent container. | **继承来的**（结果标记：这条不是在本对象上新写的显式 ACE） |
+| `(OI)` | Object inherit. Objects in this container inherit this ACE. Directories only. | **对象继承**：容器里的**文件**会继承 |
+| `(CI)` | Container inherit. Containers inherit this ACE. Directories only. | **容器继承**：子**文件夹**会继承 |
+| `(IO)` | Inherit only. Doesn't apply to the object itself. Directories only. | **仅继承**：不作用于当前对象，只当子孙模板 |
+| `(NP)` | Don't propagate inherit. Doesn't propagate to nested containers. | **不传播**：只到直接子级，不再往深层传 |
+
+与第 12 站对照（直觉）：
+
+| icacls | .NET 侧常对应 |
+|--------|----------------|
+| `(CI)` | `InheritanceFlags.ContainerInherit` |
+| `(OI)` | `InheritanceFlags.ObjectInherit` |
+| `(IO)` | `PropagationFlags.InheritOnly` |
+| `(NP)` | `PropagationFlags.NoPropagateInherit` |
+| `(I)` | 显示「这条是继承结果」，不是你授予时勾的「适用于」本身 |
+
+因此对项目组那一行：
+
+> `(I)(OI)(CI)(RX,WD,WEA,WA)` ≈  
+> 从父级继承来的；会继续向子文件/子文件夹传；权限是 RX+WD+WEA+WA。
+
+### T.4 基本权限（简单权利）
+
+可写成不带括号的缩写（授予时也常用）：
+
+| 符号 | 含义（Learn） |
+|------|----------------|
+| `N` | No access（无访问） |
+| `F` | Full access（完全控制） |
+| `M` | Modify access（修改） |
+| `RX` | Read and execute |
+| `R` | Read-only |
+| `W` | Write-only |
+| `D` | Delete access |
+
+例子：
+
+```bat
+icacls D:\Share\Q1.xlsx /grant CONTOSO\FinanceRO:RX
+icacls D:\Share\Q1.xlsx /grant CONTOSO\Alice:F
+```
+
+### T.5 高级权限（括号内、逗号分隔）
+
+Learn 列出的 specific rights（节选按文档）：
+
+| 符号 | 含义 |
+|------|------|
+| `DE` | Delete |
+| `RC` | Read control（读权限/安全信息） |
+| `WDAC` | Write DAC（改 DACL） |
+| `WO` | Write owner（取得所有权） |
+| `S` | Synchronize |
+| `AS` | Access system security |
+| `MA` | Maximum allowed |
+| `GR` / `GW` / `GE` / `GA` | Generic read / write / execute / all |
+| `RD` | Read data / list directory |
+| `WD` | Write data / add file |
+| `AD` | Append data / add subdirectory |
+| `REA` / `WEA` | Read / Write extended attributes |
+| `X` | Execute / traverse |
+| `DC` | Delete child |
+| `RA` / `WA` | Read / Write attributes |
+
+所以 `(RX,WD,WEA,WA)` 里：
+
+| 项 | 含义 |
+|----|------|
+| `RX` | 读取和执行（基本缩写，也可与高级项并列出现在输出习惯中） |
+| `WD` | 写数据 / 添加文件 |
+| `WEA` | 写扩展属性 |
+| `WA` | 写属性 |
+
+官方授予高级权利的例子：
+
+```bat
+:: 给 User1 删除 + 改 DACL
+icacls test1 /grant User1:(d,wdac)
+
+:: 用 SID 授予（数字 SID 前加 *）
+icacls TestFile /grant *S-1-1-0:(d,wdac)
+```
+
+来源：同上 icacls Examples。
+
+### T.6 常用命令（每个都带例子）
+
+全局开关（常与其它操作连用）：
+
+| 参数 | 作用 |
+|------|------|
+| `/t` | 当前目录及**子目录**都处理 |
+| `/c` | 遇错继续 |
+| `/l` | 对符号链接本身操作 |
+| `/q` | 少打成功消息 |
+
+#### 查看
+
+```bat
+icacls "\\jzfz18\协同设计平台-18\CD-2013388"
+icacls D:\Share\Q1.xlsx
+```
+
+#### 授予 / 拒绝 / 移除
+
+```bat
+:: 追加授予（默认加到已有显式允许上）
+icacls D:\Share\Q1.xlsx /grant CONTOSO\FinanceRO:R
+
+:: 替换该用户已有显式授予（:r）
+icacls D:\Share\Q1.xlsx /grant:r CONTOSO\FinanceRO:RX
+
+:: 显式拒绝（并会从显式授予中去掉相同权限）
+icacls D:\Share\Q1.xlsx /deny CONTOSO\TempVendor:M
+
+:: 带继承地授予（目录上常用）
+icacls D:\Share\Root /grant CONTOSO\FinanceRO:(OI)(CI)RX
+
+:: 移除某 SID 的所有 ACE
+icacls D:\Share\Q1.xlsx /remove CONTOSO\TempVendor
+```
+
+文档还保留 ACE **规范顺序**：显式拒绝 → 显式允许 → 继承拒绝 → 继承允许。  
+来源：同上 Remarks（canonical order）。
+
+#### 继承开关
+
+```bat
+:: e = 启用继承
+icacls D:\Share\Root /inheritance:e
+
+:: d = 禁用继承，并复制当前 ACE
+icacls D:\Share\Root /inheritance:d
+
+:: r = 禁用继承，并移除仅继承来的 ACE
+icacls D:\Share\Root /inheritance:r
+```
+
+（Learn 参数名写作 `/inheritancelevel:`；实际环境中也常见 `/inheritance:e|d|r` 写法，以你机器 `icacls /?` 为准。）
+
+#### 备份与还原
+
+```bat
+icacls D:\Share\* /save D:\Share-acl-backup.txt /t
+icacls D:\Share\ /restore D:\Share-acl-backup.txt
+```
+
+对照官方：
+
+```bat
+icacls c:\windows\* /save aclfile /t
+icacls c:\windows\ /restore aclfile
+```
+
+#### 其它实用
+
+```bat
+:: 重设为默认继承 ACL
+icacls D:\Share\Root /reset /t
+
+:: 改所有者
+icacls D:\Share\Q1.xlsx /setowner CONTOSO\Alice
+
+:: 查找 DACL 里显式提到某 SID 的文件
+icacls D:\Share\* /findsid *S-1-5-21-...-1103 /t
+```
+
+### T.7 用真实一行做「翻译练习」
+
+```text
+JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+```
+
+逐项翻译：
+
+1. **谁**：域组 `JZFZ\CD-2013388_项目组`  
+2. **`(I)`**：这条是从父目录**继承**下来的  
+3. **`(OI)(CI)`**：作为目录规则时，会继续传给子**文件**和子**文件夹**  
+4. **`(RX,WD,WEA,WA)`**：读执行 + 写数据 + 写扩展属性 + 写属性  
+
+对比只读组 `(I)(OI)(CI)(RX)`：同样会继承传播，但权限更窄，主要是读执行。  
+对比设总 `(I)(OI)(CI)(F)`：完全控制。
+
+### 收束
+
+**你现在会了：** 读懂 `icacls` 一行输出；会用查看/授权/拒绝/继承/备份还原。  
+**下一站：** 有效权限——规则太多时如何看「最终能不能访问」。
 
 ---
 
