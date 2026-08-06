@@ -3,17 +3,44 @@ import { navbar } from "vuepress-theme-hope";
 export default navbar([
   "/",
   {
-    text: "文章",
-    icon: "book",
-    prefix: "/posts/",
-    children: [
-      { text: "Windows / 权限", link: "/posts/windows/" },
-      { text: "Hadoop / 大数据", link: "/posts/hadoop/" },
-      { text: ".NET / Java 后端", link: "/posts/dotnet/" },
-      { text: "AI / 自动化", link: "/posts/ai-tools/" },
-      { text: "开发工具", link: "/posts/devtools/" },
-      { text: "其他笔记", link: "/posts/notes/" },
-    ],
+    text: "AI",
+    icon: "robot",
+    link: "/Ai/",
+  },
+  {
+    text: ".NET",
+    icon: "code",
+    link: "/DotNet/",
+  },
+  {
+    text: "Java",
+    icon: "code",
+    link: "/Java/",
+  },
+  {
+    text: "大数据",
+    icon: "database",
+    link: "/BigData/",
+  },
+  {
+    text: "Windows",
+    icon: "laptop-code",
+    link: "/Windows/",
+  },
+  {
+    text: "工具",
+    icon: "screwdriver-wrench",
+    link: "/Tools/",
+  },
+  {
+    text: "英语",
+    icon: "language",
+    link: "/English/",
+  },
+  {
+    text: "笔记",
+    icon: "note-sticky",
+    link: "/Notes/",
   },
   {
     text: "GitHub",

@@ -6,9 +6,10 @@
   "type": "module",
   "packageManager": "pnpm@11.20.0",
   "scripts": {
-    "docs:build": "vuepress-vite build src",
-    "docs:clean-dev": "vuepress-vite dev src --clean-cache",
-    "docs:dev": "vuepress-vite dev src",
+    "sidebar:gen": "node scripts/gen-sidebar.mjs",
+    "docs:build": "pnpm sidebar:gen && vuepress-vite build src",
+    "docs:clean-dev": "pnpm sidebar:gen && vuepress-vite dev src --clean-cache",
+    "docs:dev": "pnpm sidebar:gen && vuepress-vite dev src",
     "docs:update-package": "pnpm dlx vp-update"
   },
   "devDependencies": {
