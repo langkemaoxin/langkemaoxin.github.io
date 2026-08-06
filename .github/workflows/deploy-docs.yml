@@ -11,9 +11,10 @@ permissions:
   pages: write
   id-token: write
 
+# 发布中途不要取消上一次，否则会出现 Deployment cancelled
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
