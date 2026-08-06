@@ -1802,7 +1802,6 @@ Security Descriptor
   → 有效权限
   → SACL
   → 域与域控
-  → 网络登录 + 共享权限 ∩ NTFS
   → 用户权利 ≠ 对象权限；UAC
 ```
 
