@@ -46,7 +46,6 @@ jobs:
         run: |
           pnpm run docs:build
           touch src/.vuepress/dist/.nojekyll
-          # 确保自定义域名文件进入产物
           cp src/.vuepress/public/CNAME src/.vuepress/dist/CNAME || true
 
       - name: Upload Pages artifact
@@ -63,4 +62,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
