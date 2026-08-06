@@ -1614,7 +1614,7 @@ SMB 访问控制由 **共享权限** 与 **NTFS 权限** 共同管理。
   → ACE / DACL
   → 访问检查（令牌对 DACL）
   → 安全描述符（Owner + DACL + 稍后 SACL）
-  → 继承（InheritanceFlags × PropagationFlags）
+  → 继承（最小实验发明 OI/CI/IO/NP，再对接两套旋钮）
   → 有效权限
   → SACL
   → 域与域控
