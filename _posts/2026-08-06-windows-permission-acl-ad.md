@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 author:     "Corey"
 header-img: "img/post-bg-circuit-board.jpg"
@@ -19,16 +19,17 @@ tags: [Windows, ACL, NTFS, Active Directory, 权限, InheritanceFlags, Propagati
 
 ```text
 ① 多用户同机 → Security Principal / SID / Owner（含 C#）
-② 粗粒度不够 → 权限位（读/写/改）
-③ 人太多 → 组
-④ 规则冲突 → ACL（Allow/Deny 列表）
-⑤ 目录太深 → 继承；两套旋钮 InheritanceFlags / PropagationFlags（重点）
-⑥ 看不清结果 → 有效权限；还要审计 → SACL
-⑦ 机器太多 → 域控与安全组
-⑧ 两道门与分权 → 共享权限 ∩ NTFS、特权 vs 权限、UAC
+② 登录之后 → LSA / 访问令牌 / 访问检查 / 为何有的共享能开有的不能（小白向）
+③ 粗粒度不够 → 权限位（读/写/改）
+④ 人太多 → 组
+⑤ 规则冲突 → ACL（Allow/Deny 列表）
+⑥ 目录太深 → 继承；两套旋钮 InheritanceFlags / PropagationFlags（重点）
+⑦ 看不清结果 → 有效权限；还要审计 → SACL
+⑧ 机器太多 → 域控与安全组
+⑨ 两道门与分权 → 共享权限 ∩ NTFS、特权 vs 权限、UAC
 ```
 
-概念与命令对照以 Microsoft Learn（Windows Server / `icacls` / AD 安全主体与安全组）为准；.NET 侧用 `System.Security.AccessControl` 的 `InheritanceFlags` / `PropagationFlags` 描述同一套 ACE 标志。
+概念与命令对照以 Microsoft Learn（Windows Server / 登录与认证 / SMB / UAC）及 Context7 查询结果为准；文中关键论断旁标注资料来源。
 
 ---
 
@@ -196,12 +197,206 @@ Console.WriteLine($"新所有者: {file.GetAccessControl().GetOwner(typeof(NTAcc
 - 有 **Owner + Security Descriptor**，对象知道主人；  
 - 用 C# 可以查询身份、翻译 SID、读写 Owner。
 
-但模型仍然太粗：**只有「主人 / 非主人」远远不够协作。** 同事需要能读不能改——于是下一事故逼我们发明权限位。
+但模型仍然太粗：**只有「主人 / 非主人」远远不够协作。**  
+在发明更细的权限位之前，先把一个更「日常」的问题说清楚——**你点了登录之后，操作系统到底做了什么，才让你能打开某些共享、打不开另一些？**
 
 ---
 
+## 2. 登录之后：操作系统如何带着「你是谁」去访问资源（小白向）
 
-## 2. 事故二：要协作又不能乱改 → 发明「权限位」
+上一章发明了身份（Principal / SID）和 Owner。可是日常体验是这样的：
+
+1. 你输入账号密码（或刷卡、Windows Hello），进入桌面；  
+2. 双击打开 `\\fileserver\财务` 成功；  
+3. 再打开 `\\fileserver\研发` 却提示拒绝访问。
+
+中间没有人再问你一遍「你是谁」。那系统是怎么一路记得你的？权限又是从哪张「表」里拿出来比对的？
+
+下面按**登录之后实际发生的顺序**，把概念一个个拆开。每个概念只回答一个小问题。
+
+### 2.1 先分清两件事：认证 vs 授权
+
+Windows 文档把登录相关流程拆成两段（见 [Windows logon scenarios](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-logon-scenarios)）：
+
+| 词 | 白话 | 回答的问题 |
+|----|------|------------|
+| **认证（Authentication）** | 验明正身 | 你是不是你声称的那个人？密码/密钥对不对？ |
+| **授权（Authorization）** | 决定能不能碰 | 验明正身之后，你**被允许**访问这个资源吗？ |
+
+所以：登录成功 ≠ 所有共享都能开。  
+登录成功只说明**认证过了**；每个文件夹、每个共享还要再做一次**授权检查**。
+
+### 2.2 谁在验你的身份？——LSA（本地安全机构）
+
+验身份不是资源管理器自己干的，而是一个受保护的系统组件：**LSA（Local Security Authority）**。
+
+资料怎么说：
+
+- LSA 负责认证用户、维护本地安全策略、提供「名字 ↔ SID」翻译，并参与对象访问校验与审计。  
+  来源：[Windows Authentication Architecture - Local Security Authority](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-architecture)  
+- 它会查**本机 SAM 数据库**，或者联系**域的安全权威**（域控）来验证你。  
+  来源：[Credentials processes in Windows authentication - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
+
+小白直觉：
+
+```text
+你输入凭据
+    → LSA 验真假（本机账户 or 问域控）
+    → 验过了，才进入「给你发通行证」的阶段
+```
+
+### 2.3 登录成功后发什么？——访问令牌（Access Token）
+
+认证通过后，LSA 会创建一份受保护的对象，叫 **主访问令牌（primary access token）**。
+
+令牌里至少装着（来源：[Understand security principals - Access tokens](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)）：
+
+| 令牌里有什么 | 白话 |
+|--------------|------|
+| 你的用户 **SID** | 「你是谁」的机器可读 ID |
+| 你所属各组的 **组 SID** | 「你还算哪个部门/角色的人」 |
+| 分配给你的 **用户权利（user rights）** | 如能否关机、能否备份——偏系统能力，不是某个文件上的勾选 |
+
+文档还强调：这份令牌会**挂到你名下启动的每个进程、每个线程上**。  
+也就是说：你开的 Word、资源管理器、命令行，默认都带着同一张（或同源继承的）「通行证」。
+
+域用户登录时，认证服务还会把相关 SID 都收进令牌，包括当前 SID、组 SID，以及可能存在的历史 SID（`SIDHistory`）。访问资源时，**令牌里任何一个 SID** 都可能用来允许或拒绝访问。  
+来源：[Understand security identifiers](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers)
+
+小白口诀：
+
+> **登录 = 验身份 + 发令牌。**  
+> 之后你在这台电脑上做的事，系统主要看令牌，而不是反复问密码。
+
+### 2.4 令牌长什么样？——自己看一眼
+
+不必先读内核文档，先看自己的令牌内容：
+
+```bat
+whoami /all
+```
+
+该命令会显示当前访问令牌里的用户名、SID、特权、组成员等。  
+来源：[whoami](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/whoami)
+
+C# 侧对应上一章的 `WindowsIdentity.GetCurrent()`：读的就是当前进程令牌所代表的 Windows 身份。
+
+```csharp
+using System.Security.Principal;
+
+var id = WindowsIdentity.GetCurrent();
+Console.WriteLine(id.Name);   // 账户名
+Console.WriteLine(id.User);   // 用户 SID
+// id.Groups → 组 SID 列表（与 whoami /groups 同一类信息）
+```
+
+来源：[How to: Create a WindowsPrincipal Object](https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-create-a-windowsprincipal-object)
+
+### 2.5 打开文件时底层比什么？——主体 vs 客体的「对表」
+
+现在你双击一个文件。系统并不是「凭感觉」放行，而是做一次标准的访问控制判断：
+
+> **主体（你的进程）** 拿着令牌里的 SID，去和 **客体（文件）** 安全描述符里的 ACE 一条条比对，决定允不允许。
+
+来源原文要点（[Understand security principals - Authorization and access control](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)）：
+
+- 主体：用户发起的进程  
+- 系统比较：访问令牌中的 SID ↔ 对象安全描述符中的 ACE  
+- 据此做出访问决定  
+
+画成一张极简图：
+
+```text
+[你的进程]
+   带着 Access Token
+   （用户 SID + 组 SID + 权利）
+           │
+           ▼
+   系统做 Access Check（访问检查）
+           │
+           ▼
+[文件 / 文件夹 / 共享]
+   带着 Security Descriptor
+   （Owner + DACL 里一堆 ACE）
+```
+
+所以「有没有权限」不是登录时一次性算完贴在脑门上的，而是**每次访问对象时，用令牌对那张对象上的规则表再算一遍**。
+
+### 2.6 为什么有的共享能开、有的不能？——网络登录 + 两道门
+
+访问 `\\fileserver\财务` 比打开本机 `D:\a.txt` 多了几步。
+
+**（1）这是一次「网络登录（network logon）」**
+
+交互式坐在屏幕前登录，叫 interactive logon；去访问网络资源时，还会发生 **network logon**：用已建立的凭据（或其它机制）向网络服务证明「我是谁」，通常不再弹密码框。  
+支持的机制包括 Kerberos、证书、SSL/TLS、Digest，以及兼容用的 NTLM 等。  
+来源：[Windows logon scenarios - Network logon](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-logon-scenarios)
+
+小白理解：
+
+```text
+本机登录成功 → 你有了本机会话和令牌
+访问 \\服务器\共享 → 还要对「那台服务器」再证明一次身份（网络登录）
+服务器认可后 → 在服务器侧用「你的身份」做授权检查
+```
+
+SMB 场景下，官方更推荐用主机名走 Kerberos；用 IP / 某些 CNAME 容易落到 NTLM。  
+来源：[SMB signing overview - security considerations](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing-overview)
+
+**（2）共享路径要过两道门**
+
+对文件服务器上的共享，访问控制由 **共享权限（share permissions）** 和 **NTFS 权限** 共同管理；只有授权用户才能访问对应文件/文件夹。  
+来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)
+
+白话对照你的体验：
+
+| 现象 | 常见原因（直觉） |
+|------|------------------|
+| `\\server\财务` 能进，`\\server\研发` 不能 | 共享权限或该共享目录的 NTFS ACL，对你令牌里的 SID/组 SID 不允许 |
+| 共享能列出来，深层某个文件夹打不开 | 共享门过了，某个子文件夹的 NTFS ACE 把你拦了 |
+| 明明在「财务组」，仍进不去 | 令牌里没有那个组 SID（没刷新登录）、或还有一条 Deny、或只过了共享没过 NTFS |
+
+两道门的细讲后文「事故十」还会展开；这里先记住结论：
+
+> **能访问某个共享路径 ≈ 网络侧认证成功，并且共享权限与 NTFS ACL 都允许你令牌里的身份。**
+
+### 2.7 管理员登录为什么还要弹 UAC？——其实发了两张令牌
+
+若账户在 Administrators 组里，登录时系统会创建**两份**访问令牌：标准用户令牌 + 管理员令牌。日常桌面（`explorer.exe`）用标准令牌启动，子进程默认继承它，所以多数程序以标准用户上下文运行；需要管理员能力时再提示提升。  
+来源：[How User Account Control works - Sign in process](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)
+
+这对小白的意义是：
+
+- 「我是管理员」不等于「我打开的每个程序都带着管理员令牌」；  
+- 拒绝访问有时不是共享 ACL 错了，而是**当前进程用的是被过滤后的那张令牌**。
+
+### 2.8 把整条链路串起来（登录 → 共享）
+
+```text
+① 输入凭据
+② LSA 认证（本机 SAM 或域控）
+③ LSA 创建 Access Token（用户 SID + 组 SID + 用户权利）
+④ 令牌附着到你的进程/线程（桌面、资源管理器等）
+⑤ 访问 \\server\share
+      → 网络登录（Kerberos / NTLM 等）向服务器证明身份
+⑥ 服务器上做授权：
+      → 先看共享权限
+      → 再看目标文件/文件夹的 NTFS DACL
+      → 用令牌里的 SID 去对 ACE（Allow/Deny）
+⑦ 通过则打开；否则拒绝访问
+```
+
+你「拥有」的权限，并不是登录时复印在身上的一张万能通行证清单，而是：
+
+- **令牌告诉系统：你是谁、属于哪些组、有哪些系统权利；**  
+- **每个对象自己的安全描述符告诉系统：这些身份分别能做什么；**  
+- **每次访问时现场对表。**
+
+于是回到设计演进：有了「登录后带着令牌访问」这套机制，下一步才需要把对象上的规则从「主人/非主人」细化成可读可写的**权限位**——这就是下一事故。
+
+---
+
+## 3. 事故二：要协作又不能乱改 → 发明「权限位」
 
 给每个人、每个文件记一组能力开关，例如：
 
@@ -220,7 +415,7 @@ NTFS 把这些能力落到更细的 **高级权限**（删、读属性、写扩�
 
 ---
 
-## 3. 事故三：人来人走管不过来 → 发明「组」
+## 4. 事故三：人来人走管不过来 → 发明「组」
 
 财务部 30 人，都要对 `F:\报表` 只读。人入职离职时，你不想改 30 条文件规则。
 
@@ -234,7 +429,7 @@ Microsoft Learn 对安全组的表述很直接：权限授给安全组而不是�
 
 ---
 
-## 4. 事故四：规则打架 → 发明 ACL（DACL）与 ACE
+## 5. 事故四：规则打架 → 发明 ACL（DACL）与 ACE
 
 现在每个对象上不再是「一个主人开关」，而是一张表：
 
@@ -264,7 +459,7 @@ Security Descriptor
 
 ---
 
-## 5. 事故五：目录太深设不过来 → 发明「继承」
+## 6. 事故五：目录太深设不过来 → 发明「继承」
 
 直觉解法：在父文件夹上写一条规则，**自动流到子级**。
 
@@ -287,7 +482,7 @@ Security Descriptor
 
 ---
 
-## 6. 重点：`InheritanceFlags` × `PropagationFlags` 到底在控制什么
+## 7. 重点：`InheritanceFlags` × `PropagationFlags` 到底在控制什么
 
 先固定一棵目录树，后面所有例子都对着它想：
 
@@ -494,7 +689,7 @@ Learn 文档中 `icacls` 的 `<perm>` 可带继承权利：`(OI)`、`(CI)`、`(I
 
 ---
 
-## 7. 事故六：表面有权实际打不开 → 「有效权限」
+## 8. 事故六：表面有权实际打不开 → 「有效权限」
 
 继承、组嵌套、显式/继承混合、共享权限（下一节）、Deny……叠在一起后，人脑算不过来。
 
@@ -506,7 +701,7 @@ Learn 文档中 `icacls` 的 `<perm>` 可带继承权利：`(OI)`、`(CI)`、`(I
 
 ---
 
-## 8. 事故七：出了事要追责 → 发明 SACL
+## 9. 事故七：出了事要追责 → 发明 SACL
 
 DACL 回答「能不能碰」。还有另一个需求：「谁碰过要记下来」。
 
@@ -514,7 +709,7 @@ DACL 回答「能不能碰」。还有另一个需求：「谁碰过要记下来
 
 ---
 
-## 9. 事故八：几百台机器账户不一致 → 发明域与域控
+## 10. 事故八：几百台机器账户不一致 → 发明域与域控
 
 每台机器本地建用户、本地建组：入职要跑几十台，密码策略不统一，人走了残留账号。
 
@@ -528,7 +723,7 @@ DACL 回答「能不能碰」。还有另一个需求：「谁碰过要记下来
 
 ---
 
-## 10. 事故九：职能不同、高权不能滥用 → 安全组与最小权限
+## 11. 事故九：职能不同、高权不能滥用 → 安全组与最小权限
 
 域里不要把业务权限直接授给个人，继续用组，而且分层更清楚，例如：
 
@@ -549,7 +744,7 @@ Learn 对 **Domain Admins** 的提醒很明确：成员对域内计算机有广�
 
 ---
 
-## 11. 事故十：能连上共享却打不开文件 → 两道门
+## 12. 事故十：能连上共享却打不开文件 → 两道门
 
 局域网场景常有第二道门：**共享权限（Share Permissions）** 与 **NTFS ACL**。
 
@@ -560,7 +755,7 @@ Learn 对 **Domain Admins** 的提醒很明确：成员对域内计算机有广�
 
 ---
 
-## 12. 事故十一：管理员日常挂高权 → 分权与 UAC（收束）
+## 13. 事故十一：管理员日常挂高权 → 分权与 UAC（收束）
 
 域管账号用来逛网页、开邮件，一旦中马，DACL 再完美也难救。
 
@@ -568,11 +763,12 @@ Learn 对 **Domain Admins** 的提醒很明确：成员对域内计算机有广�
 
 ---
 
-## 13. 把整套设计串回一张图
+## 14. 把整套设计串回一张图
 
 ```text
 没有权限
   → 身份 + Owner
+  → 登录：LSA 认证 → Access Token → 每次访问对表（共享还需网络登录 + 共享权限 ∩ NTFS）
   → 权限位（读/写/完全控制…）
   → 组（对人打包）
   → ACL = ACE 列表（Allow/Deny）→ DACL
@@ -585,6 +781,12 @@ Learn 对 **Domain Admins** 的提醒很明确：成员对域内计算机有广�
   → 分权使用 / UAC
 ```
 
+若只能记住「登录章」的三句话：
+
+1. **登录成功是认证；能不能开共享是授权（令牌 SID 对对象 ACE）。**  
+2. **LSA 发 Access Token（用户 SID + 组 SID + 用户权利），挂到你的进程上。**  
+3. **访问 `\\server\share` 还要网络登录，并且共享权限与 NTFS 都放行。**
+
 若只能记住继承专章的三句话：
 
 1. **`InheritanceFlags` 决定传给文件夹还是文件（CI/OI）。**  
@@ -595,11 +797,25 @@ Learn 对 **Domain Admins** 的提醒很明确：成员对域内计算机有广�
 
 ## 参考
 
+### 登录 / 令牌 / 访问检查（第 2 章）
+
+- [Windows logon scenarios](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-logon-scenarios)（认证 vs 授权；interactive / network logon）  
+- [Windows Authentication Architecture - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-architecture)  
+- [Credentials processes in Windows authentication - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)  
+- [Understand security principals - Access tokens / access control](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)  
+- [Understand security identifiers](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers)（令牌中的 SID / SIDHistory / 组 SID）  
+- [whoami](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/whoami)（`whoami /all` 查看令牌）  
+- [SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)（共享权限 + NTFS）  
+- [SMB signing overview - Kerberos vs NTLM](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing-overview)  
+- [How User Account Control works](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)（管理员双令牌）  
+- [Create a WindowsPrincipal](https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-create-a-windowsprincipal-object)
+
+### 身份 / Owner / ACL / 继承
+
 - [Understand security principals](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)（Principal / SID / 安全描述符）  
 - [Security identifiers (SID)](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers)  
 - [Owner Rights 特殊身份](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-special-identities-groups)  
 - [takeown](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/takeown)  
-- [Create a WindowsPrincipal（WindowsIdentity.GetCurrent）](https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-create-a-windowsprincipal-object)  
 - [FileSystemAclExtensions.SetAccessControl](https://learn.microsoft.com/en-us/dotnet/api/system.io.filesystemaclextensions.setaccesscontrol)  
 - [Privileged accounts and groups：Permissions 与 Deny](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory)  
 - [Active Directory security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)  
