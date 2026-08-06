@@ -36,14 +36,13 @@ tags: [Windows, ACL, NTFS, Active Directory, 权限, InheritanceFlags, Propagati
 第 7 站  权限位：读 / 写 / 完全控制……
 第 8 站  组：人太多时如何打包
 第 9 站  ACE 与 DACL：规则列表
-第 10 站 访问检查：令牌如何对上规则
+第 10 站 访问检查：令牌对 DACL；UNC/SMB 与共享∩NTFS 两道门
 第 11 站 安全描述符：把 Owner 与 DACL 放进同一份档案
 第 12 站 继承：从最小实验一步步发明（OI/CI/IO/NP）（重点）
 第 13 站 有效权限
 第 14 站 SACL：审计
 第 15 站 域与域控：很多台机器如何共用身份
-第 16 站 网络共享：为何有的路径能开、有的不能
-第 17 站 用户权利 ≠ 对象权限；UAC 双令牌
+第 16 站 用户权利 ≠ 对象权限；UAC 双令牌
 总图    串回全链路
 ```
 
@@ -701,7 +700,7 @@ Appendix B 特意区分：
 本站只要记住：
 
 > **DACL 很重要，但不是宇宙尽头。**  
-> 「权利压过权限 / 夺所有权」的细节 → **第 17 站**再讲透。
+> 「权利压过权限 / 夺所有权」的细节 → **第 16 站**再讲透。
 
 （Appendix B 后半关于 Enterprise Admins、Domain Admins 等内置高权组的大表，属于域与高权专题，**不在本站展开**。）
 
@@ -803,12 +802,12 @@ file.SetAccessControl(security);
 
 ---
 
-## 第 10 站：访问检查——令牌如何对上规则
+## 第 10 站：访问检查——令牌如何对上规则（含网络共享两道门）
 
 ### 麻烦
 
 令牌有了，DACL 有了，中间怎么判「能不能开」？  
-用一个真实场景把抽象对表变成可操作的自查。
+真实协作里路径还常是 `\\服务器\共享\...`——本机对表之外，网络上还会多几步。用一个真实场景把抽象对表变成可操作的自查。
 
 ### 这一站只发明：访问检查（Access Check）
 
@@ -835,9 +834,12 @@ file.SetAccessControl(security);
 - 令牌里**任一相关 SID**（用户或组）都可能命中某条 ACE  
 - 无匹配 ACE → 不能访问；Deny 通常压过 Allow（第 9 站）
 
+对本机路径（如 `D:\Share\Q1.xlsx`），大体就是上面这一道 **NTFS Access Check**。  
+对网络 UNC，还要先认清地址与协议，再补上「认身份」和「共享门」——下面按顺序发明。
+
 ### 10.0 先认两个词：UNC 与 SMB
 
-第 10 站的例子会用到 `\\jzfz18\...` 这种路径。动手对表之前，先把两个词立住——**只讲「是什么」**，权限两道门仍留到第 16 站。
+例子会用到 `\\jzfz18\...`。动手对表之前，先把两个词立住。
 
 #### 本机路径 vs 网络路径
 
@@ -871,7 +873,7 @@ file.SetAccessControl(security);
 #### SMB 是什么
 
 **SMB（Server Message Block）** 是 Windows 环境里做**文件共享与数据访问**的核心协议：让客户端像访问本地文件夹一样，去读写服务器上共享出来的文件。  
-来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)（开篇：SMB protocol is a core component for file sharing and data access in Windows environments）
+来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)
 
 直觉分工：
 
@@ -885,10 +887,9 @@ file.SetAccessControl(security);
 
 > **UNC 是门牌号；SMB 是路上跑的协议；共享名是服务器上开给别人的入口。**
 
-管理员在 `jzfz18` 上把某个目录共享为 `协同设计平台-18` 之后，你在本机用 UNC 访问，底层通常就是走 SMB。  
-（加密、签名、共享权限 ∩ NTFS 等 → 第 16 站再展开。）
+管理员在 `jzfz18` 上把某个目录共享为 `协同设计平台-18` 之后，你在本机用 UNC 访问，底层通常就是走 SMB。
 
-### 10.1 例子：本机打开 `\\jzfz18\协同设计平台-18\CD-2013388`
+### 10.1 例子：先对 NTFS 这道门——`\\jzfz18\协同设计平台-18\CD-2013388`
 
 假设你在本机资源管理器地址栏输入（或双击）：
 
@@ -901,16 +902,15 @@ file.SetAccessControl(security);
 #### ① 这不是「只读本机硬盘」
 
 由上一小节可知：这是 **UNC 地址**，目标在服务器 `jzfz18` 的共享 `协同设计平台-18` 下，访问时经 **SMB** 协议到达对方机器。  
-因此流程比打开 `D:\某文件夹` 多半步——本机先要向服务器证明「我是谁」（网络登录），服务器再用**你的身份**做授权。  
+因此比打开 `D:\某文件夹` 多几步：本机要向服务器证明「我是谁」，再过共享门，最后仍要对**该文件夹的 NTFS DACL** 做 Access Check。
 
-> **本站只把「对表」讲透。**  
-> 共享权限 ∩ NTFS、Kerberos/NTLM 等细节 → **第 16 站**。  
-> 这里先记住：最终打开文件夹时，服务器仍要对**该文件夹的 NTFS DACL** 做 Access Check。
+本小节先把 **NTFS 对表**做透（你本机就能用 `whoami` + `icacls` 自查）。  
+**网络登录**与**共享权限**紧接着在 10.2 / 10.3 补上——读完本站才算把 UNC 打开路径讲完整。
 
-SMB 侧文档也写明：访问控制由 **NTFS permissions** 与 **share permissions** 共同管理（两道门的细讲后置）。  
+SMB 侧文档也写明：访问控制由 **NTFS permissions** 与 **share permissions** 共同管理。  
 来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)
 
-#### ② 时序（小白话）
+#### ② 时序（小白话，整站读完后应对得上）
 
 ```text
 本机 explorer.exe（带着你的 Access Token）
@@ -918,11 +918,11 @@ SMB 侧文档也写明：访问控制由 **NTFS permissions** 与 **share permis
         ▼
  连接 \\jzfz18\协同设计平台-18\...
         │
-        ├─（第 16 站）向 jzfz18 证明身份 → 服务器侧得到「你是 JZFZ\某人」
-        ├─（第 16 站）过共享权限这一道门
+        ├─（10.2）向 jzfz18 证明身份 → 服务器侧得到「你是 JZFZ\某人」
+        ├─（10.3）过共享权限这一道门
         │
         ▼
- 对本路径做 NTFS Access Check（本站）
+ 对本路径做 NTFS Access Check（10.1 详练）
         │  用「你的令牌里的 SID 集合」
         │  去对「该文件夹安全描述符里的 DACL」
         ▼
@@ -979,7 +979,7 @@ whoami /groups
   … 以及其它项目组 …
 ```
 
-#### ⑤ 对表：我能不能打开？
+#### ⑤ 对表：NTFS 这道门我能不能过？
 
 Access Check 的白话做法：
 
@@ -996,11 +996,12 @@ Access Check 的白话做法：
 | `CD-2013388_设总` | `(F)` | **完全控制**（在 NTFS 这层很宽） |
 
 结论（就 **NTFS Access Check** 而言）：  
-当前令牌已命中多条 Allow，且未见针对你的显式 Deny → **可以打开** `\\jzfz18\协同设计平台-18\CD-2013388` 这一类路径（在共享门也放行的前提下）。
+当前令牌已命中多条 Allow，且未见针对你的显式 Deny → **NTFS 这道门可以过**。  
+若最终仍打不开，优先怀疑 10.3 的**共享门**（或 10.2 身份未在服务器侧成立）。
 
 若换一个**令牌里既不在项目组、也不在只读组、也不在设总**的域账户去开同一路径：DACL 上没有匹配 ACE → 按第 9 站直觉 → **不能访问**（表现为拒绝访问），除非共享/NTFS 上另有其它命中规则。
 
-#### ⑥ 你自己以后怎么判（复制即用）
+#### ⑥ 你自己以后怎么判 NTFS 门（复制即用）
 
 ```bat
 :: 1) 我是谁、带着哪些组
@@ -1011,18 +1012,63 @@ whoami /groups
 icacls "\\jzfz18\协同设计平台-18\CD-2013388"
 
 :: 3) 肉眼对表：groups 输出里的 JZFZ\某组 是否出现在 icacls 的 Allow 行
-::    - 有 (RX)/(R)/(F) 等且无针对你的 Deny → 多半能开
-::    - 完全对不上 → 多半不能开（再查是否卡在共享权限，见第 16 站）
+::    - 有 (RX)/(R)/(F) 等且无针对你的 Deny → NTFS 门多半过
+::    - 完全对不上 → 多半卡在 NTFS；对得上仍进不去 → 查共享门（10.3）
 ```
+
+### 10.2 网络登录：向服务器证明「我是谁」
+
+访问网络资源时，还会发生 **network logon（网络登录）**：用已有凭据向网络服务证明身份，通常不再弹框。机制可包括 Kerberos、NTLM 等。  
+来源：[Windows logon scenarios - Network logon](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-logon-scenarios)
+
+和本机交互式登录（第 4 站）的差别（直觉即可）：
+
+| | 交互式登录（坐在电脑前） | 网络登录（访问 `\\服务器\...`） |
+|--|--------------------------|----------------------------------|
+| 何时 | 开机/切换用户时 | 连共享时 |
+| 结果 | 本机得到 Access Token | 服务器侧认可「请求来自某账户」 |
+
+SMB 更推荐用**主机名**走 Kerberos；用 IP 等容易落到 NTLM。  
+来源：[SMB signing overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing-overview)
+
+域账户细节到第 15 站再集中讲；此处先接受：**UNC 打开前，服务器必须先认清你是谁。**
+
+### 10.3 两道门：共享权限 ∩ NTFS
+
+SMB 访问控制由 **共享权限（share permissions）** 与 **NTFS 权限** 共同管理——两道门都要过，取更严的那一侧（直觉：任一门拒绝就不放行）。  
+来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)
+
+| 现象 | 常见直觉 |
+|------|----------|
+| 一个共享能进、另一个不能 | 共享权限或该共享根 NTFS 对你令牌里的 SID 不允许 |
+| 共享能进、深层文件夹不能 | 共享门过了，子目录 NTFS ACE 拦住（正是 10.1 那种对表） |
+| 在组里仍进不去 | 令牌未刷新、Deny、或只过了一道门 |
+
+```text
+\\server\share\path
+  → 网络登录（10.2：向服务器证明你是谁）
+  → 共享权限检查（10.3：第一道门）
+  → 目标路径 NTFS DACL 检查（10.1：第二道门，令牌 SID 对 ACE）
+  → 都过才打开
+```
+
+所以：
+
+- 10.1 用 `whoami` + `icacls` 查的是 **第二道门（NTFS）**  
+- 共享权限在服务器「共享属性 → 权限」里配置，**不一定**等于该文件夹的 NTFS DACL  
+- 官方示例常同时：`ICACLS ... :(CI)(OI)F` 与 `New-SmbShare -FullAccess ...`  
+  来源：[Storage Spaces Direct 示例](https://learn.microsoft.com/en-us/windows-server/storage/storage-spaces/deploy-storage-spaces-direct)
+
+回扣开篇麻烦：本机令牌齐了，仍可能 `\\fileserver\财务` 能开、`\\fileserver\研发` 不能——往往是**共享门或该共享根上的 NTFS** 对你的 SID 放行情况不同。
 
 ### 收束
 
 **你现在会了：**
 
-- UNC = 网络路径写法；SMB = Windows 文件共享协议；共享名 = 服务器入口；  
 - Access Check = 每次访问时用令牌 SID 对对象 DACL；  
-- 对 UNC，先在服务器侧认身份，再对 NTFS DACL 对表；  
-- 用 `whoami /groups` + `icacls` 就能自查「我能不能打开」。
+- UNC = 网络路径写法；SMB = 文件共享协议；共享名 = 服务器入口；  
+- 打开 UNC ≈ 网络登录 + **共享门 ∩ NTFS 门**；  
+- 用 `whoami /groups` + `icacls` 自查 NTFS 门；对得上仍进不去时查共享门。
 
 **下一站才需要：** Owner 与 DACL 在对象上如何放进同一份安全描述符结构里。
 
@@ -1713,56 +1759,13 @@ Security Descriptor
 ### 收束
 
 **你现在会了：** 域让身份集中；ACL 模型不变，变的是主体从哪来。  
-**下一站才需要：** 访问 `\\服务器\共享` 时，为何还多一道门。
-
----
-
-## 第 16 站：网络共享——有的路径能开、有的不能
-
-### 麻烦
-
-本机令牌齐了，仍可能：`\\fileserver\财务` 能开，`\\fileserver\研发` 不能。
-
-### 16.1 网络登录（network logon）
-
-访问网络资源时，还会发生 **network logon**：用已有凭据向网络服务证明身份，通常不再弹框。机制可包括 Kerberos、NTLM 等。  
-来源：[Windows logon scenarios - Network logon](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-logon-scenarios)
-
-SMB 更推荐主机名走 Kerberos；用 IP 等容易落到 NTLM。  
-来源：[SMB signing overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing-overview)
-
-### 16.2 两道门：共享权限 ∩ NTFS
-
-SMB 访问控制由 **共享权限** 与 **NTFS 权限** 共同管理。  
-来源：[SMB security overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security)
-
-| 现象 | 常见直觉 |
-|------|----------|
-| 一个共享能进、另一个不能 | 共享权限或该共享根 NTFS 对你令牌里的 SID 不允许 |
-| 共享能进、深层文件夹不能 | 共享门过了，子目录 NTFS ACE 拦住 |
-| 在组里仍进不去 | 令牌未刷新、Deny、或只过了一道门 |
-
-```text
-\\server\share
-  → 网络登录（向服务器证明你是谁）
-  → 共享权限检查
-  → 目标路径 NTFS DACL 检查（令牌 SID 对 ACE）
-  → 都过才打开
-```
-
-官方示例常同时：`ICACLS ... :(CI)(OI)F` 与 `New-SmbShare -FullAccess ...`。  
-来源：[Storage Spaces Direct 示例](https://learn.microsoft.com/en-us/windows-server/storage/storage-spaces/deploy-storage-spaces-direct)
-
-### 收束
-
-**你现在会了：** 共享路径 = 再认证 + 两道授权门。  
 **下一站才需要：** 「能备份整盘」这类能力，和「某个文件 ACE」不是同一旋钮；以及管理员为何还弹 UAC。
 
 ---
 
-## 第 17 站：用户权利 ≠ 对象权限；UAC 双令牌
+## 第 16 站：用户权利 ≠ 对象权限；UAC 双令牌
 
-### 17.1 两个旋钮
+### 16.1 两个旋钮
 
 | 概念 | 管什么 |
 |------|--------|
@@ -1771,7 +1774,7 @@ SMB 访问控制由 **共享权限** 与 **NTFS 权限** 共同管理。
 
 来源：[Privileged accounts appendix](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory) 中对 permissions 与权利的区分语境
 
-### 17.2 UAC：管理员常有两张令牌
+### 16.2 UAC：管理员常有两张令牌
 
 管理员登录时，系统可创建**标准用户令牌**与**管理员令牌**；桌面 `explorer.exe` 用标准令牌，子进程默认继承，故多数程序以标准用户上下文运行；需要时再提升。  
 来源：[How UAC works - Sign in process](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)
@@ -1793,7 +1796,7 @@ SMB 访问控制由 **共享权限** 与 **NTFS 权限** 共同管理。
   → 权限位
   → 组（令牌带组 SID）
   → ACE / DACL
-  → 访问检查（令牌对 DACL）
+  → 访问检查（令牌对 DACL；UNC 时再加网络登录 + 共享∩NTFS）
   → 安全描述符（Owner + DACL + 稍后 SACL）
   → 继承（最小实验发明 OI/CI/IO/NP，再对接两套旋钮）
   → 有效权限
