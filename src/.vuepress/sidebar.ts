@@ -2,42 +2,11 @@ import { sidebar } from "vuepress-theme-hope";
 
 // 由 scripts/gen-sidebar.mjs 自动生成，请勿手改。
 // 新增分类：直接建子文件夹；新增文章：放入对应文件夹并写 shortTitle / order / sidebarGroup
-// icon / 显示名可在 scripts/sidebar.config.mjs 的 folderIcons / folderTitles 里覆盖
+// icon / 显示名 / 分类顺序可在 scripts/sidebar/<模块>.mjs 里覆盖
 // 然后运行：pnpm sidebar:gen
 export default sidebar({
   "/Ai/": [
     "",
-    {
-      text: "基础知识",
-      icon: "book",
-      prefix: "基础知识/",
-      collapsible: true,
-      children: [
-        "harness-engineering",
-      ],
-    },
-    {
-      text: "Agent / 方法论",
-      icon: "lightbulb",
-      prefix: "agent/",
-      collapsible: true,
-      children: [
-        "how-to-build-tech-info-radar",
-        "how-to-build-tech-info-radar copy",
-        "harness-engineering",
-        "2026年AI-Agent框架选型指南：从“大爆发”到“大灭绝”后的生存法则",
-      ],
-    },
-    {
-      text: "本地模型",
-      icon: "server",
-      prefix: "local-llm/",
-      collapsible: true,
-      children: [
-        "ollama-opencode-local-llm",
-        "qwen3-5-27b-deep-dive",
-      ],
-    },
     {
       text: "自动化 / Playwright",
       icon: "robot",
@@ -58,6 +27,37 @@ export default sidebar({
       collapsible: true,
       children: [
         "langchain-rag",
+      ],
+    },
+    {
+      text: "本地模型",
+      icon: "server",
+      prefix: "local-llm/",
+      collapsible: true,
+      children: [
+        "ollama-opencode-local-llm",
+        "qwen3-5-27b-deep-dive",
+      ],
+    },
+    {
+      text: "Agent / 方法论",
+      icon: "lightbulb",
+      prefix: "agent/",
+      collapsible: true,
+      children: [
+        "how-to-build-tech-info-radar",
+        "how-to-build-tech-info-radar copy",
+        "harness-engineering",
+        "2026年AI-Agent框架选型指南：从“大爆发”到“大灭绝”后的生存法则",
+      ],
+    },
+    {
+      text: "基础知识",
+      icon: "book",
+      prefix: "基础知识/",
+      collapsible: true,
+      children: [
+        "harness-engineering",
       ],
     },
   ],
@@ -188,16 +188,6 @@ export default sidebar({
   "/Notes/": [
     "",
     {
-      text: "基础概念",
-      icon: "lightbulb",
-      prefix: "concepts/",
-      collapsible: true,
-      children: [
-        "one-hot",
-        "math-jax",
-      ],
-    },
-    {
       text: "HAMi",
       icon: "microchip",
       prefix: "hami/",
@@ -207,6 +197,16 @@ export default sidebar({
         "Hami-Learning",
         "Hami-Use",
         "Hami-UseTo-Make-Money",
+      ],
+    },
+    {
+      text: "基础概念",
+      icon: "lightbulb",
+      prefix: "concepts/",
+      collapsible: true,
+      children: [
+        "one-hot",
+        "math-jax",
       ],
     },
     {

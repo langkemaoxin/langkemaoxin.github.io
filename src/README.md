@@ -3,8 +3,8 @@ home: true
 icon: house
 title: 首页
 heroIcon: book-open
-heroText: Corey 知识库
-tagline: 用西蒙学习法整理的技术笔记（VuePress Theme Hope）
+heroText: Corey的知识库
+tagline: 用西蒙学习法整理的技术笔记，记录工作中的点点滴滴
 actions:
   - text: 开始阅读
     icon: book
@@ -12,7 +12,7 @@ actions:
     type: primary
   - text: GitHub
     icon: fab fa-github
-    link: https://github.com/code-corey/code-corey.github.io
+    link: https://github.com/code-corey/code-corey.github.io 
 ---
 
 ## 推荐阅读
@@ -25,5 +25,3 @@ actions:
 - [工具](Tools/)：Git 代理排障、编码基础、发布流程与实用 CLI
 - [英语](English/)：用 B1 词汇量读技术论文的生词精讲
 - [笔记](Notes/)：HAMi、基础概念与项目 / 博客工作流随记
-
-旧 Jekyll 博客已整站迁到本知识库，备份分支：`archive/jekyll-hux`。

@@ -4,8 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   modules,
-  folderIcons,
-  folderTitles,
+  folders,
   defaultFolderIcon,
 } from "./sidebar.config.mjs";
 
@@ -74,7 +73,8 @@ function sortKey(order) {
  * @param {string[]} sidebarGroups
  */
 function resolveGroupTitle(folderName, sidebarGroups, configKey) {
-  if (folderTitles[configKey]) return folderTitles[configKey];
+  const meta = folders[configKey];
+  if (meta?.title) return meta.title;
 
   const counts = new Map();
   for (const g of sidebarGroups) {
@@ -115,16 +115,13 @@ function collectModuleSidebar(mod) {
     }
   }
 
-  const subdirs = fs
-    .readdirSync(dirPath)
-    .filter((name) => {
-      if (name.startsWith(".")) return false;
-      return fs.statSync(path.join(dirPath, name)).isDirectory();
-    })
-    .sort((a, b) => a.localeCompare(b, "zh"));
+  const subdirs = fs.readdirSync(dirPath).filter((name) => {
+    if (name.startsWith(".")) return false;
+    return fs.statSync(path.join(dirPath, name)).isDirectory();
+  });
 
-  /** @type {object[]} */
-  const children = [""];
+  /** @type {{ folder: string, order: number, entry: object }[]} */
+  const groups = [];
 
   for (const folder of subdirs) {
     const groupDir = path.join(dirPath, folder);
@@ -157,7 +154,8 @@ function collectModuleSidebar(mod) {
     if (items.length === 0) continue;
 
     const title = resolveGroupTitle(folder, groupsInFiles, configKey);
-    const icon = folderIcons[configKey] || defaultFolderIcon;
+    const meta = folders[configKey] || {};
+    const icon = meta.icon || defaultFolderIcon;
 
     for (const g of groupsInFiles) {
       if (g !== title) {
@@ -169,16 +167,24 @@ function collectModuleSidebar(mod) {
 
     items.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id, "zh"));
 
-    children.push({
-      text: title,
-      icon,
-      prefix: `${folder}/`,
-      collapsible: true,
-      children: items.map((item) => item.id),
+    groups.push({
+      folder,
+      order: sortKey(meta.order),
+      entry: {
+        text: title,
+        icon,
+        prefix: `${folder}/`,
+        collapsible: true,
+        children: items.map((item) => item.id),
+      },
     });
   }
 
-  return children;
+  groups.sort(
+    (a, b) => a.order - b.order || a.folder.localeCompare(b.folder, "zh"),
+  );
+
+  return ["", ...groups.map((g) => g.entry)];
 }
 
 /**
@@ -220,7 +226,7 @@ function generateSidebar() {
 
 // 由 scripts/gen-sidebar.mjs 自动生成，请勿手改。
 // 新增分类：直接建子文件夹；新增文章：放入对应文件夹并写 shortTitle / order / sidebarGroup
-// icon / 显示名可在 scripts/sidebar.config.mjs 的 folderIcons / folderTitles 里覆盖
+// icon / 显示名 / 分类顺序可在 scripts/sidebar/<模块>.mjs 里覆盖
 // 然后运行：pnpm sidebar:gen
 export default sidebar({
 ${body}

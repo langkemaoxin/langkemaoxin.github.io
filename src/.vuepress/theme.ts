@@ -21,7 +21,7 @@ export default hopeTheme({
   navbar,
   sidebar,
 
-  footer: "Corey 知识库 · VuePress Theme Hope",
+  footer: "Corey 知识库",
   displayFooter: true,
 
   metaLocales: {
