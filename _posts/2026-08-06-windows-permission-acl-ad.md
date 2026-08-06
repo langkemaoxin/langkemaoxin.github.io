@@ -550,15 +550,32 @@ Microsoft Learn（Appendix B）把 **Permissions（权限）** 说成：施加�
 
 ### 9.2 DACL 保存在哪里？——跟对象走的元数据，不是文件正文
 
+#### 先认一下：什么是 NTFS
+
+后面会反复提到 **NTFS**，这里用一分钟对齐概念。
+
+磁盘上的文件不是随便扔一堆字节：必须有一套规则，规定「文件怎么命名、怎么找到、属性存在哪」。这套规则就是 **文件系统（file system）**。
+
+**NTFS（New Technology File System）** 是现代 Windows 的**默认文件系统**。除了存你的文档内容，它还支持更丰富的能力，其中包括 **security descriptors（安全描述符）**、加密、磁盘配额、丰富元数据等。  
+来源：[NTFS overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview)
+
+和本篇的关系只要记一句：
+
+> **正因为 NTFS 支持安全描述符，并用 ACL 做文件/文件夹级访问控制，DACL 才能作为「元数据」贴在每个文件旁边。**  
+> 来源：同上（Increased security：NTFS provides granular access control through ACLs）
+
+U 盘若格式化成 **FAT / exFAT** 等不支持这套 NTFS 安全描述符的文件系统，把文件拷过去时，**NTFS ACL 常常带不过去**——权限不是写在文件正文里，而是写在 NTFS 的元数据里。
+
+（本站只需要「NTFS = Windows 默认文件系统，能挂安全描述符」。加密、集群卷等其它 NTFS 特性这里不展开。）
+
+#### DACL 是写在文件内容里的吗？
+
 常见疑问：**DACL 是写在文件内容里的吗？**
 
-短答：对 NTFS 上的文件/文件夹，DACL 在该对象的 **安全描述符（Security Descriptor）** 里，由文件系统作为**安全元数据**保存，和对象绑在一起；**不是**塞进你用 Word/记事本打开的那种「文件正文」。
+短答：对 **NTFS** 上的文件/文件夹，DACL 在该对象的 **安全描述符（Security Descriptor）** 里，由文件系统作为**安全元数据**保存，和对象绑在一起；**不是**塞进你用 Word/记事本打开的那种「文件正文」。
 
 Learn 的表述是：安全描述符是与每个可保护对象**关联（associated）**的数据结构，其中可含 DACL（谁能碰）与 SACL（审计）等。  
 来源：[Understand security principals - Security descriptors](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)
-
-NTFS 的能力明确包括 **security descriptors**，并用 ACL 对文件/文件夹做访问控制。  
-来源：[NTFS overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/ntfs-overview)
 
 可以这样对照：
 
@@ -683,7 +700,42 @@ icacls D:\Share\Q1.xlsx /grant CONTOSO\FinanceRO:R
 
 :: 拒绝：显式 Deny（会加入 Deny ACE；文档说明还会从显式授予中去掉相同权限）
 icacls D:\Share\Q1.xlsx /deny CONTOSO\TempVendor:M
+
 ```
+
+```bat
+:: 查看文件的权限
+PS C:\Users\chengongyi> icacls \\jzfz18\协同设计平台-18\CD-2013388\XREF\A
+\\jzfz18\协同设计平台-18\CD-2013388\XREF\A BUILTIN\Administrators:(I)(F)
+                                     CREATOR OWNER:(I)(OI)(CI)(IO)(F)
+                                     JZFZ\CD-2013388_项目组:(I)(OI)(CI)(RX,WD,WEA,WA)
+                                     JZFZ\zhaojiaju:(I)(OI)(CI)(RX)
+                                     JZFZ\quangongshu:(I)(OI)(CI)(RX)
+                                     JZFZ\liuzhiyi:(I)(OI)(CI)(RX)
+                                     JZFZ\chenbei:(I)(OI)(CI)(RX)
+                                     JZFZ\CD-2013388_设总:(I)(OI)(CI)(F)
+                                     JZFZ\yetingyao:(I)(OI)(CI)(RX)
+                                     JZFZ\wangqi8:(I)(OI)(CI)(RX)
+                                     JZFZ\libensheng:(I)(OI)(CI)(RX)
+                                     JZFZ\qinyu1:(I)(OI)(CI)(RX)
+                                     JZFZ\bitservice:(I)(OI)(CI)(F)
+                                     JZFZ\huangjian3:(I)(OI)(CI)(RX)
+                                     JZFZ\zhushuhua:(I)(OI)(CI)(RX)
+                                     JZFZ\nichangjin:(I)(OI)(CI)(RX)
+                                     JZFZ\gaoyawei:(I)(OI)(CI)(RX)
+                                     JZFZ\wuchuanjiang:(I)(OI)(CI)(RX)
+                                     JZFZ\sunxuchu:(I)(OI)(CI)(RX)
+                                     NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
+                                     JZFZ\成都协同平台只读组:(I)(OI)(CI)(RX)
+                                     JZFZ\成都协同平台管理组:(I)(OI)(CI)(F)
+                                     JZFZ\AUTO_RESTORE_CLIENT_GP:(I)(OI)(CI)(F)
+                                     JZFZ\Administrator:(I)(OI)(CI)(F)
+                                     BUILTIN\Administrators:(I)(OI)(CI)(IO)(F)
+
+已成功处理 1 个文件; 处理 0 个文件时失败
+```
+
+
 
 来源：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（`/grant`、`/deny`）
 
@@ -735,7 +787,8 @@ file.SetAccessControl(security);
 
 **你现在会了：**
 
-- Permissions 是对象上的访问控制；DACL 是跟对象走的安全元数据（不是文件正文）；  
+- Permissions 是对象上的访问控制；  
+- **NTFS** 是 Windows 默认文件系统，能挂安全描述符；DACL 是跟对象走的安全元数据（不是文件正文）；  
 - ACE 是一行（谁 × 允许/拒绝 × 操作）；DACL 是整张表；  
 - 无匹配 ACE → 不能访问；Deny 通常压过 Allow；组 SID 可命中 ACE；  
 - 权限与用户权利不是同一旋钮（细节后置）。
