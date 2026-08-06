@@ -44,17 +44,162 @@ tags: [Windows, ACL, NTFS, Active Directory, 权限, InheritanceFlags, Propagati
 
 同事登录同一台机器，打开你的报表，随手改了两行，或者直接删了。
 
-你需要两样东西：
+系统若要阻止这种事，第一步不是画权限表，而是先回答两个更基础的问题：
 
-1. **身份（Security Principal）**：系统得认出「现在操作的是谁」——本地用户账户。
-2. **所有者（Owner）**：每个对象挂一个「主人」，至少能回答「这是谁的」。
+1. **现在动手的是谁？** → 需要可认证的身份：**Security Principal**  
+2. **这个文件算谁的？** → 需要对象上的主人字段：**Owner**
 
-于是可保护对象（文件、文件夹、注册表键、AD 对象……）开始带上 **安全描述符（Security Descriptor）**：里面记所有者，后面还会塞进整份权限表。
+Microsoft Learn 的定义很干脆：Security Principal 是能被 Windows 认证的实体（用户、组、计算机等）；每个主体创建时拿到一个**唯一且永不复用**的 **SID（Security Identifier）**。操作系统认的是 SID，不是你屏幕上看到的 `DOMAIN\Alice` 字符串。
 
-这一步解决了「完全匿名乱改」。但新问题立刻出现：  
-**只有「主人全能 / 别人全不能」太粗。** 同事需要能读，不能改。
+### 1.1 Security Principal：系统眼里的「人」
+
+可以把 Principal 想成「安全世界里的主语」：
+
+| 形态 | 例子 | 说明 |
+|------|------|------|
+| 用户账户 | `PC01\Bob`、`CONTOSO\Alice` | 本机 SAM 或域账户 |
+| 安全组 | `Administrators`、`Domain Users` | 也是 Principal；权限常授给组 |
+| 计算机账户 | `CONTOSO\FILESVR01$` | 机器本身也有身份 |
+| 特殊身份 | `Everyone`、`SYSTEM`、`Owner Rights` | 预定义 SID，不全是「真人」 |
+
+用户登录成功后，进程会拿到一份 **访问令牌（Access Token）**：里面有用户 SID，以及他所属各组的 SID 列表。之后「打不打得开某个文件」，比的是令牌里的 SID 集合，去对对象上的 ACL——账户名只是给人看的标签。
+
+这也解释了一个常见现象：**改用户显示名 / 登录名，旧 ACL 往往还有效**——因为 ACL 里存的是 SID。
+
+### 1.2 C#：当前进程「我是谁」
+
+.NET 用 `WindowsIdentity` 读当前 Windows 身份（官方文档：[Create a WindowsPrincipal](https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-create-a-windowsprincipal-object)）：
+
+```csharp
+using System.Security.Principal;
+
+WindowsIdentity identity = WindowsIdentity.GetCurrent();
+
+Console.WriteLine($"账户名: {identity.Name}");          // 如 CONTOSO\Alice
+Console.WriteLine($"用户 SID: {identity.User}");        // 如 S-1-5-21-...-1103
+Console.WriteLine($"是否认证: {identity.IsAuthenticated}");
+Console.WriteLine($"令牌类型: {identity.ImpersonationLevel}");
+
+// 令牌里带着哪些组 SID（权限求值会用到）
+foreach (IdentityReference group in identity.Groups!)
+{
+    try
+    {
+        var name = group.Translate(typeof(NTAccount));
+        Console.WriteLine($"  组: {name}  ({group})");
+    }
+    catch (IdentityNotMappedException)
+    {
+        Console.WriteLine($"  组 SID(无法翻译): {group}");
+    }
+}
+
+// 需要按角色判断时，再包一层 WindowsPrincipal
+var principal = new WindowsPrincipal(identity);
+bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+Console.WriteLine($"当前是否管理员角色: {isAdmin}");
+```
+
+命令行对照：`whoami /user`、`whoami /groups`。
+
+### 1.3 C#：账户名 ↔ SID（IdentityReference）
+
+ACL、Owner 字段在系统底层都偏向 SID。`.NET` 里用 `NTAccount`（可读名）和 `SecurityIdentifier`（SID）互转——二者都是 `IdentityReference`：
+
+```csharp
+using System.Security.Principal;
+
+// 名字 → SID（写入 ACL / Owner 前常用）
+var account = new NTAccount(@"CONTOSO\Alice");
+var sid = (SecurityIdentifier)account.Translate(typeof(SecurityIdentifier));
+Console.WriteLine(sid.Value);   // S-1-5-21-...-xxxx
+
+// SID → 名字（展示、排障）
+var back = (NTAccount)sid.Translate(typeof(NTAccount));
+Console.WriteLine(back.Value);  // CONTOSO\Alice
+
+// 也可用「人人皆知」的 SID 字面量（示例：Everyone = S-1-1-0）
+var everyone = new SecurityIdentifier("S-1-1-0");
+Console.WriteLine(everyone.Translate(typeof(NTAccount))); // Everyone
+```
+
+域恢复文档里也有同样模式：用 `SecurityIdentifier` 拼出 RID 500，再 `Translate` 成 `NTAccount` 找出内置 Administrator。要点只有一句：**稳定身份是 SID；名字是视图。**
+
+### 1.4 Owner：安全描述符上的「主人」槽位
+
+光有「谁在操作」还不够——每个可保护对象（文件、文件夹、注册表键、AD 对象……）还要挂一份 **安全描述符（Security Descriptor）**。Learn 示例里可以看到典型字段：
+
+```text
+Security Descriptor
+├── Owner:  MyDomain\Admin1  [S-1-5-21-...-1103]
+├── Group:  MyDomain\Domain Users  [S-1-5-21-...-513]   ← Primary Group
+├── DACL   → 谁能碰（后面章节）
+└── SACL   → 审计（后面章节）
+```
+
+**Owner 解决的是「默认控制权从哪来」**，而不是完整权限模型：
+
+- 对象创建时，通常把创建者（或其管理员上下文）记为 Owner。  
+- Owner 默认往往隐含能读控制信息、改 DACL 的能力（即「我是主人，至少能把自己锁门外的惨剧救回来」这一类钩子）。  
+- 若要对「主人」本身再收紧，Windows 还有特殊身份 **Owner Rights**（SID `S-1-3-4`）：在 ACE 里针对它授权时，可覆盖 Owner 那套隐含的 `READ_CONTROL` / `WRITE_DAC` 行为。  
+
+注意区分：
+
+| 概念 | 回答的问题 |
+|------|------------|
+| 当前 Principal（令牌） | 现在是谁在访问？ |
+| 对象 Owner | 这个对象登记的主人是谁？ |
+| DACL 里的 ACE | 明确允许/拒绝了哪些人做哪些事？ |
+
+Owner ≠「DACL 里有一条 Full Control」。很多对象 Owner 是某用户，真正业务权限却授给了组；反过来，管理员也可以 `takeown` 夺所有权，再改 DACL——这是运维「救回失控权限」的标准路径之一。
+
+```bat
+takeown /f lostfile
+```
+
+### 1.5 C#：读取与修改文件 Owner
+
+现代 .NET 通过 `System.IO.FileSystemAclExtensions`（`GetAccessControl` / `SetAccessControl`）读写文件安全描述符：
+
+```csharp
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
+
+var path = @"D:\Share\report.xlsx";
+var file = new FileInfo(path);
+
+// 读出安全描述符，再取 Owner（可指定翻译成 NTAccount 或 SecurityIdentifier）
+FileSecurity security = file.GetAccessControl();
+IdentityReference owner = security.GetOwner(typeof(NTAccount))!;
+Console.WriteLine($"当前所有者: {owner}");
+
+var ownerSid = security.GetOwner(typeof(SecurityIdentifier))!;
+Console.WriteLine($"所有者 SID: {ownerSid}");
+
+// 修改所有者（通常需要足够特权；否则会 UnauthorizedAccessException）
+security.SetOwner(new NTAccount(@"CONTOSO\Alice"));
+file.SetAccessControl(security);
+
+Console.WriteLine($"新所有者: {file.GetAccessControl().GetOwner(typeof(NTAccount))}");
+```
+
+若在较老的 .NET Framework 上，常见写法是 `File.GetAccessControl(path)` / `File.SetAccessControl(path, security)`，语义相同：拿到 `FileSecurity`，对其 `GetOwner` / `SetOwner`。
+
+文件夹同理，类型换成 `DirectoryInfo` + `DirectorySecurity`。
+
+### 1.6 这一步发明了什么，还缺什么
+
+到这里，世界已经不再「匿名可写」：
+
+- 有 **Principal + SID + 令牌**，系统知道操作者；  
+- 有 **Owner + Security Descriptor**，对象知道主人；  
+- 用 C# 可以查询身份、翻译 SID、读写 Owner。
+
+但模型仍然太粗：**只有「主人 / 非主人」远远不够协作。** 同事需要能读不能改——于是下一事故逼我们发明权限位。
 
 ---
+
 
 ## 2. 事故二：要协作又不能乱改 → 发明「权限位」
 
@@ -450,12 +595,17 @@ Learn 对 **Domain Admins** 的提醒很明确：成员对域内计算机有广�
 
 ## 参考
 
-- [Security principals（安全描述符 / DACL / SACL）](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)  
+- [Understand security principals](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)（Principal / SID / 安全描述符）  
+- [Security identifiers (SID)](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers)  
+- [Owner Rights 特殊身份](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-special-identities-groups)  
+- [takeown](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/takeown)  
+- [Create a WindowsPrincipal（WindowsIdentity.GetCurrent）](https://learn.microsoft.com/en-us/dotnet/standard/security/how-to-create-a-windowsprincipal-object)  
+- [FileSystemAclExtensions.SetAccessControl](https://learn.microsoft.com/en-us/dotnet/api/system.io.filesystemaclextensions.setaccesscontrol)  
 - [Privileged accounts and groups：Permissions 与 Deny](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory)  
 - [Active Directory security groups](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups)  
 - [icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)（含 `(OI)/(CI)/(IO)/(I)` 等）  
 - [cacls 输出中的 OI/CI/IO 说明](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cacls)  
-- .NET：`System.Security.AccessControl.InheritanceFlags` / `PropagationFlags` / `FileSystemAccessRule`
+- .NET：`NTAccount` / `SecurityIdentifier` / `FileSecurity.GetOwner|SetOwner`；`InheritanceFlags` / `PropagationFlags` / `FileSystemAccessRule`
 
 ---
 
