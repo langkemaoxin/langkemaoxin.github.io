@@ -1,7 +1,7 @@
 ---
-title: "第 27 站：AD 对象权限与委派"
+title: "第 27 讲：AD 对象权限与委派"
 sidebarGroup: "卷四·不只是文件"
-shortTitle: "第 27 站：AD 委派"
+shortTitle: "第 27 讲：AD 委派"
 order: 3
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 第 27 站：AD 对象权限与委派
+# 第 27 讲：AD 对象权限与委派
 
 > **状态：待写**（占位章）  
 > **分卷：卷四·不只是文件**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 26 站：服务权限](./02-services.md)
+← 上一章：[第 26 讲：服务权限](./02-services.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 28 站：共享设计](../vol5-ops/01-share-design.md)
+→ 下一章：[第 28 讲：共享设计](../vol5-ops/01-share-design.md)
 <!-- chapter-nav:end -->

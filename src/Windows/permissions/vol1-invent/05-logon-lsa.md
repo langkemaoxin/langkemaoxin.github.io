@@ -1,7 +1,7 @@
 ---
-title: "第 4 站：登录——谁验密码，过程怎样（LSA）"
+title: "第 4 讲：登录——谁验密码，过程怎样（LSA）"
 sidebarGroup: "卷一·发明权限"
-shortTitle: "第 4 站：登录与 LSA"
+shortTitle: "第 4 讲：登录与 LSA"
 order: 5
 date: 2026-08-06
 category: "Windows"
@@ -14,13 +14,13 @@ tag:
   - "安全"
 ---
 
-# 第 4 站：登录——谁验密码，过程怎样（LSA）
+# 第 4 讲：登录——谁验密码，过程怎样（LSA）
 
-### 先分清两个词（本站只用到「认证」）
+### 先分清两个词（本讲只用到「认证」）
 
-| 词 | 白话 | 本站是否展开 |
+| 词 | 白话 | 本讲是否展开 |
 |----|------|--------------|
-| **认证 Authentication** | 你是不是你声称的那个人？ | ✅ 本站讲透 |
+| **认证 Authentication** | 你是不是你声称的那个人？ | ✅ 本讲讲透 |
 | **授权 Authorization** | 验过之后，某个文件/共享能不能碰？ | ❌ 后面才讲 |
 
 来源：[Windows logon scenarios](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-logon-scenarios)
@@ -73,13 +73,13 @@ Alice 输入密码
   → Logon UI + Credential Provider（采集）
   → Winlogon ──secur32──► LSA
   → 域账户？→ 问域控（或缓存）
-  → 成功：建立 logon session → 下一站「发通行证」
+  → 成功：建立 logon session → 下一讲「发通行证」
 ```
 
 ### 收束
 
 **你现在会了：** 登录框只收凭据；LSA 是验钞机；域/本机对答案的地方不同。  
-**下一站才需要：** 验过之后，系统发给你什么，好让之后不用反复问密码。
+**下一讲才需要：** 验过之后，系统发给你什么，好让之后不用反复问密码。
 
 ---
 
@@ -90,7 +90,7 @@ Alice 输入密码
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 3 站：名字 ↔ SID](./04-name-sid-lsa.md)
+← 上一章：[第 3 讲：名字 ↔ SID](./04-name-sid-lsa.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 5 站：Access Token](./06-access-token.md)
+→ 下一章：[第 5 讲：Access Token](./06-access-token.md)
 <!-- chapter-nav:end -->

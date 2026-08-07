@@ -1,7 +1,7 @@
 ---
-title: "第 33 站：模拟（Impersonation）入门"
+title: "第 33 讲：模拟（Impersonation）入门"
 sidebarGroup: "卷六·用代码改权限"
-shortTitle: "第 33 站：.NET 模拟"
+shortTitle: "第 33 讲：.NET 模拟"
 order: 3
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 第 33 站：模拟（Impersonation）入门
+# 第 33 讲：模拟（Impersonation）入门
 
 > **状态：待写**（占位章）  
 > **分卷：卷六·用代码改权限**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 32 站：.NET 改 ACL](./02-acl.md)
+← 上一章：[第 32 讲：.NET 改 ACL](./02-acl.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[总图](../appendix/01-map.md)
 <!-- chapter-nav:end -->

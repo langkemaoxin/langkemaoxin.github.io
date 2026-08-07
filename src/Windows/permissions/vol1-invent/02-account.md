@@ -1,7 +1,7 @@
 ---
-title: "第 1 站：账户——系统眼里的「人」"
+title: "第 1 讲：账户——系统眼里的「人」"
 sidebarGroup: "卷一·发明权限"
-shortTitle: "第 1 站：账户"
+shortTitle: "第 1 讲：账户"
 order: 2
 date: 2026-08-06
 category: "Windows"
@@ -14,7 +14,7 @@ tag:
   - "安全"
 ---
 
-# 第 1 站：账户——系统眼里的「人」
+# 第 1 讲：账户——系统眼里的「人」
 
 ### 麻烦
 
@@ -22,9 +22,9 @@ tag:
 
 系统若连「现在是谁」都分不清，后面谈不上保护。
 
-### 这一站只发明：账户（用户）
+### 这一讲只发明：账户（用户）
 
-Microsoft Learn 把能被 Windows **认证**的实体叫做 **Security Principal（安全主体）**。常见形态包括用户、组、计算机等；**这一站我们先只盯住「用户账户」**，组和计算机以后再开。  
+Microsoft Learn 把能被 Windows **认证**的实体叫做 **Security Principal（安全主体）**。常见形态包括用户、组、计算机等；**这一讲我们先只盯住「用户账户」**，组和计算机以后再开。  
 来源：[Understand security principals](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-principals)
 
 白话：
@@ -68,7 +68,7 @@ Console.WriteLine(id.IsAuthenticated);   // 是否已认证
 ### 收束
 
 **你现在会了：** 系统用「账户」区分不同的人。  
-**下一站才需要：** 为什么系统内部更爱用一串 `S-1-5-21-...`，而不是只记名字。
+**下一讲才需要：** 为什么系统内部更爱用一串 `S-1-5-21-...`，而不是只记名字。
 
 ---
 
@@ -79,7 +79,7 @@ Console.WriteLine(id.IsAuthenticated);   // 是否已认证
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 0 站：没有权限](./01-no-permission.md)
+← 上一章：[第 0 讲：没有权限](./01-no-permission.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 2 站：SID](./03-sid.md)
+→ 下一章：[第 2 讲：SID](./03-sid.md)
 <!-- chapter-nav:end -->

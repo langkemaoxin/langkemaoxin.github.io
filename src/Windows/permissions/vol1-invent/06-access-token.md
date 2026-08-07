@@ -1,7 +1,7 @@
 ---
-title: "第 5 站：Access Token——登录成功后的通行证"
+title: "第 5 讲：Access Token——登录成功后的通行证"
 sidebarGroup: "卷一·发明权限"
-shortTitle: "第 5 站：Access Token"
+shortTitle: "第 5 讲：Access Token"
 order: 6
 date: 2026-08-06
 category: "Windows"
@@ -14,18 +14,18 @@ tag:
   - "安全"
 ---
 
-# 第 5 站：Access Token——登录成功后的通行证
+# 第 5 讲：Access Token——登录成功后的通行证
 
 ### 麻烦
 
 不能每打开一个程序就再输一次密码。系统需要一份「本次登录有效的身份摘要」，挂在你的进程上。
 
-### 这一站只发明：访问令牌（Access Token）
+### 这一讲只发明：访问令牌（Access Token）
 
 认证成功后，**LSA 创建主访问令牌（primary access token）**，其中包含：
 
 - 用户 **SID**  
-- **组 SID**（你属于哪些组——组的细节下一站才展开，这里先接受「令牌里可以有一组 SID 列表」）  
+- **组 SID**（你属于哪些组——组的细节下一讲才展开，这里先接受「令牌里可以有一组 SID 列表」）  
 - 分配的 **用户权利（user rights）**  
 
 令牌会附着到你名下的进程与线程。  
@@ -88,7 +88,7 @@ foreach (IdentityReference g in id.Groups!)
 ### 收束
 
 **你现在会了：** 令牌是什么、里面有用户 SID（以及一组组 SID 槽位）、挂在进程上。  
-**下一站才需要：** 文件上如何登记「主人是谁」（还不是完整权限表）。
+**下一讲才需要：** 文件上如何登记「主人是谁」（还不是完整权限表）。
 
 ---
 
@@ -99,7 +99,7 @@ foreach (IdentityReference g in id.Groups!)
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 4 站：登录与 LSA](./05-logon-lsa.md)
+← 上一章：[第 4 讲：登录与 LSA](./05-logon-lsa.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 6 站：Owner](./07-owner.md)
+→ 下一章：[第 6 讲：Owner](./07-owner.md)
 <!-- chapter-nav:end -->

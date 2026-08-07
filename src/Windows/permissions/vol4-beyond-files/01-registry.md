@@ -1,7 +1,7 @@
 ---
-title: "第 25 站：注册表上的 ACL"
+title: "第 25 讲：注册表上的 ACL"
 sidebarGroup: "卷四·不只是文件"
-shortTitle: "第 25 站：注册表 ACL"
+shortTitle: "第 25 讲：注册表 ACL"
 order: 1
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 第 25 站：注册表上的 ACL
+# 第 25 讲：注册表上的 ACL
 
 > **状态：待写**（占位章）  
 > **分卷：卷四·不只是文件**  
@@ -45,7 +45,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 24 站：AdminSDHolder](../vol3-rights-uac/05-adminsdholder.md)
+← 上一章：[第 24 讲：AdminSDHolder](../vol3-rights-uac/05-adminsdholder.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 26 站：服务权限](./02-services.md)
+→ 下一章：[第 26 讲：服务权限](./02-services.md)
 <!-- chapter-nav:end -->

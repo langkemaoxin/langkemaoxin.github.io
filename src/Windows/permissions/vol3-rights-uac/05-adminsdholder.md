@@ -1,7 +1,7 @@
 ---
-title: "第 24 站：AdminSDHolder 与保护组"
+title: "第 24 讲：AdminSDHolder 与保护组"
 sidebarGroup: "卷三·权利与 UAC"
-shortTitle: "第 24 站：AdminSDHolder"
+shortTitle: "第 24 讲：AdminSDHolder"
 order: 5
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 第 24 站：AdminSDHolder 与保护组
+# 第 24 讲：AdminSDHolder 与保护组
 
 > **状态：待写**（占位章）  
 > **分卷：卷三·权利、UAC、特权账户**  
@@ -45,7 +45,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 23 站：GPO 权利分配](./04-gpo-rights.md)
+← 上一章：[第 23 讲：GPO 权利分配](./04-gpo-rights.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 25 站：注册表 ACL](../vol4-beyond-files/01-registry.md)
+→ 下一章：[第 25 讲：注册表 ACL](../vol4-beyond-files/01-registry.md)
 <!-- chapter-nav:end -->
