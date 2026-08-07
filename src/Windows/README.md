@@ -9,7 +9,7 @@ article: false
 
 本专栏覆盖 **Windows 权限模型** 与常见开发环境搭建（WSL / Docker / 本地工具链）。
 
-建议先读权限 ACL 长文，再按需看环境搭建笔记。
+权限系列已拆成多章：请从 [索引：一步步「发明」Windows 权限](./permissions/00-index.md) 进入，再按站阅读。
 
 ## 文章目录
 
