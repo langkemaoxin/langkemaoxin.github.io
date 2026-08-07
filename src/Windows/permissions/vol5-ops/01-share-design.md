@@ -1,7 +1,7 @@
 ---
-title: "卷五·共享权限设计模式"
+title: "第 28 站：共享权限设计模式"
 sidebarGroup: "卷五·排障与设计"
-shortTitle: "共享设计"
+shortTitle: "第 28 站：共享设计"
 order: 1
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷五·共享权限设计模式
+# 第 28 站：共享权限设计模式
 
 > **状态：待写**（占位章）  
 > **分卷：卷五·排障与设计模式**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[AD 委派](../vol4-beyond-files/03-ad-delegation.md)
+← 上一章：[第 27 站：AD 委派](../vol4-beyond-files/03-ad-delegation.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[有效权限实战](./02-effective-access-practice.md)
+→ 下一章：[第 29 站：有效权限实战](./02-effective-access-practice.md)
 <!-- chapter-nav:end -->

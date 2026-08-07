@@ -36,6 +36,8 @@ tag:
   → SACL
   → 域与域控（公共账→搭 DC→加域→树与新建组）
   → Kerberos 票据（TGT → 服务票；网上认证）
+  → NTLM 与协商（盖章走不通时的另一条路）
+  → 登录类型 / SPN（待写）
   → 用户权利 ≠ 对象权限；UAC
 ```
 
@@ -58,7 +60,10 @@ tag:
 | SACL | [第 14 站](../vol1-invent/15-sacl.md) |
 | 域与域控 | [第 15 站](../vol2-identity/01-domain-dc.md) |
 | Kerberos | [第 16 站](../vol2-identity/02-kerberos.md) |
-| 权利与 UAC | [第 17 站](../vol3-rights-uac/01-rights-uac.md) |
+| NTLM 与协商 | [第 17 站](../vol2-identity/03-ntlm.md) |
+| 登录类型 | [第 18 站](../vol2-identity/04-logon-types.md) |
+| SPN | [第 19 站](../vol2-identity/05-spn.md) |
+| 权利与 UAC | [第 20 站](../vol3-rights-uac/01-rights-uac.md) |
 
 三句总收束：
 
@@ -75,7 +80,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[.NET 模拟](../vol6-dotnet/03-impersonation.md)
+← 上一章：[第 33 站：.NET 模拟](../vol6-dotnet/03-impersonation.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[SDDL](./02-sddl.md)
 <!-- chapter-nav:end -->

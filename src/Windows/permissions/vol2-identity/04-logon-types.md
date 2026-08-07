@@ -1,7 +1,7 @@
 ---
-title: "卷二·登录类型（Logon Type）"
+title: "第 18 站：登录类型（Logon Type）"
 sidebarGroup: "卷二·网上的身份"
-shortTitle: "登录类型"
+shortTitle: "第 18 站：登录类型"
 order: 4
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷二·登录类型（Logon Type）
+# 第 18 站：登录类型（Logon Type）
 
 > **状态：待写**（占位章）  
 > **分卷：卷二·网上的身份**  
@@ -45,7 +45,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[NTLM 与协商](./03-ntlm.md)
+← 上一章：[第 17 站：NTLM 与协商](./03-ntlm.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[SPN](./05-spn.md)
+→ 下一章：[第 19 站：SPN](./05-spn.md)
 <!-- chapter-nav:end -->

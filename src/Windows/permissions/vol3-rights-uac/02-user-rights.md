@@ -1,7 +1,7 @@
 ---
-title: "卷三·用户权利（Privileges）专章"
+title: "第 21 站：用户权利（Privileges）"
 sidebarGroup: "卷三·权利与 UAC"
-shortTitle: "用户权利专章"
+shortTitle: "第 21 站：用户权利"
 order: 2
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷三·用户权利（Privileges）专章
+# 第 21 站：用户权利（Privileges）
 
 > **状态：待写**（占位章）  
 > **分卷：卷三·权利、UAC、特权账户**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[权利与 UAC（合章）](./01-rights-uac.md)
+← 上一章：[第 20 站：权利与 UAC](./01-rights-uac.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[UAC 专章](./03-uac.md)
+→ 下一章：[第 22 站：UAC](./03-uac.md)
 <!-- chapter-nav:end -->

@@ -1,7 +1,7 @@
 ---
-title: "卷六·.NET 里的 Windows 身份"
+title: "第 31 站：.NET 里的 Windows 身份"
 sidebarGroup: "卷六·用代码改权限"
-shortTitle: ".NET 身份"
+shortTitle: "第 31 站：.NET 身份"
 order: 1
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷六·.NET 里的 Windows 身份
+# 第 31 站：.NET 里的 Windows 身份
 
 > **状态：待写**（占位章）  
 > **分卷：卷六·用代码改权限**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[排障案例集](../vol5-ops/03-troubleshooting-cases.md)
+← 上一章：[第 30 站：排障案例集](../vol5-ops/03-troubleshooting-cases.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[.NET 改 ACL](./02-acl.md)
+→ 下一章：[第 32 站：.NET 改 ACL](./02-acl.md)
 <!-- chapter-nav:end -->

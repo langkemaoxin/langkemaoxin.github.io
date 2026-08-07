@@ -1,7 +1,7 @@
 ---
-title: "卷四·服务与服务账户权限"
+title: "第 26 站：服务与服务账户权限"
 sidebarGroup: "卷四·不只是文件"
-shortTitle: "服务权限"
+shortTitle: "第 26 站：服务权限"
 order: 2
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷四·服务与服务账户权限
+# 第 26 站：服务与服务账户权限
 
 > **状态：待写**（占位章）  
 > **分卷：卷四·不只是文件**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[注册表 ACL](./01-registry.md)
+← 上一章：[第 25 站：注册表 ACL](./01-registry.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[AD 委派](./03-ad-delegation.md)
+→ 下一章：[第 27 站：AD 委派](./03-ad-delegation.md)
 <!-- chapter-nav:end -->

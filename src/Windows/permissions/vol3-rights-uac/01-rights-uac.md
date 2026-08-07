@@ -1,7 +1,7 @@
 ---
-title: "第 17 站：用户权利 ≠ 对象权限；UAC 双令牌"
+title: "第 20 站：用户权利 ≠ 对象权限；UAC 双令牌"
 sidebarGroup: "卷三·权利与 UAC"
-shortTitle: "第 17 站：权利与 UAC"
+shortTitle: "第 20 站：权利与 UAC"
 order: 1
 date: 2026-08-06
 category: "Windows"
@@ -14,7 +14,7 @@ tag:
   - "安全"
 ---
 
-# 第 17 站：用户权利 ≠ 对象权限；UAC 双令牌
+# 第 20 站：用户权利 ≠ 对象权限；UAC 双令牌
 
 前面第 9～10 站教会小王一件事：
 
@@ -448,7 +448,7 @@ Mandatory Label\High Mandatory Level          标签   S-1-16-12288
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[SPN](../vol2-identity/05-spn.md)
+← 上一章：[第 19 站：SPN](../vol2-identity/05-spn.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[用户权利专章](./02-user-rights.md)
+→ 下一章：[第 21 站：用户权利](./02-user-rights.md)
 <!-- chapter-nav:end -->

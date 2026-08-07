@@ -1,7 +1,7 @@
 ---
-title: "卷三·用 GPO 分配用户权利"
+title: "第 23 站：用 GPO 分配用户权利"
 sidebarGroup: "卷三·权利与 UAC"
-shortTitle: "GPO 权利分配"
+shortTitle: "第 23 站：GPO 权利分配"
 order: 4
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷三·用 GPO 分配用户权利
+# 第 23 站：用 GPO 分配用户权利
 
 > **状态：待写**（占位章）  
 > **分卷：卷三·权利、UAC、特权账户**  
@@ -45,7 +45,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[UAC 专章](./03-uac.md)
+← 上一章：[第 22 站：UAC](./03-uac.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[AdminSDHolder](./05-adminsdholder.md)
+→ 下一章：[第 24 站：AdminSDHolder](./05-adminsdholder.md)
 <!-- chapter-nav:end -->

@@ -1,7 +1,7 @@
 ---
-title: "卷二·NTLM 与协商（Negotiate）"
+title: "第 17 站：NTLM 与协商（Negotiate）"
 sidebarGroup: "卷二·网上的身份"
-shortTitle: "NTLM 与协商"
+shortTitle: "第 17 站：NTLM 与协商"
 order: 3
 date: 2026-08-06
 category: "Windows"
@@ -14,7 +14,7 @@ tag:
   - "Negotiate"
 ---
 
-# 卷二·NTLM 与协商（Negotiate）
+# 第 17 站：NTLM 与协商（Negotiate）
 
 上一章小王刚学会：[Kerberos](./02-kerberos.md) 用域控盖章，网上证明「我是谁」，不必把密码交给每台文件服务器。  
 本站只发明一件事——**为什么现实里并不总是走盖章换票**。
@@ -145,5 +145,5 @@ NTLM 还是 Kerberos，解决的是**认人**；认完之后仍是令牌对 DACL
 <!-- chapter-nav:start -->
 ← 上一章：[第 16 站：Kerberos](./02-kerberos.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[登录类型](./04-logon-types.md)
+→ 下一章：[第 18 站：登录类型](./04-logon-types.md)
 <!-- chapter-nav:end -->

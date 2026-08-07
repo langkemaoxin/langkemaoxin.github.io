@@ -1,7 +1,7 @@
 ---
-title: "卷六·用 .NET 读写文件 ACL"
+title: "第 32 站：用 .NET 读写文件 ACL"
 sidebarGroup: "卷六·用代码改权限"
-shortTitle: ".NET 改 ACL"
+shortTitle: "第 32 站：.NET 改 ACL"
 order: 2
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷六·用 .NET 读写文件 ACL
+# 第 32 站：用 .NET 读写文件 ACL
 
 > **状态：待写**（占位章）  
 > **分卷：卷六·用代码改权限**  
@@ -45,7 +45,7 @@ GetAccessControl / FileSystemAccessRule / InheritanceFlags·PropagationFlags 与
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[.NET 身份](./01-identity.md)
+← 上一章：[第 31 站：.NET 身份](./01-identity.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[.NET 模拟](./03-impersonation.md)
+→ 下一章：[第 33 站：.NET 模拟](./03-impersonation.md)
 <!-- chapter-nav:end -->

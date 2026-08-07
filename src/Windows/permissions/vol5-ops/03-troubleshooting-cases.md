@@ -1,7 +1,7 @@
 ---
-title: "卷五·排障案例集"
+title: "第 30 站：排障案例集"
 sidebarGroup: "卷五·排障与设计"
-shortTitle: "排障案例集"
+shortTitle: "第 30 站：排障案例集"
 order: 3
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷五·排障案例集
+# 第 30 站：排障案例集
 
 > **状态：待写**（占位章）  
 > **分卷：卷五·排障与设计模式**  
@@ -43,7 +43,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[有效权限实战](./02-effective-access-practice.md)
+← 上一章：[第 29 站：有效权限实战](./02-effective-access-practice.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[.NET 身份](../vol6-dotnet/01-identity.md)
+→ 下一章：[第 31 站：.NET 身份](../vol6-dotnet/01-identity.md)
 <!-- chapter-nav:end -->

@@ -1,7 +1,7 @@
 ---
-title: "卷五·有效权限实战"
+title: "第 29 站：有效权限实战"
 sidebarGroup: "卷五·排障与设计"
-shortTitle: "有效权限实战"
+shortTitle: "第 29 站：有效权限实战"
 order: 2
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷五·有效权限实战
+# 第 29 站：有效权限实战
 
 > **状态：待写**（占位章）  
 > **分卷：卷五·排障与设计模式**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[共享设计](./01-share-design.md)
+← 上一章：[第 28 站：共享设计](./01-share-design.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[排障案例集](./03-troubleshooting-cases.md)
+→ 下一章：[第 30 站：排障案例集](./03-troubleshooting-cases.md)
 <!-- chapter-nav:end -->

@@ -233,5 +233,5 @@ PS C:\Users\chengongyi> klist
 <!-- chapter-nav:start -->
 ← 上一章：[第 15 站：域与域控](./01-domain-dc.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[NTLM 与协商](./03-ntlm.md)
+→ 下一章：[第 17 站：NTLM 与协商](./03-ntlm.md)
 <!-- chapter-nav:end -->

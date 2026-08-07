@@ -1,7 +1,7 @@
 ---
-title: "卷三·UAC 专章"
+title: "第 22 站：UAC"
 sidebarGroup: "卷三·权利与 UAC"
-shortTitle: "UAC 专章"
+shortTitle: "第 22 站：UAC"
 order: 3
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 卷三·UAC 专章
+# 第 22 站：UAC
 
 > **状态：待写**（占位章）  
 > **分卷：卷三·权利、UAC、特权账户**  
@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[用户权利专章](./02-user-rights.md)
+← 上一章：[第 21 站：用户权利](./02-user-rights.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[GPO 权利分配](./04-gpo-rights.md)
+→ 下一章：[第 23 站：GPO 权利分配](./04-gpo-rights.md)
 <!-- chapter-nav:end -->
