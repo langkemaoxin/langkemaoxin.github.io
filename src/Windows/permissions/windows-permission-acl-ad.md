@@ -804,7 +804,7 @@ file.SetAccessControl(security);
 - **NTFS** 是 Windows 默认文件系统，能挂安全描述符；DACL 是跟对象走的安全元数据（不是文件正文）；  
 - ACE 是一行（谁 × 允许/拒绝 × 操作）；DACL 是整张表；  
 - 无匹配 ACE → 不能访问；Deny 通常压过 Allow；组 SID 可命中 ACE；  
-- 权限与用户权利不是同一旋钮（细节后置）。
+- 权限与用户权利不是同一类设置（细节后置）。
 
 **下一站才需要：** 打开文件时，系统如何拿你令牌里的 SID，去和这张 DACL **逐条对表**（Access Check）。
 
@@ -1568,10 +1568,10 @@ E:\WindowsTest\Lab07\Sub                     JZFZ\chengongyi:(I)(RX)
 
 ---
 
-### 12.10 现在才起学名：两套旋钮
+### 12.10 现在才起学名：两套标志
 
 把上面的直觉映射到 .NET（以及资源管理器「适用于」）。  
-口诀：**一套管「传给谁」，一套管「自己吃不吃、传多深」。**
+口诀：**一组管「传给谁」，一组管「自己吃不吃、传多深」。**
 
 | 你已经会的 | .NET 枚举 | 枚举值 |
 |------------|-----------|--------|
@@ -2258,7 +2258,7 @@ PS C:\Users\chengongyi> klist
 **你现在会了：**  
 域网上证明身份，常用 Kerberos：先 TGT，再换服务票；服务器验票不收你的域密码；验完之后权限仍按令牌对 DACL（外加共享门）。  
 
-**下一站才需要：** 「能备份整盘」这类能力，和「某个文件 ACE」不是同一旋钮；以及管理员为何还弹 UAC。
+**下一站才需要：** 「能备份整盘」这类能力，和「某个文件 ACE」不是同一类设置；以及管理员为何还弹 UAC。
 
 ---
 
@@ -2266,7 +2266,7 @@ PS C:\Users\chengongyi> klist
 
 ### 麻烦
 
-前面十几站几乎都在发明**同一类旋钮**：某文件/文件夹门上贴的 ACE（对象权限）。  
+前面十几站几乎都在发明**同一类设置**：某文件/文件夹门上贴的 ACE（对象权限）。  
 现实里还会撞上两件「看起来像权限、却不是同一张表」的事：
 
 **案例 A：门上写着不许进，备份仍能拷走**
@@ -2274,7 +2274,7 @@ PS C:\Users\chengongyi> klist
 - 某目录 DACL 对 `JZFZ\chengongyi` 显式 **Deny** 读取；  
 - 但若账户被授了「备份文件和目录」这类**系统能力**，备份工具仍可能读到内容。  
 
-你若只盯着 `icacls`，会觉得「Deny 失灵了」——其实动的是**另一套旋钮**。
+你若只盯着 `icacls`，会觉得「Deny 失灵了」——其实动的是**另一类设置**。
 
 **案例 B：明明是管理员，装个软件还弹 UAC**
 
@@ -2289,19 +2289,19 @@ PS C:\Users\chengongyi> klist
 
 ---
 
-### 17.1 想做什么：承认世界上有两套旋钮
+### 17.1 想做什么：承认世界上有两类设置
 
 #### 先用人话分开
 
-| 你想控制的事 | 直觉该拧哪颗旋钮 |
-|--------------|------------------|
+| 你想控制的事 | 直觉该改哪一类 |
+|--------------|----------------|
 | 「这个文件夹，财务组只读、研发组可改」 | **对象上的规则表**（ACE / DACL，第 9～10 站） |
-| 「这个账户能不能备份整盘、能不能作为服务登录、能不能关掉机器」 | **系统级能力开关**（跟某个文件无关） |
+| 「这个账户能不能备份整盘、能不能作为服务登录、能不能关掉机器」 | **系统级能力**（跟某个文件无关） |
 
 #### 现在才贴官方标签
 
-| 旋钮 | 常见英文 | 挂在哪 |
-|------|----------|--------|
+| 这类设置 | 常见英文 | 挂在哪 |
+|----------|----------|--------|
 | 对象权限 | **Permissions** | 某个可保护对象的安全描述符（门上的字） |
 | 用户权利 / 特权 | **User rights** / **privileges** | 安全策略里授给账户/组；登录后进**令牌的特权列表** |
 
@@ -2447,9 +2447,9 @@ whoami /priv
 
 | 概念 | 管什么 | 本站关系 |
 |------|--------|----------|
-| ACE / DACL | 某个对象允不允许你做某操作 | 对象权限旋钮 |
-| 用户权利 / privileges | 系统级能力（备份、关机、服务登录…） | **另一旋钮**；可出现在 `whoami /priv` |
-| Access Token | 进程当前身份摘要（SID + 组 + 特权…） | 两套旋钮的「口袋」 |
+| ACE / DACL | 某个对象允不允许你做某操作 | 对象权限（门上的规则） |
+| 用户权利 / privileges | 系统级能力（备份、关机、服务登录…） | **另一类设置**；可出现在 `whoami /priv` |
+| Access Token | 进程当前身份摘要（SID + 组 + 特权…） | 两类设置结果都会装进令牌 |
 | UAC 双令牌 | 管理员默认用哪一张口袋 | 同一账户，不同进程可能不同令牌 |
 | Kerberos 票据（第 16 站） | 网上如何证明你是谁 | 认证；不替代本机 ACE / 权利 |
 
@@ -2458,7 +2458,7 @@ whoami /priv
 ### 收束
 
 **你现在会了：**  
-对象权限（ACE）≠ 用户权利（privileges）；备份等权利走另一赛道；管理员日常受 UAC 约束，默认标准令牌，提升后才是完整管理员令牌。  
+对象权限（ACE）≠ 用户权利（privileges）；备份等权利是另一类系统设置；管理员日常受 UAC 约束，默认标准令牌，提升后才是完整管理员令牌。
 
 **整篇到此：** 从「没有权限」到账户 / SID / 登录 / 令牌 / ACL / 继承 / 共享两道门 / 域 / Kerberos / 权利与 UAC——可以串回总图复习。
 
@@ -2479,7 +2479,7 @@ whoami /priv
   → ACE / DACL
   → 访问检查（令牌对 DACL；UNC 时再加网络登录 + 共享∩NTFS）
   → 安全描述符（Owner + DACL + 稍后 SACL）
-  → 继承（最小实验发明 OI/CI/IO/NP，再对接两套旋钮）
+  → 继承（最小实验发明 OI/CI/IO/NP，再对接两套标志）
   → 有效权限
   → SACL
   → 域与域控（公共账→搭 DC→加域→树与新建组）
@@ -2491,7 +2491,7 @@ whoami /priv
 
 1. **认证发令牌；网上常用票据证明身份；授权是令牌 SID 对对象 ACE（共享还多一道门）。**  
 2. **名字给人看，SID 给机器用；翻译与验密都经 LSA。**  
-3. **继承两套旋钮：传给谁（CI/OI），当前吃不吃、传几层（IO/NP）。**
+3. **继承有两套标志：传给谁（CI/OI），当前吃不吃、传几层（IO/NP）。**
 
 ---
 
@@ -2512,7 +2512,9 @@ whoami /priv
 - [Windows Authentication Architecture - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/windows-authentication-architecture)  
 - [LSA_AP_LOGON_USER](https://learn.microsoft.com/en-us/windows/win32/api/ntsecpkg/nc-ntsecpkg-lsa_ap_logon_user)  
 - [whoami](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/whoami)  
-- [How UAC works](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)
+- [How UAC works](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)  
+- [Key security concepts](https://learn.microsoft.com/en-us/dotnet/standard/security/key-security-concepts)（UAC 双令牌简述）  
+- [Appendix B - Privileged accounts](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory)（permissions vs rights；夺所有权）
 
 ### ACL / 继承 / 共享
 
