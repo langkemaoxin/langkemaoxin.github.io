@@ -41,10 +41,5 @@ export default navbar([
     text: "笔记",
     icon: "note-sticky",
     link: "/Notes/",
-  },
-  {
-    text: "GitHub",
-    icon: "fab fa-github",
-    link: "https://github.com/code-corey/code-corey.github.io",
-  },
+  }
 ]);

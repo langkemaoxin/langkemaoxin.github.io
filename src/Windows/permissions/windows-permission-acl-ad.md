@@ -2125,13 +2125,105 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
 
 在**已加入域且已用域账户登录**的电脑上：
 
-```bat
-:: 看当前登录会话缓存了哪些 Kerberos 票（含 TGT 与服务票）
-klist
+`klist` ：<u>看当前登录会话缓存了哪些 Kerberos 票（含 TGT 与服务票）</u>
 
-:: 只盯总通行证（TGT）
-klist tgt
+`klist tgt`:<u>只盯总通行证（TGT）</u>
+
+
+```bat
+PS C:\Users\chengongyi> klist tgt
+
+当前登录 ID 是 0:0x13d0ec
+
+缓存的 TGT:
+
+服务名        : krbtgt
+目标名(SPN)   : krbtgt
+客户端名         : chengongyi
+域名         : JZFZ.LOCAL
+目标域名   : JZFZ.LOCAL
+替换目标域名: JZFZ.LOCAL
+票证标志       : 0x40e10000 -> forwardable renewable initial pre_authent name_canonicalize
+会话密钥        : 密钥类型 0x12 - AES-256-CTS-HMAC-SHA1-96
+                   : 密钥长度 32 - 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+开始时间          : 8/7/2026 10:02:54 (本地)
+结束时间            : 8/7/2026 20:02:54 (本地)
+在以下时间之前续订         : 8/14/2026 10:02:54 (本地)
+TimeSkew           :  + 0:00 分钟
+编号票证      : (大小: 2423)
+0000  61 82 09 73 30 82 09 6f:a0 03 02 01 05 a1 0c 1b  a..s0..o........
+0010  0a 4a 5a 46 5a 2e 4c 4f:43 41 4c a2 1f 30 1d a0  .JZFZ.LOCAL..0..
+0020  03 02 01 02 a1 16 30 14:1b 06 6b 72 62 74 67 74  ......0...krbtgt
+0030  1b 0a 4a 5a 46 5a 2e 4c:4f 43 41 4c a3 82 09 37  ..JZFZ.LOCAL...7
+0040  30 82 09 33 a0 03 02 01:12 a1 03 02 01 03 a2 82  0..3............
+0050  09 25 04 82 09 21 d6 0a:db f0 83 f6 f9 58 7f 82  .%...!.......X..
 ```
+
+系统刚登陆的时候
+``` bat
+PS C:\Users\chengongyi> klist
+
+当前登录 ID 是 0:0x13d0ec
+
+缓存的票证: (1)
+
+#0>     客户端: chengongyi @ JZFZ.LOCAL
+        服务器: krbtgt/JZFZ.LOCAL @ JZFZ.LOCAL
+        Kerberos 票证加密类型: AES-256-CTS-HMAC-SHA1-96
+        票证标志 0x40e10000 -> forwardable renewable initial pre_authent name_canonicalize
+        开始时间: 8/7/2026 10:02:54 (本地)
+        结束时间:   8/7/2026 20:02:54 (本地)
+        续订时间: 8/14/2026 10:02:54 (本地)
+        会话密钥类型: AES-256-CTS-HMAC-SHA1-96
+        缓存标志: 0x1 -> PRIMARY
+        调用的 KDC: jzfzdc9.jzfz.local
+```
+
+访问过共享目录之后，发现了缓存了共享路径的票据
+``` bat
+PS C:\Users\chengongyi> klist
+
+当前登录 ID 是 0:0x13d0ec
+
+缓存的票证: (3)
+
+#0>     客户端: chengongyi @ JZFZ.LOCAL
+        服务器: krbtgt/JZFZ.LOCAL @ JZFZ.LOCAL
+        Kerberos 票证加密类型: AES-256-CTS-HMAC-SHA1-96
+        票证标志 0x40e10000 -> forwardable renewable initial pre_authent name_canonicalize
+        开始时间: 8/7/2026 10:02:54 (本地)
+        结束时间:   8/7/2026 20:02:54 (本地)
+        续订时间: 8/14/2026 10:02:54 (本地)
+        会话密钥类型: AES-256-CTS-HMAC-SHA1-96
+        缓存标志: 0x1 -> PRIMARY
+        调用的 KDC: jzfzdc9.jzfz.local
+
+#1>     客户端: chengongyi @ JZFZ.LOCAL
+        服务器: cifs/jzfz15 @ JZFZ.LOCAL
+        Kerberos 票证加密类型: AES-256-CTS-HMAC-SHA1-96
+        票证标志 0x40a10000 -> forwardable renewable pre_authent name_canonicalize
+        开始时间: 8/7/2026 10:23:08 (本地)
+        结束时间:   8/7/2026 20:02:54 (本地)
+        续订时间: 8/14/2026 10:02:54 (本地)
+        会话密钥类型: AES-256-CTS-HMAC-SHA1-96
+        缓存标志: 0
+        调用的 KDC: jzfzdc9.jzfz.local
+
+#2>     客户端: chengongyi @ JZFZ.LOCAL
+        服务器: LDAP/JZFZDC10.jzfz.local/jzfz.local @ JZFZ.LOCAL
+        Kerberos 票证加密类型: AES-256-CTS-HMAC-SHA1-96
+        票证标志 0x40a50000 -> forwardable renewable pre_authent ok_as_delegate name_canonicalize
+        开始时间: 8/7/2026 10:23:06 (本地)
+        结束时间:   8/7/2026 20:02:54 (本地)
+        续订时间: 8/14/2026 10:02:54 (本地)
+        会话密钥类型: AES-256-CTS-HMAC-SHA1-96
+        缓存标志: 0
+        调用的 KDC: jzfzdc9.jzfz.local
+```
+
+
+
+
 
 来源：[klist](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/klist)
 
