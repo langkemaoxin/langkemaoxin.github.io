@@ -448,7 +448,7 @@ Mandatory Label\High Mandatory Level          标签   S-1-16-12288
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[卷三导读](./00-overview.md)
+← 上一章：[SPN](../vol2-identity/05-spn.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[用户权利专章](./02-user-rights.md)
 <!-- chapter-nav:end -->

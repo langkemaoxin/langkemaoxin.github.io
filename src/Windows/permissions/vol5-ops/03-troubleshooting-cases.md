@@ -45,5 +45,5 @@ tag:
 <!-- chapter-nav:start -->
 ← 上一章：[有效权限实战](./02-effective-access-practice.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[卷六导读](../vol6-dotnet/00-overview.md)
+→ 下一章：[.NET 身份](../vol6-dotnet/01-identity.md)
 <!-- chapter-nav:end -->

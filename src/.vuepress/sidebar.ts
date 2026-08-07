@@ -133,7 +133,6 @@ export default sidebar({
           prefix: "vol1-invent/",
           collapsible: true,
           children: [
-            "00-overview",
             "01-no-permission",
             "02-account",
             "03-sid",
@@ -153,11 +152,10 @@ export default sidebar({
         },
         {
           text: "卷二·网上的身份",
-          icon: "network-wired",
+          icon: "book",
           prefix: "vol2-identity/",
           collapsible: true,
           children: [
-            "00-overview",
             "01-domain-dc",
             "02-kerberos",
             "03-ntlm",
@@ -167,11 +165,10 @@ export default sidebar({
         },
         {
           text: "卷三·权利与 UAC",
-          icon: "user-shield",
+          icon: "book",
           prefix: "vol3-rights-uac/",
           collapsible: true,
           children: [
-            "00-overview",
             "01-rights-uac",
             "02-user-rights",
             "03-uac",
@@ -181,11 +178,10 @@ export default sidebar({
         },
         {
           text: "卷四·不只是文件",
-          icon: "folder-tree",
+          icon: "book",
           prefix: "vol4-beyond-files/",
           collapsible: true,
           children: [
-            "00-overview",
             "01-registry",
             "02-services",
             "03-ad-delegation",
@@ -193,11 +189,10 @@ export default sidebar({
         },
         {
           text: "卷五·排障与设计",
-          icon: "screwdriver-wrench",
+          icon: "book",
           prefix: "vol5-ops/",
           collapsible: true,
           children: [
-            "00-overview",
             "01-share-design",
             "02-effective-access-practice",
             "03-troubleshooting-cases",
@@ -205,11 +200,10 @@ export default sidebar({
         },
         {
           text: "卷六·用代码改权限",
-          icon: "code",
+          icon: "book",
           prefix: "vol6-dotnet/",
           collapsible: true,
           children: [
-            "00-overview",
             "01-identity",
             "02-acl",
             "03-impersonation",
@@ -217,11 +211,10 @@ export default sidebar({
         },
         {
           text: "附录",
-          icon: "bookmark",
+          icon: "book",
           prefix: "appendix/",
           collapsible: true,
           children: [
-            "00-overview",
             "01-map",
             "02-sddl",
             "03-event-ids",

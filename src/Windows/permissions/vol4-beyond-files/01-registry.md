@@ -45,7 +45,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[卷四导读](./00-overview.md)
+← 上一章：[AdminSDHolder](../vol3-rights-uac/05-adminsdholder.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[服务权限](./02-services.md)
 <!-- chapter-nav:end -->

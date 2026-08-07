@@ -46,5 +46,5 @@ tag:
 <!-- chapter-nav:start -->
 ← 上一章：[服务权限](./02-services.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[卷五导读](../vol5-ops/00-overview.md)
+→ 下一章：[共享设计](../vol5-ops/01-share-design.md)
 <!-- chapter-nav:end -->

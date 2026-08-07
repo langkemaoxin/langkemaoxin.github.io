@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[卷五导读](./00-overview.md)
+← 上一章：[AD 委派](../vol4-beyond-files/03-ad-delegation.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[有效权限实战](./02-effective-access-practice.md)
 <!-- chapter-nav:end -->

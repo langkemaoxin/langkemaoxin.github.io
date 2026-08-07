@@ -42,5 +42,5 @@ Security Descriptor
 <!-- chapter-nav:start -->
 ← 上一章：[第 13 站：有效权限](./14-effective-permissions.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[卷二导读](../vol2-identity/00-overview.md)
+→ 下一章：[第 15 站：域与域控](../vol2-identity/01-domain-dc.md)
 <!-- chapter-nav:end -->

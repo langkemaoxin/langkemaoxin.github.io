@@ -12,32 +12,32 @@ export default {
   },
   "permissions/vol2-identity": {
     title: "卷二·网上的身份",
-    icon: "network-wired",
+    icon: "book",
     order: 2,
   },
   "permissions/vol3-rights-uac": {
     title: "卷三·权利与 UAC",
-    icon: "user-shield",
+    icon: "book",
     order: 3,
   },
   "permissions/vol4-beyond-files": {
     title: "卷四·不只是文件",
-    icon: "folder-tree",
+    icon: "book",
     order: 4,
   },
   "permissions/vol5-ops": {
     title: "卷五·排障与设计",
-    icon: "screwdriver-wrench",
+    icon: "book",
     order: 5,
   },
   "permissions/vol6-dotnet": {
     title: "卷六·用代码改权限",
-    icon: "code",
+    icon: "book",
     order: 6,
   },
   "permissions/appendix": {
     title: "附录",
-    icon: "bookmark",
+    icon: "book",
     order: 7,
   },
   setup: {

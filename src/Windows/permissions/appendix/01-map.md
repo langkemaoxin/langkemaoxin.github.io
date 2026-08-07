@@ -75,7 +75,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[附录导读](./00-overview.md)
+← 上一章：[.NET 模拟](../vol6-dotnet/03-impersonation.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[SDDL](./02-sddl.md)
 <!-- chapter-nav:end -->

@@ -47,5 +47,5 @@ tag:
 <!-- chapter-nav:start -->
 ← 上一章：[GPO 权利分配](./04-gpo-rights.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[卷四导读](../vol4-beyond-files/00-overview.md)
+→ 下一章：[注册表 ACL](../vol4-beyond-files/01-registry.md)
 <!-- chapter-nav:end -->

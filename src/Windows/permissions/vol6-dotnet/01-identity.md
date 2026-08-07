@@ -44,7 +44,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[卷六导读](./00-overview.md)
+← 上一章：[排障案例集](../vol5-ops/03-troubleshooting-cases.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[.NET 改 ACL](./02-acl.md)
 <!-- chapter-nav:end -->

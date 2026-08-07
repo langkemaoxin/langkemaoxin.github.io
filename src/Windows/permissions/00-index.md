@@ -21,15 +21,15 @@ tag:
 
 ## 分卷一览
 
-| 卷 | 目录 | 导读 |
+| 卷 | 目录 | 入口 |
 |----|------|------|
-| 卷一·发明权限 | `vol1-invent/` | [导读](./vol1-invent/00-overview.md) |
-| 卷二·网上的身份 | `vol2-identity/` | [导读](./vol2-identity/00-overview.md) |
-| 卷三·权利与 UAC | `vol3-rights-uac/` | [导读](./vol3-rights-uac/00-overview.md) |
-| 卷四·不只是文件 | `vol4-beyond-files/` | [导读](./vol4-beyond-files/00-overview.md) |
-| 卷五·排障与设计 | `vol5-ops/` | [导读](./vol5-ops/00-overview.md) |
-| 卷六·用代码改权限 | `vol6-dotnet/` | [导读](./vol6-dotnet/00-overview.md) |
-| 附录 | `appendix/` | [导读](./appendix/00-overview.md) |
+| 卷一·发明权限 | `vol1-invent/` | [第 0 站](./vol1-invent/01-no-permission.md) |
+| 卷二·网上的身份 | `vol2-identity/` | [第 15 站](./vol2-identity/01-domain-dc.md) |
+| 卷三·权利与 UAC | `vol3-rights-uac/` | [权利与 UAC](./vol3-rights-uac/01-rights-uac.md) |
+| 卷四·不只是文件 | `vol4-beyond-files/` | [注册表 ACL](./vol4-beyond-files/01-registry.md) |
+| 卷五·排障与设计 | `vol5-ops/` | [共享设计](./vol5-ops/01-share-design.md) |
+| 卷六·用代码改权限 | `vol6-dotnet/` | [.NET 身份](./vol6-dotnet/01-identity.md) |
+| 附录 | `appendix/` | [总图](./appendix/01-map.md) |
 
 ## 卷一·发明权限
 
@@ -105,11 +105,11 @@ tag:
 | [实验室](./appendix/04-lab.md) | 待写 | |
 | [参考](./appendix/05-references.md) | 已有·待升级 | |
 
-建议从 [卷一导读](./vol1-invent/00-overview.md) 或 [第 0 站](./vol1-invent/01-no-permission.md) 开始。
+建议从 [第 0 站](./vol1-invent/01-no-permission.md) 开始。
 
 ---
 
 <!-- chapter-nav:start -->
 · [回书稿索引](./00-index.md)
-→ 下一章：[卷一导读](./vol1-invent/00-overview.md)
+→ 下一章：[第 0 站：没有权限](./vol1-invent/01-no-permission.md)
 <!-- chapter-nav:end -->
