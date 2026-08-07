@@ -17,7 +17,6 @@ export default sidebar({
         "playwright-Agent-Skills",
         "playwright-Agent-Skills-Ai-News",
         "LangChain-Learn",
-        "技术专家10问自查清单",
       ],
     },
     {
@@ -46,7 +45,6 @@ export default sidebar({
       collapsible: true,
       children: [
         "how-to-build-tech-info-radar",
-        "how-to-build-tech-info-radar copy",
         "harness-engineering",
         "2026年AI-Agent框架选型指南：从“大爆发”到“大灭绝”后的生存法则",
       ],
@@ -219,6 +217,15 @@ export default sidebar({
         "project-learning-map",
         "three-blog-skills-for-retrospective-and-publish",
         "hello-202026",
+      ],
+    },
+    {
+      text: "思考",
+      icon: "folder",
+      prefix: "think/",
+      collapsible: true,
+      children: [
+        "技术专家10问自查清单",
       ],
     },
   ],
