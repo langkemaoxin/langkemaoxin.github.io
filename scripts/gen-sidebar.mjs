@@ -68,9 +68,9 @@ function sortKey(order) {
 }
 
 /**
- * 从目录内文章推断显示名：优先一致的 sidebarGroup，否则用文件夹名
  * @param {string} folderName
  * @param {string[]} sidebarGroups
+ * @param {string} configKey
  */
 function resolveGroupTitle(folderName, sidebarGroups, configKey) {
   const meta = folders[configKey];
@@ -90,6 +90,119 @@ function resolveGroupTitle(folderName, sidebarGroups, configKey) {
     return best;
   }
   return folderName;
+}
+
+/**
+ * 读取目录内 md（不含 README），按 order 排序
+ * @param {string} dirPath
+ * @param {string} configKey
+ * @returns {{ id: string, order: number, sidebarGroup?: string }[]}
+ */
+function readMarkdownItems(dirPath, configKey) {
+  if (!fs.existsSync(dirPath)) return [];
+  const files = fs
+    .readdirSync(dirPath)
+    .filter((name) => name.endsWith(".md") && name.toLowerCase() !== "readme.md");
+
+  /** @type {{ id: string, order: number, sidebarGroup?: string }[]} */
+  const items = [];
+  for (const fileName of files) {
+    const filePath = path.join(dirPath, fileName);
+    if (!fs.statSync(filePath).isFile()) continue;
+    const raw = fs.readFileSync(filePath, "utf8");
+    const split = splitFrontmatter(raw);
+    if (!split) {
+      console.warn(`[warn] no frontmatter: ${configKey}/${fileName}`);
+      continue;
+    }
+    const data = parseSimpleFrontmatter(split.fm);
+    const order = data.order !== undefined ? Number(data.order) : undefined;
+    items.push({
+      id: toSidebarId(fileName),
+      order: sortKey(order),
+      sidebarGroup: data.sidebarGroup,
+    });
+  }
+  items.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id, "zh"));
+  return items;
+}
+
+/**
+ * 构建一层分组：可含根级 md + 嵌套子文件夹（再作一级 collapsible）
+ * @param {string} groupDir
+ * @param {string} folder
+ * @param {string} moduleDir
+ */
+function buildGroupEntry(groupDir, folder, moduleDir) {
+  const configKey = `${moduleDir}/${folder}`;
+  const rootItems = readMarkdownItems(groupDir, configKey);
+  const nestedDirs = fs
+    .readdirSync(groupDir)
+    .filter((name) => {
+      if (name.startsWith(".")) return false;
+      return fs.statSync(path.join(groupDir, name)).isDirectory();
+    });
+
+  /** @type {(string | object)[]} */
+  const children = [];
+
+  for (const item of rootItems) {
+    children.push(item.id);
+  }
+
+  /** @type {{ name: string, order: number, entry: object }[]} */
+  const nested = [];
+  for (const nestName of nestedDirs) {
+    const nestDir = path.join(groupDir, nestName);
+    const nestKey = `${configKey}/${nestName}`;
+    const nestItems = readMarkdownItems(nestDir, nestKey);
+    if (nestItems.length === 0) continue;
+
+    const groupsInFiles = nestItems
+      .map((i) => i.sidebarGroup)
+      .filter(Boolean);
+    const title = resolveGroupTitle(nestName, groupsInFiles, nestKey);
+    const nestMeta = folders[nestKey] || {};
+    const icon = nestMeta.icon || defaultFolderIcon;
+
+    nested.push({
+      name: nestName,
+      order: sortKey(nestMeta.order),
+      entry: {
+        text: title,
+        icon,
+        prefix: `${nestName}/`,
+        collapsible: true,
+        children: nestItems.map((i) => i.id),
+      },
+    });
+  }
+
+  nested.sort(
+    (a, b) => a.order - b.order || a.name.localeCompare(b.name, "zh"),
+  );
+  for (const n of nested) {
+    children.push(n.entry);
+  }
+
+  if (children.length === 0) return null;
+
+  const groupsInRoot = rootItems.map((i) => i.sidebarGroup).filter(Boolean);
+  const title = resolveGroupTitle(folder, groupsInRoot, configKey);
+  const meta = folders[configKey] || {};
+  const icon = meta.icon || defaultFolderIcon;
+
+  return {
+    folder,
+    order: sortKey(meta.order),
+    entry: {
+      text: title,
+      icon,
+      prefix: `${folder}/`,
+      collapsible: true,
+      children,
+    },
+  };
 }
 
 /**
@@ -125,59 +238,8 @@ function collectModuleSidebar(mod) {
 
   for (const folder of subdirs) {
     const groupDir = path.join(dirPath, folder);
-    const files = fs
-      .readdirSync(groupDir)
-      .filter((name) => name.endsWith(".md") && name.toLowerCase() !== "readme.md");
-    if (files.length === 0) continue;
-
-    const configKey = `${mod.dir}/${folder}`;
-    /** @type {string[]} */
-    const groupsInFiles = [];
-    /** @type {{ id: string, order: number }[]} */
-    const items = [];
-
-    for (const fileName of files) {
-      const filePath = path.join(groupDir, fileName);
-      const raw = fs.readFileSync(filePath, "utf8");
-      const split = splitFrontmatter(raw);
-      if (!split) {
-        console.warn(`[warn] no frontmatter: ${configKey}/${fileName}`);
-        continue;
-      }
-      const data = parseSimpleFrontmatter(split.fm);
-      if (data.sidebarGroup) groupsInFiles.push(data.sidebarGroup);
-
-      const order = data.order !== undefined ? Number(data.order) : undefined;
-      items.push({ id: toSidebarId(fileName), order: sortKey(order) });
-    }
-
-    if (items.length === 0) continue;
-
-    const title = resolveGroupTitle(folder, groupsInFiles, configKey);
-    const meta = folders[configKey] || {};
-    const icon = meta.icon || defaultFolderIcon;
-
-    for (const g of groupsInFiles) {
-      if (g !== title) {
-        console.warn(
-          `[warn] sidebarGroup "${g}" != folder title "${title}" under ${configKey}`,
-        );
-      }
-    }
-
-    items.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id, "zh"));
-
-    groups.push({
-      folder,
-      order: sortKey(meta.order),
-      entry: {
-        text: title,
-        icon,
-        prefix: `${folder}/`,
-        collapsible: true,
-        children: items.map((item) => item.id),
-      },
-    });
+    const built = buildGroupEntry(groupDir, folder, mod.dir);
+    if (built) groups.push(built);
   }
 
   groups.sort(
@@ -225,7 +287,8 @@ function generateSidebar() {
   const content = `import { sidebar } from "vuepress-theme-hope";
 
 // 由 scripts/gen-sidebar.mjs 自动生成，请勿手改。
-// 新增分类：直接建子文件夹；新增文章：放入对应文件夹并写 shortTitle / order / sidebarGroup
+// 新增分类：直接建子文件夹；权限书稿可在分类下再建卷目录（二级侧栏）。
+// 新增文章：放入对应文件夹并写 shortTitle / order / sidebarGroup
 // icon / 显示名 / 分类顺序可在 scripts/sidebar/<模块>.mjs 里覆盖
 // 然后运行：pnpm sidebar:gen
 export default sidebar({

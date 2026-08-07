@@ -17,106 +17,99 @@ tag:
 > 假设世界上本来没有「权限」这回事。  
 > **案例引入 → 西蒙式一次发明一个概念 → 专有名词后置。**
 
-本页是**整本书的导航**。已有正文直接读；标「待写」的是占位章，只说明计划写什么。
+正文按**物理卷目录**存放；本页是总导航。标「待写」的是占位章。
 
 ## 分卷一览
 
-| 卷 | 导读 | 内容 |
+| 卷 | 目录 | 导读 |
 |----|------|------|
-| 卷一·发明权限 | [导读](./v1-00-overview.md) | 现第 0～14 站（部分待加厚） |
-| 卷二·网上的身份 | [导读](./v2-00-overview.md) | 现第 15～16 站 + NTLM / 登录类型 / SPN（待写） |
-| 卷三·权利、UAC、特权账户 | [导读](./v3-00-overview.md) | 现合章待拆 + GPO 权利 / AdminSDHolder（待写） |
-| 卷四·不只是文件 | [导读](./v4-00-overview.md) | 注册表 / 服务 / AD 委派（待写） |
-| 卷五·排障与设计模式 | [导读](./v5-00-overview.md) | 共享设计 / 有效权限实战 / 案例集（待写） |
-| 卷六·用代码改权限 | [导读](./v6-00-overview.md) | .NET 身份 / ACL / 模拟（待写） |
-| 附录 | [导读](./a-00-overview.md) | 总图 / SDDL / 事件 ID / 实验室 / 参考 |
+| 卷一·发明权限 | `vol1-invent/` | [导读](./vol1-invent/00-overview.md) |
+| 卷二·网上的身份 | `vol2-identity/` | [导读](./vol2-identity/00-overview.md) |
+| 卷三·权利与 UAC | `vol3-rights-uac/` | [导读](./vol3-rights-uac/00-overview.md) |
+| 卷四·不只是文件 | `vol4-beyond-files/` | [导读](./vol4-beyond-files/00-overview.md) |
+| 卷五·排障与设计 | `vol5-ops/` | [导读](./vol5-ops/00-overview.md) |
+| 卷六·用代码改权限 | `vol6-dotnet/` | [导读](./vol6-dotnet/00-overview.md) |
+| 附录 | `appendix/` | [导读](./appendix/00-overview.md) |
 
 ## 卷一·发明权限
 
-| 章 | 状态 | 这一站干什么 |
-|----|------|----------------|
-| [第 0 站](./01-no-permission.md) | 已有 | 为什么需要后面这些发明 |
-| [第 1 站](./02-account.md) | 已有 | 系统如何认出「人」 |
-| [第 2 站](./03-sid.md) | 已有 | 机器真正认的稳定身份证号 |
-| [第 3 站](./04-name-sid-lsa.md) | 已有 | LSA 去哪里查、怎么翻译 |
-| [第 4 站](./05-logon-lsa.md) | 已有 | 谁验密码、登录过程怎样 |
-| [第 5 站](./06-access-token.md) | 已有 | 登录成功后挂到进程上的通行证 |
-| [第 6 站](./07-owner.md) | 已有 | 对象上的「主人」字段 |
-| [第 7 站](./08-permission-bits.md) | 已有·待加厚 | 读 / 写 / 完全控制等操作粒度 |
-| [第 8 站](./09-groups.md) | 已有·待加厚 | 人太多时如何打包身份 |
-| [第 9 站](./10-ace-dacl.md) | 已有 | 门上的规则列表怎么写 |
-| [第 10 站](./11-access-check.md) | 已有 | 令牌如何对上规则；共享∩NTFS |
-| [第 11 站](./12-security-descriptor.md) | 已有·待加厚 | Owner + DACL（及 SACL 槽位） |
-| [第 12 站](./13-inheritance.md) | 已有 | 从最小实验发明 OI/CI/IO/NP |
-| [第 13 站](./14-effective-permissions.md) | 已有 | 用有效访问验收「某人最终怎样」 |
-| [第 14 站](./15-sacl.md) | 已有·待加厚 | 审计：碰了记不记 |
+| 章 | 状态 | 说明 |
+|----|------|------|
+| [第 0 站](./vol1-invent/01-no-permission.md) | 已有 | 为何需要权限 |
+| [第 1 站](./vol1-invent/02-account.md) | 已有 | 账户 |
+| [第 2 站](./vol1-invent/03-sid.md) | 已有 | SID |
+| [第 3 站](./vol1-invent/04-name-sid-lsa.md) | 已有 | 名字 ↔ SID |
+| [第 4 站](./vol1-invent/05-logon-lsa.md) | 已有 | 登录与 LSA |
+| [第 5 站](./vol1-invent/06-access-token.md) | 已有 | Access Token |
+| [第 6 站](./vol1-invent/07-owner.md) | 已有 | Owner |
+| [第 7 站](./vol1-invent/08-permission-bits.md) | 已有·待加厚 | 权限位 |
+| [第 8 站](./vol1-invent/09-groups.md) | 已有·待加厚 | 组 |
+| [第 9 站](./vol1-invent/10-ace-dacl.md) | 已有 | ACE / DACL |
+| [第 10 站](./vol1-invent/11-access-check.md) | 已有 | 访问检查与共享两道门 |
+| [第 11 站](./vol1-invent/12-security-descriptor.md) | 已有·待加厚 | 安全描述符 |
+| [第 12 站](./vol1-invent/13-inheritance.md) | 已有 | 继承 |
+| [第 13 站](./vol1-invent/14-effective-permissions.md) | 已有 | 有效权限 |
+| [第 14 站](./vol1-invent/15-sacl.md) | 已有·待加厚 | SACL |
 
 ## 卷二·网上的身份
 
-| 章 | 状态 | 这一站干什么 |
-|----|------|----------------|
-| [第 15 站](./16-domain-dc.md) | 已有 | 域与域控 |
-| [第 16 站](./17-kerberos.md) | 已有 | Kerberos 票据 |
-| [NTLM 与协商](./v2-ntlm.md) | 待写 | 非纯 Kerberos 时发生了什么 |
-| [登录类型](./v2-logon-types.md) | 待写 | Interactive / Network / Batch / Service… |
-| [SPN](./v2-spn.md) | 待写 | 服务如何被票认到 |
+| 章 | 状态 | 说明 |
+|----|------|------|
+| [第 15 站](./vol2-identity/01-domain-dc.md) | 已有 | 域与域控 |
+| [第 16 站](./vol2-identity/02-kerberos.md) | 已有 | Kerberos |
+| [NTLM 与协商](./vol2-identity/03-ntlm.md) | 待写 | |
+| [登录类型](./vol2-identity/04-logon-types.md) | 待写 | |
+| [SPN](./vol2-identity/05-spn.md) | 待写 | |
 
-## 卷三·权利、UAC、特权账户
+## 卷三·权利与 UAC
 
-| 章 | 状态 | 这一站干什么 |
-|----|------|----------------|
-| [权利与 UAC（合章）](./18-rights-uac.md) | 已有·待拆 | 当前合订；将拆成下列专章 |
-| [用户权利专章](./v3-user-rights.md) | 待写 | 对象权限 ≠ 用户权利 |
-| [UAC 专章](./v3-uac.md) | 待写 | 双令牌与诊断 |
-| [GPO 权利分配](./v3-gpo-rights.md) | 待写 | 权利从哪配置 |
-| [AdminSDHolder](./v3-adminsdholder.md) | 待写 | 保护组 ACL 为何被还原 |
+| 章 | 状态 | 说明 |
+|----|------|------|
+| [权利与 UAC（合章）](./vol3-rights-uac/01-rights-uac.md) | 已有·待拆 | |
+| [用户权利专章](./vol3-rights-uac/02-user-rights.md) | 待写 | |
+| [UAC 专章](./vol3-rights-uac/03-uac.md) | 待写 | |
+| [GPO 权利分配](./vol3-rights-uac/04-gpo-rights.md) | 待写 | |
+| [AdminSDHolder](./vol3-rights-uac/05-adminsdholder.md) | 待写 | |
 
 ## 卷四·不只是文件
 
-| 章 | 状态 | 这一站干什么 |
-|----|------|----------------|
-| [注册表 ACL](./v4-registry.md) | 待写 | 同一套 SD，换到注册表 |
-| [服务权限](./v4-services.md) | 待写 | 服务账户与对象 ACL |
-| [AD 委派](./v4-ad-delegation.md) | 待写 | OU 上谁能改用户 |
+| 章 | 状态 | 说明 |
+|----|------|------|
+| [注册表 ACL](./vol4-beyond-files/01-registry.md) | 待写 | |
+| [服务权限](./vol4-beyond-files/02-services.md) | 待写 | |
+| [AD 委派](./vol4-beyond-files/03-ad-delegation.md) | 待写 | |
 
-## 卷五·排障与设计模式
+## 卷五·排障与设计
 
-| 章 | 状态 | 这一站干什么 |
-|----|------|----------------|
-| [共享设计](./v5-share-design.md) | 待写 | 两道门如何配 |
-| [有效权限实战](./v5-effective-access-practice.md) | 待写 | 可重复验收流程 |
-| [排障案例集](./v5-troubleshooting-cases.md) | 待写 | 按症状找原因 |
+| 章 | 状态 | 说明 |
+|----|------|------|
+| [共享设计](./vol5-ops/01-share-design.md) | 待写 | |
+| [有效权限实战](./vol5-ops/02-effective-access-practice.md) | 待写 | |
+| [排障案例集](./vol5-ops/03-troubleshooting-cases.md) | 待写 | |
 
 ## 卷六·用代码改权限
 
-| 章 | 状态 | 这一站干什么 |
-|----|------|----------------|
-| [.NET 身份](./v6-dotnet-identity.md) | 待写 | WindowsIdentity / Principal |
-| [.NET 改 ACL](./v6-dotnet-acl.md) | 待写 | FileSystemAccessRule 与继承标志 |
-| [.NET 模拟](./v6-dotnet-impersonation.md) | 待写 | Impersonation 入门 |
+| 章 | 状态 | 说明 |
+|----|------|------|
+| [.NET 身份](./vol6-dotnet/01-identity.md) | 待写 | |
+| [.NET 改 ACL](./vol6-dotnet/02-acl.md) | 待写 | |
+| [.NET 模拟](./vol6-dotnet/03-impersonation.md) | 待写 | |
 
 ## 附录
 
-| 章 | 状态 | 这一站干什么 |
-|----|------|----------------|
-| [总图](./19-map.md) | 已有·待升级 | 串回全链路（将纳入新卷节点） |
-| [SDDL](./a-sddl.md) | 待写 | 字串形式的安全描述符 |
-| [事件 ID](./a-event-ids.md) | 待写 | 登录与对象访问速查 |
-| [实验室](./a-lab.md) | 待写 | 最小实验环境清单 |
-| [参考](./20-references.md) | 已有·待升级 | Learn 链接与实验顺序 |
+| 章 | 状态 | 说明 |
+|----|------|------|
+| [总图](./appendix/01-map.md) | 已有·待升级 | |
+| [SDDL](./appendix/02-sddl.md) | 待写 | |
+| [事件 ID](./appendix/03-event-ids.md) | 待写 | |
+| [实验室](./appendix/04-lab.md) | 待写 | |
+| [参考](./appendix/05-references.md) | 已有·待升级 | |
 
-## 建议阅读顺序
-
-1. 卷一按站读完（薄章可先跳过加厚，但 ACE / 继承 / 有效权限建议精读）  
-2. 卷二域 + Kerberos；其余待写章有需要再盯  
-3. 卷三先读合章，再等拆章 / GPO / AdminSDHolder  
-4. 卷四～六、附录按职责选读  
-
-下一章从 [卷一导读](./v1-00-overview.md) 或 [第 0 站](./01-no-permission.md) 开始。
+建议从 [卷一导读](./vol1-invent/00-overview.md) 或 [第 0 站](./vol1-invent/01-no-permission.md) 开始。
 
 ---
 
 <!-- chapter-nav:start -->
 · [回书稿索引](./00-index.md)
-→ 下一章：[卷一导读](./v1-00-overview.md)
+→ 下一章：[卷一导读](./vol1-invent/00-overview.md)
 <!-- chapter-nav:end -->
