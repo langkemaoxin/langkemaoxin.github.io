@@ -2,7 +2,7 @@
 title: "第 3 站：名字 ↔ SID——LSA 去哪里查"
 sidebarGroup: "权限"
 shortTitle: "第 3 站：名字 ↔ SID"
-order: 4
+order: 5
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -124,8 +124,10 @@ LSA 还有 Name/SID **查找缓存**，减少反复打域控。
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 2 站：SID](./03-sid.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 4 站：登录与 LSA](./05-logon-lsa.md)
 <!-- chapter-nav:end -->

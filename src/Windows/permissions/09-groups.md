@@ -2,7 +2,7 @@
 title: "第 8 站：组——对人打包"
 sidebarGroup: "权限"
 shortTitle: "第 8 站：组"
-order: 9
+order: 10
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -38,8 +38,10 @@ tag:
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 7 站：权限位](./08-permission-bits.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 9 站：ACE 与 DACL](./10-ace-dacl.md)
 <!-- chapter-nav:end -->

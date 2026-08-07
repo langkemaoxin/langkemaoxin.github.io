@@ -2,7 +2,7 @@
 title: "第 11 站：安全描述符——Owner + DACL 放进同一份档案"
 sidebarGroup: "权限"
 shortTitle: "第 11 站：安全描述符"
-order: 12
+order: 13
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -40,8 +40,10 @@ Security Descriptor
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 10 站：访问检查](./11-access-check.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 12 站：继承](./13-inheritance.md)
 <!-- chapter-nav:end -->

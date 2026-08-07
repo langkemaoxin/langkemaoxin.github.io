@@ -2,7 +2,7 @@
 title: "第 13 站：有效权限"
 sidebarGroup: "权限"
 shortTitle: "第 13 站：有效权限"
-order: 14
+order: 15
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -134,8 +134,10 @@ icacls E:\协同\项目A\图纸\总平.dwg
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 12 站：继承](./13-inheritance.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 14 站：SACL](./15-sacl.md)
 <!-- chapter-nav:end -->

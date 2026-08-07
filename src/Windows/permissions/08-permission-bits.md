@@ -2,7 +2,7 @@
 title: "第 7 站：权限位——读、写、完全控制……"
 sidebarGroup: "权限"
 shortTitle: "第 7 站：权限位"
-order: 8
+order: 9
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -54,8 +54,10 @@ icacls D:\Share\Q1.xlsx
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 6 站：Owner](./07-owner.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 8 站：组](./09-groups.md)
 <!-- chapter-nav:end -->

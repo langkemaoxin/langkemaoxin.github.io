@@ -2,7 +2,7 @@
 title: "第 12 站：继承——从「子文件太多」一步步发明（重点）"
 sidebarGroup: "权限"
 shortTitle: "第 12 站：继承"
-order: 13
+order: 14
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -618,8 +618,10 @@ icacls E:\WindowsTest\ /restore E:\WindowsTest\acl-backup.txt
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 11 站：安全描述符](./12-security-descriptor.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 13 站：有效权限](./14-effective-permissions.md)
 <!-- chapter-nav:end -->

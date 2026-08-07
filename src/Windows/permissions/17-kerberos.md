@@ -2,7 +2,7 @@
 title: "第 16 站：Kerberos 票据——网上如何证明「我是谁」"
 sidebarGroup: "权限"
 shortTitle: "第 16 站：Kerberos"
-order: 17
+order: 22
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -226,8 +226,10 @@ PS C:\Users\chengongyi> klist
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 15 站：域与域控](./16-domain-dc.md)
-· [回索引](./00-index.md)
-→ 下一章：[第 17 站：权利与 UAC](./18-rights-uac.md)
+· [回书稿索引](./00-index.md)
+→ 下一章：[NTLM 与协商](./v2-ntlm.md)
 <!-- chapter-nav:end -->

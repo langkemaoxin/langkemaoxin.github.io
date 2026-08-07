@@ -2,7 +2,7 @@
 title: "第 1 站：账户——系统眼里的「人」"
 sidebarGroup: "权限"
 shortTitle: "第 1 站：账户"
-order: 2
+order: 3
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -74,8 +74,10 @@ Console.WriteLine(id.IsAuthenticated);   // 是否已认证
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 0 站：没有权限](./01-no-permission.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 2 站：SID](./03-sid.md)
 <!-- chapter-nav:end -->

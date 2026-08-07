@@ -2,7 +2,7 @@
 title: "第 0 站：没有权限的世界"
 sidebarGroup: "权限"
 shortTitle: "第 0 站：没有权限"
-order: 1
+order: 2
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -27,8 +27,10 @@ tag:
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
-← 上一章：[索引](./00-index.md)
-· [回索引](./00-index.md)
+← 上一章：[卷一导读](./v1-00-overview.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 1 站：账户](./02-account.md)
 <!-- chapter-nav:end -->

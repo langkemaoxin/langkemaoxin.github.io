@@ -2,7 +2,7 @@
 title: "参考（按主题）"
 sidebarGroup: "权限"
 shortTitle: "参考"
-order: 20
+order: 75
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -70,7 +70,9 @@ tag:
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
-← 上一章：[总图](./19-map.md)
-· [回索引](./00-index.md)
+← 上一章：[实验室](./a-lab.md)
+· [回书稿索引](./00-index.md)
 <!-- chapter-nav:end -->

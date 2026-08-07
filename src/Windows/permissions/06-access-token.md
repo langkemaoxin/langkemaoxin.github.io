@@ -2,7 +2,7 @@
 title: "第 5 站：Access Token——登录成功后的通行证"
 sidebarGroup: "权限"
 shortTitle: "第 5 站：Access Token"
-order: 6
+order: 7
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -94,8 +94,10 @@ foreach (IdentityReference g in id.Groups!)
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 4 站：登录与 LSA](./05-logon-lsa.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 6 站：Owner](./07-owner.md)
 <!-- chapter-nav:end -->

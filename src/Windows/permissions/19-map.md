@@ -2,7 +2,7 @@
 title: "总图：把各站串回一条线"
 sidebarGroup: "权限"
 shortTitle: "总图"
-order: 19
+order: 71
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -70,8 +70,10 @@ tag:
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
-← 上一章：[第 17 站：权利与 UAC](./18-rights-uac.md)
-· [回索引](./00-index.md)
-→ 下一章：[参考](./20-references.md)
+← 上一章：[附录导读](./a-00-overview.md)
+· [回书稿索引](./00-index.md)
+→ 下一章：[SDDL](./a-sddl.md)
 <!-- chapter-nav:end -->

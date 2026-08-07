@@ -2,7 +2,7 @@
 title: "第 2 站：SID——机器真正认的身份证号"
 sidebarGroup: "权限"
 shortTitle: "第 2 站：SID"
-order: 3
+order: 4
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -55,8 +55,10 @@ Console.WriteLine(id.User);   // 当前用户的 SID
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 1 站：账户](./02-account.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 3 站：名字 ↔ SID](./04-name-sid-lsa.md)
 <!-- chapter-nav:end -->

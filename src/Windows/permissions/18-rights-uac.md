@@ -2,7 +2,7 @@
 title: "第 17 站：用户权利 ≠ 对象权限；UAC 双令牌"
 sidebarGroup: "权限"
 shortTitle: "第 17 站：权利与 UAC"
-order: 18
+order: 31
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -443,8 +443,10 @@ Mandatory Label\High Mandatory Level          标签   S-1-16-12288
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
-← 上一章：[第 16 站：Kerberos](./17-kerberos.md)
-· [回索引](./00-index.md)
-→ 下一章：[总图](./19-map.md)
+← 上一章：[卷三导读](./v3-00-overview.md)
+· [回书稿索引](./00-index.md)
+→ 下一章：[用户权利专章](./v3-user-rights.md)
 <!-- chapter-nav:end -->

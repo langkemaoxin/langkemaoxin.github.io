@@ -2,7 +2,7 @@
 title: "第 10 站：访问检查——令牌如何对上规则（含网络共享两道门）"
 sidebarGroup: "权限"
 shortTitle: "第 10 站：访问检查"
-order: 11
+order: 12
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -288,8 +288,10 @@ SMB 访问控制由 **共享权限（share permissions）** 与 **NTFS 权限** 
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 9 站：ACE 与 DACL](./10-ace-dacl.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 11 站：安全描述符](./12-security-descriptor.md)
 <!-- chapter-nav:end -->

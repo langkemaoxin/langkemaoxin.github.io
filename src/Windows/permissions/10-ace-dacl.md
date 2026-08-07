@@ -2,7 +2,7 @@
 title: "第 9 站：ACE 与 DACL——规则列表"
 sidebarGroup: "权限"
 shortTitle: "第 9 站：ACE 与 DACL"
-order: 10
+order: 11
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -296,8 +296,10 @@ file.SetAccessControl(security);
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 8 站：组](./09-groups.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 10 站：访问检查](./11-access-check.md)
 <!-- chapter-nav:end -->

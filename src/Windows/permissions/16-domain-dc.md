@@ -2,7 +2,7 @@
 title: "第 15 站：域与域控——集中身份"
 sidebarGroup: "权限"
 shortTitle: "第 15 站：域与域控"
-order: 16
+order: 21
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -322,8 +322,10 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
-← 上一章：[第 14 站：SACL](./15-sacl.md)
-· [回索引](./00-index.md)
+← 上一章：[卷二导读](./v2-00-overview.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 16 站：Kerberos](./17-kerberos.md)
 <!-- chapter-nav:end -->

@@ -2,7 +2,7 @@
 title: "第 14 站：SACL——审计"
 sidebarGroup: "权限"
 shortTitle: "第 14 站：SACL"
-order: 15
+order: 16
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -35,8 +35,10 @@ Security Descriptor
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 13 站：有效权限](./14-effective-permissions.md)
-· [回索引](./00-index.md)
-→ 下一章：[第 15 站：域与域控](./16-domain-dc.md)
+· [回书稿索引](./00-index.md)
+→ 下一章：[卷二导读](./v2-00-overview.md)
 <!-- chapter-nav:end -->

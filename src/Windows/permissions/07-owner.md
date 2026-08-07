@@ -2,7 +2,7 @@
 title: "第 6 站：Owner——对象上的主人字段"
 sidebarGroup: "权限"
 shortTitle: "第 6 站：Owner"
-order: 7
+order: 8
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -67,8 +67,10 @@ file.SetAccessControl(security);
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 5 站：Access Token](./06-access-token.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 7 站：权限位](./08-permission-bits.md)
 <!-- chapter-nav:end -->

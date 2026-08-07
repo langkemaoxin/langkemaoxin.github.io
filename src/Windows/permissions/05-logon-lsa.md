@@ -2,7 +2,7 @@
 title: "第 4 站：登录——谁验密码，过程怎样（LSA）"
 sidebarGroup: "权限"
 shortTitle: "第 4 站：登录与 LSA"
-order: 5
+order: 6
 date: 2026-08-06
 category: "Windows"
 tag:
@@ -85,8 +85,10 @@ Alice 输入密码
 
 ---
 
+---
+
 <!-- chapter-nav:start -->
 ← 上一章：[第 3 站：名字 ↔ SID](./04-name-sid-lsa.md)
-· [回索引](./00-index.md)
+· [回书稿索引](./00-index.md)
 → 下一章：[第 5 站：Access Token](./06-access-token.md)
 <!-- chapter-nav:end -->
