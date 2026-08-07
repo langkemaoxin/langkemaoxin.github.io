@@ -57,7 +57,7 @@ tag:
 |----|------|------|
 | [第 15 站](./vol2-identity/01-domain-dc.md) | 已有 | 域与域控 |
 | [第 16 站](./vol2-identity/02-kerberos.md) | 已有 | Kerberos |
-| [NTLM 与协商](./vol2-identity/03-ntlm.md) | 待写 | |
+| [NTLM 与协商](./vol2-identity/03-ntlm.md) | 已有 | 盖章走不通时为何会出现 NTLM |
 | [登录类型](./vol2-identity/04-logon-types.md) | 待写 | |
 | [SPN](./vol2-identity/05-spn.md) | 待写 | |
 

@@ -23,7 +23,7 @@ tag:
 |----|------|------|
 | [第 15 站](./01-domain-dc.md) | 已有 | 域与域控 |
 | [第 16 站](./02-kerberos.md) | 已有 | Kerberos |
-| [NTLM 与协商](./03-ntlm.md) | 待写 | 何时不用/掉到 NTLM |
+| [NTLM 与协商](./03-ntlm.md) | 已有 | 何时不用/掉到 NTLM |
 | [登录类型](./04-logon-types.md) | 待写 | Interactive/Network/… |
 | [SPN 与计算机账户](./05-spn.md) | 待写 | 服务如何被票认到 |
 
