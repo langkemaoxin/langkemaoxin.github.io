@@ -49,7 +49,8 @@ tag:
 第 13 站 有效权限
 第 14 站 SACL：审计
 第 15 站 域与域控：从「一本公共账」推到加域与目录树
-第 16 站 用户权利 ≠ 对象权限；UAC 双令牌
+第 16 站 Kerberos 票据：网上如何证明「我是谁」
+第 17 站 用户权利 ≠ 对象权限；UAC 双令牌
 总图    串回全链路
 ```
 
@@ -707,7 +708,7 @@ Appendix B 特意区分：
 本站只要记住：
 
 > **DACL 很重要，但不是宇宙尽头。**  
-> 「权利压过权限 / 夺所有权」的细节 → **第 16 站**再讲透。
+> 「权利压过权限 / 夺所有权」的细节 → **第 17 站**再讲透。
 
 （Appendix B 后半关于 Enterprise Admins、Domain Admins 等内置高权组的大表，属于域与高权专题，**不在本站展开**。）
 
@@ -1038,7 +1039,7 @@ icacls "\\jzfz18\协同设计平台-18\CD-2013388"
 SMB 更推荐用**主机名**走 Kerberos；用 IP 等容易落到 NTLM。  
 来源：[SMB signing overview](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing-overview)
 
-域账户细节到第 15 站再集中讲；此处先接受：**UNC 打开前，服务器必须先认清你是谁。**
+域账户与「票据怎么换」放到第 15、16 站；此处先接受：**UNC 打开前，服务器必须先认清你是谁。**
 
 ### 10.3 两道门：共享权限 ∩ NTFS
 
@@ -2047,13 +2048,131 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
 **你现在会了：**  
 多机要共用身份 → 发明公共账与答账服务器（域 / 域控）→ 新电脑挂靠（加域）→ 单机与加域后差别 → 账本用文件夹分层（再认 OU/CN/路径）→ 新建组只是多一个带 SID 的主体，权限仍走 ACE + 令牌。  
 
+**下一站才需要：** 访问 `\\服务器\共享` 时，对方如何在**不拿到你密码**的前提下相信「你是谁」——域里常用的「盖章 / 票据」机制。
+
+---
+
+## 第 16 站：Kerberos 票据——网上如何证明「我是谁」
+
+### 麻烦
+
+第 4、5 站：坐在电脑前登录 → 本机得到 **Access Token**。  
+第 10 站：打开 `\\jzfz18\协同设计平台-18\...` 时，还要做**网络登录**——服务器也得认清你。
+
+若每次连共享都把**密码**交给文件服务器：
+
+- 烦（反复输入）；  
+- 险（每台服务器都可能学到你的密码）。
+
+需要发明另一种证明方式：**给服务器看一张「章」**，而不是把密码交出去。
+
+> 本站严格西蒙节奏：先发明「盖章处 / 总通行证 / 专用票」，再贴 Kerberos 官方名。  
+> **不展开**黄金票据、委派、加密套件考试表。
+
+---
+
+### 16.1 想做什么：密码只交给「盖章处」一次
+
+域里已经有第 15 站的**答账服务器（域控）**。再给它一个额外职责：当**可信的第三方盖章处**。
+
+推导：
+
+1. 你登录域账户时，只向盖章处证明「我是小王、密码对」；  
+2. 盖章处发给你一张**当天有效的总通行证**（先别记英文）；  
+3. 以后要访问某台文件服务器，用总通行证去换一张**只针对该服务的专用票**；  
+4. 文件服务器验的是专用票（相信盖章处签过），**不必**也不该拿到你的域密码。
+
+#### 现在才贴官方标签
+
+| 刚才发明的东西 | 常见叫法 |
+|----------------|----------|
+| 这套「盖章换票」协议 | **Kerberos** |
+| 盖章处（常跑在域控上） | **KDC（Key Distribution Center，密钥分发中心）** |
+| 登录后拿到的总通行证 | **TGT（Ticket-Granting Ticket，票据授予票据）** |
+| 访问某服务时换到的专用票 | **Service Ticket（服务票据）** / 会话票 |
+
+来源：[Kerberos authentication overview](https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview)  
+（KDC = AS + TGS；先发 TGT，再用 TGT 向 TGS 要服务票。）
+
+第 3 站 LSA 图里的 **KDC** 箭头，指的就是这条路上的盖章处。
+
+---
+
+### 16.2 两条时间线：登录发总票，访问换专用票
+
+```text
+【坐在电脑前登录域账户】
+  输入域名\账户 + 密码
+    → LSA 联系域（第 4 站）
+    → KDC 认可后：本机得到 Access Token（第 5 站）
+                   并且常缓存一张 TGT（总通行证）
+
+【稍后打开 \\fileserver\share】
+  本机用 TGT 向 KDC 申请「访问 fileserver 上 SMB」的专用票
+    → 带着专用票去做网络登录（第 10.2 站）
+    → 服务器认可你是谁之后
+    → 再走共享门 ∩ NTFS 门（令牌 SID 对 ACE，第 10 站）
+```
+
+收成一句：
+
+> **票据解决「网上如何认证」；令牌 + DACL 解决「认证之后能否读写」。**  
+> 两件事前后衔接，不要混成一个名词。
+
+---
+
+### 16.3 最小观察：用 `klist` 看见口袋里的票
+
+在**已加入域且已用域账户登录**的电脑上：
+
+```bat
+:: 看当前登录会话缓存了哪些 Kerberos 票（含 TGT 与服务票）
+klist
+
+:: 只盯总通行证（TGT）
+klist tgt
+```
+
+来源：[klist](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/klist)
+
+现象直觉（具体输出因环境而异）：
+
+- 刚登录后，往往已有与 `krbtgt` 相关的总票痕迹；  
+- 访问过 `\\某主机名\...` 之后，列表里常多出针对该主机/服务的票；  
+- 票有**过期时间**——过期后要续或重登，不是「一张票用到退休」。
+
+> 若 `klist` 几乎为空：可能未走域登录、票已清、或当前会话不是域会话。  
+> 用 **IP** 访问共享时，常更容易落到 NTLM 而不是 Kerberos（第 10.2 已提醒：尽量用主机名）。
+
+---
+
+### 16.4 和前几站怎么对齐（防混淆）
+
+| 概念 | 主要回答的问题 | 你已经会的站 |
+|------|----------------|--------------|
+| 密码 / 登录 | 人是不是本人 | 第 4 站 |
+| Access Token | 本机进程「带着哪些 SID」 | 第 5、8 站 |
+| Kerberos 票据 | 网上服务如何在不收密码的情况下认你 | **本站** |
+| ACE / Access Check | 认清人之后，这个文件能不能碰 | 第 9、10 站 |
+| 域控 / 目录 | 账户组存在哪、KDC 常跑在哪 | 第 15 站 |
+
+运维里还会听到 KRBTGT 账户等——那是 KDC 签总票时用的特殊账户，本站只需知道：**票的信用绑在域的盖章体系上，不绑在某一台文件服务器的良心上。**  
+来源：[Default accounts - KRBTGT](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-default-user-accounts)
+
+---
+
+### 收束
+
+**你现在会了：**  
+域网上证明身份，常用 Kerberos：先 TGT，再换服务票；服务器验票不收你的域密码；验完之后权限仍按令牌对 DACL（外加共享门）。  
+
 **下一站才需要：** 「能备份整盘」这类能力，和「某个文件 ACE」不是同一旋钮；以及管理员为何还弹 UAC。
 
 ---
 
-## 第 16 站：用户权利 ≠ 对象权限；UAC 双令牌
+## 第 17 站：用户权利 ≠ 对象权限；UAC 双令牌
 
-### 16.1 两个旋钮
+### 17.1 两个旋钮
 
 | 概念 | 管什么 |
 |------|--------|
@@ -2062,7 +2181,7 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
 
 来源：[Privileged accounts appendix](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory) 中对 permissions 与权利的区分语境
 
-### 16.2 UAC：管理员常有两张令牌
+### 17.2 UAC：管理员常有两张令牌
 
 管理员登录时，系统可创建**标准用户令牌**与**管理员令牌**；桌面 `explorer.exe` 用标准令牌，子进程默认继承，故多数程序以标准用户上下文运行；需要时再提升。  
 来源：[How UAC works - Sign in process](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)
@@ -2090,12 +2209,13 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
   → 有效权限
   → SACL
   → 域与域控（公共账→搭 DC→加域→树与新建组）
+  → Kerberos 票据（TGT → 服务票；网上认证）
   → 用户权利 ≠ 对象权限；UAC
 ```
 
 三句总收束：
 
-1. **认证发令牌；授权是令牌 SID 对对象 ACE（共享还多一道门）。**  
+1. **认证发令牌；网上常用票据证明身份；授权是令牌 SID 对对象 ACE（共享还多一道门）。**  
 2. **名字给人看，SID 给机器用；翻译与验密都经 LSA。**  
 3. **继承两套旋钮：传给谁（CI/OI），当前吃不吃、传几层（IO/NP）。**
 
@@ -2139,6 +2259,12 @@ Add-ADGroupMember -Identity "CD-平台-设计" -Members "chengongyi"
 - [Securing Domain Admins](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-f--securing-domain-admins-groups-in-active-directory)  
 - [New-ADGroup](https://learn.microsoft.com/en-us/powershell/module/activedirectory/new-adgroup)
 
+### Kerberos
+
+- [Kerberos authentication overview](https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview)  
+- [klist](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/klist)  
+- [Default accounts - KRBTGT](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-default-user-accounts)
+
 ---
 
-建议实验顺序：先 `whoami /all` → 再对本机文件 `GetOwner` → 再对测试目录试三组继承标志 → 最后在有权限的环境对比两个共享路径。每一步只验证**当前站**学会的概念。
+建议实验顺序：先 `whoami /all` → 再对本机文件 `GetOwner` → 再对测试目录试三组继承标志 → 域环境再 `klist` → 最后对比两个共享路径。每一步只验证**当前站**学会的概念。
