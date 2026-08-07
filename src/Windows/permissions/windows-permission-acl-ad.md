@@ -2264,21 +2264,203 @@ PS C:\Users\chengongyi> klist
 
 ## 第 17 站：用户权利 ≠ 对象权限；UAC 双令牌
 
-### 17.1 两个旋钮
+### 麻烦
 
-| 概念 | 管什么 |
-|------|--------|
-| **Permissions（对象权限）** | 某文件/共享/AD 对象上的 ACE |
-| **User rights / privileges（用户权利）** | 如备份、作为服务登录——偏系统能力 |
+前面十几站几乎都在发明**同一类旋钮**：某文件/文件夹门上贴的 ACE（对象权限）。  
+现实里还会撞上两件「看起来像权限、却不是同一张表」的事：
 
-来源：[Privileged accounts appendix](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory) 中对 permissions 与权利的区分语境
+**案例 A：门上写着不许进，备份仍能拷走**
 
-### 17.2 UAC：管理员常有两张令牌
+- 某目录 DACL 对 `JZFZ\chengongyi` 显式 **Deny** 读取；  
+- 但若账户被授了「备份文件和目录」这类**系统能力**，备份工具仍可能读到内容。  
 
-管理员登录时，系统可创建**标准用户令牌**与**管理员令牌**；桌面 `explorer.exe` 用标准令牌，子进程默认继承，故多数程序以标准用户上下文运行；需要时再提升。  
-来源：[How UAC works - Sign in process](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)
+你若只盯着 `icacls`，会觉得「Deny 失灵了」——其实动的是**另一套旋钮**。
 
-> 「我是管理员」≠「我打开的每个程序都带着管理员令牌」。
+**案例 B：明明是管理员，装个软件还弹 UAC**
+
+- 登录账户在本机 **Administrators** 里；  
+- 双击安装包却弹出「是否允许此应用对设备进行更改？」；  
+- 不点「是」，程序仍像普通用户一样处处碰壁。  
+
+「我是管理员」≠「我打开的每个程序都带着管理员令牌」。
+
+> 本站只发明两样：**用户权利（privileges）** 与 **UAC 双令牌**。  
+> 专有名词后置；不背完整权利清单，不讲提权漏洞。
+
+---
+
+### 17.1 想做什么：承认世界上有两套旋钮
+
+#### 先用人话分开
+
+| 你想控制的事 | 直觉该拧哪颗旋钮 |
+|--------------|------------------|
+| 「这个文件夹，财务组只读、研发组可改」 | **对象上的规则表**（ACE / DACL，第 9～10 站） |
+| 「这个账户能不能备份整盘、能不能作为服务登录、能不能关掉机器」 | **系统级能力开关**（跟某个文件无关） |
+
+#### 现在才贴官方标签
+
+| 旋钮 | 常见英文 | 挂在哪 |
+|------|----------|--------|
+| 对象权限 | **Permissions** | 某个可保护对象的安全描述符（门上的字） |
+| 用户权利 / 特权 | **User rights** / **privileges** | 安全策略里授给账户/组；登录后进**令牌的特权列表** |
+
+Microsoft Learn（Appendix B）在讲特权账户时，把「对象 ACL 上的 permissions」和「user rights」分开讨论，并强调：在 AD 语境下，**强大的权利往往会压过你在单个对象上精心写的拒绝**——例如管理员仍可通过**夺取所有权**再改 ACL，从而获得完全控制。  
+来源：[Appendix B - Privileged accounts](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory)
+
+回扣第 9 站：Deny 在「普通 Access Check」里通常很硬；  
+但本站要接受：**另有一条「系统能力」赛道**，不应当成「又一条 ACE」。
+
+---
+
+### 17.2 案例展开：备份权利 vs 文件夹 Deny
+
+场景（教学用，勿在生产乱授）：
+
+```text
+1) 文件夹 E:\Secret 对普通用户 Deny 读取（icacls 看得见）
+2) 同一用户若令牌里带有「备份」类特权且被备份 API/工具正确使用
+3) 仍可能读出本不该用「打开文件」路径读到的数据
+```
+
+推导：
+
+- `icacls` 管的是**这扇门的 ACE**；  
+- 「备份文件和目录」管的是**我是否被允许走备份专用能力**；  
+- 两套同时存在时，只看门上的字会误判。
+
+#### 最小观察：令牌里有没有「特权」槽位
+
+```bat
+whoami /priv
+```
+
+输出里常见类似（名称因语言/版本略有差异）：
+
+```text
+特权名称                      描述                          状态
+SeBackupPrivilege            备份文件和目录                 已禁用
+SeRestorePrivilege           还原文件和目录                 已禁用
+SeShutdownPrivilege          关闭系统                       已启用
+...
+```
+
+来源：[whoami](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/whoami)（`/all` 含用户、组、**privileges**）
+
+直觉：
+
+- **出现在列表里** ≈ 策略上可能授了这项权利；  
+- **已禁用 / 已启用** ≈ 当前进程要不要先「打开」这项特权才能用（许多工具会代你打开）；  
+- 普通办公账户列表很短；管理员 / 备份账户会明显更长。
+
+> 本站结论只到这里：**权利在令牌里，和 ACE 不是同一张表。**  
+> 不演示如何用备份特权绕过 Deny 做攻击。
+
+---
+
+### 17.3 案例：为什么「Domain Admins 别当日常账号」
+
+第 15 站说过 DA 能量极大。Appendix B 又补了一刀权限模型层面的原因：
+
+> 即便某个对象的 ACL **拒绝** Administrators 访问，属于管理员组的人仍常能 **取得所有权（take ownership）**，再改 DACL 给自己完全控制——很难单靠 ACE 挡住一个决心用高权账户的人。
+
+所以运维常识与模型是同一句话：
+
+**日常浏览文件、上网、开 Office → 用普通域账户；**  
+**改机器、管域、救火 → 再临时用高权账户（并尽快退回）。**
+
+这和「ACE 写得够不够细」是两层问题。
+
+---
+
+### 17.4 想做什么：管理员登录后，默认先当「普通人」
+
+案例 B 的麻烦：账户在 Administrators 里，为何还弹 UAC？
+
+#### 推导（先不堆名词）
+
+1. 若管理员一登录，**每个**进程都带着完整管理员能力 → 网页木马、邮件附件一点就「全权」。  
+2. 于是系统发明：管理员登录时准备**两张通行证**；  
+3. 桌面、资源管理器、普通双击启动的程序 → 默认用**权力较小**的那张；  
+4. 只有你明确同意提升（UAC 对话框 / 「以管理员身份运行」）→ 子进程才换用**完整管理员**那张。
+
+#### 贴标签
+
+| 白话 | 常见叫法 |
+|------|----------|
+| 这套「默认降权、需要时再抬」 | **UAC（User Account Control，用户账户控制）** |
+| 权力较小、日常用的那张 | **标准用户令牌** / 过滤后的管理员令牌（filtered admin token） |
+| 点「是」之后用的那张 | **管理员令牌**（full administrator token） |
+
+来源：[How UAC works](https://learn.microsoft.com/en-us/windows/security/identity-protection/user-account-control/how-user-account-control-works)  
+.NET 文档也概括：Vista 起，Administrators 成员会同时得到标准令牌与管理员令牌，默认以标准令牌运行，需显式提升。  
+来源：[Key security concepts - Authentication](https://learn.microsoft.com/en-us/dotnet/standard/security/key-security-concepts)
+
+```text
+管理员登录
+  → 系统准备：标准令牌 + 管理员令牌
+  → explorer.exe 等挂标准令牌
+  → 子进程默认继承标准令牌
+  → 「以管理员运行」/ 安装程序触发同意
+       → 新进程挂管理员令牌
+```
+
+#### 小案例：改 hosts 文件
+
+路径：`C:\Windows\System32\drivers\etc\hosts`
+
+| 操作 | 常见结果 |
+|------|----------|
+| 普通记事本直接打开并保存 | 拒绝访问 / 另存失败（标准令牌过不了该路径 ACL） |
+| 右键记事本 → **以管理员身份运行** → 再保存 | UAC 同意后，用管理员令牌，往往就能写 |
+
+同一人、同一账户；变的是**进程挂的哪张令牌**，不是「账户忽然不是管理员了」。
+
+---
+
+### 17.5 最小观察：提升前后看令牌差在哪
+
+在**未提升**的命令提示符：
+
+```bat
+whoami /groups
+whoami /priv
+```
+
+再**右键「以管理员身份运行」**开一个新的命令提示符，再执行同样两条。
+
+对比直觉（环境不同，细节会变）：
+
+| 看什么 | 未提升（标准令牌） | 已提升（管理员令牌） |
+|--------|--------------------|----------------------|
+| 组 | 可能看到 Administrators 带限制标记，或高完整性相关差异 | 管理员组以完整使用方式出现 |
+| 特权 | 列表较短或多项禁用 | 更多特权可用 / 状态不同 |
+| 实际能力 | 像标准用户：改系统目录常失败 | 能完成需管理员的操作 |
+
+完整性级别（Integrity Level）等细节本站不展开；你只要建立图景：
+
+> **UAC = 管理员也先发「日常票」，要干重活再换「管理员票」。**
+
+---
+
+### 17.6 和前几站对齐（防混淆）
+
+| 概念 | 管什么 | 本站关系 |
+|------|--------|----------|
+| ACE / DACL | 某个对象允不允许你做某操作 | 对象权限旋钮 |
+| 用户权利 / privileges | 系统级能力（备份、关机、服务登录…） | **另一旋钮**；可出现在 `whoami /priv` |
+| Access Token | 进程当前身份摘要（SID + 组 + 特权…） | 两套旋钮的「口袋」 |
+| UAC 双令牌 | 管理员默认用哪一张口袋 | 同一账户，不同进程可能不同令牌 |
+| Kerberos 票据（第 16 站） | 网上如何证明你是谁 | 认证；不替代本机 ACE / 权利 |
+
+---
+
+### 收束
+
+**你现在会了：**  
+对象权限（ACE）≠ 用户权利（privileges）；备份等权利走另一赛道；管理员日常受 UAC 约束，默认标准令牌，提升后才是完整管理员令牌。  
+
+**整篇到此：** 从「没有权限」到账户 / SID / 登录 / 令牌 / ACL / 继承 / 共享两道门 / 域 / Kerberos / 权利与 UAC——可以串回总图复习。
 
 ---
 
