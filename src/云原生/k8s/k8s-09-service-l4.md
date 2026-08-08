@@ -3,13 +3,14 @@ title: "Service 四层流量分发——iptables、IPVS 与四类 Port"
 sidebarGroup: "Kubernetes"
 shortTitle: "09 Service 四层"
 order: 9
-date: 2026-11-09
+date: 2026-08-29
 category: "云原生"
 tag:
   - "Kubernetes"
   - "云原生"
   - "Service"
   - "kube-proxy"
+description: "Service 类型、kube-proxy 的 iptables/IPVS，以及四类 Port 与会话保持。"
 ---
 
 > **Kubernetes 系列 · 第 9/20 篇**  

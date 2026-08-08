@@ -3,7 +3,7 @@ title: "custom-metrics-server 规则配置与 Grafana 展示"
 sidebarGroup: "Kubernetes 系列"
 shortTitle: "19 自定义指标"
 order: 19
-date: 2026-08-28
+date: 2026-09-01
 category: "云原生"
 tag:
   - "Kubernetes"
@@ -12,6 +12,7 @@ tag:
   - "Grafana"
   - "云原生"
   - "Kubernetes系列"
+description: "custom-metrics 规则、QPS 指标、Grafana 展示与 adapter Discovery。"
 ---
 
 > **Kubernetes 系列 · 第 19/20 篇**  

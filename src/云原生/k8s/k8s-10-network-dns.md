@@ -3,13 +3,14 @@ title: "Underlay/Overlay 网络与集群 DNS 解析"
 sidebarGroup: "Kubernetes"
 shortTitle: "10 网络与 DNS"
 order: 10
-date: 2026-11-09
+date: 2026-08-29
 category: "云原生"
 tag:
   - "Kubernetes"
   - "云原生"
   - "CNI"
   - "DNS"
+description: "Underlay/Overlay、IPVLAN 与集群内外 DNS 解析规律。"
 ---
 
 > **Kubernetes 系列 · 第 10/20 篇**  

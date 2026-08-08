@@ -3,12 +3,13 @@ title: "穿透 K8S 八大宏观架构——Master、Worker 与数据流"
 sidebarGroup: "Kubernetes"
 shortTitle: "02 宏观架构"
 order: 2
-date: 2026-11-09
+date: 2026-08-26
 category: "云原生"
 tag:
   - "Kubernetes"
   - "云原生"
   - "K8s系列"
+description: "用八张宏观架构图讲清 Master/Worker、元数据流、APIServer 与 kubelet 内部结构。"
 ---
 
 > **Kubernetes 系列 · 第 2/20 篇**  

@@ -3,7 +3,7 @@ title: "应用持久化存储——Volume、PV 与 PVC"
 sidebarGroup: "Kubernetes"
 shortTitle: "11 PV 与 PVC"
 order: 11
-date: 2026-11-09
+date: 2026-08-30
 category: "云原生"
 tag:
   - "Kubernetes"
@@ -11,6 +11,7 @@ tag:
   - "PV"
   - "PVC"
   - "StorageClass"
+description: "Volume、PV/PVC 生命周期、静态/动态供给与 StorageClass。"
 ---
 
 > **Kubernetes 系列 · 第 11/20 篇**  

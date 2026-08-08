@@ -3,7 +3,7 @@ title: "Secret、ConfigMap 与常见部署排障"
 sidebarGroup: "Kubernetes 系列"
 shortTitle: "16 Secret/ConfigMap"
 order: 16
-date: 2026-11-09
+date: 2026-08-31
 category: "云原生"
 tag:
   - "Kubernetes"
@@ -14,6 +14,7 @@ tag:
   - "ImagePullBackOff"
   - "CrashLoopBackOff"
   - "hostPath"
+description: "Secret/ConfigMap/imagePullSecrets，以及 ImagePullBackOff 等常见故障排查。"
 ---
 
 > **Kubernetes 系列 · 第 16/20 篇**  

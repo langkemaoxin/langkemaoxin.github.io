@@ -3,7 +3,7 @@ title: "Deployment 与副本控制——灰度更新、RC 与 ReplicaSet"
 sidebarGroup: "Kubernetes"
 shortTitle: "06 Deployment/RS"
 order: 6
-date: 2026-11-09
+date: 2026-08-28
 category: "云原生"
 tag:
   - "Kubernetes"
@@ -11,6 +11,7 @@ tag:
   - "K8s系列"
   - "Deployment"
   - "ReplicaSet"
+description: "Deployment 与 ReplicaSet/RC 关系、滚动更新与灰度发布操作要点。"
 ---
 
 > **Kubernetes 系列 · 第 6/20 篇**  

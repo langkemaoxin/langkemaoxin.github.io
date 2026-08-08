@@ -3,13 +3,14 @@ title: "Ingress 七层流量分发——原理、部署模式与动态域名"
 sidebarGroup: "Kubernetes"
 shortTitle: "12 Ingress 七层"
 order: 12
-date: 2026-11-09
+date: 2026-08-30
 category: "云原生"
 tag:
   - "Kubernetes"
   - "云原生"
   - "Ingress"
   - "nginx-ingress"
+description: "Ingress Controller、资源字段、部署模式与生产侧 LVS/Keepalived 思路。"
 ---
 
 > **Kubernetes 系列 · 第 12/20 篇**  
