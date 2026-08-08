@@ -9,6 +9,7 @@ import Notes from "./sidebar/Notes.mjs";
 import CloudNative from "./sidebar/云原生.mjs";
 import Middleware from "./sidebar/中间件.mjs";
 import Concurrency from "./sidebar/并发编程.mjs";
+import SoftwareArch from "./sidebar/软件架构.mjs";
 
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
@@ -29,6 +30,7 @@ export const modules = [
   { path: "/云原生/", dir: "云原生" },
   { path: "/中间件/", dir: "中间件" },
   { path: "/并发编程/", dir: "并发编程" },
+  { path: "/软件架构/", dir: "软件架构" },
 ];
 
 /**
@@ -63,6 +65,7 @@ export const folders = {
   ...prefix("云原生", CloudNative),
   ...prefix("中间件", Middleware),
   ...prefix("并发编程", Concurrency),
+  ...prefix("软件架构", SoftwareArch),
 };
 
 /** 未单独配置 icon 时的默认图标 */

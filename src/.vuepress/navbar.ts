@@ -38,6 +38,11 @@ export default navbar([
     link: "/并发编程/",
   },
   {
+    text: "软件架构",
+    icon: "diagram-project",
+    link: "/软件架构/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",

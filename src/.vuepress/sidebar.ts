@@ -595,4 +595,54 @@ export default sidebar({
       ],
     },
   ],
+  "/软件架构/": [
+    "",
+    {
+      text: "入门与动机",
+      icon: "book",
+      prefix: "ddd-basics/",
+      collapsible: true,
+      children: [
+        "ddd-01-what-is-ddd",
+        "ddd-02-scrum-anemic",
+        "ddd-03-solid-oo",
+      ],
+    },
+    {
+      text: "战略设计",
+      icon: "sitemap",
+      prefix: "ddd-strategy/",
+      collapsible: true,
+      children: [
+        "ddd-04-concepts-bc",
+        "ddd-05-microservice-split",
+        "ddd-06-strategic-modeling",
+        "ddd-07-ubiquitous-eventstorm",
+      ],
+    },
+    {
+      text: "战术与分层",
+      icon: "layer-group",
+      prefix: "ddd-tactics/",
+      collapsible: true,
+      children: [
+        "ddd-08-layered-models",
+        "ddd-09-domain-primitive",
+        "ddd-10-hexagonal-new-app",
+        "ddd-11-repository",
+        "ddd-12-domain-layer",
+        "ddd-13-application-interface",
+      ],
+    },
+    {
+      text: "落地实践",
+      icon: "gears",
+      prefix: "ddd-practice/",
+      collapsible: true,
+      children: [
+        "ddd-14-cola-scaffold",
+        "ddd-15-acl-summary",
+      ],
+    },
+  ],
 });
