@@ -6,6 +6,7 @@ import Windows from "./sidebar/Windows.mjs";
 import Tools from "./sidebar/Tools.mjs";
 import English from "./sidebar/English.mjs";
 import Notes from "./sidebar/Notes.mjs";
+import CloudNative from "./sidebar/云原生.mjs";
 
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
@@ -23,6 +24,7 @@ export const modules = [
   { path: "/Tools/", dir: "Tools" },
   { path: "/English/", dir: "English" },
   { path: "/Notes/", dir: "Notes" },
+  { path: "/云原生/", dir: "云原生" },
 ];
 
 /**
@@ -54,6 +56,7 @@ export const folders = {
   ...prefix("Tools", Tools),
   ...prefix("English", English),
   ...prefix("Notes", Notes),
+  ...prefix("云原生", CloudNative),
 };
 
 /** 未单独配置 icon 时的默认图标 */

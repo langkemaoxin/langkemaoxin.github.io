@@ -23,6 +23,7 @@ actions:
 - [Kestrel 如何监听端口](DotNet/aspnetcore/1-kestrel-socket-connection-listener.md)：从浏览器地址栏一路挖到 Windows `bind/listen`，看清 ASP.NET Core 的入口。
 - [ASP.NET Core 10 源码地图](DotNet/aspnetcore/3-aspnetcore-10-source-map.md)：这份仓库到底是什么、`src` 里有哪些项目，读源码前先建立全局图。
 - [Hadoop 是什么？](BigData/hadoop-series/hadoop-series-01-what-is-hadoop.md)：Hadoop 系列开篇，用大白话讲清分布式存储与计算为什么能拼出「超级电脑」。
+- [Docker 是什么？](云原生/docker/docker-01-what-is-docker.md)：云原生 Docker 系列开篇，从交付痛点讲到镜像与容器。
 - [Windows 权限书稿（分卷索引）](Windows/permissions/00-index.md)：从「发明权限」到域 / 权利 / 多对象 / 排障 / .NET（含待写占位章）。
 - [用 B1 英语读 ACM 论文：最终一致性生词精讲](English/vocabulary/eventual-consistency-b1-vocabulary.md)：先背生词再读原文，降低技术论文的查词成本。
 
@@ -30,7 +31,7 @@ actions:
 
 你好，我是 **Corey**。
 
-这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
+这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**云原生（Docker / K8s）**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
 
 我习惯用西蒙学习法把概念拆开写——先建立直觉，再落到源码、命令和复盘。写给未来的自己，也欢迎路过的你一起看。
 
@@ -43,6 +44,7 @@ actions:
 - [.NET](DotNet/)：ASP.NET Core 请求链路与源码构建
 - [Java](Java/)：MyBatis 等源码调试实践
 - [大数据](BigData/)：Hadoop 系列与架构概念
+- [云原生](云原生/)：Docker 系列，Kubernetes / Serverless 后续展开
 - [Windows](Windows/)：权限 ACL 与环境搭建
 - [工具](Tools/)：Git、代理、编码与发布
 - [英语](English/)：技术论文 B1 生词
