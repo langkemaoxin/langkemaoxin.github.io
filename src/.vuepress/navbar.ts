@@ -33,6 +33,11 @@ export default navbar([
     link: "/中间件/",
   },
   {
+    text: "并发编程",
+    icon: "bolt",
+    link: "/并发编程/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",
