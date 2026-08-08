@@ -1,0 +1,1 @@
+var e=`/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/async/02/p15-page.png`;export{e as t};
