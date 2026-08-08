@@ -1,0 +1,1 @@
+var e=`/%E5%88%86%E5%B8%83%E5%BC%8F/seata/p020-01.png`;export{e as t};
