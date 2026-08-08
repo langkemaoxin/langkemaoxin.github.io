@@ -28,6 +28,11 @@ export default navbar([
     link: "/云原生/",
   },
   {
+    text: "中间件",
+    icon: "server",
+    link: "/中间件/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",
