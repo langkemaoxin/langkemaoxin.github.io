@@ -28,6 +28,8 @@ actions:
 - [MQ 是什么与选型](中间件/rabbitmq/rabbitmq-01-what-is-mq.md)：中间件专栏开篇，从同步事件讲到 RabbitMQ / Kafka / RocketMQ 选型。
 - [为何学并发编程](并发编程/basics/juc-01-why-concurrency.md)：并发专栏开篇，从线程与等待通知建立直觉。
 - [DDD 是什么](软件架构/ddd-basics/ddd-01-what-is-ddd.md)：软件架构专栏开篇，从领域驱动设计的价值与本质收益讲起。
+- [全面理解 JVM](性能调优/jvm/jvm-01-overview.md)：性能调优专栏开篇，建立 JVM 全局图。
+- [全面理解 MySQL 架构](数据库/mysql/mysql-01-architecture.md)：数据库专栏开篇，从 MySQL 架构讲到后续索引与事务。
 - [Windows 权限书稿（分卷索引）](Windows/permissions/00-index.md)：从「发明权限」到域 / 权利 / 多对象 / 排障 / .NET（含待写占位章）。
 - [用 B1 英语读 ACM 论文：最终一致性生词精讲](English/vocabulary/eventual-consistency-b1-vocabulary.md)：先背生词再读原文，降低技术论文的查词成本。
 
@@ -35,7 +37,7 @@ actions:
 
 你好，我是 **Corey**。
 
-这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**云原生（Docker / K8s）**、**消息中间件**、**Java 并发编程**、**软件架构（DDD）**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
+这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**云原生（Docker / K8s）**、**消息中间件**、**Java 并发编程**、**软件架构（DDD）**、**性能调优（JVM / Tomcat）**、**数据库（MySQL）**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
 
 我习惯用西蒙学习法把概念拆开写——先建立直觉，再落到源码、命令和复盘。写给未来的自己，也欢迎路过的你一起看。
 
@@ -52,6 +54,8 @@ actions:
 - [中间件](中间件/)：消息队列、Redis、ZooKeeper、ShardingSphere、ES、Netty
 - [并发编程](并发编程/)：JUC 基础、锁与 AQS、容器、线程池、Disruptor
 - [软件架构](软件架构/)：DDD 入门、战略建模、战术分层、COLA 与防腐层
+- [性能调优](性能调优/)：JVM 原理与调优、Tomcat 架构与线程模型
+- [数据库](数据库/)：MySQL 架构、索引、事务锁、InnoDB、主从与高可用
 - [Windows](Windows/)：权限 ACL 与环境搭建
 - [工具](Tools/)：Git、代理、编码与发布
 - [英语](English/)：技术论文 B1 生词

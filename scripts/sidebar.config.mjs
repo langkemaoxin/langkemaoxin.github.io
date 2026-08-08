@@ -10,6 +10,8 @@ import CloudNative from "./sidebar/云原生.mjs";
 import Middleware from "./sidebar/中间件.mjs";
 import Concurrency from "./sidebar/并发编程.mjs";
 import SoftwareArch from "./sidebar/软件架构.mjs";
+import PerfTune from "./sidebar/性能调优.mjs";
+import Database from "./sidebar/数据库.mjs";
 
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
@@ -31,6 +33,8 @@ export const modules = [
   { path: "/中间件/", dir: "中间件" },
   { path: "/并发编程/", dir: "并发编程" },
   { path: "/软件架构/", dir: "软件架构" },
+  { path: "/性能调优/", dir: "性能调优" },
+  { path: "/数据库/", dir: "数据库" },
 ];
 
 /**
@@ -66,6 +70,8 @@ export const folders = {
   ...prefix("中间件", Middleware),
   ...prefix("并发编程", Concurrency),
   ...prefix("软件架构", SoftwareArch),
+  ...prefix("性能调优", PerfTune),
+  ...prefix("数据库", Database),
 };
 
 /** 未单独配置 icon 时的默认图标 */

@@ -43,6 +43,16 @@ export default navbar([
     link: "/软件架构/",
   },
   {
+    text: "性能调优",
+    icon: "gauge-high",
+    link: "/性能调优/",
+  },
+  {
+    text: "数据库",
+    icon: "database",
+    link: "/数据库/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",
