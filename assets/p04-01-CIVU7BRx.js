@@ -1,0 +1,1 @@
+var e=`/%E4%B8%AD%E9%97%B4%E4%BB%B6/rabbitmq/12/p04-01.png`;export{e as t};
