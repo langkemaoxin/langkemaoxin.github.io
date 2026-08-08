@@ -53,6 +53,11 @@ export default navbar([
     link: "/数据库/",
   },
   {
+    text: "分布式",
+    icon: "network-wired",
+    link: "/分布式/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",

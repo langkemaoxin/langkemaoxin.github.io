@@ -720,4 +720,23 @@ export default sidebar({
       ],
     },
   ],
+  "/分布式/": [
+    "",
+    {
+      text: "Seata",
+      icon: "network-wired",
+      prefix: "seata/",
+      collapsible: true,
+      children: [
+        "seata-01-distributed-tx-overview",
+        "seata-02-at-mode",
+        "seata-03-tc-server",
+        "seata-04-at-tm-rm",
+        "seata-05-tcc-practice",
+        "seata-06-tcc-issues",
+        "seata-07-tcc-source",
+        "seata-08-isolation-interview",
+      ],
+    },
+  ],
 });
