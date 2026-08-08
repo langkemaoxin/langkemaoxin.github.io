@@ -20,4 +20,29 @@ export default {
     icon: "circle-question",
     order: 4,
   },
+  redis: {
+    title: "Redis",
+    icon: "database",
+    order: 5,
+  },
+  zookeeper: {
+    title: "ZooKeeper",
+    icon: "sitemap",
+    order: 6,
+  },
+  shardingsphere: {
+    title: "ShardingSphere",
+    icon: "table",
+    order: 7,
+  },
+  elasticsearch: {
+    title: "Elasticsearch",
+    icon: "magnifying-glass",
+    order: 8,
+  },
+  netty: {
+    title: "Netty",
+    icon: "network-wired",
+    order: 9,
+  },
 };

@@ -46,7 +46,7 @@ actions:
 - [Java](Java/)：MyBatis 等源码调试实践
 - [大数据](BigData/)：Hadoop 系列与架构概念
 - [云原生](云原生/)：Docker 系列，Kubernetes / Serverless 后续展开
-- [中间件](中间件/)：RabbitMQ / Kafka / RocketMQ 与 MQ 常见问题
+- [中间件](中间件/)：消息队列、Redis、ZooKeeper、ShardingSphere、ES、Netty
 - [Windows](Windows/)：权限 ACL 与环境搭建
 - [工具](Tools/)：Git、代理、编码与发布
 - [英语](English/)：技术论文 B1 生词

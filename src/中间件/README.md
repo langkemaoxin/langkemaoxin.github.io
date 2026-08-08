@@ -7,9 +7,14 @@ article: false
 
 # 中间件
 
-本专栏以消息中间件为主线：**RabbitMQ → Kafka → RocketMQ**，并单独整理跨产品的 **MQ 常见问题**。
+本专栏覆盖常见中间件与网络通信底座：
 
-建议按侧栏顺序阅读；三套产品会重复出现「MQ 是什么」时，RabbitMQ 开篇写透，其余开篇简写并互链。
+- **消息**：RabbitMQ / Kafka / RocketMQ + MQ 常见问题
+- **缓存与协调**：Redis / ZooKeeper
+- **数据与搜索**：ShardingSphere / Elasticsearch
+- **网络通信**：TCP·NIO·epoll 与 Netty
+
+建议按侧栏各大类顺序阅读；同类产品开篇会互链，避免重复堆砌「MQ/缓存是什么」。
 
 ## 文章目录
 
