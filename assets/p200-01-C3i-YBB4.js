@@ -1,0 +1,1 @@
+var e=`/%E4%BA%91%E5%8E%9F%E7%94%9F/k8s/p197-01.png`,t=`/%E4%BA%91%E5%8E%9F%E7%94%9F/k8s/p200-01.png`;export{e as n,t};
