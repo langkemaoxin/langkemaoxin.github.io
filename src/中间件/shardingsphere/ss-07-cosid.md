@@ -33,7 +33,7 @@ spring.shardingsphere.rules.sharding.sharding-algorithms.course_tbl_alg.props.al
 
 ![分片算法与 Snowflake 配置](/中间件/shardingsphere/10-5/p03-01.png)
 
-![actual-data-nodes 四节点](/中间件/shardingsphere/10-5/p04-page.png)
+四片节点为 `m0.course_1`、`m0.course_2`、`m1.course_1`、`m1.course_2`，`actual-data-nodes=m$->{0..1}.course_$->{1..2}`。分库 `cid%2`、分表 `((cid+1)%4).intdiv(2)+1` 理论上应均匀落四片。
 
 ![insert 十条分布异常](/中间件/shardingsphere/10-5/p05-01.png)
 
@@ -45,21 +45,17 @@ spring.shardingsphere.rules.sharding.sharding-algorithms.course_tbl_alg.props.al
 - 要均匀 4 片，需要 cid 低位在 0–3 **循环**  
 - 标准 **SNOWFLAKE**：跨毫秒时 `sequence` 在 0/1 **震荡**（`vibrateSequenceOffset`），插入 DB 又耗时间 → 低位常只有 0、1 → **仅 2 个表位**  
 
-![SNOWFLAKE sequence 震荡逻辑](/中间件/shardingsphere/10-5/p06-page.png)
+Snowflake 在同一毫秒内 `sequence` 仅在 0 和 1 之间交替递增，导致 cid 二进制最低两位无法覆盖 00/01/10/11 四种组合；配合 `%4` 分表时，实际只会命中两个表位。
 
 **变通**（文档稀少）：SNOWFLAKE 增加 `max-vibration-offset=12` 扩大 sequence 摆动范围——不如换 CosID 直观。
-
-![max-vibration-offset 说明](/中间件/shardingsphere/10-5/p07-page.png)
 
 ### COSID_SNOWFLAKE
 
 `sequence` **递增到 max 再回绕**，低位严格递增 → 对 4 取模均匀。
 
-![CosID sequence 递增策略](/中间件/shardingsphere/10-5/p08-page.png)
+CosID 的 Snowflake 实现让 sequence 在同一毫秒内单调递增到上限后再归零，保证低位比特在短批量插入中遍历 0–3，与 `%4` 分片表达式配合时四片分布均匀。
 
 **workerId 问题**：Snowflake 中间 10 bit 区分机器；ShardingSphere 里 `worker-id=1` 常全员相同，大集群仍可能冲突——CosID 用 **MachineIdDistributor**（JDBC/Redis/ZK 等）自动分配。
-
-![worker-id 集群隐患](/中间件/shardingsphere/10-5/p09-page.png)
 
 ---
 
@@ -89,7 +85,11 @@ provider.getShare().generate();
 
 三种模式：**Snowflake**、**Segment**、**SegmentChain**；统一经 `IdGeneratorProvider`。
 
-![CosID 三种 ID 模式](/中间件/shardingsphere/10-5/p12-page.png)
+| 模式 | 特点 | 适用 |
+|------|------|------|
+| Snowflake | 趋势递增、高性能 | 分库分表、日志 ID |
+| Segment | DB 号段、严格递增 | 订单号、流水号 |
+| SegmentChain | 双 Buffer 预取 | 高 QPS + 严格递增 |
 
 ---
 
@@ -110,13 +110,9 @@ CREATE TABLE cosid_machine (
 
 分发流程（`AbstractMachineIdDistributor`）：本地缓存 → **自认领** → **回滚认领** → **`max(machine_id)+1` 远程分配**。
 
-![MachineId 分发三步](/中间件/shardingsphere/10-5/p13-page.png)
+三步保证集群内 machineId 不冲突：实例启动时先查本地缓存；若无则尝试 `INSERT` 认领空闲位；冲突则回滚并重试；最终由 DB 分配 `max(machine_id)+1` 作为新机器号。
 
 `InstanceId` = 命名空间 + IP + port（或稳定 instanceId）；`stable=true` 时机器位持久化文件，停服仍占用。
-
-![InstanceId 与 stable 语义](/中间件/shardingsphere/10-5/p14-page.png)
-
-![JdbcMachineIdDistributor 流程](/中间件/shardingsphere/10-5/p15-page.png)
 
 时钟回拨：`ClockSyncSnowflakeId` / 抛 `ClockBackwardsException`；Second vs Millisecond 两种雪花实现。
 
@@ -155,7 +151,7 @@ cosid.segment.chain.safe-distance=10
 
 `DefaultSegmentId.generate`：段内自增，用尽 `nextIdSegment`；`SegmentChainId` 遍历链 + 后台 `PrefetchWorker` 扩容。
 
-![DefaultSegmentId 与 SegmentChainId](/中间件/shardingsphere/10-5/p19-page.png)
+Segment 模式每次从 DB 预取 `step` 大小的号段（如 100），本地递增发号，用尽再请求下一段；SegmentChain 在链上缓存多段，用到 10% 时后台线程预取下一段，避免 DB 成为热点。
 
 JDBC 核心 SQL：
 
@@ -164,7 +160,7 @@ UPDATE cosid SET last_max_id=(last_max_id + ?) WHERE name = ?;
 SELECT last_max_id FROM cosid WHERE name = ?;
 ```
 
-![JdbcIdSegmentDistributor SQL](/中间件/shardingsphere/10-5/p22-page.png)
+号段分发通过 `UPDATE ... SET last_max_id=last_max_id+step` 原子递增，再 `SELECT` 取新边界；SegmentChain 的 `PrefetchWorker` 在链长度低于 `safe-distance` 时异步补充号段。
 
 ---
 
@@ -178,7 +174,7 @@ spring.shardingsphere.rules.sharding.key-generators.alg_snowflake.type=COSID_SNO
 
 理解 CosID 后，再选 SNOWFLAKE / COSID_SNOWFLAKE / NANOID / 自定义 SPI，并**联合分片表达式**验证低位分布。
 
-![ShardingSphere 集成 CosID 原理](/中间件/shardingsphere/10-5/p06-page.png)
+ShardingSphere 5.x 内置 `COSID_SNOWFLAKE` 类型，底层调用 CosID 的递增 sequence 实现，配置只需把 `key-generators` 的 `type` 从 `SNOWFLAKE` 改为 `COSID_SNOWFLAKE`，无需引入 CosID 全部依赖。
 
 ---
 

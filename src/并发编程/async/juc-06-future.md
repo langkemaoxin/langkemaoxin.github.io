@@ -21,103 +21,152 @@ tag:
 
 本篇讲 **Runnable 的局限**、Future API、FutureTask 用法，以及促销查询实战。
 
-![Callable Future FutureTask 关系](/并发编程/async/02/p02-page.png)
-
 ---
 
 ## 一、Runnable 与 Callable
+
+直接继承 `Thread` 或实现 `Runnable` 都能创建线程，但**没有返回值，也不能抛出 checked Exception**。
+
+Java 1.5 引入 `Callable<V>`：`call()` 可返回泛型结果，也可声明抛出异常。配合 **`Future`** 可取消任务、查询完成状态、**阻塞获取结果**。
+
+```java
+@FunctionalInterface
+public interface Runnable {
+    void run();
+}
+
+@FunctionalInterface
+public interface Callable<V> {
+    V call() throws Exception;
+}
+```
 
 | 接口 | 返回值 | 受检异常 |
 |------|--------|----------|
 | `Runnable` | 无 | 不能声明 |
 | `Callable<V>` | `V call()` | 可 `throws Exception` |
 
-`Future` 负责：取消任务、查询是否完成、**阻塞获取结果**（`get`）。
-
-![Runnable 与 Callable 对比](/并发编程/async/02/p03-01.png)
+![Runnable 与 Callable 及 Future 关系](/并发编程/async/02/p03-01.png)
 
 ---
 
 ## 二、Future API
 
+`Future` 表示异步计算的结果：取消、查询是否完成、获取结果（`get` 阻塞直到完成）。
+
 | 方法 | 说明 |
 |------|------|
 | `cancel(mayInterruptIfRunning)` | 取消；运行中是否中断由参数决定 |
 | `isCancelled()` / `isDone()` | 状态查询 |
-| `get()` | 阻塞至完成，抛 `InterruptedException` / `ExecutionException` / `CancellationException` |
+| `get()` | 阻塞至完成；抛 `InterruptedException` / `ExecutionException` / `CancellationException` |
 | `get(timeout, unit)` | 限时等待，超时 `TimeoutException` |
 
 底层实现类通常是 **`FutureTask`**。
 
-![Future 核心 API](/并发编程/async/02/p04-page.png)
+```java
+FutureTask task = new FutureTask(new Callable() {
+    @Override
+    public Object call() throws Exception {
+        System.out.println("通过Callable方式执行任务");
+        Thread.sleep(3000);
+        return "返回任务结果";
+    }
+});
+new Thread(task).start();
+System.out.println(task.get());
+```
 
 ---
 
 ## 三、FutureTask
 
-- 构造时传入 `Callable`（或 `Runnable + result`）。  
-- 既可 `new Thread(futureTask).start()`，也可 `executor.submit(futureTask)`。  
-- 生产者线程执行计算并更新状态；消费者通过 Future 接口阻塞取结果。
+`FutureTask` 是生产者与消费者之间的桥梁：
+
+- **生产者**（工作线程）执行 `Callable`，更新任务状态（未开始 / 运行中 / 已完成）。  
+- **消费者**通过 `Future` 接口阻塞取结果或查询状态。
+
+`FutureTask` 既可当作 `Runnable` 执行（`new Thread(futureTask).start()`），也可 `executor.submit(futureTask)`。
 
 ```java
-FutureTask<Integer> futureTask = new FutureTask<>(() -> {
-    int sum = 0;
-    for (int i = 0; i < 100; i++) sum += i;
-    return sum;
-});
-new Thread(futureTask).start();
-System.out.println(futureTask.get());
+public class FutureTaskDemo {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        FutureTask<Integer> futureTask = new FutureTask<>(new Task());
+        new Thread(futureTask).start();
+        System.out.println("task运行结果：" + futureTask.get());
+    }
+
+    static class Task implements Callable<Integer> {
+        @Override
+        public Integer call() throws Exception {
+            System.out.println("子线程正在计算");
+            int sum = 0;
+            for (int i = 0; i < 100; i++) sum += i;
+            return sum;
+        }
+    }
+}
 ```
 
-![FutureTask 桥接 Callable 与 Thread](/并发编程/async/02/p05-01.png)
-
-![FutureTask 执行流程](/并发编程/async/02/p06-page.png)
+![FutureTask 桥接 Callable 与线程执行](/并发编程/async/02/p05-01.png)
 
 ---
 
 ## 四、实战：促销商品信息并行查询
 
-同步：4 个远程接口各 50ms → 约 200ms。  
-异步：5 个任务进线程池并行 → 接近 **max(50ms)**。
+维护促销活动需查询：基本信息、价格、库存、图片、销售状态等，分布在不同业务中心。
+
+- **同步**：每个接口约 50ms，5 个接口串行 ≈ 250ms。  
+- **异步**：5 个 `FutureTask` 提交线程池并行，总耗时 ≈ **max(50ms)**。
 
 ```java
-ExecutorService es = Executors.newFixedThreadPool(5);
-FutureTask<String> ft1 = new FutureTask<>(() -> { /* 基本信息 50ms */ });
-// ... ft2 ~ ft5 同理
-es.submit(ft1);
-// ...
-System.out.println(ft1.get());
-es.shutdown();
+public class FutureTaskDemo2 {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        FutureTask<String> ft1 = new FutureTask<>(new T1Task());
+        FutureTask<String> ft2 = new FutureTask<>(new T2Task());
+        FutureTask<String> ft3 = new FutureTask<>(new T3Task());
+        FutureTask<String> ft4 = new FutureTask<>(new T4Task());
+        FutureTask<String> ft5 = new FutureTask<>(new T5Task());
+
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        executorService.submit(ft1);
+        executorService.submit(ft2);
+        executorService.submit(ft3);
+        executorService.submit(ft4);
+        executorService.submit(ft5);
+
+        System.out.println(ft1.get());
+        System.out.println(ft2.get());
+        System.out.println(ft3.get());
+        System.out.println(ft4.get());
+        System.out.println(ft5.get());
+        executorService.shutdown();
+    }
+
+    static class T1Task implements Callable<String> {
+        public String call() throws Exception {
+            System.out.println("T1:查询商品基本信息...");
+            TimeUnit.MILLISECONDS.sleep(50);
+            return "商品基本信息查询成功";
+        }
+    }
+    // T2Task ~ T5Task：价格、库存、图片、销售状态，各 sleep 50ms
+}
 ```
-
-![促销查询业务场景](/并发编程/async/02/p07-page.png)
-
-![并行查询架构示意](/并发编程/async/02/p08-page.png)
-
-![FutureTaskDemo2 类结构](/并发编程/async/02/p09-page.png)
-
-![五个并行子任务](/并发编程/async/02/p10-page.png)
-
-![线程池提交 FutureTask](/并发编程/async/02/p11-page.png)
-
-![各任务 Callable 实现](/并发编程/async/02/p12-page.png)
-
-![并行查询时序](/并发编程/async/02/p13-page.png)
-
-![同步 vs 异步耗时对比](/并发编程/async/02/p14-page.png)
 
 ---
 
 ## 五、Future 的局限（为 CompletableFuture 铺垫）
 
-1. **get 阻塞**，难以组合多个任务。  
-2. **无链式回调**（完成后再发邮件等）。  
-3. **多任务 allOf/anyOf 式编排** 需手写 `CountDownLatch` 等。  
-4. **异常处理** 分散在 `ExecutionException` 解析里。
+`Future` 异步获取结果的设计很优秀，但存在明显限制：
 
-因此 JDK 8 引入 **CompletableFuture**——下一篇重点。
+1. **get 阻塞**——并发执行多任务时，除等待别无他法。  
+2. **无链式回调**——任务完成后发邮件等动作需手写线程 + 等待。  
+3. **无法优雅组合多任务**——10 个任务全部完成后再执行动作，Future 无能为力（需 `CountDownLatch` 等）。  
+4. **异常处理分散**——须在 `ExecutionException` 中解析原因。
 
-![Future 局限性总结](/并发编程/async/02/p15-page.png)
+业务中任务常有**串行依赖、并行、聚合**关系，手写 Future 非常繁琐。
+
+**CompletableFuture**（JDK 8）扩展 Future，提供**任务编排**能力——`thenApply`、`thenCombine`、`allOf` 等，下一篇详述。
 
 ---
 

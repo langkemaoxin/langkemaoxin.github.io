@@ -32,11 +32,7 @@ set k1 v1
 OBJECT ENCODING k1    # "embstr"
 ```
 
-![OBJECT HELP 与 ENCODING 子命令说明](/中间件/redis/09/p02-page.png)
-
 **encoding 常量（server.h）：** RAW、INT、HT、EMBSTR、QUICKLIST、LISTPACK、INTSET、SKIPLIST 等；ZIPLIST 等已废弃。
-
-![Redis 底层 encoding 类型枚举定义](/中间件/redis/09/p03-page.png)
 
 **redisObject 结构：**
 
@@ -54,8 +50,6 @@ struct redisObject {
 - **encoding**：底层实现  
 - **ptr**：实际数据  
 
-![redisObject 结构体字段与 ptr 指针关系](/中间件/redis/09/p04-page.png)
-
 **上层 vs 底层：非一一对应**
 
 ```redis
@@ -65,11 +59,7 @@ set k3 <长字符串> -> encoding raw
 
 同一 `string` 类型可有 int、embstr、raw 多种 encoding。
 
-![同一 string 类型不同 value 对应 int/embstr/raw](/中间件/redis/09/p05-page.png)
-
 **DEBUG OBJECT**（需 `enable-debug-command yes`）可看 refcount、serializedlength 等。
-
-![DEBUG OBJECT 输出 encoding 与内存信息](/中间件/redis/09/p06-page.png)
 
 **Redis 6 vs 7 底层对照（高频面试）：**
 
@@ -80,8 +70,6 @@ set k3 <长字符串> -> encoding raw
 | list | quicklist+ziplist | quicklist+**listpack** |
 | set | intset+hashtable | intset+listpack+hashtable |
 | zset | skiplist+ziplist | skiplist+**listpack** |
-
-![Redis6 与 Redis7 各类型底层结构对照表](/中间件/redis/09/p07-page.png)
 
 ---
 
@@ -152,8 +140,6 @@ OBJECT ENCODING user:1    # listpack
 
 **存储结构：** field-value 序列 → **dictEntry** → **dict**（value 整体）。
 
-![Hash value 的 dict 与 dictEntry 结构](/中间件/redis/09/p15-page.png)
-
 `hset` → `hashTypeTryConversion` 按阈值选择编码。
 
 ![hashTypeTryConversion 编码转换入口](/中间件/redis/09/p16-01.png)
@@ -206,10 +192,6 @@ OBJECT ENCODING l1    # listpack
 
 **源码：** `lpush` → `createListListpackObject` → `listTypeTryConvertListpack` → 超阈值转 **quicklist**。
 
-![lpush 创建 listpack 对象流程](/中间件/redis/09/p21-page.png)
-
-![listTypeTryConvertListpack 触发 quicklist 转换](/中间件/redis/09/p22-page.png)
-
 ### quicklist
 
 **动机：** 纯 listpack（数组）中间插入慢；纯链表检索慢 → **quicklist = 双向链表 + 每节点一个 listpack**。
@@ -225,8 +207,6 @@ OBJECT ENCODING l1    # listpack
 Redis 6 节点内为 ziplist，7 改为 listpack。
 
 **List 总结：** 小 listpack，大 quicklist；参数控制切换阈值。
-
-![List 底层 listpack 与 quicklist 选型总结](/中间件/redis/09/p25-page.png)
 
 ---
 

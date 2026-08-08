@@ -53,7 +53,7 @@ tag:
 - `LinkedBlockingQueue`：默认无界，易 OOM
 - `SynchronousQueue`：不缓冲，直接移交
 
-![队列类型对比](/并发编程/pool/13a/p04-page.png)
+**拒绝策略**：AbortPolicy（抛异常）、CallerRunsPolicy（调用线程执行）、DiscardOldestPolicy（丢最旧）、DiscardPolicy（静默丢弃）。
 
 ```java
 ThreadPoolExecutor executor = new ThreadPoolExecutor(
@@ -69,43 +69,41 @@ ThreadPoolExecutor executor = new ThreadPoolExecutor(
 
 阿里巴巴开发手册要求显式使用 `ThreadPoolExecutor`：`newFixedThreadPool` 用无界 `LinkedBlockingQueue`；`newCachedThreadPool` 最大线程数无限——流量异常时风险很大。
 
-![Executors 不推荐使用](/并发编程/pool/13a/p06-page.png)
-
 ---
 
 ## 三、提交与关闭
 
 - **execute(Runnable)**：无返回值
-- **submit**：返回 `Future`
+- **submit**：返回 `Future`（内部仍调 `execute`）
 - **invokeAll / invokeAny**：批量任务
 
 ![提交任务与 invokeAll](/并发编程/pool/13a/p07-01.png)
 
-![invokeAll 示例](/并发编程/pool/13a/p08-page.png)
-
-![定时延时任务 ScheduledThreadPoolExecutor](/并发编程/pool/13a/p09-page.png)
+**ScheduledThreadPoolExecutor**：`schedule` 延时一次；`scheduleAtFixedRate` 固定周期；`scheduleWithFixedDelay` 固定间隔。
 
 **关闭**：
 
-- `shutdown()`：不接新任务，队列任务执行完
-- `shutdownNow()`：中断工作线程，返回队列剩余任务
-- `awaitTermination()`：等待终止
+| | shutdown | shutdownNow |
+|--|----------|-------------|
+| 接收新任务 | 否 | 否 |
+| 处理队列任务 | 是 | 否 |
+| 中断执行中任务 | 否 | 是 |
+| 返回未执行任务 | 否 | 是 |
+| 线程池状态 | SHUTDOWN | STOP |
 
-![shutdown 与 shutdownNow 对比](/并发编程/pool/13a/p10-page.png)
+`awaitTermination(timeout)` 等待终止；超时则 `shutdownNow()` 强制关闭。
 
 ---
 
 ## 四、参数设计思路
 
-![核心线程数设计](/并发编程/pool/13a/p11-page.png)
+![任务队列与最大线程数](/并发编程/pool/13a/p12-01.png)
 
 **核心线程数**：按任务耗时与 QPS 估算。例：单任务 0.1s，每秒 100 任务 → 约需 10 核心线程（二八原则留余量）。
 
 **队列长度**：`核心线程数 / 单任务耗时 × 2`，上例约 200。
 
 **最大线程数**：`(最大任务数 - 队列长度) × 单任务耗时`，上例 `(1000-200)×0.1=80`。
-
-![任务队列与最大线程数](/并发编程/pool/13a/p12-01.png)
 
 ---
 
@@ -116,8 +114,6 @@ ThreadPoolExecutor executor = new ThreadPoolExecutor(
 1. 工作线程数 < corePoolSize → 创建核心线程执行
 2. 否则尝试入队；入队成功且 worker=0 → 补一个非核心线程
 3. 入队失败 → 创建非核心线程；仍失败 → **拒绝策略**
-
-![execute 源码流程图](/并发编程/pool/13a/p14-page.png)
 
 **要点**：
 
@@ -140,31 +136,34 @@ ThreadPoolExecutor executor = new ThreadPoolExecutor(
 | TIDYING | 线程清空，调 terminated() |
 | TERMINATED | terminated() 执行完毕 |
 
-![ctl 状态与工作线程数](/并发编程/pool/13a/p16-page.png)
-
-![五种状态二进制表示](/并发编程/pool/13a/p17-page.png)
-
-![runStateOf 与 workerCountOf](/并发编程/pool/13a/p18-page.png)
-
-![状态比较与 CAS 方法](/并发编程/pool/13a/p19-page.png)
-
-![五种状态语义](/并发编程/pool/13a/p20-page.png)
+状态转换：`RUNNING → SHUTDOWN`（调 shutdown）；`(RUNNING|SHUTDOWN) → STOP`（调 shutdownNow）；`SHUTDOWN → TIDYING`（队列空且无 worker）；`STOP → TIDYING`（无 worker）；`TIDYING → TERMINATED`（terminated 回调完成）。
 
 ---
 
 ## 七、execute 源码与 addWorker
 
-![execute 方法源码](/并发编程/pool/13a/p21-page.png)
+```java
+public void execute(Runnable command) {
+    int c = ctl.get();
+    if (workerCountOf(c) < corePoolSize) {
+        if (addWorker(command, true)) return;
+    }
+    if (isRunning(c) && workQueue.offer(command)) {
+        int recheck = ctl.get();
+        if (!isRunning(recheck) && remove(command))
+            reject(command);
+        else if (workerCountOf(recheck) == 0)
+            addWorker(null, false);
+        return;
+    }
+    if (!addWorker(command, false))
+        reject(command);
+}
+```
 
-![addWorker 核心逻辑](/并发编程/pool/13a/p23-page.png)
+**addWorker** 四步：判断线程数上限 → ctl+1 → 构造 Worker 加入 workers → `thread.start()`。
 
-addWorker 四步：判断线程数上限 → ctl+1 → 构造 Worker 加入 workers → `thread.start()`。
-
-![Worker 构造与 runWorker](/并发编程/pool/13a/p24-page.png)
-
-worker 循环：`getTask()` 从队列取任务 → 加锁执行 → 异常时 `processWorkerExit` 并可能补新 worker 维持核心数。
-
-![runWorker 与 getTask](/并发编程/pool/13a/p25-page.png)
+Worker 循环：`getTask()` 从队列取任务 → 加锁执行 → 异常时 `processWorkerExit` 并可能补新 worker 维持核心数。
 
 ---
 

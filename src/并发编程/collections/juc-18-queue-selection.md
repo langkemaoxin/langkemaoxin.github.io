@@ -27,8 +27,6 @@ tag:
 
 基于数组实现的**无界**优先级阻塞队列，默认自然序升序，可自定义 `Comparator`。出队总是优先级最高（或最低）的元素，**同优先级元素顺序不保证**。
 
-![PriorityBlockingQueue 应用场景](/并发编程/collections/12/p19-page.png)
-
 - 电商抢购：会员等级高的优先
 - 银行柜台：VIP 客户优先办理
 
@@ -46,8 +44,6 @@ PriorityBlockingQueue<Integer> desc = new PriorityBlockingQueue<>(5, (a, b) -> b
 | 有序数组 | O(n) | O(1) | O(1) |
 | **二叉堆** | O(log n) | O(1) | O(log n) |
 
-![二叉堆与优先级队列构造](/并发编程/collections/12/p20-page.png)
-
 大顶堆：父 ≥ 子；小顶堆：父 ≤ 子。完全二叉树 + 数组存储，是 PriorityBlockingQueue 的底层思路。
 
 ---
@@ -55,8 +51,6 @@ PriorityBlockingQueue<Integer> desc = new PriorityBlockingQueue<>(5, (a, b) -> b
 ## 二、DelayQueue：延迟到期才出队
 
 元素必须实现 `Delayed` 接口（继承 `Comparable`），按剩余延迟时间排序，队头是最早到期的任务。
-
-![DelayQueue 原理](/并发编程/collections/12/p21-page.png)
 
 ```java
 public interface Delayed extends Comparable<Delayed> {
@@ -66,21 +60,25 @@ public interface Delayed extends Comparable<Delayed> {
 
 ### 实战：延迟订单处理
 
-![DelayQueue 延迟订单示例](/并发编程/collections/12/p22-page.png)
+```java
+DelayQueue<Order> delayQueue = new DelayQueue<>();
+delayQueue.put(new Order("order1", System.currentTimeMillis(), 5000));
+delayQueue.put(new Order("order2", System.currentTimeMillis(), 2000));
+while (!delayQueue.isEmpty()) {
+    Order order = delayQueue.take();
+    System.out.println("处理订单：" + order.getOrderId());
+}
+```
 
 订单按到期时间自动排序，`take()` 阻塞直到最近订单到期。典型用于：订单超时取消、缓存过期、定时重试。
 
-![DelayQueue 数据结构](/并发编程/collections/12/p23-page.png)
+**内部结构**：`ReentrantLock` + `PriorityQueue` + `leader` 线程优化——只有一个 leader 线程按剩余时间 timed wait，避免多个消费者同时空转。
 
-内部：`ReentrantLock` + `PriorityQueue` + `leader` 线程优化（避免多个消费者同时 timed wait）。
-
-![DelayQueue 入队逻辑](/并发编程/collections/12/p24-page.png)
+`take()` 逻辑：取堆顶元素 → 若 `getDelay() <= 0` 则弹出 → 否则设 leader 并 `awaitNanos(delay)` → 到期后唤醒下一个等待者。
 
 ---
 
 ## 三、五维选型策略
-
-![阻塞队列选型策略](/并发编程/collections/12/p25-page.png)
 
 | 维度 | 要点 |
 |------|------|

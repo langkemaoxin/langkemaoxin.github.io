@@ -19,15 +19,11 @@ tag:
 
 高稳定系统里，生产者过快必须用**有界队列**防 OOM；JUC 阻塞队列普遍 `ReentrantLock`，竞争时线程挂起唤醒开销大；有界数组队列还容易 **伪共享**（false sharing）——`ArrayBlockingQueue` 的 `takeIndex`、`putIndex`、`count` 常挤在同一 Cache Line，生产者改 `putIndex` 会让消费者缓存行失效。LMAX Disruptor 用环形数组 + CAS + 缓存行填充，单线程每秒处理数百万订单级消息，Log4j2 异步日志、Storm 等都在用。
 
-![JUC 阻塞队列的性能缺陷](/并发编程/performance/17/p10-page.png)
-
 ---
 
 ## 一、Disruptor 是什么
 
 英国 LMAX 开发的高性能**有界**内存队列，解决传统队列延迟与 I/O 同量级的问题。GitHub：[LMAX-Exchange/disruptor](https://github.com/LMAX-Exchange/disruptor)
-
-![Disruptor 介绍](/并发编程/performance/17/p11-page.png)
 
 ---
 
@@ -41,13 +37,9 @@ tag:
 | **缓存行填充** | 避免伪共享 |
 | **等待策略** | 平衡 CPU 与延迟 |
 
-![Disruptor 高性能设计方案](/并发编程/performance/17/p12-page.png)
-
 ### RingBuffer
 
 可自定义大小的环形数组 + **sequence** 序列号。生产者与消费者通过序号申请槽位，写入/读取后 publish。
-
-![RingBuffer 数据结构](/并发编程/performance/17/p13-page.png)
 
 **覆盖问题**：槽位被覆盖前，消费者必须已处理——通过背压与容量规划保证。
 
@@ -61,15 +53,11 @@ tag:
 | SleepingWaitStrategy | 加 sleep，延迟不均 |
 | TimeoutBlockingWaitStrategy | 加锁+超时 |
 
-![等待策略对比](/并发编程/performance/17/p14-page.png)
-
 ---
 
 ## 三、Log4j2 中的应用
 
 Log4j2 全异步模式（loggers all async）用 Disruptor；Async Appender 用 ArrayBlockingQueue。64 线程压测下，Disruptor 吞吐可达 Async Appender 的 12 倍、Sync 的 68 倍。
-
-![Log4j2 Disruptor 性能对比](/并发编程/performance/17/p15-page.png)
 
 ---
 
@@ -84,8 +72,6 @@ Log4j2 全异步模式（loggers all async）用 Disruptor；Async Appender 用 
     <version>3.3.4</version>
 </dependency>
 ```
-
-![Disruptor Maven 依赖](/并发编程/performance/17/p16-page.png)
 
 ### 2. 事件与工厂
 
@@ -102,8 +88,6 @@ public class OrderEventFactory implements EventFactory<OrderEvent> {
 }
 ```
 
-![OrderEvent 与 EventFactory](/并发编程/performance/17/p17-page.png)
-
 ### 3. 生产者
 
 ```java
@@ -118,8 +102,6 @@ public void onData(long value, String name) {
     }
 }
 ```
-
-![OrderEventProducer](/并发编程/performance/17/p18-page.png)
 
 ### 4. 消费者与启动
 

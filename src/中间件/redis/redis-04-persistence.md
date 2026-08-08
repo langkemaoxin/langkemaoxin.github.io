@@ -28,8 +28,6 @@ redis-benchmark -a 123qweasd -t set -n 1000000 -c 20
 # throughput summary: ~116536 requests/sec
 ```
 
-![redis-benchmark 压测 set 指令吞吐与延迟分布](/中间件/redis/03/p02-page.png)
-
 **四种策略：**
 
 | 策略 | 说明 |
@@ -38,8 +36,6 @@ redis-benchmark -a 123qweasd -t set -n 1000000 -c 20
 | RDB | 定时全量快照 |
 | AOF | 追加写操作日志 |
 | RDB + AOF | 混合，恢复更快 |
-
-![RDB、AOF、混合持久化策略对比总览](/中间件/redis/03/p03-page.png)
 
 **RDB 优缺点：**
 
@@ -56,8 +52,6 @@ redis-benchmark -a 123qweasd -t set -n 1000000 -c 20
 1. 纯缓存 → 关闭持久化  
 2. 可接受少量丢失 → RDB  
 3. **不建议单独 AOF** → RDB + AOF 混合，恢复用 AOF（含 RDB 前缀）
-
-![持久化策略选型决策图](/中间件/redis/03/p04-page.png)
 
 ---
 
@@ -118,8 +112,6 @@ AOF 已内置 RDB 段，便于控制体积与重写。
 ```
 
 `*3` 表 3 段，`$3` + `SET` 为第一段……理解协议可手写简易客户端。
-
-![AOF incr 文件中 RESP 协议格式示例](/中间件/redis/03/p09-page.png)
 
 **损坏恢复：** 手动破坏 incr 文件后重启失败，用 `redis-check-aof --fix appendonly.aof.1.incr.aof` 截断非法尾部。
 

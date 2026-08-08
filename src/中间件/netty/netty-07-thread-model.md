@@ -48,7 +48,7 @@ Netty 采用 **Reactor 主从模式**（与 Redis 6.0 前单线程处理命令 +
 
 **无锁串行化（线程模型层面）**：同一 Channel 的 I/O 与 Pipeline 事件默认在**绑定的一个 EventLoop 线程**内顺序执行，避免多线程抢 Channel 锁。用户若不 `executor().execute()` 切换线程，从 `fireChannelRead` 到业务 Handler 全在 IO 线程——这是线程模型设计的核心，下一篇再从性能角度展开。
 
-![Netty 线程模型源码剖析图](/中间件/netty/38/p04-page.png)
+源码阅读时可对照：`NioEventLoop.run()` → `processSelectedKeys()` → `NioSocketChannel.doReadBytes()` → `pipeline.fireChannelRead()`，整条链路在同一线程内串行完成。
 
 ---
 
@@ -65,7 +65,7 @@ Netty 采用 **Reactor 主从模式**（与 Redis 6.0 前单线程处理命令 +
 
 对应类：`MultithreadEventLoopGroup` → `NioEventLoop` → `Selector` + `run()` 循环。
 
-![主从 Reactor 线程模型](/中间件/netty/38/p05-page.png)
+Boss 线程只负责 `accept`，新连接通过 `register(childChannel, workerEventLoop)` 分配给 worker 池中某个 EventLoop；此后该 Channel 的所有 I/O 与 Pipeline 事件都在这个 worker 线程内串行处理，实现「一 Channel 一线程」的无锁模型。
 
 ### 3.2 NioEventLoop 一次 loop
 
@@ -180,7 +180,7 @@ handlerAdded → channelRegistered → channelActive
 
 ![线程安全容器与业务线程池](/中间件/netty/38/p11-03.png)
 
-![主从 Reactor 支撑海量连接](/中间件/netty/38/p12-page.png)
+百万连接实践要点：OS 层调大 `ulimit -n` 与 `fs.file-max`；Netty 层用主从 Reactor + 合理 worker 线程数；连接层配置 IdleStateHandler 及时清理假死连接；内存层 Direct Buffer + PooledByteBufAllocator；JVM 层选 G1/ZGC 并监控 DirectMemory 使用。
 
 ---
 

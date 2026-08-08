@@ -34,8 +34,6 @@ Echo 程序证明 Netty 能跑；真实分布式系统还需要：**登录鉴权
 5. 链路有效性校验（心跳）
 6. 断连重连
 
-![通信模型时序](/中间件/netty/37/p02-page.png)
-
 **典型时序**：
 
 1. TCP 建连 → 客户端发**握手/登录**请求（带节点 ID 等）
@@ -43,7 +41,7 @@ Echo 程序证明 Netty 能跑；真实分布式系统还需要：**登录鉴权
 3. 双向业务消息 + **Ping/Pong 心跳**
 4. 空闲或异常 → 关闭连接，客户端间隔 **INTERVAL** 重连
 
-支持 **TWO_WAY**（需应答）与 **ONE_WAY**（单向通知）。
+支持 **TWO_WAY**（需应答）与 **ONE_WAY**（单向通知）。消息类型通过 Header 的 `type` 字段区分：0 业务请求、1 业务响应、2 单向、3/4 握手、5/6 心跳。
 
 ---
 
@@ -61,7 +59,7 @@ Echo 程序证明 Netty 能跑；真实分布式系统还需要：**登录鉴权
 
 Body 为 Java 对象，序列化可用 **Kryo**（需配套 KryoEncoder/Decoder）。
 
-![消息定义表](/中间件/netty/37/p03-page.png)
+完整消息结构：`RemotingCommand` = Header（md5、msgID、type、priority、attachment）+ Body（Kryo 序列化的 Java 对象）。md5 用于防篡改校验；msgID 用于请求-响应配对；priority 支持 0–255 优先级队列（扩展点）。
 
 ---
 

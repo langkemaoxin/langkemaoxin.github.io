@@ -81,7 +81,7 @@ spring.shardingsphere.rules.readwrite-splitting.load-balancers.user_lb.type=ROUN
 
 ![读写分离架构示意](/中间件/shardingsphere/10-2/p21-01.png)
 
-![readwrite-splitting 配置与 SQL 日志](/中间件/shardingsphere/10-2/p23-page.png)
+配置完成后：写操作（insert/update/delete）路由到 `m0` 主库；读操作（select）按 `ROUND_ROBIN` 轮询 `m1` 从库。开启 `sql-show=true` 可在日志里对比 Logic SQL 与 Actual SQL 的数据源名称。
 
 ---
 
@@ -96,9 +96,7 @@ spring.shardingsphere.rules.sharding.broadcast-tables=dict
 
 插入一条 `dict`，会写入 m0、m1 的 `dict`。
 
-![dict 广播表配置](/中间件/shardingsphere/10-2/p24-page.png)
-
-![addDict 双库写入](/中间件/shardingsphere/10-2/p26-page.png)
+广播表适合字典、配置等**各分片都需要且数据量小**的表。配置 `broadcast-tables=dict` 后，对 `dict` 的 insert/update/delete 会自动同步到所有分片库，无需在业务代码里双写。
 
 ---
 
@@ -119,9 +117,9 @@ SELECT uci.* FROM user_course_info uci, user u WHERE uci.userid = u.userid
 - **无绑定**：4 种表组合 → 笛卡尔式 4 条 SQL  
 - **有绑定**：仅 `user_1↔user_course_info_1`、`user_2↔user_course_info_2` 两条
 
-![绑定表配置 user + user_course_info](/中间件/shardingsphere/10-2/p27-01.png)
+无 `binding-tables` 时，两表各 2 片会产生 2×2=4 条 Actual SQL；配置绑定后 ShardingSphere 知道 `user_i` 只与 `user_course_info_i` 关联，SQL 数量减半，避免无效笛卡尔积。
 
-![无绑定时四条 Actual SQL](/中间件/shardingsphere/10-2/p26-page.png)
+![绑定表配置 user + user_course_info](/中间件/shardingsphere/10-2/p27-01.png)
 
 ![有绑定时两条 Actual SQL](/中间件/shardingsphere/10-2/p27-01.png)
 

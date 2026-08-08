@@ -49,13 +49,9 @@ OBJECT ENCODING s2    # listpack
 # 超 listpack 阈值 → hashtable
 ```
 
-![Set 根据元素类型与数量选择 intset/listpack/hashtable](/中间件/redis/09/p21-page.png)
-
 ### intset
 
 紧凑有序整数数组（intset.h），省内存。
-
-![intset 底层整数数组结构](/中间件/redis/09/p22-page.png)
 
 ### 转换逻辑
 
@@ -87,8 +83,6 @@ zadd z2 80 a 90 b 91 c 95 d   # 超 entries → skiplist
 OBJECT ENCODING z2    # skiplist
 ```
 
-![ZSet listpack 与 skiplist 编码切换实验](/中间件/redis/09/p25-page.png)
-
 ### skiplist 跳表
 
 单链表查找 O(N)；跳表多层索引，查找 **O(log N)**，空间 **O(N)**，**读多写少**合适（维护索引有写成本）。
@@ -108,8 +102,6 @@ OBJECT ENCODING z2    # skiplist
 ![skiplist 与 dict 在 ZSet 中的分工](/中间件/redis/09/p28-01.png)
 
 **ZSet 总结：** 小 listpack，大 skiplist；两参数控切换。
-
-![ZSet 底层 encoding 总结](/中间件/redis/09/p29-page.png)
 
 ---
 
@@ -144,8 +136,6 @@ OBJECT ENCODING z2    # skiplist
 
 但 Redis 的价值不仅是「快」：**缓存、分布式锁、NoSQL、向量搜索、Stack 扩展**——在复杂业务中**选对类型、部署与原子性方案**才是基本功。
 
-![Redis 应用场景：缓存、锁、DB、搜索等](/中间件/redis/09/p32-page.png)
-
 ---
 
 ## 六、系列回顾
@@ -175,5 +165,3 @@ OBJECT ENCODING z2    # skiplist
 理解 `OBJECT ENCODING` 背后的 **编码升级路径**，面试与排障都会更从容。系列完结——愿你的 Redis 又稳又快。
 
 ![Redis 课程总结：理解深度与实战并重](/中间件/redis/09/p34-01.png)
-
-![系列完结：Redis 从入门到底层](/中间件/redis/09/p35-page.png)

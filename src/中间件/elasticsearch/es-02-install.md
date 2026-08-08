@@ -24,8 +24,6 @@ tag:
 
 ## 一、安装与目录结构
 
-![Elasticsearch 安装包目录结构说明](/中间件/elasticsearch/46-5/p02-page.png)
-
 初学者可在 Windows 直接解压运行；生产环境推荐 Linux。以 **8.14.3** 为例：
 
 - 下载：[官方安装文档](https://www.elastic.co/guide/en/elasticsearch/reference/8.14/install-elasticsearch.html)
@@ -43,13 +41,17 @@ tag:
 
 **内存建议**：虚拟机 ≥ 4GB，JVM heap ≥ 1GB。JDK 版本见 [Support Matrix](https://www.elastic.co/support/matrix#matrix_jvm)。环境变量优先级：`ES_JAVA_HOME` > 内置 JDK > `ES_HOME`。
 
-![Windows 下配置 ES_JAVA_HOME 与 ES_HOME](/中间件/elasticsearch/46-5/p03-page.png)
+Windows 下设置环境变量：
+
+```powershell
+# 系统环境变量
+ES_JAVA_HOME = D:\elasticsearch-8.14.3\jdk
+ES_HOME      = D:\elasticsearch-8.14.3
+```
 
 ---
 
 ## 二、基础配置（开发模式）
-
-![编辑 elasticsearch.yml 关闭 Security](/中间件/elasticsearch/46-5/p04-page.png)
 
 编辑 `config/elasticsearch.yml`：
 
@@ -67,18 +69,14 @@ ES 8 默认开启 Security；初学者可先关闭以便快速上手。
 -Dfile.encoding=GBK
 ```
 
-![启动 elasticsearch.bat 并访问 9200](/中间件/elasticsearch/46-5/p05-page.png)
-
 - **9200**：HTTP REST 端口（浏览器访问）
 - **9300**：节点间通信端口
 
-访问 `http://localhost:9200` 应返回集群 JSON 信息。
+启动 `bin/elasticsearch.bat`（Windows）或 `bin/elasticsearch`（Linux），访问 `http://localhost:9200` 应返回集群 JSON 信息。
 
 ---
 
 ## 三、Linux 安装要点
-
-![Linux 创建 es 用户并下载解压](/中间件/elasticsearch/46-5/p06-page.png)
 
 ES **禁止 root 直接启动**。若 root 解压，需 `chown -R es:es elasticsearch-8.14.3`。
 
@@ -86,9 +84,8 @@ ES **禁止 root 直接启动**。若 root 解压，需 `chown -R es:es elastics
 adduser es
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.14.3-linux-x86_64.tar.gz
 tar -xzf elasticsearch-8.14.3-linux-x86_64.tar.gz
+chown -R es:es elasticsearch-8.14.3
 ```
-
-![配置 ES_JAVA_HOME 与 ES_HOME](/中间件/elasticsearch/46-5/p07-page.png)
 
 在 `~/.bash_profile` 中：
 
@@ -100,10 +97,10 @@ source ~/.bash_profile
 
 ### 开发模式 vs 生产模式
 
-![开发模式 single-node 与生产引导检查说明](/中间件/elasticsearch/46-5/p08-page.png)
-
-- **开发模式**：`discovery.type: single-node` 绕过引导检查
-- **生产模式**：修改集群相关配置会触发 bootstrap checks（JVM、内存锁、虚拟内存、线程数、discovery 等），不合理则拒绝启动
+| 模式 | 特征 |
+|------|------|
+| 开发模式 | `discovery.type: single-node` 绕过引导检查 |
+| 生产模式 | 修改集群相关配置会触发 bootstrap checks（JVM、内存锁、虚拟内存、线程数、discovery 等），不合理则拒绝启动 |
 
 常用配置项见 [Important Settings](https://www.elastic.co/guide/en/elasticsearch/reference/8.14/important-settings.html)：
 
@@ -115,10 +112,7 @@ source ~/.bash_profile
 | `network.host` | 默认 127.0.0.1，远程需 0.0.0.0 |
 | `discovery.seed_hosts` | 候选主节点主机列表 |
 | `cluster.initial_master_nodes` | 首次选主节点名（首次后应移除） |
-
-![path.data 与 bootstrap.memory_lock 等配置说明](/中间件/elasticsearch/46-5/p09-page.png)
-
-![http.port、transport.port、discovery 配置](/中间件/elasticsearch/46-5/p10-page.png)
+| `bootstrap.memory_lock` | 内存锁定，生产建议 true；内存不足时可设 false |
 
 JVM 堆内存 `config/jvm.options`：
 
@@ -128,8 +122,6 @@ JVM 堆内存 `config/jvm.options`：
 ```
 
 建议 Xms = Xmx，且不超过物理内存 50%，单节点 heap 不宜超过 30GB。
-
-![Linux 启动 ES 与生产模式常见错误](/中间件/elasticsearch/46-5/p11-page.png)
 
 生产启动常见报错及处理：
 
@@ -151,11 +143,9 @@ sysctl -p
 
 ## 四、浏览器插件与 Kibana
 
-![Elasticsearch Head、Elasticvue 等 Chrome 插件](/中间件/elasticsearch/46-5/p12-page.png)
-
 常用 Dev 插件：Elasticsearch Head、Elasticvue（对国人友好）。生产环境更推荐 **Kibana**。
 
-![Kibana 下载与 kibana.yml 配置](/中间件/elasticsearch/46-5/p13-page.png)
+下载 [Kibana 8.14.3](https://www.elastic.co/cn/downloads/past-releases#kibana)，编辑 `config/kibana.yml`：
 
 ```yaml
 server.port: 5601
@@ -172,13 +162,9 @@ GET /_cat/indices?v
 GET /_cat/shards?v
 ```
 
-![Kibana 启动与 _cat API 示例](/中间件/elasticsearch/46-5/p14-page.png)
-
 ---
 
 ## 五、中文分词插件
-
-![在线安装 analysis-icu 插件](/中间件/elasticsearch/46-5/p15-page.png)
 
 ```bash
 bin/elasticsearch-plugin list

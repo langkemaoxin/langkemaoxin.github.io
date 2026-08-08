@@ -53,7 +53,7 @@ BIO 中 `ServerSocket.accept()` 和 `socket.read()` 都会**阻塞**当前线程
 
 **RPC 背景**：业务拆分到多机后，本地方法调用变成远程调用。RPC 封装序列化、网络传输、代理，对现有代码侵入小；Dubbo 基于 TCP，gRPC 基于 HTTP/2——RPC 与 HTTP 是不同层次的概念。
 
-![为什么需要 RPC](/中间件/netty/32a/p06-page.png)
+RPC 解决的是「像调本地方法一样调远程服务」：客户端 Stub 序列化参数 → 网络传输 → 服务端 Skeleton 反序列化并执行 → 结果原路返回。相比 REST，RPC 通常二进制协议、长连接、性能更高，适合内部服务间高频调用。
 
 ---
 
@@ -77,11 +77,9 @@ NIO（New/Non-blocking IO）核心差异：
 
 Channel 必须**非阻塞**才能注册 Selector；interest 用位掩码：`OP_READ | OP_WRITE`。
 
-![Selector select 与 selectedKeys 处理](/中间件/netty/32a/p10-page.png)
+`selector.select()` 阻塞直到至少一个 Channel 就绪；返回后遍历 `selectedKeys`，对每个 key 检查 `isAcceptable()`/`isReadable()`/`isWritable()` 并处理。**SelectionKey** 绑定 Channel 与 interest 集合，处理完毕需 `keyIterator.remove()` 避免重复处理。
 
-![SelectionKey 类型与就绪条件](/中间件/netty/32a/p11-page.png)
-
-![服务端与客户端 Channel 可注册的操作](/中间件/netty/32a/p12-page.png)
+服务端 Channel 注册 `OP_ACCEPT`，已 accept 的 SocketChannel 注册 `OP_READ`（写就绪通常由读触发）；客户端连接后注册 `OP_CONNECT` 或 `OP_READ`。
 
 ### Reactor 演进
 
@@ -89,7 +87,7 @@ Channel 必须**非阻塞**才能注册 Selector；interest 用位掩码：`OP_R
 2. **单 Reactor + 线程池**：I/O 在 Reactor，业务丢线程池。
 3. **主从 Reactor**：main 只 accept，sub 池处理 read/write——高并发标配，Netty `boss`/`worker` 即此模型。
 
-![单线程 Reactor 流程](/中间件/netty/32a/p16-page.png)
+单线程 Reactor 中，accept、read、decode、业务、encode、write 全在一个线程——实现简单，但任一连接业务阻塞会拖慢所有连接 I/O。
 
 ![多线程 Reactor 线程池](/中间件/netty/32a/p17-01.png)
 
@@ -104,9 +102,7 @@ Buffer 关键属性：`capacity`、`position`、`limit`；写→`flip()`→读�
 - **HeapByteBuffer**：堆内，分配快，发网络时往往还要拷到直接内存。
 - **DirectByteBuffer**：堆外，分配贵，IO 少一次拷贝，高吞吐网络更合适。
 
-![Buffer 读写步骤](/中间件/netty/32a/p13-page.png)
-
-![Heap 与 Direct 对比](/中间件/netty/32a/p14-page.png)
+Buffer 典型流程：写数据时 `put()` 移动 position；写完后 `flip()` 切换为读模式（limit=position, position=0）；读完后 `clear()` 或 `compact()` 准备下一轮。Heap 适合小对象与短生命周期；Direct 适合网络 IO 主路径，Netty ByteBuf 默认优先 Direct。
 
 直接内存不受 Young GC 管理，需关注 `-XX:MaxDirectMemorySize`，避免堆外泄漏。
 

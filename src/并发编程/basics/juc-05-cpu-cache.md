@@ -27,94 +27,125 @@ tag:
 
 ## 一、CPU 高速缓存
 
-Cache 位于 CPU 与主存之间，容量小、速度快。常见 **L1 / L2 / L3**；读 miss 时逐级下探直至主存，写时按**缓存一致性协议**写回。
+**Cache** 位于 CPU 与主存之间，容量小、速度快。常见 **L1 / L2 / L3**；每一级缓存存储的数据都是下一级的子集，技术难度与制造成本递减、容量递增。
 
-**局部性原理**：
+CPU 速度远高于主存，直接从内存读写需等待多个时钟周期。Cache 保存 CPU 刚用过或循环使用的一部分数据，再次使用时可直接从 Cache 读取，减少等待。
 
-- **时间局部性**：刚访问的数据很可能再访问（循环、递归）。  
-- **空间局部性**：相邻地址很可能接着访问（数组、顺序代码）。
+### 局部性原理
 
-![局部性原理与多级缓存](/并发编程/performance/17/p02-page.png)
+- **时间局部性（Temporal）**：刚访问的信息很可能再次访问——循环、递归、方法反复调用。  
+- **空间局部性（Spatial）**：某地址被引用，附近地址也很可能被引用——顺序代码、数组、连续分配的对象。
 
-### 多核下的两个问题
+### 多级缓存与寄存器
 
-- **场景一**：核 A 修改了某行，核 B 仍用旧副本 → 可见性/一致性问题。  
-- **场景二**：两线程改同一缓存行内**不同字段** → 频繁失效，**伪共享**。
+现代 CPU 集成多级缓存。CPU **寄存器**位于 CPU 内部，速度最快、容量极小（几十到几百字节），常用数据优先放寄存器。
 
-![多核缓存架构示意](/并发编程/performance/17/p03-page.png)
+**读路径**：L1 → L2 → L3 → 主内存。  
+**写路径**：先写 L1，再按**缓存一致性协议**决定是否写 L2/L3/主存（可能写回、可能使其它核副本失效）。
+
+**多核下的问题**：
+
+- **场景一**：核 A 修改共享数据，核 B 仍用旧副本 → 一致性问题。  
+- **场景二**：两线程改**同一 Cache Line** 内不同字段 → 频繁失效，**伪共享**。
 
 ---
 
 ## 二、缓存一致性的硬件手段
 
-IA-32 文档描述三类机制：
+IA-32 手册描述，处理器用三种相互依赖的机制执行**锁定的原子操作**：
 
-1. **保证的原子操作**（如 `CMPXCHG`）  
-2. **总线锁定**（`LOCK#` 前缀）  
-3. **缓存锁定 / 一致性协议**（现代主流）
+1. **保证的原子操作**（如 `XADD`、`XCHG`、`CMPXCHG`）  
+2. **总线锁定**（`LOCK#` 信号与 `LOCK` 指令前缀）  
+3. **缓存锁定 / 一致性协议**（Pentium 4、Xeon、P6 及以后主流）
 
-数据**不能缓存**或**跨多个缓存行**时，可能退化为总线锁，开销更大。
+**何时退化为总线锁**：
 
-![缓存一致性三种机制](/并发编程/performance/17/p05-page.png)
+- 数据**不能被缓存在处理器内部**（如部分设备内存）  
+- 操作**跨多个 Cache Line**  
+
+现代处理器应尽量用**缓存锁定**实现原子操作，性能更好。早期 Pentium 不支持缓存锁定，只能总线锁。
 
 ---
 
 ## 三、总线窥探与 MESI
 
-**Bus Snooping**：各缓存监视总线事务，发现共享块被改则 **invalidate** 或 **update** 本地副本。
+### 3.1 总线窥探（Bus Snooping）
 
-协议分 **写失效（Write-invalidate）** 与 **写更新（Write-update）**；x86 常用 **MESI**（Modified / Exclusive / Shared / Invalid）：
+一致性控制器监视总线事务，当共享缓存块被修改时，通知其它持有副本的缓存**失效（invalidate）**或**更新（update）**。
+
+**窥探协议类型**：
+
+| 类型 | 行为 | 代表 |
+|------|------|------|
+| **写失效（Write-invalidate）** | 写时使其它副本失效 | MSI、MESI、MOESI 等（最常用） |
+| **写更新（Write-update）** | 写时广播更新到所有缓存 | Dragon、Firefly（总线流量大，较少见） |
+
+### 3.2 MESI 协议
+
+**MESI**（又称 Illinois 协议）是基于写失效、支持**回写（write-back）**缓存的最常用协议。
 
 | 状态 | 含义 |
 |------|------|
-| M | 已修改，与主存不一致 |
-| E | 独占且干净 |
-| S | 多核共享且干净 |
-| I | 无效 |
+| **M（Modified）** | 脏数据，与主存不一致；其它核读主存前须回写 |
+| **E（Exclusive）** | 独占且干净，与主存一致 |
+| **S（Shared）** | 多核共享且干净 |
+| **I（Invalid）** | 无效 |
 
-**Cache-to-cache** 复制可在命中 Shared 时减少访存，但须配合状态转换保证一致。
-
-![MESI 状态与总线窥探](/并发编程/performance/17/p06-page.png)
-
-![写失效协议工作流程](/并发编程/performance/17/p07-page.png)
+**Cache-to-cache 复制**：miss 时若其它核已有 Shared 副本，可直接复制，减少访存；但 M 状态须先写回主内存再复制，保证一致。
 
 ---
 
 ## 四、伪共享（False Sharing）
 
-两线程更新**同一 64 字节 Cache Line** 内的不同变量 → 行在核间来回失效，性能骤降。
+多个核上的线程操作**同一 Cache Line 内不同变量**，仍会频繁使对方缓存失效——代码层面变量无关，硬件上却互相干扰，即**伪共享**。
 
-例：`ArrayBlockingQueue` 的 `takeIndex`、`putIndex`、`count` 易落在同一行，生产者 put 与消费者 take 互相使对方缓存失效。
+**典型例子**：`ArrayBlockingQueue` 的 `takeIndex`、`putIndex`、`count` 易落在同一 64 字节行内。生产者 `put` 改 `putIndex` 会使消费者核上的缓存行失效，反之亦然。
 
-查看 Cache Line 大小（Linux）：`getconf LEVEL1_DCACHE_LINESIZE` 或 `/proc/cpuinfo`（通常 **64 字节**）。
+**查看 Cache Line 大小**（Linux，通常 64 字节）：
 
-![伪共享示意](/并发编程/performance/17/p08-page.png)
+```bash
+getconf LEVEL1_DCACHE_LINESIZE
+# 或 cat /proc/cpuinfo
+```
 
 ### 规避方案
 
-1. **缓存行填充**：在 hot 字段间插入 `long p1..p7` 等 padding。  
-2. **`@sun.misc.Contended`**（JDK 8+，常配合 `-XX:-RestrictContended`）。  
-3. **ThreadLocal**：变量不跨线程共享。
+**方案 1：缓存行填充**
 
-![伪共享 benchmark 与填充](/并发编程/performance/17/p09-page.png)
+```java
+class Pointer {
+    volatile long x;
+    long p1, p2, p3, p4, p5, p6, p7; // 填充，使 x 与 y 不在同一行
+    volatile long y;
+}
+```
 
-![Contended 注解避免伪共享](/并发编程/performance/17/p10-page.png)
+**方案 2：`@sun.misc.Contended`（JDK 8+）**
+
+常配合 JVM 参数 `-XX:-RestrictContended` 使用。
+
+**方案 3：ThreadLocal**——变量不跨线程共享，从根源避免行竞争。
+
+**Benchmark 现象**：未填充时两线程各自增 `x`、`y`，耗时远高于填充后（同一定义下的 `Pointer` 对比实验）。
 
 ---
 
 ## 五、从缓存问题到高性能队列（延伸）
 
-JUC 有界队列多用 **ReentrantLock**，高稳定场景下锁竞争 + **数组伪共享** 会成为瓶颈。LMAX **Disruptor** 等设计通过：
+JUC 有界队列（如 `ArrayBlockingQueue`）多用 **ReentrantLock**：
 
-- **环形数组** + 2^n 长度位运算定位  
-- **CAS** 无锁（或极少锁）  
-- **缓存行填充** 隔离序列号与数据  
+1. 高稳定系统为防止生产者过快导致 OOM，常选有界队列。  
+2. 加锁带来竞争、上下文切换与死锁风险。  
+3. 数组实现又易触发**伪共享**。
 
-解决「内存队列延迟接近 I/O」类问题。Disruptor 细节见专栏 **性能扩展** 篇；此处只需建立联系：**懂 CPU 缓存，才理解为何要 padding、为何无锁队列要关心 Cache Line**。
+LMAX **Disruptor** 针对内存队列延迟问题设计（单线程每秒数百万订单级别），核心思路包括：
 
-![Disruptor 高性能队列预览](/并发编程/performance/17/p09-page.png)
+- **环形数组**（2^n 长度，位运算定位，O(1) 存取）  
+- **CAS 无锁**（或极少锁）序列号申请 slot  
+- **缓存行填充**隔离 hot 字段  
+- **事件驱动**生产者-消费者（观察者模式）  
 
-![Disruptor RingBuffer 设计要点](/并发编程/performance/17/p10-page.png)
+Log4j 2 异步模式采用 Disruptor；64 线程下吞吐量可比 Async Appender 高一个数量级。Disruptor 细节见专栏 **性能扩展** 篇；此处只需建立联系：**懂 CPU 缓存，才理解为何要 padding、为何无锁队列要关心 Cache Line**。
 
 ---
 

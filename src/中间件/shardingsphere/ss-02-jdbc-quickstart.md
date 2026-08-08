@@ -19,7 +19,7 @@ tag:
 
 先把「分库分表」从概念落到一次可运行的 Demo：**2 个库 × 2 张表 = 4 片**，业务仍写 `course` 一张逻辑表。本篇搭 Spring Boot + MyBatis-Plus 基线，再只改依赖与配置接入 ShardingJDBC。
 
-![第一个分库分表案例目标](/中间件/shardingsphere/10-2/p02-page.png)
+**案例目标**：插入 10 条 `course` 记录后，数据按 `cid` 路由到 `shardingdb1/shardingdb2` 下的 `course_1`、`course_2`；开启 `sql-show` 可在日志中看到 Logic SQL 与 Actual SQL 的对应关系。
 
 ---
 
@@ -54,7 +54,7 @@ CREATE TABLE course (
 
 基线跑通后，所有数据在**单库单表**。
 
-![Spring Boot + MyBatis-Plus 工程结构](/中间件/shardingsphere/10-2/p05-page.png)
+典型工程结构：`pom.xml`（Spring Boot + MyBatis-Plus + Druid + MySQL 驱动）→ `entity/Course.java` → `mapper/CourseMapper.java` → `Application` 主类加 `@MapperScan` → `application.properties` 单数据源 → 单元测试 `insert` 循环 10 条、`selectList` 验证。此对照组证明业务代码本身无需分片感知。
 
 ---
 

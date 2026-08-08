@@ -101,13 +101,13 @@ TCP/UDP 首部各用 16 位存端口号，2^16=65536，其中 0 表示「所有�
 
 MySQL 大量 TIME_WAIT 时可调 `wait_timeout`、内核参数 `tcp_tw_reuse`、`tcp_fin_timeout` 等（生产需评估后再改）。
 
+常见调优参数：`net.ipv4.tcp_tw_reuse=1` 允许复用 TIME_WAIT 套接字；`net.ipv4.tcp_fin_timeout` 缩短 FIN_WAIT_2 超时；应用侧 `wait_timeout` 控制空闲连接回收。修改前需在测试环境验证对长连接业务的影响。
+
 ---
 
 ## 四、Wireshark 实战：亲眼看见握手
 
 抓包是定位网络问题、学习协议最直观的方式。常用工具：Wireshark、Fiddler、Charles。
-
-![MySQL TIME_WAIT 调优参数](/中间件/netty/31/p16-page.png)
 
 ![Wireshark 下载与准备](/中间件/netty/31/p17-01.png)
 

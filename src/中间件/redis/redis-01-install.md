@@ -57,8 +57,6 @@ ll /usr/local/bin
 | `redis-check-aof` / `redis-check-rdb` | 修复持久化文件 |
 | `redis-sentinel` | 哨兵进程 |
 
-![编译生成的 redis-server、redis-cli 等可执行文件](/中间件/redis/01a/p03-page.png)
-
 ### 1.2 启动与后台运行
 
 源码目录直接启动（前台，退出即停）：
@@ -202,8 +200,6 @@ Cluster 通过 **16384 个哈希槽**分片，突破单机内存，每个 Master
 
 槽位计算：`CRC16(key) mod 16384`。三节点示例：A 0–5460，B 5461–10922，C 10923–16383。
 
-![Cluster 节点 B 故障时槽位不可用示意](/中间件/redis/01a/p19-page.png)
-
 **搭建步骤：**
 
 ```bash
@@ -220,8 +216,6 @@ redis-cli cluster info
 redis-cli cluster nodes
 ```
 
-![创建集群目录并启动各节点服务](/中间件/redis/01a/p20-page.png)
-
 6379 节点配置要点：
 
 ```conf
@@ -235,10 +229,6 @@ appendonly yes
 port 6379
 cluster-config-file nodes-6379.conf
 ```
-
-![6379 集群节点 redis.conf 完整示例](/中间件/redis/01a/p21-page.png)
-
-![6380 集群节点 redis.conf 完整示例](/中间件/redis/01a/p22-page.png)
 
 **读写与路由：**
 
@@ -273,37 +263,99 @@ redis-server ./cluster/redis_6379.conf  # 旧 Master 重启后变 Slave
 
 ![单机 redis.conf 配置文件截图](/中间件/redis/01a/p27-01.png)
 
-![6379 单机配置全文（bind、daemonize、dir 等）](/中间件/redis/01a/p28-page.png)
-
-![6379 配置续（appendonly、lazyfree 等）](/中间件/redis/01a/p29-page.png)
-
-![主从节点配置说明与 129 主节点配置](/中间件/redis/01a/p30-page.png)
-
-![131 从节点配置（含 replicaof）](/中间件/redis/01a/p31-page.png)
-
-![132 从节点配置](/中间件/redis/01a/p32-page.png)
-
-![26379 哨兵 sentinel.conf 配置](/中间件/redis/01a/p33-page.png)
-
-![集群 6379 节点 cluster 配置](/中间件/redis/01a/p34-page.png)
-
-![集群 6380 节点 cluster 配置](/中间件/redis/01a/p35-page.png)
-
-![常用 Redis 命令汇总（keys、ttl、flush 等）](/中间件/redis/01a/p36-page.png)
-
-![单机/主从/哨兵/集群部署命令速查（上）](/中间件/redis/01a/p37-page.png)
-
-![部署命令速查（中）——哨兵与集群 create](/中间件/redis/01a/p38-page.png)
-
-![部署命令速查（下）——集群故障模拟](/中间件/redis/01a/p39-page.png)
-
-![集群故障转移与节点重启命令](/中间件/redis/01a/p40-page.png)
-
-![cluster nodes 查看与日志 tail](/中间件/redis/01a/p41-page.png)
-
-![完整集群运维命令清单结尾](/中间件/redis/01a/p42-page.png)
-
 ---
+
+## 五、配置与命令速查
+
+### 5.1 推荐目录结构
+
+```text
+/opt/software/redis/                          # 应用根目录
+/opt/software/redis/redis-stable/             # 源码与单机/哨兵配置
+/opt/software/redis/cluster/                  # 集群运行时数据（RDB/AOF/日志）
+/opt/software/redis/redis-stable/cluster/     # 集群 redis_6379.conf 等
+```
+
+### 5.2 单机 redis.conf 要点
+
+```conf
+bind * -::*
+protected-mode no
+port 6379
+daemonize yes
+logfile /opt/software/redis/redis-stable/redis.log
+dir /opt/software/redis
+requirepass 1qaz@WSX
+appendonly no
+appendfsync everysec
+aof-use-rdb-preamble yes
+```
+
+### 5.3 主从节点（131/132 从节点示例）
+
+```conf
+replicaof 192.168.75.129 6379
+replica-read-only yes
+```
+
+### 5.4 哨兵 sentinel.conf（26379，三机相同）
+
+```conf
+port 26379
+daemonize yes
+logfile /opt/software/redis/redis-stable/sentinel.log
+dir /opt/software/redis
+sentinel monitor mymaster 192.168.75.129 6379 2
+sentinel down-after-milliseconds mymaster 30000
+sentinel failover-timeout mymaster 180000
+```
+
+### 5.5 集群节点（6379 / 6380 各一份，改 port 与文件名）
+
+```conf
+bind * -::*
+daemonize yes
+protected-mode no
+cluster-enabled yes
+cluster-node-timeout 5000
+dir /opt/software/redis/cluster
+appendonly yes
+port 6379
+logfile /opt/software/redis/redis-stable/cluster/redis6379.log
+cluster-config-file nodes-6379.conf
+appendfilename appendonly6379.aof
+dbfilename dump6379.rdb
+```
+
+### 5.6 常用命令
+
+```bash
+# 基础
+keys * | exists key | type key | ttl key
+del key | unlink key | expire key seconds
+select 0 | dbsize | flushdb | flushall
+
+# 单机运维
+redis-server redis.conf
+redis-cli -a 1qaz@WSX
+redis-cli shutdown
+
+# 主从
+info replication
+
+# 哨兵
+redis-cli -p 26379 info sentinel
+tail -f sentinel.log
+
+# 集群
+redis-cli --cluster create --cluster-replicas 1 \
+  192.168.75.129:6379 192.168.75.129:6380 \
+  192.168.75.131:6379 192.168.75.131:6380 \
+  192.168.75.132:6379 192.168.75.132:6380
+redis-cli -c
+redis-cli cluster info
+redis-cli cluster nodes
+```
 
 ## 小结
 

@@ -40,17 +40,11 @@ replicaof host port
 # 或运行时 SLAVEOF host port / SLAVEOF NO ONE
 ```
 
-![Replica 主从拓扑与 replicaof 配置示意](/中间件/redis/03/p12-page.png)
-
 ### 状态查看
 
 Master 上 `info replication`：关注 `connected_slaves`、`slave0:...state=online`、`master_repl_offset`。
 
 Slave 上：关注 `role:slave`、`master_link_status:up`、`slave_read_only:1`。
-
-![Master 节点 info replication 输出字段说明](/中间件/redis/03/p13-page.png)
-
-![Slave 节点 info replication 与 master_link_status](/中间件/redis/03/p14-page.png)
 
 ### 从库只读
 
@@ -58,13 +52,9 @@ Slave 上：关注 `role:slave`、`master_link_status:up`、`slave_read_only:1`�
 
 管理命令（CONFIG、DEBUG 等）在从库仍可用，生产可用 `rename-command CONFIG ""` 屏蔽危险指令。
 
-![从库 READONLY 错误与 replica-read-only 配置](/中间件/redis/03/p15-page.png)
-
 ### Slave 已有数据时
 
 建立主从时，Slave 会**清空本地数据**（删除 RDB/AOF），再接收 Master 的 RDB + 缓冲写命令。可从从库日志观察 `FULL RESYNC` / `PARTIAL RESYNC`。
-
-![从库重建主从时清空数据并全量同步的日志](/中间件/redis/03/p16-page.png)
 
 ![解除并重建主从关系验证同步行为](/中间件/redis/03/p17-01.png)
 
@@ -82,8 +72,6 @@ Slave 上：关注 `role:slave`、`master_link_status:up`、`slave_read_only:1`�
 1. **复制延迟**：写多 Slave 多时更明显  
 2. **Master 高可用**：Master 挂掉需人工切换  
 3. **数据安全 vs 可用**：多副本提高安全，但单 Master 仍是 SPOF（直到加 Sentinel）
-
-![主从复制延迟与 Master 单点故障示意](/中间件/redis/03/p18-page.png)
 
 ---
 

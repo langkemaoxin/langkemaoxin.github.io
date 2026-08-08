@@ -51,10 +51,6 @@ tag:
 
 官网 Commands 页按组检索；服务端 `MODULE LIST` 查看已加载模块。
 
-![Redis Stack 扩展模块官方命令分组](/中间件/redis/07/p05-page.png)
-
-![module list 输出 bf、ReJSON 等模块信息](/中间件/redis/07/p06-page.png)
-
 ---
 
 ## 四、Redis JSON
@@ -95,8 +91,6 @@ SCAN 0 MATCH k* COUNT 20
 SSCAN / HSCAN / ZSCAN  # 按类型
 ```
 
-![SCAN cursor 迭代与 MATCH/COUNT 参数](/中间件/redis/07/p10-page.png)
-
 **RediSearch（基于 JSON 或 Hash）：**
 
 ```redis
@@ -107,8 +101,6 @@ FT.INFO productIndex
 ```
 
 可视为 ES 的轻量替代，减少数据搬迁。
-
-![FT.CREATE 索引与 FT.SEARCH 条件查询示例](/中间件/redis/07/p11-page.png)
 
 ![商品 JSON 数据与搜索结果返回](/中间件/redis/07/p12-01.png)
 
@@ -124,8 +116,6 @@ Guava：
 BloomFilter<String> bf = BloomFilter.create(
     Funnels.stringFunnel(StandardCharsets.UTF_8), 10000, 0.01);
 ```
-
-![Guava BloomFilter 误判率与 mightContain 示例](/中间件/redis/07/p13-page.png)
 
 **Redis 命令：**
 
@@ -153,8 +143,6 @@ CF.ADD / CF.EXISTS / CF.DEL
 
 BUCKETSIZE 默认 2；越大利用率越高但误判率上升。
 
-![Cuckoo Filter 与 Bloom Filter 对比及 CF 命令](/中间件/redis/07/p11-page.png)
-
 ---
 
 ## 八、本地安装与 Java 调用
@@ -176,8 +164,6 @@ DefaultRedisScript<String> script = new DefaultRedisScript<>(
     "return redis.call('BF.RESERVE', KEYS[1], '0.01','1000','NONSCALING')", String.class);
 redisTemplate.execute(script, List.of("a-bf"));
 ```
-
-![Spring Boot 通过 Lua 调用 BF.RESERVE 示例](/中间件/redis/07/p13-page.png)
 
 ---
 

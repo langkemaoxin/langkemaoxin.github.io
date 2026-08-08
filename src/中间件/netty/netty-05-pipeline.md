@@ -61,7 +61,12 @@ TCP 是**字节流**，无消息边界。常见现象：
 
 原因：Nagle 合并小包、接收缓冲未及时取走、MSS 分段、应用写入大于发送缓冲等。
 
-![粘包半包四种情况](/中间件/netty/34/p30-page.png)
+| 现象 | 说明 |
+|------|------|
+| 独立两包 | 理想情况，一次 read 一条消息 |
+| 粘包 | 一次 read 读到多条消息拼接 |
+| 半包 | 一条消息分多次 read |
+| 混合 | 粘包与半包同时出现 |
 
 **业界方案**：
 
@@ -113,7 +118,7 @@ Netty 内置 **HttpRequestDecoder/Encoder**、**HttpObjectAggregator**（聚合�
 
 HTTPS：在 Pipeline **最前面**加 **SslHandler**（内部 SSLEngine），也可根据客户端用 OptionalSslHandler 动态决定是否 SSL。
 
-![HTTP 编解码与聚合](/中间件/netty/34/p30-page.png)
+HTTP 服务端 Pipeline 典型顺序：`SslHandler`（可选）→ `HttpServerCodec`（请求解码+响应编码）→ `HttpObjectAggregator(maxContentLength)` 聚合成 `FullHttpRequest`/`FullHttpResponse` → `HttpContentCompressor` 压缩 → 业务 Handler。客户端顺序类似，Codec 方向相反。
 
 ---
 

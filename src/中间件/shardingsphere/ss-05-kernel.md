@@ -91,7 +91,7 @@ SELECT id, name FROM t_user WHERE status = 'ACTIVE' AND age > 18
 
 由 `max-connections-size-per-query` 等 props 影响，OLTP 偏流式、OLAP 偏内存归并。
 
-![执行引擎架构](/中间件/shardingsphere/10-3/p09-page.png)
+执行引擎在「内存限制」与「连接限制」两种模式间平衡：前者每个连接一次只跑一条 SQL，连接数可能较多；后者一个连接串行跑多条 SQL，严格限制并发连接。多片查询时，引擎按路由结果并行或串行下发到各数据源，再交给归并层。
 
 ---
 
@@ -102,7 +102,7 @@ SELECT id, name FROM t_user WHERE status = 'ACTIVE' AND age > 18
 - **流式归并**：逐条取，适合 order by / 流式分组（OLTP）
 - **内存归并**：全量进内存再排序聚合（OLAP）
 
-![结果归并流式 vs 内存](/中间件/shardingsphere/10-3/p12-page.png)
+流式归并逐条从各分片结果集取数，适合 `ORDER BY`/`GROUP BY` 且数据量可控的 OLTP；内存归并先把各片结果全部加载再排序聚合，适合分析型查询。跨片 `LIMIT` 也可能触发内存归并——这是分片 SQL 需要谨慎设计的原因之一。
 
 ---
 
@@ -118,7 +118,7 @@ Connection conn = ds.getConnection(); // ShardingConnection
 
 Java 配置与 YAML/`application.properties` **一一对应**（`AlgorithmConfiguration("MOD", props)` 等）。
 
-![ShardingSphereDataSource 创建与调试](/中间件/shardingsphere/10-3/p14-page.png)
+调试时可断点 `ShardingSphereDataSourceFactory.createDataSource`，观察传入的 `dataSourceMap` 与 `ShardingRuleConfiguration`；`getConnection()` 返回的 `ShardingConnection` 会在 `prepareStatement` 时触发完整五阶段流水线。
 
 ![Java API 与 properties 对照](/中间件/shardingsphere/10-3/p15-01.png)
 
@@ -131,7 +131,7 @@ Connection c = DriverManager.getConnection("jdbc:shardingsphere:classpath:config
 
 `config.yaml` 与 **Proxy 同源**，可脱离 Spring Boot。
 
-![ShardingSphereDriver 与 config.yaml](/中间件/shardingsphere/10-3/p12-page.png)
+独立 Driver 适合非 Spring 项目或 CLI 工具：classpath 下放与 Proxy `conf/` 同结构的 YAML，通过 `jdbc:shardingsphere:classpath:config.yaml` 连接，规则变更只需改 YAML 无需改代码。
 
 ---
 
@@ -144,7 +144,7 @@ Connection c = DriverManager.getConnection("jdbc:shardingsphere:classpath:config
 
 自定义：实现接口 + `META-INF/services/org.apache.shardingsphere.sharding.spi.KeyGenerateAlgorithm` + `type=MYKEY`。
 
-![SPI 加载 KeyGenerateAlgorithm](/中间件/shardingsphere/10-3/p14-page.png)
+`ServiceLoader` 在启动时扫描 classpath 下 SPI 文件，按 `getType()` 返回的字符串与配置里的 `type=MYKEY` 匹配。自定义主键生成器只需实现 `generateKey()` 并在 resources 目录注册即可。
 
 ![自定义 MyKeyGeneratorAlgorithm](/中间件/shardingsphere/10-3/p15-01.png)
 

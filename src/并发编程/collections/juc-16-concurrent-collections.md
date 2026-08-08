@@ -40,26 +40,53 @@ tag:
 
 ### 2.1 适用场景
 
+![CopyOnWriteArrayList 应用场景](/并发编程/collections/11/p03-01.png)
+
 - **读多写少**：读不加锁，写时复制整份数组
 - **允许短暂不一致**：如日志缓冲、配置快照、IP 黑名单——读者拿到的是某一时刻的快照，不必实时看到最新写入
 
-![CopyOnWriteArrayList 应用场景](/并发编程/collections/11/p03-01.png)
-
 ### 2.2 实战：IP 黑名单判定
 
-![IP 黑名单判定示例](/并发编程/collections/11/p04-page.png)
+当应用接入外部请求后，为防范风险常对请求 IP 做特征判定；IP 黑名单偶尔由运维更新，典型读多写少场景。
+
+```java
+public class CopyOnWriteArrayListDemo {
+    private static CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+
+    static {
+        list.add("ipAddr0");
+        list.add("ipAddr1");
+        list.add("ipAddr2");
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Runnable task = () -> {
+            try { Thread.sleep(new Random().nextInt(5000)); } catch (Exception ignored) {}
+            String currentIP = "ipAddr" + new Random().nextInt(6);
+            if (list.contains(currentIP)) {
+                System.out.println(Thread.currentThread().getName() + " IP " + currentIP + " 命中黑名单");
+                return;
+            }
+            System.out.println(Thread.currentThread().getName() + " IP " + currentIP + " 接入处理...");
+        };
+        new Thread(task, "请求1").start();
+        new Thread(task, "请求2").start();
+        new Thread(task, "请求3").start();
+        new Thread(() -> {
+            try { Thread.sleep(new Random().nextInt(2000)); } catch (Exception ignored) {}
+            String newBlackIP = "ipAddr3";
+            list.add(newBlackIP);
+            System.out.println("添加了新的非法 IP " + newBlackIP);
+        }, "IP黑名单更新").start();
+    }
+}
+```
 
 多个请求线程并发 `contains` 检查 IP；运维线程偶尔 `add` 新黑名单。读线程无锁遍历，写线程在副本上修改后一次性替换引用。
 
-![CopyOnWriteArrayList 多线程演示](/并发编程/collections/11/p05-page.png)
-
 ### 2.3 原理：锁 + 数组拷贝 + volatile
 
-![CopyOnWriteArrayList 原理四步](/并发编程/collections/11/p06-page.png)
-
-写操作四步：加锁 → 复制数组 → 在新数组上修改 → 赋值给 `array` 并解锁。底层 `private transient volatile Object[] array` 保证替换后其他线程立即可见。
-
-![CopyOnWriteArrayList 数据结构](/并发编程/collections/11/p07-page.png)
+写操作四步：**加锁 → 复制数组 → 在新数组上修改 → 赋值给 `array` 并解锁**。底层 `private transient volatile Object[] array` 保证替换后其他线程立即可见。
 
 **优点**：读性能高；迭代器 Fail-Safe，遍历中不会因其他线程修改而抛 `ConcurrentModificationException`。
 
@@ -67,10 +94,10 @@ tag:
 
 ### 2.4 fail-fast 与 fail-safe
 
-![fail-fast 与 fail-safe 对比](/并发编程/collections/11/p09-page.png)
-
-- **fail-fast**（ArrayList）：并发修改时抛异常
+- **fail-fast**（ArrayList）：并发修改时抛 `ConcurrentModificationException`
 - **fail-safe**（CopyOnWriteArrayList）：在副本上迭代，不抛异常，但可能读到旧数据
+
+fail-fast 方案一：遍历路径全部加 `synchronized` 或使用 `Collections.synchronizedList`，不推荐。方案二：换 **CopyOnWriteArrayList**，推荐用于读多写少场景。
 
 ---
 
@@ -80,8 +107,6 @@ tag:
 
 - **JDK 7**：Segment 分段锁，减小锁粒度
 - **JDK 8+**：数组 + 链表 + 红黑树，CAS + synchronized 锁定桶头节点，内存更省、粒度更细
-
-![ConcurrentHashMap 应用场景](/并发编程/collections/11/p10-page.png)
 
 常用 API：`putIfAbsent`、`computeIfAbsent`、`merge` 等复合操作，适合缓存与计数。
 
@@ -101,29 +126,31 @@ deal(() -> new ConcurrentHashMap<String, Integer>(), (map, list) -> {
 });
 ```
 
-![词频统计测试流程](/并发编程/collections/11/p11-page.png)
-
-![生成测试文件](/并发编程/collections/11/p12-page.png)
-
-![多线程读文件](/并发编程/collections/11/p13-page.png)
-
-![正确结果每个字母 200 次](/并发编程/collections/11/p14-page.png)
+`deal` 方法用 `CountDownLatch` 保证 26 个线程全部完成后再打印。错误写法用 `HashMap` + 非原子 `get/put` 会导致计数不准；正确结果应为每个字母出现 200 次。
 
 ### 3.3 数据结构对比
 
-![Hashtable 与 JDK7 ConcurrentHashMap](/并发编程/collections/11/p15-page.png)
+- **Hashtable**：整表一把锁
+- **JDK 7 ConcurrentHashMap**：Segment 数组 + HashEntry 数组 + 链表
+- **JDK 8 ConcurrentHashMap**：数组 + 链表 + 红黑树，CAS + synchronized 锁桶头
 
-![JDK8 ConcurrentHashMap 结构](/并发编程/collections/11/p16-page.png)
-
-树化条件：链表长度 ≥ 8 且数组长度 ≥ 64。
+树化条件：链表长度 ≥ 8 且数组长度 ≥ 64（`TREEIFY_THRESHOLD = 8`，`MIN_TREEIFY_CAPACITY = 64`）。
 
 ---
 
 ## 四、ConcurrentSkipListMap：有序并发 Map
 
-基于跳表（Skip List），支持 O(log n) 插入/删除/查找，key 默认升序。适合需要 **有序遍历** 或 **区间查询** 的并发场景，如按商品 ID 维护销量排行榜。
+基于跳表（Skip List），支持 O(log n) 插入/删除/查找，key 默认升序。跳表多层有序链表，高层是「快速通道」，底层包含全部元素。
 
-跳表多层有序链表，高层是「快速通道」，底层包含全部元素。`ConcurrentSkipListMap` 在跳表基础上保证线程安全，替代 `synchronizedSortedMap(TreeMap)`。
+### 4.1 电商场景选型
+
+| 案例 | 场景 | 选型 |
+|------|------|------|
+| 商品销量统计 | 频繁 get/set，key 稳定 | ConcurrentHashMap |
+| 用户浏览历史 | 数据量大、频繁增删 | ConcurrentSkipListMap（跳表分段，增删效率更高） |
+| 冻结用户列表 | 低频写、高频读 | CopyOnWriteArrayList |
+
+强一致要求用 Hashtable；弱一致高并发 Map 用 ConcurrentHashMap；数据量级高且大量增删改用 ConcurrentSkipListMap。
 
 ---
 

@@ -32,7 +32,7 @@ tag:
 - **分片策略** = 分片键 + 分片算法（分库 + 分表）
 - 匹配不到 → **全路由**（所有 actual-nodes），性能最差
 
-![垂直分片 vs 水平分片](/中间件/shardingsphere/10-2/p12-page.png)
+**垂直分片**：按业务拆库，不同表落到不同库（如用户库、订单库）。**水平分片**：同一张表拆成多表/多库（如 `course_1`、`course_2`）。日常说的「分库分表」多指水平分片；垂直分片解决业务边界，水平分片解决单表数据量。
 
 ---
 
@@ -51,7 +51,7 @@ wrapper.eq("cid", 924770131651854337L);
 
 改表达式 `course_$->{((cid+1)%4).intdiv(2)+1}` 可验证 `in (1,2,3,4)` 的路由——**有路由 ≠ 有数据**。
 
-![全路由 UNION 日志](/中间件/shardingsphere/10-2/p14-page.png)
+无分片键条件时，ShardingSphere 会对所有 actual-data-nodes 执行查询，同库多表结果用 **UNION ALL** 合并。日志里可见多条 Actual SQL，这是性能最差的路径，生产应通过分片键、Hint 或改写 SQL 避免。
 
 ---
 
@@ -67,7 +67,7 @@ spring.shardingsphere.rules.sharding.sharding-algorithms.course_tbl_alg.props.al
 
 ![between 范围查询报错与参数](/中间件/shardingsphere/10-2/p16-01.png)
 
-![范围查询 Actual SQL 全路由](/中间件/shardingsphere/10-2/p17-page.png)
+`between 1 and 10` 这类范围条件在 INLINE 模式下，即使开启 `allow-range-query-with-inline-sharding`，也常会路由到全部 4 个节点并在内存归并——日志里能看到对 `m0.course_1`、`m0.course_2`、`m1.course_1`、`m1.course_2` 四条 Actual SQL。
 
 ---
 
@@ -83,7 +83,7 @@ spring.shardingsphere.rules.sharding.sharding-algorithms.course_tbl_alg.props.al
 
 `user_id=1002` 时可路由到**必空**的表，体现「分片即过滤」。
 
-![COMPLEX_INLINE 配置](/中间件/shardingsphere/10-2/p18-page.png)
+配置 `table-strategy.complex` 指定 `sharding-columns=cid,user_id`，算法类型改为 `COMPLEX_INLINE`，表达式可同时引用两列。测试 `cid in (1,2,3,4) and user_id=1001` 时路由范围会明显小于全表扫描。
 
 ---
 
@@ -120,11 +120,9 @@ spring.shardingsphere.rules.sharding.sharding-algorithms.course_tbl_alg.type=HIN
 spring.shardingsphere.rules.sharding.sharding-algorithms.course_tbl_alg.props.algorithm-expression=course_$->{value}
 ```
 
-![HintManager 强制查 course_1](/中间件/shardingsphere/10-2/p17-page.png)
+`HintManager.addTableShardingValue("course", "1")` 后，即使 SQL 是 `select * from course` 不带分片键，也会强制路由到 `course_1`，日志里 Actual SQL 仅一条。
 
-分库分表后应减少多表 join、复杂子查询、distinct 等。
-
-![HINT 与复杂 SQL 限制](/中间件/shardingsphere/10-2/p18-page.png)
+分库分表后应减少多表 join、复杂子查询、distinct 等。HINT 适合 ShardingSphere 无法从 SQL 解析出分片键的场景（如 `MOD(cid,2)=1`），但不应作为日常查询手段——团队可用分片审计规则约束 DML 必须带分片键。
 
 ---
 

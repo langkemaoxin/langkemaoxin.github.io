@@ -58,7 +58,7 @@ mysql -h127.0.0.1 -P3307 -uroot -proot
 
 初始仅有虚拟库骨架；随意 `CREATE TABLE` 会报对象不存在——**表由分片规则定义**。
 
-![mysql 客户端连接 Proxy](/中间件/shardingsphere/10-4/p07-page.png)
+用 `mysql -h127.0.0.1 -P3307 -uroot -proot` 连接后，`show databases` 最初只有 Proxy 内置库；配置分片规则并重启后才会出现 `sharding_db` 等逻辑库。对逻辑库执行 DML 时，Proxy 按规则路由到后端真实库表。
 
 ---
 
@@ -68,7 +68,7 @@ mysql -h127.0.0.1 -P3307 -uroot -proot
 
 重启后出现逻辑库 **`sharding_db`**，逻辑表 **`course`**；`select * from course` 归并分片数据；也可 `select * from course_1` 查**真实表**（解答「未映射真实表怎么查」）。
 
-![config-sharding 与 sharding_db](/中间件/shardingsphere/10-4/p09-page.png)
+`config-sharding.yaml` 结构与 JDBC 的 `application.properties` 一一对应：`dataSources` 定义 m0/m1 连接，`!SHARDING` 规则块配置 `actual-data-nodes`、分片算法与主键生成器。改 YAML 后重启 Proxy 即可生效。
 
 ![show databases 与 course 查询](/中间件/shardingsphere/10-4/p11-01.png)
 
@@ -90,9 +90,7 @@ Proxy 跨库写需 **分布式事务**。`server.yaml`：
 
 注意：XA **慢**、**不能 autocommit 友好**、故障隔离难——仅在有跨片强一致需求时开启。
 
-![XA 事务流程示意](/中间件/shardingsphere/10-4/p14-page.png)
-
-JDBC 侧引入 `shardingsphere-transaction-xa-core` + Atomikos 可同样试验双库 insert。
+XA 两阶段流程：TM 协调各 RM——第一阶段各分片 `XA PREPARE` 预提交并持有锁；第二阶段 TM 根据结果发送 `COMMIT` 或 `ROLLBACK`。跨库 insert 同一事务时，任一 RM 失败则全部回滚，保证强一致但吞吐明显下降。
 
 ![JDBC XA 依赖与示例](/中间件/shardingsphere/10-4/p11-01.png)
 
@@ -119,7 +117,7 @@ mode:
 
 ZK 树：`/rules`、`/metadata/{db}/versions/.../rules` 存分片规则；`/nodes/compute_nodes` 注册实例。
 
-![Cluster 模式与 ZK 命名空间](/中间件/shardingsphere/10-4/p17-page.png)
+Cluster 模式下，多个 Proxy 实例共享 ZK 中的规则与元数据；`/governance_ds/rules` 下存放分片、加密、读写分离等 YAML 片段，任一实例修改规则后其他实例可感知并热更新（视版本而定）。
 
 ### JDBC 读 ZK 配置
 
@@ -149,7 +147,7 @@ spring.shardingsphere.database.name=sharding_db
 - 冷数据：定时任务 + 独立 **Proxy** 读旧写新，规则经 ZK 与 JDBC 写入库一致  
 - 完成后下线双写，保留新分片 DS  
 
-![混合架构数据迁移示意](/中间件/shardingsphere/10-4/p24-page.png)
+典型迁移步骤：① 新分片集群就绪并双写；② 历史数据通过 Data Pipeline 或定时任务同步；③ 读流量逐步切到新集群；④ 验证一致性后停写旧库；⑤ 下线双写与旧 Proxy。ZK 统一规则可保证 JDBC 与 Proxy 写入目标一致。
 
 ---
 

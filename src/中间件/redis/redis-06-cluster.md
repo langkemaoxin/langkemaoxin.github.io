@@ -33,8 +33,6 @@ Sentinel 解决了**自动选主**，但仍是**全量数据在每组主从**上
 
 ![Redis Cluster 多分片 + 每分片主从拓扑](/中间件/redis/03/p22-01.png)
 
-![Cluster 与 Sentinel 架构对比：分片 vs 单库多副本](/中间件/redis/03/p25-page.png)
-
 ---
 
 ## 二、核心配置与搭建
@@ -71,11 +69,7 @@ set k2 v2
 # -> Redirected to slot [449] located at host:6381
 ```
 
-![集群模式下 MOVED 重定向与 -c 自动跳转](/中间件/redis/03/p28-page.png)
-
 **高可用：** 关闭 6383 Master → 6384 升主；重启 6383 → 变为 6384 的 Slave。
-
-![Master 宕机后 cluster nodes 中 fail 与 slave 升主](/中间件/redis/03/p29-page.png)
 
 ![旧 Master 重启后以 slave 身份加入](/中间件/redis/03/p30-01.png)
 
@@ -94,8 +88,6 @@ redis-cli --cluster reshard host:6381
 ```
 
 reshard 只迁移部分槽对应数据，不必全量搬库。
-
-![reshard 重新分配槽位与数据迁移过程](/中间件/redis/03/p32-page.png)
 
 **部分槽不可用：** 默认 `cluster-require-full-coverage yes`，任一分片全挂则集群拒写。极端场景可设 `no` 允许部分槽继续服务（数据不完整，不推荐）。
 

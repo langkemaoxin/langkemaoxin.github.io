@@ -62,14 +62,21 @@ tag:
 
 生产勿手写：使用 `curator-recipes` 的 **InterProcessMutex**（可重入、阻塞、会话失效释放锁）。
 
-![InterProcessMutex 工作流程](/中间件/zookeeper/19/p07-page.png)
+```java
+InterProcessMutex lock = new InterProcessMutex(client, "/locks/order");
+try {
+    if (lock.acquire(10, TimeUnit.SECONDS)) {
+        // 临界区
+    }
+} finally {
+    lock.release();
+}
+```
 
 **优劣**：
 
 - 优点：高可用、可重入、避免失效死锁（临时节点 + session）
 - 缺点：性能低于 Redis；**高并发写锁**不推荐，**一致性要求高、并发适中**的场景更合适
-
-![ZK 锁适用场景总结](/中间件/zookeeper/19/p08-page.png)
 
 ---
 
@@ -90,7 +97,23 @@ ZK 天然适合注册中心：Provider 在约定路径写**临时节点**（地�
 
 依赖 `spring-cloud-starter-zookeeper-discovery`，排除传递的旧 `zookeeper`，显式引入与 Server 匹配的 `zookeeper` 3.8.0：
 
-![zookeeper-discovery 依赖](/中间件/zookeeper/19/p07-page.png)
+```xml
+<dependency>
+  <groupId>org.springframework.cloud</groupId>
+  <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
+  <exclusions>
+    <exclusion>
+      <groupId>org.apache.zookeeper</groupId>
+      <artifactId>zookeeper</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>
+<dependency>
+  <groupId>org.apache.zookeeper</groupId>
+  <artifactId>zookeeper</artifactId>
+  <version>3.8.0</version>
+</dependency>
+```
 
 `application.yml`：
 
@@ -102,8 +125,6 @@ spring:
       discovery:
         instance-host: 127.0.0.1
 ```
-
-![注册中心 YAML 配置](/中间件/zookeeper/19/p08-page.png)
 
 Feign 调用示例：`/user/findOrderByUserId/{id}` 经注册发现路由到 order 服务。
 

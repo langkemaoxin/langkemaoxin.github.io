@@ -44,8 +44,6 @@ Elasticsearch 是一个开源的分布式搜索和数据分析引擎，专门设
 
 ## 二、Elastic Stack 生态
 
-![Elastic Stack 四大组件关系](/中间件/elasticsearch/46-4/p02-page.png)
-
 Elastic Stack（ELK/Elastic Stack）由 **Elasticsearch、Logstash、Beats、Kibana** 组成，覆盖采集、存储、分析、可视化全链路。
 
 ### Elasticsearch

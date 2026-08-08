@@ -61,7 +61,7 @@ Socket 创建：`socket()` → `bind()` → `listen()` → `accept()` → `send(
 
 三者都是 **IO 多路复用**：一个进程监视多个 fd，就绪再读写（仍是同步 I/O，就绪后自己读写）。
 
-![文件描述符 FD 概念](/中间件/netty/33/p05-page.png)
+**文件描述符（FD）** 是内核给每个打开资源（文件、Socket）分配的非负整数；`select/poll/epoll` 监视的就是 fd 集合。Linux 默认单进程 fd 上限可通过 `ulimit -n` 调整，百万连接调优的基础。
 
 | 维度 | select | poll | epoll |
 |------|--------|------|-------|
@@ -70,7 +70,7 @@ Socket 创建：`socket()` → `bind()` → `listen()` → `accept()` → `send(
 | 数据拷贝 | 每次拷贝 fd 集合到内核 | 同左 | 共享内存 mmap |
 | 适用 | fd 少 | fd 较多 | 高并发 |
 
-![select 接口与限制](/中间件/netty/33/p06-page.png)
+**select** 用 `fd_set` 位图，每次调用需把 fd 集合从用户态拷贝到内核，返回后再遍历全部 fd 检查就绪位；`FD_SETSIZE` 默认 1024 是硬限制。**poll** 用 `pollfd` 数组，无 1024 上限但仍需 O(n) 遍历。
 
 ![poll 与 epoll 创建/ctl/wait](/中间件/netty/33/p07-01.png)
 

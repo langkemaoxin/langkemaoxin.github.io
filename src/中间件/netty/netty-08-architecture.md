@@ -44,9 +44,7 @@ tag:
 
 注意：串行指 **I/O 路径**；耗时业务仍应 offload 到业务线程池，否则 CPU 利用率假高、延迟爆炸。
 
-![无锁串行化设计思想](/中间件/netty/38/p04-page.png)
-
-![NioEventLoop 串行 fireChannelRead](/中间件/netty/38/p05-page.png)
+同一 EventLoop 内，`fireChannelRead` 沿 Pipeline 从头向尾传播，每个 InboundHandler 在同一线程顺序执行；Outbound 写操作从尾向头传播。这种「单 Channel 单线程」设计避免了 Channel 级别的锁竞争，是 Netty 高并发的基础。
 
 ---
 
@@ -158,7 +156,7 @@ Netty 零拷贝包括：
 
 **水平触发(LT) vs 边缘触发(ET)**：JDK Selector 为 LT；Netty Epoll 模式为 **ET**，减少就绪 fd 重复通知，但需一次 read 到 EAGAIN。
 
-![百万连接调优总览](/中间件/netty/38/p12-page.png)
+百万连接调优清单：① OS：`ulimit -n`、`fs.file-max`、`net.core.somaxconn`；② 线程：boss=1、worker≈CPU×2 起测；③ 心跳：IdleStateHandler 周期 30s–60s；④ 内存：PooledByteBufAllocator + 监控 DirectMemory；⑤ 流控：连接数达阈值拒绝新连接；⑥ JVM：G1/ZGC，避免 Full GC 停顿过长。
 
 ---
 

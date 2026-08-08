@@ -67,8 +67,6 @@ INCR / DECR / INCRBY / DECRBY
 
 ![String 单值缓存、对象缓存与分布式锁示例](/中间件/redis/01b/p04-02.png)
 
-![String 应用场景汇总（缓存、锁、计数）](/中间件/redis/01b/p05-page.png)
-
 ---
 
 ## 三、Hash
@@ -102,8 +100,6 @@ HGETALL cart:1001
 
 - 优点：同类数据归类、比 String 省内存与 CPU
 - 缺点：过期只能设在 key 上；Cluster 下大规模 Hash 不合适
-
-![Hash 结构优缺点对比](/中间件/redis/01b/p09-page.png)
 
 ---
 
@@ -228,8 +224,6 @@ GEORADIUSBYMEMBER changsha 火车站 2 KM withdist withcoord count 4
 
 经纬度可从地图 API 获取。
 
-![Geo 添加 POI 与附近搜索示例](/中间件/redis/01b/p21-page.png)
-
 ---
 
 ## 十、Stream（了解）
@@ -275,8 +269,6 @@ spring:
       password: 123qweasd
 ```
 
-![Spring Boot Redis 依赖与 application.yml 配置](/中间件/redis/01b/p25-page.png)
-
 **RedisTemplate 按类型操作：**
 
 ```java
@@ -294,13 +286,28 @@ redisTemplate.opsForStream()...
 redisTemplate.opsForValue().setBit()  // Bitmap 无独立 ops
 ```
 
-![RedisTemplate 各 ops 与数据类型对应关系](/中间件/redis/01b/p26-page.png)
-
 **中文乱码：** 统一 Key/Value 序列化器，例如 String 序列化 Key，GenericToStringSerializer 序列化 Value。
 
-![RedisTemplate 序列化配置解决乱码](/中间件/redis/01b/p27-page.png)
+**RedisTemplate 配置示例：**
 
-![RedisTemplate Bean 完整配置代码](/中间件/redis/01b/p28-page.png)
+```java
+@Configuration
+public class RedisConfig {
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(factory);
+        StringRedisSerializer str = new StringRedisSerializer();
+        template.setKeySerializer(str);
+        template.setHashKeySerializer(str);
+        GenericToStringSerializer<Object> val = new GenericToStringSerializer<>(Object.class);
+        template.setValueSerializer(val);
+        template.setHashValueSerializer(val);
+        template.afterPropertiesSet();
+        return template;
+    }
+}
+```
 
 ---
 
@@ -309,5 +316,3 @@ redisTemplate.opsForValue().setBit()  // Bitmap 无独立 ops
 - 缓存/锁/计数 → **String**；对象/购物车 → **Hash**；队列/栈 → **List**
 - 去重/标签/关系 → **Set**；排行榜 → **ZSet**；签到 → **Bitmap**；UV → **HyperLogLog**；LBS → **Geo**
 - 理解场景比死记命令更重要：**理解 → 熟练 → 记忆**
-
-![Redis 数据结构学习路径：理解、熟练、记忆](/中间件/redis/01b/p29-page.png)

@@ -46,8 +46,6 @@ if (storageValue == null) {
 }
 ```
 
-![缓存空对象防止重复穿透 DB](/中间件/redis/05/p03-page.png)
-
 **方案 2：布隆过滤器**
 
 多个 hash 映射到位数组；**说不存在则一定不存在**，说存在可能误判。适合**数据集相对固定、实时性要求低**的大集合。
@@ -60,10 +58,6 @@ bloomFilter.tryInit(100000000L, 0.03);
 bloomFilter.add("zhuge");
 bloomFilter.contains("guojia"); // false
 ```
-
-![布隆过滤器原理：位数组 + 多 hash 函数](/中间件/redis/05/p04-page.png)
-
-![Redisson 布隆过滤器初始化与 contains 示例](/中间件/redis/05/p05-page.png)
 
 **组合伪代码：** 先 `bloomFilter.contains(key)`，再查缓存，再查 DB；**布隆过滤器不能删元素**，删数据需重建。
 
@@ -93,8 +87,6 @@ bloomFilter.contains("guojia"); // false
 2. 限流熔断：Sentinel、Hystrix；非核心数据降级返回默认值  
 3. **提前演练**缓存宕机预案  
 
-![缓存雪崩：缓存层故障引发 DB 连锁压力](/中间件/redis/05/p08-page.png)
-
 ---
 
 ## 五、热点 key 重建
@@ -117,17 +109,11 @@ if (redis.set(mutexKey, "1", "ex 180", "nx")) {
 
 只允许一个线程重建，其他等待或重试。
 
-![互斥锁重建热点缓存时序图](/中间件/redis/05/p09-page.png)
-
 ---
 
 ## 六、缓存与 DB 双写不一致
 
 并发读写缓存与 DB 可能出现短暂不一致。
-
-![先更新 DB 再删缓存等典型双写时序问题](/中间件/redis/05/p10-page.png)
-
-![读写并发导致缓存与数据库不一致](/中间件/redis/05/p11-page.png)
 
 **思路：**
 
@@ -139,8 +125,6 @@ if (redis.set(mutexKey, "1", "ex 180", "nx")) {
 
 **原则：** 缓存放**实时性、一致性要求不高**的数据；勿为绝对一致过度设计。
 
-![双写不一致各方案权衡总结](/中间件/redis/05/p12-page.png)
-
 ---
 
 ## 七、开发规范与性能优化
@@ -151,13 +135,9 @@ if (redis.set(mutexKey, "1", "ex 180", "nx")) {
 - **Value：** 拒绝 BigKey（string >10KB，hash/list/set/zset 元素 >5000）  
 - BigKey 删除用 `HSCAN/SSCAN/ZSCAN` 渐进删，慎用对大 zset 设短 TTL 触发同步 DEL  
 
-![Key 命名规范与 value 类型选型示例](/中间件/redis/05/p13-page.png)
-
 **BigKey 危害：** 阻塞 Redis、网卡打满、过期同步删除阻塞。
 
 **优化：** 拆 key；避免 `HGETALL` 大 hash；用 `UNLINK` 异步删。
-
-![BigKey 危害：阻塞、网络、过期删除](/中间件/redis/05/p14-page.png)
 
 ### 命令
 

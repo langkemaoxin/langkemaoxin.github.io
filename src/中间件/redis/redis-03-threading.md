@@ -31,8 +31,6 @@ Redis = **REmote DIctionary Server**，高性能 K-V 存储。官方定位三方
 - 数据在内存，读写极快
 - 持久化到磁盘，可当数据库用
 
-![Redis 官方对 Cache/Database/Vector Search 的定位](/中间件/redis/02/p02-page.png)
-
 ### 2024 生态
 
 - **Redis Cloud**：基于 AWS/Azure 的企业云服务
@@ -55,8 +53,6 @@ Redis = **REmote DIctionary Server**，高性能 K-V 存储。官方定位三方
 - 连接层：`maxclients`（默认 10000）多线程维护 Socket
 - 命令执行：主线程 + epoll IO 多路复用，请求**串行**执行 → 无 MySQL 式脏读/幻读，但需自己保证复合逻辑原子性
 
-![redis.conf 中 io-threads 与 maxclients 说明](/中间件/redis/02/p05-page.png)
-
 **版本演进：**
 
 | 版本 | 特点 |
@@ -68,8 +64,6 @@ Redis = **REmote DIctionary Server**，高性能 K-V 存储。官方定位三方
 Redis **刻意保持命令执行单线程**：CPU 通常不是瓶颈（内存/网络才是）；多线程命令执行会增加锁竞争与复杂度。
 
 ![Redis 版本线程模型演进时间线](/中间件/redis/02/p07-01.png)
-
-![6.x/7.x 后台线程处理的耗时操作示意](/中间件/redis/02/p08-page.png)
 
 ---
 
@@ -95,8 +89,6 @@ WATCH key [...]   # 监听 key，变化则 EXEC 失败
 ```
 
 **与 DB 事务不同：** 不支持回滚；某条命令类型错误（如 `LPOP` 作用于 string）只该条报错，其余仍执行。作用仅是**打包排队**，不被其他客户端插队。
-
-![Redis MULTI/EXEC 事务执行流程](/中间件/redis/02/p11-page.png)
 
 **要点：**
 
@@ -139,8 +131,6 @@ EVAL "local v=redis.call('get',KEYS[1]) ..." 1 stock_1 10
 - 默认 `lua-time-limit` 5000ms，超时返回 BUSY
 - Redis 7 支持**只读脚本** `EVAL_RO`，可卸载到从节点
 
-![Lua 脚本在 Redis 中原子执行示意](/中间件/redis/02/p18-page.png)
-
 ### 5. Redis Function（7+）
 
 预加载服务端函数，客户端 `FCALL` 调用，支持嵌套复用（优于一次性 EVAL 脚本）。
@@ -151,8 +141,6 @@ FCALL my_hset 1 myhash field value ...
 ```
 
 集群内需**各节点分别加载** Function。
-
-![Redis Function 定义、加载与 FCALL 调用流程](/中间件/redis/02/p21-page.png)
 
 ### 6. 方案选型
 
@@ -180,8 +168,6 @@ redis-cli --memkeys
 
 处理策略在缓存设计篇详述（拆分、渐进删除、`UNLINK` 等）。
 
-![redis-cli --bigkeys 与 --memkeys 扫描 BigKey](/中间件/redis/02/p23-page.png)
-
 ---
 
 ## 五、线程模型总结
@@ -189,5 +175,3 @@ redis-cli --memkeys
 - 连接多线程 + **命令单线程** → 并发问题简单，但需选对原子性工具
 - 单线程模型不利于吃满多核，Pipeline、Cluster 分片、IO 线程是补充
 - 使用 Redis 时始终思考：**命令是否会阻塞主线程、是否原子**
-
-![Redis 线程模型总览：多路复用 + 单线程命令执行](/中间件/redis/02/p24-page.png)

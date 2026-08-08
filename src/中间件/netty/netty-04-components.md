@@ -108,7 +108,12 @@ Pipeline API：`addLast`、`remove`、`replace`；**ChannelHandlerContext** 类�
 
 **ChannelInitializer**：Channel 注册后调用 `initChannel()` 安装 Handler，完成后自动移除——适合一次性 Handler（如鉴权）。
 
-![Bootstrap 与 ServerBootstrap 对比](/中间件/netty/34/p19-page.png)
+| 对比项 | Bootstrap（客户端） | ServerBootstrap（服务端） |
+|--------|---------------------|---------------------------|
+| EventLoopGroup | 通常 1 个 | 通常 2 个（boss + worker） |
+| 绑定方式 | `connect(host, port)` | `bind(port)` |
+| 典型用途 | 连远程服务 | 监听本地端口 |
+| Handler 安装 | `handler()` | `childHandler()` 给 accepted Channel |
 
 ---
 

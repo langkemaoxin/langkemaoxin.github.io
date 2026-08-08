@@ -87,15 +87,11 @@ public class DynamicThreadPool {
 
 运行中调用 `adjustThreadPool(5, 8)` 即可在不重启 JVM 的情况下缩容；多余 worker 会在任务间隙被回收。
 
-![调整前后线程数变化](/并发编程/pool/13b/p06-page.png)
-
 ---
 
 ## 四、基于 Nacos 配置中心
 
 思路：Bean 初始化时注册 Nacos `Listener`，配置变更时解析 YAML/JSON，调用 setter 更新线程池。
-
-![Nacos Listener 注册](/并发编程/pool/13b/p07-page.png)
 
 核心流程：
 
@@ -103,13 +99,21 @@ public class DynamicThreadPool {
 2. 创建 `ThreadPoolTaskExecutor` 并 `initialize()`
 3. `addListener("threadPool.yml", ...)` 在 `receiveConfigInfo` 里解析并 `setCorePoolSize` / `setMaxPoolSize`
 
-![Nacos 动态调整完整配置类](/并发编程/pool/13b/p08-page.png)
-
-![receiveConfigInfo 解析配置](/并发编程/pool/13b/p09-page.png)
+```java
+// 伪代码示意
+configService.addListener("threadPool.yml", group, new Listener() {
+    @Override
+    public void receiveConfigInfo(String configInfo) {
+        ThreadPoolConfig cfg = parseYaml(configInfo);
+        executor.setCorePoolSize(cfg.getCorePoolSize());
+        executor.setMaximumPoolSize(cfg.getMaxPoolSize());
+    }
+    @Override
+    public Executor getExecutor() { return null; }
+});
+```
 
 运维在 Nacos 控制台改 `threadPool.corePoolSize`，应用秒级生效，无需发版重启。
-
-![动态修改前后打印对比](/并发编程/pool/13b/p10-page.png)
 
 ---
 
