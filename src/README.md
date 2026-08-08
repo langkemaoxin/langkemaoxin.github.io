@@ -24,6 +24,7 @@ actions:
 - [ASP.NET Core 10 源码地图](DotNet/aspnetcore/3-aspnetcore-10-source-map.md)：这份仓库到底是什么、`src` 里有哪些项目，读源码前先建立全局图。
 - [Hadoop 是什么？](BigData/hadoop-series/hadoop-series-01-what-is-hadoop.md)：Hadoop 系列开篇，用大白话讲清分布式存储与计算为什么能拼出「超级电脑」。
 - [Docker 是什么？](云原生/docker/docker-01-what-is-docker.md)：云原生 Docker 系列开篇，从交付痛点讲到镜像与容器。
+- [云原生原理与演进](云原生/k8s/k8s-01-cloud-native.md)：Kubernetes 系列开篇，从 CNCF 定义讲到 Service Mesh。
 - [MQ 是什么与选型](中间件/rabbitmq/rabbitmq-01-what-is-mq.md)：中间件专栏开篇，从同步事件讲到 RabbitMQ / Kafka / RocketMQ 选型。
 - [为何学并发编程](并发编程/basics/juc-01-why-concurrency.md)：并发专栏开篇，从线程与等待通知建立直觉。
 - [DDD 是什么](软件架构/ddd-basics/ddd-01-what-is-ddd.md)：软件架构专栏开篇，从领域驱动设计的价值与本质收益讲起。
@@ -47,7 +48,7 @@ actions:
 - [.NET](DotNet/)：ASP.NET Core 请求链路与源码构建
 - [Java](Java/)：MyBatis 等源码调试实践
 - [大数据](BigData/)：Hadoop 系列与架构概念
-- [云原生](云原生/)：Docker 系列，Kubernetes / Serverless 后续展开
+- [云原生](云原生/)：Docker 系列与 Kubernetes 系列，Serverless 后续展开
 - [中间件](中间件/)：消息队列、Redis、ZooKeeper、ShardingSphere、ES、Netty
 - [并发编程](并发编程/)：JUC 基础、锁与 AQS、容器、线程池、Disruptor
 - [软件架构](软件架构/)：DDD 入门、战略建模、战术分层、COLA 与防腐层
