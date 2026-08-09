@@ -48,7 +48,7 @@ actions:
 
 ## 按专题浏览
 
-- [AI](Ai/)：Playwright、RAG、本地大模型、Agent 与 Spring AI Alibaba
+- [AI](Ai/)：Playwright、RAG、本地大模型、Agent、Spring AI 与 Spring AI Alibaba
 - [.NET](DotNet/)：ASP.NET Core 请求链路与源码构建
 - [Java](Java/)：MyBatis 等源码调试实践
 - [大数据](BigData/)：Hadoop 系列与架构概念
