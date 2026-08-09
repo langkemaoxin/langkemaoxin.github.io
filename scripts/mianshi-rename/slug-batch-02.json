@@ -1,0 +1,602 @@
+{
+  "811": {
+    "order": 811,
+    "title": "搜索引擎设计：信息搜索怎么避免大海捞针",
+    "en": "Search Engine Design: Avoiding Needle-in-a-Haystack Retrieval",
+    "slug": "search-engine-design-avoid-needle-in-haystack"
+  },
+  "812": {
+    "order": 812,
+    "title": "百亿级超大流量红包架构方案",
+    "en": "Billion-Scale Red Packet Architecture",
+    "slug": "billion-scale-red-packet-architecture"
+  },
+  "813": {
+    "order": 813,
+    "title": "需要设计一款基于 LBS 的交友系统，如何设 计地理空间邻近算法",
+    "en": "LBS Dating System: Geo-Proximity Algorithm Design",
+    "slug": "lbs-dating-system-geo-proximity-algorithm-design"
+  },
+  "814": {
+    "order": 814,
+    "title": "网盘系统设计：万亿 GB 网盘如何实现秒传与限速",
+    "en": "Cloud Drive Design: Instant Upload and Rate Limiting at Trillion-GB Scale",
+    "slug": "cloud-drive-design-instant-upload-rate-limit"
+  },
+  "815": {
+    "order": 815,
+    "title": "短视频系统设计：如何支持三千万用户同时在线看视频",
+    "en": "Short Video System Design: 30 Million Concurrent Viewers",
+    "slug": "short-video-815"
+  },
+  "816": {
+    "order": 816,
+    "title": "微博系统设计：怎么应对热点事件的突发访问压力",
+    "en": "Weibo System Design: Handling Hot-Event Traffic Spikes",
+    "slug": "weibo-design-hot-event-traffic-spike"
+  },
+  "817": {
+    "order": 817,
+    "title": "海量数据的计数器要如何设计",
+    "en": "How to Design Counters for Massive Data",
+    "slug": "massive-data-counter-design"
+  },
+  "818": {
+    "order": 818,
+    "title": "50万QPS下如何设计未读数系统",
+    "en": "Designing an Unread Count System at 500K QPS",
+    "slug": "500k-qps-unread-count-system-design"
+  },
+  "819": {
+    "order": 819,
+    "title": "京东电商大促高可用保障实践",
+    "en": "JD E-Commerce Promo High-Availability Practices",
+    "slug": "jd-ecommerce-promo-high-availability-practice"
+  },
+  "820": {
+    "order": 820,
+    "title": "咸鱼交易业务状态机方案实践",
+    "en": "Xianyu Trade Business State Machine Practice",
+    "slug": "xianyu-trade-state-machine-practice"
+  },
+  "821": {
+    "order": 821,
+    "title": "京东内部Redis性能优化最佳实践",
+    "en": "JD Internal Redis Performance Optimization Best Practices",
+    "slug": "jd-redis-performance-optimization-best-practices"
+  },
+  "822": {
+    "order": 822,
+    "title": "阿里内部设计模式最佳实践",
+    "en": "Alibaba Internal Design Patterns Best Practices",
+    "slug": "alibaba-design-patterns-best-practices"
+  },
+  "823": {
+    "order": 823,
+    "title": "美团即时物流架构落地实践",
+    "en": "Meituan Instant Logistics Architecture in Production",
+    "slug": "meituan-instant-logistics-architecture-practice"
+  },
+  "824": {
+    "order": 824,
+    "title": "京东内部缓存应用最佳实践",
+    "en": "JD Internal Cache Application Best Practices",
+    "slug": "jd-cache-application-best-practices"
+  },
+  "825": {
+    "order": 825,
+    "title": "携程门票秒杀系统优化实践",
+    "en": "Ctrip Ticket Flash-Sale System Optimization",
+    "slug": "ctrip-ticket-flash-sale-optimization"
+  },
+  "826": {
+    "order": 826,
+    "title": "喜马拉雅亿级推送系统实践",
+    "en": "Ximalaya Billion-Scale Push System Practice",
+    "slug": "ximalaya-billion-scale-push-system-practice"
+  },
+  "827": {
+    "order": 827,
+    "title": "喜马拉雅自研网关技术实践",
+    "en": "Ximalaya Self-Built Gateway Technology Practice",
+    "slug": "ximalaya-self-built-gateway-practice"
+  },
+  "828": {
+    "order": 828,
+    "title": "携程亿级高并发架构改造实践",
+    "en": "Ctrip Billion-Scale High-Concurrency Architecture Refactor",
+    "slug": "ctrip-billion-scale-high-concurrency-refactor"
+  },
+  "829": {
+    "order": 829,
+    "title": "B站亿级API网关重构之路",
+    "en": "Bilibili Billion-Scale API Gateway Refactor",
+    "slug": "bilibili-billion-scale-api-gateway-refactor"
+  },
+  "830": {
+    "order": 830,
+    "title": "石墨文档百万级长连接技术实践",
+    "en": "Shimo Docs Million-Scale Long Connection Practice",
+    "slug": "shimo-docs-million-long-connection-practice"
+  },
+  "831": {
+    "order": 831,
+    "title": "线上问题如何快速排查",
+    "en": "How to Quickly Troubleshoot Production Issues",
+    "slug": "how-to-quickly-troubleshoot-production-issues"
+  },
+  "832": {
+    "order": 832,
+    "title": "互联网大厂高并发限流解决方案",
+    "en": "Big Tech High-Concurrency Rate Limiting Solutions",
+    "slug": "big-tech-high-concurrency-rate-limiting-solutions"
+  },
+  "833": {
+    "order": 833,
+    "title": "美团内部性能优化实践",
+    "en": "Meituan Internal Performance Optimization Practice",
+    "slug": "meituan-internal-performance-optimization"
+  },
+  "834": {
+    "order": 834,
+    "title": "Restful API设计最佳实践",
+    "en": "RESTful API Design Best Practices",
+    "slug": "restful-api-design-best-practices"
+  },
+  "835": {
+    "order": 835,
+    "title": "一次搞定MySQL分库分表",
+    "en": "Complete Guide to MySQL Sharding and Table Splitting",
+    "slug": "mysql-sharding-table-splitting-guide"
+  },
+  "836": {
+    "order": 836,
+    "title": "微服务架构常用十种设计模式",
+    "en": "Ten Common Design Patterns in Microservices Architecture",
+    "slug": "microservices-ten-common-design-patterns"
+  },
+  "837": {
+    "order": 837,
+    "title": "互联网大厂分布式ID解决方案",
+    "en": "Big Tech Distributed ID Solutions",
+    "slug": "big-tech-distributed-id-solutions"
+  },
+  "838": {
+    "order": 838,
+    "title": "Effective Java 最佳应用实践",
+    "en": "Effective Java Best Application Practices",
+    "slug": "effective-java-best-practices"
+  },
+  "839": {
+    "order": 839,
+    "title": "秒杀系统瓶颈-日志",
+    "en": "Flash-Sale System Bottleneck: Logging",
+    "slug": "flash-sale-system-bottleneck-logging"
+  },
+  "840": {
+    "order": 840,
+    "title": "如何管理昵称重复",
+    "en": "How to Manage Duplicate Nicknames",
+    "slug": "how-to-manage-duplicate-nicknames"
+  },
+  "841": {
+    "order": 841,
+    "title": "如何设计一个分布式缓存系统",
+    "en": "How to Design a Distributed Cache System",
+    "slug": "how-to-design-distributed-cache-system"
+  },
+  "842": {
+    "order": 842,
+    "title": "1 亿个数据取出最大前 100 个有什么方法",
+    "en": "Methods to Find Top 100 from 100 Million Records",
+    "slug": "top-100-from-100-million-data-methods"
+  },
+  "843": {
+    "order": 843,
+    "title": "电商系统开发中会都遇到了哪些问题？",
+    "en": "Common Problems in E-Commerce System Development",
+    "slug": "ecommerce-development-common-problems"
+  },
+  "844": {
+    "order": 844,
+    "title": "为什么忘记密码要重置而不是告诉你原密码？",
+    "en": "Why Forgot Password Resets Instead of Revealing the Original",
+    "slug": "why-forgot-password-reset-not-reveal-original"
+  },
+  "845": {
+    "order": 845,
+    "title": "你们系统有没有防盗链，怎么做的？",
+    "en": "Hotlink Protection: Do You Have It and How Is It Done?",
+    "slug": "hotlink-protection-implementation"
+  },
+  "846": {
+    "order": 846,
+    "title": "面试问到项目场景问题如何应对",
+    "en": "How to Handle Project Scenario Interview Questions",
+    "slug": "interview-project-scenario-questions-strategy"
+  },
+  "847": {
+    "order": 847,
+    "title": "一文分清OA、CRM、ERP、MES、HRM、SCM、WMS、KMS等",
+    "en": "OA, CRM, ERP, MES, HRM, SCM, WMS, KMS Explained",
+    "slug": "oa-crm-erp-mes-hrm-scm-wms-kms-explained"
+  },
+  "848": {
+    "order": 848,
+    "title": "拜托，别再背八股文了，现在都会结合项目场景问",
+    "en": "Stop Memorizing Classic Interview Q&A — Project Scenarios Matter Now",
+    "slug": "stop-memorizing-classic-interview-qa-project-scenarios"
+  },
+  "849": {
+    "order": 849,
+    "title": "阿里一面：某个接口平时的 Qps 假如是1000，线上的机器服务能力是 OK 的，但是有时候流量可能会翻倍或者到三倍，变成2000或者3000，可以做一些什么样的预案去解决",
+    "en": "Alibaba Interview: QPS Spike Contingency When Traffic Doubles or Triples",
+    "slug": "alibaba-interview-qps-spike-contingency-plan"
+  },
+  "850": {
+    "order": 850,
+    "title": "腾讯面试：40亿QQ号，给你1G内存，怎么去重？",
+    "en": "Tencent Interview: Deduplicate 4 Billion QQ IDs with 1GB Memory",
+    "slug": "tencent-interview-4b-qq-ids-dedup-1gb-memory"
+  },
+  "851": {
+    "order": 851,
+    "title": "实现快速排序算法",
+    "en": "Implement Quicksort Algorithm",
+    "slug": "implement-quicksort"
+  },
+  "852": {
+    "order": 852,
+    "title": "实现归并排序算法",
+    "en": "Implement Merge Sort Algorithm",
+    "slug": "implement-merge-sort"
+  },
+  "853": {
+    "order": 853,
+    "title": "实现一个LRU（最近最少使用）缓存",
+    "en": "Implement an LRU Cache",
+    "slug": "implement-lru-cache"
+  },
+  "854": {
+    "order": 854,
+    "title": "判断一棵二叉树是否是平衡二叉树",
+    "en": "Check if a Binary Tree Is Balanced",
+    "slug": "check-balanced-binary-tree"
+  },
+  "855": {
+    "order": 855,
+    "title": "实现一个简单的字符串匹配算法",
+    "en": "Implement a Simple String Matching Algorithm",
+    "slug": "implement-simple-string-matching"
+  },
+  "856": {
+    "order": 856,
+    "title": "反转一个单链表",
+    "en": "Reverse a Singly Linked List",
+    "slug": "reverse-singly-linked-list"
+  },
+  "857": {
+    "order": 857,
+    "title": "实现一个简单的哈希表",
+    "en": "Implement a Simple Hash Table",
+    "slug": "implement-simple-hash-table"
+  },
+  "858": {
+    "order": 858,
+    "title": "使用两个队列实现一个栈",
+    "en": "Implement a Stack Using Two Queues",
+    "slug": "two-queues-implement-stack"
+  },
+  "859": {
+    "order": 859,
+    "title": "找出两个单链表的交点",
+    "en": "Find Intersection of Two Linked Lists",
+    "slug": "find-intersection-of-two-linked-lists"
+  },
+  "860": {
+    "order": 860,
+    "title": "检测单链表中是否有环",
+    "en": "Detect Cycle in a Linked List",
+    "slug": "detect-cycle-in-linked-list"
+  },
+  "861": {
+    "order": 861,
+    "title": "实现一个基本的图数据结构，并实现深度优先搜索（DFS）和广度优先搜索（BFS）",
+    "en": "Graph Data Structure with DFS and BFS Implementation",
+    "slug": "graph-data-structure-dfs-bfs-implementation"
+  },
+  "862": {
+    "order": 862,
+    "title": "给定一个数组，找出其中的最大子数组和",
+    "en": "Maximum Subarray Sum",
+    "slug": "maximum-subarray-sum"
+  },
+  "863": {
+    "order": 863,
+    "title": "实现二叉树的前序、中序和后序遍历（递归和非递归方式）",
+    "en": "Binary Tree Traversal: Pre/In/Post Order Recursive and Iterative",
+    "slug": "binary-tree-traversal-recursive-iterative"
+  },
+  "864": {
+    "order": 864,
+    "title": "给定一个字符串，找出其中最长的回文子串",
+    "en": "Longest Palindromic Substring",
+    "slug": "longest-palindromic-substring"
+  },
+  "865": {
+    "order": 865,
+    "title": "给定一个数组，找出其中和为特定值的两个数",
+    "en": "Two Sum in an Array",
+    "slug": "two-sum-in-array"
+  },
+  "866": {
+    "order": 866,
+    "title": "实现一个基于数组的栈（Stack）",
+    "en": "Implement an Array-Based Stack",
+    "slug": "implement-array-based-stack"
+  },
+  "867": {
+    "order": 867,
+    "title": "实现一个基于优先队列的最小堆",
+    "en": "Implement a Min Heap Using Priority Queue",
+    "slug": "implement-min-heap-with-priority-queue"
+  },
+  "868": {
+    "order": 868,
+    "title": "给定一个二叉树，实现层序遍历",
+    "en": "Binary Tree Level Order Traversal",
+    "slug": "binary-tree-level-order-traversal"
+  },
+  "869": {
+    "order": 869,
+    "title": "在一个排序数组中查找一个数，如果不存在，返回它应该插入的位置",
+    "en": "Search Insert Position in a Sorted Array",
+    "slug": "search-insert-position-in-sorted-array"
+  },
+  "870": {
+    "order": 870,
+    "title": "讲讲你对线性表 - 数组和矩阵的理解",
+    "en": "Understanding Linear Lists: Arrays and Matrices",
+    "slug": "linear-list-array-matrix-understanding"
+  },
+  "871": {
+    "order": 871,
+    "title": "讲讲你对线性表 - 链表的理解",
+    "en": "Understanding Linear Lists: Linked Lists",
+    "slug": "linear-list-linked-list-understanding"
+  },
+  "872": {
+    "order": 872,
+    "title": "讲讲你对线性表(散列) - 哈希表的理解",
+    "en": "Understanding Linear Lists: Hash Tables",
+    "slug": "linear-list-hash-table-understanding"
+  },
+  "873": {
+    "order": 873,
+    "title": "讲讲你对线性表 - 栈和队列的理解",
+    "en": "Understanding Linear Lists: Stacks and Queues",
+    "slug": "linear-list-stack-queue-understanding"
+  },
+  "874": {
+    "order": 874,
+    "title": "说说你对树 - 二叉搜索树的理解",
+    "en": "Understanding Trees: Binary Search Trees",
+    "slug": "tree-binary-search-tree-understanding"
+  },
+  "875": {
+    "order": 875,
+    "title": "说说你对树 - 平衡二叉树的理解",
+    "en": "Understanding Trees: Balanced Binary Trees",
+    "slug": "tree-balanced-binary-tree-understanding"
+  },
+  "876": {
+    "order": 876,
+    "title": "说说你对树 - 红黑树的理解",
+    "en": "Understanding Trees: Red-Black Trees",
+    "slug": "tree-red-black-tree-understanding"
+  },
+  "877": {
+    "order": 877,
+    "title": "说说你对树 - 哈夫曼树的理解",
+    "en": "Understanding Trees: Huffman Trees",
+    "slug": "tree-huffman-tree-understanding"
+  },
+  "878": {
+    "order": 878,
+    "title": "说说你对树 - 前缀树的理解",
+    "en": "Understanding Trees: Trie (Prefix Tree)",
+    "slug": "tree-trie-prefix-tree-understanding"
+  },
+  "879": {
+    "order": 879,
+    "title": "说说你对图 - 遍历的理解",
+    "en": "Understanding Graphs: Traversal",
+    "slug": "graph-traversal-understanding"
+  },
+  "880": {
+    "order": 880,
+    "title": "说说你对图 - 最小生成树的理解",
+    "en": "Understanding Graphs: Minimum Spanning Tree",
+    "slug": "graph-minimum-spanning-tree-understanding"
+  },
+  "881": {
+    "order": 881,
+    "title": "说说你对图 - 拓扑排序的理解",
+    "en": "Understanding Graphs: Topological Sort",
+    "slug": "graph-topological-sort-understanding"
+  },
+  "882": {
+    "order": 882,
+    "title": "说说你对排序 - 冒泡排序的理解",
+    "en": "Understanding Sorting: Bubble Sort",
+    "slug": "sorting-bubble-sort-understanding"
+  },
+  "883": {
+    "order": 883,
+    "title": "说说你对排序 - 快速排序的理解",
+    "en": "Understanding Sorting: Quicksort",
+    "slug": "sorting-quicksort-understanding"
+  },
+  "884": {
+    "order": 884,
+    "title": "说说你对排序 - 插入排序的理解",
+    "en": "Understanding Sorting: Insertion Sort",
+    "slug": "sorting-insertion-sort-understanding"
+  },
+  "885": {
+    "order": 885,
+    "title": "说说你对算法思想 - 分治算法的理解",
+    "en": "Understanding Algorithm Paradigms: Divide and Conquer",
+    "slug": "algorithm-divide-and-conquer-understanding"
+  },
+  "886": {
+    "order": 886,
+    "title": "说说你对算法思想 - 动态规划算法的理解",
+    "en": "Understanding Algorithm Paradigms: Dynamic Programming",
+    "slug": "algorithm-dynamic-programming-understanding"
+  },
+  "887": {
+    "order": 887,
+    "title": "说说你对算法思想 - 贪心算法的理解",
+    "en": "Understanding Algorithm Paradigms: Greedy Algorithms",
+    "slug": "algorithm-greedy-understanding"
+  },
+  "888": {
+    "order": 888,
+    "title": "说说你对算法思想 - 二分法的理解",
+    "en": "Understanding Algorithm Paradigms: Binary Search",
+    "slug": "algorithm-binary-search-understanding"
+  },
+  "889": {
+    "order": 889,
+    "title": "说说你对算法思想 - 回溯算法的理解",
+    "en": "Understanding Algorithm Paradigms: Backtracking",
+    "slug": "algorithm-backtracking-understanding"
+  },
+  "890": {
+    "order": 890,
+    "title": "说说你对分布式算法 - 一致性Hash算法的理解",
+    "en": "Understanding Distributed Algorithms: Consistent Hashing",
+    "slug": "distributed-consistent-hash-understanding"
+  },
+  "891": {
+    "order": 891,
+    "title": "说说你对分布式算法 - Paxos算法的理解",
+    "en": "Understanding Distributed Algorithms: Paxos",
+    "slug": "distributed-paxos-understanding"
+  },
+  "892": {
+    "order": 892,
+    "title": "说说你对分布式算法 - Raft算法的理解",
+    "en": "Understanding Distributed Algorithms: Raft",
+    "slug": "distributed-raft-understanding"
+  },
+  "893": {
+    "order": 893,
+    "title": "说说你对分布式算法 - ZAB算法的理解",
+    "en": "Understanding Distributed Algorithms: ZAB",
+    "slug": "distributed-zab-understanding"
+  },
+  "894": {
+    "order": 894,
+    "title": "说说你对分布式算法 - 雪花算法的理解",
+    "en": "Understanding Distributed Algorithms: Snowflake ID",
+    "slug": "distributed-snowflake-id-understanding"
+  },
+  "895": {
+    "order": 895,
+    "title": "说说你对安全算法 - 摘要算法的理解",
+    "en": "Understanding Security Algorithms: Digest (Hash)",
+    "slug": "security-digest-hash-understanding"
+  },
+  "896": {
+    "order": 896,
+    "title": "说说你对安全算法 - 加密算法的理解",
+    "en": "Understanding Security Algorithms: Encryption",
+    "slug": "security-encryption-understanding"
+  },
+  "897": {
+    "order": 897,
+    "title": "说说你对安全算法 - 国密算法的理解",
+    "en": "Understanding Security Algorithms: GM (Guo Mi) Cryptography",
+    "slug": "security-gm-crypto-understanding"
+  },
+  "898": {
+    "order": 898,
+    "title": "大厂弃用 ClickHouse？Doris 凭什么成新宠？",
+    "en": "Why Big Tech Switches from ClickHouse to Doris",
+    "slug": "why-big-tech-switch-clickhouse-to-doris"
+  },
+  "900": {
+    "order": 900,
+    "title": "什么是智能体 (Agent)？什么是工作流 (Workflow)？",
+    "en": "What Is an Agent? What Is a Workflow?",
+    "slug": "what-is-agent-and-workflow"
+  },
+  "902": {
+    "order": 902,
+    "title": "Redis 缓存失效三大经典场景",
+    "en": "Redis Cache Invalidation: Three Classic Scenarios",
+    "slug": "redis-cache-invalidation-three-classic-scenarios"
+  },
+  "904": {
+    "order": 904,
+    "title": "面试官：MySQL 里有 1 亿条加密数据，如何设计索引？",
+    "en": "Interview: Index Design for 100M Encrypted Rows in MySQL",
+    "slug": "mysql-100m-encrypted-data-index-design"
+  },
+  "906": {
+    "order": 906,
+    "title": "什么是 DeepSeek 的 MLA？它的优势是什么？",
+    "en": "What Is DeepSeek MLA and Its Advantages?",
+    "slug": "what-is-deepseek-mla-advantages"
+  },
+  "908": {
+    "order": 908,
+    "title": "MySQL 同步 ES 的 4种方案：从“双写”到“CDC”的避坑指南",
+    "en": "MySQL to ES Sync: Four Schemes from Dual-Write to CDC",
+    "slug": "mysql-sync-es-four-schemes-dual-write-to-cdc"
+  },
+  "910": {
+    "order": 910,
+    "title": "假设平台要搞一个活动，10万人在同一秒抢100瓶茅台。该怎么设计后端架构方案",
+    "en": "Backend Architecture for 100K Users Flash-Sale of 100 Bottles",
+    "slug": "100k-users-flash-sale-100-bottles-backend-architecture"
+  },
+  "912": {
+    "order": 912,
+    "title": "如何设计一个敏感词过滤系统？",
+    "en": "How to Design a Sensitive Word Filter System",
+    "slug": "how-to-design-sensitive-word-filter-system"
+  },
+  "914": {
+    "order": 914,
+    "title": "JVM 调优，到底是调什么？",
+    "en": "JVM Tuning: What Exactly Are You Tuning?",
+    "slug": "what-is-jvm-tuning-about"
+  },
+  "916": {
+    "order": 916,
+    "title": "大众点评订单系统分库分表实战：如何突破单机瓶颈实现架构跃迁",
+    "en": "Dianping Order Sharding: Breaking Single-Machine Bottleneck",
+    "slug": "dianping-order-sharding-break-single-machine-bottleneck"
+  },
+  "918": {
+    "order": 918,
+    "title": "你真的会微服务拆分吗？事件驱动架构又是什么？",
+    "en": "Microservices Splitting and Event-Driven Architecture",
+    "slug": "microservices-splitting-event-driven-architecture"
+  },
+  "920": {
+    "order": 920,
+    "title": "拒绝慢查询：MySQL 8.0 高性能优化实战指南",
+    "en": "MySQL 8.0 High-Performance Optimization: Eliminating Slow Queries",
+    "slug": "mysql-8-slow-query-high-performance-optimization"
+  },
+  "922": {
+    "order": 922,
+    "title": "Redis Zset 底层设计：为什么选择跳表而非 B+ 树？",
+    "en": "Redis Zset Internals: Skip List vs B+ Tree",
+    "slug": "redis-zset-skip-list-vs-b-plus-tree"
+  }
+}
