@@ -1,7 +1,7 @@
 ---
 title: "4.Hooks 和 Interceptors"
 sidebarGroup: "Spring AI Alibaba"
-shortTitle: "Hooks / Interceptors"
+shortTitle: "4.Hooks 和 Interceptors"
 order: 4
 date: 2026-05-21
 category: "AI"

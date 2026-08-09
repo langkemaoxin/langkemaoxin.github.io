@@ -1,7 +1,7 @@
 ---
 title: "11.《基于航空智能客服+RAG》实战"
 sidebarGroup: "Spring AI"
-shortTitle: "航空客服 RAG"
+shortTitle: "11.《基于航空智能客服+RAG》实战"
 order: 11
 date: 2026-08-02
 category: "AI"

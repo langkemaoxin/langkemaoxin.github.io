@@ -1,7 +1,7 @@
 ---
 title: "12.《基于RAG技术的个人知识库AI问答系统》实战"
 sidebarGroup: "Spring AI"
-shortTitle: "个人知识库"
+shortTitle: "12.《基于RAG技术的个人知识库AI问答系统》实战"
 order: 12
 date: 2026-06-22
 category: "AI"

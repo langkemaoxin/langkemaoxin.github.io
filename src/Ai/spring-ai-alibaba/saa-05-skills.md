@@ -1,7 +1,7 @@
 ---
 title: "5.Skills"
 sidebarGroup: "Spring AI Alibaba"
-shortTitle: "Skills"
+shortTitle: "5.Skills"
 order: 5
 date: 2026-05-27
 category: "AI"

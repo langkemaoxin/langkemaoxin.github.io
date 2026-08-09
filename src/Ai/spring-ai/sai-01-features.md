@@ -1,7 +1,7 @@
 ---
 title: "1.SpringAI特性介绍"
 sidebarGroup: "Spring AI"
-shortTitle: "特性介绍"
+shortTitle: "1.SpringAI特性介绍"
 order: 1
 date: 2026-07-21
 category: "AI"

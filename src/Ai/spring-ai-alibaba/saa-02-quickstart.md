@@ -1,7 +1,7 @@
 ---
 title: "2. 快速使用Spring AI Alibaba Agent Framework"
 sidebarGroup: "Spring AI Alibaba"
-shortTitle: "快速使用"
+shortTitle: "2. 快速使用Spring AI Alibaba Agent Framework"
 order: 2
 date: 2026-07-14
 category: "AI"

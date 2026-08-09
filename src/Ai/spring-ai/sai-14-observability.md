@@ -1,7 +1,7 @@
 ---
 title: "14.SpringAI实时监控+观测性"
 sidebarGroup: "Spring AI"
-shortTitle: "监控观测性"
+shortTitle: "14.SpringAI实时监控+观测性"
 order: 14
 date: 2026-04-15
 category: "AI"

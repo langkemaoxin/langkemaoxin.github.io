@@ -1,7 +1,7 @@
 ---
 title: "7.Spring Ai Alibaba Graph《Hr招聘全流程workflow-agent实战》"
 sidebarGroup: "Spring AI Alibaba"
-shortTitle: "Graph HR 实战"
+shortTitle: "7.Spring Ai Alibaba Graph《Hr招聘全流程workflow-agent实战》"
 order: 8
 date: 2026-07-27
 category: "AI"

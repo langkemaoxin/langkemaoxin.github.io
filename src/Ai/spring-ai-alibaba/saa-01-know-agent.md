@@ -1,7 +1,7 @@
 ---
 title: "1.认识Agent"
 sidebarGroup: "Spring AI Alibaba"
-shortTitle: "认识 Agent"
+shortTitle: "1.认识Agent"
 order: 1
 date: 2026-03-01
 category: "AI"

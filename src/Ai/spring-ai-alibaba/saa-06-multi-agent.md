@@ -1,7 +1,7 @@
 ---
 title: "6.Multi-agent（多Agent编排）"
 sidebarGroup: "Spring AI Alibaba"
-shortTitle: "Multi-agent"
+shortTitle: "6.Multi-agent（多Agent编排）"
 order: 7
 date: 2026-07-22
 category: "AI"

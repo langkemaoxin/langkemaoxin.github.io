@@ -1,7 +1,7 @@
 ---
 title: "SpringAi 1.1更新说明"
 sidebarGroup: "Spring AI"
-shortTitle: "1.1 更新说明"
+shortTitle: "SpringAi 1.1更新说明"
 order: 16
 date: 2026-03-01
 category: "AI"

@@ -1,7 +1,7 @@
 ---
 title: "7.结构化输出和初代Tools实现"
 sidebarGroup: "Spring AI"
-shortTitle: "结构化输出/Tools"
+shortTitle: "7.结构化输出和初代Tools实现"
 order: 7
 date: 2026-06-10
 category: "AI"

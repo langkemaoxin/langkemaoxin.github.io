@@ -1,7 +1,7 @@
 ---
 title: "15.Agent5种模式详细应用"
 sidebarGroup: "Spring AI"
-shortTitle: "Agent 五种模式"
+shortTitle: "15.Agent5种模式详细应用"
 order: 15
 date: 2026-07-02
 category: "AI"

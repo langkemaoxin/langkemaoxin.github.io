@@ -1,7 +1,7 @@
 ---
 title: "13.模型RAG评测"
 sidebarGroup: "Spring AI"
-shortTitle: "RAG 评测"
+shortTitle: "13.模型RAG评测"
 order: 13
 date: 2026-04-09
 category: "AI"

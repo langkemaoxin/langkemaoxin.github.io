@@ -1,7 +1,7 @@
 ---
 title: "9.MCP实现+原理+源码+鉴权"
 sidebarGroup: "Spring AI"
-shortTitle: "MCP"
+shortTitle: "9.MCP实现+原理+源码+鉴权"
 order: 9
 date: 2026-04-13
 category: "AI"

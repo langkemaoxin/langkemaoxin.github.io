@@ -1,7 +1,7 @@
 ---
 title: "8.Tools/function-call使用+原理+7大痛点"
 sidebarGroup: "Spring AI"
-shortTitle: "Function Call"
+shortTitle: "8.Tools/function-call使用+原理+7大痛点"
 order: 8
 date: 2026-01-14
 category: "AI"

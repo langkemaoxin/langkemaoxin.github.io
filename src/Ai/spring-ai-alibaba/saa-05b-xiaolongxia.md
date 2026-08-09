@@ -1,7 +1,7 @@
 ---
 title: "5.手搓简版\"小龙虾\"：实现 70% 核心功能"
 sidebarGroup: "Spring AI Alibaba"
-shortTitle: "手搓小龙虾"
+shortTitle: "5.手搓简版\"小龙虾\"：实现 70% 核心功能"
 order: 6
 date: 2026-07-13
 category: "AI"

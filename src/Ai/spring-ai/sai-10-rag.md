@@ -1,7 +1,7 @@
 ---
 title: "10.RAG全链路讲解"
 sidebarGroup: "Spring AI"
-shortTitle: "RAG 全链路"
+shortTitle: "10.RAG全链路讲解"
 order: 10
 date: 2026-07-01
 category: "AI"

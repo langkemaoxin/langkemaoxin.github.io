@@ -1,7 +1,7 @@
 ---
 title: "4.提示词使用和设置技巧"
 sidebarGroup: "Spring AI"
-shortTitle: "提示词技巧"
+shortTitle: "4.提示词使用和设置技巧"
 order: 4
 date: 2026-07-17
 category: "AI"

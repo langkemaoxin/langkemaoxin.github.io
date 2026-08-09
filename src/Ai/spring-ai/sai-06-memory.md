@@ -1,7 +1,7 @@
 ---
 title: "6.对话记忆—数据库和Redis不同的实现"
 sidebarGroup: "Spring AI"
-shortTitle: "对话记忆"
+shortTitle: "6.对话记忆—数据库和Redis不同的实现"
 order: 6
 date: 2026-07-21
 category: "AI"

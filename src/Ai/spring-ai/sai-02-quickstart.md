@@ -1,7 +1,7 @@
 ---
 title: "2.SpringAi快速使用"
 sidebarGroup: "Spring AI"
-shortTitle: "快速使用"
+shortTitle: "2.SpringAi快速使用"
 order: 2
 date: 2026-07-01
 category: "AI"

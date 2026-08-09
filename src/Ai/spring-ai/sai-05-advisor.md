@@ -1,7 +1,7 @@
 ---
 title: "5.Advisor对话拦截的使用和自定义"
 sidebarGroup: "Spring AI"
-shortTitle: "Advisor"
+shortTitle: "5.Advisor对话拦截的使用和自定义"
 order: 5
 date: 2026-07-17
 category: "AI"

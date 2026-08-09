@@ -1,7 +1,7 @@
 ---
 title: "3.ChatClient的基本使用及实战"
 sidebarGroup: "Spring AI"
-shortTitle: "ChatClient"
+shortTitle: "3.ChatClient的基本使用及实战"
 order: 3
 date: 2026-07-17
 category: "AI"
