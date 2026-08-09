@@ -40,7 +40,8 @@ jobs:
 
       - name: Build Docs
         env:
-          NODE_OPTIONS: --max_old_space_size=4096
+          # VuePress SSG of ~2200 pages needs a larger heap (4GB OOMs at Rendering).
+          NODE_OPTIONS: --max-old-space-size=12288
         run: |
           pnpm run docs:build
           touch src/.vuepress/dist/.nojekyll
