@@ -1,0 +1,86 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - img "有道云笔记" [ref=e7] [cursor=pointer]
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e13] [cursor=pointer]: 保存文件夹到笔记
+          - button [ref=e15] [cursor=pointer]:
+            - img [ref=e16]
+        - button "登录/注册" [ref=e19] [cursor=pointer]
+    - generic [ref=e20]:
+      - generic "MyBatis" [ref=e21]
+      - generic [ref=e22]:
+        - paragraph [ref=e23]: 图灵_徐庶
+        - generic [ref=e24]: 的分享
+    - generic [ref=e27]:
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - listitem [ref=e32]: 文件名
+          - listitem [ref=e33]: 大小
+          - listitem [ref=e34]: 修改时间
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37] [cursor=pointer]:
+              - img [ref=e38]
+              - generic "09-MyBatis-Plus的使用" [ref=e40]
+            - generic "217.79 KB" [ref=e41]
+            - generic "2021-01-25" [ref=e42]
+          - generic [ref=e43]:
+            - generic [ref=e44] [cursor=pointer]:
+              - img [ref=e45]
+              - generic "06-MyBatis基于XML的详细使用——缓存" [ref=e47]
+            - generic "114.84 KB" [ref=e48]
+            - generic "2020-11-03" [ref=e49]
+          - generic [ref=e50]:
+            - generic [ref=e51] [cursor=pointer]:
+              - img [ref=e52]
+              - generic "02-MyBatis的配置文件详解" [ref=e54]
+            - generic "46.95 KB" [ref=e55]
+            - generic "2020-10-10" [ref=e56]
+          - generic [ref=e57]:
+            - generic [ref=e58] [cursor=pointer]:
+              - img [ref=e59]
+              - generic "08-SSM框架整合" [ref=e61]
+            - generic "25.35 KB" [ref=e62]
+            - generic "2020-09-07" [ref=e63]
+          - generic [ref=e64]:
+            - generic [ref=e65] [cursor=pointer]:
+              - img [ref=e66]
+              - generic "MyBatis面试题（2020最新版）" [ref=e68]
+            - generic "3.04 MB" [ref=e69]
+            - generic "2020-08-05" [ref=e70]
+          - generic [ref=e71]:
+            - generic [ref=e72] [cursor=pointer]:
+              - img [ref=e73]
+              - generic "01-Mybatis的介绍和基本使用" [ref=e75]
+            - generic "90.54 KB" [ref=e76]
+            - generic "2020-07-17" [ref=e77]
+          - generic [ref=e78]:
+            - generic [ref=e79] [cursor=pointer]:
+              - img [ref=e80]
+              - generic "07-MyBatis逆向工程&分页插件" [ref=e82]
+            - generic "466.04 KB" [ref=e83]
+            - generic "2020-07-15" [ref=e84]
+          - generic [ref=e85]:
+            - generic [ref=e86] [cursor=pointer]:
+              - img [ref=e87]
+              - generic "05-MyBatis基于XML的详细使用——动态sql" [ref=e89]
+            - generic "46.23 KB" [ref=e90]
+            - generic "2020-07-09" [ref=e91]
+          - generic [ref=e92]:
+            - generic [ref=e93] [cursor=pointer]:
+              - img [ref=e94]
+              - generic "03-MyBatis基于XML的详细使用-参数、返回结果处理" [ref=e96]
+            - generic "14.63 KB" [ref=e97]
+            - generic "2020-07-07" [ref=e98]
+          - generic [ref=e99]:
+            - generic [ref=e100] [cursor=pointer]:
+              - img [ref=e101]
+              - generic "04-MyBatis基于XML的详细使用——高级结果映射" [ref=e103]
+            - generic "229.95 KB" [ref=e104]
+            - generic "2020-07-07" [ref=e105]
+      - paragraph [ref=e107]: 本内容由用户通过“有道云笔记”发布，并不代表有道的立场
+  - generic:
+    - link:
+      - /url: ""
