@@ -1,6 +1,6 @@
 ---
 title: "18-MyBatis解析全局配置文件"
-sidebarGroup: "MyBatis 源码"
+sidebarGroup: "MyBatis"
 shortTitle: "18-MyBatis解析全局配置文件"
 order: 18
 date: 2026-08-09
@@ -158,7 +158,7 @@ MyBatis的源码编译比较简单， 随便在网上找一篇博客即可，在
 
 如果希望在spring源码中引入你自己的这份源码，可以做如下操作
 
-1. 修改你mybatis源码的pom的`<version>` 这样可以和官方的区分开来
+1. 修改你mybatis源码的pom的``<version>`` 这样可以和官方的区分开来
 
 ```java
 <version>3.5.3-xsls</version>

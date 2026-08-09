@@ -6,7 +6,7 @@ export default {
     order: 1,
   },
   mybatis: {
-    title: "MyBatis 源码",
+    title: "MyBatis",
     icon: "database",
     order: 2,
   },

@@ -1,6 +1,6 @@
 ---
 title: "19-MyBatis-执行Sql的流程分析"
-sidebarGroup: "MyBatis 源码"
+sidebarGroup: "MyBatis"
 shortTitle: "19-MyBatis-执行Sql的流程分析"
 order: 19
 date: 2026-08-09
