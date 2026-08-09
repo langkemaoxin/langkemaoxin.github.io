@@ -39,7 +39,7 @@ actions:
 
 你好，我是 **Corey**。
 
-这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**云原生（Docker / K8s）**、**消息中间件**、**Java 并发编程**、**软件架构（DDD）**、**性能调优（JVM / Tomcat）**、**数据库（MySQL）**、**分布式（Seata）**、**微服务（Spring Cloud Alibaba）**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
+这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**云原生（Docker / K8s）**、**消息中间件**、**Java 并发编程**、**软件架构（DDD）**、**性能调优（JVM / Tomcat）**、**数据库（MySQL）**、**分布式（Seata）**、**微服务（Spring Cloud Alibaba）**、**源码剖析（Spring 6）**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
 
 我习惯用西蒙学习法把概念拆开写——先建立直觉，再落到源码、命令和复盘。写给未来的自己，也欢迎路过的你一起看。
 
@@ -60,6 +60,7 @@ actions:
 - [数据库](数据库/)：MySQL 架构、索引、事务锁、InnoDB、主从与高可用
 - [分布式](分布式/)：Seata AT/TCC、TC 集群、源码与隔离性
 - [微服务](微服务/)：Spring Boot 原理、SCA、Nacos/Sentinel/Seata 内核
+- [源码剖析](源码剖析/)：Spring 6 IOC/AOP/事务/MVC 源码系列
 - [Windows](Windows/)：权限 ACL 与环境搭建
 - [工具](Tools/)：Git、代理、编码与发布
 - [英语](English/)：技术论文 B1 生词

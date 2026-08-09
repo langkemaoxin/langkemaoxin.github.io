@@ -63,6 +63,11 @@ export default navbar([
     link: "/微服务/",
   },
   {
+    text: "源码剖析",
+    icon: "code",
+    link: "/源码剖析/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",

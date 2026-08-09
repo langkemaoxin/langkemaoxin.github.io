@@ -14,6 +14,7 @@ import PerfTune from "./sidebar/性能调优.mjs";
 import Database from "./sidebar/数据库.mjs";
 import Distributed from "./sidebar/分布式.mjs";
 import Microservices from "./sidebar/微服务.mjs";
+import SourceAnalysis from "./sidebar/源码剖析.mjs";
 
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
@@ -39,6 +40,7 @@ export const modules = [
   { path: "/数据库/", dir: "数据库" },
   { path: "/分布式/", dir: "分布式" },
   { path: "/微服务/", dir: "微服务" },
+  { path: "/源码剖析/", dir: "源码剖析" },
 ];
 
 /**
@@ -78,6 +80,7 @@ export const folders = {
   ...prefix("数据库", Database),
   ...prefix("分布式", Distributed),
   ...prefix("微服务", Microservices),
+  ...prefix("源码剖析", SourceAnalysis),
 };
 
 /** 未单独配置 icon 时的默认图标 */
