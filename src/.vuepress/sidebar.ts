@@ -59,6 +59,22 @@ export default sidebar({
         "harness-engineering",
       ],
     },
+    {
+      text: "Spring AI Alibaba",
+      icon: "robot",
+      prefix: "spring-ai-alibaba/",
+      collapsible: true,
+      children: [
+        "saa-01-know-agent",
+        "saa-02-quickstart",
+        "saa-03-deep-usage",
+        "saa-04-hooks-interceptors",
+        "saa-05-skills",
+        "saa-05b-xiaolongxia",
+        "saa-06-multi-agent",
+        "saa-07-graph-hr",
+      ],
+    },
   ],
   "/BigData/": [
     "",

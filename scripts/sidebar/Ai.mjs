@@ -24,4 +24,9 @@ export default {
     icon: "book",
     order: 5,
   },
+  "spring-ai-alibaba": {
+    title: "Spring AI Alibaba",
+    icon: "robot",
+    order: 6,
+  },
 };
