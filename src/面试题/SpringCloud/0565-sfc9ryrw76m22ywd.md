@@ -15,7 +15,7 @@ article: false
 
 下图是微软团队建议如何在微服务架构中使用这些模式：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1727617883402-6177549b-2755-49cc-9166-747ea5ade91c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0565-sfc9ryrw76m22ywd/img-01d90bf0177b.png)
 
 文中提到的 9 个模式包括：外交官模式（Ambassador），防腐层（Anti-corruption layer），后端服务前端（Backends for Frontends），舱壁模式（Bulkhead），网关聚合（Gateway Aggregation），网关卸载（Gateway Offloading），网关路由（Gateway Routing），挎斗模式（Sidecar）和绞杀者模式（Strangler）。这些模式绝大多数也是目前业界比较常用的模式，如：
 

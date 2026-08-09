@@ -23,7 +23,7 @@ select * from user where mobile like %123%
 
 看下面这个例子，我们将手机号进行加密，这时候我们要搜索手机前缀为136的手机号，这时候你讲条件进行加密，然后查询，你会发现，加密出来的是二个完全不一样的字符串，所以你根本就查不出来
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729508972314-33b76e35-a7dc-4dc1-9abd-a2fbb4ff1136.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0354-xgl9a1fah7cppdil/img-7d13a8a8969b.png)
 
 ## 方案一：**内存解密**(数据量少可用，数据量多不推荐)
 
@@ -144,6 +144,6 @@ id              mobile                                         mobileSm4
 
 这是阿里文档给出的建议： [open.taobao.com/docV3.htm?d…](https://link.juejin.cn/?target=https%3A%2F%2Fopen.taobao.com%2FdocV3.htm%3FdocId%3D106213%26docType%3D1)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729500107388-110bfeb1-313f-4217-95a3-81155230f986.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0354-xgl9a1fah7cppdil/img-041b23800399.png)
 
 > 来自: 加密后的数据该如何支持模糊查询大家好

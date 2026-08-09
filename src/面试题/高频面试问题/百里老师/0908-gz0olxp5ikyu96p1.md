@@ -15,7 +15,7 @@ article: false
 
 在微服务架构中，**“关系型数据库（MySQL）做存储，搜索引擎（Elasticsearch）做检索”** 几乎是处理海量数据查询的标准范式。然而，如何保证两者之间的数据一致性，却是让无数架构师头秃的难题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766560621852-58140bbe-0f0a-40ac-9898-7b8b2a5fafc5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0908-gz0olxp5ikyu96p1/img-995cf4cbc29f.png)
 
 从早期的同步双写，到引入 MQ 解耦，再到如今主流的 CDC（Change Data Capture）方案，每一次架构演进的背后，都是对**性能、解耦**与**一致性**这三者之间平衡点的重新考量。
 
@@ -27,7 +27,7 @@ article: false
 
 在项目初期，数据量不大，开发周期紧，很多团队会选择最直观的“同步双写”方案。即在业务代码的事务逻辑中，直接调用 ES 的 SDK 进行写入。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766560634044-a6770146-ce5b-4926-9412-5c7b1ad7a76f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0908-gz0olxp5ikyu96p1/img-7acc3a7bc126.png)
 
 ### 1. 为什么它是“架构陷阱”？
 
@@ -45,7 +45,7 @@ article: false
 
 为了解决“同步双写”带来的性能问题，引入消息队列（Kafka/RocketMQ）是自然的演进方向。主线程将变更事件写入 MQ 后立即返回，由消费者异步写入 ES。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766560641847-c4ae4413-e162-4faa-a1e3-76bc504c2f08.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0908-gz0olxp5ikyu96p1/img-cac613565d41.png)
 
 ### 1. 性能提升与新的痛点
 
@@ -60,7 +60,7 @@ article: false
 
 这是目前业界公认的“黄金标准”。CDC（Change Data Capture）技术的核心思想是：**不要让业务层感知同步逻辑，而是去监听数据库的“核心心跳”——Binlog。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766560649029-37b6e9bf-937e-46f2-8adf-f3ec2b07d1db.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0908-gz0olxp5ikyu96p1/img-d9da48eba1b0.png)
 
 ### 1. 像“从库”一样思考
 
@@ -77,7 +77,7 @@ article: false
 
 选择了 CDC + MQ 的链路，就意味着选择了分布式系统的复杂性。其中最棘手的问题就是**消息乱序（Ordering）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766560660491-1fba20ec-46a3-4ce8-a3cc-20df1b408528.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0908-gz0olxp5ikyu96p1/img-81ea33e62c55.png)
 
 ### 1. 场景复现
 
@@ -104,7 +104,7 @@ article: false
 
 即便架构设计得再完美，也无法避免“黑天鹅”事件：Binlog 意外被清理、代码逻辑 Bug、人为误删数据等。因此，系统必须具备**自我修复能力**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766560667480-da1f821a-03dd-431e-abb7-29fa1f5241fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0908-gz0olxp5ikyu96p1/img-ddd489340042.png)
 
 ### 1. T+1 全量比对
 
@@ -120,7 +120,7 @@ article: false
 
 ## 六、 总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766560693327-667fe4ae-f6ee-47d3-afb3-1615cca3d512.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0908-gz0olxp5ikyu96p1/img-9b2624b23cc9.png)
 
 构建一个生产级的高可靠同步架构，并非一蹴而就，而是一个不断做减法和加法的过程：
 

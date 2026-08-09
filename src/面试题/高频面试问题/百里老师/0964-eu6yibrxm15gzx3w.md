@@ -13,7 +13,7 @@ article: false
 
 > 来源：[什么是SQL注入？怎么处理？](https://www.yuque.com/tulingzhouyu/db22bv/eu6yibrxm15gzx3w)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762686968843-e412c493-eede-49a1-be53-4abee3e73f87.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0964-eu6yibrxm15gzx3w/img-69f517d28422.png)
 
 在Web开发中，我们每天都在与数据库打交道。一个看似无害的登录框，背后可能隐藏着足以让整个系统瘫痪的巨大风险。这个风险，就是“SQL注入”。本文将带你从攻击的表象出发，层层深入，探究其根源，掌握核心的防御手段，并最终构建起一个完整的防御体系。
 
@@ -25,7 +25,7 @@ article: false
 
 ### **二、 典型攻击场景：从查询到“删库跑路”**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762686991531-9b37728c-22d2-4bbc-973e-3691e7234e39.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0964-eu6yibrxm15gzx3w/img-301ee18c7b54.png)
 
 上图直观地展示了同一个查询接口，在面对正常用户和攻击者时所产生的两种截然不同的命运。理论是枯燥的，让我们来剖析其背后的代码发生了什么。
 
@@ -45,7 +45,7 @@ article: false
 
 ### **三、 探究根源：数据与代码的边界崩塌**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762687001938-bc08bf4d-fe4d-42b8-83a3-3ba7b5a03737.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0964-eu6yibrxm15gzx3w/img-03d808ac3661.png)
 
 为什么数据库会如此“愚蠢”地执行了攻击者的恶意代码？上图的隐喻一针见血——**根源在于“数据”与“代码”的边界消失了**。
 
@@ -55,7 +55,7 @@ article: false
 
 ### **四、 核心解法：PreparedStatement（参数化查询）**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762687019178-7f17b18d-02ec-4393-a06f-13409b0ae2af.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0964-eu6yibrxm15gzx3w/img-9b869882e8af.png)
 
 要从根本上解决问题，就必须重建“数据”与“代码”之间那道清晰的边界。业界公认的最佳实践就是**参数化查询**，在Java JDBC中其具体实现即为 `PreparedStatement`。
 
@@ -68,7 +68,7 @@ article: false
 
 ### **五、 MyBatis核心实践：认准 **`#{}`
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762687035237-d0cec4d4-4a92-4954-adb6-ad49240a9e29.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0964-eu6yibrxm15gzx3w/img-80c99ac12bb0.png)
 
 在现代Java开发中，我们更多地通过MyBatis这样的ORM框架与数据库交互。MyBatis为我们提供了两种接收参数的方式：`#{}` 和 `${}`，它们的选择直接决定了应用的安全性。
 
@@ -79,7 +79,7 @@ article: false
 
 ### **六、 总结与纵深防御**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762687042555-6d83ab98-b91d-4963-843a-5903313362a2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0964-eu6yibrxm15gzx3w/img-0fd9faa8ed47.png)
 
 至此，我们已经走完了从理解SQL注入到掌握核心防御方法的旅程。让我们最后回顾关键点，并构建一个更完整的防御体系。
 

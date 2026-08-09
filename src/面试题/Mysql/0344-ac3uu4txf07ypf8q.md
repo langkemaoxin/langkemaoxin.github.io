@@ -45,11 +45,11 @@ INSERT INTO `student_course` (`id`, `student_id`, `course_id`, `xxx_id`) VALUES
 
 从上图中看出，`mysql`的唯一性约束生效了，重复数据被拦截了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684936066489-0abbd2f5-1199-45b2-a70c-c52296cdca59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0344-ac3uu4txf07ypf8q/img-4d4f2c6f5481.png)
 
 接下来，我们再插入两条`xxx_id`为`null`的数据，其中第三条数据跟第二条数据中`student_id`、`course_id`和`xxx_id`字段值都一样.
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684935985951-685bed3b-116b-4670-afcd-34ce0f140826.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0344-ac3uu4txf07ypf8q/img-7453964e121d.png)
 
 从图中看出，竟然执行成功了。
 
@@ -70,7 +70,7 @@ INSERT INTO `student_course` (`id`, `student_id`, `course_id`, `xxx_id`) VALUES
 
 官网链接：https://dev.mysql.com/doc/refman/8.4/en/problems-with-null.html
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1743320674236-f82e93c9-9285-4b24-a067-4d14656770ca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0344-ac3uu4txf07ypf8q/img-dec3e9087158.png)
 
 **举个简单例子：**当你使用 NOT IN 条件时，如果其中包含 NULL 值，这会导致整个条件的结果不确定。具体来说：
 

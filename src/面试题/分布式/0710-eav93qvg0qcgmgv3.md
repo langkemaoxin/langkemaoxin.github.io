@@ -23,7 +23,7 @@ article: false
 
 > 如下图，CAP的三种特性只能同时满足两个。而且在不同的两两组合，也有一些成熟的分布式产品。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884684449-badd87c0-2c53-4f3d-924c-2615410bd6dd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-fd03fecf7e76.png)
 
 接下来，我们来介绍一下CAP的三种特性，我们采用一个应用场景来分析CAP中的每个特点的含义。
 
@@ -47,17 +47,17 @@ article: false
 
 > Web业务层向主Master写数据库成功，从Backup读数据也成功。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884780250-465a22b6-13b5-4916-a0b6-46dd4ac00276.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-595a69843530.png)
 
 > Web业务层向主Master读数据库失败，从Backup读数据也失败。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884797997-a1d08177-7e1e-4733-b256-9194da3187ae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-ad20e9b6e12f.png)
 
 必要实现流程：
 
 > 写入主数据库后，在向从数据库同步期间要将从数据库锁定，待同步完成后再释放锁，以免在新数据写入成功后，向从数据库查询到旧的数据。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884809639-b534d4b4-0300-4fb5-af28-7e7ab0db6716.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-e2d270e33e34.png)
 
 分布式一致性特点：
 
@@ -100,7 +100,7 @@ article: false
 > 1.当Master正在被更新，Backup数据库接收到数据查询的请求则**立即能够响应数据查询结果**。
 > 2.backup数据库不允许出现响应超时或响应错误。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884866616-de0a19cb-59be-4353-90df-d292f4804e34.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-861d554e9f50.png)
 
 必要实现流程：
 
@@ -108,7 +108,7 @@ article: false
 > 2.由于要保证Backup从数据库的可用性，不可将Backup从数据库中的资源进行锁定。
 > 3.即时数据还没有同步过来，从数据库也要返回要查询的数据，哪怕是旧数据/或者默认数据，但不能返回错误或响应超时。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884878862-324ff980-0de8-467f-b052-20bbd3bea67e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-567d435efb9b.png)
 
 分布式可用性特点：
 
@@ -126,14 +126,14 @@ article: false
 
 其一个结点挂掉不影响另一个结点对外提供服务。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884928969-f9d579d9-0a13-4fe1-8c5e-a5a3db909f68.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-ef5b9cbab707.png)
 
 必要实现流程：
 
 > 1.尽量使用异步取代同步操作，例如使用异步方式将数据从主数据库同步到从数据，这样结点之间能有效的实现松耦合。
 > 2.添加Backup从数据库结点，其中一个Backup从结点挂掉其它Backup从结点提供服务。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695884956233-51562825-e807-4326-9490-43ff98866958.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0710-eav93qvg0qcgmgv3/img-c2ede4c20484.png)
 
 分区容错性特点：
 

@@ -13,7 +13,7 @@ article: false
 
 > 来源：[Redis Zset 底层设计：为什么选择跳表而非 B+ 树？](https://www.yuque.com/tulingzhouyu/db22bv/vnel6ecscdmq78su)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765459673697-55558454-1601-490d-a752-9e502076111d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0922-vnel6ecscdmq78su/img-5ab4498f852c.png)
 
 在数据库领域，B+ 树几乎是索引的代名词。MySQL、Oracle 等主流关系型数据库都坚定地选择它作为底层数据结构。然而，作为内存数据库霸主的 Redis，在其核心数据类型 Zset（有序集合）中，却出人意料地选择了**跳表（SkipList）**。
 
@@ -21,7 +21,7 @@ article: false
 
 ### 1. 结构本质：概率平衡的艺术
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765459770253-d6aeaa88-fd2b-4ce0-8fe1-c2884259e073.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0922-vnel6ecscdmq78su/img-713d656fdcd0.png)
 
 如上图所示，跳表并非某种复杂的树形结构，而是一种**多层链表**。
 
@@ -32,7 +32,7 @@ article: false
 
 ### 2. 对手的强大：磁盘王者的逻辑
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765459781489-c9a11c9b-991f-463a-a5f6-5db5fc200566.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0922-vnel6ecscdmq78su/img-a3b673bf068a.png)
 
 B+ 树之所以成为数据库的标准答案，核心在于**磁盘 I/O**。
 
@@ -41,7 +41,7 @@ B+ 树之所以成为数据库的标准答案，核心在于**磁盘 I/O**。
 
 ### 3. 核心冲突：内存场景下的规则重写
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765459811060-78491aee-7edf-4937-8db9-6aea9c46c22e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0922-vnel6ecscdmq78su/img-34c3cac51350.png)
 
 这是 Redis 放弃 B+ 树的最根本原因：**场景变了，瓶颈也变了。**
 
@@ -51,7 +51,7 @@ B+ 树之所以成为数据库的标准答案，核心在于**磁盘 I/O**。
 
 ### 4. 工程视角：维护成本与并发优势
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765459819524-875a86d2-22b2-4a62-b1df-05a81b4fdd4c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0922-vnel6ecscdmq78su/img-9b426e57635a.png)
 
 除了性能，**工程实现的复杂度**往往被理论分析所忽视，但它对开源项目至关重要。
 
@@ -63,7 +63,7 @@ B+ 树之所以成为数据库的标准答案，核心在于**磁盘 I/O**。
 
 ### 5. 总结：架构设计的核心是权衡 (Trade-off)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765459830738-bc1e5d7f-f0d4-4dc7-b3d9-ab42939a4bd8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0922-vnel6ecscdmq78su/img-5af639ac2080.png)
 
 Redis 选择跳表，并不是因为跳表在算法理论上比 B+ 树更强，而是因为它在**内存场景**下做到了**收益与成本的最佳平衡**：
 

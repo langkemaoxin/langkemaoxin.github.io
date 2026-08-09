@@ -13,7 +13,7 @@ article: false
 
 > 来源：[订单服务调用时间从200ms飙升至1.5s，如何排查？](https://www.yuque.com/tulingzhouyu/db22bv/qug6wm6gzy3s62zq)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760250411207-cf5f638f-19da-4d8a-8411-1c2dc8212da5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1002-qug6wm6gzy3s62zq/img-9f78f8a58348.png)
 
 ### 一、事故背景：风平浪静下的告警风暴
 
@@ -37,7 +37,7 @@ article: false
 
 **核心发现 (What & So What?):** 分析结果非常明确：**海量线程（超过80%）都处于 **`BLOCKED`** 状态**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760250427085-4acfd085-6d2d-4c9f-bcca-973e30596c50.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1002-qug6wm6gzy3s62zq/img-c3782dab8bfc.png)
 
 这是本次排查的**第一个关键突破口**。它有力地证明了应用正陷于严重的内部等待瓶颈，而不是CPU资源不足。这个发现让我们**排除了代码死循环、计算量过大等消耗CPU的场景**，并将调查焦点缩小到两个主要可能性：
 
@@ -52,7 +52,7 @@ article: false
 
 **核心发现 (What & So What?):** 监控显示，所有外部依赖（数据库、Redis缓存、其他微服务）的**响应时间均在正常范围内**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760250437880-137762fd-7cf0-4bca-8ce0-3467442c4ef0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1002-qug6wm6gzy3s62zq/img-53cd6dd684b3.png)
 
 这个发现意义重大，它帮助我们**排除了所有外部因素**。问题根源不在别处，就在订单服务应用本身或它直连的数据库上。调查范围被进一步缩小。
 
@@ -64,7 +64,7 @@ article: false
 
 **核心发现 (What & So What?):** 我们捕捉到了一个惊人的现象：**一次耗时高达 **`1.2秒`** 的 Full GC**！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760250446013-4008a0ec-abdb-4e41-8c97-9d6c658ca89b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1002-qug6wm6gzy3s62zq/img-9a54dead78f5.png)
 
 这个发现是**第二个关键突破口**。`1.2秒`的全局暂停，与我们观察到的 `1.5秒` RT 高度吻合。它直接解释了请求为何会突然卡住。
 
@@ -78,7 +78,7 @@ article: false
 
 **核心发现 (What & So What?):** 监控页面惨不忍睹：**连接池中的80个连接全部被占用，还有数百个线程正在排队等待获取连接**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760250459997-bf1505d9-9889-4177-b3a1-70cf7611a398.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1002-qug6wm6gzy3s62zq/img-5e4596c13eea.png)
 
 至此，所有线索都汇集到了一起。这解释了为何线程会 `BLOCKED`，也解释了为何新来的请求因拿不到任何资源而被拒绝（`HTTP 429`）。
 
@@ -90,7 +90,7 @@ article: false
 
 **最终原因 (The Root Cause):** 一条 `UPDATE` 语句浮出水面。它正在更新一个拥有数百万行数据的大表，但其 `WHERE` 子句中的 `status` 字段**竟然没有索引**！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760250469102-e7e37055-390a-4025-a5a9-733e21bc766d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1002-qug6wm6gzy3s62zq/img-9c557df75b42.png)
 
 在数据库中，对没有索引的字段进行更新，会导致**行锁升级为表锁**，锁住了整张表。
 
@@ -108,7 +108,7 @@ article: false
 
 这次事故是一次典型的由“一个点的疏忽”引发“整个面崩溃”的案例。我们将其排查路径和核心发现总结如下：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760250481523-f9531b8f-4de6-42a9-92ce-8c6cb47642c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1002-qug6wm6gzy3s62zq/img-150517d26840.png)
 
 为了防止此类问题再次发生，我们制定了以下改进措施：
 

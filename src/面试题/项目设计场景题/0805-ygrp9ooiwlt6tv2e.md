@@ -24,7 +24,7 @@ article: false
 
 因此，我们可以将需求先简单拆解为两部分：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593427276-e6cb95e6-6456-4f23-a9e4-e2a757ee57fa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-2f80c551b57e.png)
 
 同时，无论是券模板还是券记录，都需要开放查询接口，支持券模板/券记录的查询。
 
@@ -61,13 +61,13 @@ article: false
 
 从需求拆解部分我们对大致要开发的系统有了一个了解，下面给出整体的一个系统架构，包含了一些具体的功能。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593447715-cd797a3c-fddb-4354-84af-6e72cf1b5d21.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-038d012d1466.png)
 
 数据结构 ER 图
 
 与系统架构对应的，我们需要建立对应的 MySQL 数据存储表。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593514705-fbfc4ab4-a4b3-40eb-946d-fa4649388436.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-e65b08f079c3.png)
 
 核心逻辑实现
 
@@ -75,7 +75,7 @@ article: false
 
 - 发券流程分为三部分：参数校验、幂等校验、库存扣减。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593548130-ae28ff3a-f892-435d-8c11-79c22e4bf276.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-9603b40cd925.png)
 
 幂等操作用于保证发券请求不正确的情况下，业务方通过重试、补偿的方式再次请求，可以最终只发出一张券，防止资金损失。
 
@@ -83,7 +83,7 @@ article: false
 
 券过期是一个状态推进的过程，这里我们使用 RocketMQ 来实现。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593563934-b6947ff5-c822-4377-bc14-3871161fce88.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-efabc67311b3.png)
 
 - 由于 RocketMQ 支持的延时消息有最大限制，而卡券的有效期不固定，有可能会超过限制，所以我们将卡券过期消息循环处理，直到卡券过期。
 
@@ -144,17 +144,17 @@ b. Redis 资源
 
 热点库存的问题，业界有通用的方案：即，扣减的库存 key 不要集中在某一个分片上。如何保证这一个券模板的 key 不集中在某一个分片上呢，我们拆 key（拆库存）即可。如图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593590176-8d7c8430-1c5f-4261-919e-7e2f7bafe4eb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-63ae9d8b560e.png)
 
 在业务逻辑中，我们在建券模板的时候，就将这种热点券模板做库存拆分，后续扣减库存时，也扣减相应的子库存即可。
 
 **建券**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593617658-e531d87d-306c-487f-8ef9-4f5d5ce57c56.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-037b7b186969.png)
 
 **库存扣减**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593651141-f0cc9720-7761-4cf1-8c6e-c111882b4117.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-9c970b8cd1f0.png)
 
 这里还剩下一个问题，即：扣减子库存，每次都是从 1 开始进行的话，那对 Redis 对应分片的压力其实并没有减轻，因此，我们需要做到：每次请求，**随机不重复的轮询子库存**。以下是本项目采取的一个具体思路：
 
@@ -178,7 +178,7 @@ Redis 子库存的 key 的最后一位是分片的编号，如：xxx_stock_key1�
 
 内部重试可以提高一部分请求的成功率，但无法从根本上解决 Redis 存在超时的问题，同时重试的次数也和接口响应的时长成正比。二级缓存的引入，可以从根本上避免 Redis 超时造成的发券请求失败。因此我们选用二级缓存方案：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593682620-11bb3c21-eb39-4825-bda8-931ead0d965e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0805-ygrp9ooiwlt6tv2e/img-226432543db8.png)
 
 当然，引入了本地缓存，我们还需要在每个服务实例中启动一个定时任务来将最新的券模板信息刷入到本地缓存和 Redis 中，将模板信息刷入 Redis 中时，要加分布式锁，防止多个实例同时写 Redis 给 Redis 造成不必要的压力。
 

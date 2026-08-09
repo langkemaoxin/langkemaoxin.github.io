@@ -17,7 +17,7 @@ article: false
 
 **1、整体结构**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392981990-1b72cb42-f284-4074-98c6-8376a9686f9f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-588d78f01d03.png)
 
 Core 核心层
 Core 核心层是 Netty 最精华的内容，它提供了底层网络通信的通用抽象和实现，包括事件模型、通用API、支持零拷贝的 ByteBuf 等。
@@ -30,7 +30,7 @@ Transport Service 传输服务层
 
 **2、逻辑架构**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392981963-7a410b1b-8680-4436-92f9-f773f0ba785d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-6f1be77845b7.png)
 
 网络通信层
 网络通信层的职责是执行网络 I/O 的操作。它支持多种网络协议和 I/O 模型的连接操作。当网络数据读取到内核缓冲区后，会触发各种网络事件，这些网络事件会分发给事件调度层进行处理。
@@ -48,7 +48,7 @@ Channel 的是“**通道**”，Netty Channel提供了基于NIO更高层次的�
 
 事件调度层的核心组件包括 **EventLoopGroup、EventLoop**。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392981951-12fd22d8-36da-406e-9c09-72c5b3fd5317.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-7c49c3a9072b.png)
 
 **EventLoop** 负责处理 Channel 生命周期内的所有 I/O 事件，如 accept、connect、read、write 等 I/O 事件
 
@@ -73,17 +73,17 @@ Channel 的是“**通道**”，Netty Channel提供了基于NIO更高层次的�
 
 **ChannelPipeline** 是 Netty 的核心编排组件，负责组装各种 ChannelHandler，ChannelPipeline 内部通过双向链表将不同的 ChannelHandler 链接在一起。当 I/O 读写事件触发时，Pipeline 会依次调用 Handler 列表对 Channel 的数据进行拦截和处理。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392981943-5438c5d8-7381-4ef5-ba73-0272c19cad47.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-bc236218237f.jpg)
 
 客户端和服务端都有各自的 ChannelPipeline。客户端和服务端一次完整的请求：客户端出站（Encoder 请求数据）、服务端入站（Decoder接收数据并执行业务逻辑）、服务端出站（Encoder响应结果）。
 
 **ChannelHandler** 完成数据的编解码以及处理工作。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392982087-c4f62c49-e4ad-4593-b065-35a33185a867.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-7c2f6f23b0cf.jpg)
 
 **ChannelHandlerContext** 用于保存Handler 上下文，通过 HandlerContext 我们可以知道 Pipeline 和 Handler 的关联关系。HandlerContext 可以实现 Handler 之间的交互，HandlerContext 包含了 Handler 生命周期的所有事件，如 connect、bind、read、flush、write、close 等。同时，HandlerContext 实现了Handler通用的逻辑的模型抽象。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392982331-c55a07bd-40f1-4e8c-a49e-4ddecac06bdc.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-9cadb0fd876d.jpg)
 
 网络传输
 
@@ -91,31 +91,31 @@ Channel 的是“**通道**”，Netty Channel提供了基于NIO更高层次的�
 
 阻塞I/O：（BIO）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392982336-ef0df83c-7713-4a8e-ac52-a572ebf2e060.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-f1d3f0dbe3ca.png)
 
 应用进程向内核发起 I/O 请求，发起调用的线程一直等待内核返回结果。一次完整的 I/O 请求称为BIO（Blocking IO，阻塞 I/O），所以 BIO 在实现异步操作时，只能使用多线程模型，一个请求对应一个线程。但是，**线程的资源是有限且宝贵的，创建过多的线程会增加线程切换的开销。**
 
 同步非阻塞I/O（NIO）：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392982366-33aad989-7a6e-4074-a4da-9e648564f1e6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-fae6fc85556c.png)
 
 应用进程向内核发起 I/O 请求后不再会同步等待结果，而是会立即返回，通过轮询的方式获取请求结果。NIO 相比 BIO 虽然大幅提升了性能，但是轮询过程中大量的系统调用导致上下文切换开销很大。所以，单独使用非阻塞 I/O 时效率并不高，而且**随着并发量的提升，非阻塞 I/O 会存在严重的性能浪费。**
 
 多路复用I/O（select和poll）：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392982386-e06eb506-28a5-43e5-8a4d-1f2ffd6e6dd1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-110790cbb5c3.png)
 
 多路复用实现了**一个线程处理多个 I/O 句柄的操作**。多路指的是多个数据通道，复用指的是使用一个或多个固定线程来处理每一个 Socket。select、poll、epoll 都是 I/O 多路复用的具体实现，线程一次 select 调用可以获取内核态中多个数据通道的数据状态。其中，select只负责等，recvfrom只负责拷贝，阻塞IO中可以对多个文件描述符进行阻塞监听，是一种非常高效的 I/O 模型。
 
 信号驱动I/O（SIGIO）：
 
-![image](https://cdn.nlark.com/yuque/0/2024/svg/22811459/1714392982357-1d9e7c06-1da5-483f-a56c-ab21611e14c1.svg)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-05837ab248ba.svg)
 
 信号驱动IO模型，应用进程告诉内核：当数据报准备好的时候，给我发送一个信号，对SIGIO信号进行捕捉，并且调用我的信号处理函数来获取数据报。
 
 异步I/O（Posix.1的aio_系列函数）：
 
-![image](https://cdn.nlark.com/yuque/0/2024/svg/22811459/1714392982606-cdd2fd06-9d82-483e-9701-fa884a7b8bd3.svg)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-587dcbf697c9.svg)
 
 当应用程序调用aio_read时，内核一方面去取数据报内容返回，另一方面将程序控制权还给应用进程，应用进程继续处理其他事情，是一种非阻塞的状态。当内核中有数据报就绪时，由内核将数据报拷贝到应用程序中，返回aio_read中定义好的函数处理程序。
 
@@ -123,7 +123,7 @@ Channel 的是“**通道**”，Netty Channel提供了基于NIO更高层次的�
 
 Netty 的 I/O 模型是基于非阻塞 I/O 实现的，底层依赖的是 NIO 框架的多路复用器 Selector。采用 epoll 模式后，只需要一个线程负责 Selector 的轮询。当有数据处于就绪状态后，需要一个事件分发器（Event Dispather），它负责将读写事件分发给对应的读写事件处理器（Event Handler）。事件分发器有两种设计模式：Reactor 和 Proactor，Reactor 采用同步 I/O， Proactor 采用异步 I/O。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392982679-4dd50623-eae0-4e41-ac12-9f277e8c5769.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-380349cfae49.png)
 
 Reactor 实现相对简单，适合处理耗时短的场景，对于耗时长的 I/O 操作容易造成阻塞。Proactor 性能更高，但是实现逻辑非常复杂，适合图片或视频流分析服务器，目前主流的事件驱动模型还是依赖 select 或 epoll 来实现。
 
@@ -134,7 +134,7 @@ Reactor 实现相对简单，适合处理耗时短的场景，对于耗时长的
 
 **MSS（Maximum Segement Size）** 是指 TCP 最大报文段长度，它是传输层一次发送最大数据的大小。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392982725-e1b8ae84-640f-47ff-96f6-554038edea8e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-5c5aa3b04799.png)
 
 如上图所示，如果 MSS + TCP 首部 + IP 首部 > MTU，那么数据包将会被拆分为多个发送。这就是拆包现象。
 
@@ -177,7 +177,7 @@ MessageToMessageDecoder //将一种消息类型解码为另外一种消息类型
 
 **5、WriteAndFlush**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392982764-7391c467-aa85-40ae-84a2-3363bdafa243.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-a7d447254ab9.jpg)
 
 ①writeAndFlush 属于出站操作，它是从 Pipeline 的 Tail 节点开始进行事件传播，一直向前传播到 Head 节点。不管在 write 还是 flush 过程，Head 节点都中扮演着重要的角色。
 
@@ -198,13 +198,13 @@ MessageToMessageDecoder //将一种消息类型解码为另外一种消息类型
 
 在堆内存放的 DirectByteBuffer 对象并不大，仅仅包含堆外内存的地址、大小等属性，同时还会创建对应的 Cleaner 对象，通过 ByteBuffer 分配的堆外内存不需要手动回收，它可以被 JVM 自动回收。当堆内的 DirectByteBuffer 对象被 GC 回收时，Cleaner 就会用于回收对应的堆外内存。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392982831-45ac2335-3830-4924-8c3d-391b7da136a7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-c25e1b9225ba.png)
 
 从 DirectByteBuffer 的构造函数中可以看出，真正分配堆外内存的逻辑还是通过 unsafe.allocateMemory(size)，Unsafe 是一个非常不安全的类，它用于执行内存访问、分配、修改等**敏感操作**，可以越过 JVM 限制的枷锁。Unsafe 最初并不是为开发者设计的，使用它时虽然可以获取对底层资源的控制权，但也失去了安全性的保证，使用 Unsafe 一定要慎重（Java 中是不能直接使用 Unsafe 的，但是可以通过反射获取 Unsafe 实例）。Netty 中依赖了 Unsafe 工具类，是因为 Netty 需要与底层 Socket 进行交互，Unsafe 提升 Netty 的性能
 
 因为DirectByteBuffer 对象的回收需要依赖 Old GC 或者 Full GC 才能触发清理，如果长时间没有 GC执行，那么堆外内存即使不再使用，也会一直在占用内存不释放，很容易将机器的物理内存耗尽。-XX:MaxDirectMemorySize 指定堆外内存的上限大小，超出时触发GC，仍无法释放抛出OOM异常。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983178-41dba73c-bf92-462f-9a11-be28ba04aa8d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-970f9d1ed318.png)
 
 当初始化堆外内存时，内存中的对象引用情况如下图所示，first 是 Cleaner 类中的静态变量，Cleaner 对象在初始化时会加入 Cleaner 链表中。DirectByteBuffer 对象包含堆外内存的地址、大小以及 Cleaner 对象的引用，ReferenceQueue 用于保存需要回收的 Cleaner 对象。
 
@@ -217,7 +217,7 @@ JDK NIO 的 **ByteBuffer**
 - limit：buffer 中有效的数据长度大小；
 - capacity：初始化时的空间容量。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983109-195b9963-7b92-4ef4-a888-62149bc6fe26.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-5c2926fe734a.png)
 
 第一，ByteBuffer 分配的长度是固定的，无法动态扩缩容，每次在存放数据的时候对容量大小做校验，扩容需要将已有的数据迁移。
 
@@ -230,7 +230,7 @@ Netty中的ByteBuf
 - **可写字节**，向 ByteBuf 中写入数据都会存储到可写字节区域。当 writeIndex 超过 capacity，表示 ByteBuf 容量不足，需要扩容。
 - **可扩容字节**，表示 ByteBuf 最多还可以扩容多少字节，最多扩容到 maxCapacity 为止，超过 maxCapacity 再写入就会出错。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983123-5688ac21-ebf2-456a-88ea-ee5391b09737.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-8272c4dcce14.png)
 
 引用计数
 
@@ -246,7 +246,7 @@ JVM 并不知道 Netty 的引用计数是如何实现的，当 ByteBuf 对象不
 
 **⾸次适应算法（first fit）**，空闲分区链以地址递增的顺序将空闲分区以双向链表的形式连接在一起，从空闲分区链中找到第一个满足分配条件的空闲分区，然后从空闲分区中划分出一块可用内存给请求进程，剩余的空闲分区仍然保留在空闲分区链中。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983243-d282ce2d-0f3f-4ce3-9a78-b5c0779e96a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-9eb6e00f1353.png)
 
 **循环首次适应算法（next fit）**不再是每次从链表的开始进行查找，而是从上次找到的空闲分区的以后开始查找。查找效率提升，会产生更多的碎片。
 
@@ -256,7 +256,7 @@ JVM 并不知道 Netty 的引用计数是如何实现的，当 ByteBuf 对象不
 
 是一种非常经典的内存分配算法，它采用了**分离适配的设计思想**，将物理内存按照 2 的次幂进行划分，内存分配时也是按照 2 的次幂大小进行按需分配
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983360-d2e1537e-f2f8-4987-a6b8-e2a0d410ce78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-a6d97513eaf8.png)
 
 1. 首先需要找到存储 2^4 连续 Page 所对应的链表，即数组下标为 4；
 2. 查找 2^4 链表中是否有空闲的内存块，如果有则分配成功；
@@ -267,7 +267,7 @@ Slab 算法（解决伙伴算法内部碎片问题）
 
 Slab 算法在伙伴算法的基础上，对小内存的场景专门做了优化，采用了内存池的方案，解决内部碎片问题。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983444-a6e47c98-8767-4ee4-8f83-6bf07fb142a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-866dfd2f3afc.png)
 
 在 Slab 算法中维护着大小不同的 Slab 集合，将这块内存划分为大小相同的 slot，不会对内存块再进行合并，同时使用位图 bitmap 记录每个 slot 的使用情况。
 
@@ -281,7 +281,7 @@ kmem_cache 中包含三个 Slab 链表：**完全分配使用 slab_full**、**�
 - 每个 run 会被划分为一定数量的 regions，在小内存的分配场景，region 相当于用户内存；
 - 每个 tcache 对应一个 arena，tcache 中包含多种类型的 bin。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983584-a330abd3-33db-4d13-81d7-dd5fa0d2caec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-91e9831634da.png)
 
 **内存管理Arena** ，内存由一定数量的 arenas 负责管理。每个用户线程采用 round-robin 轮询的方式选择可用的 arena 进行内存分配。
 
@@ -295,7 +295,7 @@ kmem_cache 中包含三个 Slab 链表：**完全分配使用 slab_full**、**�
 
 **tcache 是每个线程私有的缓存**，tcache 每次从 arena 申请一批内存，在分配内存时首先在 tcache 查找，避免锁竞争，分配失败才会通过 run 执行内存分配。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983641-745c58ea-3d2a-4b2e-8a0a-89124142dbbe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-0adbe9b49583.png)
 
 Small 场景，如果请求分配内存的大小小于 arena 中的最小的 bin，那么优先从线程中对应的 tcache 中进行分配。首先确定查找对应的 tbin 中是否存在缓存的内存块，如果存在则分配成功，否则找到 tbin 对应的 arena，从 arena 中对应的 bin 中分配 region 保存在 tbin 的 avail 数组中，最终从 availl 数组中选取一个地址进行内存分配，当内存释放时也会将被回收的内存块进行缓存。
 
@@ -310,13 +310,13 @@ Huge 场景，如果请求分配内存的大小大于 chunk 的大小，那么�
 3. 用户进程调用 send() 方法期望将数据发送到网络中，用户态会再次切换到内核态，**第三次数据拷贝**请求的数据从用户态缓冲区被拷贝到 Socket 缓冲区。
 4. 最终 send() 系统调用结束返回给用户进程，发生了第四次上下文切换。**第四次拷贝会异步执行**，从 Socket 缓冲区拷贝到协议引擎中。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983881-a4f53033-602b-465f-b7c3-09620a8af6c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-3f75a6489619.png)
 
 **在 Linux 中**系统调用 sendfile() 可以实现将数据从一个文件描述符传输到另一个文件描述符，从而实现了零拷贝技术。
 
 **在 Java 中**也使用了零拷贝技术，它就是 NIO FileChannel 类中的 transferTo() 方法，它可以将数据从 FileChannel 直接传输到另外一个 Channel。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983916-554a15b3-1558-4a69-926a-ca8cc6966ef4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-b6cb3790bf86.png)
 
 **Netty 中的零拷贝**技术除了操作系统级别的功能封装，更多的是面向用户态的数据操作优化，主要体现在以下 5 个方面：
 
@@ -334,23 +334,23 @@ ThreadLocal 可以理解为线程本地变量。ThreadLocal 为变量在每个�
 
 既然多线程访问 ThreadLocal 变量时都会有自己独立的实例副本，那么很容易想到的方案就是在 ThreadLocal 中维护一个 Map，记录线程与实例之间的映射关系。当新增线程和销毁线程时都需要更新 Map 中的映射关系，因为会存在多线程并发修改，所以需要保证 Map 是线程安全的。但是在高并发的场景并发修改 Map 需要加锁，势必会降低性能。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392983973-e62dff6f-625a-4964-9199-624d1e5a105a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-44049d3e6199.png)
 
 JDK 为了避免加锁，采用了相反的设计思路。以 Thread 入手，在 Thread 中维护一个 Map，记录 ThreadLocal 与实例之间的映射关系，这样在同一个线程内，Map 就不需要加锁了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392984012-a720107a-c05b-43d1-a650-1245714b426d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-501edff4253b.png)
 
 ThreadLocalMap 是一种使用线性探测法实现的哈希表，底层采用数组存储数据，通过魔数0x61c88647来使散列更加平衡。ThreadLocalMap 初始化一个长度为 16 的 Entry 数组。与 HashMap 不同的是，Entry 的 key 就是 ThreadLocal对象本身，value 就是用户具体需要存储的值。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392984196-7e9fe746-c45e-4de9-bc77-1357dc9749f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-2e1632dde1d5.png)
 
 Entry 继承自弱引用类 WeakReference，Entry 的 key 是弱引用，value 是强引用。在 JVM 垃圾回收时，只要发现了弱引用的对象，不管内存是否充足，都会被回收。那么为什么 Entry 的 key 要设计成弱引用呢？如果 key 都是强引用，当线 ThreadLocal 不再使用时，然而 ThreadLocalMap 中还是存在对 ThreadLocal 的强引用，那么 GC 是无法回收的，从而造成内存泄漏。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392984397-1c223ba1-646e-4ff5-ab6e-7620611ee425.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-3e6405abe856.png)
 
 虽然 Entry 的 key 设计成了弱引用，但是当 ThreadLocal不再使用(**业务逻辑走完，但是由于线程复用导致线程并没有结束**)被 GC 回收后，ThreadLocalMap 中可能出现 Entry 的 key 为 NULL，那么 Entry 的 value 一直会强引用数据而得不到释放，只能等待线程销毁。那么应该如何避免 ThreadLocalMap 内存泄漏呢？ThreadLocal 已经帮助我们做了一定的保护措施，在执行 ThreadLocal.set()/get() 方法时，ThreadLocal 会清除 ThreadLocalMap 中 key 为 NULL 的 Entry 对象，让它还能够被 GC 回收。除此之外，当线程中某个 ThreadLocal 对象不再使用时，立即调用 remove() 方法删除 Entry 对象。如果是在异常的场景中，应在 finally 代码块中进行清理，保持良好的编码意识。在Netty中，可以方便的使用FashThreadLocal来防止内存泄漏。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392984406-127190f9-3998-4a03-96ad-616f0218c476.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-b211b501a559.png)
 
 FastThreadLocal
 
@@ -359,7 +359,7 @@ FastThreadLocal 使用 Object 数组替代了 Entry 数组，Object[0] 存储的
 1. 找到数组下标 index 位置，设置新的 value。
 2. 将 **FastThreadLocal 对象保存到待清理的 Set 中**。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392984517-411574a1-45dd-42b2-831b-0af9371ab9e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-55b9777adbc5.png)
 
 - **高效查找。**FastThreadLocal 在定位数据的时候可以直接根据数组下标 index 获取，时间复杂度 O(1)。而 JDK 原生的 ThreadLocal 在数据较多时哈希表很容易发生 Hash 冲突，线性探测法在解决 Hash 冲突时需要不停地向下寻找，效率较低。此外，FastThreadLocal 相比 ThreadLocal 数据扩容更加简单高效，FastThreadLocal 以 index 为基准向上取整到 2 的次幂作为扩容后容量，然后把原数据拷贝到新数组。而 ThreadLocal 由于采用的哈希表，所以在扩容后需要再做一轮 rehash。
 - **安全性更高。**JDK 原生的 ThreadLocal 使用不当可能造成内存泄漏，只能等待线程销毁。在使用线程池的场景下，ThreadLocal 只能通过主动检测的方式防止内存泄漏，从而造成了一定的开销。然而 FastThreadLocal 不仅提供了 remove() 主动清除对象的方法，而且在线程池场景中 Netty 还封装了 FastThreadLocalRunnable，**任务执行完毕后一定会执行 FastThreadLocal.removeAll() 将 Set 集合中所有 FastThreadLocal 对象都清理掉。**
@@ -414,7 +414,7 @@ TimerTask 如果执行出现异常，Timer 并不会捕获，会导致线程终�
 
 时间轮原理分析
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392984569-d3cb69f8-6a48-4faf-bfed-1e58219f0727.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-f11834f2568e.png)
 
 根据任务的到期时间进行取余和取模，然后根据取余结果将任务分布到不同的 slot 中，每个slot中根据round值决定是否操作，每次轮询到指定slot时，总时遍历最少round的对象进行执行，这样新增、执行两个操作的时间复杂度都近似O(1)。如果冲突较大可以增加数组长度，或者采用多级时间轮的方式处理。
 
@@ -422,7 +422,7 @@ TimerTask 如果执行出现异常，Timer 并不会捕获，会导致线程终�
 public HashedWheelTimer(        ThreadFactory threadFactory, //线程池，但是只创建了一个线程        long tickDuration, //时针每次 tick 的时间，相当于时针间隔多久走到下一个 slot        TimeUnit unit,             //表示 tickDuration 的时间单位，tickDuration * unit        int ticksPerWheel,  //时间轮上一共有多少个 slot，默认 512 个。boolean leakDetection,        long maxPendingTimeouts) {//最大允许等待任务数    // 省略其他代码    wheel = createWheel(ticksPerWheel); // 创建时间轮的环形数组结构    mask = wheel.length - 1; // 用于快速取模的掩码    long duration = unit.toNanos(tickDuration); // 转换成纳秒处理    workerThread = threadFactory.newThread(worker); // 创建工作线程    leak = leakDetection || !workerThread.isDaemon() ? leakDetector.track(this) : null; // 是否开启内存泄漏检测    this.maxPendingTimeouts = maxPendingTimeouts; // 最大允许等待任务数，HashedWheelTimer 中任务超出该阈值时会抛出异常}
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392984766-b67fc4f0-2023-4193-8ef7-c314ac9073f7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0038-fbbnqbv2ry9lk1vq/img-eefa53d92cc7.png)
 
 时间轮空推进问题
 

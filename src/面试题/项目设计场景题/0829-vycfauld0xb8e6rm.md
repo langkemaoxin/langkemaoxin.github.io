@@ -52,7 +52,7 @@ bilizone 在当时最大的意义就是为用户终端提供了基本稳定的�
 
 当时的调用模式如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719302992409-c85e92e5-f342-4fb5-bd96-db58b09840f8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0829-vycfauld0xb8e6rm/img-654fd19d58a1.png)
 
 但是随着功能拆分后，我们对外暴露了一批微服务，但是因为缺乏统一的出口而面临了不少困难：
 
@@ -67,7 +67,7 @@ bilizone 在当时最大的意义就是为用户终端提供了基本稳定的�
 
 app-interface 的工作模式如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719302992380-d750ab02-4688-41af-b898-1498eea1441f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0829-vycfauld0xb8e6rm/img-75d3756d0d9c.png)
 
 有了这个 BFF 之后，我们可以在该服务内进行大量的数据聚合，按照业务场景来设计粗粒度的 API，给后续服务的演进带来的很多优势：
 
@@ -80,7 +80,7 @@ BFF 可以认为是一种适配服务，将后端的微服务为客户端的需�
 
 这个时期的 BFF 还有一个致命的一个问题是整个 app-interface 属于 single point of failure，严重代码缺陷或者流量洪峰可能引发集群宕机所有接口不可用。于是我们在上述基础上进一步迭代，将 app-interface 进行业务拆分，进而多套 BFF 的模式横空出世：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719302992419-e09de5a4-1867-45c6-9501-76d719092d5c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0829-vycfauld0xb8e6rm/img-033183b46833.png)
 
 由此模式开始，基本确定了 B 站微服务接口的对接模式，这套模式也随之在全公司内推广开来。
 
@@ -131,13 +131,13 @@ BFF 可以认为是一种适配服务，将后端的微服务为客户端的需�
 
 此时我们可能还需要一个能协调横跨切面的组件，将路由、认证、限流、安全等组件全部上提，能够统一更新发布，把业务集成度高的 BFF 层和通用功能服务层进行分层，进而大家开始引入**「统一 API 网关」**。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719302992734-afac1f1f-e54c-47bd-a5b0-32cbc01a8fcd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0829-vycfauld0xb8e6rm/img-0c14108f1b75.png)
 
 在新的架构中，统一网关承担了重要的角色，它是解耦拆分和后续升级迁移的利器。在统一网关的配合下，单块 BFF 实现了解耦拆分，各业务线团队可以独立开发和交付各自的微服务，研发效率大大提升。另外，把跨横切面逻辑从 BFF 剥离到网关上去以后，BFF 的开发人员可以更加专注业务逻辑交付，实现了架构上的关注分离（Separation of Concerns）。
 
 ### 从多个网关到最后一个统一网关 2022 - 至今
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719302992478-31bea12a-e0c7-41dc-8205-ae8d6dd58a06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0829-vycfauld0xb8e6rm/img-6491cc0a3fbd.png)
 
 在这两三年的时间里，各个业务团队或多或少都有自己业务网关组建独立的维护团队，也为网关的功能作出过相当多的投入。但随着 B 站业务的发展，公司级中间件功能的不断更替演进，如果将对接各个中间件的工作在每个网关上都实现一次的话带来的人力投入和沟通成本会相当巨大，且实现标准不统一、运营方式不统一无法起到 API 网关所带来的最佳收益。
 

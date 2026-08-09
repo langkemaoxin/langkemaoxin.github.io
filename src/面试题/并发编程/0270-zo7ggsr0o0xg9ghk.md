@@ -144,13 +144,13 @@ public class LockUpgradeVerify {
 
 这也是我看 Hotspot 源码学到的。”
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767856156130-65239318-8ab0-466e-bc9a-acab7c1e804a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0270-zo7ggsr0o0xg9ghk/img-6b0dbd4a61c6.png)
 
 ## 拓展：
 
 ### 锁升级的流程分析
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767856195096-6f0c42b6-ec01-4936-a7c7-5a7813f28b94.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0270-zo7ggsr0o0xg9ghk/img-0b47244f6547.png)
 
 ### synchronized源码分析
 

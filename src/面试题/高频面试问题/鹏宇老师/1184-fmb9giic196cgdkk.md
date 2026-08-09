@@ -23,7 +23,7 @@ article: false
 
 从 MySQL 架构来看，存储引擎属于 “引擎层”，位于 “Server 层”（连接器、查询缓存、分析器等）之下，直接对接磁盘 IO，是影响数据库性能与数据安全性的关键：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565415914-699c5e1d-13d3-4b0f-88ee-603076c61ba9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-1b7e8a64e398.png)
 
 这里有个面试基础考点：**MySQL 5.5 版本是 “引擎分水岭”**——5.5 之前默认 MyISAM，之后默认 InnoDB（如 MySQL 8.0 版本，默认引擎已固化为 InnoDB）。这个版本差异，直接关联后续 “为什么生产环境不用 MyISAM” 的核心逻辑。
 
@@ -43,7 +43,7 @@ article: false
 show engines;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565450900-2f47a4dc-e7ce-481b-9b62-ca164a6c8a48.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-a91ee495ef20.png)
 
 ### 2. 查看当前默认存储引擎
 
@@ -54,9 +54,9 @@ show engines;
 SHOW VARIABLES LIKE 'default_storage_engine';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565465805-683a47c3-27cc-412e-b6a6-a641e2b317e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-7a34eb6188da.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565487274-a250e72d-59e9-4c02-8623-39cdeac7cd75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-8e94a90b09d5.png)
 
 ## 三、核心差异拆解：从原理到代码，面试要讲透这 8 点
 
@@ -138,7 +138,7 @@ public void createOrderWithInnoDB(Long productId, Long userId) {
 
 **面试结论**：生产环境只要涉及 “多步操作原子性”（如支付、下单），必选 InnoDB；MyISAM 因无事务支持，已被淘汰出核心业务场景。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565515447-2a4588bc-01bb-45b0-9787-80062580bc03.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-49ac6d25a0e9.png)
 
 ### 2. 存储文件结构：InnoDB “全能文件”，MyISAM “三文件分离”
 
@@ -155,7 +155,7 @@ public void createOrderWithInnoDB(Long productId, Long userId) {
 - `.frm`：表结构定义文件；
 - `.ibd`：（InnoDB Data）存储数据、索引、Undo 日志（“一站式” 文件）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565531785-a174fcf0-1d35-4801-a256-5b5db15e3630.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-49605f843373.png)
 
 **面试延伸**：为什么 InnoDB 的`.ibd`文件包含日志？因为要支持事务回滚（Undo 日志）与崩溃恢复（Redo 日志），而 MyISAM 无日志文件，崩溃后无法恢复数据。
 
@@ -189,7 +189,7 @@ UPDATE user SET name = 'test' WHERE id = 1;
 -- 此时会话2执行读操作：SELECT * FROM user WHERE id = 2; 正常执行！（仅锁id=1的行）
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565548807-efdc4f5d-7e9a-4a9f-9c79-b266a017bba2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-2f9e6208f286.png)
 
 **面试结论**：只要业务存在 “读写并发”（如电商商品详情页 + 库存修改），必选 InnoDB；MyISAM 仅适合 “纯读场景”（如博客静态日志）。
 
@@ -200,7 +200,7 @@ UPDATE user SET name = 'test' WHERE id = 1;
 - **MyISAM**：主键可选，无主键时索引存储 “数据物理地址”（磁盘地址）；
 - **InnoDB**：必须有主键，若未显式定义，会自动生成 “6 字节隐藏主键”（`row_id`），原因是 InnoDB 采用 “聚簇索引”（数据按主键排序存储），无主键则数据无法有序组织。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565562372-d71044fb-c1c3-46b6-b7b7-4878d9f0c30d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-f81b5ce4c16a.png)
 
 **面试踩坑点**：不要让 InnoDB 自动生成隐藏主键！显式定义自增主键（如`id int auto_increment primary key`），能避免隐藏主键带来的索引性能损耗。
 
@@ -250,7 +250,7 @@ public void createOrderWithoutForeignKey(Long productId, Long userId) {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565586813-9c2e8446-a0db-4bac-8856-d8eafdd473da.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-cd27f986893f.png)
 
 ### 6. MVCC 支持：InnoDB “读写不阻塞”，MyISAM “无此能力”
 
@@ -259,7 +259,7 @@ MVCC（多版本并发控制）是 InnoDB 实现 “高并发读” 的核心技
 - **MyISAM**：不支持 MVCC，读操作加表共享锁，写操作加表排他锁，导致 “读阻塞写、写阻塞读”；
 - **InnoDB**：支持 MVCC，通过 “隐藏字段（如`DB_TRX_ID`事务 ID）+ Undo 日志” 实现多版本数据，读操作无需加锁，写操作只锁单行，做到 “读写不阻塞、写读不阻塞”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565604266-5024e631-5921-4a3a-a233-b97cdd0d3fdd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-13b2057ea052.png)
 
 **面试简化回答**：InnoDB 靠 MVCC 实现 “快照读”（如普通 SELECT），读的时候不影响写；MyISAM 读的时候会锁表，写操作只能等。
 
@@ -270,7 +270,7 @@ MVCC（多版本并发控制）是 InnoDB 实现 “高并发读” 的核心技
 - **MyISAM**：无崩溃恢复机制，若服务器突然断电 / 崩溃，未写入磁盘的数据会丢失，且无法恢复；
 - **InnoDB**：靠 “Redo 日志”（重做日志）实现崩溃恢复 —— 事务执行时，先写 Redo 日志再写磁盘，崩溃后重启 MySQL，会通过 Redo 日志恢复未完成的事务，保证数据不丢失。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565621866-0ab670eb-dc79-4a26-84a4-96ed0f02fc72.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-48be8bef4026.png)
 
 ### 8. 索引实现：InnoDB “聚簇索引”，MyISAM “非聚簇索引”（新增核心模块）
 
@@ -310,7 +310,7 @@ MVCC（多版本并发控制）是 InnoDB 实现 “高并发读” 的核心技
 索引结构简单
 主键查询快、范围查询优
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565642873-5a5dfff8-ad77-4ec8-8166-1a70bfc2ce1f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-9b662d38d084.png)
 
 **面试延伸**：为什么 InnoDB 二级索引存主键值？因为聚簇索引按主键排序，存储主键值能保证数据一致性，避免存储物理地址导致的性能问题（如数据迁移后物理地址变化）。
 
@@ -353,7 +353,7 @@ MVCC（多版本并发控制）是 InnoDB 实现 “高并发读” 的核心技
 key_buffer_size
 innodb_buffer_pool_size
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565671259-aa73d5ad-f990-43ef-a2d7-38164e64e5f1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-c24fc3e4e84e.png)
 
 **面试结论**：InnoDB 的 Buffer Pool 能最大化减少磁盘 IO，高并发读写场景性能远超 MyISAM；MyISAM 因仅缓存索引，数据查询依赖磁盘，性能受限。
 
@@ -371,7 +371,7 @@ innodb_buffer_pool_size
 - 读写可并发（行锁 + MVCC），性能随 CPU 核数线性增长（8 核性能接近 4 核的 2 倍）；
 - Buffer Pool + 聚簇索引减少 IO，读写混合场景（如电商订单、用户中心）性能优势显著。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565684140-75467fee-85e3-4211-8031-4146bef4d68e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-3cfed4bd1607.png)
 
 ## 四、业务选型：99% 场景选 InnoDB，1% 场景选 MyISAM
 
@@ -397,7 +397,7 @@ InnoDB
 MyISAM
 纯读场景，无事务 / 并发需求，MyISAM 读性能尚可（InnoDB 也能满足，差异极小）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761565708855-f9cb6af1-ebef-4167-abb8-d223580d6f83.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1184-fmb9giic196cgdkk/img-d377c2421ad2.png)
 
 **权威引用**：《高性能 MySQL》明确指出：“不要轻信 MyISAM 更快的说法，InnoDB 在多数场景下（尤其是读写混合）性能更优、安全性更高，是生产环境的首选。”
 

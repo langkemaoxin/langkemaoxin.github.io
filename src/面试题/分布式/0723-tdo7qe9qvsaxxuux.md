@@ -25,7 +25,7 @@ article: false
 
 **算法实现**：可以准备一个队列来保存暂时处理不了的请求，然后通过一个线程池定期从队列中获取请求来执行。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1696575844063-68130233-5ca6-4801-8f00-b962920ee4ac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0723-tdo7qe9qvsaxxuux/img-656a0f80a8f6.png)
 
 漏桶算法
 
@@ -37,7 +37,7 @@ article: false
 
 Guava RateLimiter是一个谷歌提供的限流，其基于令牌桶算法，比较适用于单实例的系统。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1696575844098-afae9158-5962-4c38-85e4-dd413b4eabed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0723-tdo7qe9qvsaxxuux/img-7eac86fc637b.png)
 
 令牌桶算法
 

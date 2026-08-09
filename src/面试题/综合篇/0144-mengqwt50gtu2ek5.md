@@ -13,7 +13,7 @@ article: false
 
 > 来源：[快速生成数据库表映射工具-Screw](https://www.yuque.com/tulingzhouyu/db22bv/mengqwt50gtu2ek5)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714131876043-8f0c73cb-6200-494a-b159-29cf024dc1a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0144-mengqwt50gtu2ek5/img-8096c6a6f5c7.png)
 
 本篇文章主要是帮助还在手工维护数据库表关系的老爷们，直接进入主题：
 
@@ -178,10 +178,10 @@ void document() {
 
 ## 数据库数据截图
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714132423411-6f8d52d7-dd94-4577-a77a-d0935e9042b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0144-mengqwt50gtu2ek5/img-3c984d510420.png)
 
 ## 生成文档截图
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714132459300-140d1a22-888f-4db6-bb75-5676da33e875.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_60%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0144-mengqwt50gtu2ek5/img-eb582407c857.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714132466985-7238abc3-cafe-4447-b083-776ef6f1b2bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_60%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0144-mengqwt50gtu2ek5/img-ecfc12ae82cb.png)

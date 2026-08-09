@@ -19,7 +19,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371564917-6ee70e66-c2cc-467b-b801-1364479abff4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1401-wg55o76bip8fpigw/img-1f21ae5abb8d.png)
 
 #### 案例1：医疗影像诊断中的自蒸馏策略
 
@@ -56,7 +56,7 @@ article: false
 
 #### 案例2：智能客服多轮对话中的在线蒸馏
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371587860-95e54ddf-d38e-4e80-8cb8-3a82d39ff00b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1401-wg55o76bip8fpigw/img-000e7f5b1ec1.png)
 
 **场景**：某电商平台的智能客服需实时处理海量咨询，但用户问题复杂多变，基础模型（BERT-base）响应速度慢且准确率不足。
 **痛点**：
@@ -91,7 +91,7 @@ article: false
 
 #### 案例3：跨语言机器翻译的多教师蒸馏
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371680626-666054f4-e6a4-48fb-acaa-1254c72069fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1401-wg55o76bip8fpigw/img-07c1f802135d.png)
 
 **场景**：某跨国公司需构建中英日三语翻译模型，但每种语言的平行语料有限（各50万句对）。
 **痛点**：
@@ -118,7 +118,7 @@ article: false
 
 **实施效果**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371707548-86d4b12f-7528-4bf9-b410-0c213380ffaf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1401-wg55o76bip8fpigw/img-80502b6c2e40.png)
 
 - 在50万句对数据下，BLEU值达到32.5，接近单语种模型（34.2）；
 - 训练时间缩短至5天，GPU资源消耗降低60%；
@@ -189,7 +189,7 @@ article: false
 
 #### （三）策略选择建议
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371746063-447a737c-a1d0-4eb7-bb2b-c93e9f66e09c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1401-wg55o76bip8fpigw/img-d555038ab3ef.png)
 
 1. **数据与资源权衡**：
 

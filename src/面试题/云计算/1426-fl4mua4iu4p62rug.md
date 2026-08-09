@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689883354-793e331b-b651-41d5-aaa9-46e6487ea6f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1426-fl4mua4iu4p62rug/img-69e00cc7f14b.png)
 
 要对比LSTM/GRU与Transformer的长距离依赖处理能力，需从**架构原理**、**训练效率**、**实际应用效果**三个维度展开：
 
@@ -37,7 +37,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689915032-7ed70ca3-e793-4d88-aacf-39788e251c33.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1426-fl4mua4iu4p62rug/img-e14df8c32ffc.png)
 
 #### **案例1：机器翻译系统（英译中）**
 
@@ -86,7 +86,7 @@ article: false
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689946534-65cc7264-b44c-4889-a077-b37cfb82596f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1426-fl4mua4iu4p62rug/img-878e20f5b777.png)
 
 “在开发机器翻译系统时，我们对比了LSTM和Transformer架构。当处理类似`The report that the committee submitted... has finally been published`的长句时，LSTM的BLEU值仅为32.1，且28%的长句翻译出现主谓丢失。根本原因是LSTM需20步以上传递`report`到`published`的信息，梯度衰减导致关键动词遗漏。而Transformer通过自注意力直接计算`report`与`published`的关联，BLEU提升至38.7，长句准确率达82%。
 
@@ -102,7 +102,7 @@ article: false
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689960642-903a6e8d-2ea9-47d8-8879-3722ad36a78b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1426-fl4mua4iu4p62rug/img-352fafd30d73.png)
 
 **维度**
 **LSTM/GRU**

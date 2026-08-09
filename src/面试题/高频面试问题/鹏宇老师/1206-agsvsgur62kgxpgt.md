@@ -33,7 +33,7 @@ article: false
 
 对工具类、内容类产品（如笔记 APP、视频平台），“即时访问” 是留存关键 —— 用户想查看内容时，若需先登录，可能直接放弃。自动登录让用户 “打开即能用”，降低流失率。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758720238159-8e96ea58-a654-4598-bba1-33f491cb52bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1206-agsvsgur62kgxpgt/img-46fd29ecf2e7.png)
 
 ## 二、核心方案：Cookie + Token 三层存储架构
 
@@ -65,7 +65,7 @@ Redis
 - 若只存 Cookie+Redis：Redis 宕机后，所有自动登录都会失效，用户体验崩溃；
 - 三层存储既保证了 “快速验证”（Redis），又有 “兜底备份”（数据库），还能 “自动携带”（Cookie），兼顾性能与稳定性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758720259333-f97b8876-1744-44dd-89aa-b8f7427857e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1206-agsvsgur62kgxpgt/img-e262420e5a25.png)
 
 ## 三、两大核心流程：从首次登录到自动验证
 
@@ -90,7 +90,7 @@ Redis
 1. **客户端存储**：后端通过响应头将 Token 写入 Cookie，设置`Max-Age=604800`（7 天秒数）、`Path=/`（全站请求自动携带），浏览器接收后自动保存 Cookie；
 2. **响应结果**：返回 “登录成功”，跳转首页，首次登录流程结束。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758720282257-1ce228f9-46d5-4378-b67f-2d80fa108ff3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1206-agsvsgur62kgxpgt/img-bbde62d6b43c.png)
 
 ### 阶段 2：自动登录 —— 无感知身份验证
 
@@ -106,7 +106,7 @@ Redis
 1. **恢复登录状态**：双重验证通过后，后端生成当前会话（如设置 Session、ThreadLocal 存储用户信息），返回首页并携带登录状态；
 2. **失败处理**：若任一验证失败，清除无效 Cookie，跳转登录页，提示 “请重新登录”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758720302866-34ea2304-8c8f-45db-9466-059711e770d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1206-agsvsgur62kgxpgt/img-063dc6d23a98.png)
 
 ## 四、六大关键技术：支撑自动登录的基石
 
@@ -150,7 +150,7 @@ Redis
 - **防 Cookie 窃取**：通过`HttpOnly、Secure`配置，减少 XSS、中间人攻击风险；
 - **Token 随机化**：每次自动登录成功后，可重新生成 Token 并更新存储（Token 刷新机制），降低旧 Token 被窃取后的风险。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758720337736-29ee5108-87a3-43b6-bf91-28b6994f0726.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1206-agsvsgur62kgxpgt/img-ede9227da258.png)
 
 ## 五、面试官视角：高频追问与应答
 

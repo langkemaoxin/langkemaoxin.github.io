@@ -20,7 +20,7 @@ article: false
 
 起因很简单，面试官问他：“**有一个核心接口响应很慢，里面串行调用了用户信息、积分查询、优惠券三个服务，你会怎么优化？**”
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773381027767-32c2245f-f92c-4cd8-ad32-7131e7921f93.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-3bf9156ed58f.webp)
 
 阿强自信满满：“这题熟！用 JDK8 的神器 `CompletableFuture` 啊！把三个串行调用改成 `CompletableFuture.supplyAsync()` 并行处理，最后用 `allOf` 等待结果。代码优雅又高效！”
 
@@ -46,7 +46,7 @@ article: false
 
 ## **【源码铁证】所有任务挤在一个“黑网吧”里**
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773381027760-a8a5fc33-fc40-4b1b-8860-4b85ab4e6323.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-c64748102be9.webp)
 
 请看 `CompletableFuture` 的源码：
 
@@ -69,7 +69,7 @@ private static final Executor asyncPool = useCommonPool ?
 
 **但是！** 你在业务代码里写的 `Thread.sleep`、`JdbcTemplate` 查库、`RestTemplate` 调接口，统统**没有**实现这个接口。
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773381027789-1c145ed8-5591-482d-a8d0-af242ac1fb59.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-ec06a2c72506.webp)
 
 **生产惨案还原：**
 
@@ -78,7 +78,7 @@ private static final Executor asyncPool = useCommonPool ?
 3. **注意！**`**parallelStream**`** 也是共用这个 `**commonPool**` 的！**
 4. 结果就是：**这 3 个可怜的线程瞬间被你的慢 SQL 占满，池子也不会扩容。**
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773381027811-4d5589cd-2ec3-459f-a1cd-5aac403e9de2.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-0566ce94c900.webp)
 
 结局？隔壁的并行流计算全部卡死，甚至连系统里其他完全不相关的异步导出功能也一起“陪葬”。大家抢的是同一个“黑网吧”里的 3 台机器！这就是典型的**级联雪崩**。
 
@@ -90,7 +90,7 @@ private static final Executor asyncPool = useCommonPool ?
 
 ## **【源码铁证】它是“守护线程”**
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773381027875-f1c7c629-200c-40b6-b85a-f95bf7e4e214.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-febcb980750e.webp)
 
 `ForkJoinPool.commonPool()` 里的线程，默认都是 **Daemon Thread**。
 
@@ -111,7 +111,7 @@ final WorkQueue registerWorker(ForkJoinWorkerThread wt) {
 
 **这在生产环境有个巨大的隐患：优雅停机失效。** 我们在生产环境发版部署，或者重启服务时，都会触发 JVM 的关闭流程。
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773381028475-50acac2b-9a1b-4ab4-bb09-3dcf86623c46.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-94f5ca885583.webp)
 
 **JVM 的规矩是：** 当所有“非守护线程”结束时，JVM 就会退出，它**绝对不会**等待守护线程执行完毕。
 
@@ -123,7 +123,7 @@ final WorkQueue registerWorker(ForkJoinWorkerThread wt) {
 
 在传统的 `try-catch` 里，出错了你能看到日志。 但在 `CompletableFuture` 里，如果你不调用 `get()` 或 `join()`，也不用 `exceptionally` 处理异常，**任务里的异常会被直接吞掉**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1773381028280-5954a5af-21f7-4080-801c-59e9eb96446a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-ba1970cdd000.png)
 
 ## **【实战隐患】**
 
@@ -135,7 +135,7 @@ final WorkQueue registerWorker(ForkJoinWorkerThread wt) {
 
 ## **1. 必须依附于独立的业务线程池**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1773381028302-f4849af3-957a-44dd-b1bf-5680d7a2818d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-c5f2db05b25d.png)
 
 不要跟别人抢 `commonPool`，那是找死。
 
@@ -153,7 +153,7 @@ CompletableFuture.supplyAsync(() -> {
 
 ## **2. 必须要有异常兜底**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1773381028354-9bf53dca-9652-43c9-9f0c-a5187bcccff0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0232-lfgoho3tmggg67ft/img-b131ca0782fb.png)
 
 ```plain
 CompletableFuture.supplyAsync(..., executor)

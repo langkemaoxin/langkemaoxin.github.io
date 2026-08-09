@@ -21,7 +21,7 @@ article: false
 
 我试着提醒他们：“用Redis就行了吗？或者不用Redis就做不了缓存加速了吗？能不能成体系一点”？ 很多人的反应往往是不知所措。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1764076450557-6f05c3e3-6b4b-4b40-88d3-00ed7bc7a6d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1084-wsvnsur7189g2nha/img-6d0481e662cc.png)
 
 如果面试官真的问你这个问题，考的绝对不是你知不知道某个工具，而是看你有没有**“成体系的架构思维”**。看你能不能从并发这个问题出发，把微服务整个链路梳理清楚了。做到这一点，就算有些具体技术，你记得不是很熟练，面试官也会相信你能解决问题。但是如果做不到这一点，你会再多技术，面试官也永远只会考虑性价比。在AI时代，这基本上就意味着这场面试崩了。
 
@@ -35,7 +35,7 @@ article: false
 
 好，面对百万并发，第一招，永远是“**拆**”。 核心思路是什么？ 是**“分而治之”**。 单体架构就像一辆马车，马再强壮跑得也慢；微服务就是动车组，每节车厢都有动力，还能根据情况自行组装。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1764076482058-71f7d11c-e662-416a-91e7-e136fe016160.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1084-wsvnsur7189g2nha/img-0e0c33067510.png)
 
 **第一步：服务拆分与治理。** 我们把庞大的单体，按业务领域拆分成用户、订单、支付、库存这些独立的服务。 但拆完之后，服务A怎么找到服务B？几百个服务实例IP变来变去怎么办？ 这时候，我们需要一个“通讯录”，也就是**注册中心**。 至于落地工具，现在首推 Nacos。&#x20;
 
@@ -53,7 +53,7 @@ article: false
 
 ## **第二招：缓冲（以空间换时间，柔性抗压）**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1764076516751-faf7acfb-0887-474d-8aac-85437baf5327.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1084-wsvnsur7189g2nha/img-25f8d6bc4135.png)
 
 拆分只是解决了扩展性问题，但如果流量瞬间爆发，比如双十一零点，数据库还是会被打挂。 这时候我们需要第二招：**“缓冲”**。 **核心思路是什么？** 是**“挡”**和**“削”**。 就像洪水来了，我们不能让水直接冲进村庄（数据库），得先修水库（MQ），还得在村口堆沙袋（缓存）。
 
@@ -86,7 +86,7 @@ article: false
 
 ## **第三招：防御（多维立体防护，底线思维）**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1764076531350-132f6060-ded4-419e-8743-8baf544d8ebf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1084-wsvnsur7189g2nha/img-f5abf1eaec95.png)
 
 好，前面两招是进攻，这第三招就是**防守**。 万一流量真的超过了系统的物理极限，或者某个服务代码写得烂报错了，怎么办？ 我们需要建立一套**“多维防御体系”**。 **核心思路：** **层层设防，丢车保帅。**
 
@@ -104,7 +104,7 @@ article: false
 
 好了，我们来复盘一下。 当面试官问你“百万并发”时，你的脑海里要立马浮现出这张图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1764076544318-e61e12fe-82ce-4abb-9356-5d59f3eb23f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1084-wsvnsur7189g2nha/img-251f74e2285b.png)
 
 1. **拆分层**：用 **Nacos** 和 **ShardingSphere**，解决系统的**扩展性**瓶颈。
 2. **缓冲层**：用 **Redis** 抗读压力（注意三座大山），用 **RocketMQ** 抗写压力（注意幂等性）。

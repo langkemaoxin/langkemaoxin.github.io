@@ -39,7 +39,7 @@ InnoDB 引擎层
 事务原子性（ACID 之 A）+ MVCC
 事务回滚、读写不冲突查询
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760706185489-2a92b089-c4a9-4387-844d-d01ffce2e81b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-e436a5de8ea8.png)
 
 ## 1 Redo Log（重做日志）：InnoDB 的 “崩溃恢复保险”
 
@@ -55,7 +55,7 @@ Redo Log 是 **InnoDB 存储引擎独有**的 **物理日志**，记录 “某�
 
 Redo Log 的工作流程与 InnoDB 内存结构（Buffer Pool）深度耦合，完整链路需经历 “内存修改→日志缓存→日志刷盘→脏页落盘” 四步，确保性能与安全性平衡：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760706224114-9120820a-ef93-4bbb-981f-2ab712dee3f7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-67637f36351e.png)
 
 1. **数据加载**：MySQL 从硬盘读取目标数据页（如 order 表的 Page 123），加载至内存中的 **Buffer Pool（缓冲池）**—— 这是为了避免每次修改都直接操作硬盘（硬盘 IO 速度远低于内存）。
 2. **内存修改**：事务在 Buffer Pool 中直接更新数据页，此时数据页变为 “脏页”（内存数据与硬盘数据不一致）。
@@ -63,7 +63,7 @@ Redo Log 的工作流程与 InnoDB 内存结构（Buffer Pool）深度耦合，�
 4. **日志刷盘**：触发刷盘策略时，Redo Log Buffer 中的日志先写入 **文件系统缓存（Page Cache，内核空间）**，再通过操作系统的 `fsync` 命令刷入硬盘的 Redo Log 文件（如 `ib_logfile_0`）—— 这一步是数据安全的关键。
 5. **脏页落盘**：InnoDB 后台线程（Page Cleaner）异步将 Buffer Pool 中的脏页刷回硬盘（与 Redo Log 刷盘独立），即使脏页未刷盘，只要 Redo Log 已刷盘，宕机后仍可通过日志恢复数据。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760706277593-3d623503-d9b7-42f3-ac64-664d6902bb0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-8d17fba0cf0e.png)
 
 ### 1.3 关键刷盘策略（innodb_flush_log_at_trx_commit）
 
@@ -103,7 +103,7 @@ Redo Log 的工作流程与 InnoDB 内存结构（Buffer Pool）深度耦合，�
 
 Redo Log 通过 “日志文件组 + 双指针” 实现环形存储，既避免日志无限膨胀，又确保旧日志在安全范围内被覆盖：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760706365889-f0a2c1b0-0e0e-4a88-bb90-78d91eadddeb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-5d061766dc60.png)
 
 #### 1.4.1 核心组件解析
 
@@ -135,7 +135,7 @@ Binlog（Binary Log，二进制日志）是 **MySQL Server 层通用**的 **逻�
 - **逻辑记录特性**：记录 SQL 操作逻辑或行级变更，不依赖数据页位置，支持跨版本、跨实例同步（如 MySQL 5.7 主库同步至 MySQL 8.0 从库）。
 - **追加轮转存储**：Binlog 文件按顺序追加，当文件达到 `max_binlog_size`（默认 1G）或执行 `flush logs` 命令时，自动生成新文件（如 `mysql-bin.000001`→`mysql-bin.000002`），便于备份与清理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760706668714-01eb594c-7d0d-4966-a68c-bc906600d776.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-5f301549b9eb.png)
 
 ### 2.2 日志格式（binlog_format）
 
@@ -143,7 +143,7 @@ Binlog 支持三种记录格式，直接影响数据同步的一致性与日志�
 
 #### 2.2.1 格式对比与适用场景
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760706424136-ba84712a-a814-4c19-9bda-6e18c9982828.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-4cbffdc204e5.png)
 
 **格式类型**
 **记录内容**
@@ -281,7 +281,7 @@ UPDATE
 
 InnoDB 的 MVCC（多版本并发控制）本质是 “Undo Log 历史版本链 + Read View 可见性判断” 的协同，实现 “读写分离” 的高并发能力：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760706575850-4c1aa6f5-8932-4171-9913-1812285e8668.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-77e83887f15d.png)
 
 #### 3.3.1 行隐藏字段：版本链的基础
 
@@ -354,7 +354,7 @@ Redo Log（InnoDB 层）与 Binlog（Server 层）独立工作时，会因 “�
 
 **关键保障：即使在 Commit 阶段宕机，重启后 InnoDB 会检查 Redo Log 状态 —— 若为 “Prepare”，则查看对应 Binlog 是否存在：存在则将 Redo Log 标记为 “Commit”，不存在则回滚，完全避免不一致。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760618604112-cf3eb554-8fc4-41fd-9b6c-f0dfa7e8ea75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1192-vgrgsxbiklt4u0su/img-4146d6d08cc8.png)
 
 ## 5 生产环境最佳实践与故障排查
 

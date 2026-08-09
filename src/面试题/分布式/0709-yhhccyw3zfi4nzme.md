@@ -19,7 +19,7 @@ article: false
 
 BASE（Basically Available、Soft state、Eventual consistency）是基于CAP理论逐步演化而来的，核心思想是即便不能达到强一致性（Strong consistency），也可以根据应用特点采用适当的方式来达到最终一致性（Eventual consistency）的效果。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695887360918-d05d2e33-2d39-4f6a-8e57-125528102c0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0709-yhhccyw3zfi4nzme/img-d51d3791b22b.png)
 
 ## (1) BASE的主要含义：
 
@@ -63,17 +63,17 @@ BASE支持的是大型分布式系统，提出通过牺牲强一致性获得高�
 
 > 原子性（硬状态） -> 要求多个节点的数据副本都是一致的,这是一种"硬状态"
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695887730861-b283fb00-2697-440e-b7ca-e6d4273bab1e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0709-yhhccyw3zfi4nzme/img-697a7beb295d.png)
 
 软状态（弱状态） -> 允许系统中的数据存在中间状态,并认为该状态不影响系统的整体可用性,即允许系统在多个不同节点的数据副本存在数据延迟。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695887752843-f18f9d33-71db-4b27-8e62-3e2a6ed62a70.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0709-yhhccyw3zfi4nzme/img-1a3b3fbf709a.png)
 
 ## (4) Eventually consistent（最终一致性）
 
 上面说软状态，然后不可能一直是软状态，必须有个时间期限。在期限过后，应当保证所有副本保持数据一致性。从而达到数据的最终一致性。这个时间期限取决于网络延时，系统负载，数据复制方案设计等等因素。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695887862032-f9e54d72-e901-49b7-a100-93dc82e79e0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0709-yhhccyw3zfi4nzme/img-3c027f06d952.png)
 
 稍微官方一点的说法就是：
 

@@ -13,7 +13,7 @@ article: false
 
 > 来源：[IDEA 天花板小技巧](https://www.yuque.com/tulingzhouyu/db22bv/zg9g6s0kivgbopgq)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727095935933-fe07de0a-74fb-453c-975d-005a0a8d3420.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-996eb31ea8d9.png)
 
 IDEA 作为Java开发工具的主流工具，几乎以碾压之势把其他对手甩在了身后，主要原因还是归功于：好用；虽然有点重，但依旧瑕不掩瑜，内置了非常多的功能，大大提高了日常的开发效率。
 
@@ -23,7 +23,7 @@ IDEA 作为Java开发工具的主流工具，几乎以碾压之势把其他对�
 
 鼠标在需要查看的java类 右键 找到Local History >> Show History 点开即可看到历史版本，常用于自己忘记代码改了哪些内容 或需要恢复至某个版本 (注意 只能看近期修改 太久了也是看不到的)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094258748-ddf30468-6511-4a47-9c48-319ca784263f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-d34418d9aa83.png)
 
 ### **2.idea设置成eclipse的快捷键**
 
@@ -31,7 +31,7 @@ IDEA 作为Java开发工具的主流工具，几乎以碾压之势把其他对�
 
 这对eclipse转idea的开发人员来说 非常友好，这样不需要记两套快捷键
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094258830-0a535bbd-cebf-4608-8ca8-febc08a012f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-7c9337983bdf.png)
 
 ### **3.设置提示词忽略大小写**
 
@@ -39,7 +39,7 @@ IDEA 作为Java开发工具的主流工具，几乎以碾压之势把其他对�
 
 把这个勾去掉，（有的idea版本是选择选项 选择none即可），例如String 输入string 、String 都可以提示
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094258956-e13a0938-ab7c-4aa1-9bea-2a7af81f54e6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-038296de9f1c.png)
 
 ### **4.设置多行tab**
 
@@ -47,9 +47,9 @@ IDEA 作为Java开发工具的主流工具，几乎以碾压之势把其他对�
 
 idea默认是选择显示单行的，我们把这个去掉，就可以显示多行tab了，在打开tab过多时的场景非常方便！
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094259258-4709a017-b4b9-4bd6-b782-caf90b5d424f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-e1f3da26c7e8.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094259222-1c9208b4-4b2d-4aff-ad88-388242296e04.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-6b2fa3f38b29.png)
 
 **4.1 tab过多会自动关闭**
 
@@ -67,7 +67,7 @@ ctrl+[    或者   ctrl+] 可以快速跳转到方法大括号的起止位置，
 
 例如一行代码补全分号，或者是if(xxx) 补全大括号，按ctrl+shift+enter 无需切换鼠标光标，大幅度提升了编码效率
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094259216-7e6fbdbc-421d-4438-86cf-852cf239f525.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-3ca429995567.png)
 
 ### **7.模糊搜索方法**
 
@@ -75,7 +75,7 @@ ctrl+[    或者   ctrl+] 可以快速跳转到方法大括号的起止位置，
 
 例如People类里面的test方法，按ctrl+shift+alt+n 输入Peo.te 就可以查到该方法了，如果觉得这个快捷键难记 也可以按ctrl+shift+r （查找某个文件名的快捷键 下图中的Files）,再手动选择Symbols
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094259328-4c0b2102-5160-4ba3-9555-afa83094a1c1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-b658c333c4df.png)
 
 ### **8.查看方法在哪里被调用**
 
@@ -83,13 +83,13 @@ ctrl+[    或者   ctrl+] 可以快速跳转到方法大括号的起止位置，
 
 ctrl+alt+h 可以清楚看到方法在哪些地方被调用
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094259468-c7e52b4f-83d4-4a45-9ef2-f9d085444ab6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-9ed42d75b38e.png)
 
 ### **9.自动导包、自动移除没用的包（建议开启自动导入，关闭自动移除）**
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094259645-740ef961-5ace-4ec9-8818-24c5516efc06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-f7570638e59b.png)
 
 **9.1 手动导包 :alt+enter 手动移除未使用包: crtl+alt+o**
 
@@ -97,7 +97,7 @@ ctrl+alt+h 可以清楚看到方法在哪些地方被调用
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094259792-a3a242e2-e941-4d47-b212-c6285681e25d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-2e72a72c4c15.png)
 
 步骤：View ——>Tool Windows ——> services ——>add services
 
@@ -113,7 +113,7 @@ ctrl+alt+h 可以清楚看到方法在哪些地方被调用
 
 即使两个tab不相邻 也可以切换回去
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094260334-974bf7ea-08f7-403b-b593-59315c348b4b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-b1ac2392d343.png)
 
 ### **12.代码调用链路图插件**
 
@@ -123,15 +123,15 @@ ctrl+alt+h 可以清楚看到方法在哪些地方被调用
 
 这其实是本文第13点的上位替代方案，idea自带的快捷键查看代码调用，只是以菜单形式展示，不太直观，如果是自己写的代码或比较规范的代码，那用自带的也就无所谓，如果是比较复杂的源码或不规范的代码，那使用 SequenceDiagram 会直观特别多。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094260634-8a253f49-1e78-4f7e-b76a-e6f4075f9218.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-9f9509d35d8c.png)
 
 在要查看的java文件鼠标右键，点击 Sequence Diagram
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094260555-9c92b275-b125-4ff0-9b2c-eee297ac24b3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-1a44f2297cd4.png)
 
 效果示例：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094260709-b508a4be-c55f-4d68-8335-231ab9a4899c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-9f5f14db8e83.png)
 
 ### **13.获取当前线程dump**
 
@@ -143,11 +143,11 @@ ctrl+alt+h 可以清楚看到方法在哪些地方被调用
 
 比如下图1， run()方法是通过main主线程执行的，只是方法调用，并没有启动多线程（这是我们熟知结论的实践证明）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094260716-6fd53c95-f28b-4f25-a109-d91908742dac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-a7e61bb184f0.png)
 
 当我们把run方法改成start()方法时，可以看到是线程thread0执行的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727094260973-06f292c8-bd8b-4a03-9299-a1b4d75da943.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-cea95a5985c8.png)
 
 ### **14.代码模板(代码快捷键)（调用ctrl + j 唤醒）**
 
@@ -155,4 +155,4 @@ ctrl+alt+h 可以清楚看到方法在哪些地方被调用
 
 例如 : eclipse 中的syso是打印控制台输出 ，但是idea默认是sout , 如果非要改成syso 可以在Postfix Completion里面设置，类似的 fori等都是在里面设置
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727095206868-dc7253a7-ef83-46ce-b594-931a7a328ac1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0149-zg9g6s0kivgbopgq/img-6103ab5e5cb9.png)

@@ -15,7 +15,7 @@ article: false
 
 在大流量互联网业务的演进历程中，订单系统往往是承压最重、稳定性要求最高的核心链路。随着业务体量的爆发式增长，单一数据库架构不可避免地会触碰到性能天花板。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765973202998-23d17a69-3116-494a-aae6-a97961b5fc5c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0916-ggml5g3io1lksdas/img-80510b39c3e4.png)
 
 本文将深度复盘大众点评订单系统如何通过架构重构，从单库单表平滑演进至千亿级分片架构，详解其中的**分片策略、路由算法优化以及无损迁移方案**。
 
@@ -28,7 +28,7 @@ article: false
 1. **性能瓶颈**：InnoDB 的 B+ 树层级变深，导致磁盘 IO 成为绝对瓶颈。高峰期 TPS 稍有波动，数据库 CPU 就会瞬间飙升，查询延迟呈现指数级增长。
 2. **运维死结**：在如此庞大的表上执行任何 DDL 操作（如加索引、加字段）都无异于在“高速行驶的列车上换轮子”。一次简单的变更可能导致长达数小时的锁表，这对 7x24 小时的交易系统而言是不可接受的风险。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765972453973-22e20107-a9ae-4af6-a752-554994800983.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0916-ggml5g3io1lksdas/img-3b7d8cec320f.png)
 
 面对这些深海之下的隐患，垂直升级硬件已无济于事，我们必须进行一场彻底的水平拆分（Sharding）手术。
 
@@ -45,7 +45,7 @@ article: false
 
 如果仅按用户 ID 分片，商户查询就会变成跨库的全表扫描；反之亦然。为了兼顾两端，我们放弃了单一维度切分，转而构建了一个立体的分片矩阵。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765972462409-ba80d2cf-2e7b-47be-adea-83d3d9f7a98a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0916-ggml5g3io1lksdas/img-8ccece5be2a7.png)
 
 我们最终确定的方案是 **32 个物理库，每个库包含 32 张逻辑表**，共计 1024 张分表。
 
@@ -60,7 +60,7 @@ article: false
 
 我们引入了 MHA (Master High Availability) 配合中间件 Zebra，构建了基于 **VIP (Virtual IP)** 漂移的高可用方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765972471659-e98bc693-fe4f-4307-9c86-9aabbcf322ef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0916-ggml5g3io1lksdas/img-1b304c4ab508.png)
 
 在此架构下，应用层不再直接连接物理 IP，而是连接 VIP。当主库发生宕机时，监控组件会在秒级内感知，并自动将 VIP 漂移至备库。整个切换过程对上层应用完全透明，业务感知仅为一次短暂的连接闪断（重连即可恢复），从而真正实现了 99.99% 的高可用性。
 
@@ -74,7 +74,7 @@ article: false
 
 为了极致的性能，我们设计了 **“基因 ID (Genetic ID)”** 生成算法。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765972477937-3f3ba50a-85f5-4a95-aae1-350f24500ab9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0916-ggml5g3io1lksdas/img-ea0a649466fe.png)
 
 **算法原理：** 我们在生成全局唯一的 `Order_ID` 时，并不是完全随机生成，而是将 `User_ID` 的最后 4 位（即分片基因）通过位运算直接嵌入到 `Order_ID` 的末尾。
 
@@ -86,7 +86,7 @@ article: false
 
 架构设计再完美，如果无法平滑上线，也是空中楼阁。面对每秒数万笔交易的线上系统，我们制定了严格的“不停机迁移”策略。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765972485791-5c39e254-d535-45d2-a266-f0904d623a3a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0916-ggml5g3io1lksdas/img-b8b347b8d187.png)
 
 整个迁移过程分为三个严密的阶段：
 
@@ -100,7 +100,7 @@ article: false
 
 回顾这次架构演进，不仅解决了迫在眉睫的存储瓶颈，更为大众点评未来十年的业务发展预留了广阔的空间。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765972493469-ff3c964e-ed9c-4969-a036-e6d659186d32.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0916-ggml5g3io1lksdas/img-76033c8fe605.png)
 
 - **极致扩展**：32x32 的分片矩阵设计，支持无缝扩容至 64 或 128 集群，足以应对未来 10 倍以上的业务增长。
 - **高效路由**：基因 ID 方案证明了，优秀的算法设计可以在不增加硬件成本的前提下，通过逻辑优化获得巨大的性能收益。

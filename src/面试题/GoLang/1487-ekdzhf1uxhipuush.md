@@ -37,7 +37,7 @@ GoLang 核心优势 高性能的支撑 高并发
 
 Erlang 之父 Joe Armstrong 用一张5岁小孩都能看懂的图解释了并发与并行的区别
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747395864128-2afa0fb4-86a4-4bd7-b999-8bb47ba23eb3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-1d2b7f70a609.png)
 
 #### 协程 goroutine 的引入
 
@@ -75,7 +75,7 @@ golang的协程机制，可轻松开启上万个协程。其他语言并发机�
 
 ##### 流程图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747395890932-d4b5401a-c2f9-463d-9518-9ccdde19cee7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-c2a5caecac6f.png)
 
 #### 百万级并发
 
@@ -232,7 +232,7 @@ int表示类型 可以是 map[int] string ; Person ; *User 等
 
 intChan<- 1 <- intChan len(intChan) cap(intChan)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747395938273-0a0e6549-9a27-4bb4-89eb-e57bc223e715.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-3db77bb66f85.png)
 
 使用案例：
 
@@ -450,7 +450,7 @@ func isPrime(num int) {
 
 改进思路：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747395977069-1d025210-2eb0-4b18-b669-d748f482abf4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-a5aee9306ea0.png)
 
 ###### goroutine + channel 实现：
 
@@ -746,28 +746,28 @@ func onlyOut(num int) {
 
 能看到这说明你确实“够浪”，我就给你再留给彩蛋吧。上述进阶并发和网路通信的笔记的
 
-![](https://www.bilibili.com/video/BV1d84y1v7eZ/?spm_id_from=333.1387.upload.video_card.click&vd_source=04d13f3e51316f05440d2eb2411de9f3)
+[https://www.bilibili.com/video/BV1d84y1v7eZ/?spm_id_from=333.1387.upload.video_card.click&vd_source=04d13f3e51316f05440d2eb2411de9f3](https://www.bilibili.com/video/BV1d84y1v7eZ/?spm_id_from=333.1387.upload.video_card.click&vd_source=04d13f3e51316f05440d2eb2411de9f3)
 
 是我已发布在B站（够浪编程），还有更多架构从应用到原理和项目实战的内容。以及云原生二次开发
 
 天明寄语:如果不是要往go这块转或者云原生定制化，到此面个试基本就够吊打面试官了
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747396094491-de0198d3-700f-4bec-bd31-15cb5adcf76d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-1bbea7f2c6c4.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747396124173-a1453884-8a4a-407f-85ff-c95790753255.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-187d6802ec13.png)
 
 **底层源码**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747396185789-86a41659-37af-4409-9b38-77345ef729e0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-1244cf7c2e67.png)
 
 从计算机底层深入“够浪” 高并发
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747396240345-671ceb5f-7880-4aec-a367-49277dd37364.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-cc14529458bd.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747396266661-80518d04-93c2-432a-8c63-b2061bc1dafa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-3fdd975615a1.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747396294932-515a690a-238b-4ce7-828c-b77c99604ab3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-cfe2ac8dc694.png)
 
 **MPG源码流程**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747396335094-397782e5-a455-47b7-82c4-3305dc6bd396.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/GoLang/1487-ekdzhf1uxhipuush/img-9cee0137702e.png)

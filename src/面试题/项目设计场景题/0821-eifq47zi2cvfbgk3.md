@@ -197,7 +197,7 @@ Redis 的过期数据采用被动过期 + 主动过期两种策略：
 
 需要注意的是，Redis 的淘汰数据的逻辑与删除过期 key 的一样，也是在命令真正执行之前执行的，也就是说它也会增加我们操作 Redis 的延迟，而且，写 OPS 越高，延迟也会越明显。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716371542320-7e775881-0314-4706-9230-27544a082af5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0821-eifq47zi2cvfbgk3/img-ec35328b25ca.png)
 
 如果此时你的 Redis 实例中还存储了 bigkey，那么**在淘汰删除 bigkey 释放内存时，也会耗时比较久。**
 
@@ -228,7 +228,7 @@ latest_fork_usec:59477
 
 除了数据持久化会生成 RDB 之外，当主从节点第一次建立数据同步时，主节点也创建子进程生成 RDB，然后发给从节点进行一次全量同步，所以，这个过程也会对 Redis 产生性能影响。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716371542280-ec730eb2-4f7e-405f-8d32-76d1f571da9c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0821-eifq47zi2cvfbgk3/img-f4ae4f7bb9e2.png)
 
 ## 7. 开启内存大页
 
@@ -290,7 +290,7 @@ Linux 内核从 2.6.38 开始，支持了**内存大页机制**，该机制允�
 
 此时的主线程依旧会接收写请求，紧接着，主线程又需要把数据写到文件内存中（write 系统调用），当主线程使用后台子线程执行了一次 fsync，需要再次把新接收的操作记录写回磁盘时，如果主线程发现上一次的 fsync 还没有执行完，那么它就会阻塞。所以，如果后台子线程执行的 fsync 频繁阻塞的话（比如 AOF 重写占用了大量的磁盘 IO 带宽），主线程也会阻塞，导致 Redis 性能变慢。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716371542243-5f9156f8-f820-4b0d-9623-ba8350bf5f3b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0821-eifq47zi2cvfbgk3/img-dc13c747aca4.png)
 
 看到了么？在这个过程中，主线程依旧有阻塞的风险。
 

@@ -18,7 +18,7 @@ article: false
 
 Seata是一款开源的分布式事务解决方案，致力于提供高性能和简单易用的分布式事务服务。Seata将为用户提供了AT、TCC、SAGA和XA事务模式，为用户打造一站式的分布式解决方案。
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/22309163/1697436714119-86c89fea-f27b-4987-8ea0-bea62633e0b1.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0721-qkonkyxh8cti4k7k/img-c8f95f24599e.jpg)
 
 ## 1.1 Seata的三大角色
 
@@ -44,7 +44,7 @@ Seata是一款开源的分布式事务解决方案，致力于提供高性能和
 
 Seata对原始的XA模式做了简单的封装和改造，以适应自己的事务模型，基本架构如图：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697439204802-96936db5-9b2f-4976-ac23-3aab21387d7c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0721-qkonkyxh8cti4k7k/img-29ef9779eea4.png)
 
 **RM一阶段的工作：**
 
@@ -82,7 +82,7 @@ AT模式同样是分阶段提交的事务模型，不过缺弥补了XA模型中�
 
 基本流程图：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697439204776-518ffe46-6400-411f-90da-c21364e38499.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0721-qkonkyxh8cti4k7k/img-1b6e2dbe63bc.png)
 
 阶段一RM的工作：
 
@@ -153,11 +153,11 @@ b）如果有分支事务失败，需要回滚。读取快照数据（{"id": 1, 
 
 在多线程并发访问AT模式的分布式事务时，有可能出现脏写问题，如图：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697439204828-f24ec1c3-54b0-44c2-be64-16493e9a7d7c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0721-qkonkyxh8cti4k7k/img-501f837ca980.png)
 
 解决思路就是引入了全局锁的概念。在释放DB锁之前，先拿到全局锁。避免同一时刻有另外一个事务来操作当前数据。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697439204832-f5c253e1-e466-4786-8dd8-f90e3039e559.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0721-qkonkyxh8cti4k7k/img-0fdba78985c3.png)
 
 - > 但是也可能在一个极端的情况下造成脏读,比如一个非Seata管理的全局事务，在事务1提交事务释放DB锁之后获取了DB锁，从而造成脏写问题。 > 这时事务1会根据快照数据发现异常，发出警告，进行人工介入。
 

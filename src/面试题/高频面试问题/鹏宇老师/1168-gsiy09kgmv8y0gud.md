@@ -41,7 +41,7 @@ article: false
 **可用性**
 集群环境下，单个节点宕机不能导致锁失效（需支持集群部署）；加锁 / 释放锁操作响应迅速。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763125357790-e977af1d-f8c5-4937-861e-4c7da00a548e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1168-gsiy09kgmv8y0gud/img-34f5845895ec.png)
 
 ## 二、实现方案一：基于关系型数据库
 
@@ -199,7 +199,7 @@ private boolean isHoldLock(String resourceKey, String holderId) {
 适合小型系统、低并发场景
 锁释放依赖定时任务，可能存在延迟
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763125389238-c8d53552-0bf1-4782-a79f-d569d227ea60.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1168-gsiy09kgmv8y0gud/img-18e47b13f9d0.png)
 
 ## 三、实现方案二：基于 Redis（高性能首选）
 
@@ -387,7 +387,7 @@ Redisson 封装完善，开箱即用
 适合高并发场景
 ——
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763125424044-91fd6fb8-059e-49ee-83cd-fc6ec5ccd63e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1168-gsiy09kgmv8y0gud/img-85d3c84b112d.png)
 
 ## 四、实现方案三：基于 ZooKeeper（高可靠首选）
 
@@ -522,7 +522,7 @@ Curator 封装完善，易用性高
 适合对可靠性要求极高的场景（如金融支付）
 ——
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763125448624-5e7dc66d-a4b8-4c48-bb7f-316085ee4cc7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1168-gsiy09kgmv8y0gud/img-8730b9daee5b.png)
 
 ## 五、三大方案对比与选型指南
 
@@ -563,7 +563,7 @@ Curator 封装完善，易用性高
 高并发、高性能需求（如电商秒杀）
 高可靠、公平锁需求（如金融支付）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763125465525-c2732874-8617-40d6-9c89-2d6934e66ebf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1168-gsiy09kgmv8y0gud/img-913f808fb088.png)
 
 ### 选型建议
 

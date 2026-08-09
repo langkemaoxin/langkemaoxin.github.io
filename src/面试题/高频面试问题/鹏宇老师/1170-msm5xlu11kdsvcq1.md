@@ -45,7 +45,7 @@ DEL key
 
 - **核心价值**：加速访问、保护数据库、减轻服务器负载。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010493201-e1110148-6202-4f79-b763-21e5c580872b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-90fc8efc1a6e.png)
 
 ## 二、Redis 非缓存能力总览：10 大场景全覆盖
 
@@ -95,7 +95,7 @@ String
 Sorted Set
 定时任务（订单超时取消）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010533664-7c6d2d2f-2f98-4fc1-8441-3c1d8834a3d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-c7fa08cd5bcc.png)
 
 ## 三、逐个拆解：10 大非缓存场景的实现与实战
 
@@ -167,7 +167,7 @@ XPENDING mystream group1
 - List 方案：消费者拿到消息后若崩溃，消息会永久丢失（已从 List 移除），需手动实现 “消息回队”（处理失败时 LPUSH 重新入队）；
 - Stream 方案：未 ACK 的消息会存入 Pending 列表，可通过`XPENDING`监控，重试次数超限后可移至 “死信流” 单独处理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010551356-1f223c8f-5b1e-4d9f-b3db-174208bbb9e1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-523070abca94.png)
 
 ### 3.2 场景 2：分布式计数 —— 高并发下的精准统计
 
@@ -197,7 +197,7 @@ INCR page_view:index:20240520  # 返回当日访问量：如5000
 - 若需 “批量统计”（如同时统计点赞 + 收藏），可结合`MULTI/EXEC`实现事务，但需注意 Redis 事务的 “弱一致性”（不支持回滚）；
 - 对于超大计数（如千万级访问量），Redis String 支持 64 位整数，无需担心溢出。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010563077-7c6984b7-00bd-4b37-b5c6-054a07bee5ac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-c79d1f99c556.png)
 
 ### 3.3 场景 3：限流 —— 接口防刷与流量控制
 
@@ -254,7 +254,7 @@ ZCARD ${key}
 - 固定窗口实现简单，但适合非精准场景；滑动窗口精准度高，但需额外删除旧数据，性能略低；
 - 分布式系统中，若需跨节点统一限流，需确保 Redis 为单实例或开启集群模式（需注意 Redis Cluster 的 Slot 分配）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010583777-8a4e180b-e14a-49e3-8ac0-15f61ed1aa61.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-a836123f3c3f.png)
 
 ### 3.4 场景 4：分布式锁 —— 多服务资源互斥
 
@@ -283,7 +283,7 @@ EVAL "if redis.call('GET', KEYS[1]) == ARGV[1] then return redis.call('DEL', KEY
 - 基础版分布式锁存在 “锁超时” 问题（若任务执行时间超过锁过期时间，会导致锁被释放），复杂场景需用 Redisson 框架实现 “自动续期”；
 - 集群环境下，若需更高可靠性，可使用 Redlock 算法（多节点加锁，超过半数节点成功则锁有效）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010601415-7da685a9-5e93-4a99-9d57-020a34c30b02.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-85a655f62d94.png)
 
 ### 3.5 场景 5：排行榜 —— 实时排名与分数统计
 
@@ -320,7 +320,7 @@ ZRANK ranking:game "playerC"  # 返回升序排名（从0开始），降序用ZR
 - 若排行榜数据量过大（如百万级用户），查询 Top N 时需避免使用`ZREVRANGE 0 -1`（全量返回），仅查询所需范围（如 Top 100）；
 - 可通过`ZREMRANGEBYRANK`定期清理排名过低的用户，减少内存占用。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010618729-15e4f79a-c02b-4376-91ea-02b5fe0fcf10.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-1261ad13ebfa.png)
 
 ### 3.6 场景 6：实时系统 —— 发布订阅与即时通知
 
@@ -352,7 +352,7 @@ PUBLISH chat:room1 "userA: 大家好！"
 - Pub/Sub 不支持消息持久化：若订阅者离线，期间的消息会丢失，需持久化则用 Stream；
 - 频道无 “容量限制”，但高并发下需注意 Redis 的性能瓶颈（建议单个频道订阅者不超过千级）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763010637575-7869769f-139f-474f-b18c-d5ff2d3ff7ad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-b3e38f89030c.png)
 
 ### 3.7 场景 7：布隆过滤器 —— 海量数据的高效存在性判断
 
@@ -390,7 +390,7 @@ BF.INFO url_filter
 - 布隆过滤器的 “误判率” 与 “比特位数量” 正相关：误判率越低，需占用的比特位越多（误差率 0.01 时，存储 100 万数据约需 1.44MB）；
 - 不支持 “删除数据”（因比特位是共享的，删除会影响其他数据），需删除则需重建过滤器。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763016180170-15f56637-87f4-4f37-8acc-9318c8335b7d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-fbb0c6d0cd7b.png)
 
 ### 3.8 场景 8：会话存储 —— 分布式系统的会话共享
 
@@ -427,7 +427,7 @@ EXPIRE session:uid:789 1800
 - 会话 Key 建议包含用户唯一标识（如 uid），避免 Key 冲突；
 - 若需 “会话主动注销”，直接执行`DEL session:uid:789`即可。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763016191470-4649c450-da26-44a3-a838-b4384220df88.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-b6009650dd10.png)
 
 ### 3.9 场景 9：分布式 ID 生成 —— 全局唯一标识
 
@@ -462,7 +462,7 @@ final_order_id = "1693478400:05:12345"
 - 若需更高并发，可通过`INCRBY`实现 “批量预生成 ID”（如一次获取 100 个 ID，减少 Redis 调用次数）；
 - 时间戳建议用 “毫秒级”，避免秒内序列号耗尽导致的 ID 重复。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763016204569-c210010b-2c69-427c-bb1e-603c5a873601.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-ec1518047ea0.png)
 
 ### 3.10 场景 10：延迟队列 —— 定时任务与延迟执行
 
@@ -506,7 +506,7 @@ done
 - 消费者需通过 “定时调度”（如 Linux Crontab、Spring Scheduled）触发，扫描间隔需根据业务精度调整（如 1 秒 / 次适合高精度场景）；
 - 若任务执行失败，可将任务重新添加到队列（设置下次执行时间，如 5 分钟后重试）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763016216406-91c68736-61d8-4a13-9a9e-f7a43a1d523f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-63a095627d21.png)
 
 ### 3.11 关键对比：消息队列（Stream）vs 实时系统（Pub/Sub）
 
@@ -599,7 +599,7 @@ Sorted Set
 ZADD、ZRANGEBYSCORE、ZREM
 定时任务、无需外部框架
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763016245265-81298d1b-37d2-41c8-84b9-753e78d425a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1170-msm5xlu11kdsvcq1/img-71012e2ee0b8.png)
 
 ### 4.2 面试答题技巧
 

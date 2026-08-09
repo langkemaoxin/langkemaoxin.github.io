@@ -21,13 +21,13 @@ article: false
 
 我在这边已经登录了QQ空间 [https://qzone.qq.com](https://qzone.qq.com) , 当我们再打开QQ邮箱时发现并不需要登录了 [https://mail.qq.com](https://mail.qq.com)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/1455668e-9747-49bb-a99e-7f30a2bfa850.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_63%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-5f77e23a2661.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/e6971c8f-1429-4bcf-abd4-4ce402dcf226.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-6257fc4daecf.png)
 
 传统的多点登录系统中，每个站点都实现了本站专用的帐号数据库和登录模块。各站点的登录状态相互不认可，各站点需要逐一手工登录。如下图，有两个术语含义如下：
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/370ecca6-3aaf-475c-8895-e62ce189893f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-6194a0cbc06e.png)
 
 ## SSO有什么好处？
 
@@ -67,7 +67,7 @@ OAuth2.0模式
 
 多个站点共用一台认证授权服务器(用户数据库和认证授权模块共用)。用户经由其中任何一个站点(比如 `北冥网站-A`)登录后，可以免登录访问其他所有站点。而且，各站点间可以通过该登录状态直接交互。
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/24901ab0-d005-499a-a476-15a176d0f5fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-fbbb54a11bb2.png)
 
 ### OAuth2实现原理分析
 
@@ -84,20 +84,20 @@ OAuth2.0模式
 - 认证中心携带access_token跳转至站点2的回调地址
 - 站点2前端获取到access_token令牌，记录已登录状态，每次请求携带access_token
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/3661b62c-f52a-4c4a-b336-7d17e3ebc37d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-4db825fb6b57.png)
 
 ### 注销流程分析示例
 
 任一站点用户退出登录，通过Redis失效所有以username开头的键值对即可
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/152e5b3d-ad17-4da5-99b9-61530f72bb1d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-a7f0ef888877.png)
 
 ### 效果演示
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/920c335c-ce5c-4d98-af15-a86ed1af4008.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-25585912bed8.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/b28adbe4-3ccb-438b-b287-8229b3b3ae28.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-ad3829d9ea5e.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/dba2475d-87a3-423f-8286-5bab286f1077.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-47d2c6190da3.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/b841ac39-57e3-490f-b260-285140c46d3b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0138-bn0ynk3vqm0gptmx/img-fddaa544ad3f.png)

@@ -21,13 +21,13 @@ article: false
 
 **线程状态：创建、就绪、运行、阻塞、死亡**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304366-061ec09e-e96b-4fff-85b6-4b5c503f4cad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-9ecdb8304fc1.png)
 
 **2、线程状态切换**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304307-f29a4d46-304a-4010-a19c-6d494fc339eb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-659bd90a1379.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304338-219fb213-38aa-4ba2-89a6-4a485084e8dd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-15fa6b95a843.png)
 
 **3、阻塞唤醒过程**
 
@@ -92,11 +92,11 @@ static class DefaultThreadFactory implements ThreadFactory {    DefaultThreadFac
 
 **参数介绍：**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304290-82c0ea8b-4c9f-4c93-9998-248fbc1c5a9b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-d14fa3940eae.png)
 
 **2、线程处理任务过程**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304410-3e534a35-55ca-4823-9934-e0ac7144b3ee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-3111c2d3fbe8.png)
 
 1. 当线程池小于corePoolSize，新提交任务将创建一个新线程执行任务，即使此时线程池中存在空闲线程。
 2. 当线程池达到corePoolSize时，新提交任务将被放入 workQueue 中，等待线程池中任务调度执行。
@@ -122,7 +122,7 @@ JDK 内置的拒绝策略如下：
 
 **4、Execuors类实现线程池**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304703-930f1121-f9c0-4983-979d-231e8e746046.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-8bd7543c0889.png)
 
 - **newSingleThreadExecutor()**：只有一个线程的线程池，任务是顺序执行，适用于一个一个任务执行的场景
 - **newCachedThreadPool()**：线程池里有很多线程需要同时执行，60s内复用，适用执行很多短期异步的小程序或者负载较轻的服务
@@ -130,7 +130,7 @@ JDK 内置的拒绝策略如下：
 - **newScheduledThreadPool()**：用来调度即将执行的任务的线程池
 - **newWorkStealingPool()**：底层采用forkjoin的Deque，采用独立的任务队列可以减少竞争同时加快任务处理
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304777-0ce627be-02f3-4660-b55e-94488e4fd6a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-d7dcc9590df1.png)
 
 **因为以上方式都存在弊端：**
 
@@ -244,7 +244,7 @@ ReenTrantLock的实现是一种自旋锁，通过循环调用CAS操作来实现�
 
 **缺点：**你们可能也发现了，这样可能导致队列中间的线程一直获取不到锁或者长时间获取不到锁。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304760-eef3b670-35f5-42e0-b8ef-24b9160f7983.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-7bb5f42b743e.png)
 
 **公平锁效率低原因：**
 
@@ -341,7 +341,7 @@ private static ThreadLocal&lt;SimpleDateFormat&gt; format1 = new ThreadLocal&lt;
 
 所以如果 ThreadLocal 没有被外部强引用的情况下，在垃圾回收的时候会被清理掉的，这样一来 ThreadLocalMap中使用这个 ThreadLocal 的 key 也会被清理掉。但是，value 是强引用，不会被清理，这样一来就会出现 key 为 null 的 value。假如我们不做任何措施的话，value 永远⽆法被GC 回收，如果线程长时间不被销毁，可能会产⽣内存泄露。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304744-16880cd8-09b4-4676-9db7-1ea9b1961f7e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-4b4b0dfa1bd9.png)
 
 ThreadLocalMap实现中已经考虑了这种情况，在调用 set()、get()、remove() 方法的时候，会清理掉 key 为 null 的记录。如果说会出现内存泄漏，那只有在出现了 key 为 null 的记录后，没有手动调用 remove() 方法，并且之后也不再调用 get()、set()、remove() 方法的情况下。因此使⽤完ThreadLocal ⽅法后，**最好⼿动调⽤ remove() ⽅法。**
 
@@ -364,7 +364,7 @@ HashMap 有可能会发生死循环并且造成 CPU 100% ，这种情况发生�
 
 Java 内存模型（Java Memory Model，JMM）就是一种符合内存模型规范的，屏蔽了各种硬件和操作系统的访问差异的，保证了 Java 程序在各种平台下对内存的访问都能保证效果一致的机制及规范。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393304885-508c8271-e0a1-4d88-8356-5132793fb9b0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0034-zaghg96a8rlwdryg/img-09205ee12a71.png)
 
 JMM 是一种规范，是解决由于多线程通过共享内存进行通信时，存在的本地内存数据不一致、编译器会对代码指令重排序、处理器会对代码乱序执行等带来的问题。目的是保证并发编程场景中的原子性、可见性和有序性。
 

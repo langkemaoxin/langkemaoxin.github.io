@@ -23,7 +23,7 @@ article: false
 
 消息队列（Message Queue）是一种应用间的通信方式，消息发送后可以立即返回，有消息系统来确保信息的可靠专递，消息发布者只管把消息发布到MQ中而不管谁来取，消息使用者只管从MQ中取消息而不管谁发布的，这样发布者和使用者都不用知道对方的存在。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690613122316-4f3b55e0-af5a-4e39-b508-0f30259ac512.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-ee3a8b4a7ef4.png)
 
 - Producer：消息生产者，负责产生和发送消息到 Broker；
 - Broker：消息处理中心。负责消息存储、确认、重试等，一般其中会包含多个 queue；
@@ -79,7 +79,7 @@ Kafka是一个分布式流处理系统，流处理系统使它可以像消息队
 
 ### Kafka与传统消息队列的对比
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690613810956-354f0a8a-b2da-4b00-a722-0f3dc016335b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-6bfa950c1820.png)
 
 各种对比之后，有如下建议：
 
@@ -90,7 +90,7 @@ Kafka是一个分布式流处理系统，流处理系统使它可以像消息队
 
 ### Kafka的架构设计
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1704627052660-503dc323-5354-415c-8e98-e870b95d63e3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-e688f8f35c74.png)
 
 kafka运行在集群上，集群包含一个或多个服务器。kafka把消息存在topic中，每一条消息包含键值（key），值（value）和时间戳（timestamp）。
 
@@ -124,7 +124,7 @@ kafka有以下一些基本概念：
 
 Kafka里的消息用**主题**进行分类（主题好比数据库中的表），主题下有可以被分为若干个 **分区（分表技术）** 。分区本质上是个提交日志文件，有新消息，这个消息就会以追加的方式写入分区（写文件的形式），然后用先入先出的顺序读取。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744182398974-3379f1d8-3cf1-4ff2-9c47-c1723ef8723e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-7ba10c0b8179.png)
 
 但是因为主题会有多个分区，所以在整个主题的范围内，是无法保证消息的顺序的，单个分区则可以保证。
 
@@ -142,7 +142,7 @@ Kafka通过分区来实现数据冗余和伸缩性，因为分区可以分布在
 
 多个消费者可以构成一个消费者群组。怎么构成？共同读取一个主题的消费者们，就形成了一个群组。群组可以保证每个分区只被一个消费者使用。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744182399005-21c503a7-cb19-41a1-9527-38a4c96aea47.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-6672282d1a36.png)
 
 **消费者和分区之间的这种映射关系叫做消费者对分区的所有权关系，很明显，一个分区只有一个消费者，而一个消费者可以有多个分区。Kafka 区别于其他 MQ 之一**
 
@@ -160,7 +160,7 @@ broker的主要工作是，接收生产者的消息，设置偏移量，提交�
 
 集群中Kafka内部一般使用管道技术进行高效的复制。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744182418328-621bf97e-da21-4857-bf73-25d6ccfac2fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-326bea9af692.png)
 
 分区复制带来的好处是，提供了消息冗余。一旦首领broker失效，其他broker可以接管领导权。当然相关的消费者和生产者都要重新连接到新的首领上。（详细过程可见下面的选举部分）
 
@@ -170,7 +170,7 @@ broker的主要工作是，接收生产者的消息，设置偏移量，提交�
 
 ### 工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1704628275351-d101b349-c0b4-45d0-adea-e0d378856c59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-3f81a1312411.png)
 
 - producer先从zookeeper的 "/brokers/.../state"节点找到该partition的leader
 - producer将消息发送给该leader
@@ -186,7 +186,7 @@ broker的主要工作是，接收生产者的消息，设置偏移量，提交�
 
 ### Kafka的数据模型与消息存储机制
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1704628728989-5c90216e-e2b7-4c79-8bbe-d2895d31342d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-5e0c7ed4a56a.png)
 
 #### 消息存储结构
 
@@ -196,7 +196,7 @@ Kafka 有 Topic 和 Partition 两个概念，一个 Topic 可以有多个 Partit
 
 Segment File 的大概意思是：将大文件拆分成小文件来存储，这样一个大文件就变成了一段一段（Segment 段）。这样的好处是 IO 加载速度快，不会有很长的 IO 加载时间。Kafka 的消息存储就采用了这种方式。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690640952523-157ab09a-08b9-4fdd-911c-c6ba25898f78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-4a59d4e429bf.png)
 
 如上图所示，在一个文件夹下的数据会根据 Kafka 的配置拆分成多个小文件。拆分规则可以根据文件大小拆分，也可以根据消息条数拆分，这个是 Kafka 的一个配置，这里不细说。
 
@@ -206,11 +206,11 @@ Segment File 的大概意思是：将大文件拆分成小文件来存储，这�
 
 索引文件的命名统一为数字格式，其名称表示 Kafka 消息的偏移量。我们假设索引文件的数字为 N，那么就代表该索引文件存储的第一条 Kafka 消息的偏移量为 N + 1，而上个文件存储的最后一条 Kafka 消息的偏移量为 N（因为 Kafka 是顺序存储的）。例如下图的 368769.index 索引文件，其表示文件存储的第一条 Kafka 消息的偏移量为 368770。而 368769 表示的是 0000.index 这个索引文件的最后一条消息。所以 368769.index 索引文件，其存储的 Kafka 消息偏移量范围为 368769-737337。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690641015311-7db1e045-e083-4853-922d-4aff101fb21f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-cffdc2f121a0.png)
 
 索引文件存储的是简单地索引数据，其格式为：「N,Position」。其中 N 表示索引文件里的第几条消息，而 Position 则表示该条消息在数据文件（Log File）中的物理偏移地址。例如下图中的「3,497」表示：索引文件里的第 3 条消息（即 offset 368772 的消息，368772 = 368769+3），其在数据文件中的物理偏移地址为 497。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1704632093829-458bd589-8dfa-414f-ac11-5af2a30c5945.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-f0e5f02c67b7.png)
 
 其他的以此类推，例如：「8,1686」表示 offset 为 368777 的 Kafka 消息，其在数据文件中的物理偏移地址为 1686。
 
@@ -222,7 +222,7 @@ Segment File 的大概意思是：将大文件拆分成小文件来存储，这�
 
 数据文件就是所有消息的一个列表，而每条消息都有一个固定的格式，如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690648401699-24913c41-1d9e-44e9-a4f0-793280a238ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-522cd359dc80.png)
 
 从上图可以看到 Kafka 消息的物理结构，其包含了 Kafka 消息的 offset 信息、Kafka 消息的大小信息、版本号等等。有了这些信息之后，我们就可以正确地读取到 Kafka 消息的实际内容。
 
@@ -251,7 +251,7 @@ Segment File 的大概意思是：将大文件拆分成小文件来存储，这�
 
 为保证producer发送的数据，能可靠到指定topic，topic的每个的partition收到 producer发送的数据后，都需要向producer发送 ack（acknowledgement确认收到），如果 producer收到 ack，就会进行下一轮的发送。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1704896649152-158f7830-bcef-43c3-a6f8-fc8ee5d2ac46.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-115bb003a1c5.png)
 
 #### ACKS 机制
 
@@ -342,7 +342,7 @@ follower发生故障后会被临时踢出ISR，待该follower恢复后，followe
 
 等该follower的LEO大于等于该Partition的HW，即follower追上leader之后，就可以重新加入ISR了。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744182715678-fc2a7a9c-cd85-4609-8d19-b7c94a812506.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-c3cec24f1e42.png)
 
 #### 选举过程：
 
@@ -358,7 +358,7 @@ follower发生故障后会被临时踢出ISR，待该follower恢复后，followe
 
 > 假设 leader 接受了 producer 传来的数据为 8 条，ISR 中三台 follower（broker0,broker1,broker2）开始同步数据，由于网络传输，另外两台 follower 同步数据的速率不同。当 broker1 同步了 4 条数据，broker2 已经同步了 6 条数据，此时，leader-broker0 突然挂掉，从 ISR 中选取了 broker1 作为主节点，此时 leader-broker1 同步了 4 条，broker2 同步 6，就会造成 leader 和 followe r之间数据不一致问题。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1705063082361-fed2437f-4f0e-4db1-b579-07f43c8f942d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-f8a034354741.png)
 
 - **HW** （High Watermark）俗称高水位，它标识了一个特定的消息偏移量（offset），消费者只能拉取到这个offset之前的消息，对于同一个副本对象而言，其 HW 值不会大于 LEO 值。小于等于 HW 值的所有消息都被认为是“已备份”的（replicated） 。**所有分区副本中消息偏移量最小值。**
 - **LEO**（Log End Offset），即日志末端位移(log end offset)，记录了该副本底层日志(log)中下一条消息的位移值。**注意是下一条消息！也就是说**，如果 LEO =8，那么表示该副本保存了 8 条消息，位移值范围是[0, 7]。LEO 的大小相当于当前日志分区中最后一条消息的 offset 值加1，分区 ISR 集合中的每个副本都会维护自身的 LEO，而 **ISR 集合中最小的 LEO 即为分区的 HW**，**对消费者而言只能消费 HW 之前的消息**。
@@ -366,7 +366,7 @@ follower发生故障后会被临时踢出ISR，待该follower恢复后，followe
 #### 针对不同的产生原因，解决方案不同：
 
 - 当服务出现故障时：如果是 Follower 发生故障，这不会影响消息写入，只不过是少了一个备份而已。处理 相对简单一点。Kafka 会做如下处理：
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1705064485653-5132d45a-abd0-4040-b6d2-86a034367248.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-1cb99accd4a2.png)
 
 - 将故障的 Follower 节点临时踢出 ISR 集合。而其他 Leader 和 Follower 继续正常接收消息。
 - 出现故障的 Follower 节点恢复后，不会立即加入 ISR 集合。该 Follower 节点会读取本地记录的上一次的 HW，将自己的日志中高于 HW 的部分信息全部删除掉，然后从 HW 开始，向 Leader 进行消息同步。
@@ -374,7 +374,7 @@ follower发生故障后会被临时踢出ISR，待该follower恢复后，followe
 
 - 如果是 Leader 节点出现故障，Kafka 为了保证消息的一致性，处理就会相对复杂一点。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1705064515417-5c004a06-0492-4988-bf65-505352834d0c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-49473ff33447.png)
 
 - Leader 发生故障，会从 ISR 中进行选举，将一个原本是 Follower 的 Partition提升为新的 Leader。这时， 消息有可能没有完成同步，所以新的 Leader 的LEO 会低于之前 Leader 的 LEO。
 - Kafka 中的消息都只能以 Leader 中的备份为准。其他 Follower 会将各自的Log 文件中高于 HW 的部分全部 清理掉，然后从新的 Leader 中同步数据。
@@ -526,7 +526,7 @@ public class KafkaConsumerAsyncExample {
 
 整体推拉流程梳理：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744184690438-0104b9f4-f6ed-492c-9c81-fdfc3d8a9ba5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-139543bfeeeb.png)
 
 深入浅出之前 先思考下
 
@@ -653,7 +653,7 @@ Producer的send方法可见有三个实现  (首先是CloseSafeProducer 是 Defa
 
 而这个工厂刚才看过是通过 委派 创建了KafkaProducer 来发送的
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744184826446-1fec7f0a-5e9f-42ff-94db-5f81b97741a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-62ccb454dcde.png)
 
 可见第一个 里面实际上用的也是delegate 来发送的 return this.delegate.send(record, callback);
 
@@ -735,7 +735,7 @@ private int partition(ProducerRecord<K, V> record, byte[] serializedKey, byte[] 
 
 实际上我们自己也可以写这个实现接口 重写configure 方法来实现自己的分区逻辑(自定义分区器)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744184887610-25274323-d9c3-468b-9b8b-90d88d057308.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-f1f6153ce212.png)
 
 ```java
 /**
@@ -938,7 +938,7 @@ b）dq中无producerBatch，返回null，代表没有能追加成功。
 
 最后再给你们**上个图**吧。（图太大，[看更多](https://www.yuque.com/tianming-aroh0/sagnbd)？）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744185296357-95f20203-2ddf-4f28-8554-734a66ec1303.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-1c6f0b9ee383.png)
 
 既然已经深入源码解读了 发送消息流程，当然少不了对应的消费流程了。
 
@@ -1190,7 +1190,7 @@ public void run() {
 #spring.kafka.listener.concurrency=3
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744185636626-362a58ec-24fa-4a99-96ef-1e04c7cad652.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-d645e5570330.png)
 
 默认 doInvokeWithRecords 方法
 
@@ -1234,7 +1234,7 @@ public void run() {
 
 最后再给你们**上个图**吧。（图太大，[看关键部分](https://www.yuque.com/tianming-aroh0/sagnbd)先）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744185843125-f1cb6dc6-25d8-46b7-9d96-3f0ae0c33fda.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-b7b48147ec91.png)
 
 理论上解下来要深入的应该是上图中的epoll了。但实际上具备上述源码已经能吊打面试官了，后续就不解读了。
 
@@ -1268,7 +1268,7 @@ Sender.run() > 注册到一个Selector Selector.send() 注册channel 相当于Ma
 
 #### 一、Kafka 消费并发的本质
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1745912361518-199cabd1-9bc5-4fce-a866-1dfcbd24da6c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Kafka/0652-bubwm3kyevkt68m8/img-e325a3c17bc4.png)
 
 Kafka 的并发消费能力，决定于两个核心指标：
 

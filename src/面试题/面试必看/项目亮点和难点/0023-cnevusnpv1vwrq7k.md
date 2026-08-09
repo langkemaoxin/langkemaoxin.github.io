@@ -13,7 +13,7 @@ article: false
 
 > 来源：[云行智达打车平台+智能物流项目](https://www.yuque.com/tulingzhouyu/db22bv/cnevusnpv1vwrq7k)
 
-![](https://www.yuque.com/attachments/yuque/0/2025/docx/43518495/1742220509150-12dcc860-d88f-4bed-98d4-3b2bfb491e8c.docx)
+[https://www.yuque.com/attachments/yuque/0/2025/docx/43518495/1742220509150-12dcc860-d88f-4bed-98d4-3b2bfb491e8c.docx](https://www.yuque.com/attachments/yuque/0/2025/docx/43518495/1742220509150-12dcc860-d88f-4bed-98d4-3b2bfb491e8c.docx)
 
 基本信息和技术栈已标红修改点。主要是项目，这里重点优化第一个项目，面试基本也重点聊最近或 最拿得出手的项目。这里已帮你两个项目一并优化了。
 

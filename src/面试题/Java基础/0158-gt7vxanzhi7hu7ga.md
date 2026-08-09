@@ -43,7 +43,7 @@ article: false
 - **基本类型（int a = 10）：** 栈里直接存的是 **10 的二进制**。
 - **引用类型（Object o = new Object()）：** 栈里存的是 **堆中对象的内存地址（如 0x5F3）的二进制**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773380695996-d8bc69da-9c24-4711-95ca-2fe67a1488fb.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0158-gt7vxanzhi7hu7ga/img-7ea8a12fdde2.webp)
 
 `==`** 操作符的本质**，就是比较这该死的槽位里的二进制位是否完全一样！
 
@@ -123,7 +123,7 @@ System.out.println(s1 == s2.intern()); // true
 - `s2` 指向 **堆内存**（因为用了 `new`）。
 - `intern()`**的作用：** 这是一个 native 方法，它会尝试把堆里的字符串“塞回”常量池。如果池子里有了，就返回池里的地址。所以 `s2.intern()` 返回的地址和 `s1` 是一样的！
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773380696049-21002cba-6854-4044-a3a7-11dee1928134.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0158-gt7vxanzhi7hu7ga/img-90b1a4e5d6e3.webp)
 
 ## **坑位 2：Integer 的 128 陷阱与 JVM 调优**
 
@@ -159,7 +159,7 @@ public static Integer valueOf(int i) {
 - **127** 命中缓存，大家拿到的都是缓存池里同一个对象的引用。
 - **128** 超出缓存，每次都 `new` 一个新对象。
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773380696203-1510304d-a79d-48de-b237-52e000d3802d.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0158-gt7vxanzhi7hu7ga/img-3c797afe3533.webp)
 
 **大神加分项：**
 
@@ -178,7 +178,7 @@ public static Integer valueOf(int i) {
 1. **第一道门禁（Hash）：** 先算 key 的 `hashCode()`。如果哈希值不一样，HashMap 直接判定“找不到”，连 `equals` 都懒得调。
 2. **第二道门禁（Equals）：** 只有哈希值一样（Hash冲突）且桶里有数据时，才会调用 `equals` 进行最终确认。
 
-![image](https://cdn.nlark.com/yuque/0/2026/webp/12590378/1773380696096-7a08d45f-90b2-41d2-88a5-3d36b87ede70.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0158-gt7vxanzhi7hu7ga/img-a691c5544081.webp)
 
 如果你重写了 `equals` 让两个对象“逻辑相等”，却没重写 `hashCode`： HashMap 第一步算出来的哈希值就不同，直接返回 `null`。 这就是经典的 **内存泄漏** 或 **逻辑诡异** bug。
 

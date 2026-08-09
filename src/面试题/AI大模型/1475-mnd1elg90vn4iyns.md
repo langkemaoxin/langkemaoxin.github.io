@@ -44,7 +44,7 @@ OpenAI的第一次开发者大会的主题为 Maximizing LLM Performance，提�
 **二**
 **业务系统接入大模型的三种方式**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/317882/1705999421865-93f9f376-e29f-4a70-9ae1-a6fe9ac66c3d.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-3c88e22d81df.png)
 
 前面我们简单提过，目前业务系统接入大模型一共有三种方式，分别是 PROMPT（直接给大模型输入提示语），RAG（通过检索增强来提升大模型的能力），Fine-tuning（通过微调训练来提升大模型的能力）。下面我们对这三种方式先给出简单的示例解释。
 ●PROMPT（直接给大模型输入提示语）
@@ -58,7 +58,7 @@ Fine-tuning 的方式是指在一个已经预训练好的大模型的基础上�
 **三**
 **直接PROMPT(提示语)方式接入**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/317882/1705999421888-07bc3c78-dfef-44c4-9f00-206b944a6e8c.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-3e2ab9f36286.png)
 
 所谓 PROMPT 方式接入大模型，是指给大模型设计合适的提示语（Prompt）让大模型产生对应的输出，从而完成各种任务。最简单的 PROMPT 比如上面的例子，让大模型写一首关于春天的诗，然后大模型会产生对应的输出。
 在复杂业务场景下，PROMPT 的设计往往非常复杂。因此专门研究如何设计 PROMPT 的"PROMPT 工程"应运而生。PROMPT 工程是一门利用大语言模型（Large Language Model, LLM）的内在能力，通过设计合适的提示语（Prompt）来完成各种任务的学科。其目的是找到最优的提示语，使模型的性能和效率达到最高。
@@ -79,7 +79,7 @@ OpenAI 关于 GPT-3 的论文"Language Models are Few-Shot Learners"，这篇论
 ●举例：
 下面是在 text-davinci-003 模型上的实验：错误答案如下：Q：一个杂耍者可以抛 16 个球。球的一半是高尔夫球，而高尔夫球中又有一半是蓝色的。有多少个蓝色的高尔夫球?A：8 个蓝色的高尔夫球。加了链式思维提示后，得到了正确的答案：Q：一个杂耍者可以抛 16 个球。球的一半是高尔夫球，而高尔夫球中又有一半是蓝色的。有多少个蓝色的高尔夫球?让我们一步一步思考A：首先，一个杂耍者可以抛 16 个球，所以一共有 16 个球。其次，其中一半是高尔夫球，所以有 8 个高尔夫球。最后，高尔夫球中又有一半是蓝色的，所以有 4 个蓝色的高尔夫球。下面是作者论文中的例子：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/317882/1705999421866-22786937-ea79-477c-9f38-01871cacfe8d.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-f87adebbcbac.png)
 
 **任务分解**
 任务分解是当一个任务比较复杂时，往往是将一个复杂的任务分解成更小、更容易处理的子任务的过程。经典的例子，比如 AB 两个城市之间搬运货物，需要分三个步骤，A 城市装货，AB 城市之间运输，B 城市卸货。
@@ -88,20 +88,20 @@ OpenAI 关于 GPT-3 的论文"Language Models are Few-Shot Learners"，这篇论
 ●提示语设计：
 HuggingGPT 会把一个多模态任务拆分成多个子任务，然后再以此执行每个子任务，从而实现多模态的功能。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/317882/1705999421887-59f33a73-3b9b-46ad-ae65-f586cab83a3e.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-8e6dc327b6a9.png)
 
 HuggingGPT 的任务拆分是通过 PROMPT 提示大模型来实现的。下面看下 HuggingGPT 的一个 PROMOT 的具体内容(已经翻译成中文)：
 用户请求内容如下：
 HuggingGPT 给大模型的提示如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/317882/1705999421894-09d8b350-22e2-414e-b24a-82767b242985.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-27d273820ac4.png)
 
 这些 Prompt 后面还会增加一些请求返回的示例，也就是 Few-Shot，让大模型对这些 Prompt 理解更加精确，这个我们在前面的**Few-Shot** 部分有讲到。
 大模型的返回如下：
 由此可见，基于任务拆解 PROMOPT，完全让大模型具备任务拆解的功能，把一个复杂的多模态任务拆分成一个个简单的 task，然后 HuggingGPT 会依据 GPT 返回的 task，去一步一步执行，返回给用户最后结果。
 **如何在PROMPT提示语中嵌入业务知识**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/317882/1705999422270-93538cb4-b83c-4b3b-ad70-5fdee0962486.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-5f02a9d08ea7.png)
 
 在为大模型设计 PROMPT 时，通常可以将其分为四个可选部分，以指导模型的响应和行为：
 ●用户指令：明确告诉大模型需要执行的具体任务，例如扮演特定角色，生成某些内容等。
@@ -112,7 +112,7 @@ HuggingGPT 给大模型的提示如下：
 从上图的 PROMPT 四要素中可以看出，业务知识可以嵌入到 PROMPT 的附加内容中，业务场景对话可以嵌入到 PROMPT 的对话上下文中。
 下面是 KubeAI 大模型平台对接的"AI画原型"项目的一个 PROMPT 写法(简单版本)，该项目的目的是用户写完产品描述后，让大模型基于产品描述生成满足标准的前端页面。我们来拆解下他的 PROMPT。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/317882/1705999422780-fc705409-86f6-4925-9bf5-e318e4f2f927.jpeg?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-7bddd52de54a.jpg)
 
 这样的 PROMPT 设计允许业务知识通过附加内容部分嵌入到提示语中。可见按照 PROMPT 四要素的原则去设计，可以把业务相关知识比较容易嵌入到提示语中。
 **四**
@@ -128,7 +128,7 @@ HuggingGPT 给大模型的提示如下：
 
 **RAG的流程**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/317882/1705999422738-0936862c-537d-4ec8-91fa-e3d56df11677.jpeg?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-2c8e80df8a05.jpg)
 
 上图展示了 RAG 的一个典型流程，我们来逐步分析这个流程。RAG 的主要步骤如下：
 ●用户根据自己的需求输入指令，例如：公司 IT 的电话是多少？
@@ -137,7 +137,7 @@ HuggingGPT 给大模型的提示如下：
 ●向大模型发出 PROMPT，并得到大模型的回答。
 **知识检索如何实现**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/317882/1705999423267-28c7f264-d4c2-4363-b477-13f8f97bd4e0.jpeg?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-208de6ccb10f.jpg)
 
 知识检索可以从互联网直接获取知识，也可以先在企业内部存储业务知识，再进行检索。由于企业内部知识存储的应用较为广泛，我们这里只介绍这种实现方式。
 业务知识检索主要包括两个环节，分别是业务知识的录入和检索。我们来逐一分析这两个环节的具体步骤。
@@ -152,7 +152,7 @@ HuggingGPT 给大模型的提示如下：
 **业务接入RAG检索的例子**
 **下面以 KubeAI 大模型平台对接的数仓指标智能分析为例，讲解下一个具体业务如何通过 RAG 的方式接入大模型。**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/317882/1705999423410-5be71459-5da5-4dc9-b65a-7d3a9ac59ebf.jpeg?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-6d3853d37877.jpg)
 
 该项目能够根据用户的自然语言描述，直接生成用户可视化的数据展示。其简单 RAG 推理流程如下：
 ●Agent 接收到用户的咨询问题，立即访问向量数据库，找出需要用到的数仓指标。
@@ -162,7 +162,7 @@ HuggingGPT 给大模型的提示如下：
 **通过Fine-tuning(微调训练)接入**
 **微调训练的方式有哪些**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/317882/1705999423649-1d8e69a5-6b63-4125-90f8-cce6be7ba9ad.jpeg?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-f2adf055094d.jpg)
 
 上图展示了一个完整的大型模型训练过程，从大型模型的预训练到应用于业务场景，通常包括三个阶段：
 ●预训练
@@ -176,7 +176,7 @@ HuggingGPT 给大模型的提示如下：
 定义：在指令调优的基础上，使用强化学习的方法，利用人类的反馈作为奖励信号，对模型进行进一步的优化，使其能够生成更符合人类偏好的输出。RLHF 是为了提高模型的质量和安全性，使其能够避免一些不合理或不道德的生成结果。
 **KubeAI大模型平台上如何进行Fine-tuning**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/317882/1705999423659-6498dc49-020e-4d83-b0e8-455fedd6af47.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-bfadc6e878d5.png)
 
 在 KubeAI 大模型平台上，用户可以按照以下步骤迅速启动大型模型训练并进行自动部署：
 ●选择大模型，基于之前提到的大模型选择原则，在大型模型平台上选择您需要的大模型。
@@ -186,7 +186,7 @@ HuggingGPT 给大模型的提示如下：
 **一些Fine-tuning微调的例子**
 **我们以训练一个某业务领域的智能客服机器人为例，讲解下如何通过 Fine-tuning 的方式构建一个智能客服机器人。**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/317882/1705999423653-d19ea693-8dfc-4f68-a753-9cbcf4a1ce31.jpeg?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-e20a40ab3672.jpg)
 
 训练的目的是构造一个熟悉某业务领域知识的智能客服机器人。
 ●数据准备。
@@ -200,7 +200,7 @@ HuggingGPT 给大模型的提示如下：
 **业务系统接入大模型的最佳路径**
 **渐进式接入大模型**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/317882/1705999423674-e8b3c0c2-ce5d-4178-aba5-e3ab3981adbd.jpeg?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_937%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1475-mnd1elg90vn4iyns/img-a72fbf6e00b3.jpg)
 
 前面介绍了业务如何通过 PROMPT（提示语），RAG（检索增强），Fine-tuning（微调训练）三种方式接入大模型。OpenAI 的开发者大会 Maximizing LLM Performance 提出的业务接入大模型的方式，我们理解应该是渐进式接入，其流程如下。
 ●第一步，业务先用 PROMPT 方式接入大模型。这一步很简单，只需编写 PROMPT，并建立基本的调用逻辑，测试效果。

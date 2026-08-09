@@ -29,7 +29,7 @@ article: false
 
 大致梳理主线流程图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740723698245-ab32f056-9221-41e9-b579-beec835d14ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1461-kyeirtcgm48qz8qn/img-d9a84f2927f8.png)
 
 不过过程中还有一些细节问题，比如数据预处理可能需要更详细的步骤，比如处理不平衡数据、数据增强等。另外，可能还需要考虑计算资源，比如使用GPU还是TPU，分布式训练等。
 
@@ -84,7 +84,7 @@ article: false
 
 大模型微调（Fine-tuning）是在预训练模型的基础上，通过特定领域或任务的数据进行针对性训练，以提升模型在目标场景中的性能。其核心流程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1739711309251-701420dd-8ed0-44c4-b1b2-43d9553f9bed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1461-kyeirtcgm48qz8qn/img-c36b4a895dcb.png)
 
 1. **任务定义与数据准备**
 

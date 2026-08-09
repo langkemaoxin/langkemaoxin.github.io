@@ -41,7 +41,7 @@ article: false
 
 ## 解释下 MySQL 事务的四大特性ACID以及实现原理
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695112779841-b7799b85-b173-4623-8a7b-543dd607fe8d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-271fca52399d.png)
 
 事务四大特性
 
@@ -88,7 +88,7 @@ article: false
 - slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
 - slave记录自己的binglog
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695130384090-50466f0e-3afd-4485-bda1-6d4f6d1d59ad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-94d86ef42555.png)
 
 主从复制
 
@@ -124,7 +124,7 @@ article: false
 
 我们可以观察一些支付系统，发现只能查一年范围内的支付记录，这个可能就是支付公司按照时间进行了分表。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695451051393-ec1df0dd-4a74-4e82-9a57-1f720d502f78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-81e4196fd84b.png)
 
 范围路由
 
@@ -136,7 +136,7 @@ article: false
 
 同样以订单 id  为例，假如我们一开始就规划了 4个数据库表，路由算法可以简单地用 id % 4 的值来表示数据所属的数据库表编号，id 为 12的订单放到编号为 0 的子表中，id为 13的订单放到编号为 1 的子表中。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695130654258-6f95740a-e86b-4fc7-ac04-d82caba043dd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-b8477bbb11e1.png)
 
 Hash路由
 
@@ -146,7 +146,7 @@ Hash 路由设计的复杂点主要体现在**初始表数量**的选取上，�
 
 配置路由设计简单，使用起来非常灵活，尤其是在扩充表的时候，只需要迁移指定的数据，然后修改路由表就可以了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695130679063-f08fcdeb-900d-42f6-aa86-0d89efcf001f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-308239d75fbc.png)
 
 配置路由
 
@@ -161,7 +161,7 @@ Hash 路由设计的复杂点主要体现在**初始表数量**的选取上，�
 1. **建立好新的库表结构，数据写入老库的同时，也写入拆分的新库**
 2. **数据迁移，使用数据迁移程序，将旧库中的历史数据迁移到新库**
 3. **使用定时任务，新旧库的数据对比，把差异补齐**
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695130843142-012bbbf7-84e6-4426-b054-e2bf8d4639b2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-12a1c6e1bb27.png)
 
 **第一阶段**
 
@@ -169,7 +169,7 @@ Hash 路由设计的复杂点主要体现在**初始表数量**的选取上，�
 
 1. **完成了历史数据的同步和校验**
 2. **把对数据的读切换到新库**
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695130878231-603bd10e-d274-4aca-a2f6-27e56eee4a9e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-aed3610de621.png)
 
 **第二阶段**
 
@@ -178,7 +178,7 @@ Hash 路由设计的复杂点主要体现在**初始表数量**的选取上，�
 1. **旧库不再写入新的数据**
 2. **经过一段时间，确定旧库没有请求之后，就可以下线老库**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695130902159-511745e3-0c73-477b-b8ff-cf5f00696a6c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-6d9bbfc3f3e0.png)
 
 第三阶段
 
@@ -248,7 +248,7 @@ Hash 路由设计的复杂点主要体现在**初始表数量**的选取上，�
 
 JVM执行start方法，会先创建一条线程，由创建出来的新线程去执行thread的run方法，这才起到多线程的效果。如果直接调用Thread的run()方法，那么run方法还是运行在主线程中，相当于顺序执行，就起不到多线程的效果。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695134723770-904adb1d-e443-458f-9946-00bfdc17925d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-9d312f1e5f79.png)
 
 start方法
 
@@ -286,7 +286,7 @@ Java中的线程分为两类，分别为 daemon 线程（守护线程）和 user
 
 ThreadLocal，也就是线程本地变量。如果你创建了一个ThreadLocal变量，那么访问这个变量的每个线程都会有这个变量的一个本地拷贝，多个线程操作这个变量的时候，实际是操作自己本地内存里面的变量，从而起到线程隔离的作用，避免了线程安全问题。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695134999458-cc2bfb3e-77c2-47e8-901e-f9af2dcd797e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-e99bf37120f8.png)
 
 ThreadLocal线程副本
 
@@ -383,7 +383,7 @@ public WeakReference(T referent) {
 
 key的赋值，使用的是WeakReference的赋值。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135049737-9cb64c9d-d9b4-4cea-b4a6-1ee1fdb0a796.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-af3187b2d804.png)
 
 ThreadLoca结构图
 
@@ -400,7 +400,7 @@ ThreadLoca结构图
 
 所以呢，栈中存储了ThreadLocal、Thread的引用，堆中存储了它们的具体实例。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135071206-58a7af7c-12c2-4244-960f-c87b7b3e5c2b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-a3ee2a4d0cb5.png)
 
 ThreadLocal内存分配
 
@@ -434,7 +434,7 @@ key设计成弱引用同样是为了防止内存泄漏。
 
 ThreadLocalMap虽然被叫做Map，其实它是没有实现Map接口的，但是结构还是和HashMap比较类似的，主要关注的是两个要素：元素数组和散列方法。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135093928-f699390a-9cf3-4c9b-9ddb-fed61455b0ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-22d41f1d5ea2.png)
 
 ThreadLocalMap结构示意图
 
@@ -466,7 +466,7 @@ private static final int HASH_INCREMENT = 0x61c88647;
 
 ThreadLocalMap没有使用链表，自然也不是用链地址法来解决冲突了，它用的是另外一种方式——**开放定址法**。开放定址法是什么意思呢？简单来说，就是这个坑被人占了，那就接着去找空着的坑。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135122980-301d8d69-657d-4905-a561-ba8141efc0a5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-a1ac085e2e5e.png)
 
 ThreadLocalMap解决冲突
 
@@ -509,13 +509,13 @@ private void expungeStaleEntries() {
 
 接着看看具体的resize()方法，扩容后的newTab的大小为老数组的两倍，然后遍历老的table数组，散列方法重新计算位置，开放地址解决冲突，然后放到新的newTab，遍历完成之后，oldTab中所有的entry数据都已经放入到newTab中了，然后table引用指向newTab
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135143440-2659f8d9-689b-4146-9cb4-ebd999f88bde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-f166761c60bc.png)
 
 ThreadLocalMap扩容
 
 具体代码：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695132050097-64f86b77-9efa-47d3-bbf8-2c7724ba70c4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-75a5ca3125c8.png)
 
 ThreadLocalMap resize
 
@@ -570,7 +570,7 @@ if (inheritThreadLocals && parent.inheritableThreadLocals != null)
 目前最主流的微服务开源解决方案有三种：
 
 1. Dubbo：Dubbo工作原理图-来源官网
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695133407832-8ca1a798-12bb-4764-8277-705a2de5300f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-2e36e2616989.png)
 
 - Dubbo 是一个高性能、轻量级的 Java 微服务框架，最初由阿里巴巴（Alibaba）开发并于2011年开源。它提供了服务注册与发现、负载均衡、容错、分布式调用等功能，后来一度停止维护，在近两年，又重新开始迭代，并推出了Dubbo3。
 - Dubbo 使用基于 RPC（Remote Procedure Call）的通信模型，具有较高的性能和可扩展性。它支持多种传输协议（如TCP、HTTP、Redis）和序列化方式（如JSON、Hessian、Protobuf），可根据需求进行配置。
@@ -670,7 +670,7 @@ Service Mesh（Nacos+Dubbo Mesh）
 
 微服务给系统开发带来了一些问题和挑战，如服务调用的复杂性、分布式事务的处理、服务的动态管理等。为了更好地解决这些问题和挑战，各种微服务治理的组件应运而生，充当微服务架构的基石和支撑。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135227416-f153fd58-ff0b-4d40-894d-06ea879a7ffc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-3c06df4fc46b.png)
 
 微服务组件示意图
 
@@ -719,7 +719,7 @@ Service Mesh（Nacos+Dubbo Mesh）
 
 严格来讲，HTTP和RPC不是一个层面的东西：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135287237-706ba68a-0c2c-4b88-a960-1847348cffbf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-eb96ed1cf2eb.png)
 
 HTTP和RPC
 
@@ -732,7 +732,7 @@ HTTP和RPC
 
 常见的负载均衡算法包含以下几种：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695135318532-6ec035d7-4f11-4ca1-9b27-9c0506b215d9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-d9231e443dec.png)
 
 常见负载均衡算法
 
@@ -749,25 +749,25 @@ Seata支持以下几种模式的分布式事务：
 
 1. AT模式：AT模式是Seata默认支持的模式，也是最常用的模式之一。在AT模式下，Seata通过在业务代码中嵌入事务上下文，实现对分布式事务的管理。Seata会拦截并解析业务代码中的SQL语句，通过对数据库连接进行拦截和代理，实现事务的管理和协调。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695133592018-73f2abda-895d-46ad-b860-2999b9faeaa3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-425e9d72357a.png)
 
 AT模式示意图
 
 1. TCC（Try-Confirm-Cancel）模式：TCC模式是一种基于补偿机制的分布式事务模式。在TCC模式中，业务逻辑需要实现Try、Confirm和Cancel三个阶段的操作。Seata通过调用业务代码中的Try、Confirm和Cancel方法，并在每个阶段记录相关的操作日志，来实现分布式事务的一致性。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695133592012-b47d5d4a-e5af-484d-99f7-6cc9daa75efc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-a7ce655a4b52.png)
 
 Seata TCC模式
 
 1. SAGA模式：SAGA模式是一种基于事件驱动的分布式事务模式。在SAGA模式中，每个服务都可以发布和订阅事件，通过事件的传递和处理来实现分布式事务的一致性。Seata提供了与SAGA模式兼容的Saga框架，用于管理和协调分布式事务的各个阶段。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695133592024-53c8092f-4026-43cc-a50d-6fea196f4e4b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-9fc632712db7.png)
 
 SAGA模式状态机引擎
 
 1. XA模式：XA模式是一种基于两阶段提交（Two-Phase Commit）协议的分布式事务模式。在XA模式中，Seata通过与数据库的XA事务协议进行交互，实现对分布式事务的管理和协调。XA模式需要数据库本身支持XA事务，并且需要在应用程序中配置相应的XA数据源。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/34624608/1695133592016-e103b1f0-f31a-46d0-84f6-a8231a1aa831.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0094-ugosvy5vty51sxw6/img-020731050f56.png)
 
 XA模式示意图
 

@@ -25,7 +25,7 @@ article: false
 大语言模型普遍基于 Transformer 架构，其核心是**自注意力机制（Self-Attention）**。
 自注意力机制的计算复杂度和内存消耗随着序列长度（Token 数量）的增加呈**平方级增长**，即时间与空间复杂度均为 $
 
-![](https://cdn.nlark.com/yuque/__latex/44987cdf24dd308d34c4c7af30ad5b0b.svg)
+![](/面试题/高频面试问题/伯乐老师/1274-ghn19e90qzp6cuhb/img-041b2c4058d8.svg)
 
 $。
 这意味着，如果上下文长度翻倍，显存消耗和计算时间将增加至原来的四倍。当上下文极长时，会迅速撑爆 GPU 显存（OOM，Out of Memory），且推理速度极慢。
@@ -36,7 +36,7 @@ $。
 
 在实际业务和前沿研究中，突破长上下文限制通常从以下三个维度入手：
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781245218231-def0099c-ac81-48bf-a949-5dd77044214b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1274-ghn19e90qzp6cuhb/img-1fa03eed9d61.png)
 
 ### 路径一：模型与算法层（扩展原生窗口）
 
@@ -51,9 +51,9 @@ $。
 - **FlashAttention**：一种硬件（IO）感知的注意力算法，通过优化 GPU 的 SRAM 和 HBM 之间的读写操作，大幅降低显存占用并提升计算速度，是目前长文本模型的标配。
 - **RingAttention**：通过将长序列切块并分布到多张 GPU 上进行环形通信计算，打破单卡显存限制，实现百万级超长上下文（如 Llama-3-1M）。
 - **稀疏注意力（Sparse Attention）**：不计算所有 Token 之间的注意力，而是只关注局部或特定的关键 Token，从而将复杂度从 $$。
-![](https://cdn.nlark.com/yuque/__latex/44987cdf24dd308d34c4c7af30ad5b0b.svg)
-![](https://cdn.nlark.com/yuque/__latex/23a772d9be27f1e8de669d4b38ad43b8.svg)
-![](https://cdn.nlark.com/yuque/__latex/8c51f5913186f8ac629f1d5838940f33.svg)
+![](/面试题/高频面试问题/伯乐老师/1274-ghn19e90qzp6cuhb/img-041b2c4058d8.svg)
+![](/面试题/高频面试问题/伯乐老师/1274-ghn19e90qzp6cuhb/img-fc1fbf975312.svg)
+![](/面试题/高频面试问题/伯乐老师/1274-ghn19e90qzp6cuhb/img-745a1ffe9f8c.svg)
 
 ### 路径二：工程与推理层（显存压缩与调度）
 
@@ -93,4 +93,4 @@ $。
 1. **切忌只背算法名词**：面试官更看重你对业务场景的理解。
 2. **强调性价比与落地性**：在回答时可以补充：“虽然现在有支持 1M 上下文的模型（如 Gemini 1.5 Pro / Kimi），但在企业级高并发应用中，全部依赖长上下文 API 成本极高且响应慢。因此，**在实际工程落地中，我们通常优先采用『RAG 检索 + 历史对话摘要』的组合方案**，只有在处理单篇不可分割的超长复杂逻辑文档时，才会依赖模型的原生大窗口。”
 3. **提及 O(N²) 痛点**：一定要准确说出 Transformer 自注意力机制的时间/空间复杂度是 $$，这能体现你对底层原理的扎实掌握。
-![](https://cdn.nlark.com/yuque/__latex/44987cdf24dd308d34c4c7af30ad5b0b.svg)
+![](/面试题/高频面试问题/伯乐老师/1274-ghn19e90qzp6cuhb/img-041b2c4058d8.svg)

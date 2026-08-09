@@ -31,7 +31,7 @@ Drone 与流行的源代码管理系统无缝集成，包括 GitHub、GitHub Ent
 
 ## 自动化流程
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/18fb0bf1-a25a-458a-be3b-8d811a826367.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0134-lgnioqs4y83vgpdk/img-274bde59bfbb.png)
 
 ## 基础设施
 
@@ -43,11 +43,11 @@ Drone 与流行的源代码管理系统无缝集成，包括 GitHub、GitHub Ent
 
 ### 配置Gitee第三方授权
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/042da93c-50a4-4397-ab44-07ad9a51abc1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0134-lgnioqs4y83vgpdk/img-3a871c60b60a.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/38b08673-050b-42b6-adfc-6ca6dd8c3f9b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0134-lgnioqs4y83vgpdk/img-130cb0fce371.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/565541e9-c005-4cb8-a315-eefa1c6c97f9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0134-lgnioqs4y83vgpdk/img-e064b7fd49e2.png)
 
 ### 安装Drone
 
@@ -204,8 +204,8 @@ ENTRYPOINT ["java", "-jar", "beiming-talk-backend-0.0.1-SNAPSHOT.jar"]
 
 ## 效果演示
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/6422972f-8901-48ef-80b3-46327d68a871.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0134-lgnioqs4y83vgpdk/img-f38a8995657c.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/56af44da-50db-48d6-8ffd-5d32b4564984.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0134-lgnioqs4y83vgpdk/img-68292b426490.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/66e4d363-3ec9-4f76-bac0-b1bcd4c542b3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0134-lgnioqs4y83vgpdk/img-fd4e06722b70.png)

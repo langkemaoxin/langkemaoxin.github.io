@@ -23,7 +23,7 @@ article: false
 
 其实 “抢红包” 是大厂面试的 **“高并发天王山之战”**。面试官考察的不是你怎么算钱，而是你能不能设计一个 **“抗住流量洪峰、资金绝对安全”** 的系统。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145496264-2dbe4082-151e-4350-9520-e1b41d67256f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-697d525c1f3d.png)
 
 今天结合高并发真实场景，拆透抢红包的 **“预先分配 + Redis Lua 原子性 + 异步入库”** 核心原理，最后送你一套满分面试模板。
 
@@ -49,7 +49,7 @@ article: false
 
 业界的标准解法是 **“二倍均值法 + 预分配”**： 在 **“发红包”** 的那一刻，其实所有红包的金额已经算好，并变成了一条条数据塞进了 Redis。 “抢” 的动作，本质上只是从 Redis 里 **“拿走”** 一个预先生成好的数字而已。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145496257-9455a7d2-0b63-4df3-9c50-3904b26eae68.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-85ea7c0b214a.png)
 
 #### **阶段 1：发红包 —— 资金冻结，流量前置**
 
@@ -59,7 +59,7 @@ article: false
 
 必须在 DB 层先扣除发送者余额。**注意：这一步必须是同步的！**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145496234-38aa3cfe-0bc1-4d25-8f81-b162cabdc24a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-525fa2be02ea.png)
 
 - **小额红包（ 直接扣除余额。
 - **大额红包（> 200元）：** 推荐使用 **“冻结”** 模式。**Why？** 如果红包 24 小时没抢完需要退回，直接解冻比走复杂的“退款逆向流程”更安全、更高效。* *
@@ -87,7 +87,7 @@ UPDATE user_account SET balance = balance - 100, frozen_balance = frozen_balance
 
 这是面试官最关注的环节。100 万人点“开”，如何保证只有 10 个人抢到？**答案：Redis Lua 脚本。**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145496307-eee0ad23-215b-46b5-936f-80401e5ba617.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-90257462ed91.png)
 
 前端点击“开”，请求打到服务器，服务器执行一段 Lua 脚本。**
 
@@ -101,7 +101,7 @@ UPDATE user_account SET balance = balance - 100, frozen_balance = frozen_balance
 
 **
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145496282-f20d8136-f02d-47db-9d5e-e48fa26b2843.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-92ee21ea0c6d.png)
 
 **解决方案：** 使用 **Hash Tag**`{}`。 Key 命名必须统一，例如：`hb:{1001}:pool`、`hb:{1001}:count`。 Redis 只会根据 `{}` 里的 `1001` 计算 Hash 槽，强制让这组 Key 落在同一个物理节点上。
 
@@ -122,7 +122,7 @@ return money
 1. **发送 MQ 消息：**服务端拿到 Redis 返回的金额后，立刻发一条 MQ 消息（包含：抢红包者 ID、红包 ID、金额）。
 2. **异步入库（MQ 消费端）：**后端服务监听 MQ，执行余额更新和流水插入。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145496947-a7cc77ca-29aa-411d-aacc-b221bd616e6a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-ee17baaf0eb0.png)
 
 **⚠️ 生产级大坑预警 2：**
 
@@ -148,7 +148,7 @@ return money
 - **5 分钟小对账（用户体验）：** 扫描最近 5 分钟内的抢夺记录，快速修复因 MQ 延迟导致的“抢到没到账”问题，减少客诉。
 - **T+1 全量对账（财务审计）：** 每天凌晨核对 Redis 里的 `grabbed_set` 和 MySQL 流水表，发现不一致进行兜底补账，确保财务总账做平。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145497026-cc2a99dd-8fd5-44ff-87de-793adc51a3dd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-c70daeea5e1d.png)
 
 **Q2：同一个用户连点两次，抢了两份怎么办？
 
@@ -164,7 +164,7 @@ return money
 
 **
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145497002-7ad54edb-c55d-4496-9fc4-23ae1972edec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-a0442a453459.png)
 
 **正确做法：** 使用 **延迟消息队列**（发送时投递一个 24h 后消费的消息）或者 **DB 定时任务扫描**。 当 24 小时到了，扫描 DB 中该红包是否还有剩余金额，如果有（且之前是冻结状态），直接执行：
 
@@ -178,7 +178,7 @@ UPDATE user_account SET frozen_balance = frozen_balance - 剩余, balance = bala
 
 - **服务降级：** 客户端检测到 Redis 异常时，直接触发熔断，返回“红包已抢完”，**绝对不能**让流量穿透到 MySQL，否则数据库必死。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769145497100-953e8373-4451-477b-b25c-e9f99b87f3c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1030-gzfnrplyev74gxw7/img-720155d5bf9a.png)
 
 - **数据兜底：** Redis 开启 **RDB+AOF** 混合持久化。同时，后台可异步将抢夺记录落入 MySQL 临时表，作为灾备数据。
 

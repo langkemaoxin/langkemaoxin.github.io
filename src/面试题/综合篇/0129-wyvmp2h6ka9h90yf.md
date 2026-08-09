@@ -17,17 +17,17 @@ article: false
 
 虚拟机软件：** VMware Workstation Pro**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593123366-519ab1da-839a-4602-ab70-c1b733f5a85c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-0b765f974d07.png)
 
 **Centos7 ISO 文件**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593109638-5944d3f8-b751-4ef5-965b-083d2d8b230d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-da2080b95d9e.png)
 
 .
 
 **xshell 工具，去官网搞一个，个人使用不要钱**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593919191-23de48b4-ffdb-4200-bd8c-acda6e1f049a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-ff39ddc18690.png)
 
 **如果是从 0 开始，大家不要自己找对应的版本，找对应的班班小姐姐获取相应的软件以及 ISO。**
 
@@ -37,29 +37,29 @@ article: false
 
 按照图片操作
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593352408-4eae8312-9258-415f-8afd-d6275cf169a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-d2b797c2d223.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593394771-60458518-f497-442f-ac69-0e6267ef5a3f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-d984f2a9e95f.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593475406-d6c5c002-4ae3-43c4-bc34-484da696dd0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-c4285342bf0b.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593598546-06fb6ba4-561a-4ebd-9d54-0fa8ddeba03b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-816f0901d724.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593614655-2a2c0ce7-6a22-4dfa-a1f4-779789ef62d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-c5cf277d80cd.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593648667-5bbf83fe-4b1b-4f1b-b322-1829cceff00e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-312251313653.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731593704055-64e6cf1f-62a5-4bd4-9339-d683b2fd1cad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-b51693246dd0.png)
 
 **修改完硬件配置后，点击完成会自动启动 Centos7，默默地等待就行。**
 
 ## 补充：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594347465-8f0bf5f8-1691-416f-8739-91892edd27ca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-412ad18911fb.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594421816-e5224c3d-96c3-411b-84c5-51edc4122b36.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-96f86102c1c6.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594495493-6b880411-a769-4e9b-ba4a-c6733664f693.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-1675b52a2d95.png)
 
 ## 继续：
 
@@ -75,25 +75,25 @@ systemctl set-default graphical.target
 
 **登录账号时，选择 Not listed，然后 输入 root 账号，密码之前自己输入的******
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594553531-ce200085-29d1-4e57-bf4c-49cd7638c593.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-fa77740b9dd0.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594816610-00cdcd97-6792-4524-8f58-3c69e8dc9c1c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-95f4df23cf99.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594790064-845ec1b1-31d8-485b-b39b-721f58caa257.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-b9e9cc0714f4.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594970219-ba8f40d6-3dae-4920-b03d-b557ad98a675.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-615284ed2173.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731594901026-cb254541-cc0d-49a0-917f-2cc846734f4a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-a4d26d27770e.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731595029953-e2873767-7166-4df2-bf6b-51494fece14f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-1b2edbd4d013.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731595070652-675e351a-261f-47d0-a455-769d16b58544.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-346c45b99c61.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731595148932-ca8de650-a8e2-4d1e-93a8-ddc49c00a321.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-342142f2021e.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731595264330-eab7768a-6a4e-4fd4-a894-749d542dd303.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-3508da1b938d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1731595301708-66114d3d-ad45-496b-81f5-d8e0c4db8e0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0129-wyvmp2h6ka9h90yf/img-e05b5fa4079d.png)
 
 **至此 NAT 网络连接就已经搞定了。**
 

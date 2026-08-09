@@ -22,7 +22,7 @@ article: false
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1782218316447-40751aa1-79f7-4ec0-832d-d0919a45b6f0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1283-fn94k71ugry4zzbl/img-f99abe92a5f2.png)
 
 ## 二、 Phase 1：离线知识构建阶段 (Offline Indexing)
 

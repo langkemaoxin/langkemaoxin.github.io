@@ -13,7 +13,7 @@ article: false
 
 > 来源：[面试官：怎么手搓一个线程池？](https://www.yuque.com/tulingzhouyu/db22bv/imalggpi28agdxo6)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763447538359-75e8950e-92f2-47de-87ec-f528c2a042a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0952-imalggpi28agdxo6/img-bddaff442d2e.png)
 
 在并发编程的世界里，线程池是绕不开的基石。但我们是否满足于仅仅会用`ThreadPoolExecutor`？不，真正的掌握源于深刻的理解。今天，就让我们一起踏上“造轮子”的旅程，从一个最简单的想法出发，亲手构建一个功能完备、设计精良的线程池。
 
@@ -23,7 +23,7 @@ article: false
 
 于是，我们的V0.1版本设计诞生了：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763447549127-116337f9-4789-493a-b15b-d87b8fcd5efc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0952-imalggpi28agdxo6/img-ca7b7c1a4203.png)
 
 这个设计是线程池的灵魂。我们只需要在程序启动时，创建一个（或多个）“工作者线程”，让它在一个`while(true)`循环里不断地从一个**阻塞任务队列（BlockingQueue）**中`take()`任务。
 
@@ -36,7 +36,7 @@ article: false
 
 我们的V0.1版本虽然能工作，但它很脆弱。如果任务提交的速度持续快于处理速度，任务队列（假设它有界）迟早会被塞满。这时，如果再有新任务提交，程序该怎么办？直接崩溃吗？显然不行。我们需要一个“安全阀门”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763447559308-5bd7d7a0-ac5e-4e01-9f71-9a946afd770a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0952-imalggpi28agdxo6/img-e162b572cf63.png)
 
 为了让我们的线程池更健壮，我们必须引入**拒绝策略 (Rejection Policy)**。当线程池判断自己无法再接收新任务时（例如，队列已满），就必须执行这个预设的策略。我们可以设计几种不同的应对方式：
 
@@ -50,7 +50,7 @@ article: false
 
 随着项目变大，我们可能会有多个线程池，每个池里又有多个线程。当出现问题时，如果日志或堆栈信息里全是`Thread-1`, `Thread-5`这样的名字，排查问题将是一场噩梦。我们需要对我们创造出的“工人”进行规范化管理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763447567277-3c2d2165-4970-40f4-9b07-7593e4087806.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0952-imalggpi28agdxo6/img-a6dbefbdb239.png)
 
 解决方案就是引入**线程工厂 (ThreadFactory)**。我们不再直接`new Thread()`，而是委托一个专门的工厂来创建工作者线程。在这个工厂里，我们可以：
 
@@ -64,7 +64,7 @@ article: false
 
 目前为止，我们的线程池要么是固定大小，要么需要手动调整。这不够智能。理想的线程池应该像一个管理有方的团队：有固定的“正式工”，在任务繁忙时还能招募“临时工”，任务清闲时再解雇“临时工”以节约成本。这就是`corePoolSize`和`maximumPoolSize`的设计精髓。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763447575451-ccf7912f-540d-48a4-aab0-2e997c111a59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0952-imalggpi28agdxo6/img-a1541064fe18.png)
 
 现在，我们要为我们的线程池V1.0版本实现这套复杂的调度逻辑。当一个新任务提交时，我们的处理流程如下：
 
@@ -79,7 +79,7 @@ article: false
 
 我们已经成功“手搓”出了一个功能强大的线程池V1.0。但作为一个负责任的创造者，我们还必须知道如何为它配置最佳参数。线程池的容量并不是越大越好，它取决于我们要执行的任务类型。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763447589500-0c0a8c47-0327-4ec3-a08a-2624b532f54c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0952-imalggpi28agdxo6/img-f661725bfcb9.png)
 
 - **CPU密集型任务**：这种任务需要消耗大量CPU算力。过多的线程只会导致CPU在它们之间频繁切换，浪费宝贵的上下文切换时间。因此，线程数通常设置为接近CPU的核心数。
 - **I/O密集型任务**：这种任务大部分时间都在等待（如等待数据库返回数据、等待网络响应）。当一个线程在等待时，CPU是空闲的。为了不浪费CPU，我们应该让其他线程此时能顶上来工作。因此，可以配置远超CPU核心数的线程。
@@ -90,7 +90,7 @@ article: false
 
 我们从一个简单的想法出发，通过不断发现问题、解决问题，最终完整地设计出了一个生产级线程池所应具备的所有核心组件和调度逻辑。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763447598171-081678df-f62a-4bba-84c6-e15081e59835.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0952-imalggpi28agdxo6/img-b1308bbafde9.png)
 
 这次“造轮子”的旅程，其真正的价值不在于创造一个可以替代`ThreadPoolExecutor`的工具，而在于通过这个过程，我们深刻地理解了其每一项设计的背后所要解决的问题和蕴含的权衡。
 

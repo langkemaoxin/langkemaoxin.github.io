@@ -20,7 +20,7 @@ article: false
 
 在实际应用中，无缝切换多个大模型的需求日益凸显。例如，企业可能需要同时对接多个大模型，以满足不同业务场景的需求；当单个模型出现稳定性问题时，能够迅速回退到另一个模型，确保业务的连续性和稳定性；在 Multi Agent 场景下，一个复杂任务可能需要调用多个模型来协同完成。Higress AI 网关提供了一个强大的解决方案，支持多模型服务，并具备消费者鉴权、模型自动切换等高级功能。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741760832753-71421487-462c-4e10-9d26-05efdc8b6a6f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-17a122d4ab92.png)
 
 本文将为您提供一份详细的教程，指导您如何使用 Higress AI 网关在 DeepSeek-R1 和 QwQ-32B 大模型之间实现无缝切换。通过以下步骤，您可以轻松完成这一目标：
 
@@ -33,37 +33,37 @@ curl -sS https://higress.cn/ai-gateway/install.sh | bash
 
 安装完成后访问控制台http://localhost:8001，完成初始化配置。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741669057034-48f3ecba-5aad-4237-b963-3b42d1f27a57.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-4b541be5d512.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741675267629-a36ec9a9-e665-40f3-8ba7-863013ac71bd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-046f8a5cd5da.png)
 
 注意：默认脚本是监听的127.0.0.1，如果想通过windows本地机器访问虚拟机中的higress，将ip替换为0.0.0.0
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741676552460-bae46f4b-c6db-4945-8c77-e4835fde791b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-f38156f59dd7.png)
 
 访问Higress控制台，首次访问需要设置管理员账号密码
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741676439494-482b69c4-1b05-4ad9-aeee-38225d72f5cc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-1336e4fd1ec3.png)
 
 成功登录之后，会进入Higress控制台界面
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741676825200-56304801-a94a-44d1-b427-ea699ba79de2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-ee89e9c5c0e9.png)
 
 ### 2.模型接入配置
 
 在 Higress 控制台中，分别配置 DeepSeek-R1 和 QwQ-32B 的接入方式。对于厂商模型，选择相应的厂商名进行配置；对于自建模型，使用 OpenAI 兼容模式，填入 baseURL 即可。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741763670749-2a82f2b0-7cd9-4d1e-b345-0d4511d5fcbf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-6008544a92e9.png)
 
 接下来，创建路由规则，按照匹配模型名称的方式转发给两个不同的模型。
 
 例如，创建一个名为 `aliyun` 的路由，匹配模型名称精确匹配 `qwq-32b`，转发给阿里云百炼平台的 QwQ-32B 模型服务；
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741763750212-e1820815-ec22-4849-8cff-52a8e38f8542.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-8bca1c15fb29.png)
 
 创建另一个名为 `deepseek` 的路由，匹配模型名称精确匹配 `deepseek-`，转发给 DeepSeek平台服务。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741763823855-cc658a01-39c1-4cef-aed8-00f3daa74870.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-782db839ace1.png)
 
 ### 3.测试示例
 
@@ -88,7 +88,7 @@ curl 'http://192.168.65.185:8080/v1/chat/completions'       -H 'Content-Type: ap
 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741764615322-f31f01d2-60de-41c8-9966-3fe242d3471e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-5f7746764d32.png)
 
 ```plain
 curl 'http://192.168.65.185:8080/v1/chat/completions'       -H 'Content-Type: application/json'       -d '{
@@ -102,7 +102,7 @@ curl 'http://192.168.65.185:8080/v1/chat/completions'       -H 'Content-Type: ap
       }'
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741764095497-3611b6fd-e457-420f-a17c-4a02069b36b0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-771b32c25fe9.png)
 
 higress添加消费者认证后，测试
 
@@ -119,7 +119,7 @@ curl 'http://192.168.65.185:8080/v1/chat/completions'       -H 'Content-Type: ap
 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741764280056-eeb96dfe-d2a2-4306-b055-628b2c5a5a98.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-45c4d84bdee6.png)
 
 ### 4.Spring Ai整合Higress实现多模型无缝切换
 
@@ -173,4 +173,4 @@ public class ChatModelController {
 
 4）测试
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1741765469155-163d5d69-d4e7-44dd-bfbd-469f7ed6dda1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1469-lca70bns0cpw7sgl/img-0edcbc073c65.png)

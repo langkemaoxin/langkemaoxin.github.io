@@ -23,7 +23,7 @@ article: false
 
 当公司刚起步时，注册用户仅 20 万，日均活跃用户 1 万，单表日均新增数据 1000 条，高峰期并发请求仅 10QPS。此时，一台普通的 MySQL 服务器就能轻松承载 ——SQL 查询毫秒级响应，磁盘空间充足，几乎不需要额外的性能优化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758550410168-dac68110-881d-46d5-9f82-00bc3eb97c25.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1208-ghoie2oniusf07c9/img-7fd3da90ef09.png)
 
 ### 2. 增长期：单机开始 “力不从心”
 
@@ -33,7 +33,7 @@ article: false
 - 数据库磁盘使用率持续攀升，每周都需要清理历史数据；
 - 高峰期服务器 CPU 利用率偶尔超过 80%，出现短暂的请求超时。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758550443729-c68fdf60-e8aa-47bf-afcd-3e5ef9f84ba2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1208-ghoie2oniusf07c9/img-14ed5dac21e8.png)
 
 ### 3. 爆发期：单机数据库 “彻底崩盘”
 
@@ -49,7 +49,7 @@ article: false
 - **存储瓶颈**：单机磁盘容量有限，即使挂载云盘，也会因单库文件过大导致 IO 性能下降；
 - **性能瓶颈**：单表数据量超过 1000 万后，索引查询效率会急剧下降（B + 树索引层级增加，磁盘 IO 次数增多）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758550471189-aae67a2b-76f2-47b1-8ecf-41ba675a3494.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1208-ghoie2oniusf07c9/img-3e9c1cd77563.png)
 
 ## 二、分库分表：破解单机瓶颈的 “两把钥匙”
 
@@ -141,7 +141,7 @@ SQL 执行性能
 - 优势：数据分布均匀，扩展性强，可无限增加分表 / 分库数量；
 - 注意点：避免 “热点数据”（如某一用户订单量远超其他用户，导致单表数据倾斜），需提前评估数据分布。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758550542836-58e6585d-088a-4d72-81e9-a8b3dcfeec68.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1208-ghoie2oniusf07c9/img-ae789e57f476.png)
 
 ### 2. 垂直拆分：按 “字段” 拆分，结构不同
 
@@ -166,7 +166,7 @@ SQL 执行性能
 - 优势：减少无效字段加载，提升缓存命中率，降低单表数据量；
 - 注意点：跨表查询需通过主键关联（如查用户完整信息需关联`user_core`和`user_extend`），需控制关联次数。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758550572276-a4df3382-2865-4aa6-ad1d-caef0b562588.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1208-ghoie2oniusf07c9/img-985a517ecd26.png)
 
 ## 四、落地避坑：分库分表的关键考量
 

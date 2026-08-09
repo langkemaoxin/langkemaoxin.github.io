@@ -15,7 +15,7 @@ article: false
 
 在分布式系统的设计中，核心挑战往往不在于单个服务的内部实现，而在于服务与服务之间的**通信与协作方式**。随着业务复杂度的攀升，传统的同步调用模式逐渐成为制约系统扩展的瓶颈。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800385658-2c288363-4f37-42c6-8eec-0eb6a807513c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-10f4aaa72c73.png)
 
 本文将探讨“事件驱动架构”（Event-Driven Architecture, EDA）如何通过控制反转的设计理念，解决现代云原生应用面临的耦合与扩展难题。
 
@@ -25,7 +25,7 @@ article: false
 
 这种紧密耦合在系统规模扩大时会引发连锁反应：一旦某个核心下游服务响应变慢，上游的线程池会被迅速耗尽，最终导致整个调用链路的雪崩。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800399925-7f508144-cc25-4e5d-bf01-3a020ec6b3cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-b2282335afbb.png)
 
 如上图所示，架构演进的方向是从左侧的**指令式调用**转向右侧的**声明式事件**。在 EDA 中，服务不再直接下达“命令”（如“去发邮件”），而是发布“事实”（如“用户已注册”）。这种运行时解耦（Runtime Decoupling）使得生产端和消费端可以独立演进，互不干扰，从而显著提升了系统的容错边界。
 
@@ -33,7 +33,7 @@ article: false
 
 除了解耦，EDA 带来的另一个显著优势是资源利用率的提升。在同步阻塞模型中，I/O 等待是造成资源浪费的主要原因。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800409490-370e8a0d-fbff-4c4e-af94-8f56d627a1fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-0242cb5b2834.png)
 
 通过引入异步机制，系统实现了流量的**削峰填谷**：
 
@@ -44,7 +44,7 @@ article: false
 
 实施 EDA 并非简单地引入一个消息队列。一个生产级的事件驱动系统，需要完善的基础设施来支撑消息的流转与治理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800430431-90de1dc7-463d-4ee0-a75e-e5d1330d7e43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-78e8aee29967.png)
 
 核心组件通常包含：
 
@@ -55,7 +55,7 @@ article: false
 
 在业务快速迭代的场景下，EDA 的**开闭原则（Open/Closed Principle）**优势尤为明显。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800439109-59de2072-0b18-4f4f-8a40-962edc4bb1e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-ef1246277a60.png)
 
 以“用户注册”场景为例，利用发布/订阅（Pub/Sub）模式，核心用户服务只需关注自身逻辑并广播事件。无论是现有的“邮件服务”，还是未来可能新增的“大数据分析”或“风控系统”，都可以作为独立的订阅者接入。
 
@@ -65,7 +65,7 @@ article: false
 
 当然，并非所有场景都适合简单的广播。针对不同的业务复杂度，EDA 衍生出了两种主要的协作模式。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800449417-d0131bc0-228f-46f5-b6c1-6733d486247f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-769d70c0af6c.png)
 
 - **编排模式（Orchestration）**：适用于需要强业务流程控制的场景（如电商下单）。通过引入一个中心化的协调者（Mediator），监听各类事件并指挥各个服务按序执行。这保证了业务状态的可控性。
 - **管道模式（Choreography/Pipeline）**：适用于数据处理与分析场景。数据在各个节点间单向流动，每个节点只负责单一的清洗或转换逻辑。这种去中心化的模式具有极高的并行处理能力。
@@ -74,13 +74,13 @@ article: false
 
 架构设计永远是权衡的艺术（Trade-off）。在享受 EDA 带来的高弹性与高性能的同时，架构师必须正视其带来的复杂性挑战。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800463245-775e848e-098d-4c6e-a64e-cbdf4b7cd6a5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-ebc2384335cf.png)
 
 - **最终一致性（Eventual Consistency）**：放弃了 ACID 事务的强一致性，意味着业务层必须接受数据在短时间内的不一致，并设计补偿事务（Saga）来处理失败场景。
 - **可观测性难题**：异步消息的流转使得传统的堆栈追踪失效。必须引入分布式链路追踪（Distributed Tracing）系统，才能在跨越多个服务和队列的复杂链路中快速定位问题。
 
 ### 结语
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765800472700-3f8695d8-71e2-4b28-8132-419bb76ab413.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0918-ggrk96gvy05lomgd/img-64edb7c63d68.png)
 
 事件驱动架构是云原生时代构建弹性系统的基石。它通过彻底的解耦和异步通信，打破了单体思维的桎梏。虽然它对开发和运维团队提出了更高的要求，但对于追求高可用、高并发和敏捷迭代的现代企业级应用而言，这是一条必经之路。

@@ -27,7 +27,7 @@ article: false
 
 **行业参考**：普通Web应用QPS达1000即可满足日常需求，而像12306这样的高并发系统，高峰期查询QPS可突破10亿级。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763544058763-c48ee076-c9dd-47ca-bcbc-f712b2e9143a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1164-fywi4bmwfed4pc1a/img-55b1a20c7079.png)
 
 **2. TPS：每秒事务数，写操作的"能力尺"**
 
@@ -37,7 +37,7 @@ article: false
 
 **行业参考**：支付宝在双11高峰期，核心交易链路TPS可达到50万+，支撑每秒数十万笔订单的完整处理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763544072966-ec6e2415-9cae-4c3a-83ad-1946a0e6af66.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1164-fywi4bmwfed4pc1a/img-c38806984d25.png)
 
 **3. RT：响应时间，用户体验的"直接反馈"**
 
@@ -47,7 +47,7 @@ article: false
 
 **行业标准**：根据Google Web性能指标，核心业务接口RT需控制在300ms以内（用户无感知），普通接口不超过1s（用户可接受），超过2s将导致50%以上的用户流失。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763544087951-1b1d8623-937b-4d0b-9b33-899d63e7ade6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1164-fywi4bmwfed4pc1a/img-42d8bf6c1dc1.png)
 
 **4. 并发量：系统并行处理的"承载量"**
 
@@ -57,7 +57,7 @@ article: false
 
 **技术关联**：并发量直接受服务器线程池、数据库连接池等资源限制。例如，Java应用的线程池核心线程数若设置为200，理论上单机并发处理能力上限即为200，超过该值的请求需进入队列等待。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763544103070-9ad54b0a-3c80-47d2-bac7-f345afb6ca65.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1164-fywi4bmwfed4pc1a/img-a37e538c2088.png)
 
 **5. 吞吐量：系统整体能力的"综合体现"**
 
@@ -67,7 +67,7 @@ article: false
 
 **影响因素**：包括CPU处理能力（加密解密、数据计算消耗）、内存带宽（CPU与内存的数据传输速率）、存储I/O（硬盘寻道时间、读写速度）、网络带宽（请求与响应的传输效率）等。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763544124797-85d5f57c-1f29-45e2-9164-a24e520e917c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1164-fywi4bmwfed4pc1a/img-819a6f0c460e.png)
 
 **二、指标关联：从数学定律到实战逻辑**
 
@@ -111,7 +111,7 @@ Little定律是排队论中的重要定理，其核心结论为：**系统中的
 
 通过这一计算，可明确系统需支撑的核心指标目标，为资源配置提供依据。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763544173407-d90149ad-e615-4cbe-a3bd-4b97ed9d3034.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1164-fywi4bmwfed4pc1a/img-8dc6bb802a43.png)
 
 **三、峰值设计：分场景的容量规划策略**
 
@@ -177,4 +177,4 @@ Little定律是排队论中的重要定理，其核心结论为：**系统中的
 
 掌握"Little定律"的应用逻辑，结合场景化的峰值设计策略，不仅能在面试中清晰阐述指标关系，更能在实际开发中精准评估系统性能、定位性能瓶颈。性能优化从来不是单纯的技术调优，而是基于指标数据的科学决策——吃透这些核心指标，便是迈出性能优化的第一步。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763544228233-8f1e9842-f88d-45f3-ae18-86c2c398f113.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1164-fywi4bmwfed4pc1a/img-34904510916c.png)

@@ -30,7 +30,7 @@ article: false
 
 下面是基于微服务架构的商业 Web 应用的组件视图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934336-1c4dfda7-9c0a-4d76-a9a3-24076de03565.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-1855bc5387e3.png)
 
 **微服务架构的重要特征：**
 
@@ -73,7 +73,7 @@ article: false
 
 更好的方法是为每个微服务提供自己的数据存储，这样服务之间在数据库层就不存在强耦合。这里我使用数据库这一术语来表示逻辑上的数据隔离，也就是说微服务可以共享物理数据库，但应该使用分开的数据结构、集合或者表，这还将有助于确保微服务是按照领域驱动设计的方法正确拆分的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934333-f1384096-d737-48f7-be43-75cbd2ee27d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-658b32d7e4c8.png)
 
 **优点**
 
@@ -106,7 +106,7 @@ article: false
 
 在这些场景，可以基于事件的架构使用事件源模式。在传统数据库中，直接存储的是业务实体的当前 “状态”，而在事件源中任何“状态” 更新事件或其他重要事件都会被存储起来，而不是直接存储实体本身。这意味着业务实体的所有更改将被保存为一系列不可变的事件。因为数据是作为一系列事件存储的，而非直接更新存储，所以各项服务可以通过重放事件存储中的事件来计算出所需的数据状态。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934394-a1561777-ee28-43da-a46b-8ab48dac5c0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-445bd664ce02.png)
 
 **优点**
 
@@ -147,7 +147,7 @@ article: false
 
 在其简单形式中，不同实体或 ORM 模型被用于读写操作，如下所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934367-b270619f-bfcb-4cde-b278-46fa53639b6a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-b08c9064e199.png)
 
 CQRS （简单）
 
@@ -155,7 +155,7 @@ CQRS （简单）
 
 在其高级形式中，会有不同的数据存储用于读写操作。高级的 CQRS 通常结合事件源模式。根据不同情况，会使用不同类型的写数据存储和读数据存储。写数据存储是 “记录的系统”，也就是整个系统的核心源头。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934411-8bae0153-7202-4252-b382-5e8224ea9e4f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-08495fe21550.png)
 
 CQRS（高级）
 
@@ -201,7 +201,7 @@ CQRS（高级）
 
 但您还是可以在微服务架构中使用 Saga 模式实现分布式事务。Saga 是 1987 年开发的一种古老模式，是关系数据库中关于大事务的一个替代概念。但这种模式的一种现代变种对分布式事务也非常有效。Saga 模式是一个本地事务序列，其每个事务在一个单独的微服务内更新数据存储并发布一个事件或消息。Saga 中的首个事务是由外部请求（事件或动作）初始化的，一旦本地事务完成（数据已保存在数据存储且消息或事件已发布），那么发布的消息或事件则会触发 Saga 中的下一个本地事务。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934791-fd046901-9107-4aaf-b7e0-69a4755eb9c1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-47c661f52ff9.png)
 
 如果本地事务失败，Saga 将执行一系列补偿事务来回滚前面本地事务的更改。
 
@@ -240,7 +240,7 @@ Axon， Eventuate， Narayana
 
 面向前端的后端模式适用于需要为特殊 UI 定制单独后端的场景。它还提供了其他优势，比如作为下游微服务的封装，从而减少 UI 和下游微服务之间的频繁通信。此外，在高安全要求的场景中，BFF 为部署在 DMZ 网络中的下游微服务提供了更高的安全性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934846-5159e8cb-d09f-4bf2-a52d-bd6c4b4a232e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-f073f2543cbe.png)
 
 **优点**
 
@@ -275,7 +275,7 @@ Axon， Eventuate， Narayana
 
 一个解决这些问题的可行方法是使用 API 网关。API 网关位于客户端 APP 和后端微服务之间充当 facade，它可以是反向代理，将客户端请求路由到适当的后端微服务。它还支持将客户端请求扇出到多个微服务，然后将响应聚合后返回给客户端。它还支持必要的横切关注点。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934936-e4760628-1502-46cb-9aee-96b046d63432.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-9f2ad83d6f75.png)
 
 **优点**
 
@@ -311,7 +311,7 @@ Amazon API 网关， Azure API 管理， Apigee， Kong， WSO2 API 管理器
 
 一个解决方案是使用 Strangler 模式。Strangler 模式意味着通过使用新的微服务逐步替换特定功能，将单体应用程序增量地迁移到微服务架构。此外，新功能只在微服务中添加，而不再添加到遗留的单体应用中。然后配置一个 Facade （API 网关）来路由遗留单体应用和微服务间的请求。当某个功能从单体应用迁移到微服务，Facade 就会拦截客户端请求并路由到新的微服务。一旦迁移了所有的功能，遗留单体应用程序就会被 “扼杀（Strangler）”，即退役。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876935102-565fbc09-347b-432a-8104-696034f217c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-6fd5c65173cc.png)
 
 **优点**
 
@@ -344,7 +344,7 @@ API 网关后端应用框架。
 
 在这种情况，可以使用断路器模式挽救。一个微服务通过代理请求另一个微服务，其工作原理类似于电气断路器，代理通过统计最近发生的故障数量，并使用它来决定是继续请求还是简单的直接返回异常。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1716876934940-2f04ea4a-f0f1-4adf-82a3-64846696fd23.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0836-dnewkmf93ahu0qtl/img-31bbc861fa4c.png)
 
 断路器可以有以下三种状态：
 

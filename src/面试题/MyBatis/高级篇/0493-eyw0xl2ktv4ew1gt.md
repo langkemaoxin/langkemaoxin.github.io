@@ -85,7 +85,7 @@ User user = userMapper.selectUserById(1);
 
 ### (4) 流程图
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1744812850679-31622b84-940d-479e-a640-933117d06729.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/MyBatis/高级篇/0493-eyw0xl2ktv4ew1gt/img-c6b5e240260f.png)
 
 ---
 

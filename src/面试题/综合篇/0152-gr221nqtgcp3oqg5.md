@@ -33,7 +33,7 @@ article: false
 - 堆栈和线程
 - 变量观察
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729239286233-9ce8233c-8f6a-45c5-88af-8cfd79af726b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0152-gr221nqtgcp3oqg5/img-5e1c27cd8970.png)
 
 #### 1.1 单步跟踪
 
@@ -53,7 +53,7 @@ Step Over 会跳过方法的执行，可以观察方法的返回值，但如果�
 
 关于单步的时候忽略哪些系统方法，可以在 IDEA 的配置项 `Settings -> Build, Execution, Deployment -> Debugger -> Stepping` 中进行配置，如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729239285923-7d94d018-a1c3-408f-9df8-ffc26c517f8c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0152-gr221nqtgcp3oqg5/img-8f8cf2dc0cee.png)
 
 - Step Out
 
@@ -73,7 +73,7 @@ Drop to frame 的原理其实也非常简单，顾名思义，它将堆栈的最
 
 断点是调试器的基础功能之一，可以让程序暂停在需要的地方，帮助我们进行分析程序的运行过程。在 IDEA 中断点管理如下图所示，合理使用断点技巧可以快速让程序停在我们想停的地方：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729239286349-61625460-6be3-456d-b09b-ba066b19d5e7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0152-gr221nqtgcp3oqg5/img-6171ff4fbfb2.png)
 
 可以将断点分成两种类型：行断点指的是在特定的某行代码上暂停下来，而全局断点是在某个条件满足时停下来，并不限于停在固定的某一行，譬如当出现异常时暂停程序。
 
@@ -84,7 +84,7 @@ Drop to frame 的原理其实也非常简单，顾名思义，它将堆栈的最
 
 条件断点。这应该也是每个使用调试器的开发者都应该掌握的一个技巧，当遇到遍历比较大的 List 或 Map 对象时，譬如有 1000 个 Person 对象，你不可能每个对象都调一遍，你可能只想在 `person.name = 'Zhangsan'` 的时候让断点断下来，就可以使用条件断点，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729239286018-ce998287-0c83-4021-9594-a46cd3c51dcc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0152-gr221nqtgcp3oqg5/img-254b878430eb.png)
 
 - Log message to console
 - Evaluate and log
@@ -120,7 +120,7 @@ Drop to frame 的原理其实也非常简单，顾名思义，它将堆栈的最
 
 这两个模式类似于 Eclipse 里面的 Expression View 和 Display View。在 Display View 里也可以编写一段代码来执行，确实非常强大，但是要注意的是，这里只能写代码片段，不能自定义方法，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729239286150-33ddd5d2-d264-495f-a603-7a22580fa17b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0152-gr221nqtgcp3oqg5/img-e7b8025d04d5.png)
 
 #### 1.4 堆栈和线程
 
@@ -129,7 +129,7 @@ Drop to frame 的原理其实也非常简单，顾名思义，它将堆栈的最
 - 线程视图
 - 堆栈视图
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729239286206-6f56daaf-b001-435b-ba42-d5a3bd8eed03.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0152-gr221nqtgcp3oqg5/img-d16ba0423c42.png)
 
 #### 1.5 变量观察
 
@@ -137,4 +137,4 @@ Drop to frame 的原理其实也非常简单，顾名思义，它将堆栈的最
 
 观察区类似于求值表达式中的 Expression mode，你可以添加需要观察的表达式，在调试的时候可以实时的看到表达式的值。变量区的内容相对是固定的，随着左边的栈帧调整，值也会变得不同。在这里还可以修改变量原有的值。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729239286368-c7770500-199a-4e09-8d89-2cc12fb87dbe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0152-gr221nqtgcp3oqg5/img-b83d5c82f4cf.png)

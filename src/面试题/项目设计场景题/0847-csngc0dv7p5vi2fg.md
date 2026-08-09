@@ -723,4 +723,4 @@ KMS
 
 ### 行业解决方案 及 核心应用架构图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/43518495/1741596911824-da1a7c1b-8247-4130-ab48-4dca93d17411.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0847-csngc0dv7p5vi2fg/img-540ea048c7fd.jpg)

@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751690685508-89518e7e-d6c1-45d3-8869-cd50a7f84d30.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1425-nguzd45ua98eamde/img-a4d7f4e38357.png)
 
 模型稀疏化（如Top-K路由）是MoE（Mixture of Experts）架构的核心技术，通过动态分配计算资源降低推理成本。其核心思路是：
 
@@ -29,7 +29,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751690711984-717b6dc1-3883-44b6-8fa0-89e6881adfd8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1425-nguzd45ua98eamde/img-cbab058f5eb8.png)
 
 #### **案例1：千亿参数金融风控模型**
 
@@ -101,7 +101,7 @@ MoE+TopK路由
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751690733911-95084345-aab8-49e9-9890-9a8884d6a55f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1425-nguzd45ua98eamde/img-21f740481ce3.png)
 
 **面试官**：请结合项目经验，说明Top-K路由如何实现模型稀疏化？
 
@@ -121,7 +121,7 @@ MoE+TopK路由
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751690755574-1560bdf4-3bf9-4385-81f7-ae93a9f60bbd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1425-nguzd45ua98eamde/img-c414ed9a8361.png)
 
 Top-K路由的核心价值：
 

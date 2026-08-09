@@ -15,7 +15,7 @@ article: false
 
 String为什么被设计成不可变？   啥是不可变？  啊？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1717652766701-b3dbd756-c0d5-4a77-ae4f-ef89a94b901a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0048-dmi0befubgtft22n/img-bc502479f4ed.png)
 
 今天一个小伙伴去面试被问到这个问题结果一脸懵逼。 我想说如果这种基础的问题都不知道那真的劝你们先准备好再去不要浪费机会， 现在的环境机会丢一个就少一个。
 

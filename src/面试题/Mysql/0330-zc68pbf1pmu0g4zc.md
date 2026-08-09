@@ -46,7 +46,7 @@ InnoDB 会在每行数据（聚簇索引）后面悄悄加三个字段：
 - **DB_ROLL_PTR**（7字节）：**回滚指针**，指向 Undo Log 中这行数据的上一个版本。
 - **DB_ROW_ID**：隐藏主键（如果表没有主键才会生成）。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458850074-829cae90-1b1f-47bf-8fab-c0775c86147f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0330-zc68pbf1pmu0g4zc/img-d25df3c1694c.png)
 
 **🔥 高手加分点（二级索引）：** 面试官如果问：“二级索引也有这两个隐藏字段吗？” 你要回答：**“没有！”** 二级索引页头有个 `PAGE_MAX_TRX_ID`。如果这个 ID 小于当前事务的可见性水位，直接读；否则，需要**回表**到聚簇索引，利用聚簇索引上的 `DB_TRX_ID` 和 Undo Log 来做版本判断。
 
@@ -54,7 +54,7 @@ InnoDB 会在每行数据（聚簇索引）后面悄悄加三个字段：
 
 当你更新一行数据时，InnoDB 不会直接覆盖旧数据，而是先把旧数据拷贝到 **Undo Log** 里。 `DB_ROLL_PTR` 就像一根链条，把新老数据串起来，形成一个**版本链**。链头是最新数据，链尾是最老数据。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458879268-d50cb9d7-f7dd-4572-8677-7d112b12c3f7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0330-zc68pbf1pmu0g4zc/img-3a1c0b26142d.png)
 
 ### 3. ReadView（读视图）—— 裁判员
 
@@ -65,13 +65,13 @@ InnoDB 会在每行数据（聚簇索引）后面悄悄加三个字段：
 - **max_trx_id**：系统应该分配给下一个事务的 ID（高水位）。
 - **creator_trx_id**：生成该 ReadView 的事务 ID（我自己）。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458893718-511d928d-67bf-4bf3-b85f-dbfef78e54cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0330-zc68pbf1pmu0g4zc/img-6e4952d5c5ef.png)
 
 ---
 
 ## ⚖️ 第三部分：数据的“可见性算法”（面试高频）
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458921334-dcea170f-2389-41fe-91da-270abf14f656.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0330-zc68pbf1pmu0g4zc/img-3bab101d7f89.png)
 
 拿着行记录的 `TRX_ID` 去跟 ReadView 比对，规则如下：
 
@@ -90,7 +90,7 @@ InnoDB 会在每行数据（聚簇索引）后面悄悄加三个字段：
 
 面试官追问：“为什么 RC 能读到新提交的，而 RR 读不到？” **这是 P6 和 P7 的分水岭！** 答案在于 **ReadView 生成的时机不同**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458965224-63c4a869-619e-4315-8dfc-3df80ddfbb8f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0330-zc68pbf1pmu0g4zc/img-c932edc4d8e9.png)
 
 - **RC（读已提交）**：
 
@@ -147,7 +147,7 @@ InnoDB 会在每行数据（聚簇索引）后面悄悄加三个字段：
 2. **流程上**：通过 ReadView 机制判断版本可见性。RC 级别是‘次次生成’，RR 级别是‘一次生成，终身复用’。
 3. **边界上**：它解决了快照读的幻读，但当前读的幻读依然需要 Next-Key Lock 配合解决。同时，还要注意 Purge 机制回收日志，避免长事务导致系统膨胀。”
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768459021183-67bf0d8b-ee59-486f-99ee-bf7b7e7bc71d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0330-zc68pbf1pmu0g4zc/img-a05ca095d88c.png)
 
 ---
 

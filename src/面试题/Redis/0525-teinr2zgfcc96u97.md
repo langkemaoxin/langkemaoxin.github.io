@@ -30,11 +30,11 @@ Redis之所以快速的原因主要包括以下几点：
 
 首先，  redis的瓶颈不在 CPU，  它直接从内存中拿完数据就直接通过网络来传输，中间不需要任何计算。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1732265354980-5677deb2-f2d5-474f-924a-d890437940b1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0525-teinr2zgfcc96u97/img-98ced3f1a17b.png)
 
 高效的数据结构，进一步提升操作内存的性能
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1732258925728-7d6d5a81-96c4-4078-b7fd-7502d7124386.gif)
+![image](/面试题/Redis/0525-teinr2zgfcc96u97/img-63f8938503e8.gif)
 
 所以对于 **Redis 这种高频小操作的场景，单线程的效率反而更高**。它的性能更多取决于内存访问速度和网络 I/O，而不是 CPU 的多核能力。那这样的话，单线程的设计就显得非常合理了。 因为对于内存操作来说，速度本身就非常快。 多线程反而会带来了额外的复杂性，上下文切换等问题造成额外的性能开销。
 
@@ -46,14 +46,14 @@ Redis为什么不用b+树？MySQL为什么不用跳表？
 
 2.mysql需要通过B+树减少磁盘ioc次数， redis直接操作内存，内存比磁盘上万倍，多跳几次问题不大。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1732265462209-32360405-a69f-4660-af27-62c2998e9e11.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0525-teinr2zgfcc96u97/img-0829eac5222b.png)
 
 - **单线程是怎么处理多个连接的？**
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1732258344616-63966f50-f9f4-42cd-a7f9-771d8453fe8e.gif)
+![image](/面试题/Redis/0525-teinr2zgfcc96u97/img-a161ad7990ab.gif)
 
 通过IO多路复用，     把连接都管理起来， 谁需要执行命令就执行谁的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1732258576904-eaf01fcd-cbdb-4d10-8041-b5b6f498b1c0.gif)
+![image](/面试题/Redis/0525-teinr2zgfcc96u97/img-8b552489588b.gif)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1732265614403-016b5175-da5b-4b8e-9203-4552c7708678.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0525-teinr2zgfcc96u97/img-4b8703fba31a.png)

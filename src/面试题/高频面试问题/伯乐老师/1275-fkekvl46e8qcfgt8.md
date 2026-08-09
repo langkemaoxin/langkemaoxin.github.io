@@ -17,7 +17,7 @@ article: false
 
 大语言模型的本质是基于概率分布预测下一个词（Token）。Temperature、Top-P 和 Top-K 这三个参数的核心作用，就是在模型输出最终结果前，对这个“概率分布”进行干预和过滤。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781246963807-6ba976c7-3c65-4910-b201-36465cea470a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1275-fkekvl46e8qcfgt8/img-ce76a112daf1.png)
 
 ### 1. Temperature（温度）
 

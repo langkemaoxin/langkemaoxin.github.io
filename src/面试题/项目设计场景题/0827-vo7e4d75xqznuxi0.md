@@ -27,7 +27,7 @@ article: false
 
 网关除了要实现最基本的功能反向代理外，还有公有特性，比如黑白名单，流控，鉴权，熔断，API 发布，监控和报警等，我们还根据业务方的需求实现了流量调度，流量 Copy，预发布，智能化升降级，流量预热等相关功能，下面就我们网关在这些方便的一些实践经验以及发展历程，下面是喜马拉雅网关的演化过程：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720426995481-e18b3d31-b4d2-44a1-a43c-28d30595a8a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0827-vo7e4d75xqznuxi0/img-058bf585ac45.png)
 
 ### 架构1.0 Tomcat nio + AsyncServlet
 
@@ -35,7 +35,7 @@ article: false
 
 架构图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720426995510-dc475f12-5a5e-4b79-a148-1cf506de9c8a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0827-vo7e4d75xqznuxi0/img-8afe950723a1.png)
 
 这版我们实现单独的 Push 层，作为网关收到响应后，响应客户端时，通过这层实现，和后端服务的通信是 HttpNioClient，对业务的支持黑白名单，流控，鉴权，API 发布等功能，这版只是功能上达到网关的要求，但是处理能力很快就成了瓶颈，单机 qps 到 5k 的时候，就会不停的 full gc，后面通过 dump 线上的堆分析，发现全是 tomcat 缓存了很多 http 的请求，因为 tomcat 默认会缓存 200 个 requestProcessor，每个 prcessor 都关联了一个 request，还有就是 servlet3.0 tomcat 的异步实现会出现内存泄漏，后面通过减少这个配置，效果明显。但性能肯定就下降了，总结了下，基于 tomcat 做为接入端，有如下几个问题：
 
@@ -57,7 +57,7 @@ article: false
 
 先看下我们基于 Netty 做接入端的架构图
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720426995482-c4bbbc36-c00d-45a5-aa51-036616f9fec8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0827-vo7e4d75xqznuxi0/img-051953102a92.png)
 
 #### 接入层
 
@@ -98,7 +98,7 @@ Netty 的 io 线程，负责 http 协议的编解码工作，同时对协议层�
 
 连接池的原理如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720426995575-f80f978c-fcae-44c8-8a2a-6732d714c57c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0827-vo7e4d75xqznuxi0/img-e0a5084188fb.png)
 
 服务调用层除了异步发起远程调用外，还需要对后端服务的连接进行管理，http 不同于 rpc，http 的连接是独占的，所以在释放的时候要特别小心，一定要等服务端响应完了才能释放，还有就是连接关闭的处理也要小心，总结如下几点：
 
@@ -126,7 +126,7 @@ Netty 的 io 线程，负责 http 协议的编解码工作，同时对协议层�
 
 下面是我们在整个链路中一个超时处理的机制。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720426995662-1a288c62-407d-466b-bda5-44513c0fcf90.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0827-vo7e4d75xqznuxi0/img-58d4e6c7a787.png)
 
 - 协议解析超时
 - 等待队列超时
@@ -159,7 +159,7 @@ Netty 的 io 线程，负责 http 协议的编解码工作，同时对协议层�
 
 ### 总体架构
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720426995999-d2a450f0-c1aa-4dad-9c3e-68e6356a04e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0827-vo7e4d75xqznuxi0/img-ae597fafb797.png)
 
 ### 性能优化实践
 
@@ -171,7 +171,7 @@ Netty 的 io 线程，负责 http 协议的编解码工作，同时对协议层�
 
 高并发系统，通常都采用异步设计，异步化后，不得不考虑线程上下文切换的问题，我们的线程模型如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1720426996066-192767e4-19ac-4d44-9423-9754d2edef40.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0827-vo7e4d75xqznuxi0/img-6280158c9bac.jpg)
 
 我们整个网关没有涉及到 io 操作，但我们在业务逻辑这块还是和 netty 的 io 编解码线程异步，是有两个原因，1 是防止开发写的代码有阻塞，2 是业务逻辑打日志可能会比较多，在突发的情况下，但是我们在 push 线程时，支持用 netty 的 io 线程替代，这里做的工作比较少，这里有异步修改为同步后 (通过修改配置调整)，cpu 的上下文切换减少 20%，进而提高了整体的吞吐量，就是不能为了异步而异步，zuul2 的设计和我们的类似，但是要注意打大量日志的风险，在出现异常时，高并发下日志多是系统杀手，会 block 住线程，特别要注意，最好用 log4j2。
 

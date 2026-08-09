@@ -13,7 +13,7 @@ article: false
 
 > 来源：[应届生简历模板](https://www.yuque.com/tulingzhouyu/db22bv/xk7e85ur7dkcv3tw)
 
-![](https://www.yuque.com/attachments/yuque/0/2023/pdf/34624608/1693816132175-e7c125bd-e042-4726-a355-b89e054d87cd.pdf)
+[https://www.yuque.com/attachments/yuque/0/2023/pdf/34624608/1693816132175-e7c125bd-e042-4726-a355-b89e054d87cd.pdf](https://www.yuque.com/attachments/yuque/0/2023/pdf/34624608/1693816132175-e7c125bd-e042-4726-a355-b89e054d87cd.pdf)
 
 可选择加入到技术能力中，通用性强面试也不会问的：
 

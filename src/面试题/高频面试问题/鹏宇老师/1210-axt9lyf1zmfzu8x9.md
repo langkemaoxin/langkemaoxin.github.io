@@ -28,7 +28,7 @@ Redis 数据默认仅存储于内存，若未开启持久化：
 - 服务异常终止（如进程崩溃、机器断电）后，所有数据直接丢失；
 - 重启 Redis 后需重新加载数据（如从数据库全量同步），可能引发 “缓存雪崩”（大量请求穿透到数据库，导致数据库过载）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523424877-e6e4d407-e151-46b8-a4cc-e6eb5bc15cab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-a9aface53ce2.png)
 
 ### 2.2 持久化的核心价值
 
@@ -36,7 +36,7 @@ Redis 数据默认仅存储于内存，若未开启持久化：
 2. **灾备保障**：持久化文件可备份至其他服务器，应对单机硬件故障（如硬盘损坏）；
 3. **避免缓存雪崩**：恢复数据后，缓存层可继续承接请求，减少对数据库的冲击。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523447678-2a19dbab-c9f8-44be-bde0-f58824235116.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-82536465c8a3.png)
 
 ## 3. Redis 持久化的两种核心方式
 
@@ -48,7 +48,7 @@ Redis 持久化分为两大类：**RDB 持久化**（默认开启）和 **AOF �
 
 RDB 是**快照式持久化**：在 “特定时间点” 生成内存中所有数据的**全量二进制快照**，并保存为 `.rdb` 文件（默认文件名 `dump.rdb`）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523523377-070476e2-06d7-4725-b8a5-c5c80b8c3156.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-48406ef35943.png)
 
 #### 3.1.2 触发方式
 
@@ -108,9 +108,9 @@ RDB 触发分为 “自动触发” 和 “手动触发”，核心依赖 `bgsav
 4. 子进程遍历内存数据，序列化生成二进制快照，写入临时文件；
 5. 临时文件生成完成后，覆盖旧的 `.rdb` 文件，持久化完成。
 6. 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523639251-69eb7df6-5842-4d02-905b-812d4c8c1288.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-053c58a96daf.png)
 7. 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523620417-bb0c7828-abb2-451e-b30f-dc1cb04e5f3d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-bf52f375a3f0.png)
 
 #### 3.1.4 优缺点
 
@@ -136,7 +136,7 @@ RDB 触发分为 “自动触发” 和 “手动触发”，核心依赖 `bgsav
 
 AOF 是**日志式持久化**：记录 Redis 执行的 “每一次写操作”（如 `set`、`del`、`hmset`），以 “文本协议格式”（可直接打开查看）追加到 `.aof` 文件中。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523549235-47b39234-48fa-48ee-a1e0-264a5eecf533.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-b302e71a30c7.png)
 
 #### 3.2.2 工作流程
 
@@ -146,7 +146,7 @@ AOF 核心通过 “缓冲区 + 刷盘策略” 平衡性能与安全性，流�
 2. **缓冲区刷盘**：根据配置的 `fsync` 策略，将 `aof_buf` 中的数据写入系统内核缓冲区，再由内核同步到磁盘的 `.aof` 文件；
 3. **文件重写**：随着写命令累积，`.aof` 文件会越来越大（如 100 次 `set name` 会存 100 条命令），需通过 `bgrewriteaof` 命令生成 “仅包含最终数据的精简命令”（如 100 次 `set` 合并为 1 条），替换旧 `.aof` 文件。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523675769-727f82de-fa9f-4f0d-b658-3738ce242eaf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-66181ed28f9b.png)
 
 #### 3.2.3 关键配置：`fsync` 刷盘策略
 
@@ -202,7 +202,7 @@ AOF 核心通过 “缓冲区 + 刷盘策略” 平衡性能与安全性，流�
 
 为兼顾 RDB 的 “快速恢复” 与 AOF 的 “高安全性”，Redis 4.0 及以上版本支持**混合持久化**（默认开启，配置项 `aof-use-rdb-preamble yes`）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1758523733935-9a69055e-9bd7-439c-b070-4a444b10b66b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1210-axt9lyf1zmfzu8x9/img-eb7628774c70.png)
 
 ### 4.1 核心逻辑
 

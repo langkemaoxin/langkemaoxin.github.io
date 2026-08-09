@@ -1389,7 +1389,7 @@ golang高并发 + 网络通信高性能全部串联起来
 
 能看到这说明你确实“够浪”，[我就给你](https://www.yuque.com/tianming-aroh0/sagnbd)再留给彩蛋吧。上述进阶并发和网路通信的笔记的
 
-![](https://www.bilibili.com/video/BV1Fg411q7s3/?spm_id_from=333.1387.upload.video_card.click&vd_source=04d13f3e51316f05440d2eb2411de9f3)
+[https://www.bilibili.com/video/BV1Fg411q7s3/?spm_id_from=333.1387.upload.video_card.click&vd_source=04d13f3e51316f05440d2eb2411de9f3](https://www.bilibili.com/video/BV1Fg411q7s3/?spm_id_from=333.1387.upload.video_card.click&vd_source=04d13f3e51316f05440d2eb2411de9f3)
 
 是我已发布在B站（够浪编程），还有更多架构从应用到原理和项目实战的内容。以及云原生二次开发
 

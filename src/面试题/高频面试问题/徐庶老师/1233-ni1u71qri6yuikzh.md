@@ -33,7 +33,7 @@ article: false
 
 ## 主从+哨兵模式
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1759998664047-4341995b-c982-4f28-82f5-7e75ac8d028c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1233-ni1u71qri6yuikzh/img-1a1247c54ca5.png)
 
 那怎么解决单实例的可靠性问题呢？可以用 主从复制 + 哨兵。
 
@@ -53,7 +53,7 @@ article: false
 
 ## 分片集群+一致性hash
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1759998730371-9931814d-7e5b-44bd-9666-67ee8094c49a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1233-ni1u71qri6yuikzh/img-58feb1b75ad6.png)
 
 为了解决单台机器内存不够用的问题，就有了 分片集群 的想法。
 
@@ -71,7 +71,7 @@ article: false
 
 ## Redis Cluster
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1759998749786-2ba785e0-738c-48e9-88af-161df50725a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1233-ni1u71qri6yuikzh/img-df5f2baa65f3.png)
 
 为了提供一个更完善、更官方的分布式解决方案，Redis在3.0版本后正式推出了 Redis Cluster。
 
@@ -81,7 +81,7 @@ article: false
 
 当客户端向一个节点（比如M1）发送一个关于某个Key的命令时，如果这个Key所属的哈希槽正好由M1负责，M1就直接处理。如果发现这个Key属于M3，M1 会返回一个 MOVED 重定向指令，告诉客户端这个Key在M3上，客户端会缓存这个信息并重定向请求到M3。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1759998779562-795a743f-5d76-4b4e-8011-3f5d05d3bf6c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1233-ni1u71qri6yuikzh/img-2c038a3a70c6.png)
 
 节点之间通过 Gossip协议 互相通信，交换彼此的状态信息，从而维护整个集群。
 
@@ -101,7 +101,7 @@ Gossip协议会带来一定的网络开销。
 
 ## 怎么选？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1759998835294-c03c9f38-d515-444a-abe8-062289a11e21.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1233-ni1u71qri6yuikzh/img-82239205854d.png)
 
 挑一种适合你项目的解决方案
 

@@ -42,7 +42,7 @@ article: false
 
 面试时，脑海里一定要有这张图。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767857124408-1f5ab63a-b333-43de-be30-81e473e1e7fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0272-mif500gkwpd4hngq/img-1192273d2487.png)
 
 这也是 JMM 存在问题的根源：**工作内存的数据可能和主内存不一致**。
 

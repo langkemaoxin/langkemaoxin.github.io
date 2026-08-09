@@ -69,7 +69,7 @@ BASE（Basically Available、Soft state、Eventual consistency）是基于CAP理
 - **分布式系统：** 通过多机房部署，当某个机房宕机时，其他机房接管流量，确保服务可用。
 - **CDN 服务：** 用户请求的非核心静态文件（如图片）可能存在延迟或缓存过期更新的情况，但页面主内容仍然正常加载。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1733908906918-9147ff27-8c58-44ad-a6a6-5b38f83c769a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0708-vgzeyhvtsbc1u6ex/img-f008dde0e53c.png)
 
 ### **Soft State（软状态）：分析及概念**
 
@@ -120,7 +120,7 @@ BASE（Basically Available、Soft state、Eventual consistency）是基于CAP理
 - **分布式缓存**：Redis 或 Memcached 中的数据可能是一个阶段性软状态。
 - **社交媒体系统**：例如用户评论、点赞数等可能短时间不同步，但最终数据保持一致。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1733908915633-bba770e3-9c42-4e4f-a87f-4f951dfe0be9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0708-vgzeyhvtsbc1u6ex/img-920e7d130cb8.png)
 
 ### **Eventually Consistent（最终一致性）：分析及概念**
 
@@ -184,4 +184,4 @@ BASE（Basically Available、Soft state、Eventual consistency）是基于CAP理
 
 - 写优先设计，允许短暂的不一致性，最终确保分布式节点的完整同步。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1733908924769-3e7c9611-7b15-4632-a402-7d5f261584b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0708-vgzeyhvtsbc1u6ex/img-8c8fbe4ea627.png)

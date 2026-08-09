@@ -45,7 +45,7 @@ GC Roots通常包括以下几种类型的引用：
 
 ### 2.2.三色标记过程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/35268836/1686666674835-68b6c75c-09d4-4488-bdc3-7f2cf1a9a383.gif)
+![image](/面试题/JVM/0291-wn5gggtb3uqsehng/img-1e4e36ff8b15.gif)
 
 假设现在有白、灰、黑三个集合（表示当前对象的颜色），其遍历访问过程为：
 
@@ -70,7 +70,7 @@ GC Roots通常包括以下几种类型的引用：
 
 并发标记的过程中，若一个已经被标记成黑色或者灰色的对象，突然变成了垃圾，此时，此对象不是白色的不会被清除，重新标记也不能从GC Root中去找到，所以成为了浮动垃圾，这种情况对系统的影响不大，留给下一次GC进行处理即可。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686719832320-800fff92-87b7-4e47-989c-670a143ef440.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0291-wn5gggtb3uqsehng/img-8d863f44b97b.png)
 
 ### 3.2.对象漏标问题：需要的对象被回收
 
@@ -78,7 +78,7 @@ GC Roots通常包括以下几种类型的引用：
 
 因为黑色对象的含义为其属性都已经被标记过了，重新标记也不会从黑色对象中去找，导致该对象被程序所需要，却又要被GC回收，此问题会导致系统出现问题。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686719848358-2ac61cd9-e480-4529-9e36-e44d254d85ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0291-wn5gggtb3uqsehng/img-4021171e8a54.png)
 
 ## 4.总结
 

@@ -25,7 +25,7 @@ article: false
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1782218652332-812cb610-cb97-4115-9b8a-6214397a953e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1287-rremfrhkgswvpgzo/img-6418c0a6450d.png)
 
 ## 二、 三大核心转换策略
 

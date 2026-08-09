@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682479261-f3de8469-07da-4c3e-aff5-2e8947c2b674.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1441-fmu5ezr6ob4q9u8a/img-6a9d8babf244.png)
 
 位置编码是Transformer模型中解决序列顺序感知的关键设计。需从以下角度展开：
 
@@ -30,7 +30,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682529874-269b9f5c-0007-44f7-974a-efe536d6fb9b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1441-fmu5ezr6ob4q9u8a/img-49d8ae258318.png)
 
 **案例背景**：在跨境电商的商品评论情感分析任务中，需处理多语言长文本（最长512词）。初期使用BERT的绝对位置编码，但在处理超长评论时效果下降。
 
@@ -48,7 +48,7 @@ article: false
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682550213-f6b2d2e8-8fb3-49bc-b6e4-6ae640a864e3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1441-fmu5ezr6ob4q9u8a/img-c509fb56e21b.png)
 
 **位置编码的作用**
 位置编码通过为序列中的每个token附加位置信息，使Transformer模型能够区分不同位置的token，从而捕捉序列的顺序依赖关系。例如，在句子“猫吃鱼”中，“猫”和“鱼”的位置编码差异帮助模型理解主谓宾结构。
@@ -85,7 +85,7 @@ article: false
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682599765-a476aeb1-4545-4ad8-a719-ebe4c7a52fd7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1441-fmu5ezr6ob4q9u8a/img-26cee13a9198.png)
 
 位置编码是Transformer处理序列任务的核心机制：
 

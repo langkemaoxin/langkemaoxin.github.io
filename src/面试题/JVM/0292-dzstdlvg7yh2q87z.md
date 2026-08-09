@@ -21,7 +21,7 @@ article: false
 
 **定义**：JVM 内存模型描述的是 JVM **物理内存的划分**，即程序运行时的内存区域。
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1748164287819-5e614cca-0491-463b-9052-fe267b8aa1bc.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0292-dzstdlvg7yh2q87z/img-5cc6bc4470d5.jpg)
 
 **核心区域**：
 
@@ -66,7 +66,7 @@ article: false
 
 **定义**：JMM 是 **多线程环境下共享数据访问的规范**，屏蔽了各种硬件和操作系统的访问差异的，解决了线程间的**可见性**、**原子性**和**有序性**问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1748164621587-00dedeeb-c914-407d-b430-af65cea528d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0292-dzstdlvg7yh2q87z/img-169913c4d638.png)
 
 **核心机制**：
 
@@ -200,8 +200,8 @@ public class VisibilityIssue {
 
 #### 7.1. JMM 操作指令含义
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1748164657419-66cc1c3f-e7ae-401b-aad9-f059e760c411.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0292-dzstdlvg7yh2q87z/img-489baca872aa.png)
 
 #### 7.2. JVM 三大特性
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1748164717089-d3055fa2-176b-40ca-8e0d-ae5b03356c34.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0292-dzstdlvg7yh2q87z/img-48f7c5f6430b.png)

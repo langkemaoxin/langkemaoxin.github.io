@@ -83,7 +83,7 @@ MVCC在MySQL InnoDB中的实现主要是为了提高数据库并发性能，用�
 - **DB_ROLL_PTR** 7byte, 回滚指针，指向这条记录的上一个版本（存储于rollback segment里）
 - **DELETED_BIT** 1byte, 记录被更新或删除并不代表真的删除，而是删除flag变了
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1729411583287-abf7dbac-91b8-459d-860e-6abd056b89c0.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-ea3c95b6bb6a.jpg)
 
 如上图，DB_ROW_ID是数据库默认为该行记录生成的唯一隐式主键；DB_TRX_ID是当前操作该记录的事务ID； 而DB_ROLL_PTR是一个回滚指针，用于配合undo日志，指向上一个旧版本；delete flag没有展示出来。
 
@@ -102,7 +102,7 @@ InnoDB把这些为了回滚而记录的这些东西称之为undo log。这里需
 
 1. **比如有个事务插入persion表插入了一条新记录，记录如下，name为Jerry, age为24岁，隐式主键是1，事务ID和回滚指针，我们假设为NULL**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729167745367-dedf82f7-a96d-4661-8130-4c691ac34c92.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-b49478d308a7.png)
 
 1. **现在来了一个事务1对该记录的name做出了修改，改为Tom**
 
@@ -111,7 +111,7 @@ InnoDB把这些为了回滚而记录的这些东西称之为undo log。这里需
 3. 拷贝完毕后，修改该行name为Tom，并且修改隐藏字段的事务ID为当前事务1的ID, 我们默认从1开始，之后递增，回滚指针指向拷贝到undo log的副本记录，即表示我的上一个版本就是它
 4. 事务提交后，释放锁
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1729411112337-04d35703-7c00-45d7-a903-be3564277b60.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-8a2dfed81827.jpg)
 
 1. **又来了个事务2修改person表的同一个记录，将age修改为30岁**
 
@@ -120,7 +120,7 @@ InnoDB把这些为了回滚而记录的这些东西称之为undo log。这里需
 3. 修改该行age为30岁，并且修改隐藏字段的事务ID为当前事务2的ID, 那就是2，回滚指针指向刚刚拷贝到undo log的副本记录
 4. 事务提交，释放锁
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1729411108230-0a15d363-cdd3-4642-b620-6916fd91c7e6.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-9a13c8b725ad.jpg)
 
 从上面，我们就可以看出，不同事务或者相同事务的对同一记录的修改，会导致该记录的undo log成为一条记录版本线性表，即链表，undo log的链首就是最新的旧记录，链尾就是最早的旧记录（当然就像之前说的该undo log的节点可能是会purge线程清除掉，向图中的第一条insert undo log，其实在事务提交之后可能就被删除丢失了，不过这里为了演示，所以还放在这里）
 
@@ -185,13 +185,13 @@ Read View不仅仅会通过一个列表**trx_list**来维护事务2执行快照�
 
 所以在这里例子中up_limit_id就是1，low_limit_id就是4 + 1 = 5，trx_list集合的值是1,3，Read View如下图
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729167745766-8998d590-20e7-4356-b988-89669c435f87.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-65527e26fe28.png)
 
 我们的例子中，只有事务4修改过该行记录，并在事务2执行快照读前，就提交了事务，所以当前该行当前数据的undo log如下图所示；
 
 我们的事务2在快照读该行记录的时候，就会拿**该行记录的DB_TRX_ID**去跟**up_limit_id,low_limit_id和活跃事务ID列表(trx_list)进行比较**，判断当前事务2能看到该记录的版本是哪个。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1729411101293-d6fa16ae-ed24-4be7-ac91-6ea27097f95d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-662f4bb580bf.jpg)
 
 所以先拿该记录DB_TRX_ID字段记录的事务ID 4去跟Read View的的up_limit_id比较
 
@@ -202,7 +202,7 @@ Read View不仅仅会通过一个列表**trx_list**来维护事务2执行快照�
 
 因此事务2 能读到的最新数据记录是事务4所提交的版本，而事务4提交的版本也是全局角度上最新的版本。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1729411094372-e4c23636-997d-4ecb-bcb4-4fdba40c848c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-ecef228036f4.jpg)
 
 也正是Read View生成时机的不同，从而造成RC,RR级别下快照读的结果的不同
 
@@ -214,11 +214,11 @@ Read View不仅仅会通过一个列表**trx_list**来维护事务2执行快照�
 
 表1:
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729167746027-4e11ba99-a738-4947-a6b2-754a97b472fe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-0f0a6b29cf00.png)
 
 表2:
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729167746087-b436b11f-ed5c-4d88-b3f4-14392f990b9d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0353-dramscudnm47xh5s/img-b291e524cf0a.png)
 
 而在表2这里的顺序中，事务B在事务A提交后的快照读和当前读都是实时的新数据400，这是为什么呢？
 

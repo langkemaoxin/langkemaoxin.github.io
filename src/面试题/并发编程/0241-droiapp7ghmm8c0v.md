@@ -82,13 +82,13 @@ public static void main(String[] args) throws InterruptedException {
 
 因为++操作可以从指令中查看到
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747039145830-e8e6f3a6-d6ff-4f1d-b49d-759e381084df.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0241-droiapp7ghmm8c0v/img-ee151db121f4.png)
 
 既然有多个指令期间就可能被插一脚，可以在方法上追加**synchronized**关键字或者采用**同步代码块**的形式来保证原子性
 
 synchronized可以让避免多线程同时操作临街资源，同一时间点，只会有一个线程正在操作临界资源
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747039145879-363c1931-7816-4ab9-a486-d55e86c990c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0241-droiapp7ghmm8c0v/img-86620d5d60d3.png)
 
 ##### 同步代码块和synchronized有什么区别？
 
@@ -154,7 +154,7 @@ CAS只能保证对一个变量的操作是原子性的，无法实现对多行�
 
 当线程2通过CAS判断是否被修改过时，会误以为没有发生过修改，但实际已经被多次修改
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747039145821-889647e2-7075-4b24-a8e5-fac871522a29.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0241-droiapp7ghmm8c0v/img-8d381ba69996.png)
 
 **解决方案**：可以引入版本号的方式，来解决ABA的问题。Java中提供了一个类在CAS时，针对各个版本追加版本号的操作。 AtomicStampeReference
 
@@ -188,7 +188,7 @@ public static void main(String[] args) {
 
 AtomicStampedReference 内部维护了一个 Pair的数据结构：reference(数据体)、stamp(版本)两个部分。该数据结构用volatile修饰，保证了线程可见性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747039145560-8f155b62-d619-4005-acea-51edfef00b04.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0241-droiapp7ghmm8c0v/img-c41d25f533ce.png)
 
 核心方法为：compareAndSet方法。
 
@@ -366,7 +366,7 @@ public static void main(String[] args) {
 
 只需要在使用完毕ThreadLocal对象之后，及时的**调用remove方法**，移除Entry即可
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747039145848-cf4fd24c-4536-4c57-b347-ce667ca322d9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0241-droiapp7ghmm8c0v/img-23007ba51d97.png)
 
 ## **二、可见性**
 
@@ -378,7 +378,7 @@ public static void main(String[] args) {
 
 这就带来了问题，现在CPU都是多核，每个线程的工作内存（CPU三级缓存）都是独立的，会告知每个线程中做修改时，只改自己的工作内存，没有及时的同步到主内存，导致数据不一致问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747039146302-6b549198-3b5b-4bdf-a3ea-7f8bb2b76996.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0241-droiapp7ghmm8c0v/img-cd764365b00d.png)
 
 可见性问题的代码逻辑
 
@@ -513,7 +513,7 @@ final修饰的属性，在运行期间是不允许修改的，这样一来，就
 
 final并不是说每次取数据从主内存读取，他没有这个必要，而且**final和volatile是不允许同时**修饰一个属性的。**原因**在于：final修饰的内容已经不允许再次被写了，而volatile是保证每次读写数据去主内存读取，并且volatile会影响一定的性能，就不需要同时修饰。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747039146315-9bf035b3-c1aa-4dd2-8c06-ac8a12fb4319.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0241-droiapp7ghmm8c0v/img-5b5c66b97c41.png)
 
 ##### **问**：`volatile` 变量的读写操作是否具有原子性？
 

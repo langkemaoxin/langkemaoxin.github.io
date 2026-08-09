@@ -17,7 +17,7 @@ article: false
 
 ### 1. **主从异步同步导致的数据不一致**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747813572503-ebb28464-bfde-4669-9247-c4ee6bb24e38.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0507-ao2fxqchp8pz5pss/img-4eddf01f8e5c.png)
 
 Redis默认采用异步主从同步，主节点写入数据后不会立即同步到从节点。如果主节点在同步完成前宕机，从节点可能缺失最新数据。此时选举出的新主节点可能包含未同步的库存信息，导致后续请求基于旧数据进行操作，引发超卖。
 
@@ -25,7 +25,7 @@ Redis默认采用异步主从同步，主节点写入数据后不会立即同步
 
 ### 2. **分布式锁失效风险**
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1747813495596-ed3ee860-0ce2-4991-84e8-5228303f4fe1.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0507-ao2fxqchp8pz5pss/img-9d2f09e733a6.jpg)
 
 - 在集群中使用单节点分布式锁时，若**主节点宕机且锁未同步到从节点**，**新主节点可能不包含该锁**。此时其他线程可能同时获取锁并操作库存，造成超卖。
 - **案例**：使用Redisson实现的锁在主节点宕机后，若未通过RedLock等算法确保半数以上节点同步锁，新请求可能绕过锁机制并发扣减库存。

@@ -19,11 +19,11 @@ article: false
 
 ## 第一站：主从复制与哨兵——解决单点故障
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183290284-78a1b8d0-c742-417b-b29e-a2cb0b1c7f37.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-8325be82a2f0.png)
 
 为了避免 Redis 服务器宕机导致整个服务不可用的问题，我们引入了最基础的高可用方案：**主从复制（Master-Slave Replication）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183317965-c95bdf3f-2770-4c0a-a7e3-c744c2b6230b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-c7289f136a6a.png)
 
 其核心思想非常简单：
 
@@ -44,7 +44,7 @@ article: false
 
 至此，我们似乎拥有了一套看似完美的 HA 方案。但仔细思考，这套架构仍然存在两大无法回避的瓶颈。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183346438-3a6bdb21-aad4-4978-8e1e-5ece4149dd43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-770fffa50178.png)
 
 ### 主从架构的瓶颈
 
@@ -53,13 +53,13 @@ article: false
 
 为了突破这两大瓶颈，Redis 的架构必须再次进化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183371962-a81b06f6-3df5-4214-bbb7-2c458c0e922d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-6f1038d23331.png)
 
 ## 第二站：分片集群——为扩展性而生
 
 基于主从架构的瓶颈，**Redis 分片集群（Redis Cluster）应运而生。它彻底改变了数据的存储方式，其核心思想是数据分片（Sharding）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183392269-8210e437-d7b9-40d9-a295-ce17c85bb8f1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-e439b55b529c.png)
 
 集群不再让每个节点都持有全量数据，而是将所有数据拆分成多个部分，分散地存储在不同的 Redis 节点上。
 
@@ -80,7 +80,7 @@ article: false
 
 集群是如何巧妙地将数据均匀分散到各个节点的呢？答案是**哈希槽（Hash Slot）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183413428-4c0af44f-989a-4de5-9410-988a7fcba4cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-20ec6563ac12.png)
 
 Redis 集群内部预设了 **16384** 个哈希槽。在集群创建时，这些槽会被自动地、尽可能平均地分配给集群中的所有主节点。每个主节点只负责一部分哈希槽。
 
@@ -102,7 +102,7 @@ Redis 集群内部预设了 **16384** 个哈希槽。在集群创建时，这些
 
 在一个去中心化的集群中，各个节点需要频繁交换信息，以了解谁是正常的、谁下线了、谁又新加入了、哈希槽的分配情况如何等。Redis 集群没有采用中心化的注册中心，而是使用了一种名为 **Gossip（流言）** 的协议来进行通信。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183438493-e621ea2f-983b-4e7a-9570-661b0f7878a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-449e785b6070.png)
 
 Gossip 协议的思想如同其名，非常像办公室里的“八卦”或流行病的传播：
 
@@ -117,7 +117,7 @@ Gossip 协议的优点是**去中心化、容错性强**，即使部分节点故
 
 正因为有了 Gossip 协议，Redis 集群拥有了自我进行故障发现和转移的能力，不再需要独立的 Sentinel 集群。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183452755-8c4ff80d-66ae-41b6-869e-9dc8e80e5001.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1327-vrv2zsn2dmr2gx4z/img-c33fcce64b61.png)
 
 **故障发现流程：**
 

@@ -706,4 +706,4 @@ Application Object，在Web层与Service层之间抽象的复用对象模型，�
 
 下面将通过一张图来理解上述几种O之间相互转换的关系:
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726125141819-5d97e58c-6b6f-49fd-9bb7-5a001fed16d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0148-yh5vsl9bt8ygkk5b/img-6f64d461d4f7.png)

@@ -17,7 +17,7 @@ article: false
 
 在现代分布式系统中，Redis 凭借其卓越的性能成为缓存和消息队列等场景的首选。然而，随着业务规模的扩大，两个经典问题逐渐浮出水面，成为许多架构师挥之不去的梦魇：“**Redis 重启要 45 分钟？**” 和 “**数据丢了怎么办？**”。前者关乎系统的高可用性（HA），后者则直指数据一致性的生命线。本文将深入剖析这两个问题的根源，并基于 Redis 的底层存储演进和分布式设计原则，提供一套从根源上解决问题的生产级架构方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764597913992-8478a798-a34d-4124-a762-f5273f593f79.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0936-xozi6999zarzngu3/img-07311b218e32.png)
 
 本文将围绕两大核心主题展开：
 
@@ -32,7 +32,7 @@ article: false
 
 传统的 AOF (Append-Only File) 持久化机制通过记录所有写命令来保证数据。但当实例运行日久，AOF 文件会急剧膨胀。一个体积达到 10GB 的 AOF 文件，在实例重启时需要逐条回放数千万甚至上亿条命令，这个过程耗时惊人，45 分钟的加载时间在生产环境中屡见不鲜，这对于要求高可用的服务是不可接受的。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764598513456-4f0c1413-4240-421c-93ac-5a65d4bffc31.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0936-xozi6999zarzngu3/img-777b72b49270.png)
 
 如图所示，传统 AOF 模式下的巨大文件体积直接导致了漫长的恢复时间（RTO）。这促使 Redis 社区对持久化机制进行了一次关键的革新。
 
@@ -40,7 +40,7 @@ article: false
 
 为了解决 AOF 重放过慢的问题，Redis 4.0 引入了混合持久化。它巧妙地结合了 RDB 和 AOF 的优点。在进行 AOF 重写时，不再简单地合并旧的 AOF 文件，而是将当前内存中的数据以 RDB 的二进制格式写入 AOF 文件的开头，后续增量的写命令则继续以 AOF 格式追加在文件末尾。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764598545956-55085354-9564-43cb-9508-80884284f209.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0936-xozi6999zarzngu3/img-cbf3b33f1bae.png)
 
 这种结构带来的好处是革命性的。重启加载时，Redis 只需加载头部的 RDB 部分（通过内存映射，速度极快），然后回放尾部少量的 AOF 增量命令即可。这使得启动速度相比纯 AOF 模式提升了 10-50 倍。在我们的案例中，启动时间从 45 分钟骤降至 90 秒。该功能在 Redis 4.0 及以上版本通过 `aof-use-rdb-preamble yes` 配置（默认开启）来启用。
 
@@ -48,7 +48,7 @@ article: false
 
 进入 Redis 7.0 时代，AOF 机制再次进化，引入了 MP-AOF (Multi-Part AOF)。它将 AOF 文件拆分为一个目录（`appendonlydir/`），其中包含一个基础文件（`base.rdb`）、多个增量文件（`incr.aof`）和一个清单文件（`manifest`）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764598564353-dab6caf9-cd1b-4d8c-a0a0-eccc3a225f71.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0936-xozi6999zarzngu3/img-8927520d02f9.png)
 
 MP-AOF 的核心优势在于**重写过程几乎无阻塞**。它通过创建新的 Base 文件和增量文件，最后原子性地更新 Manifest 文件来完成重写，避免了传统 AOF 重写时对单个大文件进行操作所带来的 IO 峰值和潜在阻塞。这种精细化的文件管理也为数据恢复提供了更大的灵活性。
 
@@ -60,7 +60,7 @@ MP-AOF 的核心优势在于**重写过程几乎无阻塞**。它通过创建新
 
 解决了性能问题，我们再来看数据一致性。在分布式系统中，保证接口幂等性是防止重复操作（如重复扣款、重复下单）的关键。许多方案依赖 Redis 的 `SETNX` 命令来判断请求是否重复。但在标准的 Redis 主从异步复制架构中，存在一个致命的数据丢失窗口。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764598537237-1a54ca4b-f504-4ec1-aa78-83f161b9de01.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0936-xozi6999zarzngu3/img-5228dd38e3e9.png)
 
 如上图所示的场景：
 
@@ -75,7 +75,7 @@ MP-AOF 的核心优势在于**重写过程几乎无阻塞**。它通过创建新
 
 为了实现 100% 的幂等保证，单一的 Redis 判重是不可靠的。我们必须建立一个纵深防御体系。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764598572484-90feb15f-e1f4-4092-aa00-ffaa06942b99.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0936-xozi6999zarzngu3/img-e19448a733a9.png)
 
 这个体系如一个层层过滤的漏斗，确保任何重复请求都无法穿透：
 
@@ -102,7 +102,7 @@ MP-AOF 的核心优势在于**重写过程几乎无阻塞**。它通过创建新
 
 通过对 Redis 底层存储和分布式幂等性的探讨，我们可以提炼出架构师在设计高可用、高一致性系统时的核心要点。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764598579438-5298f836-584d-4b17-9c93-42daba155fe8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0936-xozi6999zarzngu3/img-5967aa642e79.png)
 
 1. **AOF 优化是高可用的基础**：对于 Redis 4.0+，务必开启混合持久化。对于大规模、高并发场景，升级到 Redis 7.0+ 并利用 MP-AOF 是更优选择。
 2. **幂等性设计必须有纵深**：依赖单一组件实现幂等性是脆弱的。**“Redis + 本地缓存 + DB 唯一索引”** 的三层防御模型是经过生产环境反复验证的可靠方案。

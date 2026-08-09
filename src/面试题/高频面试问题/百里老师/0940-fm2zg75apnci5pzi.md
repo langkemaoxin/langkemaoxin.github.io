@@ -13,7 +13,7 @@ article: false
 
 > 来源：[HashMap 源码深度解析：为何“8”是链表转树的临界点？](https://www.yuque.com/tulingzhouyu/db22bv/fm2zg75apnci5pzi)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764165548795-831447c3-55d7-44cd-a4fa-631555520ea8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0940-fm2zg75apnci5pzi/img-da5c1a2d6d78.png)
 
 在 Java 面试中，`HashMap` 几乎是必考题。而其中最刁钻的一个追问往往是：**“在 JDK 1.8 中，为什么链表转红黑树的阈值（TREEIFY_THRESHOLD）被设定为 8？”**
 
@@ -29,7 +29,7 @@ article: false
 
 ### 二、 安全视角：防御 Hash DoS 攻击
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764165573276-f4cd5fd2-4d25-40d9-8620-e76532939e54.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0940-fm2zg75apnci5pzi/img-20900371f138.png)
 
 首先，我们要明白为什么要引入红黑树？这其实是一场防御战。
 
@@ -41,7 +41,7 @@ article: false
 
 ### 三、 经济学视角：空间换时间的博弈
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764165584107-6bb3a618-b325-4e6a-b57e-082ed270ff80.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0940-fm2zg75apnci5pzi/img-53f31889add0.png)
 
 既然红黑树这么好，为什么不一开始就用红黑树，而要等到链表长度达到 8 才转换？
 
@@ -58,7 +58,7 @@ article: false
 
 ### 四、 统计学视角：泊松分布的黑天鹅
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764165594378-ab2b9a7a-04f1-44ca-b4e2-71e79274c466.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0940-fm2zg75apnci5pzi/img-bd5a48fd9faf.png)
 
 如果说前两点是工程上的权衡，那么这一点就是数学上的铁律。
 
@@ -73,7 +73,7 @@ article: false
 
 ### 五、 鲁棒性设计：决策逻辑与防抖动
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764165602758-98657a26-de4a-4a29-a473-f46f183c7fcf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0940-fm2zg75apnci5pzi/img-c9440d4f1a85.png)
 
 最后，我们来看完整的决策逻辑。源码中的转换并非“一刀切”，而是有着严密的防御纵深：
 
@@ -89,7 +89,7 @@ article: false
 
 ### 总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764165610913-e3c22537-79c1-47b4-b006-7f0d52d72c17.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0940-fm2zg75apnci5pzi/img-3c205c709585.png)
 
 HashMap 对“8”的选择，绝非偶然。它是**安全底线（Hash DoS）、资源权衡（空间 vs 时间）与数学概率（泊松分布）**三者在工程实践中的完美交汇点。
 

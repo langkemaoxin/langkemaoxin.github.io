@@ -15,7 +15,7 @@ article: false
 
 设计一个支持国庆期间每天 10 亿人次的景区验票系统，核心挑战在于**高并发处理**（峰值可能达每秒数十万请求）、**高可用**（零故障容忍）、**低延迟**（验票响应需 < 500ms）以及**数据一致性**（防止重复验票 / 假票）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1300531/1759240162820-e41878cc-1f43-4d79-904a-35aef79925da.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/AI代码助手/1309-vol49xmvnduwegxo/img-21209be30895.png)
 
 以下是具体设计思路：
 
@@ -27,11 +27,11 @@ article: false
 
 **3. 核心能力**：快速校验票务有效性（是否购票、未使用、在有效期内）、实时更新票务状态（防止重复使用）、抗突发流量与网络波动。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1300531/1759240104024-f3928c20-9f4e-434a-9339-2fc1108470c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/AI代码助手/1309-vol49xmvnduwegxo/img-f7c21d3863fa.png)
 
 ### **二、架构设计：分布式高可用架构**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1300531/1759240127868-dbe890de-4cce-480d-b530-6ab67431ec23.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/AI代码助手/1309-vol49xmvnduwegxo/img-4c066c573e4e.png)
 
 采用“边缘 + 中心” 混合架构，结合分层设计实现高并发与低延迟：
 
@@ -167,4 +167,4 @@ Prometheus、SkyWalking、ELK
 
 通过“边缘本地化处理 + 中心分布式架构 + 缓存优先 + 异步最终一致” 的设计，可支撑国庆期间 10 亿人次的高并发验票需求，同时保障系统稳定性与用户体验。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1300531/1759240184644-2a918b81-4053-4c1c-8d49-dadc0ee481e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/AI代码助手/1309-vol49xmvnduwegxo/img-1c0af14912d2.png)

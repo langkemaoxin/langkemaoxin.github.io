@@ -25,7 +25,7 @@ top
 
 找到对应的进程ID (PID)。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1724650124042-4d8e6da5-a32e-4174-8669-68f40a29a8e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/线上问题排查/0772-xg9cvfe5n3fmv2t4/img-8dc0cfaf1f92.png)
 
 1. **获取线程信息**
 
@@ -37,7 +37,7 @@ top -Hp &lt;PID&gt;
 
 记录下占用CPU较高的线程ID。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1724650133740-e843164e-93a9-4cfa-b66a-b5e2dab8514a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/线上问题排查/0772-xg9cvfe5n3fmv2t4/img-683e20b47476.png)
 
 1. **转换线程ID为十六进制**
 
@@ -56,7 +56,7 @@ printf "%x\n" <线程ID>
 jstack 19663|grep -A 10 4cd0
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1724650226761-875a7f47-019d-4909-8a6f-53209cb9b083.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/线上问题排查/0772-xg9cvfe5n3fmv2t4/img-03d9030ac426.png)
 
 1. **代码分析**
 

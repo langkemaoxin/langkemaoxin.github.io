@@ -24,7 +24,7 @@ article: false
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260519477-62bf2230-1492-483f-9e4f-7de5717ec0c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-9c5bb85064cd.png)
 
 在正式开始之前，先给大家看一下今天要讲的**8大索引优化原则**：
 
@@ -43,7 +43,7 @@ article: false
 
 ## 原则① - 全值匹配我最爱
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260565852-e097124e-ce64-4cf2-a2da-7c62ed780420.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-32b63910bead.png)
 
 首先来看**第一条原则：全值匹配我最爱**。
 
@@ -83,7 +83,7 @@ MySQL会怎么做呢？
 
 ## 原则② - 最左前缀要遵守
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260593848-f6224ae1-23e1-4166-8774-9a33499a4c43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-294d371f8a2e.png)
 
 接下来是**最重要的原则：最左前缀法则**。
 
@@ -107,7 +107,7 @@ MySQL会怎么做呢？
 
 **场景1：跳过带头大哥**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260607674-26cd0291-9b7c-4e01-9b86-06c3b1469b1e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-088b68a39b1a.png)
 
 如果你查询 `WHERE age=25 AND pos='开发'`，会发生什么？
 
@@ -121,7 +121,7 @@ MySQL会怎么做呢？
 
 **场景2：跳过中间兄弟**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260620183-a6f6b513-62e1-4985-8e67-b2bb78655ad9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-b8468f94dd90.png)
 
 如果你查询 `WHERE name='李四' AND pos='测试'`：
 
@@ -146,7 +146,7 @@ MySQL会怎么做呢？
 
 ## 原则③ - 索引列上少计算
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260638543-e3f72409-78b1-41dc-80fb-0be22cb5c2fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-96a34f28ad3a.png)
 
 第三条原则：**索引列上少计算**。
 
@@ -202,7 +202,7 @@ MySQL必须对每一行的id都加1再判断：
 
 ## 原则④ - 范围之后全失效
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260685225-3ad3488e-12db-4dfb-875a-772a3cb07402.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-3c0815d0587a.png)
 
 第四条原则：**范围之后全失效**。
 
@@ -262,7 +262,7 @@ WHERE a=1 AND b=5 AND c=3
 
 ## 原则⑤ - LIKE百分写最右
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260706560-e5d87943-17ef-4493-9814-5bd07734da6e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-a91aae9d558b.png)
 
 第五条原则：**LIKE百分写最右**。
 
@@ -274,7 +274,7 @@ LIKE模糊查询时，通配符 **%** 的位置非常关键：
 
 为什么？我们看B+树中name索引的存储：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260730907-1f5e2e0a-e61c-4c8c-a4ba-a6a0a75ba640.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-20336f68ce8c.png)
 
 这些数据按照**字典序排列**，就像字典一样！
 
@@ -303,7 +303,7 @@ LIKE模糊查询时，通配符 **%** 的位置非常关键：
 
 ## 原则⑥ - 覆盖索引不写*
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260755253-963b6420-a4b6-4808-9ff7-0d2a74774ef9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-87dc548b3763.png)
 
 第六条原则：**覆盖索引不写***。
 
@@ -338,7 +338,7 @@ MySQL会进行**两次查询**：
 
 **怎么优化？使用覆盖索引！**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260782157-0b674d5c-0c7b-4b4a-a6a5-cdc87f82df55.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-4d4cc0914b63.png)
 
 如果我们建立索引 **(name, age, pos)**，然后查询：
 
@@ -381,7 +381,7 @@ SELECT name, age, pos FROM staff WHERE name='张三'
 
 ## 原则⑦ - 不等空值还有OR
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260801146-838ca307-1539-4f72-8183-15e234437bc9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-f42168bf2fa8.png)
 
 第七条原则：**不等空值还有OR** - 这是索引失效的三大杀手！
 
@@ -449,7 +449,7 @@ SELECT * FROM table WHERE b=2
 
 ## 原则⑧ - VARCHAR加引号
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762260884261-4a4f54d3-29b3-4477-b16b-dc935f6282cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1227-dfndb67qzwbxtxle/img-6ed51840df8a.png)
 
 最后一条原则：**VARCHAR加引号**。
 

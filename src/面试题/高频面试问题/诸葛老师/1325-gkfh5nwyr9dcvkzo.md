@@ -20,7 +20,7 @@ article: false
 在讲"分布式锁"之前，我们先想一个生活中的例子：
 厕所隔间里的锁，一旦有人进去锁上门，其他人就必须等里面的人出来才能进去。这个"锁"的核心作用是**保证同一时间只有一个人使用资源**——这就是"互斥性"。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758099502633-b616d240-be5d-44ca-a693-830dd387c2fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1325-gkfh5nwyr9dcvkzo/img-40e258135292.png)
 
 在程序中，"锁"的作用也是如此：让多个线程（或进程）竞争同一个资源时，同一时间只有一个能拿到权限。
 
@@ -86,7 +86,7 @@ end
 
 调用时，`KEYS[1]`传锁的key（比如`lock:order:1001`），`ARGV[1]`传当前线程的标识（比如`线程A的ID`）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183058098-161032f5-ba28-4010-bf6b-8409eba1a41a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1325-gkfh5nwyr9dcvkzo/img-24b0b18eda4e.png)
 
 ### 3. 为什么SETNX不需要Lua脚本？
 
@@ -109,7 +109,7 @@ SET lock:order:1001 "线程A的ID" NX PX 30000
 - `NX`：等同于SETNX的作用（不存在才设置）；
 - `PX 30000`：表示30秒后自动过期。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758097442077-3008367f-dc22-46f8-b137-71f65cce25fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1325-gkfh5nwyr9dcvkzo/img-fc7ca23deeff.png)
 
 ## 五、新问题：锁过期了，业务还没执行完怎么办？
 
@@ -125,7 +125,7 @@ SET lock:order:1001 "线程A的ID" NX PX 30000
 - 如果是，就给锁续期（比如把过期时间重新设为30秒）；
 - 直到线程A执行完业务，主动释放锁，看门狗才会停止。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183085552-2e5242b9-39b4-4527-af2a-a496933e41dd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1325-gkfh5nwyr9dcvkzo/img-2b2bb079031f.png)
 
 ### 2. 为什么看门狗要设为守护线程？
 
@@ -147,7 +147,7 @@ SET lock:order:1001 "线程A的ID" NX PX 30000
 
 所以我们需要**可重入锁**：同一个线程可以多次获取同一个锁，不会阻塞。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183106859-12a58159-ad58-4744-bed5-81e7a4d7a532.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1325-gkfh5nwyr9dcvkzo/img-b56c855a4770.png)
 
 在实际业务中，**当同一个线程在持有锁的情况下，需要再次进入被同一把锁保护的代码块（通常是嵌套调用的方法）时**，就必须使用重入锁。否则会导致线程自己阻塞自己，引发死锁。
 
@@ -294,7 +294,7 @@ while (true) {
 
 这种方式避免了无效的循环重试，更节省资源。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183148224-61f754d8-c00a-497b-a29c-71672fa19e24.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1325-gkfh5nwyr9dcvkzo/img-ac9042dcd15d.png)
 
 ## 八、主从架构的坑：锁丢失问题
 
@@ -328,7 +328,7 @@ Redis的红锁机制是这么解决的：
 
 如果对锁丢失很敏感的场景那就用Zookeeper的分布式锁吧，但是性能肯定比Redis的锁会差一丢丢。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758183167002-c7844fb2-3abc-49a4-88eb-797b91c781f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1325-gkfh5nwyr9dcvkzo/img-6e3d463c4e4b.png)
 
 ## 九、总结：分布式锁的核心要点
 

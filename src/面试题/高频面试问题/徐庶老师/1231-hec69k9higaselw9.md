@@ -17,11 +17,11 @@ article: false
 
 这里有一个常见的误区，就是认为大Key就是指String类型的Value很大。这个理解不完全对。大Key的“大”，有两个维度的衡量标准：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087425218-93e5866e-c784-4986-a8b9-53d48b6e318f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-67a540998fb4.png)
 
 对于String类型，我们看的是它的Value体积。一般来说，超过 10MB 的String，我们就要高度警惕了。比如你把一整篇长文，或者一个巨大的JSON对象直接塞进去，就很容易产生这种大Key。它的问题在于，一次网络请求就可能把服务器的网卡带宽给打满。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087464421-57465c3a-83b9-4658-957f-749a0b1217ec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-b6c95510fa91.png)
 
 对于集合类型，也就是 Hash, List, Set, ZSet，我们更关注的是它的内部元素数量。一个经验法则是，当成员数超过 5000个 时，它就是一个潜在的大Key。比如一个拥有几百万粉丝的用户的粉丝列表，或者一个热门商品的评论集合。你对它做一次全量操作，比如 HGETALL，就可能让Redis卡住很久。
 
@@ -31,13 +31,13 @@ article: false
 
 了解了什么是大Key，我们再来看看它到底有多可怕。我们把它总结为“三宗罪”，每一条都可能引发线上的生产事故。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087501491-b5d089a4-e89e-43cd-8d3f-f07780f15837.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-b5aa00427c32.png)
 
 第一罪：网络阻塞。想象一下，你的Redis服务器和客户端之间的网络带宽就像一根水管。当你请求一个几十MB的大Key时，就相当于把一块巨石塞进了水管，瞬间把它堵死了。在这期间，其他所有正常的、微小的请求，比如点赞、获取用户信息等，全都被堵在后面，导致整个服务响应极其缓慢。
 
 第二罪：命令阻塞。这是最致命的一点。Redis处理所有命令是单线程的。当你删除一个大Key时，Redis需要释放它占用的庞大内存，这个过程非常耗时，而且无法中断。在这几秒甚至更长的时间里，Redis就像被点了“葵花点穴手”，无法响应任何其他命令。你的业务看起来就像“卡死”了一样。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087530185-dc07eb9d-eb83-4d6e-9e94-917b290f8eb6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-51190b0a1641.png)
 
 第三罪：集群迁移困难。在Redis Cluster集群模式下，数据是分布在不同slot（槽）里的。一个Key只能属于一个slot。如果你的一个Key巨大无比，当你想对集群进行扩容或缩容，需要迁移slot时，这个“巨无霸”Key就会成为迁移的拦路虎，导致迁移过程极其缓慢，甚至失败。
 
@@ -55,15 +55,15 @@ article: false
 
 好，现在我们发现了大Key，要怎么删掉它呢？直接一个 DEL 命令？千万不要！那相当于引爆炸弹。我们要用“温柔删除法”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087649885-98952f77-eb3f-41b2-adc5-b1459490db28.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-5c9daf8063cf.png)
 
 对于String类型：如果它本身就不该存在Redis里，比如是静态文件，最好的办法是把它迁移到对象存储（如OSS或S3），Redis里只存它的URL。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087667366-1075ec63-d3c8-42c4-8cb6-4034e0b8175c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-6d737cc265c5.png)
 
 对于Hash或Set：核心思想是分批次删除。我们用 HSCAN 或 SSCAN 命令，每次只获取100个元素，然后用 HDEL 或 SREM 把这100个删掉，然后根据返回的游标继续下一轮，直到整个Key被删完。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087706245-d851f2ea-6c0d-4287-a57d-bf462e6eb8d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-0001ffcea964.png)
 
 对于List：我们可以用 LTRIM 命令，它像一个裁纸刀。比如一个List有10万个元素，我们执行 LTRIM mylist 100 -1，就相当于把前100个元素裁掉，只保留后面的。我们循环执行这个操作，每次都能“温柔”地砍掉一小部分，直到列表为空。
 
@@ -73,7 +73,7 @@ article: false
 
 处理大Key只是亡羊补牢，最高级的策略是从设计上就杜绝它。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087729304-c51959b7-5a04-4ad2-8e92-adc8cdf3cb77.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-712ed10627c8.png)
 
 分片 (Sharding)：比如一个用户有50万粉丝，不要把这50万ID全放在一个Set里。我们可以根据用户ID取模，把粉丝分散到10个或100个小的Set里。followers:12345 变成 followers:12345:0、followers:12345:1 ... 这样每个Key都不大。
 
@@ -83,7 +83,7 @@ article: false
 
 ## 为什么删除大Key会阻塞？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760087757203-54cc9b82-6224-44c1-898d-8d4c0f016db7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1231-hec69k9higaselw9/img-a231ae29b2c3.png)
 
 现在，我们来到了今天最核心的一张幻灯片。 为什么删除大Key会阻塞？前面我们提到了——因为Redis是单线程的。
 

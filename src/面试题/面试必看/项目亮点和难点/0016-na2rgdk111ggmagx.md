@@ -13,7 +13,7 @@ article: false
 
 > 来源：[传统OA办公系统(亮点与难点)](https://www.yuque.com/tulingzhouyu/db22bv/na2rgdk111ggmagx)
 
-![](https://www.yuque.com/attachments/yuque/0/2024/docx/22811459/1734614172526-24903246-dc1b-46e8-8117-430ceb5c2984.docx)
+[https://www.yuque.com/attachments/yuque/0/2024/docx/22811459/1734614172526-24903246-dc1b-46e8-8117-430ceb5c2984.docx](https://www.yuque.com/attachments/yuque/0/2024/docx/22811459/1734614172526-24903246-dc1b-46e8-8117-430ceb5c2984.docx)
 
 上面这位学员简历的项目没什么亮点和难点，投出去面试机会可能不多，经过和老师沟通后，着重优化了第三个项目《OA办公系统》，优化如下：
 

@@ -25,7 +25,7 @@ article: false
 
 如下图所示，这种发布方式比较简单粗暴，有点像我们传统的软件升级方式，主要靠手工完成，先将老版本 V1 全部下掉，再将新版本发到机器上去。这种方式会引入服务中断（停机），在开发测试环境是可行的，但对于生产环境发布，其会直接影响用户的使用体验，这种方式一般是不建议的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730726699189-0ff0f967-d736-4499-8b6b-7afb4035b8ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_106%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-d54f4684352a.png)
 
 **优势：**
 
@@ -45,7 +45,7 @@ article: false
 
 在普通发布基础上的一种简单改进发布方式，目前仍然是不少成长型技术组织的主流发布方式。单服务器组下的金丝雀发布的简化步骤如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730726929569-d2a9d268-ec91-482b-a0f8-a9ff2ec629d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_162%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-b44eeaa25cab.png)
 
 **实践要点**
 
@@ -70,7 +70,7 @@ article: false
 
 在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。单服务器组下的滚动发布的简化步骤如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730727115010-61589d18-2745-45a3-872c-ecfc88ab68c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_216%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-77a782e4df26.png)
 
 **实践要点**
 
@@ -101,7 +101,7 @@ article: false
 
 蓝绿发布仅适用于双服务器组发布，可以认为是对普通发布的一种简单优化发布方式。简化过程如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730730832985-eefed117-acba-42bf-9f87-23278ac6eb4a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_213%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-2e4277b02392.png)
 
 **实践要点**
 
@@ -128,13 +128,13 @@ article: false
 
 对蓝绿部署的一种简单优化，发布时先从绿组拉入 1 台金丝雀，待金丝雀验证通过再发全量。对比蓝绿发布，该发布方式的优势是有一个生产流量的金丝雀验证过程，可以减轻 V2 可能有问题的风险和影响面。简化发布过程如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730727651993-0fbea445-d555-400c-995f-5a227a9e8aef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_214%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-45bb8d6b732d.png)
 
 ## 滚动式发布（双服务器组）
 
 滚动式发布是对上面的蓝绿和金丝雀发布的进一步优化，按批次增量滚动发布，提供更平滑的用户体验。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730727793990-e5552750-de62-4cf5-be04-95fcc8a5639a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_214%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-ac02c295809d.png)
 
 **实践要点**
 
@@ -168,7 +168,7 @@ article: false
 
 利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730723341727-8a47ad82-b874-4918-a74a-5208f037618c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-edda5c9b9fc3.png)
 
 功能开关发布 **实践要点**
 
@@ -198,7 +198,7 @@ article: false
 
 A/B 测试主要用于产品功能的比对测试，收集用户反馈和对比数据做产品功能设计的决策。实际上，A/B 测试也可以作为一种新功能发布技术。下图展示基于 LB 实现的一种 A/B 测试发布。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730728142239-fc105a64-2487-4618-aec6-6d69eb8364e4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_106%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0154-fby0f4dos67ytssd/img-bec87e0b4b8a.png)
 
 **实践要点**
 

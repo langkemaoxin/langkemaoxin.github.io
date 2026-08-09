@@ -13,7 +13,7 @@ article: false
 
 > 来源：[深入解析 Git 代码管理模型](https://www.yuque.com/tulingzhouyu/db22bv/iohmkdkgppfthm1v)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742275021386-f5219a9c-dba2-4dd7-9286-c53c27cc789a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0117-iohmkdkgppfthm1v/img-1b4b2d877ae0.png)
 
 ## 前言
 
@@ -62,7 +62,7 @@ GitFlow 模型由 **Vincent Driessen** 提出，是一种非常经典且系统�
 
 ### GitFlow 的工作流程步骤
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742279435670-82c71fb3-4be3-4615-87f9-1cf0cef0ad4b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0117-iohmkdkgppfthm1v/img-2b9da05bd715.png)
 
 1. **初始化分支**
 
@@ -143,7 +143,7 @@ GitHub Flow 是由 **GitHub** 提出的简洁、高效的 Git 分支管理模型
 
 ### GitHub Flow 的核心工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742277414326-886adfd2-6d8c-4c21-a856-267543795396.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0117-iohmkdkgppfthm1v/img-d5c15ac94471.png)
 
 GitHub Flow 的整个开发过程可以分为以下六步：
 
@@ -273,7 +273,7 @@ GitLab Flow 是由 GitLab 提出的分支管理模型，结合了 GitHub Flow �
 
 ### GitLab Flow 的核心工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742279048385-6c57bdf9-4aca-4d4a-8b41-2abc6850490d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0117-iohmkdkgppfthm1v/img-2cd8c072a1e5.png)
 
 GitLab Flow 的整个开发和部署过程可以分为以下九步：
 
@@ -406,7 +406,7 @@ GitLab Flow 的核心是通过 **环境分支与 CI/CD 的强绑定**，实现�
 
 ### Trunk-Based Development 的核心工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742283357052-2b41303a-d4e3-406f-bd90-6366630096a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0117-iohmkdkgppfthm1v/img-232f2594f56f.png)
 
 1. **直接在主干开发**
 
@@ -551,7 +551,7 @@ AoneFlow 的设计目的是为了解决以下问题：
 
 ### AoneFlow 的核心工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742283941656-eb9379c4-33cb-41cf-a138-9852230c35a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0117-iohmkdkgppfthm1v/img-3841ccc76aa2.png)
 
 AoneFlow 的开发和部署过程通常包括以下几个阶段：
 

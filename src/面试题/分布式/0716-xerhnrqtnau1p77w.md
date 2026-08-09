@@ -38,7 +38,7 @@ Lamport 提出的 Paxos 算法包括两个部分：
 
 客户端 1 和客户端 2 同时试图创建一个 K 键。客户端 1 创建值为 "baili" 的 K ，客户端 2 创建值为 "百里" 的 K 。在这种情况下，集群如何达成共识，实现各节点上 K 的值一致呢？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732087486241-2932c5b5-6600-4fc5-9477-a03b5b2da94c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-57152962244e.png)
 
 ## 2. Paxos 涉及的概念
 
@@ -50,7 +50,7 @@ Lamport 提出的 Paxos 算法包括两个部分：
 
 需要指出的是，一个节点，既可以是提议者，也可以是接受者。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1732088220760-8686b0f1-b346-4b0d-b2be-43050cd30b38.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-180eb6e15029.jpg)
 
 在 Paxos 算法中，使用**提案**表示一个提议，提案包括提案编号和提议的值。接下来，我们使用 [n, v] 表示一个提案，其中， n 是提案编号， v 是提案的值。
 
@@ -62,11 +62,11 @@ Lamport 提出的 Paxos 算法包括两个部分：
 
 客户端作为提议者，向所有的接受者发送包含提案编号的准备请求。注意在准备阶段，请求中不需要指定提议的值，只需要包含提案编号即可。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104632303-7926dc64-6a91-4aa8-ba5a-358a29b4cf0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-e92e88782900.png)
 
 接下来，节点 A，B 接收到客户端 1 的准备请求（提案编号为 1），节点 C 接收到客户端 2 的准备请求（提案编号为 5）。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104640678-6404cc56-69a3-4ef6-8b07-e51983bd7c06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_68%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-5943fd5c9013.png)
 
  集群中各个节点在接收到第一个准备请求的处理：
 
@@ -75,7 +75,7 @@ Lamport 提出的 Paxos 算法包括两个部分：
 
 接下来，当节点 A，B 接收到提案编号为 5 的准备请求，节点 C 接收到提案编号为 1 的准备请求：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104659321-0949be52-1da0-48aa-8766-b218798a028e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_68%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-659b0420e301.png)
 
 - 节点 A, B：由于提案编号 5 大于之前响应的准备请求的提案编号 1，且节点 A, B 都没有通过任何提案，故均返回“尚无提案”的响应，并承诺以后不再响应提案编号小于等于 5 的准备请求，不会通过编号小于 5 的提案
 - 节点 C：由于节点 C 接收到提案编号 1 小于节点 C 之前响应的准备请求的提案编号 5 ，所以丢弃该准备请求，不作响应
@@ -84,14 +84,14 @@ Lamport 提出的 Paxos 算法包括两个部分：
 
 Basic Paxos 算法第二阶段为接受阶段。当客户端 1，2 在收到大多数节点的准备响应之后会开始发送接受请求。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104675551-9a06a44f-1458-46c1-9790-d7e579dfa057.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-30e0f326de42.png)
 
 - 客户端 1：客户端 1 接收到大多数的接受者（节点 A, B）的准备响应后，根据响应中的提案编号最大的提案的值，设置接受请求的值。由于节点 A, B 均返回“尚无提案”，即提案值为空，故客户端 1 把自己的提议值 "baili" 作为提案的值，发送接受请求 [1, "baili"]
 - 客户端 2：客户端 2 接收到大多数接受者的准备响应后，根据响应中的提案编号最大的提案的值，设置接受请求的值。由于节点 A, B, C 均返回“尚无提案”，即提案值为空，故客户端 2 把自己的提议值 "百里" 作为提案的值，发送接受请求 [5, "百里"]
 
 当节点 A, B, C 接收到客户端 1, 2 的接受请求时，对接受请求进行处理：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104685291-86c0b004-6bb6-4218-9817-36d5d1a88f5c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-4fe0648887d5.png)
 
 - 节点 A, B, C 接收到接受请求 [1, "baili"] ，由于提案编号 1 小于三个节点承诺可以通过的最小提案编号 5，所以提案 [1, "baili"] 被拒绝
 - 节点 A, B, C 接收到接受请求 [5, "百里"]，由于提案编号 5 不小于三个节点承诺可以通过的最小提案编号 5 ，所以通过提案 [5, "百里"]，即三个节点达成共识，接受 X 的值为 "百里"
@@ -106,21 +106,21 @@ Basic Paxos 算法第二阶段为接受阶段。当客户端 1，2 在收到大�
 
 客户端 3 向节点 A, B, C 发送提案编号为 8 的准备请求：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104695520-7ab70abf-33b1-48a8-b60d-21aee011cf8e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-81b65c4cce9b.png)
 
  节点 A, B 接收到客户端 3 的准备请求，由于节点 A, B 已通过提案 [5, "百里"]，故在准备响应中，包含此提案信息。
 
 节点 C 接收到客户端 3 的准备请求，由于节点 C 未通过任何提案，故节点 C 将返回“尚无提案”的准备响应。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104702172-fa13953d-2213-4f7f-b97f-12fea9925659.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-f266e0997101.png)
 
 客户端 3 接收到节点 A, B, C 的准备响应后，向节点 A, B, C 发送接受请求。这里需要特点指出，客户端 3 会根据响应中的提案编号最大的提案的值，设置接受请求的值。由于在准备响应中，已包含提案 [5, "百里"]，故客户端 3 将接受请求的提案编号设置为 8，提案值设置为 "百里" 即接受请求的提案为 [8, "百里"]：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104714147-f9c069e0-3c4d-4429-842e-ecd3a44ba314.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-908f7cdaa1f9.png)
 
 节点 A, B, C 接收到客户端 3 的接受请求，由于提案编号 8 不小于三个节点承诺可以通过的最小提案编号，故均通过提案 [8, 百里]。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732104720307-1b72c04f-ccc4-4748-9b47-4813095bcf02.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-9358f1b022fa.png)
 
 概括来说，Basic Paxos 具有以下特点：
 
@@ -151,7 +151,7 @@ Multi Paxos 算法则是一个统称，是指基于 Multi Paxos 思想，通过�
 
 上面的问题一存在多个提议者同时提交准备请求的情况，如果引入了领导者，由领导者作为唯一的提议者，就可以解决问题一中的冲突的问题。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1732105627136-6e8e4404-971f-43fe-9851-75e15cf28258.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-80acb9bb4daa.jpg)
 
 Lamport 没有说明如何选举领导者，需要在实现 Multi Paxos 算法的时候自行实现。这里我们略去如何选举领导者的算法，假设已经选举出领导者。
 
@@ -173,12 +173,12 @@ Google 分布式锁 Chubby 实现了 Multi Paxos 算法。Chubby 的 Multi Paxos
 
 当主节点接收到客户端的写请求，作为提议者，将数据发送给所有节点，在大多数服务器接受了这个写请求后，给客户端响应写成功。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1732105640640-a3861b01-1772-46c0-8688-7d4e1ab665a0.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-690f0bdd4c82.jpg)
 
 1. Chubby 所有的读请求由主节点来处理
 
 当主节点接收到读请求，主节点只需要查询本地数据，然后返回给客户端。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1732105647806-4d20b4e0-68dc-461b-8c59-cd0be103409e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0716-xerhnrqtnau1p77w/img-917ca0815b06.jpg)
 
 另外，需要指出的是，Basic Paxos 是经过证明的算法。Multi Paxos 是一种思想但缺乏实现算法所需的编程细节，因此，Multi Paxos 的算法实现，是建立在一个未经证明的基础之上。实现 Multi Paxos 算法，最大的挑战是如何证明它是正确的。

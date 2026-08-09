@@ -29,7 +29,7 @@ LRU（最近最少使用）与 LFU（最不经常使用），并结合Java代码
 **实现**：常用哈希表 + 双向链表；每当访问或新增数据，即把该数据节点移到链表头部。淘汰时直接移除链表尾部。
 **优点**：实现简单，适应访问热点快速变化的场景。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746774555571-6e0034d9-40ea-443e-be33-cfe0106c72a5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_108%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0161-ottfpnobpqy8m81a/img-b374a7e52609.png)
 
 **流程讲解**：
 
@@ -43,9 +43,9 @@ LRU（最近最少使用）与 LFU（最不经常使用），并结合Java代码
 **实现**：需要维护每个数据节点的访问频率，多用哈希表加“频率链表”组合。淘汰最低频率中的最旧节点。
 **优点**：能更好保留长期高频次访问的数据，适合长期热门但访问分布分散的场景。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746774585674-a52c507b-e78d-4d05-b76e-c694a5326365.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_105%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0161-ottfpnobpqy8m81a/img-f7cbdc007d42.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746774613021-48148e40-3cac-47bc-810a-8eef6c5a8246.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_116%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0161-ottfpnobpqy8m81a/img-a95a6eee6c7e.png)
 
 **流程讲解**：
 

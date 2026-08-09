@@ -25,7 +25,7 @@ article: false
 
 在这样的技术背景下，字节跳动发布了新一代AI编程工具——Trae IDE。在对标国际顶尖产品的同时，为中文开发者提供了更自然的开发体验。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943351-914ca607-564d-4bd4-9dbe-f74c5e887b08.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-8dea039de233.png)
 
 **
 什么是Trae？**
@@ -45,47 +45,47 @@ Builder模式：通过自然语言需求描述，自动完成从项目初始化�
 
 暂时只支持Mac，windows听说很快会跟上，下载之后进行安装就会发现可以选择中文和主题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943307-c3ed3528-4f03-4915-a6a2-bf96f78d3fa7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-6d285c15f967.png)
 
 当然，如果你之前有使用过Cursor或者VS Code也可以直接导入配置。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943379-28f1ccc6-3107-4efa-9841-51f4f192d6c1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-0ea5ec02a32a.png)
 
 按照提示配置完成之后就可以进入主页面了。在主界面后，我们可以选择打开一个空的文件夹，在里面实现我们需求的功能。
 
 在对话输入框中，可以看到我们选中的模型，点击可以进行切换。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943351-d8b36d15-7faf-449f-8972-6f1e209398ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-13810fc8f4e3.png)
 
 现在我们尝试实现一个小时候爆火的《是男人就下100层》的小游戏。由于是从零开始，所以我们可以直接选择Builder模式来进行对话。
 
 先简单写一下我们想要的功能：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943371-d7d3e08c-3ac6-4f17-9a80-611c39778d1b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-97d029575eaa.png)
 
 甚至，一些我没有提到的点，Ai也会自动帮我来进行改进优化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943757-21eb45aa-bd4e-4d09-9b04-7190920d258a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-ac124c9728d7.png)
 
 由于这是我们用来练手的，所以我不打算使用比较精细的游戏模型图标，于是直接让它用svg给我生成。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943777-9166623a-5a13-4e90-a268-10908d0821d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-3669a831391d.png)
 
 需求提完之后，大体的代码和功能模块都有了。然后就可以开始测试体验了。还有一点比较贴心，由于是使用python实现的，而我的电脑很多python依赖其实是没有的，它都可以直接帮我们生成好指令，我们只需要点击运行指令即可。告别了新手最厌烦的各种环境配置。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910944031-9904bb13-3d65-4311-bbdf-ba4c49bfa8aa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-d55b5c56b5ee.png)
 
 运行python指令之后，游戏界面就已经有了，还可以实现左右移动。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910944045-f372ab8e-7f0e-4eaa-a4c1-46d45b09f5ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-11b0d8075570.png)
 
 当然，效果肯定不是100%满足我们需求的，在游戏中我发现屏幕移动后小平台不会自动生成，所以还得一步步指导Trae帮我调试修改。这里我发现了一个小问题，在Builder模式中，虽然能自动完成0到1的构建，但是对修改某一些细节代码的处理上不如Chat来的精确，在Builder中我尝试让Trae修复bug，效果不是很理想，切换到Chat后，针对指定文件，Bug得到有效的修改。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738910943950-ef410d1e-6788-4fdc-93ac-eab5d9f78a95.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-cf97d7ca9736.png)
 
 在Chat模式对话中，我们对修改的对话，需要点击应用来确认替换。修改之后我陆续又向它提出了一些优化小建议，比如计分系统，碰撞判定等，最终完成了一个小时候喜欢玩的小游戏。下面看看演示效果：
 
-![image](https://cdn.nlark.com/yuque/0/2025/gif/22811459/1738910944261-7d7dc1b9-6754-422d-bb46-815f7e8ad012.gif)
+![image](/面试题/AI大模型/1483-uvea9x6gz6akkuh3/img-734684bcdf6d.gif)
 
 怎么样，通过一步步的对话，Trae成功实现了这个小游戏的功能。大家也来尝试一下吧。
 

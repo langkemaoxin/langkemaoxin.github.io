@@ -13,7 +13,7 @@ article: false
 
 > 来源：[百万级数据导出 Excel怎么性能优化，避免OOM](https://www.yuque.com/tulingzhouyu/db22bv/gogkqpk8r8gsl7rb)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736341788913-1722d489-2385-4809-b206-21fb1feef08e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0800-gogkqpk8r8gsl7rb/img-4b963585c2dd.png)
 
 在导出时，如果一次性导出百万数据是非常慢的， 甚至可能会OOM，所以需要注意内存占用情况，避免内存溢出。可以通过适当调整 JVM 内存参数和多线程分批导出来解决。具体实现步骤如下：
 
@@ -46,7 +46,7 @@ article: false
 
 我们需要设计一个简单的类图来表示 Excel 导出模块的结构。以下是一个基本的类图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736341657295-3c8846ad-67f0-4d54-9877-aed0e4d0b073.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0800-gogkqpk8r8gsl7rb/img-74954074bcf4.png)
 
 在这个类图中，我们有三个主要类：ExcelExporter 用于处理 Excel 的导出逻辑，Data 是我们要导出的数据模型，ExportTask 是一个实现了 Runnable 接口的任务，用于多线程导出。
 

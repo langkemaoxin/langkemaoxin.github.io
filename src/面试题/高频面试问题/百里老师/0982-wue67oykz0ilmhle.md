@@ -17,7 +17,7 @@ article: false
 
 #### **一、 起点：HTTP与WebSocket的本质区别**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761484631621-22f17720-6a2d-4226-a19f-b844b6b2c0a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0982-wue67oykz0ilmhle/img-4ad44827367e.png)
 
 从根本上说，HTTP（超文本传输协议）被设计为一种**单向的、无状态的**通信协议。它的工作模式就像我们去餐厅点餐：你（客户端）向服务员（服务器）提出一个明确的请求（“我要一份宫保鸡丁”），服务员在做好后把菜给你（响应）。上完这道菜，这次服务就结束了。如果你还想要一碗米饭，必须再次发起一个新的请求。
 
@@ -25,7 +25,7 @@ article: false
 
 #### **二、 困境：HTTP的“半双工”之痛**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761484642706-4142a693-8f09-4ef5-a15c-f1ff9156120f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0982-wue67oykz0ilmhle/img-d83c0b30d759.png)
 
 HTTP的单向性本质，决定了它在实时通信场景下的核心痛点：**服务器无法主动向客户端推送信息**。服务器就像一部只能接听的电话，它永远无法主动拨号给客户端。想象一个在线聊天应用，如果你的朋友给你发了一条消息，服务器是无法立刻将这条消息“推”到你的浏览器上的。它只能被动地等待你的浏览器下一次来“问”它有没有新消息。此外，每次HTTP请求都包含着冗长的头部信息，对于需要频繁通信的场景，这无疑是巨大的性能浪费。
 
@@ -35,7 +35,7 @@ HTTP的单向性本质，决定了它在实时通信场景下的核心痛点：*
 
 ##### **方案一：定时轮询 (Polling) - 简单粗暴的暴力破解**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761484675560-8067658e-f068-4baa-b7e1-c7e9964520b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0982-wue67oykz0ilmhle/img-50770ce75c09.png)
 
 这是最直观的解决方案。客户端设置一个定时器（例如，每隔2秒），不知疲倦地向服务器发起请求：“有新数据吗？”。这种方法的优点是实现极其简单，但缺点也同样致命：
 
@@ -44,7 +44,7 @@ HTTP的单向性本质，决定了它在实时通信场景下的核心痛点：*
 
 ##### **方案二：长轮询 (Long-Polling) - 更具智慧的耐心等待**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761484686550-ade16365-ccb5-4a68-bd9c-eacccd3edee4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0982-wue67oykz0ilmhle/img-6fbe18bdc212.png)
 
 长轮询是对定时轮询的智能优化。客户端发起请求后，服务器不再立即响应“没有”。相反，它会“憋个大招”——将这个连接暂时挂起，直到**真正有新数据**或者连接超时为止。一旦有新数据，服务器会立即将数据通过这个挂起的连接返回给客户端。客户端收到数据后，马上发起下一轮长轮询。
 
@@ -55,7 +55,7 @@ HTTP的单向性本质，决定了它在实时通信场景下的核心痛点：*
 
 #### **四、 终极方案：WebSocket的全双工革命**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761484695540-7f6308ab-6845-4b90-b870-d49c635c40d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0982-wue67oykz0ilmhle/img-25a86e8b9b3e.png)
 
 当轮询方案的修修补补终究无法根治HTTP的先天不足时，WebSocket作为革命性的解决方案应运而生。它提供了一种在单个TCP连接上进行**全双工通信**的机制。通过一次巧妙的“协议升级”握手，HTTP连接就能“变身”为WebSocket连接，从此建立起一条持久化的双向通道。
 
@@ -67,7 +67,7 @@ HTTP的单向性本质，决定了它在实时通信场景下的核心痛点：*
 
 #### **五、 揭秘：WebSocket的“变身”魔法**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761484704177-8b8b7432-fb8a-4924-a678-a52dd0aea66f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0982-wue67oykz0ilmhle/img-35de70c62a1f.png)
 
 WebSocket的连接过程非常巧妙，它“借用”了HTTP协议来完成初始握手。客户端首先发送一个特殊的HTTP请求，其中包含 `Upgrade: websocket` 和 `Connection: Upgrade` 等关键头部，意在告诉服务器：“我想把我们的通信方式从HTTP升级到WebSocket”。
 
@@ -75,7 +75,7 @@ WebSocket的连接过程非常巧妙，它“借用”了HTTP协议来完成初�
 
 #### **六、 总结：如何做出正确的技术选型？**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761484711253-27fba40f-14d8-4857-9637-17a9a0d2fb8c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0982-wue67oykz0ilmhle/img-cfdacbcfa321.png)
 
 我们回顾一下这三种方案的特点：
 

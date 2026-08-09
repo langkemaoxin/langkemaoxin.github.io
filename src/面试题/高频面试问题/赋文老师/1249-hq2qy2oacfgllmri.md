@@ -83,7 +83,7 @@ public class ApiGateway {
 
 **冲突点1：频繁的Young GC本身没问题，但每次Young GC都会产生短暂的STW（Stop-The-World）。如果这个STW时间不可控，就会直接导致请求延迟飙升，TP99瞬间爆表。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1762094103496-17fd4739-d978-4a32-831d-abc2db05d724.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1249-hq2qy2oacfgllmri/img-123387136bb4.png)
 
 ---
 
@@ -136,7 +136,7 @@ G1会根据之前的GC表现，动态调整每次回收的Region数量。但在�
 
 **冲突点2：G1的"可预测停顿"只是"尽力而为"，在极端场景下（老年代压力大、内存碎片化），它会"失控"，导致长时间的STW，直接击穿你的TP99目标。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1762093823954-a26c9711-8f1e-4ad2-8c37-eb3d9be52e32.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1249-hq2qy2oacfgllmri/img-b7b7f5504532.png)
 
 ---
 
@@ -277,7 +277,7 @@ java -XX:+UseZGC \
 - 如果你的API网关是核心业务，对延迟的容忍度接近零，且有足够的资源预算，**果断上ZGC**。
 - 如果你的系统还在稳定发展阶段，或者团队对新技术需要磨合期，**先用好G1**，积累经验后再平滑迁移到ZGC。 **
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1762093794797-418cdcfb-63b8-4524-ba96-42bda810b2ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1249-hq2qy2oacfgllmri/img-f9fea6ccaca8.png)
 
 ---
 

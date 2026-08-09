@@ -63,7 +63,7 @@ jdk版本：1.8.0_181
 
 上述 8 项数据检查工具，大致的处理流程是类似的，如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718695133040-6e4789f6-c77b-41d3-b3d2-71746dfb7eee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-1828a60d489f.png)
 
 针对不同的检查工具，只有 “线路数据检查” 这一步是不一样的逻辑，其他步骤都是相同的，如果每个检查工具都实现这么一套逻辑，必定造成大量的重复代码，维护性较差。
 
@@ -71,7 +71,7 @@ jdk版本：1.8.0_181
 
 下图是所实现的模板方法模式的类继承关系：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718695133187-84b8333a-f6b1-433f-8313-6bf56ccaa6b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-06f9909e4d14.png)
 
 分析如下：
 
@@ -196,7 +196,7 @@ public class CheckAncPathNoServiceService extends AbstractDataCheckProductServic
 
 之所以会用到策略模式，是因为一些检查工具写完之后，发现跑出来的结果数据太多，有几万、几十万等等，一方面，检查比较耗时，结果文件会很大，下载耗时；另一方面，这么多数据给到业务同学，他们也很难处理和分析，也许他们只是想看一下总体情况，并不想看具体的到哪个地方的线路。为此，在原先方案设计的基础上，增加了 “统计信息” 的选项，让用户可以自行选择 “详细信息” 还是“统计信息”，对应到页面上就是一个单选框，如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718695133092-b5e3bff7-5ef1-498c-9474-79a77620c9bb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-6bb711bf25b8.png)
 
 现在增加了一种检查方式，今后是否还会有其他的检查方式？完全有可能的。所以得考虑到扩展性，便于后面同学增加新的检查方式。
 
@@ -206,7 +206,7 @@ public class CheckAncPathNoServiceService extends AbstractDataCheckProductServic
 
 “详细信息”和 “统计信息” 两种检查结果的策略类图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718695133108-d2d03855-36dd-4342-aa45-f8d517dfc877.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-441a9054d719.png)
 
 解析：
 
@@ -299,7 +299,7 @@ public class SupplierAndCodeMappingStatisticsStrategy extends AbstractCompareMod
 
 同样，不同网络的处理策略类图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718697132968-7d68433b-befa-4648-b5bf-2576b3ae9793.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_100%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-498ac39e4412.png)
 
 代码与上面类似，就不展示了。
 
@@ -329,11 +329,11 @@ public class SupplierAndCodeMappingStatisticsStrategy extends AbstractCompareMod
 - CompareModeStrategyFactory：用于决策使用哪种格式输出，因为将输出策略分为了 2 类（详细信息和统计信息），所以需要传入两个参数才能决定使用哪种策略。
 - DataCheckNetworkStrategyFactory：用于决策使用哪种网络处理策略，因为将策略分为了 2 类（4PL 网络和其他网络），所以需要传入两个参数才能决定使用哪种策略。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718695133492-1da67136-671a-4a3d-92a9-c21a5a71a624.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-4bc3febbc6dc.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718695133530-a9aff18d-81a1-4900-8a62-4e53918a0d04.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-e397964cc2b9.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718695133563-2b225b03-54c0-45fa-9b30-12b00f4bbcff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0822-glsxdk2w9ysvdpxu/img-e99153ffe51a.png)
 
 这三个工厂的代码类似，这里就以 CompareModeStrategyFactory 为例，简化的代码如下：
 

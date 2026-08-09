@@ -135,17 +135,17 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 过滤器来自于 Servlet，而拦截器来自于 Spring 框架，从上面代码中我们也可以看出，过滤器在实现时导入的是 Servlet 相关的包，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726378759292-29aaf60a-5be9-4ea6-8cf2-5fed6c121496.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0169-slqi3pzslyqmynug/img-516d91054dcc.png)
 
 而拦截器在实现时，导入的是 Spring 相关的包，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726378810001-09516e05-3559-44b2-9696-135612f3c53b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0169-slqi3pzslyqmynug/img-1f357ba1589d.png)
 
 ## 2.触发时机不同
 
 **请求的执行顺序是：请求进入容器 > 进入过滤器 > 进入 Servlet > 进入拦截器 > 执行控制器（Controller）**，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726321662155-b9944ddd-8c41-40e3-aa0b-f029940ef99b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0169-slqi3pzslyqmynug/img-925b3f6bae06.png)
 
 所以过滤器和拦截器的执行时机也是不同的，**过滤器会先执行，然后才会执行拦截器，最后才会进入真正的要调用的方法**。
 
@@ -153,15 +153,15 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 **过滤器是基于方法回调实现的**，我们在上面实现过滤器的时候就会发现，当我们要执行下一个过滤器或下一个流程时，需要调用 FilterChain 对象的 doFilter 方法进行回调执行，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726321661701-d8cdc9ed-522b-4926-8a30-619093c9c4cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0169-slqi3pzslyqmynug/img-73771dde0e7e.png)
 
 而**拦截器是基于动态代理（底层是反射）实现的**，它的实现如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726321661949-31423065-281e-4fbb-ba2c-e3583d884dc3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0169-slqi3pzslyqmynug/img-d91a750f85f5.png)
 
 代理调用的效果如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726321661909-90cc7da8-719a-4d83-8018-41204b02db14.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0169-slqi3pzslyqmynug/img-413fe3df9a71.png)
 
 ## 4.支持的项目类型不同
 
@@ -173,7 +173,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 # 总结
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726384506604-936c9802-58e9-4e7b-b89a-03733346221a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0169-slqi3pzslyqmynug/img-26973bcc4ca4.png)
 
 - 拦截器是基于java反射机制的，而过滤器是基于函数回调。
 - 拦截器不依赖于Servlet容器，而过滤器依赖于servlet容器。

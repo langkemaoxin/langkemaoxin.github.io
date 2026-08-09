@@ -56,11 +56,11 @@ article: false
 
 访问 ollama 官网：https://ollama.com/ ，下载对应操作系统安装包
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742712717661-1a61b529-c277-4121-a645-29e62b4a8c68.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-d235242d5741.png)
 
 下载安装后访问：http://localhost:11434/  出现以下信息说明安装成功
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742712957706-01b9ac23-1e8e-4cc7-82ce-cc775ea6b92c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-8ff8059bf0b8.png)
 
 #### 使用Ollama部署大模型
 
@@ -70,13 +70,13 @@ Ollama默认没有提供WEB界面，需要通过命令行来使用。
 
 windows 用户复制对应的命令直接在 cmd 中执行就行，我已经提前安装了 deepseek-r1:1.5b 模型，演示为安装：sqlcoder:  ollama run sqlcoder
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742713423077-217203b0-8260-4017-9679-976473be60cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-43ac709ff254.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742713523708-7228d6d0-fbb0-4288-b530-14211cb081a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-0f90892fa38f.png)
 
 模型下载并运行完毕后可以通过命令行方式进行对话，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742715019231-3f056ad9-6ae8-4280-850c-70933d6be70c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-eacab378cf26.png)
 
 #### Ollama常用命令
 
@@ -99,7 +99,7 @@ ps.在部署之前大家还需要准备 docker + MySQL
 docker run --name one-api -d --restart always -p 3000:3000 -e SQL_DSN="root:1qaz@WSX@tcp(host.docker.internal:3306)/oneapi" -e TZ=Asia/Shanghai -v /home/ubuntu/data/one-api:/data justsong/one-api
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742715332936-975b7cc9-5907-408d-8dc2-19385703a882.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-988bf51647e7.png)
 
 #### one-api 配置界面
 
@@ -107,7 +107,7 @@ docker run --name one-api -d --restart always -p 3000:3000 -e SQL_DSN="root:1qaz
 
 - 默认 `root` 账号 `one-api` 提供了开箱即用的功能，有一个默认的`root`账号,密码是`123456`，不过登陆之后大家需要修改 root 密码。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742715419662-a6e8a155-ef50-4a07-adc6-6fcf0d68268e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-6d6956c7d9a1.png)
 
 #### 配置模型渠道
 
@@ -123,9 +123,9 @@ docker run --name one-api -d --restart always -p 3000:3000 -e SQL_DSN="root:1qaz
 http://host.docker.internal:11434
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742716157221-179fcad3-2600-4a1e-b5fc-414e6310bd4a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-1d5de618e94b.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742716097992-23b83399-b2da-477a-9187-3a2eb690110e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-35a3e83ccbcb.png)
 
 - 配置硅基流动模型
 
@@ -140,17 +140,17 @@ http://host.docker.internal:11434
 -- 代理: 非本地大模型，不需要填代理
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742715867374-b4392115-d9f5-47d3-9247-a53c38a193c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-f06e9a9493b1.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742716290857-6ed80e58-f527-4b77-b191-41cd6bef9a15.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-6157d8421c73.png)
 
 #### 生成令牌
 
 这里的模型也可以直接配置上轨迹平台的模型，这样通过这个 key 令牌也能直接访问，比如在 idea 中或其他工具中使用，因为这些工具使用是直接指定模型名称的。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717321438-2d299bd2-3cb2-4f13-bdf9-3c4429126ace.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-bf202169f82c.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717377682-4cb67a21-d8e9-49c5-9025-4a33526c720d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-147f4fc172a5.png)
 
 ### 部署 sqlChat（docker 部署）
 
@@ -164,33 +164,33 @@ http://host.docker.internal:11434
 docker run --name sqlchat -d --hostname host --restart always -p 3761:3000 -e NEXTAUTH_SECRET=hjisabfia -e OPENAI_API_KEY=sk-OLfk67FYybc2zs6GE13561AaEe474775B90dE1543707018a -e OPENAI_API_ENDPOINT=http://host.docker.internal:3000/v1 -e NEXT_PUBLIC_ALLOW_SELF_OPENAI_KEY=true sqlchat/sqlchat
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742716861471-99f3944c-735d-4d90-9004-d43825f61940.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-f7fa00e2fb59.png)
 
 #### 使用 sqlchat
 
 完成访问链接: [http://localhost:3761/](http://localhost:3761/)  找到左下角设置：修改语言中文
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717107911-3127c32c-1514-4d1a-9870-3b5f2b9fdfb2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-f6fa1de0c474.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717586227-8af6eb75-b58e-44fa-9fff-7b11023b93f4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-8f043cb9bea3.png)
 
 #### 配置 MySQL
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717696089-fe7d5d3f-c89f-4e4e-a75f-88d7f185d181.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-5ac095cc9157.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717751457-0ddae754-ad1a-477a-b04d-744f6a48e03a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-ffcb6a6a1b11.png)
 
 #### 实际操作
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717857319-3420e0ea-0943-46cb-9fcb-218ae55a542a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-9983e7fb7f47.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717928261-415c9061-bb16-4323-8c65-aff4a1c2dab8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-32dd488faf6d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742717943883-a800650d-5d73-4de3-8d7d-d0f74b48e483.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-fbcfa0c8209b.png)
 
 **手动检查**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742718015813-5db46a41-019b-4ae4-b80d-daf67b05b793.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-100417205bf2.png)
 
 至此，整套自然语言查询数据库的流程已完全打通！对于企业用户来说，只需在内网环境中部署一个“聪明一点点”的大模型（无论是通过Ollama运行量化版Llama 3，还是接入企业内部已有的AI平台），并通过OneAPI统一管理模型服务，即可快速启用自然语言查询能力。
 
@@ -200,7 +200,7 @@ docker run --name sqlchat -d --hostname host --restart always -p 3761:3000 -e NE
 
 后续使用很方便。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742718317809-bef4a25a-11f3-40ef-a885-c7972fe5863d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1471-hql2dtxeks54xxgp/img-c9085476b256.png)
 
 ## 相关数据准备
 

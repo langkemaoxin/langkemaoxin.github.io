@@ -17,7 +17,7 @@ Hello，大家好！
 
 我们今天直入主题，聊一个在后端高级岗和架构师面试中，几乎无法回避的话题——**Raft 算法**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760335695587-b31761b0-8064-4781-98db-dd61389b188d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1105-hn43vtrvgre2g5fk/img-915b00fdd89b.png)
 
 为什么它这么重要？因为我们熟知的 K8s、etcd、RocketMQ、Kafka、RabbitMQ这些顶级的分布式系统，它们的稳定和可靠，都离不开 Raft 这个核心基石。
 
@@ -31,7 +31,7 @@ Hello，大家好！
 
 “在深入细节之前，我们先花 30 秒，快速建立一个宏观认知：Raft 到底是什么？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760335716436-42d44a22-4489-443f-872f-83470538acd5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1105-hn43vtrvgre2g5fk/img-ff1f69c3d752.png)
 
 1. **它是什么？** Raft 是一个分布式一致性算法，它的最大特点就是为了‘易于理解’而设计，功能上和非常难懂的 Paxos 算法是等价的。
 2. **解决什么问题？** 它的核心任务，就是保证在一个由多台机器组成的集群里，数据是强一致的。即使有机器宕机、网络出问题，系统也能对外提供正确无误的服务。
@@ -45,7 +45,7 @@ Hello，大家好！
 
 那么，这个 Leader 是怎么来的呢？这就是 Raft 的第一个核心机制：**Leader 选举**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760335743322-a747e4e9-59b5-49e7-8985-26cbed7d60d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1105-hn43vtrvgre2g5fk/img-c57930c054fa.png)
 
 大家看这张图。假设我们有 S1, S2, S3, S4 四个节点。一开始 S2 是 Leader，它会不断地给其他 Follower 发送心跳，就像在说：‘我还活着，大家听我指挥’。
 
@@ -64,7 +64,7 @@ Hello，大家好！
 
 “好，现在集群有 Leader 了，系统就可以对外提供服务了。但怎么保证所有节点的数据都完全一样呢？这就来到了 Raft **最核心、也是最精妙**的部分：**日志同步 (Log Replication)**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760335765308-271717df-9ab3-4c5e-bcf3-2b8a77eb79bf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1105-hn43vtrvgre2g5fk/img-1f20ff74d2a6.png)
 
 请大家把注意力高度集中在这张图上，这可能是全网把 Raft 日志同步和状态机区分得最清楚的图之一了。
 
@@ -89,7 +89,7 @@ Hello，大家好！
 
 Raft 是如何利用它的机制，优雅地解决这个问题的呢？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760335793003-00fab281-be24-4821-914d-041a77a4a8d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1105-hn43vtrvgre2g5fk/img-841ca38ee2e0.png)
 
 看这个场景，一个 5 节点的集群被网络分割成了两部分。
 
@@ -117,7 +117,7 @@ Raft做的两个重要的事情，就是Leader选举和日志同步。而Raft的
 
 而Raft之所以这么火，就在于他对于前任Paxos算法的优化和改进。这里简单列一个表格进行比较。如果你希望再深入了解下Paxos或者Zookeeper的ZAB等其他分布式一致性协议，请在评论区留下你的意见。我会再出一期从源码和实战的角度再深入分析这些其他的分布式一致性协议。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760335821363-0ec787e1-b8a7-44e4-8fad-1a08cfb704cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1105-hn43vtrvgre2g5fk/img-bbc6a05ecf06.png)
 
 有了前面这些核心机制做铺垫，我们再来看这些常见的面试题，就会发现回答起来简直是水到渠成。我们来快速解答前两个。
 
@@ -143,7 +143,7 @@ Raft做的两个重要的事情，就是Leader选举和日志同步。而Raft的
 
 最后，我想用演示里的这句话作为结尾：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760335839623-c1f8eb33-18ae-457f-bc83-c1675fc6884c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1105-hn43vtrvgre2g5fk/img-98b92fdef088.png)
 
 **‘职业生涯就像一个分布式系统，重要的不是永不犯错，而是拥有从冲突中恢复并达成共识的能力。’**
 

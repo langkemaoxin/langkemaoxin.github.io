@@ -75,7 +75,7 @@ public static void main(String[] args) {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747299150-62b3e417-1f76-4f1c-ad75-32566068cca2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-9de0fb02662c.png)
 
 上述代码在编译时没有报错，但在运行时却抛出了一个 ClassCastException 异常，其原因是 Integer 对象不能强转为 String 类型。
 那如何可以避免上述异常的出现？即我们希望当我们向集合中添加了不符合类型要求的对象时，编译器能直接给我们报错，而不是在程序运行后才产生异常。这个时候便可以使用泛型了。
@@ -112,7 +112,7 @@ public static void main(String[] args) {
 （2）把运行时期的问题提前到了编译期，避免了强转类型转换可能出现的异常，降低了程序出错的概率；
 泛型的出现就是为了统一集合当中数据类型的
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747331764-acf87037-393a-4987-a249-6e5c1bb56a94.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-98d29a0d3c2e.png)
 
 ## 泛型高级篇
 
@@ -124,13 +124,13 @@ public static void main(String[] args) {
 
 我们平常所用的ArrayList类，就是一个泛型类，我们看如下源码
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726749278706-74cc71a4-a931-4716-bd7f-28d58a507064.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-3becc311abcb.png)
 
 ArrayList 源码上显示，在ArrayList类的后面，便是 &lt;E&gt;泛型，定义了这样的泛型，就可以让使用者在创建ArrayList对象时自主定义要存放的数据类型。
 
 这里的 E 可以理解成变量，它不是用来记录数据的，而是记录数据的类型的。可以写成很多字母，T，V，K都可以，通常这些字母都是英文单词的首字母，V表示 value，K表示 key，E表示   element，T表示 type；如果你想，自己练习的时候写成ABCDEFG都可以，但建议养成好习惯，用专业名词的首字母，便于理解。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747355012-a0928174-5016-43c8-8142-2a01369f3d45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-308a9a8fdd35.png)
 
 尖括号 <> 中的 泛型标识被称作是类型参数，用于指代任何数据类型。
 
@@ -177,7 +177,7 @@ public class MyArrayList&lt;T&gt; {
 } 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726749329218-d8972bea-6c6f-4f41-ba42-74c0327e78b1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-18a50f0effc7.png)
 
 这里打印出来的是 list 的内存地址，说明我们自定义的 泛型类没有问题。
 
@@ -193,15 +193,15 @@ public class MyArrayList&lt;T&gt; {
 
 但是，泛型方法却可以脱离泛型类单独存在，泛型方法上定义的泛型只有本方法上可以使用，其他方法不可用。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747383492-4fbd4479-7e36-46b8-86b8-9b96fa75a3a2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-f9d44e357b40.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747400497-17ceb4d5-2699-449c-aac9-b09dfccf3eba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-9841065bc159.png)
 
 格式
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747411013-8eb783cf-9130-449b-b90f-f9ebe8a37c54.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-85177a841a32.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747420477-4e7edd0c-652a-48fd-9961-8a266b3aab50.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-46195778523a.png)
 
 ```java
 package tuling.edu;
@@ -250,9 +250,9 @@ public static &lt;E&gt; void addAll(ArrayList&lt;E&gt; list, E ...e1) {
 
 泛型接口与泛型方法相似，当我们的接口中，参数类型不确定的时候，就可以使用泛型。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726747483174-19fa6d20-054a-47ea-a455-019bfc4f7b02.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-1187dff0d518.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726749413250-050dad62-8395-4c16-ad55-2a14080241fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-b36ee7783d88.png)
 
 泛型接口的格式虽然简单，但这不是我们要学习的重点。
 
@@ -268,7 +268,7 @@ public static &lt;E&gt; void addAll(ArrayList&lt;E&gt; list, E ...e1) {
 
 Java中 List 的实现类 ArrayList 就是采用的第二种方式，延续泛型，我们看源码即可得知
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726749441174-98a7ce01-760d-44f5-a745-2dfbe8652c32.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-af573f9ffb30.png)
 
 别的不用看，只看我画红线的部分，ArrayList 实现了list接口，但后面还是泛型&lt;E&gt;，延续了泛型，是方式二。
 
@@ -314,7 +314,7 @@ public class MyArrayList implements MyList&lt;String&gt; {
 
 然后我们写一个main方法测试是否成功
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/43518495/1726749490787-8892d0ba-716c-4c9f-b88d-eb2e4bac59ff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0197-eenepwcu5me70mre/img-832fb50cb971.png)
 
 创建对象，添加元素，打印结果，运行发现成功
 

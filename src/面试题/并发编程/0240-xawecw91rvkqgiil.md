@@ -622,11 +622,11 @@ System.out.println("耗时：" + (end - start) + "ms");
 
 普通线程耗时：678秒左右，超过10分钟了
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1718330923032-24d5bf81-6353-4910-99bb-af164707e9d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-30ffd33bfb8f.png)
 
 虚拟线程耗时 你知道花了多久  ？  就3.9秒!!
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1718330947786-186eb43e-973f-4080-9757-f6385b097b3d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-1634824c5a97.png)
 
 接近200倍的性能差距啊！！
 
@@ -1115,7 +1115,7 @@ Thread类中有两个方法：
 
 但是stop()方法是不建议使用，并且是有可能在未来版本中删除掉的：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1678190871300-80f7f211-71fe-473e-bd62-b328e469bac9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-0b3138ca41cb.png)
 
 因为stop()方法太粗暴了，一旦调用了stop()，就会**直接停掉线程**，这样就可能造成严重的问题，比如任务执行到哪一步了？该释放的锁释放了没有？都存在疑问。
 
@@ -1292,7 +1292,7 @@ Runtime.getRuntime().availableProcessors()
 
 我们可以利用jvisualvm抽样来估计这两个时间：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1677566574324-0e3037d6-43ee-4bce-91a6-a52bf3f019bb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_85%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-6fe436571dfa.png)
 
 图中表示，在刚刚这次抽样过程中，run()总共的执行时间为538948ms，利用了CPU的时间为86873ms，所以没有利用CPU的时间为538948ms-86873ms。
 
@@ -1333,7 +1333,7 @@ public class ZhouyuController {
 
 这个接口会执行1s，我现在利用apipost来压：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1677568675114-137acd01-8fa6-4c9c-ae74-f24e7ac47145.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-30bea56487f1.png)
 
 这是在Tomcat默认最大200个线程的请求下的压测结果。
 
@@ -1343,11 +1343,11 @@ public class ZhouyuController {
 server.tomcat.threads.max=500
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1677568747971-6108b843-cf38-4310-8153-3feaf4a47030.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-96abc391543a.png)
 
 发现执行效率提高了一倍，假如再增加线程数到1000：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1677568861966-525406f1-4c1a-4448-baf0-129fb20d5ba6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_80%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-2957714aa93b.png)
 
 性能就降低了。
 
@@ -1472,7 +1472,7 @@ public class Person {
 3. 如果在线程池中使用ThreadLocal会造成内存泄漏，因为当ThreadLocal对象使用完之后，应该要把设置的key，value，也就是Entry对象进行回收，但线程池中的线程不会回收，而线程对象是通过强引用指向ThreadLocalMap，ThreadLocalMap也是通过强引用指向Entry对象，线程不被回收，Entry对象也就不会被回收，从而出现内存泄漏，解决办法是，在使用了ThreadLocal对象之后，手动调用ThreadLocal的remove方法，手动清楚Entry对象
 4. ThreadLocal经典的应用场景就是连接管理（一个线程持有一个连接，该连接对象可以在不同的方法之间进行传递，线程之间不共享同一个连接）
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/365147/1622816023795-3ae4931c-bcab-4e8c-a987-4fecf53f9855.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-c843dec32d91.png)
 
 # Java中如何避免死锁?
 
@@ -1499,11 +1499,11 @@ public class Person {
 
 另外，ReentrantLock是可重入锁，不管是公平锁还是非公平锁都是可重入的。
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/365147/1626185425264-6d9a8ab7-12d9-4032-8fa4-1bcc40231009.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_65%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-4986372e1380.png)
 
  
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/365147/1626185427450-d6a6ab8e-94a4-4e7a-be68-bab2d06b320c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_65%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0240-xawecw91rvkqgiil/img-c7986dafa5a8.png)
 
 ****
 

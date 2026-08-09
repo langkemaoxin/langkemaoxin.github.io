@@ -21,19 +21,19 @@ article: false
 
 1. 在刷短视频的时候当别人评论或者点赞了你的视频，系统会主动给你推送一条动态。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715002891567-d635653c-88e3-4abe-874c-8ee4c31a46b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-8314a0afdee2.png)
 
 1. 在跟别人在线聊天的时候也需要实时感知到
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1715003025380-7d1f2ed5-c356-4a18-95f6-fdc126a58a77.gif)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-0673e831999a.gif)
 
 3. 在进行多人在线游戏的时候需要实时知道别人出的牌和释放的技能：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715002965207-753edff8-91d6-43ce-b1c5-7d2c4f192e38.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-5f28eeb77293.png)
 
 4.甚至在线下使用一些共享设备比如共享单车， 当在手机点击“开锁”，系统也会实时推送消息给共享单车进行开锁：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003118447-0cc2b5ac-74ef-4c52-ac98-f8434d0146a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-430dcff7a990.png)
 
 给大家介绍几个常见的实现方案：
 
@@ -66,7 +66,7 @@ setInterval(() => {
 
 效果还是可以的，短轮询实现固然简单，缺点也是显而易见，由于推送数据并不会频繁变更，无论后端此时是否有新的消息产生，客户端都会进行请求，势必会对服务端造成很大压力，浪费带宽和服务器资源。
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1715003408489-0a5a9d4d-249b-4a72-b4aa-586c10821057.gif)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-e035fa5b9c59.gif)
 
 ## 长轮询
 
@@ -74,7 +74,7 @@ setInterval(() => {
 
 这次我使用apollo配置中心实现长轮询的方式，应用了一个类DeferredResult，它是在servelet3.0后经过Spring封装提供的一种异步请求机制，直意就是延迟结果。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003408628-88d67391-0284-43ea-8d78-424d845c811f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-e288212fb849.png)
 
 DeferredResult可以允许容器线程快速释放占用的资源，不阻塞请求线程，以此接受更多的请求提升系统的吞吐量，然后启动异步工作线程处理真正的业务逻辑，处理完成调用DeferredResult.setResult(200)提交响应结果。
 
@@ -145,7 +145,7 @@ public class AsyncRequestTimeoutHandler {
 
 我们来测试一下，首先页面发起长轮询请求/polling/watch/10086监听消息更变，请求被挂起，不变更数据直至超时，再次发起了长轮询请求；紧接着手动变更数据/polling/publish/10086，长轮询得到响应，前端处理业务逻辑完成后再次发起请求，如此循环往复。
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1715003408592-40f195b1-3a4a-4942-9b86-77faae6b718f.gif)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-5623b070585c.gif)
 
 长轮询相比于短轮询在性能上提升了很多，但依然会产生较多的请求，这是它的一点不完美的地方。
 
@@ -155,13 +155,13 @@ public class AsyncRequestTimeoutHandler {
 
 SSE它是基于HTTP协议的，我们知道一般意义上的HTTP协议是无法做到服务端主动向客户端推送消息的，但SSE是个例外，它变换了一种思路。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003409068-81a56155-a371-4cc2-aa49-8fa6d9758f53.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-c006607004b6.png)
 
 SSE在服务器和客户端之间打开一个单向通道，服务端响应的不再是一次性的数据包而是text/event-stream类型的数据流信息，在有数据变更时从服务器流式传输到客户端。
 
 整体的实现思路有点类似于在线视频播放，视频流会连续不断的推送到浏览器，你也可以理解成，客户端在完成一次用时很长（网络不畅）的下载。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003409010-880e58d0-0477-4e4e-9c32-4f16da43ffa8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-29ad605dea6e.png)
 
 SSE与WebSocket作用相似，都可以建立服务端与浏览器之间的通信，实现服务端向客户端推送消息，但还是有些许不同：
 
@@ -262,11 +262,11 @@ public static void sendMessage(String userId, String message) {
 
 。
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1715003409191-54db0843-1230-4e25-9f92-8dc0e61a1fc1.gif)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-cd12af692296.gif)
 
 **注意：** SSE不支持IE浏览器，对其他主流浏览器兼容性做的还不错。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003409124-6e75d283-f355-4a46-9f50-57be36980090.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-7a5ded2747b0.png)
 
 ## MQTT
 
@@ -276,7 +276,7 @@ MQTT 全称(Message Queue Telemetry Transport)：一种基于发布/订阅（pub
 
 该协议将消息的发布者（publisher）与订阅者（subscriber）进行分离，因此可以在不可靠的网络环境中，为远程连接的设备提供可靠的消息服务，使用方式与传统的MQ有点类似。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003409299-a475795a-907c-494f-af39-735a51261ff2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-6dadfcef4bfe.png)
 
 TCP协议位于传输层，MQTT 协议位于应用层，MQTT 协议构建于TCP/IP协议上，也就是说只要支持TCP/IP协议栈的地方，都可以使用MQTT协议。
 
@@ -304,7 +304,7 @@ websocket应该是大家都比较熟悉的一种实现消息推送的方式，�
 
 WebSocket是一种在TCP连接上进行全双工通信的协议，建立客户端和服务器之间的通信渠道。浏览器和服务器仅需一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003409445-78b5b3ac-7247-4109-bcac-960f5dfbc971.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-960ea931b311.png)
 
 图片源于网络
 
@@ -415,9 +415,9 @@ public class WebSocketServer {
 
 页面初始化建立websocket连接，之后就可以进行双向通信了，效果还不错
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003409471-fc6a1fa9-1267-44e8-a399-39870cdacf03.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-1cf215bd27b3.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/gif/22309163/1715003409595-d16f445e-dcc0-4d54-bcc0-f71cc9d348c0.gif)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-23426c189360.gif)
 
 ## 自定义推送
 
@@ -427,7 +427,7 @@ public class WebSocketServer {
 
 一般大型公司都有自研的消息推送平台，像我们本次实现的web站内信只是平台上的一个触点而已，短信、邮件、微信公众号、小程序凡是可以触达到用户的渠道都可以接入进来。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715003409719-668e53ca-c4fc-4f59-bbae-1f65dc9e032d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-a0e2caef1d86.png)
 
 图片来源于网络
 
@@ -511,7 +511,7 @@ RPC 接口适用于分布式系统之间的通信。它可以在多种编程语�
 
 ## 什么是代理？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716887047399-3042cb84-86ac-4206-b94b-83dcd3ef22e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-4bc62204e5f7.png)
 
 代理是一种网络服务模式，它充当客户端和目标服务器之间的中介。在代理服务器的模型中，客户端不直接与目标服务器通信，而是将请求发送到代理服务器，然后代理服务器将请求转发给目标服务器。目标服务器的响应也通过代理服务器返回给客户端。
 
@@ -525,7 +525,7 @@ RPC 接口适用于分布式系统之间的通信。它可以在多种编程语�
 
 ## 什么是反向代理？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716887051179-b835faad-a9a6-4bb5-add7-63e100c5e7de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0579-om32fi26bha6ufgm/img-208ed5dddc83.png)
 
 反向代理（Reverse Proxy）是代理服务器的另一种形式，它位于客户端与服务器之间，但是客户端通常不知道反向代理的存在。在这种模型中，客户端发起的请求首先到达反向代理服务器，然后反向代理服务器将请求转发到后端的一组服务器之一。服务器的响应再通过反向代理返回给客户端。
 

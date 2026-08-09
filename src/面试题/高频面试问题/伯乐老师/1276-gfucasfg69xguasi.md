@@ -15,7 +15,7 @@ article: false
 
 ## 一、 Embedding（词向量）的本质是什么？
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781246556988-0d862e09-6aba-45f0-a238-0b212d780459.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1276-gfucasfg69xguasi/img-e8dc2b33b542.png)
 
 ### 1. 核心定义
 
@@ -34,7 +34,7 @@ Embedding 最伟大的特性在于：**在多维向量空间中，语义相近�
 - **字面不同，语义相近**：“苹果手机”和“iPhone”在字面上毫无关联，但它们的向量坐标会非常接近。
 - **字面相同，语义不同**：“苹果手机”和“吃苹果”，虽然都有“苹果”，但因为上下文语境不同，它们在空间中的距离会很远。
 - **经典的线性关系**：$$。
-![](https://cdn.nlark.com/yuque/__latex/34f29875aaf61b81b355dc3c7b2075d1.svg)
+![](/面试题/高频面试问题/伯乐老师/1276-gfucasfg69xguasi/img-01207645e6a5.svg)
 
 ---
 

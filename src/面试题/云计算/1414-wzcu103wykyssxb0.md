@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752229407063-d53bc9a4-2f6d-43a5-b2e3-31733da1095c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1414-wzcu103wykyssxb0/img-e214a54b2e89.png)
 
 向量数据库选型是构建高效检索增强生成（RAG）系统的核心环节。选型时需结合具体业务场景、数据规模、查询性能、算法兼容性等多维度综合评估。以下为选型对比的核心思路：
 
@@ -79,7 +79,7 @@ Apache 2.0
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752229427886-58d3250f-8cae-4bcb-94bb-789e024a55b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1414-wzcu103wykyssxb0/img-32f893965ac5.png)
 
 #### **案例1：电商推荐系统（Milvus）**
 
@@ -173,7 +173,7 @@ Apache 2.0
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752229455915-719b83ae-7a39-40e2-b7d7-82f4460393c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1414-wzcu103wykyssxb0/img-fec8ab3e3041.png)
 
 **面试问题**：请对比主流向量数据库（Milvus/Faiss/Elasticsearch/Chroma/Qdrant），并说明项目选型经验。
 
@@ -194,7 +194,7 @@ Apache 2.0
 
 ### 四、总结收尾
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752229474288-67a78b80-6318-4736-a668-1ba8ed4dfb34.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1414-wzcu103wykyssxb0/img-40068dcdf884.png)
 
 向量数据库选型需遵循“场景驱动、性能优先、成本可控”原则：
 

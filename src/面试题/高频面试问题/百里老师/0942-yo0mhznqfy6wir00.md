@@ -15,7 +15,7 @@ article: false
 
 ## 1. 引言：从“资源堆砌”到“架构压榨”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764159090128-d93df62f-a15b-430a-a37c-acd90fc79c20.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0942-yo0mhznqfy6wir00/img-58aeb8065597.png)
 
 大家好。面对“不扩容、不加机器、QPS 翻倍”这个命题，初级工程师可能会觉得是刁难，但对于架构师来说，这正是**审视系统熵增**的最佳时机。
 
@@ -25,7 +25,7 @@ article: false
 
 ## 2. 第一刀：斩断网络延迟 (Pipeline & Batching)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764159114483-4e3e8f48-157f-4a78-8418-4e24fbab5bf6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0942-yo0mhznqfy6wir00/img-c6245472d2f2.png)
 
 大家先看屏幕上的对比。这看似简单的“打包”，背后隐藏着 Redis 性能最大的杀手——**RTT（往返时延）与系统调用开销**。
 
@@ -44,7 +44,7 @@ article: false
 
 ## 3. 第二刀：空间换时间，架构降维 (Local Cache)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764159124668-fc82713b-9f63-47e1-9d00-056dc060d10b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0942-yo0mhznqfy6wir00/img-c152fac4d875.png)
 
 如果网络层优化到了极致，瓶颈依然存在，我们就必须引入架构层面的核武器——**多级缓存（Near Cache）**。
 
@@ -66,7 +66,7 @@ article: false
 
 ## 4. 第三刀：拒绝“虚胖”，协议瘦身 (Serialization)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764159135408-6128fabe-f579-451c-85e2-b86948198648.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0942-yo0mhznqfy6wir00/img-95f630752d28.png)
 
 解决了“怎么取”的问题，我们再来看“取什么”。
 
@@ -85,7 +85,7 @@ article: false
 
 ## 5. 第四刀：引擎升级，释放多核 (Threaded I/O)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764159170916-cab7bf80-4ba3-48c2-a514-009ebd068c20.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0942-yo0mhznqfy6wir00/img-36266b673489.png)
 
 最后，我们深入到 Redis 引擎的演进。
 
@@ -107,7 +107,7 @@ article: false
 
 ## 6. 总结：架构师的决策树
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764159182284-c60fc536-ddbb-4ed2-aea1-647ef65e1f58.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0942-yo0mhznqfy6wir00/img-0e0d9123eefa.png)
 
 最后，总结一下这套组合拳的决策逻辑：
 

@@ -13,7 +13,7 @@ article: false
 
 > 来源：[布隆过滤器，你真的懂吗？](https://www.yuque.com/tulingzhouyu/db22bv/mxyidxwg6tivafh5)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1763992257720-b0d8b28e-3112-4635-af0e-54f85d78889c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1086-mxyidxwg6tivafh5/img-ee5eab09e4de.png)
 
 简历上谁都会写着“精通 Redis”、“擅长处理海量数据”吧？
 
@@ -35,7 +35,7 @@ article: false
 
 ### 基础原理与核心价值
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1763992269442-9432bab2-3c07-4a9d-be5a-3448030e423d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_92%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1086-mxyidxwg6tivafh5/img-ca14d248a295.png)
 
 要回答这些问题，首先要弄清楚布隆过滤器的基础原理。
 
@@ -49,7 +49,7 @@ article: false
 
 **关于布隆过滤器的设计，主要有以下几方面的考虑：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1763992310519-e99e6437-fe28-47b7-b3ba-f6b9740ccf4b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_91%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1086-mxyidxwg6tivafh5/img-c8f4bc2640b3.png)
 
 1. **极致空间效率**： 布隆过滤器不存储原始数据，而是仅存储位（Bit）。这样，它能够将存储数据的空间需求降至最低。例如，如果使用 HashSet 存储 10 亿个 Long 型 ID，光数据本身就需要约 8GB 内存，这还不包括对象头的开销。而布隆过滤器只需几百兆内存就能容纳这些数据，这样在处理海量数据时，就极大地减少了内存占用。
 2. **极速查询** ： 布隆过滤器查询速度与数据集的大小无关，只与哈希函数的数量有关。通过 K 个哈希函数来判断数据是否存在，布隆过滤器可以在常数时间内完成查询操作。因此布隆过滤器非常适合那些需要高速查询的场景。
@@ -73,7 +73,7 @@ article: false
 
 ### 痛点深挖：删除的死穴
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1763992320889-5bec8b49-0795-4cfa-b9ed-dab15d3fe7fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_90%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1086-mxyidxwg6tivafh5/img-1a4c811bd5fb.png)
 
 但这东西有个致命的死穴。面试官问：“现在业务变更了，我要删除一个数据，你怎么做？”
 
@@ -91,7 +91,7 @@ B 明明在，但你判断有个位置是 0，就认为它不存在了。这就�
 
 ### 工程化解决方案：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1763992358321-9b2de394-393c-405f-8267-e332d0b73aef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_92%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1086-mxyidxwg6tivafh5/img-9717235fe6e9.png)
 
 ### 进阶方案 1：计数布隆过滤器
 

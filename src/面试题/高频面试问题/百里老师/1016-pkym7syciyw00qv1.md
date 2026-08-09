@@ -13,7 +13,7 @@ article: false
 
 > 来源：[为什么12306总显示“有票”，点进去却“已售罄”？](https://www.yuque.com/tulingzhouyu/db22bv/pkym7syciyw00qv1)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758721924275-de9fd13d-e311-494f-9ada-665b60f77da6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1016-pkym7syciyw00qv1/img-9b62f5f42ad8.png)
 
 相信很多朋友都经历过这样的场景：在12306或各大抢票软件上，你死死盯着屏幕，看到“余票 2 张”的瞬间，心跳加速，光速点击进入，结果页面却无情地告诉你“已售罄”或“没有足够的票”。你捶胸顿足，以为是自己手速不够快，但事实果真如此吗？不，这个“锅”，很可能不该你来背，其背后的技术元凶，就是我们今天要硬核拆解的主题——**数据库主从同步延迟 (Master-Slave Replication Lag)**。
 
@@ -28,7 +28,7 @@ article: false
 
 当延迟发生时，一个致命的问题就出现了：**脏数据（Dirty Data）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758721941347-5bb1ff92-7820-4625-a13b-ba070ef295ad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1016-pkym7syciyw00qv1/img-f3975e6a8062.png)
 
 简单来说，就是主库的数据已经更新了（比如，票被别人买走，库存变为1），但这个更新还没来得及同步到从库，你此刻的查询请求恰好打在了这个从库上，读到的自然是过期的、不准确的旧数据（库存仍然是2）。这就是“脏读”现象。
 
@@ -36,7 +36,7 @@ article: false
 
 MySQL默认的主从复制是**异步**的。让我们深入其内部，看看延迟是如何产生的：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758721954669-4829b392-b697-45c1-99c2-39c8efd3461a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1016-pkym7syciyw00qv1/img-ade9898f6f04.png)
 
 1. **主库（Master）**上的事务提交，数据变更被写入其`二进制日志（Binary Log, binlog）`。
 2. **从库（Slave）**上的`I/O线程`连接到主库，请求并拉取`binlog`中的事件，将其写入到自己的`中继日志（Relay Log）`。
@@ -52,7 +52,7 @@ MySQL默认的主从复制是**异步**的。让我们深入其内部，看看�
 
 这是一种折中方案。在纯异步复制中，主库“不管不顾”，写完`binlog`就直接向客户端返回成功。而半同步复制则要求，主库在执行完写操作后，必须等待**至少一个从库**确认已经接收到`binlog`并写入自己的`Relay Log`后，才能向客户端返回成功。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758722152674-e6c1b48e-ccce-48f4-a9c2-e6e40d948603.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1016-pkym7syciyw00qv1/img-ef5b6f5ba4bd.png)
 
 - **优点**：极大地提高了数据一致性的保障，减少了主库宕机时数据丢失的风险。
 - **缺点**：增加了写操作的延迟，因为需要等待从库的确认。
@@ -61,7 +61,7 @@ MySQL默认的主从复制是**异步**的。让我们深入其内部，看看�
 
 这是最简单粗暴，也最有效的方法。对于那些对数据一致性要求极高的操作，我们可以牺牲一部分读写分离带来的性能优势，直接将读请求路由到主库上。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758722160427-af874290-7c96-428f-923a-df3d3bca5187.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1016-pkym7syciyw00qv1/img-a3c581ac05ac.png)
 
 - **适用场景**：金融级的账户余额查询、电商下单前的库存校验等。
 - **实现方式**：在代码层面，通过数据库中间件或封装的路由逻辑，对特定类型的读请求打上“读主库”的标签。
@@ -74,7 +74,7 @@ MySQL默认的主从复制是**异步**的。让我们深入其内部，看看�
 
 在很多场景下，我们会引入缓存（如Redis）来加速读取。但主从延迟同样会污染缓存。如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758722032130-60a2e33d-636a-412e-9e92-40c86ce62200.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1016-pkym7syciyw00qv1/img-d450d50841c5.png)
 
 想象一下这个过程：
 

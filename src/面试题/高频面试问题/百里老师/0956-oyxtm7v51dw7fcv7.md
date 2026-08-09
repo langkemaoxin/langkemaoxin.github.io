@@ -17,7 +17,7 @@ article: false
 
 ## 核心概念：什么是反向代理
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082270342-2f0291fc-a2da-4c11-a5a3-56412fb9b2b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-b17e56d97048.png)
 
 从根本上说，**反向代理（Reverse Proxy）** 是指以代理服务器来接受客户端的连接请求，然后将请求转发给内部网络上的一个或多个后端服务器，并将从服务器上得到的结果返回给客户端。
 
@@ -25,7 +25,7 @@ article: false
 
 ## 正向代理 vs 反向代理：一个关键区别
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082280777-2120bc96-e942-4f03-b8dc-1a17e1e4a8ec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-2316de3b34ad.png)
 
 为了更深刻地理解反向代理，我们常常将其与正向代理进行对比。它们最核心的区别在于 **服务的对象不同**：
 
@@ -36,7 +36,7 @@ article: false
 
 ## 传统架构的困境：为何需要反向代理
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082290683-60ff1e20-1255-4279-9b43-9e1c8b2897fa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-78357e9517e2.png)
 
 在反向代理出现之前，Web 应用普遍采用单体架构，即客户端直接连接到唯一的应用服务器。随着业务增长和用户量激增，这种架构的弊端暴露无遗：
 
@@ -48,7 +48,7 @@ article: false
 
 ## 核心作用一：负载均衡 (Load Balancing)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082299443-b2b253ce-5b11-4257-b62c-cbae0c70027b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-218ed12d22bd.png)
 
 负载均衡是反向代理最广为人知的作用。当单台服务器无法满足性能需求时，我们可以通过增加服务器数量来“水平扩展”成一个服务器集群。Nginx 作为所有请求的统一入口，可以将海量的并发请求智能地分发到后端的多台服务器上，从而将负载压力均摊。
 
@@ -61,7 +61,7 @@ Nginx 提供了多种成熟的负载均衡策略：
 
 ## 核心作用二：高可用性 (High Availability)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082307541-96130ff6-85a9-43fe-891c-87ae1ee2585e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-465a5d8c1c87.png)
 
 在服务器集群中，任何一台服务器都可能随时出现故障。Nginx 通过 **健康检查 (Health Check)** 机制，能够持续监控后端服务器的“存活”状态。
 
@@ -69,7 +69,7 @@ Nginx 提供了多种成熟的负载均衡策略：
 
 ## 核心作用三：安全防护 (Security)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082314193-3c562a53-a6c3-4f86-a682-afbf5deea850.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-b5db4b075855.png)
 
 将 Nginx 置于后端服务之前，相当于为整个应用集群构建了一道坚固的防火墙。它可以提供多层面的安全防护：
 
@@ -80,7 +80,7 @@ Nginx 提供了多种成熟的负载均衡策略：
 
 ## 核心作用四：缓存加速 (Caching)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082321812-a7a80684-94ee-4c02-9290-57b2092bbecc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-0d7144e28328.png)
 
 对于不经常变化的静态内容（如 CSS/JS 文件、图片）或某些 API 响应，Nginx 可以将其缓存到本地磁盘或内存中。
 
@@ -88,7 +88,7 @@ Nginx 提供了多种成熟的负载均衡策略：
 
 ## 核心作用五：统一入口与 API 网关 (API Gateway)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082329456-56e12e6c-4fd5-4653-97c8-e2b7a7f7024b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-ece7bb1c1007.png)
 
 在微服务架构中，一个复杂的业务功能可能被拆分成了多个独立的服务（用户服务、订单服务、支付服务等）。如果让客户端分别去调用这些服务的不同地址，管理会变得异常混乱。
 
@@ -96,7 +96,7 @@ Nginx 此时可以扮演 **API 网关** 的角色，作为所有微服务的唯�
 
 ## 总结与最佳实践
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763082340253-3b805518-c0fa-47f9-abd4-c1a4b808e327.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0956-oyxtm7v51dw7fcv7/img-693b02e2e225.png)
 
 综上所述，Nginx 反向代理的核心价值可以归纳为五点：**负载均衡、高可用性、安全防护、性能优化（缓存）和运维简化（API 网关）**。它早已不是一个简单的代理工具，而是现代分布式、高可用、高性能 Web 架构中不可或缺的基石。
 

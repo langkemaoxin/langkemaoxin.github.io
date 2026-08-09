@@ -27,7 +27,7 @@ article: false
 
 大家犯的错误，是用 Java `List.add()` 的思维去理解数据库。在 Java 里，你把 2000 万个对象加载到内存，那是“自杀”。但在 MySQL 里，这是一个**流式（Streaming）**过程。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768460600329-879b7053-1d90-41e2-9142-5b1dcde05323.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0331-lbttviz2ewior72a/img-f4e02ffeaa8d.png)
 
 **【底层原理解析】** MySQL 服务端并不是“把 2000 万行读完 -> 打包 -> 发送”，而是**“边读边发”**。
 
@@ -36,7 +36,7 @@ article: false
 3. **触发发送**：一旦 `net_buffer` 写满了，或者一批数据读完了，MySQL 就会立马通过网络把这包数据推给客户端。
 4. **清空复用**：发送成功后，清空 `net_buffer`，接着读下一行。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768460616885-d2c84122-bae0-481b-a24d-cf9ac7df973c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0331-lbttviz2ewior72a/img-6e164e46ed90.png)
 
 **真相大白：** 不管你的表有 2000 万行还是 200 亿行，MySQL 在服务端内存里暂存的数据，永远只有 `net_buffer_length` 定义的那么大。它就像一根水管，水是流过去的，不是积压在管子里的。 所以，MySQL 的内存根本不可能因此爆掉。
 
@@ -50,7 +50,7 @@ article: false
 
 虽然 MySQL 进程没死，但它会引发一种比 OOM 更恶心的灾难——**Buffer Pool 污染**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768460731439-61bbe619-4036-4771-94f6-f400048de066.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0331-lbttviz2ewior72a/img-7dba2fdaa7ca.png)
 
 **【生产惨案复盘】** 你的数据库内存（Buffer Pool）本来是很金贵的。里面存着全站最热的数据：
 
@@ -68,7 +68,7 @@ article: false
 
 有人会问：“Fox，那为什么我平时用 `mysqldump` 导数据，也没见把生产库搞挂啊？” 这就对了！因为 `mysqldump` 底层走的也是流式查询，它正好配合了 InnoDB 的 LRU **“冷热分离”** 策略，完美避开了热区污染。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768460646656-72ef8b31-753a-4f3b-a1f4-fd83ec2db0dc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0331-lbttviz2ewior72a/img-388d8c34a7aa.png)
 
 既然大家都要“源码实锤”，今天 Fox 就带你直接扒掉 MySQL 的外衣，看看 InnoDB 引擎底层到底是怎么用 C++ 代码实现这个“防污染”逻辑的。
 
@@ -76,7 +76,7 @@ article: false
 
 很多教程说“LRU 就是把新数据放到链表头部”，但在 InnoDB 源码里，全表扫描读进来的新数据，是直接插到 **Old Sublist 的头部**（也就是 LRU 链表的腰部/Midpoint），根本没资格碰热区！
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768460679742-d7fee316-1e62-428c-b8ab-31f94ac76670.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0331-lbttviz2ewior72a/img-27d5f9875f8d.png)
 
 **坐标：**`storage/innobase/buf/buf0lru.cc`
 
@@ -105,7 +105,7 @@ void buf_LRU_add_block(buf_pool_t* buf_pool, buf_page_t* bpage, ibool old)
 
 这是最核心的逻辑。全表扫描时，虽然数据会被访问，但 InnoDB 会检查“你是不是刚进来的”。如果进来不到 1 秒（默认值），**拒绝晋升！**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768460701673-0009c3b6-6a1d-4337-b769-10935308abda.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0331-lbttviz2ewior72a/img-9a2af18e955f.png)
 
 **坐标：**`storage/innobase/buf/buf0lru.cc`
 

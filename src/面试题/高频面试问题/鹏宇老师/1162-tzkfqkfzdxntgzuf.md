@@ -26,7 +26,7 @@ article: false
 3. **SQL 与 Schema 设计**：从 “语句” 和 “结构” 层面减少性能消耗；
 4. **系统级优化**：通过配置与架构，支撑高并发场景。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648455607-7bf828e6-7a11-4add-a2cc-3dd6ef731cd7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-e012ae7b4710.png)
 
 ## 二、第一步：定位瓶颈 ——3 个工具找到 “性能病灶”
 
@@ -112,7 +112,7 @@ Extra
 
 这里有个硬性标准：`type`级别至少要达到**range**（范围查询），最优是**ref**（非唯一索引匹配）；如果出现**ALL**（全表扫描），必须优先优化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648476623-5dd90bdd-702a-44f2-be34-704908c30853.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-b00b0e8304d3.png)
 
 ## 三、第二步：索引策略 —— 性价比最高的优化手段
 
@@ -125,7 +125,7 @@ Extra
 - **避免 “冗余索引”**：如果已建联合索引（A,B），就不需要再建单独的（A）索引 —— 因为联合索引的最左列本身就是一个独立索引（最左前缀原则）。
 - **严格遵循 “最左前缀原则”**：这是联合索引的核心，也是面试高频考点，必须吃透！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648504020-508fdbe0-97bf-4324-b273-303ff6af68a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-9dfea30b723c.png)
 
 ### 2. 最左前缀原则：联合索引怎么用？
 
@@ -168,7 +168,7 @@ WHERE C = ?
 
 关键结论：联合索引的匹配必须从 “最左列” 开始，且不能跳过中间列 —— 哪怕你查询的列在索引中，只要跳过左前缀，索引就会失效。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648520651-049c30a0-86a6-4741-8867-77d164c730e9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-6d5d9f0de8ca.png)
 
 ### 3. 4 个 “高危” 索引失效场景（必记！）
 
@@ -179,7 +179,7 @@ WHERE C = ?
 3. **% 开头的 LIKE 查询**：比如`WHERE name LIKE '%John'`，前缀模糊匹配会导致索引失效，若业务需要模糊查询，尽量用后缀匹配（`LIKE 'John%'`）；
 4. **字符串列用数字查询**：比如`WHERE phone = 13800138000`（phone 是 VARCHAR 类型，且有索引），类型不匹配会导致索引失效，必须写成`WHERE phone = '13800138000'`。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648546355-8a6312a6-0c0f-4a2e-bd4c-f7d8146ec8cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-e69594d3e7ce.png)
 
 ## 四、第三步：SQL 与 Schema 设计 —— 从 “语句” 到 “结构” 优化
 
@@ -233,7 +233,7 @@ INSERT INTO goods (name, price)
 VALUES ('商品1', 99), ('商品2', 199), ..., ('商品1000', 299);
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648591734-914075e8-dfc9-4895-9a5a-889f31050f5d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-a20cb7cd153c.png)
 
 ### 2. Schema 设计：平衡 “范式化” 与 “反范式化”
 
@@ -247,7 +247,7 @@ Schema 设计的核心是 “数据结构”，关键要在 “范式化” 和 
 - 范式化：商品表（id, name, category_id）+ 分类表（category_id, category_name），查询时需 JOIN 两表；
 - 反范式化：商品表（id, name, category_id, category_name），直接存储 category_name，查询无需 JOIN，但分类名称修改时需同步更新商品表。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648612664-a4f0edb3-d1f6-4a0e-ad35-846fe7d31724.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-deb428daa4e1.png)
 
 ### 3. 推荐数据类型：选 “小而简单” 的
 
@@ -275,7 +275,7 @@ TINYINT
 VARCHAR
 状态值（如 0 = 未支付、1 = 已支付）用 TINYINT（1 字节），比 VARCHAR（至少 2 字节）更省空间，且支持数值比较。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648622109-ce5e9f4e-62fe-4175-a422-c23067fbb95e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-46d5f21911b5.png)
 
 ## 五、第四步：系统级优化 —— 支撑高并发场景
 
@@ -324,7 +324,7 @@ sync_binlog = 100
 innodb_flush_log_at_trx_commit = 2
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648642928-663413cb-632c-401c-8b88-196f0e9eb6f4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-fb864b9242d1.png)
 
 ### 2. 架构扩展方案：突破单库单表瓶颈
 
@@ -335,9 +335,9 @@ innodb_flush_log_at_trx_commit = 2
 - **读写分离**：主库负责 “写操作”（INSERT/UPDATE/DELETE），从库负责 “读操作”（SELECT），通过主从复制同步数据，分散读压力。架构示例：应用层 → 读写分离中间件（如 MyCat） → 主库（写）+ 多从库（读）；
 - **引入缓存**：在 MySQL 前加一层缓存（如 Redis、Memcached），将高频查询数据（如商品详情、用户信息）存入缓存，减少 MySQL 访问次数。缓存策略：读操作先查缓存，缓存未命中再查 MySQL，查后更新缓存；写操作先更 MySQL，再更新 / 删除缓存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648653890-f4753531-498b-4d97-9aae-82d7c4aaf86e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-0405f0edf889.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648683487-2c182d2f-2b1f-4ad2-b5c3-c0e24a0d5973.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-9f8c6b8337c6.png)
 
 ## 六、总结：MySQL 性能优化是 “持续迭代” 的过程
 
@@ -352,4 +352,4 @@ innodb_flush_log_at_trx_commit = 2
 
 希望今天的内容能帮你搞定面试，也能解决实际工作中的问题～如果有疑问，欢迎在评论区交流！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1763648695393-c4c710c4-87ed-49f4-9568-0a1fd3be379a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1162-tzkfqkfzdxntgzuf/img-d3a73815b149.png)

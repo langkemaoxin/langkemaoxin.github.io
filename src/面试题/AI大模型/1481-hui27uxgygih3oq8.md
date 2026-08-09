@@ -17,7 +17,7 @@ Deepseek是可以充当面试官来辅助程序员模拟面试，这是我做的
 
 📎 [Java资深工程师.docx](https://www.yuque.com/attachments/yuque/0/2025/docx/22811459/1738833214488-81efee5b-baab-42cb-998b-d9a236b37423.docx)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738833245286-baa670fc-66ee-4ac7-bd49-36880392bef4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1481-hui27uxgygih3oq8/img-ec53f9a6b278.png)
 
 > 提示词：
 > 现在你是大厂Java技术专家，请根据我的简历给我做一个完整的模拟面试，我的求职目标是大厂的高级工程师

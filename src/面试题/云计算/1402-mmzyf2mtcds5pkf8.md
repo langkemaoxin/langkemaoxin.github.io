@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371212928-c8aeb705-c4cb-422c-b2ab-8e426c81a4a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1402-mmzyf2mtcds5pkf8/img-367d600875bf.png)
 
 构建领域专属知识图谱需结合具体业务场景，通过系统性流程实现从数据整合到知识应用的闭环。以下为分步解题框架：
 
@@ -27,7 +27,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371223588-91074b45-4d9f-4350-8053-5ececeb02574.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1402-mmzyf2mtcds5pkf8/img-8462188d5edb.png)
 
 #### 案例背景：某商业银行构建企业风险知识图谱
 
@@ -43,7 +43,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371235205-d22f11c5-01a2-467f-9847-12a34fc64019.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1402-mmzyf2mtcds5pkf8/img-8b2b9d007ba6.png)
 
 #### （一）数据层构建：打通多源异构数据
 
@@ -168,7 +168,7 @@ risk_stream.filter(lambda x: "债务违约" in x).pprint()
 
 ### 四、总结归纳
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752371247473-5bc27691-69c3-46b3-8226-b8bf2c66d533.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1402-mmzyf2mtcds5pkf8/img-5ef1285a040e.png)
 
 1. **核心价值**：
 

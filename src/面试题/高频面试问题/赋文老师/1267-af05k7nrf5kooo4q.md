@@ -19,7 +19,7 @@ article: false
 - **分层设计与取舍**：边缘加速、检索、动态拼装、稳定性安全网各司其职，有明确降级策略。
 - **极限压力下的稳态**：热点、穿透、抖动、雪崩的预防与处置；一致性边界与成本/体验平衡。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604254230-0a7e0b37-3680-4c06-95fc-5c07d1ab19f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-46ec024cfed0.png)
 
 ---
 
@@ -31,7 +31,7 @@ article: false
 - 峰值并发：100k；总体 QPS 峰值约 30k（静态 + API）
 - 移动端占比 80%，首屏页码与热门组合占 80% 请求、
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604280554-50829603-58a6-433b-9036-6d122af49bb6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-971382ff9ddb.png)
 
 ---
 
@@ -45,7 +45,7 @@ article: false
 
 ## 第一层：动静分离与边缘加速（让 90%+ 请求在边缘终结）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604310520-ffaa3050-c396-4cd5-b8d7-2fcb7b0906da.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-532bd5ed1e99.png)
 
 ### 场景 A：大促“类目首页 + 默认排序 + 第 1 页”流量洪峰
 
@@ -102,7 +102,7 @@ article: false
 
 ## 第二层：检索与筛选引擎（毫秒级完成复杂筛选排序）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604370684-0d0889fb-8a42-46e6-8c6c-7e6b7d78d447.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-6e1817e092a2.png)
 
 ### 场景 D：关键词 + 属性过滤 + 价格排序
 
@@ -175,7 +175,7 @@ json
 
 ## 第三层：动态数据拼装（价格、库存既快又稳）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604394068-7b39e67b-b8a1-4cbe-b451-276df4bc4b19.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-3c58b6d6fe23.png)
 
 ### 场景 G：限时活动价 + 会员价 + 优惠券叠加
 
@@ -234,7 +234,7 @@ PlpResponse resp = esF.thenCombine(priceF, (es, price) -> assemble(es, price))
 
 ## 第四层：稳定性与抗压（优雅退化，永不雪崩）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604421422-3ca1a03b-7228-4a21-b8f9-3487db025cc5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-72e1e44783b1.png)
 
 ### 场景 J：爬虫/异常流量导致 facet 和深分页放大
 
@@ -380,7 +380,7 @@ public class CacheService {
 
 ## 一致性与刷新（把“准”和“稳”落到数字）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604452961-d40b85cb-b7c7-4632-8d8d-0836cbc6c657.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-d76d5ace0aa7.png)
 
 ### 场景 M：活动发布/批量改价/跨仓调拨
 
@@ -407,7 +407,7 @@ public class CacheService {
 
 ## 容量与成本推演（用数字说服人）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604484123-84d06eb4-0b11-4f1d-89b1-96565231c12b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-e1369a164b86.png)
 
 - 峰值并发 100k，总体 QPS ≈ 30k
 - 层层削峰目标：
@@ -448,7 +448,7 @@ public class CacheService {
 
 ## 总结（把“场景-指标-优化-验证”讲清）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758604517102-18b20d04-4aa3-46c7-be05-cde14dc9f85c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1267-af05k7nrf5kooo4q/img-efdfd00419fc.png)
 
 - **先立 SLO，再定动静边界与命中率目标**，用边缘把 90%+ 流量挡在外面。
 - **ES 做检索内核**，深分页 `search_after`，冷热分层秒级刷新。

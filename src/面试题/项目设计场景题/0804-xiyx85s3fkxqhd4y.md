@@ -21,7 +21,7 @@ article: false
 
 通过定时任务关闭订单，是一种成本很低，实现也很容易的方案。通过简单的几行代码，写一个定时任务，定期扫描数据库中的订单，如果时间过期，就将其状态更新为关闭即可。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720583372082-96311b5e-267d-4deb-b709-60ffc724f568.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0804-xiyx85s3fkxqhd4y/img-fdcd903bf57c.png)
 
 **优点：实现容易，成本低，基本不依赖其他组件。**
 
@@ -121,11 +121,11 @@ public abstract class KeyspaceEventMessageListener implements MessageListener,
 
 ### 5，JDK延迟队列DelayQueue
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720583379723-0a1441c0-6e43-48c1-91a5-40bdb00e6e93.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0804-xiyx85s3fkxqhd4y/img-b67604821315.png)
 
 DelayQueue是JDK提供的一个无界队列，我们可以看到，DelayQueue队列中的元素需要实现Delayed，它只提供了一个方法，就是获取过期时间。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720583385478-9e0db3e9-50b8-4e52-bd1f-ddc5215fd82d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0804-xiyx85s3fkxqhd4y/img-ea849ad5cecf.png)
 
 用户的订单生成以后，设置过期时间比如30分钟，放入定义好的DelayQueue，然后创建一个线程，在线程中通过while(true)不断的从DelayQueue中获取过期的数据。
 
@@ -144,7 +144,7 @@ Redisson是一个基于redis实现的Java 驻内存数据网格，它不仅提�
 
 Redisson除了提供我们常用的分布式锁外，还提供了一个分布式延迟队列RDelayedQueue，他是一种基于zset结构实现的延迟队列，其实现类是RedissonDelayedQueue。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720583945946-a14c803a-5535-4467-84f7-d8aa1785ecbe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0804-xiyx85s3fkxqhd4y/img-1a082854c54f.png)
 
 **优点：使用简单，并且其实现类中大量使用lua脚本保证其原子性，不会有并发重复问题。**
 

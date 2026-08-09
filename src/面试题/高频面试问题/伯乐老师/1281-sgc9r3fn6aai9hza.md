@@ -25,7 +25,7 @@ article: false
 
 ## 二、 核心解决方案：三大工程化实践
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781596901984-c986deb4-0f84-40cc-a6d4-8b1a27a0a5bb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1281-sgc9r3fn6aai9hza/img-2d7de832e9f8.png)
 
 ### 1. 代码与 Prompt 彻底解耦 (Separation of Concerns)
 

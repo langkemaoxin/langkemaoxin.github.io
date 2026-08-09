@@ -88,7 +88,7 @@ public class OrderController {
 
 这就是 AOP 的价值：**让业务代码更纯粹，通用功能可复用、可配置**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760512263864-86a8689c-d913-43d1-b33d-1a9d12391a24.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1036-lizaa8pqd0alg0m9/img-cff28896afbe.png)
 
 ## 三、AOP 核心概念：用 “下单日志” 场景翻译，秒懂
 
@@ -122,7 +122,7 @@ Spring 管理的 OrderController Bean
 Spring 为 Target 生成的 “增强版对象”，负责执行 AOP 逻辑
 动态代理生成的 OrderController$Proxy 实例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760512299273-22841a13-1ab0-4869-80ca-41d6279a1f70.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1036-lizaa8pqd0alg0m9/img-2d9287f56c33.png)
 
 ## 四、真实业务场景：3 个高频 AOP 用法（附代码实现）
 
@@ -251,7 +251,7 @@ public class GlobalExceptionHandler {
 
 Spring AOP 的核心是**动态代理**—— 在运行时为目标对象（如 OrderController）生成一个 “代理对象”，代理对象会先执行 AOP 逻辑（日志、权限），再调用目标对象的业务方法。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760512342066-aded6274-84fe-40e7-8376-7ce9819fbae1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1036-lizaa8pqd0alg0m9/img-ff4547ac3431.png)
 
 Spring AOP 有两种代理方式，面试时必须讲清楚区别：
 

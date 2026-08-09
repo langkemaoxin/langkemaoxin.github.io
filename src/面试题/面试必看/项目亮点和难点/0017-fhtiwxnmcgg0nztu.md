@@ -13,7 +13,7 @@ article: false
 
 > 来源：[建行市场结算平台(亮点与难点)](https://www.yuque.com/tulingzhouyu/db22bv/fhtiwxnmcgg0nztu)
 
-![](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734921374737-1759d3c9-08f8-4649-867a-de6c203eedcb.pdf)
+[https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734921374737-1759d3c9-08f8-4649-867a-de6c203eedcb.pdf](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734921374737-1759d3c9-08f8-4649-867a-de6c203eedcb.pdf)
 
 上面这位学员简历的项目没什么亮点和难点，投出去面试机会可能不多，经过和老师沟通后，着重优化了第二个项目建行惠市宝项目，这个项目本质上就是一个**银行结算平台**，优化如下：
 

@@ -20,7 +20,7 @@ article: false
 - 网站浏览量一天最高超 1500 亿次，峰值是双 11 的三倍。
 - 新闻网链接：[平均每小时卖出超58万张春运火车票，12306如何确保高峰期顺利购票？](https://news.cctv.com/2025/01/13/ARTIBOQnvnpPBgzdTvhQUqGt250113.shtml)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737363261075-c47b682e-737b-4c77-ac2f-06d1fe4d2fe4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-3fb404e5397f.png)
 
 # 12306 系统难点
 
@@ -48,7 +48,7 @@ article: false
 
 更多拦截可参看面试突击宝典：[接口被刷百万QPS，怎么防？](https://www.yuque.com/tulingzhouyu/db22bv/sabap6mrnfbv92gf)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737459899551-d523def5-57f0-41b7-9621-627912b597c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-3961a793cf0a.png)
 
 ### 库存扣减
 
@@ -58,7 +58,7 @@ article: false
 
 我们平时各种商品 sku 库存的话，它是表里面的一行行记录。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630238666-69b05bd2-91c0-48e6-a391-3e5d82275c18.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-9188da91cb8a.png)
 
 但**车票行程**是：杭州 -> 武汉 -> 长沙-> 成都。
 
@@ -66,7 +66,7 @@ article: false
 
 这两个是一个车次。那么每卖出一张** 武汉 -> 成都** 的票，杭州 -> 成都 的票也会少一张。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630238722-2b3e1bef-ae32-4307-842e-8397e9f409ea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-bd6401739b1c.png)
 
 举个极端的例子，火车上就一个座位，车次是从 A -> B -> C。
 
@@ -88,7 +88,7 @@ A -> B -> C -> D 共 4 个车站，假如乘客买了 B -> C 的车票，那么�
 
 **行锁竞争会非常激烈**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630238698-582edbac-866b-4f17-8d22-aebfaad498b0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-bc0e50744bde.png)
 
 购买一个行程会涉及多个站点的扣减库存，这些多个站点的库存扣减是放在一个事务中的，那么一次下单行为，可能要涉及到几十次库存扣减。
 
@@ -96,7 +96,7 @@ A -> B -> C -> D 共 4 个车站，假如乘客买了 B -> C 的车票，那么�
 
 比如买一张G335 北京西到高牌店东的票，需要扩大范围到北京西到所有站点的库存-1。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737535638791-dc8402f8-2126-4c2c-a808-b8f6de444b1b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-46c304d54470.png)
 
 而且中间站点还需要判断站点间是否互斥。
 
@@ -118,25 +118,25 @@ A -> B -> C -> D 共 4 个车站，假如乘客买了 B -> C 的车票，那么�
 
 GemFire 将很多机器内存汇总成一个大的节点，作为整体去管理，尽量保证业务运算和业务数据是在同一个节点，尽量避免多节点的网络通信。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630240265-1f695f78-8a6c-4569-a31f-a9fd3b84f291.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-0c5889fcef90.png)
 
 但是 GemFire 也存在不足的地方，对于扩容如果数据量大，加入节点后自动重分配可能耗时较久。在 12306 中，也有过测试（往年经验），需要几十个 T 的内存就可以将业务数据全部放到内存中来，根据过往经验大致能预测可以提前直接将**内存给加够**，也就不需要很频繁的扩容。当然运维人员肯定还是得关注监控工具（GemFire Pulse ,Prometheus等）实时数据做好把控。
 
 **表设计：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737361971945-7c1861f3-caa6-44c5-a9b3-f801d021b0c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-fd658e5751e3.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737361178846-fa2af011-9afb-411e-b4f8-e86e823ef327.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-16e982db3334.png)
 
 相比查询的流量，扣减库存的流量是完全可以承载的。后台管理**系统发放票**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737360390825-ea66ba90-ac4b-44e4-883b-3ecf0c084643.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-74f6e46afd48.png)
 
 由Cannal监听DB变更日志**同步数据**到GemFire即可。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737362132030-ad78a348-2cd1-470d-8d13-bde3f538b08f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-1835033e6f50.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737362166745-0e83aa66-fcdd-485f-b494-832a83ea066e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-34852d0830ff.png)
 
 扣减库存之后再同步至 GemFire，然后在 GemFire 里进行动态计算，整个 GemFire 承载的是查询的流量。引入 GemFire 之后，整个系统的查询扩散瓶颈基本上就解决了。
 
@@ -165,7 +165,7 @@ GemFire 将很多机器内存汇总成一个大的节点，作为整体去管理
 
 候补车票在整个系统上相当于是一个异步过程。先排队，后面抢没抢到票再通知你。只要异步了，就可以通过消息，或者定时任务慢慢去消费，大大降低系统的压力。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630239309-e399699a-5de8-4de6-a56d-efd07172bad7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-9275c0b541dd.png)
 
 12306 是有非常多的灰色流量的，像是一些抢票软件或者脚本。因为这里面涉及到的利益非常巨大，滋生了很多灰色流量，给 12306 本身带来了很多额外的压力。
 
@@ -177,15 +177,15 @@ GemFire 将很多机器内存汇总成一个大的节点，作为整体去管理
 
 12306 的验证码，是所有验证码中的一股绝对的 “清流”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737535889697-add2ecbc-ae67-4c6c-890d-8c6b3d708842.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-48629c582df8.png)
 
 2013 年起，铁道部为了应对**黄牛抢票**，以及各类抢票软件和插件，升级了购票验证码系统。
 
 在 12306 官方网站上，从购票到付款，都需要输入验证码。从最开始的字母数字验证码，再到后来升级后的图形验证码，成为了一道 “难过” 的关卡。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630240011-afe0bcc1-5acd-4346-977b-1d19a710e14e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-42f59d49928b.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630239404-6a7074db-bfcf-4f5f-a4fd-20120c1a2aab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-43554f236d61.png)
 
 各类**奇葩验证码**出现在了 12306 上。
 
@@ -195,7 +195,7 @@ GemFire 将很多机器内存汇总成一个大的节点，作为整体去管理
 
 道高一尺，**魔高一丈。黄牛也在不断进步**。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630239584-ffb78597-af47-4c36-9f15-a0debf8c059f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-2a95b3c8b39c.png)
 
 比如你是一个搞黑灰产的人，你可以雇佣一批大学生，去做图形验证码识别。简单验证码还是机器去执行。
 
@@ -205,7 +205,7 @@ GemFire 将很多机器内存汇总成一个大的节点，作为整体去管理
 
 好比楼下的一家餐厅，正常情况满足小区进食，排排队还是有机会吃上一口热乎的。但是有人预定了整个市区的饭票，然后坐等你们来排队到我这来买，你说能不饿死人吗？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1735630239702-41b74ecc-566e-42bf-b156-d22ec56b0715.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-2f0105ffe0fd.png)
 
 12306 比较特殊，市面上几乎不存在竞争对手，而且火车票对于逢年过节，旅行返乡的人来说，几乎可以等同于必需品。
 
@@ -237,9 +237,9 @@ GemFire 将很多机器内存汇总成一个大的节点，作为整体去管理
 
 [铁路X 辟谣](https://www.bilibili.com/video/BV1Dmw2e5EwM/?spm_id_from=333.337.search-card.all.click&vd_source=04d13f3e51316f05440d2eb2411de9f3)说是抢票软件误导，但实际就是12306APP购票如此。[链接](https://www.bilibili.com/video/BV1U2c4eJEp6/?spm_id_from=333.337.search-card.all.click&vd_source=04d13f3e51316f05440d2eb2411de9f3)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737543590453-add8e4f0-eb4e-48d2-a1fa-c3aedd347a7e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-d39163b3837c.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737543628191-65e4f9e9-1d17-4335-82a4-bbbbb128f1c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-8ccecd4fc0e5.png)
 
 ### 预留票和队列区分
 
@@ -249,7 +249,7 @@ GemFire 将很多机器内存汇总成一个大的节点，作为整体去管理
 
 由于预留长途，就可能出现奇葩的现象，就是部分小伙伴可能在查询票的时候会发现短途无票但长途确有票的情况：[链接](https://www.bilibili.com/video/BV1LK411a7mR?spm_id_from=333.788.recommend_more_video.0&vd_source=04d13f3e51316f05440d2eb2411de9f3)  。所以就算你不用找“**加钱哥**”的第三方，也可以多付一点买个全程票啊。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737543341281-dbce9183-dba1-432e-99db-40a8e88630bf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-35ec342baa54.png)
 
 ## 技术角度
 
@@ -567,7 +567,7 @@ EsService
 
 ### 示例：G1车次从北京南发往上海虹桥
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737355329496-43767e59-179e-43b9-b0fc-4c1c984bf011.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-0d5e3239dede.png)
 
 这意味着可购买组合有：（票  库存）
 
@@ -591,21 +591,21 @@ Key 设计: 车次_城市_车厢等（几等座车厢已区分）* *
 
 value设计： bitmaps标识可买状态0，已售状态1.
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737359583991-99279971-3410-4c85-aec5-84ddcd6601cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-0e3703698b64.png)
 
 当乘客想买 北京南-南京南 时，只需判断 北京南，济南西，南京南三个数组中进行或（||）的操作 即可得到库存余票情况。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737359592652-e842a8ed-26e8-4318-8361-24d4a462b747.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-50a7c6861917.png)
 
 接下来即可选择某个座位下单购买，
 
 代码层需要将这三个站点的某个坐次位都set key offset value 为1
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737359601904-1a43015a-ed5a-4660-ac78-9ee0863fa371.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-0ecdc793805a.png)
 
 接下来 更多乘客组合 短中全程票购买之后，可能会是如下结果：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737357312578-955d621a-eba2-441c-89d6-04752c9db6a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0794-dcufnmtc6ut2f4gt/img-166ab4dedba5.png)
 
 我们在买票的时候会发现，想一站到底会比中途转乘难很多。
 

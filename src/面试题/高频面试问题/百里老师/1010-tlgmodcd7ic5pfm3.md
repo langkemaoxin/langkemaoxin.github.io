@@ -13,7 +13,7 @@ article: false
 
 > 来源：[双十一 秒杀重复支付多扣钱，怎么避免才不被用户骂？](https://www.yuque.com/tulingzhouyu/db22bv/tlgmodcd7ic5pfm3)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759223149118-71924bb1-397e-4938-a372-956dea13a137.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1010-tlgmodcd7ic5pfm3/img-6e1cbc3b5985.png)
 
 “王工，线上出事故了！有用户反馈，刚才秒杀抢购一个商品，结果被连扣了两次钱！”
 
@@ -36,7 +36,7 @@ article: false
 
 在复杂的分布式环境中，重复请求几乎是不可避免的。其来源主要有三类：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759223268364-eb60f53d-bdea-42c9-a970-bdfe59721c1b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1010-tlgmodcd7ic5pfm3/img-b98c00e6edb7.png)
 
 1. **用户侧的“手抖”**：
 
@@ -60,7 +60,7 @@ article: false
 
 这是最简单、最底层的保证。利用数据库主键或唯一索引（Unique Index）的特性，来防止重复数据的插入。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759223260269-282801f4-26e4-41c3-a018-06d3102d59ef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1010-tlgmodcd7ic5pfm3/img-8efb8c07b7bd.png)
 
 - **实现**：在订单表中，为订单号`order_sn`创建一个唯一索引。当创建订单的请求重复到来时，第二次`INSERT`操作会因为违反了唯一键约束而失败。
 - **场景**：非常适合“新增”类场景，如创建订单、创建商品等。
@@ -69,7 +69,7 @@ article: false
 
 在许多业务场景中，资源的状态是有限且单向流转的，我们可以利用状态的变更来做幂等。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759223290060-5772f1d2-9826-4944-9b6f-d85537f5e2dc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1010-tlgmodcd7ic5pfm3/img-1e7d337b90a2.png)
 
 - **实现**：以支付为例，订单有“待支付(UNPAID)”、“支付中(PAYING)”、“已支付(PAID)”、“关闭(CLOSED)”等状态。支付接口在执行扣款前，必须先检查订单状态是否为“待支付”。如果不是，则直接拒绝后续操作。
 - **场景**：非常适合“更新”类场景，特别是涉及状态流转的业务，如支付订单、更新订单状态等。
@@ -78,7 +78,7 @@ article: false
 
 这是一种通用性极强的“王者”方案。其核心是让客户端在发起业务请求前，先向服务端申请一个“一次性门票”（Token）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759223307131-214f27b1-cdf6-4bb2-b68c-5689579f99c4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1010-tlgmodcd7ic5pfm3/img-2bec9da6af91.png)
 
 - **流程**：
 

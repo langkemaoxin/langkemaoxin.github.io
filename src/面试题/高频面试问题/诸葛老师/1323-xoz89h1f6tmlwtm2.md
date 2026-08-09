@@ -28,7 +28,7 @@ article: false
 3. 将 key 存入线程安全的ConcurrentHashMap，设置过期时间（避免内存溢出）
 4. 若后续请求能查到相同 key，直接返回 “请勿重复提交”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758199705925-6094b5ad-b943-4e25-8a1e-4e5e23c14e63.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1323-xoz89h1f6tmlwtm2/img-25b17b71c9af.png)
 
 ### 完整代码实现
 
@@ -132,7 +132,7 @@ public class OrderController {
 
 一旦项目拆成微服务、多实例部署，本地缓存就会失效（Instance A 存了 key，Instance B 没存，依然会重复提交）。这时候必须用**Redis+setIfAbsent 原子操作**，让所有实例共享缓存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758199727376-14292e79-5d46-4044-8964-1c38a22fd946.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1323-xoz89h1f6tmlwtm2/img-7314c5d9a87d.png)
 
 ### 核心原理
 
@@ -236,7 +236,7 @@ public class RedisNoRepeatSubmitAspect {
 
 对于订单、支付这类 “绝对不能重复” 的核心业务，即使 Redis 偶尔抽风（如网络抖动、缓存失效），也得有最后一道防线 ——**数据库唯一索引**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758199754185-fa34f62a-6b28-41c2-a26a-3a355ee457b2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1323-xoz89h1f6tmlwtm2/img-da3ef07e0907.png)
 
 ### 核心原理
 
@@ -304,7 +304,7 @@ public class OrderService {
 
 前后端分离项目中，除了防重复提交，还得考虑 CSRF（跨站请求伪造）攻击。用**Token 验证**方案，既能防重复，又能防 CSRF，一举两得。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1758199770832-247894bb-b953-4bad-a06d-4969fdf65fdc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/诸葛老师/1323-xoz89h1f6tmlwtm2/img-bbca29ba5040.png)
 
 ### 核心原理
 

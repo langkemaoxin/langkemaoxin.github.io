@@ -17,7 +17,7 @@ article: false
 
 #### 1. 问题的表象：高并发下的三大挑战
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763552950461-dc4d70a8-ea92-4df4-a211-9ed135e6d88d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-30b39e00f591.png)
 
 在深入技术细节之前，我们首先要明确在高并发场景下，一个设计不佳的分布式锁会带来哪三个核心问题：
 
@@ -29,13 +29,13 @@ article: false
 
 #### 2. 问题的本质：从内存到网络的代价鸿沟
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553724271-e44e8d21-8c9f-4ceb-8ecf-2f04cb2d2b12.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-3edcf72ded99.png)
 
 问题的根源在于分布式系统打破了单机环境的假设。在单个JVM内，我们谈论的锁（如`synchronized`）是基于内存的，其开销在纳秒或微秒级别，性能极高。然而，一旦进入分布式环境，我们需要一个所有服务节点都能访问的“中央锁服务”（通常由Redis或ZooKeeper扮演）。这意味着，每一次加锁和解锁都从内存操作退化为至少一次网络往返（RTT）。在繁忙的网络中，这可能是几十毫秒的延迟，性能下降了数万倍。
 
 #### 3. 核心矛盾：吞吐量杀手“漏斗效应”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553733354-0f9677c0-9e9c-4601-8308-3d24b350947c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-71782106040b.png)
 
 网络开销与竞争加剧两者叠加，形成了一个恐怖的“漏斗效应”。如图所示，无论你将系统横向扩展到多少台机器，所有请求最终都会被阻塞在同一个分布式锁上。10,000个并发请求，只有一个能通过，其余9,999个要么在原地空耗资源等待，要么在超时后失败。这不仅造成了巨大的资源浪费，更让整个系统的并发能力被这把锁的性能上限死死钳制。打破这个漏斗，是我们优化的首要目标。
 
@@ -43,7 +43,7 @@ article: false
 
 #### 4. 优化策略一：降低锁的粒度 (Granularity)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553747463-6dbd182d-64f8-4aad-82b4-eb9cab3bd2f1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-a638196046c2.png)
 
 这是最直接、最有效的优化手段。其核心思想是：**锁应该保护的是正在被修改的资源，而不是整个业务操作。** 以电商扣减库存为例，一个全局的`lock:stock`锁显然粒度过大。正确的做法是为每一个商品（SKU）设置独立的锁。这样，对商品A的锁定将完全不影响对商品B的操作，系统的并发能力理论上可以提升N倍（N为SKU的数量）。
 
@@ -59,7 +59,7 @@ String lockKey = "lock:stock:sku_" + skuId;
 
 #### 5. 优化策略二：锁分段 (Segmented Lock)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553757464-366bbfe5-c6d2-488e-a895-b21455043480.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-24b255784728.png)
 
 降低锁粒度虽然有效，但如果遇到“热点商品”（如秒杀），所有请求依然会集中在同一个Key上。锁分段的思想借鉴自Java的`ConcurrentHashMap`，它将一个热点锁虚拟地拆分成多个“段”（Segments）。当请求到来时，通过一个哈希算法（例如，根据用户ID哈希）将请求路由到不同的锁分段上。这样，对同一个热点商品的并发请求就被分散到了多个不同的锁上，从而将压力均摊。
 
@@ -75,13 +75,13 @@ String lockKey = "lock:stock:" + skuId + ":seg_" + segment;
 
 #### 6. 优化策略三：精简临界区 (Critical Section)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553764590-618fb251-7c7c-4be0-839e-049ed1cfb866.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-3adf0ba86c81.png)
 
 **锁的持有时间 = 性能的倒数。** 持有时间越长，其他线程等待的时间就越长，系统的吞吐量就越低。务必保证锁定的“临界区”内只包含绝对必要的核心写操作。所有可以在锁外执行的代码都应该被移出，例如：参数校验、数据准备、发送消息通知、记录日志等。定期审视临界区代码，是每个架构师的必修课。
 
 #### 7. 优化策略四：异步化处理
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553771722-78bd47d7-d1d5-49e4-8719-77f2081a89c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-08ac531bb03d.png)
 
 这是对“缩短锁持有时间”思想的极致升华，它直接将锁从用户请求的主流程中剥离。其核心是**将同步阻塞操作变为异步非阻塞任务**。当用户的下单请求到达时，系统不再直接尝试获取锁，而是将“扣减库存”任务封装成消息发往消息队列（MQ），并立即向用户返回“排队中”。后台的MQ消费者则可以按照自己的节奏，以一个可控的并发度去处理任务。这种方式通过MQ实现了流量的“削峰填谷”，从根本上避免了高并发对锁资源的直接冲击。
 
@@ -89,7 +89,7 @@ String lockKey = "lock:stock:" + skuId + ":seg_" + segment;
 
 #### 8. 优化策略五：乐观锁 (Optimistic Locking)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553784323-cef7e7a8-cc9a-487b-b611-0751faa39a6e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-5d1c93827948.png)
 
 之前的策略都属于“悲观锁”，即假定冲突总会发生。而乐观锁则假定冲突很少发生，因此不加锁，而是在更新时去检查数据是否被他人修改过。最常见的实现方式是**版本号（version）机制**。更新数据时，只有当数据库中的`version`与之前读取的一致时，更新才会成功。
 
@@ -105,7 +105,7 @@ WHERE sku_id = ? AND version = ?;
 
 #### 9. 架构优化：确保锁服务自身的高可用
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553791045-36c817f8-fade-4734-aa23-6c38d27241c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-dd5ccd34c0dd.png)
 
 当我们依赖Redis作为锁服务时，必须考虑其自身的可用性。在Redis主从架构中，如果Master节点在持有锁后，数据还未同步到Slave时就宕机，此时新的Master上没有锁的数据，会导致锁的安全性被破坏。
 
@@ -120,7 +120,7 @@ WHERE sku_id = ? AND version = ?;
 
 #### 10. 总结：构建你的优化知识金字塔
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763553800522-a2c41af6-c4cc-4c02-9ae1-70881de0400a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0950-laixkqv39oprn68i/img-d6a60ea8a4f9.png)
 
 面对分布式锁的性能问题，我们不应盲目地寻找“银弹”。这个“优化金字塔”模型为我们提供了清晰的指引，它强调了优化的层次性：从最根本的业务架构重构，到服务层的高可用保障，再到具体的技术手段（锁模式、时空维度优化）。
 

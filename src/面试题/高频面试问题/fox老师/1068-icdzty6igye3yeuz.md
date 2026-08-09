@@ -19,7 +19,7 @@ article: false
 
 我的整体思路可以概括为：**“隔离为核，优化为本，监控为盾”**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758604167105-60f90b4a-a22e-49b6-a55f-fab4e261c3d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1068-icdzty6igye3yeuz/img-33cc3003b1b6.png)
 
 ---
 

@@ -39,7 +39,7 @@ article: false
 
 比较高效的做法是，在服务内部集成链路追踪，也就是在服务访问外部依赖的出入口，记录下每次请求外部依赖的响应延时。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1726125663775-5bed7a12-f207-4876-ae81-14495582894d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-bee2bf61332f.jpg)
 
 如果你发现确实是操作 Redis 的这条链路耗时变长了，那么此刻你需要把焦点关注在业务服务到 Redis 这条链路上。
 
@@ -168,7 +168,7 @@ CONFIG SET slowlog-max-len 500
 
 除此之外，我们都知道，Redis 是单线程处理客户端请求的，如果你经常使用以上命令，那么当 Redis 处理客户端请求时，一旦前面某个命令发生耗时，就会导致后面的请求发生排队，对于客户端来说，响应延迟也会变长。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1726125663795-39156c51-47e8-43e0-9852-ad00c142fc11.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-6f38a6cd2436.jpg)
 
 针对这种情况如何解决呢？
 
@@ -263,7 +263,7 @@ Redis 的过期数据采用被动过期 + 主动过期两种策略：
 
 所以，此时你会看到，**慢日志中没有操作耗时的命令，但我们的应用程序却感知到了延迟变大，其实时间都花费在了删除过期 key 上**，这种情况我们需要尤为注意。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1726125663802-746a4997-bf09-4844-977a-b3b6595bd306.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-f1c2bbae2e3e.jpg)
 
 **那遇到这种情况，如何分析和排查**？
 
@@ -325,7 +325,7 @@ redis.expireat(key, expire_time + random(300))
 
 需要注意的是，Redis 的淘汰数据的逻辑与删除过期 key 的一样，也是在命令真正执行之前执行的，也就是说它也会增加我们操作 Redis 的延迟，而且，写 OPS 越高，延迟也会越明显。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1726126701329-32bb9bec-1c82-4e88-b177-d935e9b0427d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-8afb9a888a6a.jpg)
 
 另外，如果此时你的 Redis 实例中还存储了 bigkey，那么在淘汰删除 bigkey 释放内存时，也会耗时比较久。
 
@@ -364,7 +364,7 @@ redis.expireat(key, expire_time + random(300))
 
 除了数据持久化会生成 RDB 之外，当主从节点第一次建立数据同步时，主节点也创建子进程生成 RDB，然后发给从节点进行一次全量同步，所以，这个过程也会对 Redis 产生性能影响。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1726126691113-a11b811b-4e5d-4c9b-bd02-d012a1f39138.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-0990d00b4a16.jpg)
 
 要想避免这种情况，你可以采取以下方案进行优化：
 
@@ -399,7 +399,7 @@ Linux 内核从 2.6.38 开始，支持了内存大页机制，该机制允许应
 
 同样地，如果这个写请求操作的是一个 bigkey，那主进程在拷贝这个 bigkey 内存块时，一次申请的内存会更大，时间也会更久。可见，bigkey 在这里又一次影响到了性能。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1726126681081-3ad1d2db-c38b-4618-acfe-aaa9c941b71e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-fb17b558af19.jpg)
 
 **那如何解决这个问题**？
 
@@ -469,7 +469,7 @@ $ echo never > /sys/kernel/mm/transparent_hugepage/enabled
 
 看到了么？在这个过程中，主线程依旧有阻塞的风险。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1726126661412-bad2dec4-34ed-4efb-8c36-ef7f91da3c76.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-555b7ce9e81d.jpg)
 
 所以，尽管你的 AOF 配置为 appendfsync everysec，也不能掉以轻心，要警惕磁盘压力过大导致的 Redis 有性能问题。
 
@@ -722,7 +722,7 @@ Redis 的高性能，除了操作内存之外，就在于网络 IO 了，如果�
 
 这里我也汇总成了思维导图，方便你在排查 Redis 性能问题时，快速地去分析和定位。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726126629059-10e8e4f9-7001-4de5-bc4f-8165827d17ec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0511-eggtroo237ndu5qd/img-b22a6022e266.png)
 
 这里再简单总结一下，Redis 的性能问题，既涉及到了业务开发人员的使用方面，也涉及到了 DBA 的运维方面。
 

@@ -15,7 +15,7 @@ article: false
 
 #### **字节二面的一道真面试题：RocketMQ顺序消息吞吐量太低，怎么优化？”**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759138840431-eb55e58b-3bd1-435c-8ddb-aa87dec91a2d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-07d913ff7174.png)
 
 你要是还只是按照MQ的常规思路回答：‘加队列、异步处理、加线程’，那这轮，大概率就挂了！因为这里，是提到了一个具体的业务场景：顺序消息。
 
@@ -23,7 +23,7 @@ article: false
 
 **首先你要理解顺序消息的性能瓶颈在哪。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759138860806-7252437e-b1f1-4f61-94a0-4ccdd5bac2fa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-43e953b61d0e.png)
 
 **RocketMQ针对消费者是提供了顺序消费和并行消费两种机制的。并行消费的情况下，RocketMQ的客户端会同时使用多个线程共同消费MessageQueue的消息，这样能提高并发性能。但是线程之间会产生无序竞争，这样就无法保证消息的顺序。**
 
@@ -37,11 +37,11 @@ article: false
 
 先要确定一个优化的总纲：**在保证顺序的前提下，最大化并发。**”，然后才是一些针对性的具体招数。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759138893738-4bf2f40e-14f4-4998-96bd-754501205b94.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-0f4bbb8424fe.png)
 
 **第一招：增加队列数量。但注意，绝不是无脑增加对列。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759138917211-6fba181d-0a59-46ad-b51b-acba0898de47.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-946b93159e19.png)
 
 这一招的核心思想：**通过业务主键，确保同一组有业务关联的消息落入同一队列，从而保证这一组消息局部有序，实现并发与顺序的统一。**
 
@@ -53,7 +53,7 @@ Producer把同一个订单ID的消息，比如Order1的所有操作，都精准�
 
 **第二招：降低单消息处理耗时。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759138942619-61c6f0aa-dd29-48bf-bd03-ebbd2a1e6bf6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-96536e8d8b8a.png)
 
 **这一招的核心思想是：剥离耗时操作，让消费主线程尽快释放，去处理下一条消息。**
 
@@ -63,7 +63,7 @@ Producer把同一个订单ID的消息，比如Order1的所有操作，都精准�
 
 **第三招：增加消费者线程数。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759138973441-40279c57-cac8-4491-9169-5017e458135b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-7bd178fee858.png)
 
 这一招的核心思想是：**在资源允许的范围内，通过压测找到那个最佳的线程数，来提高并行处理能力。**”**但这里同样要注意，并不是盲目加线程就行。**
 
@@ -75,7 +75,7 @@ Producer把同一个订单ID的消息，比如Order1的所有操作，都精准�
 
 “好，讲完了顺序消息的三大优化策略，你以为就结束了吗？不，真正的高手，还会利用RocketMQ自身的特性，把性能压榨到极致！”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759138996822-ae383610-2683-40e7-beb7-3832a56f1ac7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-94a60ba86f81.png)
 
 **“第一，批量消息。”**“与其把m1, m2, m3三条消息一条一条发，不如把它们‘打包’成一个Batch，一次发出去。这就好比寄快递，把三个小包裹打成一个大包，只需要付一次运费。**打包发送，能极大减少网络开销，提高发送端的吞吐量。**”
 
@@ -83,7 +83,7 @@ Producer把同一个订单ID的消息，比如Order1的所有操作，都精准�
 
 **“第三，消费组隔离。”**“这是个非常强大的特性！你看，同一个‘订单’Topic，‘业务组A’可以订阅它来处理订单履约，同时‘分析组B’也能订阅它来做数据分析。两组人马，互不干扰，独立消费。**这就轻松实现了业务隔离和广播的效果。**”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759139024370-b4d9ba48-c395-46f6-975e-ef6cf0a3b272.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1117-bx7avtp1xdt7rlw0/img-1ced8eb8bcf9.png)
 
 “所以，你看，从‘优化策略’到‘特性利用’，这才是一套完整的组合拳。”
 

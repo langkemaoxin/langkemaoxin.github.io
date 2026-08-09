@@ -17,7 +17,7 @@ Netty 的线程模型旨在高效地处理并发连接和请求，以优化网�
 
 ### Netty 线程模型概述
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1722580010687-298f2f61-e4c4-420c-914a-f118f51540de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Netty/0607-tq8mmbb0r01ic2zy/img-904b251a7dee.png)
 
 ### Netty 的线程模型
 

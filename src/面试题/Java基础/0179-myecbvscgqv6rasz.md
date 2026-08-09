@@ -17,13 +17,13 @@ article: false
 
 首先是**BIO**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1716793621670-391a3f5b-ce02-48ee-975d-14edfca8b59b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0179-myecbvscgqv6rasz/img-d20ff116cea7.png)
 
 它是一种传统的**阻塞 I/O 模型**。举个例子， 就像你去餐厅吃饭，服务员一个接一个地接待客人。如果有一个客人点的菜很多或者吃得很慢，服务员就得一直等着，不能去接待其他客人。这就类似BIO模型，每个客户端请求都需要一个独立的线程来处理，如果请求处理时间长，就会阻塞线程，导致服务器资源消耗大，性能受限，当然可以通过线程池机制改善。
 
 然后**NIO**就诞生了，
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1716793660332-6661c8b3-358d-47a3-a842-a705517e48f0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0179-myecbvscgqv6rasz/img-73c4cfae076b.png)
 
 它是一种**非阻塞 I/O 模型**，在JDK1.4的时候引入。这种模型服务器可以用一个或少量线程来处理所有的客户端请求，客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询所有连接有I/O请求就进行处理。
 
@@ -37,7 +37,7 @@ article: false
 
 最后给这三种模型分别总结一句话就是：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1716792330534-e9d78089-7e0c-40d0-abb7-84a5657931d9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0179-myecbvscgqv6rasz/img-34863a059bfd.png)
 
 - BIO：每个请求一个线程，挨个处理，简单但性能有限。
 - NIO： 多路复用器轮询所有连接有I/O请求就进行处理。提高性能。
@@ -45,6 +45,6 @@ article: false
 
 最后呢 通过一个简单聊天室功能,给大家整理了这3种模式的Java代码示例， 大家需要的可以在评论区扣666进行获取。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1716451167482-262d89be-b93d-43b6-b3c1-6b9130447526.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0179-myecbvscgqv6rasz/img-fdd2a99b28d8.png)
 
 代码：[https://gitee.com/xscodeit/bio-nio-aio-demo.git](https://gitee.com/xscodeit/bio-nio-aio-demo.git)

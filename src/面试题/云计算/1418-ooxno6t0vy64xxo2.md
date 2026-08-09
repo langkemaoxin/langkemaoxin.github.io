@@ -15,7 +15,7 @@ article: false
 
 ## 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752107136830-2eb903ae-f434-4f56-afb6-f90b0108d8cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1418-ooxno6t0vy64xxo2/img-a61256e7ecdd.png)
 
 1. **梯度累积的定义与核心原理**
 
@@ -43,7 +43,7 @@ article: false
 
 ## 二、项目案例：千亿参数大模型微调的显存优化实践
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752107149617-0be87e4b-6a77-4b4b-adfc-5d0cb0745926.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1418-ooxno6t0vy64xxo2/img-3b3c221ec3e2.png)
 
 ### 1. 项目背景
 
@@ -123,7 +123,7 @@ ZeRO-Offload
 
 ## 三、示例回答（面试场景）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752107176150-3638d194-e2ac-4fcf-b88b-599118181a6e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1418-ooxno6t0vy64xxo2/img-a6af120efaf4.png)
 
 ### 1. 梯度累积的计算原理
 
@@ -237,7 +237,7 @@ model = torch.nn.parallel.DistributedDataParallel(model)
 
 ## 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752107245928-2e5b6de1-54e2-451f-aa7b-951f1cb118b2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1418-ooxno6t0vy64xxo2/img-81c2b9834e8c.png)
 
 ### 1. 核心价值
 

@@ -15,23 +15,23 @@ article: false
 
 高并发场景下，大家都可能遇到的经典难题——Redis的热点Key问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760971268920-de92b4c3-a0a8-4cec-9c63-e755af38a7ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1229-wopye211c4anr8bl/img-3d1ee0d32152.png)
 
 我们都知道，Redis作为我们首选的内存数据库，性能非常出色。在分布式架构下，我们通常会搭建Redis集群，通过一致性哈希等算法，把不同的Key均匀地分散到不同的节点上，来分摊访问压力，就像这张图展示的一样 。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760971280339-0e92b95b-8d12-4241-aed0-290ac2a0bc51.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1229-wopye211c4anr8bl/img-5d1d89e4ecc3.png)
 
 理想很美好，但现实往往很骨感。大家可以想象一个场景：双十一零点秒杀，或者微博上突然出现一个爆点新闻。成千上万的用户在同一瞬间涌入，抢购同一个商品，访问同一个热搜。这时会发生什么呢？"
 
 ****
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760971294973-604edb68-d0cc-4f29-97bd-a928c0157784.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1229-wopye211c4anr8bl/img-b1527e8044ab.png)
 
 "没错，所有请求访问的都是同一个Key，比如`stock:product:888`。无论我们的集群有多少个节点，这个Key只会固定落在某一个节点上。
 
 大家看，海量的请求就像洪水一样，瞬间涌向了节点2。而旁边的节点1和节点3，却几乎无事可做，处于空闲状态。结果就是，节点2因为不堪重负，CPU和网络带宽被瞬间打满，直接超载、甚至宕机！"
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760971327591-3c0d666c-fedb-4ac2-81dc-9f0585455afb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1229-wopye211c4anr8bl/img-31e17cc8c8fb.png)
 
 "那么，节点宕机了，问题就结束了吗？不，这只是灾难的开始。
 
@@ -45,7 +45,7 @@ Redis节点宕机后，缓存就失效了。但用户的请求不会停止，这
 
 一个很自然的想法是：既然压力都集中在一个点上，那我们能不能把它‘打散’？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760971369541-7bb58d66-faf4-43ea-9c1c-4828abc04617.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1229-wopye211c4anr8bl/img-3a25f717fd9f.png)
 
 这就是我们的第一种策略：**热点分散**。它的核心思想，就是把一个热点Key，复制成很多份，给它们加上不同的后缀，比如用户ID或者随机数。比如，原来的`stock:product:888`，现在变成了`stock:product:888_1`, `_2`, `_3`... 直到 `_N`。
 
@@ -57,7 +57,7 @@ Redis节点宕机后，缓存就失效了。但用户的请求不会停止，这
 
 "我们再想一下，秒杀场景下，读多写少是常态。99%的请求都是在查询商品信息和库存，真正进入下单扣库存环节的只是少数。那我们能不能在请求到达Redis之前，就把它拦下来呢？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760971384824-fd96a971-013f-48f7-94db-51b061d3e0d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1229-wopye211c4anr8bl/img-a9660d1c3c5a.png)
 
 答案是肯定的。这就是我们的第二种大杀器：**应用层本地缓存**。
 
@@ -69,7 +69,7 @@ Redis节点宕机后，缓存就失效了。但用户的请求不会停止，这
 
 "好了，现在我们有了两个强大的武器。在真实的秒杀系统中，我们通常会将它们结合起来，构建一个固若金汤的防御体系。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1760971404681-14f0a221-906c-4f8b-a832-bab155a877ea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1229-wopye211c4anr8bl/img-8dd027afc7c6.png)
 
 1. **对于读请求**：我们用‘本地缓存’来拦截。利用服务器内存的极致性能，响应速度最快，并且拦截掉99%的查询流量。
 2. **对于写请求**（比如扣减库存）：我们用‘热点分散’策略。将写操作的压力均匀地分散到后端的各个Redis节点，避免单点过载。

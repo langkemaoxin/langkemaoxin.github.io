@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751700162920-00d7e7e1-1659-4941-b372-229ec0105e75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1420-ubh7owlrwwk2l47e/img-2a7b85475ae3.png)
 
 DeepSpeed ZeRO（Zero Redundancy Optimizer）的核心是通过**分层优化模型状态存储**解决大模型训练显存瓶颈。其核心策略分为三阶段，需结合项目说明其原理、落地挑战及量化效果：
 
@@ -26,7 +26,7 @@ DeepSpeed ZeRO（Zero Redundancy Optimizer）的核心是通过**分层优化模
 
 ### 二、项目案例：130B医疗大模型训练优化
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751700194582-9526388b-0af1-41ab-8d30-11cac0781658.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1420-ubh7owlrwwk2l47e/img-9a3f4229791b.png)
 
 #### 背景
 
@@ -103,7 +103,7 @@ ZeRO后
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751700249407-a728bd6e-a0fe-4f65-8412-1c65fd7ad307.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1420-ubh7owlrwwk2l47e/img-fe34bf02caef.png)
 
 “我们在130B医疗大模型训练中，使用DeepSpeed ZeRO-3解决显存与扩展性问题。具体分三步落地：
 
@@ -147,7 +147,7 @@ ZeRO后
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751700272617-dd3a5836-9ee9-48f2-9573-6d50c38d0510.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1420-ubh7owlrwwk2l47e/img-70990d81fbf8.png)
 
 DeepSpeed ZeRO的核心价值在于**显存-计算-通信的三维博弈**：
 

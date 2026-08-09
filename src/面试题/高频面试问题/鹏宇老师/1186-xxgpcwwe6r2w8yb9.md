@@ -37,7 +37,7 @@ article: false
 
 - **实战案例**：某生鲜电商初创期（6 个月内），团队 4 人用 Spring Boot 开发单体服务，2 周上线核心功能，月服务器成本仅 3000 元，快速验证 “社区团购” 模式可行；若初期选择微服务，仅服务治理组件（如注册中心、配置中心）部署就需额外 2 台服务器，开发周期延长至 1 个月，反而拖慢业务验证节奏。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463217283-b2d44429-683b-4300-beec-606f79165b17.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-9ea557b84cc3.png)
 
 ### 2. 阶段 2：商业模式验证后（业务复杂度提升）→ 转向微服务
 
@@ -74,7 +74,7 @@ article: false
 - **判断指标**：每月迭代次数≥4 次，单次发布故障率≥5%，业务调整后上线周期≥3 天。
 - **实战案例**：某生鲜电商项目，初期用单体架构时，修改 “满减规则” 需全量测试 2 天，发布后因一个小 bug 导致系统停服 20 分钟，订单损失超 30 万元；拆分 “营销服务” 后，规则调整仅需测试 1 小时，独立发布无影响，试错效率提升 60%，故障率降至 0.5% 以下。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463232765-4c6029be-9974-4845-bcb5-dabc3747a440.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-69c0478cc591.png)
 
 ### 2. 时机 2：团队协作阻塞，代码冲突频繁
 
@@ -82,7 +82,7 @@ article: false
 - **判断指标**：日均代码冲突次数≥3 次，单次冲突解决时间≥30 分钟，团队人数≥5 人且维护同一代码库。
 - **实战案例**：某电商项目团队 6 人维护单体代码库，“商品详情页” 与 “订单流程” 模块频繁冲突，日均合并分支耗时 1.5 小时；按 “服务边界” 拆分后，“商品组” 专注商品服务、“订单组” 专注订单服务，冲突率降至 0.2 次 / 天，协作效率提升 80%。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463243829-950d0750-eed8-4d0c-b088-ae7ba341188f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-5e9d685b674f.png)
 
 ### 3. 时机 3：小功能依赖大版本，上线周期冗长
 
@@ -90,7 +90,7 @@ article: false
 - **判断指标**：小功能占比≥40%，小功能从开发完成到上线周期≥7 天，用户需求反馈响应时间≥48 小时。
 - **实战案例**：某零售项目需添加 “订单备注” 功能，因单体服务需等月度大版本，延迟 15 天上线；拆分 “订单服务” 后，该功能开发 2 天、测试 1 天、独立上线 1 天，总周期压缩至 4 天，用户满意度提升 35%。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463263258-1f75d077-b3f1-43f8-bccc-74e1a69b3a16.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-a05cdc6f849c.png)
 
 ### 4. 时机 4：高并发场景下，资源浪费严重
 
@@ -98,7 +98,7 @@ article: false
 - **判断指标**：核心模块 QPS≥5000，非核心模块 QPS≤500，整体扩容后资源利用率≤40%。
 - **实战案例**：某电商大促期间，单体服务 QPS 峰值达 8000（其中 “支付服务” 占 70%，“售后服务” 仅占 5%），统一扩容后服务器利用率仅 35%，月成本 10 万元；拆分后仅对 “支付服务” 扩容，利用率提升至 85%，月成本降至 5 万元，节省 50% 资源。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463277998-941408e5-8391-4a4e-8705-020a8a4ddd38.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-2cf88d0448ac.png)
 
 ## 三、再定 “拆的标准”：5 大核心原则，避免拆分后 “更乱”
 
@@ -110,7 +110,7 @@ article: false
 - **为什么重要**：若违反该原则（如 “订单服务” 同时处理 “库存扣减”），会导致 “改库存逻辑时，订单服务需同步测试 / 发布”，耦合度极高，故障风险扩散。
 - **实战示例**：电商场景中，“订单服务” 仅负责 “订单创建、订单查询、订单取消”，“库存扣减” 交给 “库存服务”，“支付回调处理” 交给 “支付服务”，职责边界清晰。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463296794-c0241cd8-8687-4a9d-a0ce-d423bad8e3c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-f4bb12ef106e.png)
 
 ### 2. 原则 2：服务自治原则（微服务的 “独立性保障”）
 
@@ -122,7 +122,7 @@ article: false
 
 - **反例警示**：某项目未做数据自治，“订单服务” 直接读写 “库存服务” 的数据库，导致库存服务扩容时，订单服务出现大量 SQL 超时，系统雪崩。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463312019-9eeb6500-a873-4dcb-816d-68a36b2ed3d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-db2eb853584c.png)
 
 ### 3. 原则 3：轻量级通信原则（降低服务交互成本）
 
@@ -134,7 +134,7 @@ article: false
 
 - **实战建议**：内部服务间优先用 RPC 提升性能，对外提供接口用 REST 保障兼容性，避免混合使用多种复杂协议（如同时用 SOAP、MQ、RPC，运维成本翻倍）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463323882-e96c6cb3-eb8d-4721-9bbb-19bb5d7eb868.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-ade624a3e854.png)
 
 ### 4. 原则 4：接口明确原则（避免 “牵一发而动全身”）
 
@@ -147,7 +147,7 @@ article: false
 
 - **踩坑案例**：某项目 “商品服务” 未做版本控制，直接修改 “获取库存” 接口的返回字段，导致 “订单服务” 调用时解析失败，线上停服 30 分钟，后续通过接口版本控制彻底解决该问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463337551-f1fcef3b-328d-4da5-8b49-1b897f19e841.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-50c34d63f9c0.png)
 
 ### 5. 原则 5：持续演进原则（拒绝 “一次性拆完”）
 
@@ -160,7 +160,7 @@ article: false
 
 - **反例警示**：某项目初期将电商拆分为 12 个服务，团队仅 8 人，导致 “每人维护 1-2 个服务，文档缺失、依赖混乱”，后续合并为 6 个核心服务，才恢复正常维护节奏。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463352049-158fb4a9-c6e3-4a5f-b334-a09cc51c16a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-1ba9841243f1.png)
 
 ## 四、落地 “怎么拆”：6 大核心方法（结合电商场景实战）
 
@@ -176,7 +176,7 @@ article: false
 
 - **优势**：业务逻辑清晰，团队易理解，后续迭代时能快速定位服务边界。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463374332-5e231ea3-cd16-42d0-aa56-f4681b48302c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-73bc6bbe9e72.png)
 
 ### 2. 方法 2：按需求变化频率拆分（降低发布风险）
 
@@ -188,7 +188,7 @@ article: false
 
 - **优势**：高频服务单独发布，稳定服务无需频繁测试，发布风险降低 70%。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463387242-e484eb1d-8d04-416f-9f4c-2f0d62418cc7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-ede89ff794f1.png)
 
 ### 3. 方法 3：按服务性能要求拆分（优化资源利用率）
 
@@ -200,7 +200,7 @@ article: false
 
 - **优势**：资源精准分配，高并发服务用高配置机器，普通服务用低成本资源，硬件成本降低 40%。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463399190-13f90e25-eb82-492b-bac2-b612e9d08aa4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-dc1564ce8603.png)
 
 ### 4. 方法 4：按组织架构拆分（减少跨团队沟通）
 
@@ -212,7 +212,7 @@ article: false
 
 - **优势**：沟通在团队内完成，无需跨团队对齐需求，需求交付周期缩短 30%。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463412683-fa825222-1421-4cc9-be21-1debf2fcb6cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-d21922962f36.png)
 
 ### 5. 方法 5：按安全边界拆分（保障数据安全）
 
@@ -224,7 +224,7 @@ article: false
 
 - **优势**：安全防护精准落地，敏感服务独立防护，数据泄露风险降低 90%。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463424500-3573dfee-7713-4204-a5c1-510accfe2a32.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-41cea3c5eb81.png)
 
 ### 6. 方法 6：按技术异构拆分（适配技术特性）
 
@@ -237,7 +237,7 @@ article: false
 
 - **优势**：技术栈与业务需求匹配，开发效率提升 50%，性能瓶颈减少 60%。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463436280-6bc8a9ff-b0f0-4a62-8e01-219286ba1e36.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-684a401ac2bf.png)
 
 ## 五、落地避坑：拆分过程中 3 大高频问题及解决方案
 
@@ -283,4 +283,4 @@ article: false
 
 微服务拆分不是 “技术选型”，而是 “业务驱动的决策”—— 先通过 “业务演进阶段” 判断是否需要从单体转向微服务，再用 4 大时机明确 “该不该拆”，5 大原则把控 “拆的标准”，6 大方法落地 “怎么拆”，同时做好 3 大问题的避坑措施。记住：好的微服务架构是 “演进出来的，不是设计出来的”，持续迭代优化，才能让微服务真正为业务赋能。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761463467189-d9bd2974-e76f-426c-8e06-e059f2ae646b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1186-xxgpcwwe6r2w8yb9/img-662591e02ce6.png)

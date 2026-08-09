@@ -34,7 +34,7 @@ article: false
 - **CDN（内容分发网络）**： 静态资源（图片、CSS、JS）不要让后端服务器扛。把它们缓存在 CDN 节点上，离用户最近。
 - **网关（Nginx）**： 作为流量的入口，Nginx 负责负载均衡，将请求均匀分发到应用服务器集群，避免单点过热 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767669850021-5bbe7e7c-682a-40e4-b7a0-f25385c74797.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1351-fodz8ww6nwud2geu/img-6e3755046263.png)
 
 **面试话术：** “优化的第一步是在离用户最近的地方拦截炮火，能不进后端的请求绝不进后端。”
 
@@ -45,7 +45,7 @@ article: false
 - **并行化（Parallelization）**： 使用 `CompletableFuture` 将无依赖的任务并行执行。查 A、查 B、调 C 同时进行，总耗时取决于最慢的那个任务 。
 - **核心思想**：用空间换时间 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767669900192-4dcea9ae-3190-491b-a9f4-12266b34bddf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1351-fodz8ww6nwud2geu/img-678869f10d7a.png)
 
 **面试话术：** “我们要压榨 CPU 的多核能力，拒绝串行等待，让代码‘多线开花’。”
 
@@ -57,7 +57,7 @@ article: false
 - **第二级：远程缓存（Redis）**： 作为集中式缓存，拦截 45% 的请求 。
 - **兜底：数据库（DB）**： 只有最后 5% 的请求才会真正打到数据库，保护脆弱的磁盘 I/O 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767669912012-db9509ed-e6ab-4904-9988-2647f7c37d26.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1351-fodz8ww6nwud2geu/img-8e8fbc65dc6b.png)
 
 **面试话术：** “不要只依赖 Redis，要把数据拦截在离 CPU 最近的地方。”
 
@@ -67,7 +67,7 @@ article: false
 
 - **异步削峰（Async & MQ）**： 引入消息队列（Kafka/RocketMQ） 。 请求来了，先丢进 MQ 马上返回成功。后端消费者以平滑的速率慢慢消费写入数据库 。 这叫**削峰填谷**，也是**异步换同步**的经典应用 。+4
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767669934543-8467e1ca-6a22-42aa-af8c-8abc9f89fefc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1351-fodz8ww6nwud2geu/img-41b9dfe4e00f.png)
 
 **面试话术：** “面对写洪峰，我们不能硬抗，要用 MQ 做蓄水池，实现流量的平滑处理。”
 
@@ -81,14 +81,14 @@ article: false
 - **解法**：利用 `mmap` 和 `sendfile` 技术，建立直接通道，让数据在内核态直接传输到网卡，跳过用户态拷贝 。
 - **案例**：Kafka 和 Netty 为什么快？核心就在这里 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767669965371-09b8b4bb-7158-499b-b795-4fad266d5f2a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1351-fodz8ww6nwud2geu/img-b3e67255e315.png)
 
 1. **无锁化编程（Lock-Free）**：
 
 - **痛点**：高并发下，线程争抢锁会导致大量的**上下文切换（Context Switch）**，开销巨大 。
 - **解法**：使用 **CAS**（Compare-And-Swap）原子操作和 **Disruptor** 框架（环形数组），实现无锁的高性能队列 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767669979387-7028bc9d-8b47-40bd-b128-1a2d25143801.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1351-fodz8ww6nwud2geu/img-5b31c4b59fd8.png)
 
 **面试话术：** “极致的性能不仅仅是架构层面的，更是对操作系统内核机制（如零拷贝）和 CPU 指令集（如 CAS）的深度利用。”
 

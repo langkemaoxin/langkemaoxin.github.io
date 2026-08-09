@@ -275,13 +275,13 @@ npm create vite@latest
 
 实际效果：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739859972403-6a31b0f4-d951-4b7f-a64f-d2fc0b4c2d93.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0030-be26ylhi7t6gnn9n/img-7b592d104e5f.png)
 
 #### 对话记忆(多轮对话)
 
 到目前为止对话实现，其实存在一个大问题，用户问问题每次都是新的一次对话，无法做到多轮次，就是常说的对话记忆，如下图所示问题所在：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739859994369-10895f4d-2443-4d9f-96bf-1d9388e4880e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0030-be26ylhi7t6gnn9n/img-447144cec7ad.png)
 
 如上图所示，大模型两次回复是独立的，没有形成对话记忆，要实现这个功能，Spring AI提供了Advisors API，MessageChatMemoryAdvisor主要实现对话记忆，本文基于内存的方式，首先Config类新增内存记忆的Bean。
 
@@ -353,7 +353,7 @@ new **MessageChatMemoryAdvisor**(inMemoryChatMemory, userId, 10)
 
 修改后实现的支持对话记忆的功能：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739860027556-92efe956-fcd0-4021-8920-ffb69e87518a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0030-be26ylhi7t6gnn9n/img-567be43b89d8.png)
 
 这样就实现了上下文记忆。
 

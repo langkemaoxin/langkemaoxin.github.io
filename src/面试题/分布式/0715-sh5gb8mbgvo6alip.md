@@ -31,7 +31,7 @@ Paxos 算法是 **基于消息传递** 且具有 **高效容错特性** 的一�
 
 在实际中，一个节点可以同时充当不同角色。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1696574091668-8c453f37-6e0b-496e-8b63-dda586174498.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0715-sh5gb8mbgvo6alip/img-95db2d9e2d20.png)
 
 Paxos的三种角色
 
@@ -41,7 +41,7 @@ Paxos的三种角色
 
 Paxos算法包含两个阶段，第一阶段**Prepare(准备)**、第二阶段**Accept(接受)**。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695892187691-49e874ad-fe63-49fc-a6ec-5d6051134e6e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0715-sh5gb8mbgvo6alip/img-0100be298b6d.png)
 
 Paxos算法流程
 
@@ -70,7 +70,7 @@ Paxos算法流程
 
 所以Paxos算法的整体详细流程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695892187582-f6c5442c-822b-4555-a9a6-89f58860f0c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0715-sh5gb8mbgvo6alip/img-0e5ea0704a6b.png)
 
 Paxos详细流程
 

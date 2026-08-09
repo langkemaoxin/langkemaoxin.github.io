@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366705758-78efd089-267b-475b-85a3-a1398c67358c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1408-wcwq2dvgtl6tobwv/img-f097ab435e42.png)
 
 在面试中回答“如何估算模型推理所需显存”时，需结合 **理论公式、实际案例、工具使用** 三大维度，展示系统性思维和工程落地能力。以下是核心思路：
 
@@ -28,7 +28,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366716929-939634be-4fd8-401c-99a7-b9019285b4fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1408-wcwq2dvgtl6tobwv/img-af0119138576.png)
 
 #### **案例背景**
 
@@ -44,7 +44,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366743164-ce7275c2-f1b3-487b-bdf9-f850a52d24b5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1408-wcwq2dvgtl6tobwv/img-e6d7dbd5a8af.png)
 
 #### **步骤一：理论估算模型显存**
 
@@ -155,7 +155,7 @@ print(prof.key_averages().table(sort_by="self_cuda_memory_usage", row_limit=10))
 
 ### 四、总结归纳
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366761049-b9e358f7-7cd4-4a5b-951c-64cefaa33a3b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1408-wcwq2dvgtl6tobwv/img-4855be5fba2e.png)
 
 1. **核心公式**
 

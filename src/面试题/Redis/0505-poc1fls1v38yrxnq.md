@@ -72,7 +72,7 @@ dynamic-hz yes   自适应加减频率
 
 #### 源码流程：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744889223769-ff133b6d-b908-4003-bf62-923ef78c9b0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0505-poc1fls1v38yrxnq/img-97c95b9b71cf.png)
 
 ### 被动过期详解
 
@@ -92,7 +92,7 @@ dynamic-hz yes   自适应加减频率
 
 #### 源码流程：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744889273139-94394747-4cb4-44df-a0d6-d98daab96ef9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0505-poc1fls1v38yrxnq/img-974f86a47780.png)
 
 ### 附源码解读：
 
@@ -266,7 +266,7 @@ Redis 提供了 flushdb 和 flushall 指令，用来清空数据库，这也是�
 
 Redis4.0 为这些删除点也带来了异步删除机制，打开这些点需要额外的配置选项。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744889048972-6bb60da2-fabf-4ad7-a19b-4e5536522018.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0505-poc1fls1v38yrxnq/img-f5a1d31cc463.png)
 
 1、slave-lazy-flush从库接受完 rdb 文件后的 flush 操作
 

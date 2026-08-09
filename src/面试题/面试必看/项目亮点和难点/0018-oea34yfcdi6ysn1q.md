@@ -207,7 +207,7 @@ article: false
 
 [MES](https://so.csdn.net/so/search?q=MES&spm=1001.2101.3001.7020)是制造执行系统（Manufacturing Execution System）的缩写，是一种用于管理和监控制造过程的软件系统。它是在ERP（企业资源计划）和SCADA（监控和数据采集系统）之间的一个中间层，用于实现生产计划的执行和监控。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739964823506-606cf156-f5a1-4c78-8979-c96cd9843746.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0018-oea34yfcdi6ysn1q/img-b4c3beb11188.png)
 
 #### 二、分类
 
@@ -225,7 +225,7 @@ MES系统可以按照不同的分类标准进行分类，以下是常见的MES�
 
 不同的MES系统分类方式可以帮助企业选择适合自己的MES系统，以提高生产效率、降低成本、提升产品质量和满足客户需求。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739964847482-7d77e0d8-e8dc-40e7-aa8c-edae73c6c710.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0018-oea34yfcdi6ysn1q/img-dcc406118a71.png)
 
 #### 三、作用
 
@@ -245,7 +245,7 @@ MES系统是一种用于管理和监控制造过程的软件系统，其作用�
 
 综上所述，MES系统可以帮助企业实现生产过程的自动化、信息化和智能化，提高生产效率、降低成本、提升产品质量和满足客户需求。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739964806054-cdb73e63-c2be-40fa-a68f-7e215ae0f86e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0018-oea34yfcdi6ysn1q/img-dd7deb92f1e1.png)
 
 #### 四、功能模块
 
@@ -273,7 +273,7 @@ MES系统的功能模块可以根据不同的厂商和应用领域而有所不�
 
 以上是MES系统常见的功能模块，不同的MES系统可能会有所不同，企业可以根据自己的需求选择适合自己的MES系统。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739964788690-4ff9c176-9d9e-459d-9f5b-8ceee902099c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0018-oea34yfcdi6ysn1q/img-245a4b77f60f.png)
 
 #### 五、实施步骤
 
@@ -293,7 +293,7 @@ MES系统的实施步骤可以分为以下几个阶段：
 
 以上是MES系统的实施步骤，企业在实施MES系统时需要根据自身的实际情况进行具体的实施方案制定和实施工作
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/43518495/1739964896150-26e7c50a-67a0-4cbe-94d8-8375f32dbb35.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0018-oea34yfcdi6ysn1q/img-4aaced5bcae9.jpg)
 
 #### 六、界面设计-看板界面
 
@@ -315,9 +315,9 @@ MES看板通常包括以下内容：
 
 MES看板的设计需要考虑到生产管理人员的实际需求和使用习惯，同时需要注重界面美观和易用性，以便管理人员能够迅速了解生产情况，做出及时的决策。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739964929309-cd1f9b85-75da-48ff-b5ba-9ae0d96f7b59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0018-oea34yfcdi6ysn1q/img-fc1049a001b2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/43518495/1739964934308-0ba21fec-b8e4-4f2e-b474-bcefaf5cacab.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0018-oea34yfcdi6ysn1q/img-75be7b19cdd9.jpg)
 
 #### 七、相关阅读
 

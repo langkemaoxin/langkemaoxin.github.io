@@ -19,7 +19,7 @@ article: false
 
 1. **问题分析**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227508104-b91025c0-1c29-4bd7-a139-ba7fbed4b577.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1416-br9bkksrga9otdg4/img-63669729a3ae.png)
 
 - **场景定位**：明确语义鸿沟出现的业务场景（如医疗、金融、法律等）。
 - **痛点拆解**：数据孤岛、上下文断裂、时效性不足、跨模态语义失配等。
@@ -27,7 +27,7 @@ article: false
 
 1. **技术解决方案**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227542257-db64c4d5-cc80-4f70-8348-3e3f7d99250a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1416-br9bkksrga9otdg4/img-e3e42abeeb73.png)
 
 - **知识图谱融合**：构建结构化语义网络，弥合查询与文档的逻辑断层。
 - **上下文感知检索**：动态调整检索策略，优先召回语义相关文档。
@@ -42,7 +42,7 @@ article: false
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227574731-4341e848-5f5a-451f-84b9-5d77fbbc665c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1416-br9bkksrga9otdg4/img-2a72ab7e7e1f.png)
 
 #### **案例背景：医疗诊断RAG系统**
 
@@ -143,7 +143,7 @@ combined_embedding = 0.7 * text_embedding + 0.3 * image_embedding
 
 ### 四、总结收尾
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227610887-f458d1e4-7953-456c-85cb-2b881fc0321f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1416-br9bkksrga9otdg4/img-0d0ea68cd652.png)
 
 **语义鸿沟的本质**是查询意图与知识表示之间的语义断层，需通过**技术组合拳**系统性解决：
 

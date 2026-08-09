@@ -31,21 +31,21 @@ MySQL官网提供了详细的文档、下载、社区支持等资源，官网地
 
 打开 MySQL 官网，选择 DownLoads，在点击下方 Community DownLoads，然后依次按照图示进行操作下载，如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714310974888-f8cf8f28-c7a6-4bf9-a33a-e4c7d0f726f8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-8e2cd77416ba.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714311202239-662aea43-c9cb-40b3-a845-f60276f32e13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-0f37343d3d09.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714311330950-e78d7573-13b0-4440-9a24-7ed3c69f6a49.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-3568fe04d342.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714311452014-affb74ff-f5cf-4f01-8e4d-0cad38236473.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-21d057c59554.png)
 
 ### 3.2 安装
 
 Windows 的安装有图形化界面，非常的方便快捷，直接运行下载好的 msi 文件，大多数都是下一步，极少步骤需要处理，需要单独处理的步骤提到了前面，大家稍微记一下就行，其他无脑下一步。需要注意如下图示： **完整的过程图再文末。**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714311796926-12527830-74bf-4d31-880d-284a52488983.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-d9c63ca37bc7.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312162382-9440e550-5c05-46cd-9cb5-d44753112a86.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-8d019a607ee4.png)
 
 ### 3.3 测试是否安装成功
 
@@ -53,7 +53,7 @@ Windows 的安装有图形化界面，非常的方便快捷，直接运行下载
 
 #### 3.3.1 win + R 输入 cmd 或者 win 搜索 cmd 打开命令窗口登录 MySQL。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312699909-17747749-5325-4bd9-b646-7fa39871137b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-2e0d310649c0.png)
 
 输入登录 MySQL 命令：**mysql -u root -p** ,如果出现以下报错，则需要配置下 MySQL 环境变量。
 
@@ -61,19 +61,19 @@ Windows 的安装有图形化界面，非常的方便快捷，直接运行下载
 mysql -u root -p
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312743909-d6af1a3c-a4ec-4c63-b10e-5fd617337efe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-f73cb097b6da.png)
 
 ### 3.3.2 配置 MySQL 环境变量
 
 #### 3.3.2.1 进入 MySQL 安装目录，打开 bin 目录，复制 bin 所在目录链接
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312983452-d1f4b464-49b7-45fb-8f8e-458a6b61fe4b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-0fc426571c4b.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714313119592-f7aabd76-2577-4acb-9e21-e8a7c0979130.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-4bc20c91ed2e.png)
 
 #### 3.3.2.2 打开我的电脑属性 --> 高级系统设置 --> 环境变量 ······ 按图示操作
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714313218934-9e584b5b-deee-4712-8d21-84380485c399.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-e22ba0cc0321.png)
 
 #### 3.3.2.3 需要注意，配置环境变量后，需要重新打开一个 cmd 窗口才能生效。效果如下，输入安装时的 root 密码后，出下 MySQL 提示，则代表安装成功，可以简单测试下：
 
@@ -84,9 +84,9 @@ show tables;
 quit;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714313432232-7d4142b5-9566-46db-9309-864d28286fe1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-d24a52583d6f.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714313538824-add8880e-a097-446d-a4c5-387c11aa3f10.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-394e0def6e1a.png)
 
 ## 4.Linux安装
 
@@ -229,15 +229,15 @@ MySQL 服务已经安装完成，由于命令方式输入比较复杂，所以�
 
 ### 5.1 选择 64 就可以了
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714898303460-241890ca-336a-41d0-b5fd-61e38dbc6481.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-cf3536beb3ef.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714898387617-28b3ef6e-354b-40dd-bdb6-ed800a4e2b8a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-38fcf64729e1.png)
 
 ### 5.2 然后就正常下一步，安装完成后打开软件。连接数据库，如下是连接了本机、虚机 windows、虚机 Linux 三个机器的 MySQL 服务，确认好 ip 地址，填入账号密码即可。
 
 ### 5.3 连接 Linux 机器 MySQL
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714898677246-0a8acabb-4518-46f6-97b7-030f2fb97e69.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-d64e26405d33.png)
 
 ### 5.4 至此图形化客户端处理完成
 
@@ -253,7 +253,7 @@ show database;
 
 查看现有已经存在的库。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714907362734-8049b638-2a52-415b-85f5-a737fc47edc2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-f6826adce736.png)
 
 **创建表使用命令**
 
@@ -261,7 +261,7 @@ show database;
 create database test;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714907475571-6a94bc51-9c65-4b19-9b44-853b3361032c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-6bc3fddcbce0.png)
 
 **删除数据库使用**
 
@@ -269,25 +269,25 @@ create database test;
 drop database test;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714907567980-39b0b350-9a0a-4497-aa2b-250f1b522051.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-9f339d70b0d8.png)
 
 ### 6.2 使用 HeidiSQL 创建
 
 **选中连接的数据库，然后右键-->创建新的-->数据库**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714907651084-9022a381-f57a-497d-a87b-d4d3e24312a9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-de4f90033c3f.png)
 
 填入数据库名称，这样就创建完成了
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714907721820-f2b5b5c6-a943-45da-8e02-f0e05c92833b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-c8e626f4a2c0.png)
 
 **删除数据库，很简单，直接选中数据库右键删除即可**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714907773363-5ed0290d-44eb-4c89-9535-25affa3bb2d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-8ac71916f80d.png)
 
 **细心的小伙伴应该已经发现了，我们在图形化操作时，HeidiSQL 都生成了对应的命令，因此我们接下来都在 HeidiSQL 中完成处理。**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714908577138-2fe5184a-04fd-4f83-bb5c-5077cb208f98.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-66f859cd4d56.png)
 
 ## 7.创建表
 
@@ -353,15 +353,15 @@ DROP TABLE test;
 
 **数字类型**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715065638846-c69811dd-7a08-45ee-9031-58bfe929a80c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-631a3c701dc8.png)
 
 **日期类型**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715065687607-b96b1d2c-88cd-406f-869f-415d3b3f69a7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-6de9790e6d5d.png)
 
 **字符类型**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715065705675-7a41988b-9bd4-4923-a990-09e61b050197.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-2dd321636540.png)
 
 ## 8.数据的增删改查
 
@@ -395,11 +395,11 @@ DELETE FROM test WHERE full_name = 'Alice Johnson';
 
 使用 HeidiSQL 导出非常的简单，选中表右键，然后选中需要导出的数据与保存目录就可以了
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714912459705-c234fd99-e962-4739-a5d9-64c3968e39d9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-8722485e167d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714912513523-2ff528ae-92bb-4ff6-83bd-bb67f8761984.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-85138c08ddbd.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714912603273-5c7a6a48-0a7d-4cb7-96bb-d25ec9256c70.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-f74e3a4b9214.png)
 
 ## 10.常用语句
 
@@ -648,28 +648,28 @@ DELETE FROM 表名 WHERE 条件;
 
 ## Windows 安装 msi 文件完整图示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714311796926-12527830-74bf-4d31-880d-284a52488983.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-d9c63ca37bc7.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714311939479-215cd796-dc14-4453-b11e-4b8bcea106a4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-967a11d35943.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714311992860-54bf67ca-81b9-4b61-97ad-8fbaf4b1b3a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-b4aaf3696a67.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312035082-070c949a-1eeb-47b7-a856-921ac103e4cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-3a0ddfbb9d1d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312068196-c0022ab1-edbc-49c2-9032-fce3a4ef2c26.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-a3c964f64c68.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312094054-ccbbcc5b-2f34-4ce6-bf0e-93bf53d92306.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-814ac568c7af.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312162382-9440e550-5c05-46cd-9cb5-d44753112a86.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-8d019a607ee4.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312197998-7e6dba61-2ae0-4462-ad38-c73d26ef6982.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-7c72727036b8.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312223174-50d27c1f-1626-4372-95ae-09733bd70146.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-bb62e6726b63.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312247024-531fde04-23f4-4a18-9161-5515f1a7c406.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-ad35ba4c4a68.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312282744-db13b76f-c2ee-4423-b713-702b73e9d1d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-5f186c193e23.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312300006-a56e0473-dc5a-4569-9604-7cdc4fa22a2f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-26f4c8d02f0f.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714312323977-4e1118ee-fe33-4665-b241-78da731ff395.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0109-bkgyx9eokguvv3tm/img-d5c965551d4f.png)

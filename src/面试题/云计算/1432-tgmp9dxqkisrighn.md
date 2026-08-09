@@ -15,7 +15,7 @@ article: false
 
 ## 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751684107957-504efdb8-db44-4b87-910b-cca5aad78047.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1432-tgmp9dxqkisrighn/img-386ac2c045ff.png)
 
 ### 1. 知识点拆解
 
@@ -63,7 +63,7 @@ O(n)
 
 ## 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751684120511-3cea748f-182a-4201-8e92-86fcaa71f69c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1432-tgmp9dxqkisrighn/img-f781e1feb17b.png)
 
 ### 案例1：跨境电商智能客服系统
 
@@ -125,7 +125,7 @@ O(n)
 
 ## 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751684149454-b1ef1cf0-7cf1-47e0-aa93-9a75b1e17dab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1432-tgmp9dxqkisrighn/img-fb330a44e903.png)
 
 ### 面试问题：请解释LLaMA模型中RMSNorm和SwiGLU激活函数的改进
 
@@ -134,14 +134,14 @@ O(n)
 **传统LayerNorm的局限性**：
 
 - 计算公式：$$
-![](https://cdn.nlark.com/yuque/__latex/e8cea194bd660ac4097c7f66df6e8ff8.svg)
+![](/面试题/云计算/1432-tgmp9dxqkisrighn/img-01c18b57e0a5.svg)
 - 需要计算均值μ和方差σ²，带来额外计算开销
 - 在长文本序列中容易出现内部协变量偏移
 
 **RMSNorm的创新设计**：
 
 - 公式简化：$$
-![](https://cdn.nlark.com/yuque/__latex/f897b56aba22ae67dd3932140e3e4d20.svg)
+![](/面试题/云计算/1432-tgmp9dxqkisrighn/img-a25db192dfd2.svg)
 - 仅计算均方根值，减少计算量30%-50%
 - 数值稳定性提升：通过指数移动平均保持动态分布
 
@@ -219,7 +219,7 @@ class AdaptiveScaler(nn.Module):
 
 ## 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751684165479-78c1bc92-3c35-473d-91a8-629cfadc4b4a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1432-tgmp9dxqkisrighn/img-a2f5cdd2dbe8.png)
 
 LLaMA通过RMSNorm和SwiGLU两项关键改进，实现了：
 

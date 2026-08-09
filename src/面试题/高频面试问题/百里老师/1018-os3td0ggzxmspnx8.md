@@ -13,7 +13,7 @@ article: false
 
 > 来源：[一个3人团，剩1个名额，100人同时抢…我把从崩溃到高可用的架构演进讲透了](https://www.yuque.com/tulingzhouyu/db22bv/os3td0ggzxmspnx8)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758464510363-e6118aca-0be1-4b8e-bee2-4b00e0f28a0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1018-os3td0ggzxmspnx8/img-f2aaf031a5cb.png)
 
 想象一个场景：一个热门商品的三人团，已经有两人加入，只剩下最后一个宝贵的席位。就在这时，系统检测到有100个用户在同一秒点击了“加入拼单”按钮。**会发生什么**？
 
@@ -23,13 +23,13 @@ article: false
 
 这，就是我们今天要面对的核心挑战。表面上看，拼团的流程风平浪静：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758464519974-77e8c200-2f4a-490c-8e1e-78bf2b5fbc90.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1018-os3td0ggzxmspnx8/img-55c67c728a84.png)
 
 但实际上，在“B/C同时加入”这一步，就是所有问题的**风暴中心**。如果没有任何保护，系统就会在这里被瞬间击穿。
 
 ## 核心挑战一：并发控制 - Redis锁化身“检票员”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758464532322-f48b70e6-03a4-4b64-857a-e6f27bb3fb7f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1018-os3td0ggzxmspnx8/img-559c8e236e73.png)
 
 要解决100人抢1个座位的问题，我们最先想到的，也是最容易犯错的方案，就是直接给数据库加锁。
 
@@ -38,7 +38,7 @@ article: false
 
 ## 核心挑战二：超时处理 - 告别“人工巡逻”，拥抱“智能闹钟”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758464542201-e747f36b-d275-43cc-990f-b058e64e1558.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1018-os3td0ggzxmspnx8/img-26942c7ef767.png)
 
 另一个经典问题是：一个拼单发起了，但24小时内没凑齐人，系统该如何发现并自动给已付款的用户退款？
 
@@ -47,7 +47,7 @@ article: false
 
 ## 核心挑战三：可靠通知 - 巧用“发件箱底稿”模式
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758464551990-ebf703b7-fb41-4497-bf32-00d795a321d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1018-os3td0ggzxmspnx8/img-5ed5d38b4e2a.png)
 
 拼单超时，需要退款。我们的拼单服务需要通知支付服务去执行退款操作。但如果这次通知因为网络抖动、支付服务宕机而失败了，消息就丢了，用户的钱就退不了，这可是天大的事故。
 
@@ -62,7 +62,7 @@ article: false
 
 现在，我们将以上所有关键技术点整合起来，就得到了一个稳健、高可用的拼单服务最终架构：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758464564699-76743186-ea9f-4d70-b268-c08a96026628.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1018-os3td0ggzxmspnx8/img-464affcb634e.png)
 
 1. **入口**：海量并发请求涌入。
 2. **核心处理层**：

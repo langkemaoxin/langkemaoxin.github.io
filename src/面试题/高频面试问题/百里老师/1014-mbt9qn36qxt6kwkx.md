@@ -15,7 +15,7 @@ article: false
 
 #### **解构顶级秒杀系统的架构艺术**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758871150506-731220e0-f98b-4e89-92f6-2f4e94482dde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1014-mbt9qn36qxt6kwkx/img-5f4edb5b3a47.png)
 
 **引言：**
 
@@ -33,7 +33,7 @@ article: false
 
 战争的胜利，往往在冲锋号吹响之前就已注定。秒杀系统的第一道，也是最重要的一道防线，不在云端服务器，而在你我的手机App里。这是将无效流量、作弊请求过滤在“第一公里”的关键战场。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758871225154-7213644e-e3b9-4883-a96a-3abf125f811c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1014-mbt9qn36qxt6kwkx/img-207858a30c8e.png)
 
 #### **1.1 服务器时间同步：分秒不差的起跑线**
 
@@ -57,7 +57,7 @@ article: false
 
 当海量请求离开手机，到达云端服务器集群的第一站，便是“流量网关”(API Gateway)。它像一个纪律严明的哨兵，负责甄别每一个请求的合法性，并控制进入系统的流量节奏。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758871238846-dcb5081a-e459-4b9e-93bc-8c079034eac2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1014-mbt9qn36qxt6kwkx/img-26433004cf3c.png)
 
 #### **2.1 签名校验：给每个请求一个“身份证”**
 
@@ -77,7 +77,7 @@ article: false
 
 如果直接去查询传统的数据库（如MySQL），10万个并发查询足以瞬间将其击垮，因为数据库的磁盘I/O操作相对非常缓慢。这里的英雄是**基于内存的数据库Redis**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758871301104-11cd5616-4343-4ab9-a9f7-1808d53bea9b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1014-mbt9qn36qxt6kwkx/img-3b82e51c4cbc.png)
 
 内存的读写速度比磁盘快几个数量级。我们将票务库存（比如1000张）直接存入Redis。当一个请求进来，系统执行一个极其高效的操作：
 
@@ -98,7 +98,7 @@ article: false
 
 这时，架构的智慧再次闪耀——**消息队列（Message Queue, MQ）**登场了。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758871262884-8daed832-f306-4028-acd8-b449709c36d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1014-mbt9qn36qxt6kwkx/img-65ebd5640f35.png)
 
 MQ就像一个巨大的“蓄水池”。通过Redis筛选的1000个成功请求，不会立刻去创建订单，而是被快速地包装成一条条“待办消息”，扔进这个“蓄水池”里。这个过程快如闪电，所以用户的手机上能立刻看到“排队中，请稍候”的提示。
 
@@ -110,7 +110,7 @@ MQ就像一个巨大的“蓄水池”。通过Redis筛选的1000个成功请求
 
 当订单服务从消息队列中取出你的请求，并成功在数据库中创建订单后，整个抢票流程才算真正画上句号。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758871276304-0021b172-266a-429e-99ed-2467464958a5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1014-mbt9qn36qxt6kwkx/img-5ea9e5d50814.png)
 
 此时，系统会通过一个专门的推送服务，向你的手机App发送一条推送通知（Push Notification）。你的App收到这条通知后，会刷新页面，最终向你展示“恭喜您，抢票成功！”的最终结果页。
 

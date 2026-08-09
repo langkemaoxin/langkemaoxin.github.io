@@ -41,12 +41,12 @@ article: false
 我会根据业务类型，利用公式得出一个‘理论下限’：
 
 - **CPU 密集型**（计算为主）： 。
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767862977908-cbd195c7-1110-4ab1-a19d-0aecc44a37d7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0283-la2z59asal2agdad/img-5c6c9daa0131.png)
 
 - *逻辑：* 防止线程缺页中断导致 CPU 空转。
 
 - **IO 密集型**（业务为主）： 。
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767862987644-3f7ae932-2086-444e-bf9f-90b4ffa6e669.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0283-la2z59asal2agdad/img-3cd416a56cb4.png)
 
 - *逻辑：*WT 是线程等待时间，ST 是计算时间。因为业务大部分时间在等数据库或接口（WT），所以需要更多线程来压榨 CPU。通常我会先按 **2N** 左右预设。
 

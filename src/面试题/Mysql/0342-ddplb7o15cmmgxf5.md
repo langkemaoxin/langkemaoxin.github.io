@@ -13,7 +13,7 @@ article: false
 
 > 来源：[7种 MySQL亿级/千万级大表快速删除数据方案：锁影响与性能分析](https://www.yuque.com/tulingzhouyu/db22bv/ddplb7o15cmmgxf5)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1745238005775-ad97e767-4a35-41af-a793-bba576ae26a7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_57%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0342-ddplb7o15cmmgxf5/img-ea359579d16c.png)
 
 以下是MySQL大表删除方案，重点分析每种方案的**锁定影响**、**执行时间**和**系统负载**，从最优到次优排序：
 

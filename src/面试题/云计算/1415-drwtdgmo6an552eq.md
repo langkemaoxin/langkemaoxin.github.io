@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752229964998-969709fe-16eb-434b-b999-6264d0e49dd2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1415-drwtdgmo6an552eq/img-0fb47e92bba5.png)
 
 **核心要点拆解：**
 
@@ -31,11 +31,11 @@ article: false
 
 1. **结构化答题框架设计**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752228881114-aeda8df9-0c60-4ab4-b5ec-fc74516b6695.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1415-drwtdgmo6an552eq/img-954e7f6483b0.png)
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752229978738-0109e58a-7d27-4b63-92c9-db08663a488f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1415-drwtdgmo6an552eq/img-a1f79f102ee4.png)
 
 #### 案例背景：生鲜电商动态定价场景
 
@@ -63,7 +63,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752229992543-dd0f30d1-6475-4642-8058-f53f33a56296.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1415-drwtdgmo6an552eq/img-61d235e69c69.png)
 
 #### ReAct框架在鲜花定价Agent中的实现
 
@@ -146,7 +146,7 @@ if observations["inventory"]["rose"] < 100:
 
 ### 四、总结收尾
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752230004588-1dbb29eb-a964-461c-b5ae-da7549fca66e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1415-drwtdgmo6an552eq/img-7be6b63a00c8.png)
 
 **ReAct框架的核心价值**
 

@@ -21,7 +21,7 @@ article: false
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223620712-5fac5fc5-20c1-4328-b4a8-37369e4292ea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-1335f35fb5dc.png)
 
 ****那么，到底啥是“分布式一致性”？
 
@@ -35,7 +35,7 @@ article: false
 
 当然啦，这个“对账”的严格程度也不一样，分成了三种模型。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223644606-4959f001-6b87-4bab-9938-b7efedd7d1f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-00577fb1e88e.png)
 
 第一种，**强一致性**。绝对的老大哥，最严格！要求数据一旦更新，所有节点必须立刻、马上看到最新的数据，一刻都不能等。像银行转账、金融交易这种场景，一分钱都不能错，就得用它。
 
@@ -47,7 +47,7 @@ article: false
 
 好了，理论听完了，那具体怎么做呢？先来看看老前辈——**二阶段提交**，简称2PC。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223671423-0a75fadd-c16d-4d90-afbc-f247ed41d0ae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-c72a58a872f4.png)
 
 它有个“协调者”大哥和一堆“参与者”小弟。
 
@@ -63,7 +63,7 @@ article: false
 
 **你:** 为了解决2PC的问题，人们又搞出了它的“补丁版”——**三阶段提交**，3PC。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223716363-4ddfe304-69de-4623-875b-9c3ca93014b0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-5961dc034df2.png)
 
 它在2PC的基础上，增加了一个“CanCommit”的预备阶段，还引入了超时机制，减少了之前那种“干等”的阻塞情况。
 
@@ -73,7 +73,7 @@ article: false
 
 接下来，重量级选手登场！**Paxos算法**！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223744910-c9b2e8b1-5ac1-4a5d-882e-6acb75abb53a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-5cd99ecb3479.png)
 
 它就是神！是分布式一致性领域的“圣经”！理论上完美解决了分布式一致性问题。
 
@@ -85,7 +85,7 @@ article: false
 
 Paxos太难懂怎么办？这时候，**Raft算法**闪亮登场！它的口号就是：“为了让世界更易于理解”！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223766757-3268e50b-ce08-4d01-8037-06964f0a68fa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-ba4187129807.png)
 
 Raft 把复杂逻辑拆成 “节点状态” 和 “核心能力”，超好懂！节点就三种状态：领导者Leader，唯一写入口，向其他人发号施令、跟随者Folllower，听Leader的话参与投票、候选人Candidate，领导者崩了就参与竞选。
 
@@ -99,7 +99,7 @@ Raft 把复杂逻辑拆成 “节点状态” 和 “核心能力”，超好懂
 
 别慌，记住这三点：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223782255-42f708aa-293d-4c7c-aab4-ec4daea955c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-daa818b6bf37.png)
 
 1. **看业务需求**：钱相关的，用Raft/Paxos这类强一致性方案。普通信息，最终一致性就够了。
 2. **看系统规模**：系统一大，千万别自己造轮子！直接用现成的成熟组件，比如Zookeeper或者Etcd，它们已经帮你把最难的算法封装好了。
@@ -107,7 +107,7 @@ Raft 把复杂逻辑拆成 “节点状态” 和 “核心能力”，超好懂
 
 好了，最后我们来总结一下。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759223798412-76e858d1-1610-457c-9224-59bf70a1feea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1115-txetkrf16lm0t0xd/img-82c19cad7242.png)
 
 从漏洞百出的2PC、3PC，到理论完美但晦涩难懂的Paxos，再到如今大行其道的Raft，你会发现，所有技术演进的核心，都是为了在不可靠的网络和随时可能宕机的节点上，解决“信任”的问题。
 

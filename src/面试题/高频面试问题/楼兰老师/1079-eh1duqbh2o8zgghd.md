@@ -17,7 +17,7 @@ article: false
 
 ### 第一部分：开场——高并发下的“如履薄冰”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344154896-0ff07712-a45c-4e3d-af2b-8705532f6510.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_98%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-fefdb3c892b9.png)
 
 做高并发系统，最可怕的感觉是什么？ 不是技术难，不是架构复杂，是**“如履薄冰”**。 你以为高并发场景下只要把Redis缓存做好，把MQ削峰做好，系统就稳了？ 错。 往往那个最不起眼、最基础的组件，会成为压垮骆驼的最后一根稻草。
 
@@ -33,7 +33,7 @@ article: false
 
 在分布式ID的江湖里，主要分两大流派。我们先得把它们的底裤看穿，才能谈优化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344194061-128f38fa-b229-463e-be5f-366bd62d8cc9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_96%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-d7fbf5a436dc.png)
 
 **第一派：号段模式（Segment）。** 简单说，就是“批发”。 应用服务觉得每次找数据库要一个号太慢，就一次性申请1000个。 数据库里只需要一张极简的表：
 
@@ -49,7 +49,7 @@ article: false
 
 ### 第三部分：Segment的极致——打破双Buffer的极限
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344210436-6de62744-f963-452e-bf97-25736ddd1bb6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_95%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-1520fc5742f0.png)
 
 先看号段模式。 最经典的问题：**TP999毛刺**。 当你手里这1000个号用到最后一个时，必须停下来去数据库拿新的。 这中间的几十毫秒网络IO，会让后续的请求全部阻塞。
 
@@ -65,7 +65,7 @@ article: false
 
 再来看雪花算法。 实际上，这个简单高效的算法，在高并发场景下，也是问题不断。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344234490-697b6259-acea-4afa-830c-5cfef2bc4032.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_98%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-9f4fecb497ac.png)
 
 **一是时钟回拨问题。**就是系统时间戳回到了某一个之前的时间点。这就会产生ID重复的问题。产生时钟回拨问题的原因很多，例如系统默认通过NTP进行时钟同步，那就有可能因为网络延迟等原因产生小范围时钟回退。这个问题比较好解决。保存上一次生成ID的时间，与当前时间进行比对。如果发现了时钟回拨，可以直接抛异常或者休眠等待。
 
@@ -75,7 +75,7 @@ article: false
 
 ### 第四部分：攻克机器ID分配的难题
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344261016-d8287483-0df0-4925-8371-b2db08158898.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_98%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-9fc510a75545.png)
 
 但接下来这个真正的大BOSS就没那么好解决了。这就是**机器ID（Worker ID）怎么分配？** 雪花算法中间有10位设计的是机器ID，原本是要给不同机器设置不同的ID，防止分布式场景下，不同机器在同一时刻产生重复的ID。
 
@@ -101,7 +101,7 @@ article: false
 
 ### 第五部分：存储抽象——万物皆可为ID源
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344274037-07d7a9ce-b918-4f01-8436-24f1d24ee6e3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_88%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-335e427aa39a.png)
 
 架构设计到这一步，我们还需要最后一块拼图：**存储适配**。 刚才我们讲的Segment模式和机器ID分配，都是基于数据库的。但数据库本身性能就不高，能不能把这些分布式ID需要持久化的数据转移出去呢？能不能把同样的逻辑转移到Redis，Zookeeper或者是MongoDB呢？
 
@@ -117,7 +117,7 @@ article: false
 
 ### 第六部分：集大成者——CosID与ShardingSphere
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344285868-404b8d5c-3c50-45b0-8390-999e15f1aefc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_93%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-8a256b5fbfdf.png)
 
 最后，把我们刚才讲的所有这些： **无限预加载的Segment Chain**、 **防倾斜的序列号震荡**、 **三步走的机器ID自动化分配**、 **全场景存储适配**...
 
@@ -129,7 +129,7 @@ article: false
 
 ### 第七部分：人生的高并发
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765344301929-88131894-c4eb-4ec7-aaac-4a79191281b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_98%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1079-eh1duqbh2o8zgghd/img-86fe408721c5.png)
 
 回到开篇的问题：做高并发系统，最可怕的感觉是什么？ 是**“如履薄冰”**。
 

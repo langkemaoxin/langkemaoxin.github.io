@@ -13,7 +13,7 @@ article: false
 
 > 来源：[通俗易懂-MySQL常用函数解析](https://www.yuque.com/tulingzhouyu/db22bv/hoh5yl13z8ue2kak)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1743341729896-ff5ffe14-d86c-40c5-84b7-ea069a5d55de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0345-hoh5yl13z8ue2kak/img-7d0c44401863.png)
 
 ## 数学函数
 

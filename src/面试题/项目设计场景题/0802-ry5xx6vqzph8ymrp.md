@@ -36,7 +36,7 @@ article: false
 
 在Redis中可以userid作为key，好友的userid作为value，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720591625120-126e0492-8962-4746-bb33-8f60577d86cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0802-ry5xx6vqzph8ymrp/img-b63cfb2c78b1.png)
 
 统计两个用户的共同好友只需要两个Set集合的交集，命令如下；
 
@@ -52,7 +52,7 @@ SINTERSTORE userid:new userid:20002 userid:20003
 
 此时的结构应该如何设计呢？如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720591678283-33f39c2f-6dd2-4ba5-85db-c839355dbaff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0802-ry5xx6vqzph8ymrp/img-b6d5a2455070.png)
 
 userid:20201101这个key记录了userid用户的2020/11/1日的好友集合。
 
@@ -139,15 +139,15 @@ BITCOUNT userid:10001:202011
 
 Bitmap中还支持同时对多个BitMap按位做与、或、异或操作，命令如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720591741043-fbbecceb-d360-4a29-9d61-c6a90cf376c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0802-ry5xx6vqzph8ymrp/img-8e1f494e7e9c.png)
 
 思路来了，我们可以将每天的日期作为一个key，对应的BitMap存储一亿个用户当天的打卡情况。如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720591798178-fbc39756-b7aa-4e93-ab54-99b93786c285.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0802-ry5xx6vqzph8ymrp/img-7a195a8ddb79.png)
 
 此时我们只需要对2020/11/1到2020/11/20号的Bitmap做按位与操作，最终得到的一个Bitmap中每个bit位置对应的值则代表连续20天打卡的情况，只有连续20天全部打卡，所在的bit位的值才为1。如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720591823189-6d987c8b-af35-4a9c-b1c5-f9ab68088c61.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0802-ry5xx6vqzph8ymrp/img-816218841dee.png)
 
 最终可以使用BITCOUNT命令进行统计。
 
@@ -274,7 +274,7 @@ PFCOUNT p1_uv:2024-08-28
 
 本文介绍了统计的几种类型以及应该用什么集合存储，为了方便理解，作者将支持情况和优缺点汇总了一张表格，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720591877650-d325300e-a634-452b-9ecd-02d332d96bde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0802-ry5xx6vqzph8ymrp/img-bbb572b224e5.png)
 
 Set和Sorted Set支持交集、并集的聚合运算，但是Sorted Set不支差集运算。
 

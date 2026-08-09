@@ -40,7 +40,7 @@ article: false
 
 ### 🎯 问题1：为什么这么省内存？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762353663757-a27b3cdd-d6fb-40ff-adb7-76b72f4d2e29.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1225-owbkx6n7y1bveg20/img-6024581f0f02.png)
 
 **传统存储方式：**
 
@@ -66,7 +66,7 @@ article: false
 
 ### 🔧 问题2：能否修改数据？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762353688491-b720298c-6a86-4dcc-ba66-ce2fa278dba5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1225-owbkx6n7y1bveg20/img-bcb6a575da75.png)
 
 **答案：不能直接删除！**
 
@@ -82,7 +82,7 @@ article: false
 
 **✅ 解决方案：定期重建策略**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762353707514-4a639d24-e459-4079-8e84-a7635b2c9576.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1225-owbkx6n7y1bveg20/img-28e8879cbfef.png)
 
 ```plain
 1️⃣ 修改数据库（正常业务操作）
@@ -113,7 +113,7 @@ public void rebuildBloomFilter() {
 
 ### ⚡ 问题3：如何数据预热？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762353720725-1285bae4-7416-4816-82fd-d6e334f680d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1225-owbkx6n7y1bveg20/img-eefcefe0c653.png)
 
 **⚠️ 不预热的灾难后果：**
 
@@ -133,7 +133,7 @@ public void rebuildBloomFilter() {
 
 **✅ 单机应用预热方案**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762353744904-6aa93bb4-485b-4324-bdb0-dcde5d193849.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1225-owbkx6n7y1bveg20/img-86df0d43af64.png)
 
 ```java
 // Spring Boot 启动时自动预热
@@ -149,7 +149,7 @@ public void init() {
 
 **✅ 集群部署推荐方案（Redis共享）**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762353760506-23750836-6883-4335-a0b7-988349c10a39.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1225-owbkx6n7y1bveg20/img-0ea1aba90c3e.png)
 
 ```plain
 节点A ────┐
@@ -168,7 +168,7 @@ public void init() {
 
 ### 📈 问题4：误判率暴增怎么办？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1762353775528-e5c7ff58-7271-4219-83df-f1b2f92e0e75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1225-owbkx6n7y1bveg20/img-132914eedd1b.png)
 
 **误判率升高的根本原因：**
 

@@ -55,14 +55,14 @@ article: false
 
 - 采用弹性权重固化（EWC）算法，冻结关键神经元权重
 - 公式：
-![](https://cdn.nlark.com/yuque/__latex/3994178ff4ad0f8dc2fd9f4c930ed032.svg)
+![](/面试题/云计算/1444-dcbept28bs932bvr/img-3f238ed59a34.svg)
 - 设置λ=0.3，保留关键参数80%原始值
 
 1. **渐进式学习率**
 
 - 底层参数使用1e-5学习率，顶层分类层用5e-4
 - 采用余弦退火策略：
-![](https://cdn.nlark.com/yuque/__latex/6d62b6b24e47790948cfad7f1987fb39.svg)
+![](/面试题/云计算/1444-dcbept28bs932bvr/img-cea479fc62f1.svg)
 
 1. **动态评估机制**
 

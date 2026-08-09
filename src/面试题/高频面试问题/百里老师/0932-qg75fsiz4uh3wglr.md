@@ -21,7 +21,7 @@ article: false
 
 ### 一、 开篇：拒绝流水账，建立宏观视角
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764854733831-f4782418-d967-41df-9ec8-4925a243be19.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0932-qg75fsiz4uh3wglr/img-5c7e6885bb43.png)
 
 **💡 核心思考：** 不要一上来就谈"我们用了 Spring Boot"。我在介绍项目时，首先会明确**业务规模与核心挑战**。对于履约系统而言，核心矛盾在于：**大促流量洪峰（10w+ QPS）与库存数据强一致性之间的冲突**。
 
@@ -31,7 +31,7 @@ article: false
 
 ### 二、 架构全景：流量是如何被"层层过滤"的？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764854533688-4c2dba5c-9bd7-4332-8d3f-6a70d8b2d06f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0932-qg75fsiz4uh3wglr/img-a5c2c6201148.png)
 
 **💡 架构拆解：** 如上图所示，我们设计了三道防线，每一层都有明确的职责边界，避免单点压力过大：
 
@@ -47,7 +47,7 @@ article: false
 
 ### 三、 难点攻克：如何在 10w+ QPS 下保证库存准确？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764854541756-fc8f96f5-8866-4ccd-b291-9783c2cd31bf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0932-qg75fsiz4uh3wglr/img-f0845e864df0.png)
 
 **💡 深度解析：** 秒杀场景最忌讳的是"超卖"。图片直观展示了流量的流向，但代码层面的核心逻辑在于**Redis + Lua 的原子性设计**。
 
@@ -59,7 +59,7 @@ article: false
 
 ### 四、 事务一致性：强一致 vs 最终一致的抉择
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764854549249-af5c3383-8e8e-4e72-8487-764613d7a064.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0932-qg75fsiz4uh3wglr/img-3d41c08cb0ea.png)
 
 **💡 决策依据：** 分布式事务没有银弹，只有适合的场景。我们在系统中同时应用了这两种模式：
 
@@ -70,7 +70,7 @@ article: false
 
 ### 五、 海量数据：写入与查询的分离之道
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764854555189-4229e973-fb3a-4ac7-af7e-5c61614505cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0932-qg75fsiz4uh3wglr/img-673615441c53.png)
 
 **💡 技术细节：** 随着业务发展，单表数据突破亿级，查询性能急剧下降。我们采用了**CQRS（命令查询职责分离）** 的思想：
 
@@ -82,7 +82,7 @@ article: false
 
 ### 六、 总结：架构师的价值在于"权衡"
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764854561833-febef5da-8002-44f9-ad23-2b2437ead909.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0932-qg75fsiz4uh3wglr/img-e80ad53162b2.png)
 
 **💡 核心观点：** 做架构不是堆砌最新的技术栈，而是**在约束条件下寻找最优解**。
 

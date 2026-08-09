@@ -25,7 +25,7 @@ Cool Request是一款基于 IntelliJ IDEA 的插件，旨在简化 Spring MVC(Bo
 
 Cool Request默认关闭方法耗时追踪，如果开启后，会影响第一次发起API时的速度，如果不需要耗时追踪，可点击关闭
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111799307-0cdd1616-31ba-4aee-94dc-965c272d0cd4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-d96fabd19847.png)
 
 ### 发起追踪
 
@@ -33,13 +33,13 @@ Cool Request默认关闭方法耗时追踪，如果开启后，会影响第一�
 
 自动分析时，如果遇到了对interface形式的调用，则无法分析impl实现的方法，不会统计该方法，解决办法是改用注入impl的类，而不是service，或者使用`添加/取消自定义`方法手动添加impl方法。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111811232-29d88d84-d286-48cc-9dfb-41026ceea565.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-8a207ffe1c2a.png)
 
 ### 添加/取消自定义方法
 
 如果自动分析无法满足需求，可在任意方法体内右击，选择`Cool Request -> Add/Cancel Method To Trace`，添加/取消目标方法。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111811224-6632483b-cafe-4cfb-8562-1c2d8da26624.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-c7aa06b80195.png)
 
 ### 失效情况
 
@@ -57,17 +57,17 @@ Cool Request支持在SpringBoot运行时调用任意容器内实例的方法、�
 
 在想要调用的方法体内右击，选择CoolRequest->Call this Method
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111868895-91529c63-d693-43fd-bd1a-769f37424094.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-e45af08e5886.png)
 
 接着点击运行按钮即可。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111868588-22985ded-78ff-4c06-9632-4c0cca3eed02.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-4402401f7378.png)
 
 当然，Cool Request支持大量常见的参数传递
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111868585-e60dbf03-6700-48ed-ac11-e12652216661.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-470cb4d6a8d9.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111869111-495b73ce-3545-44fa-b1dc-2569ab3acb28.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-c0c7beabf9f0.png)
 
 ## 自定义函数
 
@@ -75,7 +75,7 @@ Cool Request拥有最强大得函数支持系统，当HTTP参数想要使用动�
 
 函数可使用在任意HTTP参数中，包括请求头、URL参数、Path变量、请求体中。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111901846-d8af7e19-feae-45e0-9c37-b139d16df085.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-e0f18a6fdd21.png)
 
 例如想要增加一个自定义函数，可编写以下代码。
 
@@ -87,13 +87,13 @@ public String custom(){
 
 在任意HTTP参数值中，通过`{​{函数名}​}`来引用此函数。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111901631-a1ca2f1d-8e21-45f7-a8e0-1feafe6152da.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-fe1bbd6355fc.png)
 
 ### 关闭函数转换
 
 如果想关闭函数转换，可以设置中禁用
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725111901763-7baefc78-1b2f-4f85-95e2-6285b4129f42.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-90316b66826b.png)
 
 ## 发起反射请求
 
@@ -119,11 +119,11 @@ public String custom(){
 
 进入参数配置界面，在左侧下拉框选中如下所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725112007610-6c042e26-f52b-4d71-ab65-7628118a70ad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-b086e3d98d56.png)
 
 点击右侧
 
-![image](https://cdn.nlark.com/yuque/0/2024/svg/35268836/1725112007052-1cd74e5d-1f10-429a-a599-41a0d0266d07.svg)
+![image](/面试题/综合篇/0147-mknt2g3ukflkcb0v/img-f35d959fb6dc.svg)
 
  按钮即可发起反射请求。
 

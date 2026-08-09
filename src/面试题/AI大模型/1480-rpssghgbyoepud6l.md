@@ -32,7 +32,7 @@ article: false
 - MySQL"  
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22811459/1738855544592-1caed46a-4a66-4a95-b636-47b702844eb8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1480-rpssghgbyoepud6l/img-e3b18cc69091.png)
 
 ### 2. 框架知识复习
 

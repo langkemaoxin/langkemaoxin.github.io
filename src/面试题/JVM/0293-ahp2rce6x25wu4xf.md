@@ -17,7 +17,7 @@ article: false
 
 ## 一、对象进入老年代的条件（何时才会进入老年代）
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1748353256393-b8f8814b-30fb-4127-a3a0-ed8c42dec4d3.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0293-ahp2rce6x25wu4xf/img-a85e408d2574.jpg)
 
 ### 1. 存活时间（年龄阈值）
 

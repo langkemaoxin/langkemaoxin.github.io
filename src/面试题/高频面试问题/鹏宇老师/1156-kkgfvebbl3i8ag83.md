@@ -19,7 +19,7 @@ article: false
 
 消息推送是网站 / APP 运营方向用户当前网页或移动设备主动推送信息的机制，主要分为 Web 端和移动端两类，核心目标是实现 “事件触发后，Web 页面通知小红点实时 + 1”，让用户及时感知未读消息。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764339864109-93051dac-7583-4303-9214-94802ac2f521.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-bcf9004643a9.png)
 
 ### 1.1 核心需求拆解
 
@@ -46,13 +46,13 @@ CREATE TABLE message_record(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息推送记录表';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764339877241-208bfd32-47ee-4b09-a39d-bb5569784433.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-fa6a8f15b1aa.png)
 
 ## 二、消息推送核心模式：推（Push）vs 拉（Pull）
 
 所有消息推送方案本质上基于两种核心模式，理解这两种模式是选型的基础：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764339896424-74a0fb77-f076-4a00-a5bf-6d622ded8174.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-80aa13e91656.png)
 
 ### 2.1 推模式（Push）
 
@@ -76,7 +76,7 @@ CREATE TABLE message_record(
 
 客户端按固定时间间隔（如 1 秒）向服务端发送 HTTP 请求，服务端无论是否有新消息，都立即返回响应（含未读消息数），客户端收到响应后更新小红点。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764339923346-cef52595-fd11-48eb-a6f6-2a0db04fa616.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-7ad93b76219a.png)
 
 #### 3.2 代码实现（前端伪代码）
 
@@ -112,7 +112,7 @@ pollMessageCount();
 
 #### 3.4 工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764339936340-a2010cdf-79fd-4539-889a-25cfb14d6128.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-cabdc0fb124c.png)
 
 #### 3.5 适用场景
 
@@ -124,7 +124,7 @@ pollMessageCount();
 
 短轮询的优化版：客户端发起 HTTP 请求后，服务端若无新消息，不立即返回响应，而是 “hold 住” 请求（通过异步机制），直到有新消息产生或请求超时（如 30 秒），才返回响应；客户端收到响应后，立即发起下一次请求，形成 “请求 - hold - 响应 - 再请求” 的循环。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764339952541-f8112016-8b35-45a9-8959-52adbe88102d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-2a5bf2afa9f4.png)
 
 #### 3.7 代码实现（Java 后端伪代码）
 
@@ -182,7 +182,7 @@ public class LongPollingController {
 
 #### 3.9 工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764339966902-88484bde-1862-44cb-832b-801b910c01cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-7ab02f820bd3.png)
 
 #### 3.10 适用场景
 
@@ -194,7 +194,7 @@ public class LongPollingController {
 
 页面中嵌入隐藏的``标签，通过`src`属性请求服务端 API，建立长连接；服务端持续向 iframe 传输 HTML/JS 脚本（如`updateCount(3)`），客户端执行脚本更新页面小红点。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764340004292-b31081ff-1ff2-45e2-8d40-664b9f7914b1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-fb53a8dac6bf.png)
 
 #### 3.12 优缺点
 
@@ -211,7 +211,7 @@ public class LongPollingController {
 
 基于 HTTP 协议的单向推模式，客户端发起一次 HTTP 请求后，服务端保持连接，以`text/event-stream`格式向客户端持续推送数据流（如消息数更新、事件通知），支持自动断线重连、事件类型区分。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764340021561-33f36e96-3f07-4b4b-900e-8d1e1a6f6ddf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-71163b4c1639.png)
 
 #### 3.15 代码实现
 
@@ -324,7 +324,7 @@ public class SSEController {
 
 #### 3.17 工作流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764340036164-b44a9338-8e89-482e-a211-3537d9014b9a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-d7b70974c591.png)
 
 #### 3.18 适用场景
 
@@ -336,7 +336,7 @@ Web 端站内信、未读消息红点、行情推送（如股票 / 实时数据�
 
 基于 TCP 的全双工通信协议，客户端通过 HTTP 握手建立连接后，服务端和客户端可双向实时传输数据（无需反复发起请求），适用于需要双向交互的场景。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764340072194-373677c9-d3f4-42f9-8e29-778b0f130fca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-85374a3cb706.png)
 
 #### 3.20 代码实现
 
@@ -489,7 +489,7 @@ public class WebSocketServer {
 
 基于发布 / 订阅（Pub/Sub）模式的轻量级协议，构建于 TCP/IP 之上，通过 MQTT 代理（Broker）转发消息：发布者（Publisher）向指定主题（Topic）发送消息，订阅者（Subscriber）订阅主题后，Broker 将消息推送给所有订阅者。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764340103451-005fc63a-e701-4956-ab67-0eac02ff0fff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-497934e24911.png)
 
 #### 3.24 代码实现（伪代码）
 
@@ -668,13 +668,13 @@ MQTT
 需部署 Broker，学习成本高
 物联网、跨设备通信、弱网场景
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764340119536-bde099e0-12ff-4e2a-aa59-ea24ddfe860c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-42b83b8b7514.png)
 
 ## 五、技术选型建议（面试重点）
 
 选型的核心逻辑：**先明确需求，再匹配方案**，避免过度设计或技术选型不当。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764340131999-7fe44454-60a2-4281-8938-bdc82c656e14.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1156-kkgfvebbl3i8ag83/img-dd475a451bf7.png)
 
 1. 只需服务端推消息（如站内信、未读红点）：优先选 SSE
 

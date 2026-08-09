@@ -21,11 +21,11 @@ article: false
 
 在MySQL 5.6之前,,,   是没有索引下推的，  当查询条件使用了联合索引并且最左条件是范围：    存储引擎只会返回最左条件的范围数据 ，  然后扔给服务层再去过去其他的条件，  这样增加了服务层计算压力一级存储引擎层和服务层之间的的数据传输量。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715262928254-517720df-7a0e-44ee-b712-b1615ed8a84f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0392-wkdh9p48ybgya6g4/img-a3d0e5f98cb6.png)
 
 如果用到了索引下推
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715266447727-40a1a1a1-ccd5-4eb2-8755-97f107509a9e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0392-wkdh9p48ybgya6g4/img-1ead9b8769c6.png)
 
 同样查询条件使用了联合索引并且最左条件是范围： 那这个时候   存储引擎在过滤完范围数据后会再过滤其他联合索引的数据， 所以条件过滤这一步从服务层下推到了存储引擎层，  所以叫索引下推。  这样就减少了两层之间数据的传递，也减轻了服务层的数据计算压力，从而提高了数据检索性能。
 

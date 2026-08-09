@@ -25,7 +25,7 @@ article: false
 
 **这便是“有状态”的负担。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761571257983-719f889a-e39a-4ad2-b4e9-89b4c0c8b3c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0980-fm0drq05ad6rcpm7/img-9d582bc5dc09.png)
 
 上图清晰地揭示了两种模式的根本差异。JWT通过将用户信息和权限等数据直接编码在令牌自身之中，实现了“无状态认证”。服务器不再需要存储任何会话信息，只需验证令牌的合法性即可。这使得系统可以轻松地进行水平扩展，完美契合了云原生和微服务架构的需求。它就像一本自带所有信息的护照，任何一个边检站（服务器）都能独立完成验证，无需查询中央数据库。
 
@@ -35,7 +35,7 @@ article: false
 
 理解了JWT的优势后，我们来拆解它的内部构造。一个完整的JWT由三个部分组成，它们之间用点（`.`）分隔，共同构成一个紧凑的字符串。这三部分分别是：Header（头部）、Payload（载荷）和Signature（签名）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761571283119-658c355e-7f37-4815-8b68-1da70876b603.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0980-fm0drq05ad6rcpm7/img-1d52ff4ca0f7.png)
 
 这张“装配流水线”图精确地展示了JWT的生成过程，现在我们来解读每个部件的含义：
 
@@ -54,7 +54,7 @@ article: false
 
 了解了JWT的构造，我们来看看它在一次完整的认证流程中是如何工作的。从用户登录到访问受保护资源，大致可以分为六个步骤。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761571298883-9fa5e6ef-79ed-4cd0-a78c-a6a5975ec79b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0980-fm0drq05ad6rcpm7/img-e0e8ba795e48.png)
 
 这个流程图清晰地勾勒出一次完整的交互，我们可以将其解读为：
 
@@ -73,7 +73,7 @@ JWT的无状态特性是一把双刃剑。它带来了极佳的扩展性，但�
 
 为了解决这个问题，业界普遍采用“**Access Token + Refresh Token + 黑名单**”的纵深防御策略。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761571314752-4f106eb4-fd3c-4c56-8076-990ef13679a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0980-fm0drq05ad6rcpm7/img-a7225323d921.png)
 
 上图展示了如何为无状态的JWT加上“可撤销”的保险：
 
@@ -94,7 +94,7 @@ JWT的无状态特性是一把双刃剑。它带来了极佳的扩展性，但�
 
 经过前面的分析，我们已经可以对JWT和传统Session进行一个全面的总结和对比。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761571323414-b905c630-d4ac-471a-b62f-4afe7f2f014d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0980-fm0drq05ad6rcpm7/img-065424512815.png)
 
 这张表格一目了然地总结了二者的核心差异。总而言之：
 

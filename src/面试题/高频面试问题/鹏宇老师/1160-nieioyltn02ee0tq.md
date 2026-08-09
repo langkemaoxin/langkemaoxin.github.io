@@ -19,13 +19,13 @@ article: false
 
 在聊具体方法前，我们必须先明确：统计接口耗时不是 “多此一举”，而是性能优化的前提和基础，核心价值体现在三个方面：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764054845353-318f0ba6-ec3d-4eb6-9c6d-f8e47df82102.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-1b1041b172ca.png)
 
 1. **性能优化的基石**：没有具体的耗时数据，优化就是 “盲人摸象”。你以为是数据库慢，但可能是 Redis 缓存穿透；你觉得是代码冗余，但实际是网络调用延迟 —— 只有量化耗时，才能精准定位瓶颈。
 2. **监控告警的源头**：通过耗时趋势分析，能提前发现系统异常。比如某接口耗时从 200ms 突增至 1s，可能是慢 SQL、资源竞争或依赖服务故障，及时告警能避免故障扩大。
 3. **用户体验的晴雨表**：用户对响应时间的感知极其敏感，行业内有明确的体验分级标准：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764054862409-26202cb6-9b0d-456e-89bf-462ddb6856de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-03fdd45993bc.png)
 
 - 响应时间 < 200ms：用户无感知，体验优秀；
 - 200ms~500ms：体验良好，用户操作流畅；
@@ -42,7 +42,7 @@ article: false
 
 这是 Java 开发者最熟悉的基础方法，核心逻辑是 “记录前后时间戳，计算差值”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764054892874-19ecbbd2-acf1-4973-8ccf-0e6c949e5003.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-a34866accbd3.png)
 
 #### 核心原理
 
@@ -93,7 +93,7 @@ public class OrderService {
 
 如果需要更精细的耗时统计（如微服务间调用、算法性能对比），`System.nanoTime()`是更好的选择。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764054911104-44cf2a91-a78f-4304-b20a-6fa1e13233ca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-6b155237d235.png)
 
 #### 核心原理
 
@@ -140,7 +140,7 @@ public class AlgorithmPerformanceTest {
 
 对于 Spring Boot/Spring MVC 项目，Spring AOP 是统计接口耗时的首选，核心优势是 “业务代码零侵入”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764054929669-ca3087f4-60a1-45da-8b9c-63e39e636a13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-7caaeb5b31b2.png)
 
 #### 核心原理
 
@@ -219,7 +219,7 @@ Spring Boot/Spring MVC 项目、需要统一监控多个方法 / 接口、希望
 
 拦截器是 Spring MVC 提供的 Web 层专属组件，专门用于拦截 HTTP 请求，适合统计 Web 接口的端到端耗时。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764054959124-5eff9b49-8108-4737-bb42-28537cecb45c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-1bc6c580c889.png)
 
 #### 核心原理
 
@@ -309,7 +309,7 @@ Spring MVC Web 项目、RESTful API 耗时统计、需要获取 HTTP 上下文�
 
 过滤器是 Java Servlet 规范的标准组件，比拦截器更底层，适用于所有 Java Web 应用（不限于 Spring MVC）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764054996338-5bc404e0-de4d-4e4c-9ebc-94d0a16d0c1e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-7416da91151c.png)
 
 #### 核心原理
 
@@ -397,7 +397,7 @@ public class DemoApplication {
 
 以上 5 种方法适用于单体应用或简单场景，对于微服务、分布式系统，推荐使用 Micrometer（指标采集）+ APM 工具（如 SkyWalking、Pinpoint）的生产级方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764055013151-9a9fd2bb-8779-42c6-8247-4c6981d881b5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-07b26f39469d.png)
 
 #### 核心原理
 
@@ -494,7 +494,7 @@ java -javaagent:/path/to/skywalking-agent.jar \
 
 为了方便你快速选型，整理了核心特性对比表，涵盖精度、侵入性、适用范围等关键维度：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764055046541-548bd81d-9adb-4f44-a460-c9cbb5d4522e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-d5a1aaa2ca03.png)
 
 **方法**
 **精度**
@@ -556,7 +556,7 @@ Micrometer + APM
 
 不同场景对应不同方案，无需盲目追求 “最复杂”，选择最适合当前需求的即可：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764055066698-e17a3f05-cfda-4914-bfa1-0f227222cd26.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-d98cb8d5f26b.png)
 
 1. **开发调试 / 临时统计**：优先用`System.currentTimeMillis()`（简单）或`System.nanoTime()`（高精度）；
 2. **单体 Spring 应用**：优先用`Spring AOP`（通用方法）或`拦截器`（Web 接口）；
@@ -573,7 +573,7 @@ Micrometer + APM
 5. **建立多级告警阈值**：参考响应时间分级，配置告警（如：>500ms 警告、>1s 严重告警）；
 6. **保留上下文信息**：统计时记录方法名、接口 URL、用户 ID 等，便于定位问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764055089252-3a07a576-a74b-4599-a711-a09f5923d21d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-603cd9de4b60.png)
 
 ## 六、面试回答总结（直接套用）
 
@@ -588,7 +588,7 @@ Micrometer + APM
 
 同时，我会遵循最佳实践：只监控核心接口、设置多级告警、结合日志和指标分析，确保统计既准确又不影响系统性能。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1764055132426-d2dd7239-98c3-4dac-828a-90c917d52f3b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1160-nieioyltn02ee0tq/img-208f8359028c.png)
 
 ## 总结
 

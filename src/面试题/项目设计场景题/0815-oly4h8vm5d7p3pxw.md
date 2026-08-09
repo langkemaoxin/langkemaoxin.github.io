@@ -60,7 +60,7 @@ QuickTok 预计用户总量为 20 亿，日活用户约 10 亿，每个用户平
 
 QuickTok 的核心部署模型如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597884556-8d6b80a5-9e54-47cf-b267-571690f43bba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0815-oly4h8vm5d7p3pxw/img-2fc9940e4507.png)
 
 用户上传视频时，上传请求会通过负载均衡服务器和网关服务器，到达视频上传微服务。
 
@@ -70,15 +70,15 @@ QuickTok 的核心部署模型如下图：
 
 **视频内容处理器**是一个由责任链模式构建起来的管道。在这个管道中，视频将会被顺序进行内容合规性审查、内容重复性及质量审查、内容标签生成、视频缩略图生成、统一视频转码处理等操作，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597884432-6f0b9ffa-4ae7-4cc4-878c-8e3a6e679056.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0815-oly4h8vm5d7p3pxw/img-2cdbfc1c79d7.png)
 
 合规且非重复的视频会经过统一转码，最终被写入分布式文件存储和 CDN。这样视频上传处理就完成了，具体时序图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597884445-b569f17e-603f-4de2-8809-cfd0441c11e6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0815-oly4h8vm5d7p3pxw/img-abd72ed36fe7.png)
 
 以上就是对视频上传环节的设计，接下来我们将讨论对视频搜索及播放部分的设计，即核心部署模型图中标红的部分，如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597884614-6295868f-445a-467e-87bf-1ad13eeef5d5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0815-oly4h8vm5d7p3pxw/img-a936b3af8a07.png)
 
 **视频搜索引擎**会根据用户提交的视频标题、上传用户等元数据，以及视频内容处理器生成的内容标签构建**倒排索引**。当用户搜索视频时，系统会根据倒排索引来检索符合条件的视频，并返回结果列表。结果列表在 App 端向用户呈现时，会将此前视频内容处理器生成的
 
@@ -100,7 +100,7 @@ QuickTok 的核心部署模型如下图：
 
 HDFS 适合存储大文件，大文件减少磁盘碎片，更有利于存储空间的利用，同时 HDFNameNode 的访问压力也更小，所以我们需要把若干个视频文件合并成一个 HDFS 文件进行存储，并将存储相关的细节记录到 HBase 中。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597884561-df45d438-56a7-4ccb-a97d-64be00409686.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0815-oly4h8vm5d7p3pxw/img-f31d6e958686.png)
 
 举个例子，当用户上传一个视频文件，系统会自动生成一个视频 ID，这里假设这个 ID 是123。视频内容处理器先对视频进行一系列处理，再调用视频文件存储服务来进行存储。
 
@@ -124,7 +124,7 @@ App 请求获取视频数据流的时候，会优先检查离自己比较近的 
 
 但 QuickTok 考虑到了短视频的特点：大 V、网红们发布的短视频会被更快速、更广泛地播放。因此针对粉丝量超过 10 万的用户，系统将采用主动推送 CDN 的方法，以提高CDN 的命中率，优化用户体验，如图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597885128-0905cb63-8146-4531-a17f-86eb5f55657d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0815-oly4h8vm5d7p3pxw/img-32fbcc23f055.png)
 
 从图中可以看出，视频内容处理器进行完视频处理后，一方面会将视频存储到前面说过的视频存储系统中，另一方面又会调用 CDN 推送服务。然后，CDN 推送服务将调用大数据平台，获取视频上传者的活跃粉丝数、粉丝分布区域等数据。如果是 10 万粉丝以上的用户发布了短视频，CDN 推送服务会根据其粉丝活跃的区域，将视频推送到对应区域的 CDN服务器上。
 
@@ -140,7 +140,7 @@ App 请求获取视频数据流的时候，会优先检查离自己比较近的 
 
 我们需要通过**大数据平台的机器学习引擎**来完成缩略图的生成和推荐，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597885245-33ae3cd9-fa1d-4bc2-bed4-ba537ef3c05a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0815-oly4h8vm5d7p3pxw/img-c6f6b95811d7.png)
 
 缩略图的生成和推荐可以分为两个具体过程：
 

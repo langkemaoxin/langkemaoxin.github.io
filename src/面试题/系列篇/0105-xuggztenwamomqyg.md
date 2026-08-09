@@ -755,7 +755,7 @@ GraalVM文章推荐：[https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI3MDI5MjI
 
 打开[https://github.com/graalvm/graalvm-ce-builds/releases](https://github.com/graalvm/graalvm-ce-builds/releases)，按JDK版本下载GraalVM对应的压缩包，请下载**Java 17对应**的版本，不然后面运行SpringBoot3可能会有问题。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674881915492-21052c86-416b-4fa2-af46-57c86f0a5e3c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-a63f8c100d90.png)
 
 windows的同学直接给大家：
 
@@ -763,15 +763,15 @@ windows的同学直接给大家：
 
 下载完后，就解压，
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674882320898-5c286799-3f25-4b7c-9546-ceedf60853d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-2cf1e93e71c4.png)
 
 ### 配置环境变量
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674882359831-9b51de12-af8c-43db-86a2-a2305847a67a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-57e114c26e18.png)
 
 新开一个cmd测试：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674882400517-e8dd6fe3-a2de-4daa-b98b-16ed1d7c4dd8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-ad39ba283aff.png)
 
 ### 安装Visual Studio Build Tools
 
@@ -781,7 +781,7 @@ windows的同学直接给大家：
 
 选择C++桌面开发，和Windows 11 SDK，然后进行下载和安装，安装后重启操作系统。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/365147/1667376372688-afaf73a0-cff8-47ba-88d6-cb933f1de807.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-99ec9a71edf7.png)
 
 要使用GraalVM，不能使用普通的windows自带的命令行窗口，得使用VS提供的** x64 Native Tools Command Prompt for VS 2019**，如果没有可以执行`C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat`脚本来安装。
 
@@ -789,21 +789,21 @@ windows的同学直接给大家：
 
 但是，如果后续在编译过程中编译失败了，出现以下错误：
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/365147/1667381557684-4c0b495b-f060-42bd-8b35-74dde29f6053.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-b1a551b0c1a7.png)
 
 那么可以执行cl.exe，如果是中文，那就得修改为英文。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/365147/1667381088510-c36f8516-40a4-439e-8842-14488824b50d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-0939a2165e9e.png)
 
 通过Visual Studio Installer来修改，比如：
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/365147/1667380792427-a78963de-e179-4185-87f4-b43dee52805f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-eda4513eb8ee.png)
 
 可能一开始只选择了中文，手动选择英文，去掉中文，然后安装即可。
 
 再次检查
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/365147/1667381112626-a9b7a943-a323-489f-8dab-2faec430f23b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-bc39ddffcf62.png)
 
 这样就可以正常的编译了。
 
@@ -811,37 +811,37 @@ windows的同学直接给大家：
 
 新建一个简单的Java工程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674883686966-723aa2d7-23ab-4382-8899-675841eee4e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-73ac1e111aee.png)
 
 我们可以直接把graalvm当作普通的jdk的使用
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674883718376-1baf5a41-62a6-40ad-a724-efd7d9942ab3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-3fe105976565.png)
 
 我们也可以利用native-image命令来将字节码编译为二进制可执行文件。
 
 打开**x64 Native Tools Command Prompt for VS 2019**，进入工程目录下，并利用javac将java文件编译为class文件：`javac -d . src/com/zhouyu/App.java`
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674884506983-e93d0d3f-5adb-49a7-bcb0-c21316d3c9f5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-871c9cc11442.png)
 
 此时的class文件因为有main方法，所以用java命令可以运行
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674884587186-3fe8bbc3-0867-4942-adcc-f684553e7e0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-374c2ec0ff35.png)
 
 我们也可以利用native-image来编译：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674884635419-480342b1-0506-4327-9809-9be172c12f3b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-35aa908e4d60.png)
 
 编译需要一些些。。。。。。。时间。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674884677907-507edc6f-0901-4b79-a20d-eccb169ec06c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-213757be1ad4.png)
 
 编译完了之后就会在当前目录生成一个exe文件：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674884712392-68a1c83a-8dd6-480b-9105-9d5de34554d9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-f81f494ae886.png)
 
 我们可以直接运行这个exe文件：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674884735165-92b69e72-5654-4b37-a3c9-3aa1dd46098d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-9cb6cf825858.png)
 
 并且**运行这个exe文件是不需要操作系统上安装了JDK环境的。**
 
@@ -946,9 +946,9 @@ public class MyApplication {
 
 编译完成截图：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674886577242-eb087b22-2c8f-4722-9c9f-aa2224eefec6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-993690461289.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674886272625-a98cc341-028f-4f13-bdf6-d9d33a7c2820.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-44d15c961ea1.png)
 
 这样，我们就能够直接运行这个exe来启动我们的SpringBoot项目了。
 
@@ -981,11 +981,11 @@ mvn -Pnative spring-boot:build-image
 
 来生成Docker镜像，成功截图：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674887406333-ead0d092-6eda-4fd7-bef9-a6993b4a7057.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-7492fe2f3fd6.png)
 
 执行完之后，就能看到docker镜像了：
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/365147/1669714081640-9753dab5-a80a-44da-abd2-3f34acd771e1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-fdbc03cb9765.png)
 
 然后就可以运行容器了：
 
@@ -1007,7 +1007,7 @@ String methodName = System.getenv("methodName")
 
 建议工作中直接使用Environment来获取参数：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1676531756545-1b3bdc08-4650-4f50-a4e3-a32e07e7164d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-e9660b87f84c.png)
 
 ## RuntimeHints
 
@@ -1053,7 +1053,7 @@ public class UserService {
 
 在UserService中，通过反射的方式使用到了ZhouyuService的无参构造方法（ZhouyuService.class.newInstance()），如果我们不做任何处理，那么打成二进制可执行文件后是运行不了的，可执行文件中是没有ZhouyuService的无参构造方法的，会报如下错误：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1676358866758-1f151037-fbd8-40c5-8c94-a40df9c3a730.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-082b295af3c7.png)
 
 我们可以通过Spring提供的Runtime Hints机制来间接的配置reflect-config.json。
 
@@ -1224,7 +1224,7 @@ public class ZhouyuService {
 
 上面的SpringBoot3.0实战过程中，我们在利用image-native编译的时候，target目录下会生成一个spring-aot文件夹：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674888315200-5d89b841-c583-43fe-b61a-bb11ff42cc92.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-e3a498928a75.png)
 
 这个spring-aot文件夹是编译的时候spring boot3.0的插件生成的，resources/META-INF/native-image文件夹中的存放的就是graalvm的配置文件。
 
@@ -1234,15 +1234,15 @@ public class ZhouyuService {
 
 来查看这个插件的详细信息。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674984447042-30d24fbd-d5aa-4602-b35d-5a7ade3bfdf0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-0f2ef46d5441.png)
 
 发现native:compile命令对应的实现类为NativeCompileMojo，并且会先执行package这个命令，从而会执行process-aot命令，因为spring-boot-maven-plugin插件中有如下配置：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674986268564-68831724-c9dd-4f17-bfec-00c915e9fd3c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-5b53c1afd40a.png)
 
 我们可以执行`mvn help:describe -Dplugin=org.springframework.boot:spring-boot-maven-plugin -Ddetail`
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674986398668-46a8d92d-c6d6-4b86-95e4-920ab5c22650.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-d38529823f79.png)
 
 发现对应的phase为：prepare-package，所以会在打包之前执行ProcessAotMojo。
 
@@ -1250,7 +1250,7 @@ public class ZhouyuService {
 
 对应的源码实现：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674912244082-df092f96-9ffc-4e2f-9aa9-e56ab0044c72.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-9c92855c2f77.png)
 
 maven插件在编译的时候，就会调用到executeAot()这个方法，这个方法会：
 
@@ -1265,7 +1265,7 @@ maven插件在编译的时候，就会调用到executeAot()这个方法，这个
 
 **以下只是一些关键源码，详细内容请看直播视频。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1674986676809-9c11df8d-0962-406b-9f6d-c60fbe1ab2f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0105-xuggztenwamomqyg/img-aa855d1f65d4.png)
 
 prepareApplicationContext会直接启动我们的SpringBoot，并在触发contextLoaded事件后，返回所创建的Spring对象，注意此时还没有扫描Bean。
 

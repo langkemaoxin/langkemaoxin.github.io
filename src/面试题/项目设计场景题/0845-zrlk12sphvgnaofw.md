@@ -17,7 +17,7 @@ article: false
 
 防盗链是指一种保护网络资源的技术，用于防止未经授权的第三方直接引用或盗用服务器上的资源。通过限制非法访问来源（如他人网站或爬虫程序），防盗链确保资源只能被合法、授权的用户正常访问。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1734506161535-b0d77e67-8749-48b7-83b9-a5dd2479abd7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0845-zrlk12sphvgnaofw/img-ac29729497dd.png)
 
 - 当用户通过合法渠道（如直接访问网站或应用）请求资源时，服务器会验证来源是可信的，允许访问。
 - 当某些非法来源（如爬虫、恶意程序或其他不被授权的引用）试图盗用资源时，防盗链机制会识别来源不合法，拒绝提供资源。
@@ -26,7 +26,7 @@ article: false
 
 基于HTTP协议中的 referer做防盗链，可以从网关层或者利用AOP、Filter拦截器实现。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1734506202158-e02289aa-b114-43b6-93dc-bae9b31dbfe7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0845-zrlk12sphvgnaofw/img-2514ecefb665.png)
 
 使用Nginx在网关层做防盗链，目前是最简单的方式之一。通过拦截访问资源的请求，valid_referers 关键字定义了白名单，校验请求头中referer地址是否为本站，如不是本站请求，rewrite 转发请求到指定的警告页面。在 server 或者 location 配置模块中加入：valid_referers none blocked，其中 none : 允许没有http_refer的请求访问资源（比如：直接在浏览器输入图片网址）；blocked : 允许不是http://开头的，不带协议的请求访问资源。
 

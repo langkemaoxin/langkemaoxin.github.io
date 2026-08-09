@@ -13,7 +13,7 @@ article: false
 
 > 来源：[5分钟带你弄懂什么是K8s](https://www.yuque.com/tulingzhouyu/db22bv/vt4awxuy53tz3kx7)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713094112262-f3ffea64-201e-4e79-9c62-ab2d01d5e88c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Docker与K8S/1356-vt4awxuy53tz3kx7/img-c24d3b094d8e.png)
 
 ## K8s 是什么？
 
@@ -37,7 +37,7 @@ K8S在基于容器部署的方式上，提供了一个弹性分布式的框架�
 
 ## K8s 的工作原理
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713096914891-bb467d9a-4e08-4b78-b310-75787b98f57e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Docker与K8S/1356-vt4awxuy53tz3kx7/img-03c60a7f00e0.png)
 
 一个 kubernetes 集群主要是由**控制节点 master**、**工作节点 node**构成，每个节点上都会安装不同的组件。
 

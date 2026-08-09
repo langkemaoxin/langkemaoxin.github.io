@@ -88,7 +88,7 @@ public void test01() throws InterruptedException {
 
 `ScheduledExecutorService` 是一个接口，有多个实现类，比较常用的是 `ScheduledThreadPoolExecutor` 。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724831213172-d35bf048-280b-41df-9bc9-5b4ac2f2927e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0146-onmgtm5k4fwpnzti/img-a0c185ae4fc3.png)
 
 `ScheduledThreadPoolExecutor` 本身就是一个线程池，支持任务并发执行。并且，其内部使用 `DelayedWorkQueue` 作为任务队列。
 
@@ -127,7 +127,7 @@ public void test02() throws InterruptedException {
 
 `DelayQueue` 是 JUC 包(`java.util.concurrent)`为我们提供的延迟队列，用于实现延时任务比如订单下单 15 分钟未支付直接取消。它是 `BlockingQueue` 的一种，底层是一个基于 `PriorityQueue` 实现的一个无界队列，是线程安全的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724831213124-4d781e78-30c0-478a-9573-83809417b1e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0146-onmgtm5k4fwpnzti/img-2d76e4a5a1c8.png)
 
 BlockingQueue 的实现类
 
@@ -172,7 +172,7 @@ Kafka、Dubbo、ZooKeeper、Netty、Caffeine、Akka 中都有对时间轮的实�
 
 当我们需要新建一个 9s 后执行的定时任务，只需要将定时任务放在下标为 9 的时间格中即可。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724831213281-d0d3b735-eac5-4afc-96f0-e00b68c5b425.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0146-onmgtm5k4fwpnzti/img-d0703100a40f.png)
 
 那当我们需要创建一个 13s 后执行的定时任务怎么办呢？这个时候可以引入一叫做 **圈数/轮数** 的概念，也就是说这个任务还是放在下标为 1 的时间格中， 不过它的圈数为 2 。
 
@@ -180,7 +180,7 @@ Kafka、Dubbo、ZooKeeper、Netty、Caffeine、Akka 中都有对时间轮的实�
 
 针对下图的时间轮，我来举一个例子便于大家理解。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724831213453-8b8ca4a7-22bf-4ecb-ad82-794865c3c9e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0146-onmgtm5k4fwpnzti/img-afed8bbff247.png)
 
 上图的时间轮(ms -> s)，第 1 层的时间精度为 1 ，第 2 层的时间精度为 20 ，第 3 层的时间精度为 400。
 
@@ -266,7 +266,7 @@ ZooKeeper + Mesos
 
 ElasticJob-Lite 的架构设计如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724831213586-25b1e797-4461-46ed-a8f8-c69d95920d54.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0146-onmgtm5k4fwpnzti/img-8a4f8078e212.png)
 
 从上图可以看出，Elastic-Job 没有调度中心这一概念，而是使用 ZooKeeper 作为注册中心，注册中心负责协调分配任务到不同的节点上。
 
@@ -310,7 +310,7 @@ public class TestJob implements SimpleJob {
 
 `XXL-JOB` 的架构设计如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724831213821-7bffcd69-980e-49a1-a5c7-fd1ac1bc61fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0146-onmgtm5k4fwpnzti/img-f0756b0083fb.png)
 
 从上图可以看出，`XXL-JOB` 由 **调度中心** 和 **执行器** 两大部分组成。调度中心主要负责任务管理、执行器管理以及日志管理。执行器主要是接收调度信号并处理。另外，调度中心进行任务调度时，是通过自研 RPC 来实现的。
 

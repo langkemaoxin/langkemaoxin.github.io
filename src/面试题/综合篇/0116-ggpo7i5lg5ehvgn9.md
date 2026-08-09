@@ -24,7 +24,7 @@ article: false
 2. 执行 `new String("abc")` 时，在 **Java 堆** 创建一个新的 `String` 对象。
 3. 新对象的 `value` 数组引用常量池对象的 `value` 数组（**共享字符数组**）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760079578292-f86c95ee-2087-4591-85e8-b9ef25bc6b6a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0116-ggpo7i5lg5ehvgn9/img-0ca8a5b51ca3.png)
 
 **结论：**
 
@@ -44,7 +44,7 @@ article: false
 2. 执行 `new String("abc")` 时，在 **Java 堆的普通对象区** 创建一个新的 `String` 对象。
 3. 新对象的 `value` 数组引用常量池对象的 `value` 数组（**仍然共享**）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760079659390-b8415bb7-3f1d-463b-847a-809dcf51c5f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0116-ggpo7i5lg5ehvgn9/img-4c43f2ed7834.png)
 
 **结论：**
 
@@ -63,7 +63,7 @@ article: false
 1. 首次使用 `"abc"` → 在字符串常量池创建 `String` 对象，内部是 `byte[]`（数组 A）。
 2. `new String("abc")` → 在堆普通区创建新 `String` 对象，并**复制**数组 A 内容到新的 `byte[]`（数组 B）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760079723873-e9ed3c80-3c74-4c39-9c36-764fef3c1fe3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0116-ggpo7i5lg5ehvgn9/img-6cbf19c5b03d.png)
 
 **结论：**
 
@@ -111,13 +111,13 @@ System.out.println(s1 == s2); // false (一个在常量池，一个在堆)
 System.out.println(s1 == s3); // true (都指向常量池)
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760080480797-a9368ce0-4aff-446a-be49-28300a53a68f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0116-ggpo7i5lg5ehvgn9/img-9bc956abc85e.png)
 
 **JDK 9+ 优化：**
 
 - 结合 Compact Strings，intern () 同样不再复制内容，而是存储引用，节省内存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760079062113-5f397b86-ad5f-4d2f-9841-579f5a922265.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0116-ggpo7i5lg5ehvgn9/img-8d09e7ec7026.png)
 
 ## **6. 总结对比**
 

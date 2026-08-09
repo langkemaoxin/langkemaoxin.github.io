@@ -13,7 +13,7 @@ article: false
 
 > 来源：[👍 2024金三银四100道面试题笔记资料](https://www.yuque.com/tulingzhouyu/db22bv/avpxs3qirk1w4qod)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1708409680840-ae1690fa-5cab-4dd5-88d8-800852e80a69.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_86%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-3ce6527c26da.png)
 
 ## 什么是浅拷贝和深拷贝？
 
@@ -231,19 +231,19 @@ Java泛型这个特性是从JDK 1.5才开始加入的，因此为了兼容之前
 
 当类定义中的类型参数没有任何限制时，在类型擦除中直接被替换为Object，即形如``和``的类型参数都被替换为Object。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673251748707-998f23b2-3821-4478-b69f-eec35b94fc70.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-f55bf804e1a2.png)
 
 - 擦除类定义中的类型参数 - 有限制类型擦除
 
 当类定义中的类型参数存在限制（上下界）时，在类型擦除中替换为类型参数的上界或者下界，比如形如``和``的类型参数被替换为`Number`，``被替换为Object。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673251762790-3a2317bb-9961-43c0-baa6-9de393ff09fe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-8add898fd434.png)
 
 - 擦除方法定义中的类型参数
 
 擦除方法定义中的类型参数原则和擦除类定义中的类型参数是一样的，这里仅以擦除方法定义中的有限制类型参数为例。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673251787349-767aa025-ecad-4bd7-9460-e2c55eda54a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-b8e59f1e2a6b.png)
 
 ## 有没有可能2个不相等的对象有相同的hashcode?
 
@@ -322,11 +322,11 @@ Put()方法的执行过程中,主要包含四个步骤：
 
 ## JAVA8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673251893589-f46e7dbe-9232-4cfb-be34-81f5008666ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-ceb9dc6b1a1b.png)
 
 ### JDK1.7中设计的分段锁
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673251911720-d633bb5d-3307-42b6-a9f3-afa366ac752f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-2327618b4ea6.png)
 
 Segment继承了重入锁ReentrantLock，有了锁的功能，每个锁控制的是一段，当每个Segment越来越大时，锁的粒度就变得有些大了，具体分段数量由concurrencyLevel字段来控制。
 
@@ -350,7 +350,7 @@ Segment继承了重入锁ReentrantLock，有了锁的功能，每个锁控制的
 
 从上面的分析中，我们得出了 JDK7 中的 ConcurrentHashMap 使用的是 Segment 和 HashEntry，而在 JDK8 中 ConcurrentHashMap 就变了，阿粉现在这里给大家把这个抛出来，我们再分析， JDK8 中的 ConcurrentHashMap 使用的是 synchronized 和 CAS 和 HashEntry 和红黑树。
 
-![image](https://secure2.wostatic.cn/static/xv3xJAJx6PsNHcwULCqGML/image.png?auth_key=1673251729-d1tCq1DLHborX8T11NqZQJ-0-3d114c7934dda5ac48d6fcc2c1b892e4&x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+> ⚠️ 原图外链已失效（wostatic 403，语雀源站也无法刷新）。
 
 ConcurrentHashMap 和 HashMap 一样，使用了红黑树，而在 ConcurrentHashMap 中则是取消了Segment分段锁的数据结构，取而代之的是Node数组+链表+红黑树的结构。
 
@@ -376,7 +376,7 @@ Error和Exception体现了Java平台设计者对不同异常情况的分类。Ex
 
 ### 类加载机制
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673251975922-26fa9fec-53d3-48c9-a3fb-78d6a92b7ef0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-43bf2bee5dea.png)
 
 - 启动类加载器：由C++实现，负责加载JAVA_HOME\lib目录中的，或通过-Xbootclasspath参数指定路径中的，且被虚拟机认可（按文件名识别，如rt.jar）的类。
 
@@ -388,7 +388,7 @@ Error和Exception体现了Java平台设计者对不同异常情况的分类。Ex
 
 ### 双亲委派机制
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673252039382-ebbeac36-2334-47b9-be8d-d4cd0bf1dfd2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-ec82c3951782.png)
 
 如果一个类加载器收到了类加载的请求，它首先不会自己尝试去加载这个类，而是把这个请求委派给父类加载器，每一个层次的类加载器都是加此，因此所有的加载请求最终到达顶层的启动类加载器，只有当父类加载器反馈自己无法完成加载请求时（指它的搜索范围没有找到所需的类），子类加载器才会尝试自己去加载。
 
@@ -400,7 +400,7 @@ Error和Exception体现了Java平台设计者对不同异常情况的分类。Ex
 
 ## 简单说说你了解的类加载器，可以打破双亲委派么，怎么打破。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673252059494-255fa489-58ec-49a9-a4a3-d9276b5375bb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-da46169b55b1.png)
 
 - 启动类加载器：由C++实现，负责加载JAVA_HOME\lib目录中的，或通过-Xbootclasspath参数指定路径中的，且被虚拟机认可（按文件名识别，如rt.jar）的类。
 
@@ -703,7 +703,7 @@ Java中大量使用了CAS机制来实现多线程下数据更新的原子化操�
 
 CAS的基本流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673252634293-6b107e2d-863f-4713-be78-1238d3a2edb5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-65343cc879e4.png)
 
 在上图中涉及到三个值的比较和操作：修改之前获取的（待修改）值A，业务逻辑计算的新值B，以及待修改值对应的内存位置的C。
 
@@ -1081,7 +1081,7 @@ STW是JVM在后台自动发起和自动完成的。在用户不可见的情况�
 
 JDK 自带了很多命令行甚至是图形界面工具，帮助我们查看 JVM 的一些信息。接下来，我会与你介绍些常用的监控工具。你也可以先通过下面这张图了解下各种工具的基本作用：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673252860772-898d50ac-dc9a-44b4-83bc-3ec2b93e9790.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-98925e544fae.png)
 
 ## 如何使用在线调试工具Arthas？
 
@@ -1248,7 +1248,7 @@ Spring AOP拦截器链中的每个元素被命名为MethodInterceptor，（出�
 
 MethodInterceptor接口也有一个invoke()方法，*（出现执行MethodInterceptor的invoke()方法动画）在MethodInterceptor的invoke()方法中会触发对目标对象方法的调用，也就是反射调用目标对象的方法。*（出现调用目标对象动画）
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673252942019-b512bc87-41f9-4e45-b83d-1fef80be859a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-c998a25c8379.png)
 
 ## 讲讲Spring事务的传播属性
 
@@ -1710,7 +1710,7 @@ Serializable （串行化）
 
 这边我们定义分库分表最大数据偏斜率为 ：（数据量最大样本 - 数据量最小样本）/ 数据量最小样本。一般来说，如果我们的最大数据偏斜率在5%以内是可以接受的。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253139499-030fca46-18f2-4802-a895-c0a81ef686f5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-19e182bca629.png)
 
 ### 分表的方案是什么呢？
 
@@ -1764,13 +1764,13 @@ public static ShardCfg shard(String userId) {
 
 那么很明显，该方案是一个未达到预期效果的错误方案。数据的散落情况大致示意图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253171513-d9a9f029-f6ad-4830-878a-38f7cde21b7e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-f7f267ed666f.png)
 
 事实上，只要库数量和表数量非互质关系，都会出现某些表中无数据的问题。
 
 证明如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253185963-fd47fb69-3e09-40ef-9f6f-6b90f872dcc1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-65c47d05d6f0.png)
 
 **那么是不是只要库数量和表数量互质就可用用这种分库分表方案呢？比如我用11库100表的方案，是不是就合理了呢？**
 
@@ -1802,7 +1802,7 @@ public static ShardCfg shard(String userId) {
 
 该方案确实很巧妙的解决了数据偏斜的问题，只要Hash值足够均匀，那么理论上分配序号也会足够平均，于是每个库和表中的数据量也能保持较均衡的状态。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253204264-e96f8ea3-5cd1-4f33-9842-d3b625fbae30.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-ab97582ff153.png)
 
 但是该方案有个比较大的问题，那就是在计算表序号的时候，依赖了总库的数量，那么后续翻倍扩容法进行扩容时，会出现扩容前后数据不在同一个表中，从而无法实施。
 
@@ -1834,15 +1834,15 @@ public static ShardCfg shard2(String userId) {
 
 大家可以注意到，和错误案例二中的区别就是通过分配序号重新计算库序号和表序号的逻辑发生了变化。它的分配情况如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253223965-d4a307b9-ae63-45d1-a54b-c42fe7cc2e04.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-f79965752715.png)
 
 那为何使用这种方案就能够有很好的扩展持久性呢？我们进行一个简短的证明：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253233724-69a8bb32-3e4c-40e9-8b4c-56f3c0ab6c66.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-b59ab04ab4f8.png)
 
 通过上面结论我们知道，通过翻倍扩容后，我们的表序号一定维持不变，库序号可能还是在原来库，也可能平移到了新库中(原库序号加上原分库数)，完全符合我们需要的扩容持久性方案。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253245372-91e18b13-a802-492d-bf50-bd5cb81a74c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-be0f79b6635f.png)
 
 **【方案缺点】**
 
@@ -1886,7 +1886,7 @@ public static ShardCfg shard(String userId) {
 
 如下图所示：最开始我们为4个数据库分配了相同的权重，理论上落在每个库的数据概率均等。但是由于用户也有高频低频之分，可能某些库的数据增长会比较快。当挂载新的数据库节点后，我们灵活的调整了每个库的新权重。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253266392-cb46d82b-a22d-4891-8971-31f37d12e4f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-574e2e04655c.png)
 
 该方案似乎解决了很多问题，那么它有没有什么不适合的场景呢？当然有，该方案在很多场景下其实并不太适合，以下举例说明。
 
@@ -2303,7 +2303,7 @@ RabbitMQ 有三种模式：单机模式、普通集群模式、镜像集群模�
 
 普通集群模式，意思就是在多台机器上启动多个 RabbitMQ 实例，每台机器启动一个。你**创建的 queue，只会放在一个 RabbitMQ 实例上**，但是每个实例都同步 queue 的元数据（元数据可以认为是 queue 的一些配置信息，通过元数据，可以找到 queue 所在实例）。你消费的时候，实际上如果连接到了另外一个实例，那么那个实例会从 queue 所在实例上拉取数据过来。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253428233-5d0f01ee-ee20-4385-be63-f519dcc01189.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-0a4e5d865306.png)
 
 这种方式确实很麻烦，也不怎么好，**没做到所谓的分布式**，就是个普通集群。因为这导致你要么消费者每次随机连接一个实例然后拉取数据，要么固定连接那个 queue 所在实例消费数据，前者有**数据拉取的开销**，后者导致**单实例性能瓶颈**。
 
@@ -2315,7 +2315,7 @@ RabbitMQ 有三种模式：单机模式、普通集群模式、镜像集群模�
 
 这种模式，才是所谓的 RabbitMQ 的高可用模式。跟普通集群模式不一样的是，在镜像集群模式下，你创建的 queue，无论是元数据还是 queue 里的消息都会**存在于多个实例上**，就是说，每个 RabbitMQ 节点都有这个 queue 的一个**完整镜像**，包含 queue 的全部数据的意思。然后每次你写消息到 queue 的时候，都会自动把**消息同步**到多个实例的 queue 上。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253442550-c5dbc38f-1e09-4d6a-a52c-dd4e797062d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-c6bda04a0065.png)
 
 那么**如何开启这个镜像集群模式**呢？其实很简单，RabbitMQ 有很好的管理控制台，就是在后台新增一个策略，这个策略是**镜像集群模式的策略**，指定的时候是可以要求数据同步到所有节点的，也可以要求同步到指定数量的节点，再次创建 queue 的时候，应用这个策略，就会自动将数据同步到其他的节点上去了。
 
@@ -2339,7 +2339,7 @@ Kafka 实际上有个 offset 的概念，就是每个消息写进去，都有一
 
 注意：新版的 Kafka 已经将 offset 的存储从 Zookeeper 转移至 Kafka brokers，并使用内部位移主题 `__consumer_offsets` 进行存储。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253465300-09f1b278-eb83-4eaa-b0c9-cf14c8c33d00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-fe206851dc39.png)
 
 如果消费者干的事儿是拿一条数据就往数据库里写一条，会导致说，你可能就把数据 1/2 在数据库里插入了 2 次，那么数据就错啦。
 
@@ -2362,7 +2362,7 @@ Kafka 实际上有个 offset 的概念，就是每个消息写进去，都有一
 - 比如你不是上面两个场景，那做的稍微复杂一点，你需要让生产者发送每条数据的时候，里面加一个全局唯一的 id，类似订单 id 之类的东西，然后你这里消费到了之后，先根据这个 id 去比如 Redis 里查一下，之前消费过吗？如果没有消费过，你就处理，然后这个 id 写 Redis。如果消费过了，那你就别处理了，保证别重复处理相同的消息即可。
 
 - 比如基于数据库的唯一键来保证重复数据不会重复插入多条。因为有唯一键约束了，重复数据插入只会报错，不会导致数据库中出现脏数据。
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253483243-69b2e2b1-80e1-4bcf-9628-e3363f1b1182.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-3eef5208f3f0.png)
 
 当然，如何保证 MQ 的消费是幂等性的，在实际应用中需要结合具体的业务来看。
 
@@ -2374,7 +2374,7 @@ Kafka 实际上有个 offset 的概念，就是每个消息写进去，都有一
 
 数据的丢失问题，可能出现在生产者、MQ、消费者中，咱们从 RabbitMQ 来分析一下吧。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253496125-0968e3d6-36c1-4cbe-ba6d-3a3310991cd9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-5c79535c4c05.png)
 
 #### 生产者弄丢了数据
 
@@ -2497,7 +2497,7 @@ RabbitMQ 如果丢失了数据，主要是因为你消费的时候，**刚消费
 > 
 > 
 > 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253533985-acf0a019-3d07-48a3-b169-3198cdd1ebea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-22f8150bebef.png)
 
 ## 如何解决消息队列的延时以及过期失效问题？消息队列满了以后该怎么处理？有几百万消息持续积压几小时，说说怎么解决？
 
@@ -2704,7 +2704,7 @@ redis 高可用，如果是做主从架构部署，那么加上哨兵就可以�
 
 单机的 Redis，能够承载的 QPS 大概就在上万到几万不等。对于缓存来说，一般都是用来支撑**读高并发**的。因此架构做成主从(master-slave)架构，一主多从，主负责写，并且将数据复制到其它的 slave 节点，从节点负责读。所有的**读请求全部走从节点**。这样也可以很轻松实现水平扩容，**支撑读高并发**。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253618866-0ce863fb-0d04-405f-b86a-5f22bab10ceb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-b6170d94af52.png)
 
 Redis replication -> 主从架构 -> 读写分离 -> 水平扩容支撑读高并发
 
@@ -2732,7 +2732,7 @@ Redis replication -> 主从架构 -> 读写分离 -> 水平扩容支撑读高并
 
 如果这是 slave node 初次连接到 master node，那么会触发一次 `full resynchronization` 全量复制。此时 master 会启动一个后台线程，开始生成一份 `RDB` 快照文件，同时还会将从客户端 client 新收到的所有写命令缓存在内存中。 `RDB` 文件生成完毕后， master 会将这个 `RDB` 发送给 slave，slave 会先**写入本地磁盘，然后再从本地磁盘加载到内存**中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。slave node 如果跟 master node 有网络故障，断开了连接，会自动重连，连接之后 master node 仅会复制给 slave 部分缺少的数据。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253637488-283da552-67af-4962-a6de-594ad9e9b183.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-12af1ea66f39.png)
 
 ### 主从复制的断点续传
 
@@ -2763,7 +2763,7 @@ slave node 启动时，会在自己本地保存 master node 的信息，包括 m
 
 slave node 内部有个定时任务，每秒检查是否有新的 master node 要连接和复制，如果发现，就跟 master node 建立 socket 网络连接。然后 slave node 发送 `ping` 命令给 master node。如果 master 设置了 requirepass，那么 slave node 必须发送 masterauth 的口令过去进行认证。master node **第一次执行全量复制**，将所有数据发给 slave node。而在后续，master node 持续将写命令，异步复制给 slave node。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253654639-14b342dc-4c20-4ec9-b38e-e33213593d4a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-1310cc76e955.png)
 
 ### 全量复制
 
@@ -2881,7 +2881,7 @@ Redis 如果仅仅只是将数据缓存在内存里面，如果 Redis 宕机了�
 
 这就是缓存雪崩。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253701537-4424b51c-ac25-448f-b587-12306e29e60b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-24bb7c096805.png)
 
 大约在 3 年前，国内比较知名的一个互联网公司，曾因为缓存事故，导致雪崩，后台系统全部崩溃，事故从当天下午持续到晚上凌晨 3~4 点，公司损失了几千万。
 
@@ -2892,7 +2892,7 @@ Redis 如果仅仅只是将数据缓存在内存里面，如果 Redis 宕机了�
 - 事中：本地 ehcache 缓存 + hystrix 限流&降级，避免 MySQL 被打死。
 
 - 事后：Redis 持久化，一旦重启，自动从磁盘上加载数据，快速恢复缓存数据。
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253717567-8f4e33b6-69de-46d8-b889-b275be8f10d7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-42646d0c4e71.png)
 
 用户发送一个请求，系统 A 收到请求后，先查本地 ehcache 缓存，如果没查到再查 Redis。如果 ehcache 和 Redis 都没有，再查数据库，将数据库中的结果，写入 ehcache 和 Redis 中。
 
@@ -2914,7 +2914,7 @@ Redis 如果仅仅只是将数据缓存在内存里面，如果 Redis 宕机了�
 
 举个栗子。数据库 id 是从 1 开始的，结果黑客发过来的请求 id 全部都是负数。这样的话，缓存中不会有，请求每次都“**视缓存于无物**”，直接查询数据库。这种恶意攻击场景的缓存穿透就会直接把数据库给打死。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253737285-c5ef05bc-f947-4993-bb76-507044a8f5b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-6ee4b1517759.png)
 
 解决方式很简单，每次系统 A 从数据库中只要没查到，就写一个空值到缓存里去，比如 `set -999 UNKNOWN` 。然后设置一个过期时间，这样的话，下次有相同的 key 来访问的时候，在缓存失效之前，都可以直接从缓存中取数据。
 
@@ -2926,7 +2926,7 @@ Redis 如果仅仅只是将数据缓存在内存里面，如果 Redis 宕机了�
 
 使用布隆过滤器能够对访问的请求起到了一定的初筛作用，避免了因数据不存在引起的查询压力。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253753624-92f60f7c-4b73-4c8c-a05c-d29f1d0a8d16.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-a32e9444696f.png)
 
 ### 缓存击穿(Hotspot Invalid)
 
@@ -2981,12 +2981,12 @@ allkeys-lfu
 
 ### CAP定理
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253778860-d3f57bed-7d1f-4b6d-ad76-ba5419ab37cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-f86355f6b6f3.png)
 
 - **Consistency 一致性**
 
 - 一致性指“`all nodes see the same data at the same time`”，即所有节点在同一时间的数据完全一致。
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253787521-625781d1-ad95-40e0-8432-7dda0d784615.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-7f31e7ec12e1.png)
 
 - 一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。对于一致性，可以分为从客户端和服务端两个不同的视角。
 
@@ -3053,7 +3053,7 @@ allkeys-lfu
 - **Partition Tolerance分区容错性**
 
 - 分区容错性指“`the system continues to operate despite arbitrary message loss or failure of part of the system`”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253799058-ad953f86-9051-44a6-9298-40305b6ade33.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-336bc552fe01.png)
 
 - 分区容错性和扩展性紧密相关。在分布式应用中，可能因为一些分布式的原因导致系统无法正常运转。好的分区容错性要求能够使应用虽然是一个分布式系统，而看上去却好像是在一个可以运转正常的整体。比如现在的分布式系统中有某一个或者几个机器宕掉了，其他剩下的机器还能够正常运转满足系统需求，或者是机器之间有网络异常，将分布式系统分隔未独立的几个部分，各个部分还能维持分布式系统的运作，这样就具有好的分区容错性。
 
@@ -3061,7 +3061,7 @@ allkeys-lfu
 
 ### 那么CAP理论中的一致性、可用性和分区容忍性不能同时满足呢？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253806440-b57f73ed-7e79-41cc-9e05-8447e473a709.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-1b5e09f20cf2.png)
 
 定理指出对于一个分布式系统来说**不可能同时满足以上三种特性。** 在理解CAP理论的最简单方式是想象两个节点分处分区两侧。 允许至少一个节点更新状态会导致数据不一致， 即丧失了C性质。如果为了保证数据一致性，将分区一侧的节点设置为不可用， 那么又丧失了A性质。 除非两个节点可以互相通信， 才能既保证C又保证A，这又导致丧失了P性质。 也就是说，如图所示的三者交叉的位置，是不可能实现的。
 
@@ -3083,7 +3083,7 @@ allkeys-lfu
 
 举个栗子，ZooKeeper就是采用了CP一致性。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253824298-d664dea3-3924-4d44-b42e-5d20769c6040.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-d159f46d6904.png)
 
 ZooKeeper是一个分布式的服务框架，主要用来解决分布式集群中应用系统的协调和移置性问题。在ZooKeeper中，对应每一个事务操作请求，ZooKeeper都会为其分配一个全局唯一的事务ID，每个事务ID对应一次更新操作，**从这些事务ID中可以间接识别出ZooKeeper处理这些事务操作请求的全局顺序**。
 
@@ -3093,7 +3093,7 @@ ZooKeeper是一个分布式的服务框架，主要用来解决分布式集群�
 
 Eureka是Spring Cloud微服务技术栈中的服务发现组件。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253838289-a6a2dc76-0f25-44de-b185-6549df1f74c1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-3f19319bcc1b.png)
 
 Eureka的各个节点都是平等的，几个节点挂掉不影响正常节点的工作。剩余节点依然可以提供注册和查询服务，只要有一台Eureka在，就能保证注册服务可用。只不过查看的信息可能不是最新版本，不保证一致性。
 
@@ -3147,7 +3147,7 @@ DTP的XA规范(全称为Distributed Transaction Processing The XA Specification)
 
 如果你要操作别人的服务的库，你必须是通过**调用别的服务的接口**来实现，绝对不允许交叉访问别人的数据库。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253862436-10c870c2-1a93-4207-90d0-208481a11943.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-6642c2a4dde7.png)
 
 ### TCC 方案
 
@@ -3167,7 +3167,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 但是说实话，一般尽量别这么搞，自己手写回滚逻辑，或者是补偿逻辑，实在太恶心了，那个业务代码是很难维护的。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253875587-f6d8dfeb-10ea-42b2-9c93-1d1325a29604.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-cf102b90836a.png)
 
 ### Saga
 
@@ -3177,7 +3177,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 业务流程中每个参与者都提交本地事务，若某一个参与者失败，则补偿前面已经成功的参与者。下图左侧是正常的事务流程，当执行到 T3 时发生了错误，则开始执行右边的事务补偿流程，反向执行 T3、T2、T1 的补偿服务 C3、C2、C1，将 T3、T2、T1 已经修改的数据补偿掉。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253888015-59774e40-3721-4eea-a739-8eba80ee255f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-c51a059a9f19.png)
 
 #### 使用场景
 
@@ -3222,7 +3222,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 - 这个方案保证了最终一致性，哪怕 B 事务失败了，但是 A 会不断重发消息，直到 B 那边成功为止。
 
 - 这个方案说实话最大的问题就在于严重依赖于数据库的消息表来管理事务啥的，如果是高并发场景咋办呢？咋扩展呢？所以一般确实很少用。
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253919883-b7277f32-6871-4c77-9ce1-5de5f4efebec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-06fec5468081.png)
 
 ### 可靠消息最终一致性方案
 
@@ -3241,7 +3241,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 - 这个方案里，要是系统 B 的事务失败了咋办？重试咯，自动不断重试直到成功，如果实在是不行，要么就是针对重要的资金类业务进行回滚，比如 B 系统本地回滚后，想办法通知系统 A 也回滚；或者是发送报警由人工来手工回滚和补偿。
 
 - 这个还是比较合适的，目前国内互联网公司大都是这么玩儿的，要不你就用 RocketMQ 支持的，要不你就自己基于类似 ActiveMQ？RabbitMQ？自己封装一套类似的逻辑出来，总之思路就是这样子的
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253933868-6799633f-2c73-41d9-874d-726bd4929baa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-fceccc1768f9.png)
 
 ### 最大努力通知方案
 
@@ -3275,7 +3275,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 这里说下redis，Redis我们知道执行命令是单线程的，我们可以通过lua脚本的方式提交命令，以保证原子性操作。虽说是能够实现加锁的基本功能，但是中间还是会遇到很多其他的问题，比如说锁超时如何释放问题，我们可以设置过期时间，那么setnx命令和expire命令并不是原子操作了，那就要使用lua脚本组合提交执行，那如果业务执行时间大于我们设置的过期时间，那就需要锁续期机制，这一切我们可以直接使用RedissonLock来帮我们完成。里面已经是封装的比较完善了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253956611-50b44902-5bb9-468c-848e-79115997067f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-09ab6f7f5992.png)
 
 那么我们在采用Redis作为分布式锁的时候我们会遇到一个高可用的问题，如果选择主从架构就可能会存在锁出问题的场景。虽说Redis也是提供了RedLock但是，它的使用成本会比较高，而且在理论层面还存在争议性。
 
@@ -3289,7 +3289,7 @@ TCC 的全称是： `Try` 、 `Confirm` 、 `Cancel` 。
 
 Raft 是一个非拜占庭的一致性算法，即所有通信是正确的而非伪造的。N 个结点的情况下（N为奇数）可以最多容忍 (N−1)/2(N−1)/2 个结点故障。
 
-![image](https://zinglix.xyz/img/in-post/raft/1.gif)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-0ecb57a8e21d.gif)
 
 Raft 正常工作时的流程如上图，也就是正常情况下日志复制的流程。Raft 中使用 **日志** 来记录所有操作，所有结点都有自己的日志列表来记录所有请求。算法将机器分成三种角色：Leader、Follower 和 Candidate。正常情况下只存在一个 Leader，其他均为 Follower，所有客户端都与 Leader 进行交互。
 
@@ -3305,7 +3305,7 @@ Raft 正常工作时的流程如上图，也就是正常情况下日志复制的
 
 在算法刚开始时，所有结点都是 Follower，每个结点都会有一个定时器，每次收到来自 Leader 的信息就会更新该定时器。
 
-![image](https://zinglix.xyz/img/in-post/raft/2.gif)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-6b28547fe2c5.gif)
 
 如果定时器超时，说明一段时间内没有收到 Leader 的消息，那么就可以认为 Leader 已死或者不存在，那么该结点就会转变成 Candidate，意思为准备竞争成为 Leader。
 
@@ -3317,15 +3317,15 @@ Raft 正常工作时的流程如上图，也就是正常情况下日志复制的
 
 再次选举会在两种情况下发生。
 
-![image](https://zinglix.xyz/img/in-post/raft/3.gif)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-e8ed1c90d3bd.gif)
 
 第一种情况是 Leader 下线，此时所有其他结点的计时器不会被重置，直到一个结点成为了 Candidate，和上述一样开始一轮新的选举选出一个新的 Leader。
 
-![image](https://zinglix.xyz/img/in-post/raft/4.gif)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-5f453f461990.gif)
 
 第二种情况是某一 Follower 结点与 Leader 间通信发生问题，导致发生了分区，这时没有 Leader 的那个分区就会进行一次选举。这种情况下，因为要求获得多数的投票才可以成为 Leader，因此只有拥有多数结点的分区可以正常工作。而对于少数结点的分区，即使仍存在 Leader，但由于写入日志的结点数量不可能超过半数因此不可能提交操作。这解释了为何 Raft 至多容忍 (N −1)/2个结点故障。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673253992962-b355e1c2-81b9-4b86-b37d-33b2aaa5d521.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-f0a116f2953e.png)
 
 这解释了每个结点会如何在三个状态间发生变化。
 
@@ -3333,7 +3333,7 @@ Raft 正常工作时的流程如上图，也就是正常情况下日志复制的
 
 Leader 的选举引出了一个新的概念——**任期**（Term）。
 
-![image](https://zinglix.xyz/img/in-post/raft/1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-d70376979ae4.png)
 
 每一个任期以一次选举作为起点，所以当一个结点成为 Candidate 并向其他结点请求投票时，会将自己的 Term 加 1，表明新一轮的开始以及旧 Leader 的任期结束。所有结点在收到比自己更新的 Term 之后就会更新自己的 Term 并转成 Follower，而收到过时的消息则拒绝该请求。
 
@@ -3345,7 +3345,7 @@ Leader 的选举引出了一个新的概念——**任期**（Term）。
 
 在 Raft 中日志只有从 Leader 到 Follower 这一流向，所以需要保证 Leader 的日志必须正确，即必须拥有所有已在多数节点上存在的日志，这一步骤由投票来限制。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254013553-af49c47a-f74c-4505-8b29-b58211c25326.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-38348499c5ad.png)
 
 投票由一个称为 RequestVote 的 RPC 调用进行，请求中除了有 Candidate 自己的 term 和 id 之外，还要带有自己最后一个日志条目的 index 和 term。接收者收到后首先会判断请求的 term 是否更大，不是则说明是旧消息，拒绝该请求。如果任期更大则开始判断日志是否更加新。日志 Term 越大则越新，相同那么 index 较大的认为是更加新的日志。接收者只会投票给拥有相同或者更加新的日志的 Candidate。
 
@@ -3381,7 +3381,7 @@ Raft 保证了如下几点：
 
 接下来我们就可以看到 Raft 实际中是如何做到日志同步的。这一过程由一个称为 AppendEntries 的 RPC 调用实现，Leader 会给每个 Follower 发送该 RPC 以追加日志，请求中除了当前任期 term、Leader 的 id 和已提交的日志 index，还有将要追加的日志列表（空则成为心跳包），前一个日志的 index 和 term。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254039275-90a18dad-a4d2-4671-92d6-22cca795106e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-ccd6c7d8029b.png)
 
 当接收到该请求后，会先检查 term，如果请求中的 term 比自己的小说明已过期，拒绝请求。之后会对比先前日志的 index 和 term，如果一致，那么由前提可知前面的日志均相同，那么就可以从此处更新日志，将请求中的所有日志写入自己的日志列表中，否则返回 false。如果发生 index 相同但 term 不同则清空后续所有的日志，以 Leader 为准。最后检查已提交的日志 index，对可提交的日志进行提交操作。
 
@@ -3393,7 +3393,7 @@ Raft 保证了如下几点：
 
 只要日志在多数结点上存在，那么 Leader 就可以提交该操作。但是 Raft 额外限制了 Leader 只对自己任期内的日志条目适用该规则，先前任期的条目只能由当前任期的提交而间接被提交。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254053631-695c6ad0-b05d-45d1-b20b-088e74536b51.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-8940f216cbcb.png)
 
 例如论文中图 8 这一 corner case。一开始如 (a) 所示，之后 S1 下线，(b) 中 S5 从 S3 和 S4 处获得了投票成为了 Leader 并收到了一条来自客户端的消息，之后 S5 下线。(c) 中 S1 恢复并成为了 Leader，并且将日志复制给了多数结点，之后进行了一个致命操作，将 index 为 2 的日志提交了，然后 S1 下线。(d) 中 S5 恢复，并从 S2、S3、S4 处获得了足够投票，然后将已提交的 index 为 2 的日志覆盖了。
 
@@ -3455,7 +3455,7 @@ Raft 保证了如下几点：
 
 ### 什么是微服务？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254088476-cfba3f63-1bc1-4560-95b4-35443b8d420b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-0d75bc07945f.png)
 
 - 微服务架构是一个分布式系统，按照业务进行划分成为不同的服务单元，解决单体系统性能等不足。
 
@@ -3537,7 +3537,7 @@ RPC(Remote Procedure Call)远程过程调用，简单的理解是一个节点请
 
 ## Spring Cloud 和 Dubbo 有哪些区别？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254126765-bf0f21ce-845c-4b54-804b-f543bdf80c59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-071ff68066c1.png)
 
 ### 面向微服务的技术(SpringCloud)
 
@@ -4183,7 +4183,7 @@ Zookeeper保证了CP（C：一致性，P：分区容错性），Eureka保证了A
 
 下图展示的是这种架构：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254389635-404abf80-fbcd-40ba-bec0-9c4da79fe917.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-33ea1dfc3e83.png)
 
 这种模式有一些参数，一个参数代表每个服务实例由多少进程构成。例如，需要在 Apache Tomcat Server 上部署一个 Java 服务实例作为 web 应用。一个 Node.js 服务实例可能有一个父进程和若干个子进程构成。
 
@@ -4211,7 +4211,7 @@ Zookeeper保证了CP（C：一致性，P：分区容错性），Eureka保证了A
 
 但是用单虚拟机单实例模式，一般将服务打包成虚拟机映像（image），例如一个 Amazon EC2 AMI。每个服务实例是一个使用此映像启动的 VM（例如，EC2 实例）。下图展示了此架构：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254413556-ed34df5c-1845-4730-94c9-4d40b2155c29.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-8007032141a4.png)
 
 Netfix 采用这种架构部署 video streaming service。Netfix 使用 Aminator 将每个服务打包成一个 EC2 AMI。每个运行服务实例就是一个 EC2 实例。
 
@@ -4243,7 +4243,7 @@ CloudNative 公司有一个用于创建 EC2 AMI 的 SaaS 应用，Bakery。用�
 
 下图展示了这种模式：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254438930-c1a11457-8607-46f0-8fd7-df25469f6613.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-cfd05be2edec.png)
 
 使用这种模式需要将服务打包成容器映像。一个容器映像是一个运行包含服务所需库和应用的文件系统 。某些容器映像由完整的 linux 根文件系统组成，其它则是轻量级的。例如，为了部署 Java 服务，需要创建包含 Java 运行库的容器映像，也许还要包含 Apache Tomcat server，以及编译过的 Java 应用。
 
@@ -4334,7 +4334,7 @@ Lambda 函数 是无状态服务。一般通过激活 AWS 服务处理请求。�
 - 读写分离
 
 - ElasticSearch
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254480262-700126a7-452f-4abb-be65-6e5798939752.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-33edc5a6a580.png)
 
 ### 系统拆分
 
@@ -4471,7 +4471,7 @@ I/O 模型优化异步、非阻塞 I/O 的解决思路，你应该听说过，�
 
 I/O 多路复用是什么意思呢？别急，详细了解前，我先来讲两种 I/O 事件通知的方式：水平触发和边缘触发，它们常用在套接字接口的文件描述符中。水平触发：只要文件描述符可以非阻塞地执行 I/O ，就会触发通知。也就是说，应用程序可以随时检查文件描述符的状态，然后再根据状态，
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254562499-ef139506-486a-4e55-9860-498e666a92a7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-269af532b209.png)
 
 这里要注意，accept() 和 epoll_wait() 调用，还存在一个惊群的问题。
 
@@ -4487,11 +4487,11 @@ I/O 多路复用是什么意思呢？别急，详细了解前，我先来讲两�
 
 第二种，监听到相同端口的多进程模型。在这种方式下，所有的进程都监听相同的接口，并且开启 SO_REUSEPORT 选项，由内核负责将请求负载均衡到这些监听进程中去。这一过程如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254578814-0fc06cc7-299d-4d8c-b0ad-7125d7f58c65.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-40ad16eb0b6e.png)
 
 由于内核确保了只有一个进程被唤醒，就不会出现惊群问题了。比如，Nginx 在 1.9.1 中就已经支持了这种模式。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1673254587480-a1c24858-36b9-4694-93e0-19e42db9cc37.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-d58a3cf6b7fd.png)
 
 基于 I/O 多路复用和请求处理的优化，C10K 问题很容易就可以解决。不过，随着摩尔定律带来的服务器性能提升，以及互联网的普及，你并不难想到，新兴服务会对性能提出更高的要求。
 
@@ -4590,7 +4590,7 @@ I/O 多路复用是什么意思呢？别急，详细了解前，我先来讲两�
 
 正是因为这种特性，MQ就很难避免消息重复消费问题
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202302191512966.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-a092d5fa8281.png)
 
 本身消息投递的可靠性要比我们重复消费的优先级更高，所以一般防重问题都是交给我们应用本身去实现的。这也就是为什么RocketMQ文档中强调：消费逻辑需要自我实现幂等。
 
@@ -4602,7 +4602,7 @@ I/O 多路复用是什么意思呢？别急，详细了解前，我先来讲两�
 
 # MQ系列：如何保证消息的顺序性？
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202302211452536.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-ce69b4ecaef4.png)
 
 在这个过程中，可能会有多个同价的交易单，如果没按照顺序交易，就违反了我们本身系统的业务，这样肯定是不行的。
 
@@ -4624,7 +4624,7 @@ RocketMQ 通过生产者和服务端的协议保障单个生产者串行地发�
 - 单一生产者：消息生产的顺序性仅支持单一生产者，不同生产者分布在不同的系统，即使设置相同的消息组，不同生产者之间产生的消息也无法判定其先后顺序。
 - 串行发送：RocketMQ 生产者客户端支持多线程安全访问，但如果生产者使用多线程并行发送，则不同线程间产生的消息将无法判定其先后顺序。
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202302211459207.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-81fa31f79248.png)
 
 如上图所示，消息组1和消息组4的消息混合存储在队列1中，RocketMQ 保证消息组1中的消息G1-M1、G1-M2、G1-M3是按发送顺序存储，且消息组4的消息G4-M1、G4-M2也是按顺序存储，但消息组1和消息组4中的消息不涉及顺序关系。
 
@@ -4662,7 +4662,7 @@ RocketMQ 顺序消息投递仅在重试次数限定范围内，即一条消息�
 
 简单地说， 可用性是平均故障间隔时间(MTBF)除以平均故障间隔时间(MTBF)和平均故障修复时间(MTTR)之和所得的结果， 即：
 
-![](https://www.yuque.com/api/services/graph/generate_redirect/latex?Availablility%20%3D%20MTBP%20%2F%20(MTBF%20%2B%20MTTR))
+![](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-ad8cf23b06bf.svg))
 
 看公式可能不够直观对吧，过于理论了，这里再和大家说一种业内用的比较多的方式，用N个9来表示系统的可用性。比如说：
 
@@ -4688,7 +4688,7 @@ RocketMQ 顺序消息投递仅在重试次数限定范围内，即一条消息�
 
 ### RocketMQ架构简单解析
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202302231337698.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-ccf287574f20.png)
 
 我们聊高可用，我们是不是得先知道RocketMQ里面到底有哪些组件对吧。RocketMQ 是由阿里巴巴开发的一款高性能、低延迟、高可靠、可扩展的分布式消息中间件。它的架构可以分为四个部分：NameServer、Broker、Producer 和 Consumer。
 
@@ -4709,7 +4709,7 @@ RocketMQ 顺序消息投递仅在重试次数限定范围内，即一条消息�
 
 在集群模式里面也存在两种不同的部署方式，`多节点单副本集群`和`多节点多副本集群`
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202302231414036.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0092-avpxs3qirk1w4qod/img-bdfafbf6d74b.png)
 
 ##### 多节点单副本集群
 

@@ -22,25 +22,25 @@ TCP（传输控制协议）和UDP（用户数据报协议）是互联网中两�
 
 **TCP 三次握手与四次挥手如下：**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728545129741-b66ea930-4fc4-4033-9a3b-8e77149166bf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-6c9e955d2ffc.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728545130001-d3b65660-47aa-41bb-979c-aee5c190ff43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-dab22d497ea0.png)
 
 ### 2. 数据传输的可靠性
 
 - **TCP**：提供高可靠性的数据传输。它通过序列号、确认应答、重传机制、流量控制和拥塞控制等技术来确保数据完整无误地传输到接收方。
 - **UDP**：不保证数据传输的可靠性。它发送的数据包可能会丢失、重复或到达顺序错乱，不提供错误恢复功能。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728545830071-bfb7b341-59c1-479a-8570-0c367a4e39fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-977e2c99fbd1.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728545830143-6b378a3e-f8a3-4083-89f7-8277f2a6bb58.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-b42fa0ddeb00.png)
 
 ### 3. 数据传输的速度和效率
 
 - **TCP**：由于需要进行连接管理、错误检测和恢复，以及维持连接状态，其数据传输速度相对较慢，协议开销较大。
 - **UDP**：由于不需要建立连接，且几乎没有错误恢复机制，使得UDP的数据传输速度较快，协议开销小，效率较高。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728545956699-79521034-251f-485e-a3a9-4df92bf60034.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-cc9f14dfe3b0.png)
 
 ### 4. 报文段
 
@@ -54,7 +54,7 @@ TCP（传输控制协议）和UDP（用户数据报协议）是互联网中两�
 - **校验和（Checksum）**：提供端到端的错误检测能力。
 - **紧急指针（Urgent Pointer）**：当URG标志被设置时，表示报文段中有紧急数据，需要优先处理。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1728543602948-ceb1dddb-4e89-43d5-b51e-359ca3568e71.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-0bad5760ca2c.jpg)
 
 **UDP**：UDP报文段核心数据如下：
 
@@ -62,7 +62,7 @@ TCP（传输控制协议）和UDP（用户数据报协议）是互联网中两�
 - **长度**：指示UDP头部和数据的总长度。
 - **校验和**：提供端到端的错误检测能力，但在UDP中，这是可选的，因为UDP不保证可靠性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1728543613347-e8e7e241-7616-492b-82aa-19c1f240e9be.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-46abb286d1df.jpg)
 
 ### 5. 流量控制和拥塞控制
 
@@ -74,8 +74,8 @@ TCP（传输控制协议）和UDP（用户数据报协议）是互联网中两�
 - **TCP**：适用于需要高可靠性的应用，如网页浏览、电子邮件、文件传输等。
 - **UDP**：适用于对传输速度和效率要求高、可以容忍一定数据丢失的应用，如在线视频会议、实时游戏、流媒体等。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1728546423558-bc6ec9e9-3a17-46e3-a5a8-1fef71327ee6.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-abd8c3d2175a.jpg)
 
 ### 7.总结
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728547302026-3cf613dd-015b-4edb-92b7-fff625d8bd80.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0583-dsqhapgfmv21gqe1/img-35c90222c0d0.png)

@@ -27,7 +27,7 @@ article: false
 
 “这些听起来又多又乱的锁，其实就是纸老虎。今天这个视频，我就带你把MySQL的锁，从头到尾，从分类到原理，再到面试题，一次性给你捋清楚、说明白。保证你看完，不仅面试能横着走，自己心里对这块儿也绝对有底。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759914921198-1f328446-ec61-428d-9af7-864ab97c33d7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_59%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1111-bqdyxncv26n1hb3g/img-5b0cde64de19.png)
 
 这个视频内容比较多，时间也会比较长，感兴趣的朋友赶紧点赞、收藏，不然以后就找不到了。
 
@@ -37,7 +37,7 @@ article: false
 
 “首先，咱们得有个大局观。你想啊，你要锁东西，是把整个房子都锁了，还是只锁一个房间，或者干脆就锁一个抽屉？这就是锁的**粒度**，也就是锁的范围大小。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759914946053-09741f21-dadc-4b89-8e3a-5903bbbe438e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1111-bqdyxncv26n1hb3g/img-016221da0a14.png)
 
 “最大最狠的，就是**全局锁**，相当于把整个数据库这栋大楼都封了。一个命令下去，整个库谁也别想写数据，只能读。你可能觉得这玩意儿也太霸道了，啥时候用啊？很简单，当你要做全库备份，得保证数据一动不动，绝对一致的时候，就得靠它了。”
 
@@ -49,7 +49,7 @@ article: false
 
 “好，知道了锁的大小，咱们再聊聊用锁的两种‘派别’。这特有意思，你可以想想，你平时写代码，是‘悲观派’还是‘乐观派’？”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759914963015-638ccc9e-0121-4aad-95b6-4925093e2e46.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1111-bqdyxncv26n1hb3g/img-01634cb07ab9.png)
 
 “**悲观锁**，人如其名，就是个悲观主义者。它总觉得，‘只要我要改数据，就肯定有人跟我抢！’。所以，它在干活前，先用SELECT ... FOR UPDATE把数据锁得死死的，别人谁也别想碰。你想想，这用在什么地方最合适？对咯，就是秒杀、抢库存这种场景，并发写操作非常多，冲突概率极大，必须先下手为强。”
 
@@ -59,7 +59,7 @@ article: false
 
 “搞懂了上面两种‘派别’，我们再来看锁自带的两种基本类型：**共享锁**和**排他锁**。这个更好理解，就跟咱们去图书馆看书一样。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759914975774-b9f96f8a-e170-4e85-844c-4399de8582e0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1111-bqdyxncv26n1hb3g/img-49a5c8af3c47.png)
 
 “**共享锁**，也叫S锁或者读锁。它就等于‘大家一起看书’。一本书，可以被很多人同时看，对吧？只要大家都不在上面写字就行。这就是‘读读共享’。但这时候要是有个人想来改书的内容，那肯定不行。这就是‘读写互斥’。在MySQL里，你用LOCK IN SHARE MODE加的就是这个读锁。”
 
@@ -69,7 +69,7 @@ article: false
 
 “前面的都好懂，接下来，咱们进阶一下，聊聊InnoDB里一个特别重要，但很多人都搞不明白的锁——**意向锁**。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759914991819-e2d50770-7459-471c-9d5b-2c075bb97a33.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1111-bqdyxncv26n1hb3g/img-098b080cd76c.png)
 
 “意向锁，听着挺玄乎，但你把它想成一个挂在‘表’门口的‘通知牌’就行了。它的作用，就是为了提高效率。你想啊，事务A锁了表里的某一行，这时候事务B想给整张表加个表锁。MySQL咋办？难道要一行一行地去检查有没有行锁吗？那表里要是有几千万行，查到猴年马月去了，数据库直接就卡死了！”
 
@@ -79,13 +79,13 @@ article: false
 
 “有了意向锁这个帮手，我们再来看看InnoDB真正在一线干活的三个核心武器。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759915005568-4d53b16a-8037-4dd2-8ffb-51a84b146458.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1111-bqdyxncv26n1hb3g/img-30fd15ee78ee.png)
 
 “第一个，**记录锁**。这就是最纯粹的行锁，指哪打哪，只锁定你查询命中的那一条记录。比如你用主键WHERE id = 10去更新，它就只锁id=10这一行。这是我们最希望看到的，最理想的状态。”
 
 “但现实哪有那么理想？如果你的查询条件不是唯一的呢？比如WHERE age > 18。这时候，面试必考的知识点就来了：**幻读**。为了解决幻读，InnoDB就掏出了它的大杀器：**间隙锁**和**临键锁**。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1759915028187-c36aa4c9-1c8c-44c7-9d57-07941c2e49bb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_74%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1111-bqdyxncv26n1hb3g/img-1983590a3260.png)
 
 “**间隙锁**，非常有意思，它不锁任何已经存在的记录，而是锁住记录和记录之间的那个‘缝儿’。比如索引里有10和20，它就锁住(10, 20)这个开区间，让你没法在这个缝隙里插入新的数据。它就像给数据之间画了个结界，防止有新的‘幻影’冒出来。”
 

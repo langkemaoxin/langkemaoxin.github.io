@@ -29,7 +29,7 @@ article: false
 - **正确顺序**：用户下单前先查询库存（如剩余 10 件）→扣减库存（10→9）→确认下单成功，确保库存准确无超卖。
 - **乱序后果**：若先扣减库存再查询，会出现 “库存已扣减但查询时仍显示原数量”，导致后续用户继续下单，最终库存变为负数（超卖），平台需承担赔偿责任。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762777207662-41da0fe6-2e24-4644-9e79-98350e33d912.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1172-efgac0m1lk6xq84q/img-81a0d655f55d.png)
 
 ## 二、RocketMQ 顺序消费的核心原理：分区有序是唯一选择
 
@@ -61,7 +61,7 @@ RocketMQ 的顺序机制本质是 “基于队列的有序性”——**单个�
 1. **队列是顺序的最小单位**：RocketMQ 的 CommitLog（物理存储）按消息到达顺序追加写入，ConsumeQueue（逻辑队列）作为 CommitLog 的索引，也保持顺序，因此单个队列内消息必然有序。
 2. **分区有序的本质是 “业务隔离”**：通过业务 ID（如订单 ID、用户 ID）路由到固定队列，既保证同一业务的顺序性，又通过多队列实现并发，平衡 “顺序” 与 “性能”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762777228213-ff00746d-fbc4-4496-95df-bad7410ff2c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1172-efgac0m1lk6xq84q/img-05bef7a818ee.png)
 
 ## 三、完整架构链路：从生产到消费的顺序保障流程
 
@@ -88,7 +88,7 @@ RocketMQ 的顺序机制本质是 “基于队列的有序性”——**单个�
 - 为每个队列分配独立线程，确保单线程消费。
 - 处理消息前先获取锁，防止并发操作导致乱序。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762777246943-c900005d-d8a8-42d6-8d91-1578ce59a006.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1172-efgac0m1lk6xq84q/img-a97b51fe73fb.png)
 
 #### 全链路流程总结：
 
@@ -131,7 +131,7 @@ ProcessQueue 锁
 3. **线程处理消息时**：对 ProcessQueue（本地内存队列，存储待处理消息）加锁，按消息偏移量从小到大处理，处理完一条再取下一条。
 4. **锁续期与释放**：消费者每隔 20 秒向 Broker 续期锁；若消费者下线，Broker 在锁过期后自动释放，避免队列永久锁定。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762777317390-95c58170-5bd0-4fb2-b2ec-9fc6f131a07e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1172-efgac0m1lk6xq84q/img-c4c1721d881a.png)
 
 ## 五、落地限制与避坑指南：这些问题面试必问
 
@@ -168,7 +168,7 @@ ProcessQueue 锁
 - **多生产者全局有序**：即使路由到同一队列，多生产者的网络延迟差异仍可能导致消息顺序混乱（如生产者 A 发消息 1，生产者 B 发消息 2，消息 2 因网络快先到达队列）。
 - **跨队列顺序**：不同队列的消息无顺序关系，如队列 1 的 “下单” 消息与队列 2 的 “支付” 消息，谁先被消费不确定。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762777355159-1944f498-b629-4f3c-aaf0-59e774ad35cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1172-efgac0m1lk6xq84q/img-7e85111c0278.png)
 
 ## 六、全局有序的争议：技术可行但业务不用
 
@@ -207,7 +207,7 @@ ProcessQueue 锁
 低（配置简单）
 中（需路由与幂等设计）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762777374709-65067dd8-6784-4db8-9423-361d084fe183.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1172-efgac0m1lk6xq84q/img-adeb9c4889be.png)
 
 ## 七、落地代码实现：从生产者到消费者的完整示例
 
@@ -366,7 +366,7 @@ public class OrderConsumer {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762777395674-3ff1c80f-1a57-4419-86a9-2f48c7b5e8d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1172-efgac0m1lk6xq84q/img-19c9cd8d18d4.png)
 
 ## 八、总结：顺序消费的核心认知
 

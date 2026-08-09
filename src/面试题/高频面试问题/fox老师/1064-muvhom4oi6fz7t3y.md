@@ -29,7 +29,7 @@ article: false
 
 这是最基础，却也最容易被忽略的一道防线。将数据库中存储库存的字段（如`stock`）类型设置为无符号整数（`UNSIGNED INT`）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758616880165-62677a35-8982-429f-a47e-fc68c4905bd0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1064-muvhom4oi6fz7t3y/img-91b46b3f51f3.png)
 
 - **原理**：当库存扣减到0后，如果再有扣减操作（`stock = stock - 1`），数据库会直接抛出异常，阻止该SQL语句的执行，从而在数据库层面杜绝了库存变为负数的可能。
 
@@ -52,7 +52,7 @@ UPDATE goods SET stock = stock - 1 WHERE id = 1;
 
 悲观锁的核心思想是“先锁定，再操作”，它假设并发冲突一定会发生，所以每次操作数据前都会先加锁，阻止其他事务的修改。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758616930493-f91ef9ad-7242-4872-8393-cb448572d79c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1064-muvhom4oi6fz7t3y/img-6f60b1999ba3.png)
 
 - **实现**：在SQL查询时使用 `FOR UPDATE` 关键字。
 
@@ -76,7 +76,7 @@ COMMIT;
 
 与悲观锁相反，乐观锁假设冲突很少发生，它不会预先加锁，而是在更新数据时检查在此期间数据是否被其他事务修改过。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758616999770-ca570af5-ee23-4790-97f2-bd5f51cfe44b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1064-muvhom4oi6fz7t3y/img-19bed5faf53c.png)
 
 - **实现**：通常通过版本号（`version`）或时间戳实现。
 
@@ -104,7 +104,7 @@ WHERE id = 1 AND version = #{current_version};
 
 利用Redis单线程执行命令的特性，将请求序列化，变并行处理为串行处理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758617085631-a6b88e9b-c0b6-4a26-a8bb-2d9c4d42ea82.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1064-muvhom4oi6fz7t3y/img-3914a756cbe9.png)
 
 - **实现**：在秒杀活动开始前，根据库存数量（如1000件），在Redis的一个List中 `LPUSH` 1000个标识（例如"1"）。用户每下一个单，就执行一次 `LPOP` 操作。能`LPOP`成功的用户才能继续后续的下单流程，如果返回`nil`，则表示库存已空。
 - **优点**：
@@ -124,7 +124,7 @@ WHERE id = 1 AND version = #{current_version};
 
 虽然Redis命令是原子的，但“查询库存”+“扣减库存”是两个独立的操作，在并发下依然存在原子性问题。Lua脚本可以将多个命令打包，作为一个原子单元执行。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758617141632-85cac452-3bba-4e92-bf1a-40998ba07b0c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1064-muvhom4oi6fz7t3y/img-7091a0cf4160.png)
 
 - **实现**：编写一个Lua脚本，将“读取库存”和“判断并扣减”两个步骤合并。
 
@@ -151,7 +151,7 @@ return 0
 
 这是一个在分布式环境下保证强一致性的经典模式，常被大厂面试官考察。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758617264898-9f9d9dd9-dec0-4189-ab6d-1fad732baa2e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1064-muvhom4oi6fz7t3y/img-700e181586c8.png)
 
 - **流程**：
 
@@ -168,7 +168,7 @@ return 0
 
 这是对第六层方案的优化，也是字节、拼多多等公司处理大流量秒杀的常用方案，核心思想是“分而治之”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758617363605-cd407043-06f6-4d99-9f4a-ddb0c08ecb7a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1064-muvhom4oi6fz7t3y/img-3442896ec4ce.png)
 
 - **实现**：
 

@@ -25,7 +25,7 @@ article: false
 
 ### 一、 两个世界的“物种”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1767094462601-6911b69f-6118-4318-bc39-0f74622e0c70.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0898-gqyrre5xo3erhxmz/img-723c19e8889e.png)
 
 虽然它们都叫 OLAP 引擎，但骨子里的基因完全不同。
 
@@ -37,7 +37,7 @@ article: false
 
 ### 二、 架构之争：运维是最大的隐形成本
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1767094472134-be8e7943-f0e9-4f90-804e-2c2639d2b0b2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0898-gqyrre5xo3erhxmz/img-e723793b4bfe.png)
 
 很多团队在引入 ClickHouse 初期非常爽，但随着集群规模扩大，痛苦就开始了。
 
@@ -54,7 +54,7 @@ ClickHouse 的分布式协同强依赖 **Zookeeper**。在大数据量下，ZK �
 
 ### 三、 速度的代价：LSM-Tree 的双刃剑
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1767094481571-17c1a634-6242-4641-8c48-c80a189a6ef9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0898-gqyrre5xo3erhxmz/img-fbe88bb0f5ad.png)
 
 ClickHouse 为什么快？上图揭示了它的底牌：**MergeTree 引擎**。
 
@@ -70,7 +70,7 @@ ClickHouse 为什么快？上图揭示了它的底牌：**MergeTree 引擎**。
 
 ### 四、 决胜点：Join 能力与生态
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1767094488444-76fbc100-6284-4b75-b42d-a009af741a9d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0898-gqyrre5xo3erhxmz/img-7c8fec027cf2.png)
 
 这张对比图，道出了很多架构师最终倒戈 Doris 的真实原因：**Join 能力**。
 
@@ -87,7 +87,7 @@ ClickHouse 是典型的“大宽表”思维。它不擅长 Join，尤其是多�
 
 ### 五、 最终结论：谁更适合你？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1767094493494-e8d36214-bfeb-47fe-b4eb-d1c1fa8a65da.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0898-gqyrre5xo3erhxmz/img-4f9fbb20135a.png)
 
 没有最好的架构，只有最合适的场景。最后，我们用一张图来终结选择困难症。
 

@@ -101,7 +101,7 @@ Paxos算法中的角色：
 //算法约束P1:一个Acceptor必须接受它收到的第一个提案。//考虑到半数以上才作数，一个Accpter得接受多个相同v的提案P2a:如果某个v的提案被accept，那么被Acceptor接受编号更高的提案必须也是vP2b:如果某个v的提案被accept，那么从Proposal提出编号更高的提案必须也是v//如何确保v的提案Accpter被选定后，Proposal都能提出编号更高的提案呢针对任意的[Mid,Vid]，有半数以上的Accepter集合S，满足以下二选一：S中接受的提案都大于Mid  S中接受的提案若小于Mid，编号最大的那个值为Vid
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392759654-0e3c72f6-e449-4b5c-b77f-8e441444877f.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-019df6740ec0.jpg)
 
 面试题：如何保证Paxos算法活性
 
@@ -126,15 +126,15 @@ Raft使用**心跳机制**来触发选举。当server启动时，初始状态都
 
 全量缓存保证高效读取
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392759603-a4c2ed69-affe-4a79-a22e-103c340ea89d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-b1ce2574fd78.png)
 
 所有数据都存储在缓存里，读服务在查询时不会再降级到数据库里，所有的请求都完全依赖缓存。此时，因降级到数据库导致的毛刺问题就解决了。但全量缓存并**没有解决更新时的分布式事务**问题，反而把问题放大了。因为全量缓存**对数据更新要求更加严格**，要求所有数据库**已有数据和实时更新**的数据必须完全同步至缓存，不能有遗漏。对于此问题，一种有效的方案是采用**订阅数据库的 Binlog **实现数据同步。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392759647-5acee591-7c04-4c38-be52-ecdbe36997b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-bd6e3c80e9a3.png)
 
 现在很多开源工具（如阿里的 Canal等）可以模拟主从复制的协议。通过模拟协议读取主数据库的 Binlog 文件，从而获取主库的所有变更。对于这些变更，它们开放了各种接口供业务服务获取数据。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392759645-1d3cb0cd-974c-4aba-a08c-b65e60db496a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-6552cbc95d91.png)
 
 将 Binlog 的中间件挂载至目标数据库上，就可以**实时获取该数据库的所有变更数据**。对这些变更数据解析后，便可**直接写入缓存里**。优点还有：
 
@@ -143,7 +143,7 @@ Raft使用**心跳机制**来触发选举。当server启动时，初始状态都
 
 **缺点**不可避免：1、增加复杂度 2、消耗缓存资源 3、需要筛选和压缩数据 4、极端情况数据丢失；
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392759660-a310102c-e131-4967-9096-c24a5324ce43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-dfd86130281f.png)
 
 可以通过异步校准方案进行补齐，但是会损耗数据库性能。但是此方案会隐藏中间件使用错误的细节，线上环境前期更重要的是记录日志排查再做后续优化，不能本末倒置。
 
@@ -159,7 +159,7 @@ Raft使用**心跳机制**来触发选举。当server启动时，初始状态都
 
 **多机房实时热备**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392760055-0db214c2-897c-40b8-8eab-80bd810bc3e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-859c6069bed7.png)
 
 两套缓存集群可以分别部署到不同城市的机房。读服务也相应地部署到不同城市或不同分区。在承接请求时，不同机房或分区的读服务只依赖同样属性的缓存集群。此方案有两个好处。
 
@@ -176,7 +176,7 @@ Raft使用**心跳机制**来触发选举。当server启动时，初始状态都
 
 **日志复制**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392760123-c1fe5898-8e49-4aa9-8091-7289b8ca2358.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-56a74ca0a473.png)
 
 1. **Leader**把指令添加到日志中，发起 RPC 给其他的服务器，让他们复制这条信息；
 2. **Leader**会不断的重试，直到所有的 Follower响应了ACK并复制了所有的日志条目；
@@ -223,7 +223,7 @@ Try Confirm Cancel / 短事务
 
 **MQ最终一致性**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392760152-1b091267-1ba6-415c-a554-63d87887a3c3.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0042-trxy9wdwidr0mw62/img-75e2b775147a.jpg)
 
 比如阿里的 RocketMQ 就支持消息事务（核心：**双端确认，重试幂**等）
 

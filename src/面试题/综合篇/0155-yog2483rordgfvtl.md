@@ -32,7 +32,7 @@ article: false
 
 `Tess4J` 依赖 `Tesseract` 数据文件来识别不同语言的文本。可以从 [Tesseract Github仓库](https://github.com/tesseract-ocr) 下载所需语言的训练数据。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737553952430-02443121-4c5b-4547-8f84-ef3bc2524e75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0155-yog2483rordgfvtl/img-2ed614df2c05.png)
 
 如上图所示：Tesseract有三个独立的语言模型存储库 tessdata、tessdata-best、tessdata-fast 他们分别都存储了语言模型，主要有以下区别
 
@@ -227,13 +227,13 @@ public class OcrController {
 准备图片，就以本篇文章开头文案图片来测试；
 
 > 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737554253608-5b2a00a9-c4ee-4e93-9c7b-53df0f60aa45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0155-yog2483rordgfvtl/img-850bf96e22fc.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737554253563-2e9457d5-70b5-4144-801c-7c6776123472.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0155-yog2483rordgfvtl/img-e22bfcdebcb1.png)
 
 > 使用Apifox或Postman进行调试，这里使用Postman测试效果如下：
 > 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737554303584-20b8e963-d66d-4b36-8dc5-b3aea131eb07.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0155-yog2483rordgfvtl/img-1d0fcdbb3351.png)
 
 ## 5、总结
 

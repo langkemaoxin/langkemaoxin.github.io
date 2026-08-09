@@ -42,7 +42,7 @@ REST 是 Representational State Transfer 的缩写。它是由 [Roy Fielding](ht
 
 REST API 使用 URL 唯一标识和定位 RESTful 服务中的资源，一个完整的 URL 结构如下：
 
-![image](https://img-blog.csdnimg.cn/da1f1768af7941b990d036f9703e5b1a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0834-hv7t6xfxra7cpusi/img-c8eb00d5ff49.png)
 
 ## 2.REST API 设计建议
 

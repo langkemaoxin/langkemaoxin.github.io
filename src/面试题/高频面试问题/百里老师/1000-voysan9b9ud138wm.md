@@ -21,7 +21,7 @@ article: false
 
 在开始之前，让我们先看一下本次挑战的完整“通关路线图”。它清晰地展示了从错误路线到正确路线的思维转变，以及我们最终要达成的目标。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760339712882-e32a3db8-c505-42a3-a49f-49bd796d7407.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1000-voysan9b9ud138wm/img-b12c533d1748.png)
 
 这张图是我们接下来探索之旅的地图。左侧的“错误路线”代表了我们最容易想到的、但会迅速失败的常规方法；右侧的“正确路线”则是我们即将学习的、高效且节约空间的解决方案。现在，让我们从失败的第一步开始。
 
@@ -31,7 +31,7 @@ article: false
 
 这个思路在逻辑上无懈可击，但在工程上却不堪一击。其灾难性的后果可以用下图来形象地说明。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760339727390-78933547-21bc-45ed-8e7b-8608efd1f4ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1000-voysan9b9ud138wm/img-31eee7dac962.png)
 
 上图非常形象地展示了：当海量数据（40亿QQ号）源源不断地涌入内存时，系统资源被迅速耗尽，最终导致服务崩溃。为什么会这样？让我们来做一道简单的数学题。
 
@@ -62,7 +62,7 @@ article: false
 
 下图清晰地解释了这个过程。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760339740685-fbd6d089-374a-485a-9281-a57151aa5f1e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1000-voysan9b9ud138wm/img-15f271eba3e1.png)
 
 图示解释了标记QQ号 `10` 的过程：
 
@@ -133,7 +133,7 @@ class BitMap:
 
 布隆过滤器可以看作是BitMap的变种，它用更少的空间来表示一个巨大的集合，但代价是允许一定的“误判率”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760339792540-9c22a775-377d-4231-9643-e62d19ef2706.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1000-voysan9b9ud138wm/img-661545ce4cc4.png)
 
 上图揭示了其核心思想：
 
@@ -158,7 +158,7 @@ class BitMap:
 
 经过层层分析，我们从一个看似无解的难题中找到了完美的解决方案，并进一步拓展了知识边界。现在，是时候将所有知识点汇总成一个清晰的决策框架了。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760339815703-f617b810-9613-44bf-9c59-e0f704518e70.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1000-voysan9b9ud138wm/img-d7ec76fd4400.png)
 
 这张总结表是你在面试中可以清晰呈现给面试官的思维导图：
 

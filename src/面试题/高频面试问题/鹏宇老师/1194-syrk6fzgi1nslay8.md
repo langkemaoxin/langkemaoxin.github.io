@@ -23,7 +23,7 @@ article: false
 - 账号安全防护：检测到陌生设备登录时，可强制下线旧设备，防止账号被盗用后的数据泄露；
 - 资源占用控制：避免同一账号多端登录导致服务器资源（如连接数、缓存）过度消耗。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760537471051-267d3a2c-6cd8-4e10-a3db-d9247166e3ca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1194-syrk6fzgi1nslay8/img-fd5da8e34cda.png)
 
 ### 1.2 核心实现逻辑（3 步总纲）
 
@@ -44,7 +44,7 @@ article: false
 
 **关键差异点**：不同方案的核心区别仅在于 “会话的存储介质与验证方式”（如 Session 存在内存 Map、Token 存在 Redis、JWT 存在客户端 + Redis 缓存），但 “检测→处理→存储” 的 3 步逻辑完全一致。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760537490379-8f0c7f3e-30d6-4568-8e0a-70a21ce03908.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1194-syrk6fzgi1nslay8/img-48e8d970e90b.png)
 
 ### 1.3 核心技术概念
 
@@ -79,7 +79,7 @@ JSON Web Token，自带用户信息的加密令牌（由 Header.Payload.Signatur
 3. 生成新 Session，存入全局 Map，并通过 Cookie 返回 SessionId 给客户端；
 4. Session 过期 / 用户退出时，监听器同步删除全局 Map 中的对应记录。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760537608634-40a4e713-cd7a-4dee-ae7e-3dfc3f8459e0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1194-syrk6fzgi1nslay8/img-fffc17cde4b9.png)
 
 ### 2.3 核心代码实现
 
@@ -241,7 +241,7 @@ public class LoginController {
 3. 存 Redis：新增两个映射 ——`key=userId:${userId} → value=Token`（查账号登录状态）、`key=token:${Token} → value=userId`（验证 Token 有效性）；
 4. 客户端每次请求携带 Token，服务器通过 Redis 验证 Token 是否存在，不存在则需重新登录。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760537650360-66ced0cc-542f-49fb-980b-56e2944425e6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1194-syrk6fzgi1nslay8/img-53d32a67907b.png)
 
 ### 3.3 核心代码实现
 
@@ -411,7 +411,7 @@ JWT 本身是 “无状态令牌”，但无法主动失效，因此需结合**R
 3. 存 Redis：`key=jwt:user:${userId} → value=JWT`（用于标记 “当前有效 JWT”）；
 4. 客户端携带 JWT 请求，服务器先验证 JWT 签名有效性，再查 Redis 确认 JWT 是否在缓存中（存在则有效，不存在则已被强制下线）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760537686800-7eec6e80-9d2b-4e05-948e-5565914a96c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1194-syrk6fzgi1nslay8/img-b2ef613a1196.png)
 
 ### 4.3 核心代码实现
 
@@ -576,7 +576,7 @@ public class JwtLoginService {
 3. 若 List 长度 < 3，直接添加新会话；若≥3，删除 List 中最早的会话（FIFO）；
 4. 客户端可查询当前登录设备列表，支持手动踢下线某一端。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760537726404-ffcf10e3-5c62-4ae2-9ac7-fff089e86d93.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1194-syrk6fzgi1nslay8/img-dcca73de5c1d.png)
 
 ### 5.3 核心代码实现（以 Token 方案为例）
 
@@ -738,4 +738,4 @@ Redis（JWT 缓存）+ JWT 本身
 
 在面试或实际开发中，需不仅能讲清技术方案，更能结合业务背景说明选型理由，同时规避技术缺陷（如 Session 的分布式问题、JWT 的主动失效问题），才能体现出完整的技术思考能力。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760537775504-051b132e-237d-4483-bf5a-674718c84ef9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1194-syrk6fzgi1nslay8/img-b66f56916a17.png)

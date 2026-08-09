@@ -13,7 +13,7 @@ article: false
 
 > 来源：[💎微服务面试合集](https://www.yuque.com/tulingzhouyu/db22bv/bc44no2mis8redbn)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695365139145-e4cadfd9-bed9-4c6c-bdac-ad87766bc003.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-648c61b02045.png)
 
 # 概念
 
@@ -21,7 +21,7 @@ article: false
 
 微服务优点很多，但是我们通常说一个东西好肯定会跟另一个东西比较， 通常说微服务好会和单体项目进行比较。以下是微服务相对于单体项目的一些显著好处：
 
-![image](https://cdn.nlark.com/yuque/0/2020/jpeg/226702/1593404046625-a6d6fa26-6345-49c1-adfc-247ea3f3cc2e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_60%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-9be81552cf25.jpg)
 
 首先，让我们讨论单体项目的一些主要缺点：
 
@@ -80,7 +80,7 @@ article: false
 目前最主流的微服务开源解决方案有三种：
 
 1. Dubbo：Dubbo工作原理图-来源官网
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695355049488-c11d5c5f-a5e5-41e1-989c-990e4c197ac8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-b96609e18003.png)
 
 - Dubbo 是一个高性能、轻量级的 Java 微服务框架，最初由阿里巴巴（Alibaba）开发并于2011年开源。它提供了服务注册与发现、负载均衡、容错、分布式调用等功能，后来一度停止维护，在近两年，又重新开始迭代，并推出了Dubbo3。
 - Dubbo 使用基于 RPC（Remote Procedure Call）的通信模型，具有较高的性能和可扩展性。它支持多种传输协议（如TCP、HTTP、Redis）和序列化方式（如JSON、Hessian、Protobuf），可根据需求进行配置。
@@ -182,7 +182,7 @@ Service Mesh（Nacos+Dubbo Mesh）
 
 微服务给系统开发带来了一些问题和挑战，如服务调用的复杂性、分布式事务的处理、服务的动态管理等。为了更好地解决这些问题和挑战，各种微服务治理的组件应运而生，充当微服务架构的基石和支撑。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695369387302-03058b2c-7cc4-47e3-bda1-4d7e1774d72c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-4a5ec0420aa5.png)
 
 微服务组件示意图
 
@@ -233,7 +233,7 @@ Service Mesh（Nacos+Dubbo Mesh）
 
 注册中心是用来管理和维护分布式系统中各个服务的地址和元数据的组件。它主要用于实现服务发现和服务注册功能。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695369550929-80e585bc-4d83-404e-963f-f6d3c07c8f5a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-c95f557876ea.png)
 
 注册中心示意图
 
@@ -311,7 +311,7 @@ TCP/HTTP/MYSQL/Client Beat
 
 ## 8.Eureka实现原理了解吗？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695374605392-6696294b-7b01-468e-bb65-36f5001727a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-88f30198c113.png)
 
 Eureka原理示意图
 
@@ -327,7 +327,7 @@ Eureka的实现原理，大概可以从这几个方面来看：
 
 Eureka Server保证高可用，主要通过这三个方面来实现：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695632605858-6f30f733-66b0-4d0e-8f57-b709a7e0d530.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-73c0862ec488.png)
 
 1. 多实例部署: 通过将多个Eureka Server实例部署在不同的节点上，可以实现高可用性。当其中一个实例发生故障时，其他实例仍然可以提供服务，并保持注册信息的一致性。
 2. 服务注册信息的复制: 当一个服务实例向Eureka Server注册时，每个Eureka Server实例都会复制其他实例的注册信息，以保持数据的一致性。当某个Eureka Server实例发生故障时，其他实例可以接管其工作，保证整个系统的正常运行。
@@ -356,7 +356,7 @@ Eureka Server保证高可用，主要通过这三个方面来实现：
 
 配置中心，说白了就是一句话：配置信息的CRUD。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695454717690-a682948b-cfde-437b-accc-2079ea33d47e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-73498e126035.png)
 
 配置中心
 
@@ -375,9 +375,9 @@ Eureka Server保证高可用，主要通过这三个方面来实现：
 
 具体的实现过程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695455441833-b79dc4db-7d3f-4edf-a572-e5adf7623c13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-79791e3043e2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1702219215879-3f9bd121-f5b6-47ec-9078-0c809cbe0212.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-0791c924d782.png)
 
 Nacos长轮询
 
@@ -397,7 +397,7 @@ Nacos长轮询
 
 严格来讲，HTTP和不是一个层面的东西：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695456373944-75bada14-0c45-4bab-8cec-520b3b9bebe9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-cc729d32c404.png)
 
 HTTP和RPC
 
@@ -482,7 +482,7 @@ Dubbo是一个分布式服务框架，用于构建面向服务的微服务架构
 
 服务端负载均衡器和客户端负载均衡器的区别如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695456842924-ace2fefe-46c4-441f-9260-b5f6dd5a85a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-459a19dcc7b0.png)
 
 客户端负载均衡器的实现原理是通过注册中心，如 Nacos，将可用的服务列表拉取到本地（客户端），再通过客户端负载均衡器（设置的负载均衡策略）获取到某个服务器的具体 ip 和端口，然后再通过 Http 框架请求服务并得到结果，其执行流程如下图所示：
 
@@ -492,7 +492,7 @@ Feign是一个声明式的Web服务客户端，它简化了使用基于HTTP的�
 
 Feign是在RestTemplate 和 Ribbon的基础上进一步封装，使用RestTemplate实现Http调用，使用Ribbon实现负载均衡。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695456391540-2af551ba-30de-414f-beb3-6d107b1728b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-27f879041cb0.png)
 
 Feign封装
 
@@ -561,7 +561,7 @@ Ribbon是Netflix开源的一个客户端负载均衡器，可以与Feign无缝�
 
 Ribbon在发起请求前，会从“服务中心”获取服务列表（清单），然后按照一定的负载均衡策略去发起请求，从而实现客户端的负载均衡。Ribbon本身也维护着“服务提供者”清单的有效性。如果它发现“服务提供者”不可用，则会重新从“服务中心”获取有效的“服务提供者”清单来及时更新。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695456669105-ec939998-4461-4b98-82d2-0312b700e9cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-976f02488700.png)
 
 客户端负载均衡
 
@@ -569,7 +569,7 @@ Ribbon在发起请求前，会从“服务中心”获取服务列表（清单�
 
 常见的负载均衡算法包含以下几种：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695457040340-bfe73d31-bd20-477c-89a5-e3b8539472c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-0cc03378d46f.png)
 
 常见负载均衡算法
 
@@ -590,7 +590,7 @@ Ribbon在发起请求前，会从“服务中心”获取服务列表（清单�
 
 在微服务中，假如一个或者多个服务出现故障，如果这时候，依赖的服务还在不断发起请求，或者重试，那么这些请求的压力会不断在下游堆积，导致下游服务的负载急剧增加。不断累计之下，可能会导致故障的进一步加剧，可能会导致级联式的失败，甚至导致整个系统崩溃，这就叫服务雪崩。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695457141262-760ff478-d8f4-4cf0-acd2-eff28bc22413.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-620032f38f9f.png)
 
 服务雪崩
 
@@ -724,7 +724,7 @@ private static void initFlowQpsRule() {
 
 1. 监控流量：Sentinel会监控每个资源的流量情况，包括请求的QPS（每秒请求数）、线程数、响应时间等。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695457769588-2ac656c1-d160-46cc-a4f0-cc0a050fc70c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-b02eec839c5e.png)
 
 Sentinel控制台
 
@@ -742,7 +742,7 @@ Sentinel利用了Token Server和Token Client的机制来实现集群限流。
 
 开启集群限流后，Client向Token Server发送请求，Token Server根据配置的规则决定是否限流。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695457793671-4be31108-57b0-42e1-96a2-b6dae900f2aa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-65f327ca159c.png)
 
 Token Server和Client
 
@@ -752,7 +752,7 @@ Token Server和Client
 
 API网关（API Gateway）是一种中间层服务器，用于集中管理、保护和路由对后端服务的访问。它充当了客户端与后端服务之间的入口点，提供了一组统一的接口来管理和控制API的访问。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695457926184-cbc190b7-fdd4-48b6-a037-d4dcea49d467.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-306076ca6f30.png)
 
 网关示意图
 
@@ -783,7 +783,7 @@ API网关的主要功能包括：
 
 ## 27.Spring Cloud Gateway核心概念？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458070160-9121cd7a-f717-4471-aa88-7457ba296516.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-98dbdf6b956e.png)
 
 Gateway原理
 
@@ -795,7 +795,7 @@ Gateway原理
 
 我们再来看下Spring Cloud Gateway的具体工作流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695457989445-4744fe03-cf15-4ceb-8149-7e887c98b8f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-60b04287fc3a.png)
 
 SpringCloud工作流程图-来源官方文档
 
@@ -810,7 +810,7 @@ SpringCloud工作流程图-来源官方文档
 
 在微服务中，有的上下游可能有十几个服务，如果某一环出了问题，排查起来非常困难，所以，就需要进行链路追踪，来帮助排查问题。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458111004-7d83dc3f-9167-40a4-be86-5f0fd8a49087.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-e79634983432.png)
 
 SkyWalking界面
 
@@ -822,20 +822,20 @@ Spring Cloud提供了多种选择的微服务链路追踪方案。以下是一�
 
 1. Zipkin：Zipkin 是一个开源的分布式实时追踪系统，由 Twitter 开发并贡献给开源社区。Spring Cloud Sleuth 提供了与 Zipkin 的集成，可以通过在微服务中添加相应的依赖和配置，将追踪信息发送到 Zipkin 服务器，并通过 Zipkin UI 进行可视化展示和查询。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695355052314-35913bc6-c5b5-43fb-90c1-b4e63d63a809.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-84fa42a0687c.png)
 
 Zipkin界面
 
 1. Jaeger：Jaeger 是 Uber 开源的分布式追踪系统，也被纳入了 CNCF（云原生计算基金会）的维护。通过使用 Spring Cloud Sleuth 和 Jaeger 客户端库，可以将追踪信息发送到 Jaeger 并进行可视化展示和查询。
 2. SkyWalking：Apache SkyWalking 是一款开源的应用性能监控与分析系统，提供了对 Java、.NET 和 Node.js 等语言的支持。它可以与 Spring Cloud Sleuth 集成，将追踪数据发送到 SkyWalking 服务器进行可视化展示和分析。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458122191-dc144b38-052c-4a12-b5e4-c7d62bfba9c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-5203d0457f24.png)
 
 SkyWalking示例界面
 
 1. Pinpoint：Pinpoint 是 Naver 开源的分布式应用性能监控系统，支持 Java 和 .NET。它提供了与 Spring Cloud Sleuth 的集成，可以将追踪数据发送到 Pinpoint 服务器，并通过其 UI 进行分析和监控。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458126347-d876bff8-d887-4fbc-b56e-0715a4fefb8e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-2ce582bd9bb9.png)
 
 Pinpoint示意图
 
@@ -851,25 +851,25 @@ Seata以下几种模式的分布式事务：
 
 1. AT（Atomikos）模式：AT模式是Seata默认支持的模式，也是最常用的模式之一。在AT模式下，Seata通过在业务代码中嵌入事务上下文，实现对分布式事务的管理。Seata会拦截并解析业务代码中的SQL语句，通过对数据库连接进行拦截和代理，实现事务的管理和协调。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458133042-2bdfb892-4608-4cbd-b738-f26ff0275138.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-936a45666ebf.png)
 
 AT模式示意图
 
 1. TCC（Try-Confirm-Cancel）模式：TCC模式是一种基于补偿机制的分布式事务模式。在TCC模式中，业务逻辑需要实现Try、Confirm和Cancel三个阶段的操作。Seata通过调用业务代码中的Try、Confirm和Cancel方法，并在每个阶段记录相关的操作日志，来实现分布式事务的一致性。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458138058-486da3c8-e564-4827-8400-db73c6a6409e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-31327110b578.png)
 
 Seata TCC模式
 
 1. SAGA模式：SAGA模式是一种基于事件驱动的分布式事务模式。在SAGA模式中，每个服务都可以发布和订阅事件，通过事件的传递和处理来实现分布式事务的一致性。Seata提供了与SAGA模式兼容的Saga框架，用于管理和协调分布式事务的各个阶段。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458150542-63f0ca6f-0f1a-4496-a57e-bc792d79d95c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-0528040ce3f8.png)
 
 SAGA模式状态机引擎
 
 1. XA模式：XA模式是一种基于两阶段提交（Two-Phase Commit）协议的分布式事务模式。在XA模式中，Seata通过与数据库的XA事务协议进行交互，实现对分布式事务的管理和协调。XA模式需要数据库本身支持XA事务，并且需要在应用程序中配置相应的XA数据源。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458157260-be7afb6e-c99f-437f-a922-5482a411c7e6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-acbe5736dbf1.png)
 
 XA模式示意图
 
@@ -881,7 +881,7 @@ Seata的实现原理主要包括三个核心组件：事务协调器（Transacti
 - **事务管理器（Transaction Manager）**：事务管理器负责全局事务的管理和控制。它协调各个分支事务的提交或回滚，并保证分布式事务的一致性和隔离性。事务管理器还负责与事务协调器进行通信，并将事务的状态变更进行持久化。
 - **资源管理器（Resource Manager）**：资源管理器负责管理和控制各个参与者（Participant）的事务操作。它与事务管理器进行通信，并根据事务管理器的指令执行相应的事务操作，包括提交和回滚。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458194054-a0e4309b-e3af-483c-81f9-2ba00bcef5ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-1767ad3005ad.png)
 
 Seata领域模型
 
@@ -912,7 +912,7 @@ Seata事务的执行流程可以简要概括为以下几个步骤：
 
 ### Seata的事务回滚是怎么实现的？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695458270211-9a6c8b17-83fb-415d-84aa-a90f955afaee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-a3e41bcd52a7.png)
 
 事务日志记录
 
@@ -931,7 +931,7 @@ Seata的事务回滚是通过回滚日志实现的。每个参与者在执行本
 1. Prometheus：Prometheus 是一个开源的监控系统，具有灵活的数据模型和强大的查询语言，能够收集和存储时间序列数据。它可以通过HTTP协议定期拉取微服务的指标数据，并提供可扩展的存储和查询功能。
 2. Grafana：Grafana 是一个开源的可视化仪表板工具，可以与 Prometheus 结合使用，创建实时和历史数据的仪表板。Grafana 提供了丰富的图表和可视化选项，可以帮助用户更好地理解和分析微服务的性能和状态。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695355052965-09b762b2-058d-4e3f-a49d-014b4c270ce7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-d648f7f9d6da.png)
 
 Dashboard
 
@@ -947,7 +947,7 @@ Dashboard
 
 使用ELK进行微服务日志收集的一般流程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695459330756-33c774c2-ee8c-4965-bf94-4cacd03923fe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-441e9956afca.png)
 
 ELK流程
 
@@ -989,7 +989,7 @@ OAuth 2.0（开放授权2.0）是一种用于授权的开放标准，允许用�
 
 授权码模式（Authorization Code Grant）是 OAuth 2.0 中的一种常见的授权模式，适用于客户端需要访问用户资源，但又不能直接使用用户的凭证的场景。以下是授权码模式的流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1703487401846-7176f7d9-540d-4a9c-a01d-421384366eb2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-f8931c522031.png)
 
 1. **客户端请求授权：**
 
@@ -1033,7 +1033,7 @@ OAuth 2.0（开放授权2.0）是一种用于授权的开放标准，允许用�
 
 隐式授权模式（Implicit Grant）是 OAuth 2.0 中的一种授权模式，通常用于移动应用或纯前端应用。以下是隐式授权模式的流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1703487451323-af19a472-1925-4aef-964b-8c7f715ac04c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-dfb4480b87b9.png)
 
 1. **发起认证请求（Authorization Request）：**
 
@@ -1072,7 +1072,7 @@ OAuth 2.0（开放授权2.0）是一种用于授权的开放标准，允许用�
 
 以下是密码模式的流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1703487433977-e69196ab-34d5-4ac6-b162-8ef9302bd7d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-e0cce87229de.png)
 
 1. **客户端向授权服务器发送请求：**
 
@@ -1102,7 +1102,7 @@ OAuth 2.0（开放授权2.0）是一种用于授权的开放标准，允许用�
 
 以下是客户端凭证模式的流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1703487424489-078fdde1-df1f-4f61-b7e5-fda9dedeb5b3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringCloud/0539-bc44no2mis8redbn/img-2f723b59bbd3.png)
 
 1. **客户端向授权服务器发送请求：**
 

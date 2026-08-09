@@ -19,7 +19,7 @@ article: false
 
 今天，我们将探讨六种常见的索引失效场景，以帮助大家更好地优化查询性能。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740056605348-9a3a3b72-b974-4a61-9de6-bd441da7ec58.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-fc0cf628523a.png)
 
 # 索引存储结构（工欲善其事必先利其器）
 
@@ -44,19 +44,19 @@ MySQL 的默认存储引擎为 InnoDB，它使用 B+ 树作为索引的数据结
 
 这里有一张 t_user 表，其中 id 字段为主键索引，其他都是普通字段。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740031673415-b7b4cbde-a602-402e-93e0-790ff58cd27d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-0686a21b7930.png)
 
 ## MyISAM 存储引擎
 
 B+ 树索引的叶子节点保存数据的物理地址，即用户数据的指针
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740031730722-2a23c448-2170-44c7-b135-e1a37d175aa9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-76e9e3ea2a38.png)
 
 ## InnoDB 存储引擎
 
 B+ 树索引的叶子节点保存数据本身
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1740031994033-a85c76c1-3ce1-4aae-9c7f-3fd89243bf8d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-b99d8979cfa6.jpg)
 
 InnoDB 存储引擎根据索引类型的不同，可分为**聚簇索引**和**二级索引**（上图展示了聚簇索引）。
 
@@ -69,7 +69,7 @@ InnoDB 存储引擎根据索引类型的不同，可分为**聚簇索引**和**�
 
 如果将 name 字段设置为普通索引，那么这个二级索引长下图这样
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740033141687-8dfee1f9-f26b-42bf-9353-06b5f0f6da72.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-da49c8e3f21a.png)
 
 ```plsql
 CREATE TABLE t_user (  
@@ -144,7 +144,7 @@ SELECT id FROM t_user WHERE name="林某";
 SELECT * FROM t_user WHERE name LIKE '%林';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740034430544-d88f2fe3-931d-4991-be39-35b4b064ae1c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-00a812a60ba8.png)
 
 在这个查询的执行计划中，`type=ALL`表示全表扫描，表明未使用索引。相反，如果查询名称以「林」开头的用户：
 
@@ -153,7 +153,7 @@ SELECT * FROM t_user WHERE name LIKE '%林';
 SELECT * FROM t_user WHERE name LIKE '林%';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740034408120-11da7ced-273c-4a6c-8fe3-b3bdf3024caa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-eaf52a2051e2.png)
 
 此时，执行计划中的`type=range`表示使用了索引，`key=index_name`则确认了实际使用了索引。
 
@@ -161,7 +161,7 @@ SELECT * FROM t_user WHERE name LIKE '林%';
 
 这是因为B+树索引是根据索引值有序存储的，仅能支持前缀比较。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740034728564-2274c115-81e0-4b8b-8177-e07f14d5c081.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-7717c00ed5d9.png)
 
 举个例子，假设我们查询以「林」为前缀的名称。查询过程如下：
 
@@ -185,7 +185,7 @@ SELECT * FROM t_user WHERE name LIKE '林%';
 SELECT * FROM t_user WHERE LENGTH(name) = 2;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740035475585-864cf8c7-d973-41a3-aec5-6507a26e299c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-3c864243a286.png)
 
 那么，**为什么在对索引使用函数时会出现这种情况呢？**
 
@@ -199,7 +199,7 @@ SELECT * FROM t_user WHERE LENGTH(name) = 2;
 ALTER TABLE t_user ADD KEY idx_name_length ((LENGTH(name)));
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740035407553-dd01ec54-91c2-4ce1-a67b-24a73fa9a3c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-a0fda57bcd88.png)
 
 在这种情况下，当我们使用类似的查询时，数据库将能够利用索引来加速查询过程。
 
@@ -213,11 +213,11 @@ ALTER TABLE t_user ADD KEY idx_name_length ((LENGTH(name)));
 EXPLAIN SELECT * FROM t_user WHERE id + 1 = 10;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740035749126-083343b9-57a0-43d0-9bcd-d738c5e51803.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-fb29408db013.png)
 
 然而，如果将查询条件修改为 `WHERE id = 10 - 1`，则可以利用索引进行查询。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740035775582-79d074dd-f86f-4c04-9737-ddaae19e741a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-662be9d96f61.png)
 
 **为什么表达式计算会使索引失效呢？**
 
@@ -245,7 +245,7 @@ UPDATE t_user SET phone = CONCAT('1880000000', id);
 SELECT * FROM t_user WHERE phone = 18800000001;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740036645483-01557175-150e-4452-9f44-1c8deb8a59e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-ec7e79ce37f4.png)
 
 则执行计划显示类型为`ALL`，这意味着会进行全表扫描。
 
@@ -255,7 +255,7 @@ SELECT * FROM t_user WHERE phone = 18800000001;
 EXPLAIN SELECT * FROM t_user WHERE id = '1';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740036666448-be97f80d-187d-4c6b-88b5-e5eb34349e10.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-c92a7c36024e.png)
 
 在这种情况下，查询仍然会走索引扫描。
 
@@ -268,7 +268,7 @@ EXPLAIN SELECT * FROM t_user WHERE id = '1';
 - 如果MySQL会自动将字符串转换为数字，那么这相当于执行 `SELECT 10 > 9`，结果应该是1，因为数字10确实大于9。
 - 如果MySQL会将数字转换为字符串，那么这相当于执行 `SELECT "10" > "9"`。在这种情况下，字符串比较是逐位进行的，按照ASCII码进行比较。首先比较字符“1”和“9”，由于“1”的ASCII码小于“9”，所以结果应该是0。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740037362766-9af1b5e9-b46f-405e-b40a-6f60aebc9f0c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-22393d45976d.png)
 
 根据测试结果，可以知道**MySQL在比较时，会将字符串转换为数字**。
 
@@ -358,7 +358,7 @@ INSERT INTO test_index (a, b, c, d, e, f) VALUES
 SELECT * FROM test_index WHERE a = 3 and c = 2;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740049981230-6b56c4a8-cf21-4204-a70a-7688fb92991a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-6a0cdcf874d2.png)
 
 例如，通过执行计划中的 `Extra=Using index condition` 可以确认索引下推的使用。
 
@@ -379,7 +379,7 @@ SELECT * FROM test_index WHERE a = 3 and c = 2;
 SELECT * FROM t_user WHERE id = 1 OR age = 18;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740040257048-aa5689f4-0a8b-4246-8155-8f18c87ce8ae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-3d489d95f893.png)
 
 执行计划显示，该查询会执行全表扫描，因为 `OR` 的逻辑是，只需满足任一条件即可。
 
@@ -391,7 +391,7 @@ SELECT * FROM t_user WHERE id = 1 OR age = 18;
 ALTER TABLE t_user ADD INDEX idx_age (age);  
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1740040388383-20ed59b6-7932-4ddc-97a4-07ec44cda3ee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0346-vc3am3g8ptaty3ky/img-bdb79a94e1d7.png)
 
 优化后，如果执行计划变为“`type=index merge`”，则意味着数据库分别对 `id` 和 `age` 条件进行了索引扫描，并将结果合并，从而提高了查询效率。
 

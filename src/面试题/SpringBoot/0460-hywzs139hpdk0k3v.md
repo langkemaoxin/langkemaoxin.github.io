@@ -528,7 +528,7 @@ public abstract class PropertySource&lt;T&gt; {
 
 PropertySource 有诸多的实现类用于管理应用程序的配置属性。不同的 PropertySource 实现类可以从不同的来源获取配置属性，例如文件、环境变量、命令行参数等。其中涉及到的一些实现类有：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1688374407405-5d8293b0-ef15-40bf-a71b-7a22a9a9e0c4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-a137003c25a3.png)
 
 关系图
 
@@ -566,7 +566,7 @@ private void prepareContext(DefaultBootstrapContext bootstrapContext, Configurab
 
 PropertyResolver是获取配置的关键类，其内部提供了操作PropertySource 队列的方法，核心方法getProperty(key)获取配置值，看了下这个类的依赖关系，发现 Environment 是它子类。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1688374407538-78066da7-d837-4237-b8cd-68426b863725.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-b63590feed8e.png)
 
 那么直接用 PropertyResolver 来获取配置属性其实也是可以的，到这我们就大致明白了 Springboot 配置的加载和读取了。
 
@@ -624,7 +624,7 @@ public class EnvVariablesTest {
 
 毫无悬念，成功拿到配置数据。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1688374407401-af2eea5c-bcdb-4a45-83fa-559083551573.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-414e51bf2593.png)
 
 虽然@Value注解方式使用起来很简单，如果使用不当还会遇到不少坑。
 
@@ -632,7 +632,7 @@ public class EnvVariablesTest {
 
 如果在代码中引用变量，配置文件中未进行配值，就会出现类似下图所示的错误。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1688374407391-2d0d979a-f635-44dc-956b-b01bf3a7f4c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-0d4c197ba983.png)
 
 为了避免此类错误导致服务启动异常，我们可以在引用变量的同时给它赋一个默认值，以确保即使在未正确配值的情况下，程序依然能够正常运行。
 
@@ -773,7 +773,7 @@ public class TestService {
 
 这就涉及到了 ConfigurationPropertiesBindingPostProcessor 类，它是 Bean后置处理器，负责扫描容器中所有被 @ConfigurationProperties 注解所标记的 Bean对象。如果找到了，则会使用 Binder 组件将外部属性的值绑定到它们身上，从而实现自动注入。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1688374407371-7ede8bb7-43bb-4c4b-88d4-585478b8fe36.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-e1be7ab3b209.png)
 
 - bindToSpringApplication 主要是将属性值绑定到 Bean 对象中；
 - ConfigurationPropertiesBindingPostProcessor 负责在 Spring 容器启动时将被注解标记的 Bean 对象注册到容器中，并完成后续的属性注入操作；
@@ -963,7 +963,7 @@ public class CustomTest {
 
 # SpringBoot可以同时处理多少请求？
 
-![这么问谁不迷糊](https://cdn.nlark.com/yuque/0/2023/jpeg/22309163/1683537610516-0e83d39a-a413-490c-8787-b1647387e7c7.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![这么问谁不迷糊](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-7b95fc1eee0d.jpg)
 
 ## 前言
 
@@ -1045,7 +1045,7 @@ public class CustomTest {
 
 ### 图解
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1683606215543-e5a97d95-94a2-4df0-98c8-3d57d94ebd0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-8d0b64fabef1.png)
 
 min-spare、maxConnections、maxThreads、acceptCount关系之间，具体的关系如何呢？ 有不少的同学对于这个问题是云里雾里的，并且多次进行求助。这里用一个形象的比喻，通俗易懂的解释一下tomcat的最大线程数（maxThreads）、最大等待数（acceptCount）和最大连接数（maxConnections）三者之间的关系。
 
@@ -1192,7 +1192,7 @@ public void setEnvironment(Environment environment) {
 
 想要动态创建Bean先了解Bean创建的大概过程：
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/22309163/1638361031028-02a1ed20-738b-42d3-a004-bf1dc89cf7da.png#clientId=u930d426e-ab1c-4&errorMessage=unknown%20error&from=paste&height=381&id=u20d7d308&originHeight=500&originWidth=1529&originalType=binary&ratio=1&rotation=0&showTitle=false&size=196508&status=error&style=none&taskId=u8a248050-dbfd-4a24-8c5e-b3087b612da&title=&width=1164.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-1e505792fe00.png)
 
 如果想动态注册Bean,可以通过先动态注册BeanDefintion即可，Spring提供了动态注册BeanDefinition的接口：
 
@@ -1255,7 +1255,7 @@ OK. 现在读取信息会了， 动态创建Bean也会了， 结合即可：
 [@Value](/Value ) 和@ConfigurationProperties注解依赖 **BeanPostProcessor**解析，要调用BeanPostProcessor就**要先注册**，而BeanPostProcessor的注册是在BeanDefinition的注册之后的。
 所以在注册BeanDefinition时是获取不到注解绑定的配置信息的：
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/22309163/1638358868886-fcc0353a-8fe1-4d96-9bcf-3f537d30abe8.png#clientId=u930d426e-ab1c-4&errorMessage=unknown%20error&from=paste&height=331&id=udd0a01f4&originHeight=414&originWidth=1309&originalType=binary&ratio=1&rotation=0&showTitle=false&size=76400&status=error&style=none&taskId=ue1ccf28a-c108-4107-a2ae-fd4cd6e7965&title=&width=1047.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-7ebb7d1c131e.png)
 
 ### 实现
 
@@ -1319,11 +1319,11 @@ public class MyBeanDefinitionRegistryPostProcessor implements
 - 当com.tuling.bean.enbaled为true
 
 - 输出
-![image](https://cdn.nlark.com/yuque/0/2021/png/22309163/1638359521588-06ef1fb2-5768-46fb-a188-85b0883556c2.png#clientId=u930d426e-ab1c-4&errorMessage=unknown%20error&from=paste&height=23&id=u9c0d2746&originHeight=46&originWidth=490&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5536&status=error&style=none&taskId=u05f4c390-4e7e-4405-abac-55bcb8d1ca2&title=&width=245?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-c35977ab0742.png)
 
 - 当com.tuling.bean.enbaled为false
 
 - 输出
-![image](https://cdn.nlark.com/yuque/0/2021/png/22309163/1638359650940-3f684da2-a22f-4eb3-9095-535e42405ef0.png#clientId=u930d426e-ab1c-4&errorMessage=unknown%20error&from=paste&height=20&id=u80e41f9b&originHeight=40&originWidth=71&originalType=binary&ratio=1&rotation=0&showTitle=false&size=761&status=error&style=none&taskId=uaf1b6c07-06b6-4361-9553-587ecaf4f35&title=&width=35.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0460-hywzs139hpdk0k3v/img-c0103f4a900d.png)
 
 通过这种方式就可以实现根据配置信息自由启用、禁用某些业务的实现 。 当然我这里只是抛砖引玉，实际开发中可以非常灵活， 我可以通过配置创建多个bean、通过更复杂的业务逻辑进行控制等等......  学会的同学给个赞吧。

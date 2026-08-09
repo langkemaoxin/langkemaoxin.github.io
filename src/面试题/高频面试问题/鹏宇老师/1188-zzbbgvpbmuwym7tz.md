@@ -21,7 +21,7 @@ article: false
 
 很多开发者一遇到积压就慌，其实从 MQ 的设计初衷来看，**积压是 “削峰填谷” 的必然结果**——MQ 的核心价值就是承接峰值流量，让消费端按 “平稳速度” 处理，只要积压在业务可接受范围内（比如日志消息延迟 10 分钟无关紧要，支付消息延迟 10 秒致命），就无需处理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114278597-ce8eb44c-c3af-4db7-9fe7-5428b1be8375.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-b3baa20a23ff.png)
 
 ### 1.1 如何判断积压是否需要处理？
 
@@ -67,7 +67,7 @@ admin.shutdown();
 
 确定需要处理积压后，**第一步不是 “扩容”，而是 “定位诱因”**—— 盲目操作可能导致下游雪崩（比如消费慢是因为数据库压力大，再扩消费者会让数据库更卡）。根据 PPT 中的定位逻辑，分三步精准排查：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114261922-e3d03cbc-b472-47f4-9fa2-7b1070cde391.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-e89515007b21.png)
 
 #### 步骤 1：明确业务场景 ——“哪类消息在积压？”
 
@@ -120,9 +120,9 @@ consumer.registerMessageListener((list, context) -> {
 
 RocketMQ 集群消费模式下，**1 个 MessageQueue 同一时间只能被 1 个消费者实例消费**（保证消息顺序性）。如果消费者数量超过 Queue 数量，多余实例会空闲。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114366087-2224fd2f-ea07-4ba5-95b0-c44ea6442401.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-8d524f988f00.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114392326-e537f215-59ae-464f-a293-cc40003503a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-8ed12e2572c1.png)
 
 **正确操作流程**（Java 代码示例）：
 
@@ -180,7 +180,7 @@ public void scaleOutConsumer(String topic, String consumerGroup, int instanceNum
 
 RocketMQ 消费者默认用 20 个线程处理消息，若消费逻辑是**IO 密集型**（比如查库、调下游接口），线程大部分时间在 “等待响应”，可临时提升线程数。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114419691-bc7a7670-1ec8-433f-a198-55cbf9a5173a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-9af6d3f98a2e.png)
 
 **代码示例**（动态调整，无需重启）：
 
@@ -235,7 +235,7 @@ for (Order order : orderList) {
 
 若上游流量正常，但消费 TPS 下降，需重点排查 3 个问题，每个问题都有对应的 Java 代码优化方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114466617-deadbaf8-ec0a-48c3-b8cd-65b88ce4eda5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-1b51266652ec.png)
 
 **根因**
 **排查方法**
@@ -297,7 +297,7 @@ try (Response response = client.newCall(request).execute()) {
 
 核心逻辑：将 “MQ 消息接收” 与 “业务执行” 拆分为两个独立流程，MQ 只负责 “接收消息并落地”，业务执行由本地线程和定时任务处理，从源头避免 MQ 堆积。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114607941-f921df06-fe75-4051-b0af-ab66157d38ef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-a3403856bde5.png)
 
 #### 3.2 完整 Java 代码实现
 
@@ -467,7 +467,7 @@ public class LocalMessageCompensator {
 
 面试官问 “消息积压怎么处理”，不会只听你讲方案，更会追问细节，以下是 3 个高频考点及参考答案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761114670851-0fffbbf0-fd11-47de-80bd-cb2393e634c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1188-zzbbgvpbmuwym7tz/img-e9ebb406c2ea.png)
 
 ### 3.1 问：动态增加 Queue 后，历史积压消息会自动分配到新 Queue 吗？
 

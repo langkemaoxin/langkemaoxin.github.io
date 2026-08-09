@@ -21,7 +21,7 @@ article: false
 
 ## 一、是什么：SSO的核心使命
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762081978391-38610999-ac10-448e-9ce4-9cd7d47e12b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0974-nczngyoxws0b0iwn/img-3678fa924695.png)
 
 单点登录（SSO）的核心理念非常简单：**用户只需登录一次，就可以访问所有相互信任的应用系统。**
 
@@ -33,7 +33,7 @@ article: false
 
 实现SSO并非只有一种方法，它经历了一个从简单粗暴到标准优雅的演进过程。了解这个过程，能帮助我们理解为什么OAuth 2.0成为了当今的事实标准。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762081998221-e30f50fa-5bb4-4c30-8b4b-acb782b59566.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0974-nczngyoxws0b0iwn/img-74eeb280a652.png)
 
 1. **共享Cookie方案**：最原始的思路。如果所有系统（如 `app1.a.com` 和 `app2.a.com`）都在同一个主域名（`a.com`）下，我们可以将登录凭证（Cookie）的域（Domain）设置为主域名。这样，所有子域的系统都能读取到这个Cookie，从而实现登录状态共享。
 
@@ -65,7 +65,7 @@ article: false
 
 当一个用户首次访问集成了SSO的系统时，会经历一个相对完整的认证流程。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762082037579-2a69c17e-04b6-4951-8d78-2044dbffc9e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0974-nczngyoxws0b0iwn/img-b6b3bcaf6047.png)
 
 这个过程可以分解为以下关键步骤：
 
@@ -89,7 +89,7 @@ article: false
 
 当用户已经登录过系统1，再去访问系统2时，SSO的魔力才真正显现出来。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762082048856-3be209b9-49fa-4ce2-a9ed-6f18abaaffd9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0974-nczngyoxws0b0iwn/img-08378895b411.png)
 
 流程如下：
 
@@ -105,7 +105,7 @@ article: false
 
 有登录就必须有退出。单点退出（Single Log-Out, SLO）要确保用户一次操作，就能从所有已登录的系统中安全退出。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762082066192-17c5eb5b-222d-449b-9292-80ee87500941.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0974-nczngyoxws0b0iwn/img-028a6e5c313f.png)
 
 一个健壮的退出流程如下：
 
@@ -123,7 +123,7 @@ article: false
 
 一个生产级的SSO系统，除了实现核心流程，还必须在安全、高可用等方面进行周全考虑。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762082123611-b0c48b1e-7fa2-4b70-bce9-6b932a28caa8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0974-nczngyoxws0b0iwn/img-bba721bf8c0e.png)
 
 ### 4.1 核心设计最佳实践
 
@@ -152,7 +152,7 @@ article: false
 
 ### 4.2 面试高频问题
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762082148874-482a3c1f-80a4-4966-8285-efbf191bb7f0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0974-nczngyoxws0b0iwn/img-c84a514e7c9d.png)
 
 - **Q: OAuth 2.0 和传统 Session 认证的区别？**
 

@@ -15,7 +15,7 @@ article: false
 
 一、社区系统的架构
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714393124265-62729935-d9c4-4a9a-a9e1-4f7d44a16792.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0036-si21dgkzd4sq4e2o/img-4f6821f57c2c.jpg)
 
 **系统拆分**
 
@@ -88,7 +88,7 @@ Elasticsearch，简称 es。es 是分布式的，可以随便扩容，分布式�
 
 理论上也可以使用（2PC两阶段提交、3PC三阶段提交、TCC短事务、SAGA长事务方案），但是这些方案工业上落地代价很大，不适合互联网的业界场景。针对金融支付等需要强一致性的场景可以通过前两种方案实现。（**展开说的话参考分布式事务**）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393124217-9c57d47c-6c76-42e8-8f80-5b4bfa9854f7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0036-si21dgkzd4sq4e2o/img-89e589fab7a0.png)
 
 本地数据库事务原理：**undo log**（原子性） + **redo log**（持久性） + **数据库锁**（原子性&隔离性） + **MVCC**（隔离性）
 
@@ -236,15 +236,15 @@ QPS = 1m，则需要建设一个1000台Web服务器的集群，考虑动态扩�
 
 **微服务战略拆分**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393124316-751fe6ac-ab2b-4349-a38d-9a47b1b18dba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0036-si21dgkzd4sq4e2o/img-7e5174a182d3.png)
 
 **针对不同服务选择不同存储**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393124269-a0d1a8d9-61b0-4709-9103-e3d632bdfb73.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0036-si21dgkzd4sq4e2o/img-c05e4f307108.png)
 
 **设计数据表的结构**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393124320-9a0ed541-c0b3-4b20-a324-7b6a2b4d1747.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0036-si21dgkzd4sq4e2o/img-033944e159fd.png)
 
 基本差不多就形成了一个解决方案，但是并不是完美的，仍然需要小步快跑的不断的针对**消息队列、缓存、分布式事务、分表分库、大数据、监控、可伸缩**方面进行优化。
 

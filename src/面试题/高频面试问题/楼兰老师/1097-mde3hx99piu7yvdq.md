@@ -19,7 +19,7 @@ article: false
 
 ---
 
-![image](https://i-blog.csdnimg.cn/direct/1adba808f1a3431c8a8cba13931073ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1097-mde3hx99piu7yvdq/img-0f37653ae7f4.png)
 
 聊到Kafka，你应该经常遇到这样的面试题：“小伙子，基础不错。那聊聊Kafka 凭什么这么快？”
 
@@ -35,7 +35,7 @@ article: false
 
 ## ① 顺序写：重新定义磁盘速度
 
-![image](https://i-blog.csdnimg.cn/direct/7ed677763e8f48bd9317f8d9068d99e9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_70%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1097-mde3hx99piu7yvdq/img-87c15f2e193e.png)
 
 大家普遍有个印象：磁盘很慢。没错，但说的是“随机读写”的磁盘。想象一下，你不是在笔记本最后接着写，而是在中间某一页找个空白地儿硬塞几个字，是不是很费劲？磁头在盘片上疯狂寻道，就像你疯狂翻页一样，这当然慢！
 
@@ -45,7 +45,7 @@ article: false
 
 ## ② 页缓存：把“急事”交给操作系统
 
-![image](https://i-blog.csdnimg.cn/direct/47e524e31e2b456fb6ab223ed0cd41eb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_74%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1097-mde3hx99piu7yvdq/img-1bd405e3736f.png)
 
 如果每次写入都要等磁盘“确认收货”，那 Kafka 早就堵死了。所以，它请了个“外援”——操作系统的**页缓存（Page Cache）**。
 
@@ -61,7 +61,7 @@ article: false
 
 ## ③ 同步副本：在速度与可靠间找到黄金平衡
 
-![image](https://i-blog.csdnimg.cn/direct/c4d1ede63ce34f88a521efad1dda0f09.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_86%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1097-mde3hx99piu7yvdq/img-86c67511bfa1.png)
 
 快是很快，但万一 Kafka 节点挂了，内存里的数据不就丢了？为了不让数据丢失，Kafka 设计了**同步副本（In-Sync Replicas, ISR）**机制。
 
@@ -73,7 +73,7 @@ article: false
 
 ## ④ 分段+索引：给海量数据装上 GPS
 
-![image](https://i-blog.csdnimg.cn/direct/b4f00acc0b5b48feb362ef6412e35acd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1097-mde3hx99piu7yvdq/img-0c60939bb8e1.png)
 
 Kafka 的日志文件动辄上 T，如果消费者要找某条消息，难道要从头到尾扫描一遍？那不叫大数据技术，那叫“愚公移山”。
 
@@ -89,7 +89,7 @@ Kafka 的办法是**分段（Segment）+ 索引（Index）**。
 
 ## ⑤ 零拷贝：打通数据传输的“任督二脉”
 
-![image](https://i-blog.csdnimg.cn/direct/e72506155be04b3f8c4ff6282fbf03b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1097-mde3hx99piu7yvdq/img-b5823e85d730.png)
 
 这是 Kafka 性能的王牌，也是面试的终极难题——**零拷贝（Zero-Copy）**。
 
@@ -107,7 +107,7 @@ CPU 从繁重的搬运工作中解放出来，专注于更重要的计算。数�
 
 好了，盘到这里，我们再回顾一下 Kafka 的五大性能法宝：
 
-![image](https://i-blog.csdnimg.cn/direct/7e539569197d4522bea59f2f78e93a18.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1097-mde3hx99piu7yvdq/img-2297f1151ece.png)
 
 ### 核心回顾：
 

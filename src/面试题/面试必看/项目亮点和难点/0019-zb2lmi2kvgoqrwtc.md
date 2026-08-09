@@ -13,7 +13,7 @@ article: false
 
 > 来源：[银行信贷系统(亮点与难点)](https://www.yuque.com/tulingzhouyu/db22bv/zb2lmi2kvgoqrwtc)
 
-![](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734951878532-ad23e2d9-3acc-482f-8d01-9b83d412ffea.pdf)
+[https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734951878532-ad23e2d9-3acc-482f-8d01-9b83d412ffea.pdf](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734951878532-ad23e2d9-3acc-482f-8d01-9b83d412ffea.pdf)
 
 上面这位学员简历的项目没什么亮点和难点，投出去面试机会可能不多，经过和老师沟通后，着重优化了第二个项目《**信贷金融级分布式系统**》，这个项目本质上就是一个**分布式信贷系统**，优化如下：
 

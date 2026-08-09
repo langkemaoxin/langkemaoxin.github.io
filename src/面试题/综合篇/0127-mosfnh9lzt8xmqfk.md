@@ -38,7 +38,7 @@ so  限流就是**当系统面临高并发流量或瞬时流量高峰时，为�
 
 ### 1. 令牌桶算法（Token Bucket）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746447222383-32ae1dc2-47c9-4720-9484-6cf2478155e6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0127-mosfnh9lzt8xmqfk/img-d8277c330f44.png)
 
 #### 原理
 
@@ -132,7 +132,7 @@ RateLimiter.create(速率, 预热时长, TimeUnit)
 
 ### 2. 漏桶算法（Leaky Bucket）
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1746448894666-36204e23-5c7e-4fc3-89a0-cf6291fe6015.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0127-mosfnh9lzt8xmqfk/img-44b079ebcd48.jpg)
 
 #### 原理
 
@@ -233,7 +233,7 @@ public class Demo {
 - **缺点**：临界时刻存在“突刺”现象——在窗口边界前后短时间内可能允许近两倍的阈值通过，防护性较弱。
 - **举例**：如果1秒限制100次请求，窗口边界之前和之后连续来了200次，都会放行。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746452276883-3b15e300-fa55-4cb7-b1cc-a01ed261e908.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0127-mosfnh9lzt8xmqfk/img-fb9893d48a57.png)
 
 ```java
 AtomicInteger count = new AtomicInteger(0);
@@ -256,7 +256,7 @@ if (count.incrementAndGet() > limit) {
 - **缺点**：实现略复杂，对内存要求略高。
 - **举例**：如果1秒限制100次请求，但每100ms都有单独计数，仅允许最近10个小窗口累计不超过100次，即便在窗口交界时也不会让短时间高流量全部通过。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746452281588-951ae4f8-d141-4cd1-a6ae-f91db0b86bd5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0127-mosfnh9lzt8xmqfk/img-aaab008ce2ee.png)
 
 ```java
 import com.alibaba.csp.sentinel.Entry;

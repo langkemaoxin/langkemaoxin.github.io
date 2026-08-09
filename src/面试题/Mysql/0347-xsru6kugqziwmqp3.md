@@ -15,7 +15,7 @@ article: false
 
 # 一.索引
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/22309163/1685538843144-1b47126c-c052-406c-b297-d4d93d9ba55c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-4051d8ce8606.jpg)
 
 ## 什么是索引
 
@@ -40,27 +40,27 @@ article: false
 - 二叉树、红黑树、B树 、B+树
 - 区别：树的高度影响获取数据的性能（每一个树节点都是一次磁盘I/O)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685543364763-54cb85a5-a824-4b46-b980-0dc0245b2c00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c4147ebad5ca.png)
 
 #### 二叉树：
 
 特点：每个节点最多有两个子节,大在右，小在左  ，数据随机性情况下树杈越明显。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685362290857-b5db6cfb-1ed2-4dff-a048-54e65bbbfc80.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-922e36d281ec.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686127709826-a8d093b1-3e0a-47f2-aee2-cd0144933cf3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-a4e0cfd5973a.png)
 
 如果数据是按顺序依次进入：
 
 树的高度则会很高（就是一个链表结构）， 此时元素的查找效率就等于链表查询O(n)，数据检索效率将极为低下。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685362410423-9f0d2fd7-c4b8-49d0-880a-d7e9e4ecbc80.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-84e3639c1b98.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686127737896-f85e0f98-5f64-4839-b590-2ceaca2c7fbc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-222d1e9482a8.png)
 
 极端的情况下 就是一个链表结构（如下图），此时元素的查找效率就等于链表查询O(n)。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685543364763-54cb85a5-a824-4b46-b980-0dc0245b2c00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c4147ebad5ca.png)
 
 #### 红黑树（平衡二叉树）
 
@@ -68,27 +68,27 @@ article: false
 
 但是如果 数据量过大，节点个数就越多，树高度也会增高（也就是树的深度越深），增加磁盘I/O次数，影响查询效率。
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/22309163/1685364260410-899f3ac6-b8b2-4b91-8798-6c3ae0650ecf.gif)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-f3fab8cb0032.gif)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685370727244-9917f06b-5416-4e4c-b402-3b8f22719425.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-66e0d2ecbaf2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685543364763-54cb85a5-a824-4b46-b980-0dc0245b2c00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c4147ebad5ca.png)
 
 #### B-树
 
 B树的出现可以解决树高度的问题。之所以是B树，而并不是名称中"xxx二叉树"，就是它不再限制一个父节点中只能有两个子节点，而是允许 M 个子节点（M > 2）。不仅如此，B树的一个节点可以存储多个元素，相比较于前面的那些二叉树数据结构又将整体的树高度降低了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685543860080-820cb15f-005e-4c95-9342-1b9ee212cc06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-d68a5f85ef8c.png)
 
 B 树的节点可以包含有多个字节点，所以 **B树是一棵多叉树**，它的每一个节点包含的最多子节点数量的称为B树的阶。如下图是一颗3阶的B树。
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/22309163/1686139404742-42dce20d-7573-4691-a523-c25726a99255.gif)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-efe2a1347fd2.gif)
 
 当一颗3阶的B树查找 7这个的元素时的流程是怎么样的？
 
 先从根节点出发 ，判断 7在4和8之间，根据P2存储指针6的节点，判断7大于6   最后指针找到叶子节点。也就找到有匹配7的键值。
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/22309163/1686140116670-212f89fe-6c14-41db-afa7-b95a9ab3e1f8.gif)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-04cc3f4edaf8.gif)
 
 可以发现一颗3阶的B树在查找叶子节点时，由于树高度只有 3，所以查找过程最多只需要3次的磁盘I/O操作。
 
@@ -100,7 +100,7 @@ B 树的节点可以包含有多个字节点，所以 **B树是一棵多叉树**
 
 你看啊，B树其实已经满足了我们最前面所要满足的条件，减少磁盘I/O操作，同时支持按区间查找。但注意，虽然B树支持按区间查找，但并不高效。例如上面的例子中，B树能高效的通过等值查询 15 这个值，但不方便查询出一个区间内3 ~ 10区间内所有数的结果。因为当B树做范围查询时需要使用中序遍历，那么父节点和子节点也就需要不断的来回切换涉及了多个节点会给磁盘I/O带来很多负担。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685543364763-54cb85a5-a824-4b46-b980-0dc0245b2c00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c4147ebad5ca.png)
 
 #### B+tree索引
 
@@ -108,13 +108,13 @@ B 树的节点可以包含有多个字节点，所以 **B树是一棵多叉树**
 
 B+tree 是在B树基础上的一种优化，其更适合做存储索引结构。在 B+tree 中，非叶子节点上仅存储键值，不存储数据；而所有数据记录均存储在叶子节点上，并且数据是按照顺序排列的。此外在 B+tree 中各个数据页之间是通过双向链表连接的。B+tree 的结构图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/webp/22309163/1686137513424-bd04201b-2fbb-46e8-971b-612c8cef357b.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-b047e2bfd2f6.webp)
 
 ### B树和B+树的区别，Mysql为什么要选择B+树作为默认索引的数据结构
 
-![image](https://cdn.nlark.com/yuque/0/2023/webp/22309163/1686137513424-bd04201b-2fbb-46e8-971b-612c8cef357b.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-b047e2bfd2f6.webp)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685543860080-820cb15f-005e-4c95-9342-1b9ee212cc06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-d68a5f85ef8c.png)
 
 B+tree 结构实现数据索引具有如下优点：
 
@@ -130,11 +130,11 @@ Hash索引其实用的不多，最主要是因为最常见的存储引擎InnoDB�
 
 虽然可以使用sql语句在InnoDB显示声明Hash索引，但是其实是不生效的
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060089719-06591684-0765-4523-89c0-9aada91dc1b3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-5eddd113eda9.png)
 
 对name字段建立Hash索引，但是通过show index from 表名就会发现实际还是B+树
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060089699-2d9db32b-569d-4d7d-a2ae-05634adb429c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-e02b33572a72.png)
 
 在存储引擎中，Memory引擎支持Hash索引
 
@@ -142,11 +142,11 @@ Hash索引其实有点像Java中的HashMap底层的数据结构，他也有很�
 
 假设现在user表用Memory存储引擎，对name字段建立Hash索引，表中插入三条数据
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060089667-49ca8a48-b8f3-49a2-9e04-0161ffcae253.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-226ba61bac45.png)
 
 Hash索引会对索引列name的值进行Hash计算，然后找到对应的槽下面，如下图所示
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060089633-aa383d2c-2224-40d9-bfab-b2de18802fbd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-6aae4192a2bc.png)
 
 当遇到name字段的Hash值相同时，也就是Hash冲突，就会形成一个链表，比如有name=张三有两条数据，就会形成一个链表。
 
@@ -161,9 +161,9 @@ Hash索引会对索引列name的值进行Hash计算，然后找到对应的槽�
 
 按物理存储分类：InnoDB的存储方式是聚集索引，MyISAM的存储方式是非聚集索引。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686226684967-bf5d2cbf-ccfb-4640-a1f4-edb242add589.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-0f64488d60d5.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686226761004-b46d21b0-c48f-4010-a246-b47b1f28c143.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-824ec3e6066a.png)
 
 #### 聚簇索引
 
@@ -198,7 +198,7 @@ ALTER TABLE users ADD INDEX index_age(age);
 MySQL会分别创建主键id的聚簇索引和age的二级索引:
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/webp/22309163/1686228312805-5256f72b-5055-4545-963a-95ce7aa145dc.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-6e68fe237e3c.webp)
 
 在MySQL中主键索引的叶子节点存的是整行数据，而二级索引叶子节点内容是主键的值.
 
@@ -214,7 +214,7 @@ MySQL会分别创建主键id的聚簇索引和age的二级索引:
 SELECT * FROM users WHERE age=35;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/webp/22309163/1686228330541-4a9c644c-2572-4b8a-b2e1-c9dbaa37dfb5.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-f14f0ed3cf7b.webp)
 
 整个过程大致分为以下几个步骤：
 
@@ -235,7 +235,7 @@ select id from `users` where age = 35;
 
 这次查询字段从select *变成select id，查询条件不变，所以也会走age索引
 
-![image](https://cdn.nlark.com/yuque/0/2023/webp/22309163/1686228312805-5256f72b-5055-4545-963a-95ce7aa145dc.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-6e68fe237e3c.webp)
 
 所以还是跟前面一样了，先从索引页中查出来age = 35;对应的主键id之后，惊讶的发现，sql中需要查询字段的id值已经查到了，那次此时压根就不需要回表了，已经查到id了，还回什么表。
 
@@ -253,7 +253,7 @@ ALTER TABLE `test`.`user`  ADD INDEX(`name`);
 
 此时如果往表中插入三条数据，那么name索引的叶子节点存的数据就如下图所示
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060426659-e2031309-aa84-4688-bfb7-21a45da14d6e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-4a8e554b4629.png)
 
 **mysql会根据name字段的值进行排序，这里我假设张三排在李四前面，当索引列的值相同时，就会根据id排序，所以索引实际上已经根据索引列的值排好序了。**
 
@@ -261,17 +261,17 @@ ALTER TABLE `test`.`user`  ADD INDEX(`name`);
 
 答案是可以的，并且mysql支持很多种排序规则，我们在建数据库或者是建表的时候等都可以指定排序规则，**并且后面文章涉及到的字符串排序都是我随便排的，实际情况可能不一样**。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060426660-da7319da-f0e5-412f-8e10-f26f7509594f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-5cbf00c9aa5e.png)
 
 对于单个索引列数据查找也是跟前面说的聚簇索引一样，也会对数据分组，之后可以根据二分查找在单个索引列来查找数据。
 
 当数据不断增多，一个索引页存储不下数据的时候，也会用多个索引页来存储，并且索引页直接也会形成双向链表
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060426657-4914f989-c010-4f3d-8a7e-72da98624742.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c87f0e84698d.png)
 
 当索引页不断增多是，为了方便在不同索引页中查找数据，也就会抽取一个索引页，除了存页中id，同时也会存储这个id对应的索引列的值
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060426665-08e361ba-a9e5-4d72-b8fe-02dca7420d63.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-7bb259268572.png)
 
 当数据越来越多越来越多，还会抽取，也会形成三层的一个B+树，这里我就不画了。
 
@@ -285,7 +285,7 @@ ALTER TABLE `test`.`user` ADD INDEX(`name`, `age`, `id`);
 
 比如，在name和age上建立一个联合索引，此时单个索引页就如图所示
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060426681-ac222f22-f3eb-4b61-a8bc-74b73e26c748.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-3785ead0741b.png)
 
 **先以name排序，name相同时再以age排序，如果再有其它列，依次类推，最后再以id排序。**
 
@@ -293,7 +293,7 @@ ALTER TABLE `test`.`user` ADD INDEX(`name`, `age`, `id`);
 
 最后形成的B+树简化为如下图
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060427050-8ccf5c09-a630-4074-a4de-91e2ee228f68.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-5367fac32c3b.png)
 
 ### 最左前缀原则
 
@@ -341,25 +341,25 @@ ALTER TABLE `test`.`user`  ADD INDEX (`name`,`age`)
 
 不使用索引下推实现
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684911293119-d8ab199d-b383-4039-b6ec-ff806fb6419b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_80%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-08b1bcc03c20.png)
 
 ```plsql
 Explain SELECT * FROM user1 WHERE name LIKE 'A%' and age = 40;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684910526901-277dc73b-ab09-4f0a-b5b0-c16d7e67ef2d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-9008477ec3b2.png)
 
 使用索引下推实现
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684911337782-8a0d9866-db27-4ab4-885b-e2904d09b61e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-e83077d2987f.png)
 
 ```plsql
 Explain SELECT * FROM user1 WHERE name LIKE 'A%' and age = 40;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684910563222-95b45c8a-6cf7-44ab-af51-1d7b7e4cd7be.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-9e82321f6c2f.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060427122-d526de38-82e8-4a36-b22e-253d68daefd9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-b8e52ce900da.png)
 
 接下来要执行如下的sql
 
@@ -409,7 +409,7 @@ select * from `user` where name = '赵六' and age= 22;
 
 查看执行计划
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060427143-0d4fe61f-28b1-4407-b501-4c25a61055db.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-af5cc9b59da6.png)
 
 type是index_merge，并且possible_key和key都是idx_name和idx_age，说明使用了索引合并，并且Extra有Using intersect(idx_age,idx_name)，intersect就是交集的意思。
 
@@ -423,7 +423,7 @@ type是index_merge，并且possible_key和key都是idx_name和idx_age，说明�
 select * from `user` where name = '赵六' and age > 22;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686060427441-ebaf070f-dfb3-4163-afc8-2370954bc3cc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-009941b492a4.png)
 
 只能用name这个索引，因为age > 22查出来的id是无序的，前面在讲索引的时候有说过索引列的排序规则
 
@@ -477,9 +477,9 @@ MyISAM is based on the older (and no longer available) ISAM storage engine but h
 
 拿官网两者的 Features 来作一个分析对比吧：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685885295850-cd6ca510-c34c-4c9a-8ca9-eae76c17a224.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-f538128b0f8e.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685885420022-adfd96b6-33c8-4310-b4b3-939e298fa958.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-2ac806aa67d0.png)
 
 1、InnoDB 是聚集索引，数据文件是和索引绑在一起的，必须要有主键，通过主键索引效率很高，但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。因此，主键不应该过大，否则其他索引也会很大。而 MyISAM 是非聚集索引，数据文件是分离的，索引保存的是数据文件的指针，主键索引和辅助索引是独立的。
 
@@ -537,7 +537,7 @@ MyISAM is based on the older (and no longer available) ISAM storage engine but h
 
 ## 1、优化方法
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1685889373587-181e5819-b6b7-44d4-bdcb-98f3e425ecab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-02400eacb191.png)
 
 关于SQL优化方法，包括5点
 
@@ -639,7 +639,7 @@ MySQL5.7版本引入了这两个特性，直接使用Explain关键字可以将pa
 Explain select * from users;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681024592949-53b352d8-76bb-48c2-b08c-3b333147be4c.png#averageHue=%23faf9f8&clientId=u3c4b35c8-f43a-4&from=paste&height=78&id=ucdfd20f9&name=image.png&originHeight=192&originWidth=2655&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=94956&status=done&style=none&taskId=ufc9c5bfd-a660-46de-a9ba-2c76a45f855&title=&width=1072.7272107253098?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-979098793daf.png)
 
 Explain语句返回列的各列含义：
 
@@ -703,14 +703,14 @@ INNER JOIN orders ON users.id = orders.user_id
 INNER JOIN products ON orders.product_id = products.id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681026719178-e164f36f-c6ea-476b-9ebe-c8d3a86763b6.png#averageHue=%23f8f7f6&clientId=u3c4b35c8-f43a-4&from=paste&height=118&id=u1a16094b&name=image.png&originHeight=291&originWidth=2516&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=177224&status=done&style=none&taskId=u4313ebbd-0c91-40c1-a527-6625bb30160&title=&width=1016.5655978097474?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-62c67c1d00af.png)
 
 ```sql
 explain
 select * from orders where product_id =  (select id from products where products.price = 10);
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681111885827-f385c7dc-fd67-4213-9911-90b9b1a5b4a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_69%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-e0d9bf9f9724.png)
 
 ```sql
 set session optimizer_switch='derived_merge=off'; #关闭MySQL5.7对衍生表合并优化
@@ -722,7 +722,7 @@ from (select id from products) as temp inner join orders on temp.id = orders.pro
 set session optimizer_switch='derived_merge=on'; #还原配置
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681026768642-9a4aeb47-5788-4346-8112-5aa54d51d4a6.png#averageHue=%23f8f6f5&clientId=u3c4b35c8-f43a-4&from=paste&height=124&id=u72716dac&name=image.png&originHeight=308&originWidth=2520&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=186777&status=done&style=none&taskId=ue4ac401a-d245-4bd2-bcef-e1c6aaa49be&title=&width=1018.1817593324973?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-8537a555e7d1.png)
 
 ```sql
 explain
@@ -731,7 +731,7 @@ union
 select id from products;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681026786538-8a937cef-7daf-4409-a8a9-84364f426702.png#averageHue=%23f8f7f5&clientId=u3c4b35c8-f43a-4&from=paste&height=123&id=u498dbdff&name=image.png&originHeight=304&originWidth=2508&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=180910&status=done&style=none&taskId=uefe5c1eb-9ae1-4df5-8353-12d2989f14a&title=&width=1013.3332747642473?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-6e4ee39c2800.png)
 
 优化器会针对子查询进行一定的优化重写SQL：
 
@@ -748,13 +748,13 @@ show WARNINGS;
 Explain select * from users;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681025521715-b8ce528b-f4ab-44fb-a088-90fa8f8dded2.png#averageHue=%23faf9f8&clientId=u3c4b35c8-f43a-4&from=paste&height=75&id=ua34ce6db&name=image.png&originHeight=185&originWidth=2640&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=94484&status=done&style=none&taskId=u7d5f72cf-bd86-48f5-a50e-1e4095dddb8&title=&width=1066.6666050149972?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-a9d3c3c5c446.png)
 
 ```sql
 Explain select * from users inner join orders on users.id = orders.user_id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681287552178-bd66eaa3-6e70-4d2a-a39f-83ff9925fad9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-952c38746071.png)
 
 ##### 2.2.primary：复杂查询中最外层查询，比如使用union或union all时，id为1的记录select_type通常是primary
 
@@ -765,7 +765,7 @@ union
 select id from products;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681272527877-5ee1cd39-0abc-4406-b23a-7fbd91755d8b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-11b98bf3e281.png)
 
 ##### 2.3.subquery：指在 select 语句中出现的子查询语句,结果不依赖于外部查询（不在from语句中）
 
@@ -774,7 +774,7 @@ explain
 select orders.*,(select name from products where id = 1) from orders;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681029309790-04cfe1df-d34b-4a1c-81e4-0a3293e57a15.png#averageHue=%23f9f7f6&clientId=u3c4b35c8-f43a-4&from=paste&height=103&id=u4e67b920&name=image.png&originHeight=254&originWidth=2242&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=132993&status=done&style=none&taskId=ufb20eb00-0b49-4ea1-87ef-b64caa5927f&title=&width=905.8585335013727?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_64%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-6b5e9d5fbbed.png)
 
 ##### 2.4.dependent subquery：指在 select 语句中出现的查询语句，结果依赖于外部查询
 
@@ -783,7 +783,7 @@ explain
 select orders.*,(select name from products where products.id = orders.user_id) from orders;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681047335693-594d517a-7107-4554-8b28-64401c62e334.png#averageHue=%23f9f8f6&clientId=u3c4b35c8-f43a-4&from=paste&height=104&id=u98625413&name=image.png&originHeight=258&originWidth=2690&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=152809&status=done&style=none&taskId=ub20d3d00-c399-4858-95bd-cde37797165&title=&width=1086.868624049372?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-0e673a87ee9d.png)
 
 ##### 2.5.derived：派生表，在FROM子句的查询语句，表示从外部数据源中推导出来的，而不是从 SELECT 语句中的其他列中选择出来的。
 
@@ -796,7 +796,7 @@ select * from (select user_id from orders where id = 1) as temp;
 set session optimizer_switch='derived_merge=on'; #还原配置
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681272573191-8078286f-8374-44fe-a1a0-668f7ccb7fac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-fc1a23794082.png)
 
 ##### 2.6.union：分union与union all两种，若第二个select出现在union之后，则被标记为union；如果union被from子句的子查询包含，那么第一个select会被标记为derived；union会针对相同的结果集进行去重，union all不会进行去重处理。
 
@@ -810,7 +810,7 @@ union
 select id from users where name = '张三' ) as temp;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681305655206-41e7f35a-3d2d-4169-9a70-cc752e4186c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_83%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-cae4af16dd83.png)
 
 ```sql
 explain 
@@ -822,7 +822,7 @@ union all
 select id from users where name = '张三' ) as temp;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681289909665-76752c8e-9661-4806-b1cf-516ec8b33bad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_83%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-44efdde95d3f.png)
 
 ##### 2.7.dependent union：当union作为子查询时，其中第一个union为dependent subquery，第二个union为dependent union。
 
@@ -836,7 +836,7 @@ union
 select id from users where name = '张三' );
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681289864894-93092296-3304-4d99-9ff7-3fbe4bc0a1a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-34035ad5b0a9.png)
 
 ##### 2.8.union result：如果两个查询中有相同的列，则会对这些列进行重复删除，只保留一个表中的列。
 
@@ -847,9 +847,9 @@ union
 select id from products;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681272681693-656c2b09-74ec-4876-bd22-f246659f556b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-943256eac517.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681029933432-692c9a82-c2b5-4b2e-890f-903dc58bec27.png#averageHue=%23fafafa&clientId=u3c4b35c8-f43a-4&from=paste&height=168&id=IYtdr&name=image.png&originHeight=417&originWidth=473&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=28241&status=done&style=none&taskId=u3fb475c5-8082-40a0-a42b-83d6f2e884a&title=&width=191.111100065187?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-ae08e90f2539.png)
 
 #### 3.table列：查询所涉及的表名。如果有多个表，将显示多行记录
 
@@ -872,7 +872,7 @@ INSERT INTO t VALUES(1);
 explain select * from t;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681365781705-5ee3b302-7e4c-40ed-94a8-72759b980e92.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_83%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-f2cf81e7ca58.png)
 
 Memory存储引擎的统计数据是精确的，所以当只有一条记录的时候type类型为system。
 
@@ -883,7 +883,7 @@ INSERT INTO tt VALUES(1);
 explain select * from tt;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681368181258-8eb20a57-c719-4756-afc6-1f0ec8a72ad2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_74%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-12d330f3e2d8.png)
 
 ##### 5.2.const：基于主键或唯一索引查看一行，当MySQL对查询某部分进行优化，并转换为一个常量时，使用这些类型访问转换成常量查询，效率高
 
@@ -892,7 +892,7 @@ explain
 select * from orders where id = 1;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681366253574-0fa5ca6c-2d64-40f0-9a01-2454c736e53a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_79%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-71285ff4e85c.png)
 
 ##### 5.3.eq_ref：基于主键或唯一索引连接两个表，对于每个索引键值，只有一条匹配记录，被驱动表的类型为'eq_ref'
 
@@ -901,7 +901,7 @@ explain
 select users.* from users inner join orders on users.id = orders.id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681366272461-a8f66d17-3156-448c-97c5-d9421863ebb1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-46ab76d3a6ac.png)
 
 ##### 5.4.ref：基于非唯一索引连接两个表或通过二级索引列与常量进行等值匹配，可能会存在多条匹配记录
 
@@ -912,7 +912,7 @@ explain
 select users.* from users inner join orders on users.id = orders.user_id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681366725970-346f1c6a-4c3c-4076-a06a-239a9f1c28f7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-9c8288dd5c8f.png)
 
 2.简单查询，使用二级索引列匹配。
 
@@ -921,7 +921,7 @@ explain
 select * from orders where user_id = 1;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681366311397-1eb1ba55-cb00-464b-b3c8-2949bd18a718.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-b6ef75b94537.png)
 
 ##### 5.5.range：使用非唯一索引扫描部分索引，比如使用索引获取某些范围区间的记录
 
@@ -930,7 +930,7 @@ explain
 select * from orders where user_id > 3;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681366328856-b4f80e75-c7d3-40c7-a2c7-21c53c900bfb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-53f18c346cf2.png)
 
 ##### 5.6.index：扫描整个索引就能拿到结果，一般是二级索引，这种查询一般为使用覆盖索引（需优化，缩小数据范围）
 
@@ -939,7 +939,7 @@ explain
 select user_id from orders;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681366836249-8d05dc8f-5859-467d-ac77-d5d95a7201ef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-a99aeb7204b7.png)
 
 ##### 5.7.all：扫描整个表进行匹配，即扫描聚簇索引树（需优化，添加索引优化）
 
@@ -948,7 +948,7 @@ explain
 select * from users;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681039103901-8b407ac2-cdb5-44c1-b3e4-3f35818907a7.png#averageHue=%23f9f8f7&clientId=u3c4b35c8-f43a-4&from=paste&height=90&id=u0ba8c3b4&name=image.png&originHeight=222&originWidth=2508&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=91162&status=done&style=none&taskId=ua18177c9-8bb0-4230-b5e3-eeb307e3a25&title=&width=1013.3332747642473?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-fe6226debb82.png)
 
 ##### 5.8.NULL：MySQL在优化过程中分解语句就已经可以获取到结果，执行时甚至不用访问表或索引。
 
@@ -957,7 +957,7 @@ explain
 select min(id) from users;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681039399639-75db39c7-cf2f-49c0-92fb-b00364a29c8d.png#averageHue=%23f9f8f7&clientId=u3c4b35c8-f43a-4&from=paste&height=87&id=u05b4bc7a&name=image.png&originHeight=216&originWidth=2621&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=96676&status=done&style=none&taskId=uc8883d0d-ea15-424f-85ed-4f9afa42e25&title=&width=1058.9898377819347?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-b747cb7c2e07.png)
 
 #### 6.possible_keys列：表示在查询中可能使用到某个索引或多个索引；如果没有选择索引，显示NULL
 
@@ -974,7 +974,7 @@ explain
 select * from users where id = 1;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681384753103-94604447-d2b6-49bb-bc4c-23c14b1a076b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_69%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-f5f730d44114.png)
 
 使用联合索引：
 
@@ -983,7 +983,7 @@ explain
 select * from users where name = '张三' and email = 'zhangsan@example.com';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681043991351-f81c0cc8-6968-40b2-9e4b-f8163585d542.png#averageHue=%23f9f7f6&clientId=u3c4b35c8-f43a-4&from=paste&height=77&id=u98802bfd&name=image.png&originHeight=191&originWidth=2511&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=99786&status=done&style=none&taskId=uc314c65d-cfe5-4c41-b9e6-e67085dcf97&title=&width=1014.5453959063099?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-823bb3e2082a.png)
 
 计算规则：
 
@@ -1012,7 +1012,7 @@ timestamp：4字节
 datetime：8字节
 字段如果为NULL，需要1个字节记录是否为NULL
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686491522804-98efd37f-1489-4202-8b36-51c2fdafa9c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-9db08aece4b8.png)
 
 #### 9.ref列：表示将哪个字段或常量和key列所使用的字段进行比较。
 
@@ -1025,7 +1025,7 @@ explain
 select * from users where name = '张三' and email = 'zhangsan@example.com';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681447679631-4023e7e4-924b-45d9-97bc-a3015f5e2e89.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_74%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-bf488e1bdca3.png)
 
 2.字段：
 
@@ -1034,7 +1034,7 @@ explain
 select users.* from users inner join orders on users.id = orders.id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681446642630-3813f19b-6e70-49d4-82da-12f4fdb00754.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_80%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-70f74596955c.png)
 
 3.函数
 
@@ -1043,7 +1043,7 @@ explain
 select users.* from users inner join orders on users.id = trim(orders.id);
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681454629742-f28fd829-b9e5-4e5e-9488-9d29f3faba65.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-4071d340323c.png)
 
 #### 10.rows列：全表扫描时表示需要扫描表的行数估计值；索引扫描时表示扫描索引的行数估计值；值越小越好（不是结果集中的行数）
 
@@ -1054,7 +1054,7 @@ explain
 select * from orders where user_id >= 3 and total_price = 25;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681449747200-d5473ed5-9cec-4ad0-b696-afc1c1427bc3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-77a56ac47ab6.png)
 
 2.索引扫描
 
@@ -1063,7 +1063,7 @@ explain
 select * from orders where user_id > 3;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681449133838-d210e8ea-6a40-4ccb-8ac3-c4d810032f1c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-cf317c34840e.png)
 
 #### 11.filtered列：表示符合查询条件的数据百分比。可以使用rows * filtered/100计算出与**explain**前一个表进行连接的行数。
 
@@ -1074,7 +1074,7 @@ explain
 select users.* from users inner join orders on users.id = orders.id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681449894480-5b14d3bf-04ee-450b-bdf8-150cfa66ec57.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-d81ee80cacd4.png)
 
 #### 12.Extra列：SQL执行查询的一些额外信息
 
@@ -1085,7 +1085,7 @@ explain
 select user_id,id from orders where user_id = 1;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681044775275-6a7736f1-9b4a-4d35-ba85-dbedd53e6823.png#averageHue=%23f9f8f7&clientId=u3c4b35c8-f43a-4&from=paste&height=76&id=u7b383be1&name=image.png&originHeight=188&originWidth=2615&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=94668&status=done&style=none&taskId=u6b2fb561-6ad5-47d3-94f0-ca68ee46dc6&title=&width=1056.5655954978097?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-d05b7e1478b8.png)
 
 ##### 12.2.Using where：不通过索引查询所需要的数据
 
@@ -1097,7 +1097,7 @@ explain
 select * from orders where user_id = 1 and total_price = 100;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681044854093-370ad425-71a6-4008-b7be-55467d1c9251.png#averageHue=%23f9f8f6&clientId=u3c4b35c8-f43a-4&from=paste&height=89&id=u580f800a&name=image.png&originHeight=220&originWidth=2326&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=95387&status=done&style=none&taskId=u3ab5621d-ac5c-4cde-9102-073d8efd665&title=&width=939.7979254791226?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-ac427c39d583.png)
 
 ##### 12.3.Using index condition：表示查询列不被索引覆盖，where 条件中是一个索引范围查找，过滤完索引后回表找到所有符合条件的数据行。
 
@@ -1106,7 +1106,7 @@ explain
 select * from orders where user_id > 3;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681045567332-67e9a87a-1b04-4693-b226-f427bc53fc45.png#averageHue=%23f8f6f5&clientId=u3c4b35c8-f43a-4&from=paste&height=91&id=uf0a1f432&name=image.png&originHeight=224&originWidth=2621&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=107179&status=done&style=none&taskId=u7f4995fd-7f94-4714-8ad4-f2448f17c3b&title=&width=1058.9898377819347?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-bc41927874b1.png)
 
 ##### 12.4.Using temporary：表示需要使用临时表来处理查询；
 
@@ -1117,7 +1117,7 @@ explain
 select distinct total_price from orders;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681045772656-8572b080-7051-4df2-8625-980f54c5771a.png#averageHue=%23f9f8f7&clientId=u3c4b35c8-f43a-4&from=paste&height=88&id=u2e823e00&name=image.png&originHeight=217&originWidth=2577&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=98613&status=done&style=none&taskId=uf48f26c4-0390-45c5-a40a-b6688b717c4&title=&width=1041.212061031685?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-7ccbcf6a27a2.png)
 
 2.name列有联合索引
 
@@ -1126,7 +1126,7 @@ explain
 select distinct name from users;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681046236030-f805a8ac-1946-4600-a5b9-6bf583f5e39e.png#averageHue=%23f8f7f6&clientId=u3c4b35c8-f43a-4&from=paste&height=80&id=u139ce865&name=image.png&originHeight=199&originWidth=2663&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=104632&status=done&style=none&taskId=u1da6ac88-d3b9-4bbf-bfb3-99387eff1d9&title=&width=1075.9595337708097?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-389a5ca24b8b.png)
 
 ##### 12.5.Using filesort：当查询中包含 order by 操作而且无法利用索引完成的排序操作，数据较少时从内存排序，如果数据较多需要在磁盘中排序。	需优化成索引排序。
 
@@ -1137,7 +1137,7 @@ explain
 select total_price from orders order by total_price;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681464127193-d83100a9-f5c3-4139-a8d0-7225ec490e8f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-917a349f0344.png)
 
 2.name列有索引，因索引已经是排好序的所以直接读取就可以了。
 
@@ -1146,7 +1146,7 @@ explain
 select name from users order by name;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681474747964-b0738d83-519e-4e6e-a649-d3ac167a7d5e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_79%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-555fc6e497a3.png)
 
 ##### 12.6.Select tables optimized away：使用某些聚合函数（min,max）来访问某个索引值。
 
@@ -1158,7 +1158,7 @@ explain
 select min(password) from users;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681039399639-75db39c7-cf2f-49c0-92fb-b00364a29c8d.png#averageHue=%23f9f8f7&clientId=u3c4b35c8-f43a-4&from=paste&height=87&id=YclHG&name=image.png&originHeight=216&originWidth=2621&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=96676&status=done&style=none&taskId=uc8883d0d-ea15-424f-85ed-4f9afa42e25&title=&width=1058.9898377819347?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-0779c05d3228.png)
 
 ## 3.索引优化最佳实践
 
@@ -1198,7 +1198,7 @@ EXPLAIN SELECT * FROM employees WHERE name= '张三';
 
 查看索引长度是74=(3*24+2),可以算出联合索引中只使用了name前缀索引.
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058000736-c2814e2e-425f-47fa-ae6e-b8d7c1abef87.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-1087be419faf.png)
 
 ```sql
 EXPLAIN SELECT * FROM employees WHERE name= '张三' AND age = 18; 
@@ -1206,7 +1206,7 @@ EXPLAIN SELECT * FROM employees WHERE name= '张三' AND age = 18;
 
 查看索引长度是78=(3*24+2)+4,可以算出联合索引中只使用了name和age前缀索引.
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058010089-64bd6184-680e-4c61-9c97-2076107f1ec4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-23fe3494da78.png)
 
 ```sql
 EXPLAIN SELECT * FROM employees WHERE name= '张三' AND age = 18 AND position ='beijing'; 
@@ -1214,7 +1214,7 @@ EXPLAIN SELECT * FROM employees WHERE name= '张三' AND age = 18 AND position =
 
 查看索引长度是140=(3*24+2)+4+(3*20+2),可以算出联合索引中只使用了完整的联合索引
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058015744-bb7e6ff0-5d6f-41f0-af4e-d2a7d64ff633.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-ebf602a0a6dd.png)
 
 #### 2.最左前缀法则
 
@@ -1231,7 +1231,7 @@ EXPLAIN SELECT * FROM employees WHERE age = 18 AND position = 'beijing';
 EXPLAIN SELECT * FROM employees WHERE name= '张三' AND position = 'beijing'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058025925-7e9a3892-4661-48a5-a1be-c8838d54cdb7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-4789bdc4fa87.png)
 
 #### 3.不在索引列上做任何操作（计算、函数、（自动or手动）类型转换），会导致索引失效而转向全表扫描
 
@@ -1240,7 +1240,7 @@ EXPLAIN SELECT * FROM employees WHERE name = '张三';
 EXPLAIN SELECT * FROM employees WHERE left(name,3) = '张三';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058087297-b1fd9fcb-7abf-4eda-99c5-d226a20e0499.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-62c20c8f9c1c.png)
 
 给hire_time增加一个普通索引：
 
@@ -1252,7 +1252,7 @@ ALTER TABLE `employees` ADD INDEX `idx_hire_time` (`hire_time`) USING BTREE ;
 EXPLAIN select * from employees where date(hire_time) ='2018-09-30'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058109085-eb233710-739c-4801-bc50-843f7f982bbc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-d0830ffd4b5b.png)
 
 转化为日期范围查询，有可能会走索引：
 
@@ -1260,7 +1260,7 @@ EXPLAIN select * from employees where date(hire_time) ='2018-09-30';
 EXPLAIN select * from employees where hire_time >='2018-09-30 00:00:00' and hire_time <='2018-09-30 23:59:59'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058130474-0ef3901f-4492-4fc7-a98d-89306279b588.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-f4fe99705fdf.png)
 
 还原最初索引状态
 
@@ -1279,7 +1279,7 @@ EXPLAIN SELECT * FROM employees WHERE name= '张三' AND age = 18 AND position =
 EXPLAIN SELECT * FROM employees WHERE name= '张三' AND age > 18 AND position ='beijing';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058217448-d2897ad2-2c54-4103-bb20-5821686b00ea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c3eb04d6f9a1.png)
 
 #### 5.尽量使用覆盖索引（只访问索引的查询（索引列包含查询列）），减少 select * 语句
 
@@ -1289,13 +1289,13 @@ EXPLAIN SELECT * FROM employees WHERE name= '张三' AND age > 18 AND position =
 EXPLAIN SELECT name,age FROM employees WHERE name= '张三' AND age = 18 AND position ='beijing'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058263188-a7b01560-407a-418c-bedd-cb10c8ccc09d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-05293a3e56d6.png)
 
 ```sql
 EXPLAIN SELECT * FROM employees WHERE name= 'LiLei' AND age = 23 AND position ='manager'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058283738-a72d9098-da92-4a83-ab1f-ed8598dbb8cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c0c73e498e59.png)
 
 #### 6.不等空值还有or，索引失效要少用；
 
@@ -1307,7 +1307,7 @@ EXPLAIN SELECT * FROM employees WHERE name= 'LiLei' AND age = 23 AND position ='
 EXPLAIN SELECT * FROM employees WHERE name != '张三'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058378015-28d40137-3453-432a-9693-9f4b04e1e224.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-4c24a4a01e42.png)
 
 **is null,is not null 一般情况下也无法使用索引**
 
@@ -1315,7 +1315,7 @@ EXPLAIN SELECT * FROM employees WHERE name != '张三';
 EXPLAIN SELECT * FROM employees WHERE name is null 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058392680-23337c8c-dd18-481a-bf11-71e57032e4c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-03c87cedaef7.png)
 
 **少用or或in，用它查询时，mysql不一定使用索引，mysql内部优化器会根据检索比例、表大小等多个因素整体评估是否使用索引，详见范围查询优化**
 
@@ -1323,7 +1323,7 @@ EXPLAIN SELECT * FROM employees WHERE name is null
 EXPLAIN SELECT * FROM employees WHERE name = 'LiLei' or name = 'HanMeimei'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058463446-f1bcb53c-1580-4060-87fa-662386a75717.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-6baf0042bf6b.png)
 
 #### 7.Like百分写最右
 
@@ -1333,13 +1333,13 @@ EXPLAIN SELECT * FROM employees WHERE name = 'LiLei' or name = 'HanMeimei';
 EXPLAIN SELECT * FROM employees WHERE name like '%三' 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058405664-a5f9809b-84b0-45f8-9e09-65a88e8ac5cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-436e6606066e.png)
 
 ```sql
 EXPLAIN SELECT * FROM employees WHERE name like '张%' 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058418486-bfec2739-f2ad-44d6-a2f9-d270e386436d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-3da69cb43627.png)
 
 问题：解决like'%字符串%'索引不被使用的方法？
 
@@ -1349,7 +1349,7 @@ a）使用覆盖索引，查询字段必须是建立覆盖索引字段
 EXPLAIN SELECT name,age,position FROM employees WHERE name like '%Lei%'; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058439870-5ea46ede-3336-4350-b78d-1bd4c5741d28.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-9366572c703e.png)
 
 b）如果不能使用覆盖索引则可能需要借助搜索引擎
 
@@ -1362,7 +1362,7 @@ EXPLAIN SELECT * FROM employees WHERE name = '1000';
 EXPLAIN SELECT * FROM employees WHERE name = 1000; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058452419-9d2c12b1-cb0a-4920-8011-cc1a350ba149.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-3a937c7fcf34.png)
 
 #### 9.范围查询优化
 
@@ -1376,7 +1376,7 @@ ALTER TABLE `employees` ADD INDEX `idx_age` (`age`) USING BTREE ;
 explain select * from employees where age >=1 and age <=2000; 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058483959-75f6813b-15f3-41e2-94ef-951b14435913.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-371116782168.png)
 
 没走索引原因：mysql内部优化器会根据检索比例、表大小等多个因素整体评估是否使用索引。比如这个例子，可能是由于单次数据量查询过大导致优化器最终选择不走索引
 
@@ -1387,7 +1387,7 @@ explain select * from employees where age >=1 and age <=1000;
 explain select * from employees where age >=1001 and age <=2000;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1686058500944-5598a032-150a-435f-b1bf-aa4fa4164e7e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-f01622d4f042.png)
 
 还原最初索引状态
 
@@ -1710,7 +1710,7 @@ END
 
 阿里规范：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1679833438373-bb9be90a-ea5e-4ea6-9c76-25cf88bd9dde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_68%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-bf5b8c120979.png)
 
 分析：
 
@@ -1728,7 +1728,7 @@ EXPLAIN select * from student where name like 'mock_name%';--替换成表对应�
 SHOW WARNINGS;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1679907093052-e96f1904-b7cf-444c-abdb-f86952d8f13a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-9662fec9fe81.png)
 
 总结：
 
@@ -1737,9 +1737,9 @@ SHOW WARNINGS;
 - 在实际应用中我们通常只需要使用某几个字段，其他不需要使用的字段也查出来**浪费CPU、内存资源**；
 - 文本数据、大字段数据数据传输**增加网络消耗**。
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1679895428685-931f82f5-ce79-410a-a0cd-4104b5a96150.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-4918d960dae8.jpg)
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680414456643-db561b76-ec69-430a-9b3d-7bee93b2a498.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-1158083b6f5b.jpg)
 
 > 嵌入图板：[打开](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680874940944-32aa1d07-82f6-4dd8-b3c8-f98fcdb01f9a.jpeg)
 
@@ -1753,14 +1753,14 @@ EXPLAIN
 select * from student left join scores on student.id = scores.student_id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680182182469-d69c3714-7715-41f9-9e91-6dd2ad551cb8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-6eeac1f198a8.png)
 
 ```sql
 EXPLAIN
 select * from scores left join student on student.id = scores.student_id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680182212063-2213e902-f8ee-465d-bf8d-420a97dc49c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_84%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c23ae7c78400.png)
 
 Join Buffer（连接缓冲区）是优化器用于处理连接查询操作时的临时缓冲区。简单来说当我们需要比较两个或多个表的数据进行Join操作时，Join Buffer可以帮助MySQL临时存储结果，以减少磁盘读取和CPU负担，提高查询效率。需要注意的是每个join都有一个单独的缓冲区。
 
@@ -1782,7 +1782,7 @@ Block nested-loop join（BNL算法）会将驱动表数据加载到join buffer
 
 7、记录下匹配结果。
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680182275517-453a9fad-190b-4aee-b52a-857b6d8ee3c9.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-c8faeae6f6fc.jpg)
 
 ##### 1.2.3. 用连接查询代替子查询
 
@@ -1830,11 +1830,11 @@ select remarks from scores group by remarks;
 
 添加索引前：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680009924139-fd0faa83-2ea0-4df5-8222-cbe3e5fd3517.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-ae3d201f0613.png)
 
 添加索引后：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680009975989-b2c20052-c6f8-4103-8cb7-506e379b9540.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-8912a5e110f2.png)
 
 - 调整查询：查询的写法也会影响group by的效率。可以尝试不使用子查询或临时表，或者可以使用JOIN或EXISTS来代替IN子查询。
 - 限制结果集的数量：如果你只需要查看一小部分结果，可以在查询中添加LIMIT子句，以便只返回一定数量的结果。
@@ -1951,7 +1951,7 @@ union all
 select id,student_id,score from scores
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680010654025-dbaa938f-f592-4991-91a5-26b979fb21ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-97b006876326.png)
 
 ```sql
 select id,name,department from student
@@ -1959,7 +1959,7 @@ union
 select id,student_id,score from scores
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680010615392-70b04309-469c-4e6e-907e-171a3bc5d171.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0347-xsru6kugqziwmqp3/img-0b7064058633.png)
 
 那么union all与union如果当然它业务数据容许出现重复的记录，我们更推荐使用union all，因为union去重数据需要遍历、排序和比较，它更耗时，更消耗cpu资源，但是数据结果最完整。
 

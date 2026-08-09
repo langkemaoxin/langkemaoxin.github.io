@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751685112695-b3339aea-f58c-46c1-9cb4-778ece2054af.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1431-kmi7bxeplfbdnbml/img-c8345f11413c.png)
 
 在回答GPT与BERT的核心区别及各自优势时，可以从以下几个方面展开：
 
@@ -29,7 +29,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751685168553-7a477a83-4ad4-46bf-952d-f8c2b0431dfc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1431-kmi7bxeplfbdnbml/img-a5e1f320d5ed.png)
 
 #### 案例1：智能客服系统（BERT）
 
@@ -75,7 +75,7 @@ response = openai.ChatCompletion.create(
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751685186544-4076d72b-3a56-4a42-a57f-910fb7f3caca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1431-kmi7bxeplfbdnbml/img-1adfdfd44189.png)
 
 #### GPT与BERT的核心区别
 
@@ -115,7 +115,7 @@ response = openai.ChatCompletion.create(
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751685209278-5705b39c-c092-4e81-bd74-472f38f94f83.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1431-kmi7bxeplfbdnbml/img-b8096efa937e.png)
 
 1. **选型建议**：
 

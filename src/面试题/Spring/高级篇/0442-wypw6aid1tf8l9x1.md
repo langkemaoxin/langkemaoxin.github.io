@@ -25,7 +25,7 @@ article: false
 
 请求处理完之后呢..从调用的链路原路返回，再回到**拦截器， **然后再回到**过滤器**，最终响应给客户端！
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22309163/1715323185717-23377dae-7374-4860-ad74-eaecbc9d7398.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/高级篇/0442-wypw6aid1tf8l9x1/img-0930fd15a1f6.jpg)
 
 所以他们的区别就是：
 

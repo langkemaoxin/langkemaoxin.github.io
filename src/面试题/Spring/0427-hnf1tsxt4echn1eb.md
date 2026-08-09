@@ -19,7 +19,7 @@ article: false
 
 在解析@Component注册为BeanDefinition时会调用`AnnotationBeanNameGenerator.buildDefaultBeanName`
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1699961891863-da50e961-d644-40c7-ae48-7d852742d4ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-85e14398b1ee.png)
 
 # 单例设计模式与Bean单例
 
@@ -29,7 +29,7 @@ Singleton模式主要作用是保证在Java应用程序中，一个Class有且�
 
 **但是**，单例设计模式与Bean单例具有一定的区别，主要在于它们运行环境，java单例设计模式的环境是JVM，而Bean单例的环境在于Bean容器。一个Spring程序可以有很多个Bean，但一个Java程序通常有且仅有一个自己的JVM。所以，虽然Spring的Bean单例在一个容器中有且仅有一个，但如果程序具有多个Bean容器，而且都有某个Bean，那么这个Bean在这个程序中并非只有一个。但在实际应用中，如果将对象的生命周期完全交给Spring管理(不在其他地方通过new、反射等方式创建)，其实也能达到单例模式的效果。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1699964082522-9710065b-58d7-479b-9a7f-ce62b63af7d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-da9386991900.png)
 
 ByType-->byName
 
@@ -238,9 +238,9 @@ private MyBean myBean;
 
 @Autowired 和 @Resource 在使用时都可以设置参数，但二者支持的参数以及参数的个数完全不同，其中 @Autowired 只支持设置一个 required 的参数，而 @Resource 支持 7 个参数，支持的参数如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713513602763-e139ca2f-840a-48fe-9b72-bcb23635e992.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-946d6c3c41b7.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713513555699-e4f935cf-aa03-4a14-a5c5-4d8cd9e0222d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-6c6fc3eec646.png)
 
 ## 依赖注入的用法支持不同
 
@@ -298,7 +298,7 @@ public class UserController {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/92791/1661341346342-317ea714-5825-4dc9-96a0-f0a118158380.png#clientId=ueb6b9812-b442-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=391&id=ue8c1c294&margin=%5Bobject%20Object%5D&name=image.png&originHeight=782&originWidth=1822&originalType=binary&ratio=1&rotation=0&showTitle=false&size=92299&status=done&style=none&taskId=u0a26a79d-1578-467f-9065-7d55cf0725d&title=&width=911?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-7539eb6e4ce8.png)
 
 ## 总结
 
@@ -398,7 +398,7 @@ Spring AOP和AspectJ之间并没有特别强的关系，AOP表示面向切面编
 10. Spring事务的传播机制是Spring事务自己实现的，也是Spring事务中最复杂的
 11. Spring事务的传播机制是基于数据库连接来做的，一个数据库连接一个事务，如果传播机制配置为需要新开一个事务，那么实际上就是先建立一个数据库连接，在此新数据库连接上执行sql
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/365147/1622966825505-41961ccc-19e0-4f70-8182-e6e3337eb3af.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_223%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-e7669a0a98ab.png)
 
 # 你是如何理解Spring事务的传播机制的？底层是如何实现的？
 
@@ -451,7 +451,7 @@ Spring中一个Bean的创建大概分为以下几个步骤：
 
 当然其实真正的步骤更加细致，可以看下面的流程图
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/365147/1625729452241-4bc1dbb0-a827-49f1-83b8-70e61fd29a65.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_123%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-68e967d5c544.png)
 
 # Spring中Bean是线程安全的吗
 
@@ -477,7 +477,7 @@ BeanFactory是Spring中非常核心的组件，表示Bean工厂，可以生成Be
 7. 在源码中会更复杂，比如源码中会提供一些模板方法，让子类来实现，比如源码中还涉及到一些BeanFactoryPostProcessor和BeanPostProcessor的注册，Spring的扫描就是通过BenaFactoryPostProcessor来实现的，依赖注入就是通过BeanPostProcessor来实现的
 8. 在Spring启动过程中还会去处理@Import等注解
 
-![image](https://cdn.nlark.com/yuque/0/2021/png/365147/1622965863563-ce71fb30-d01f-4829-93a8-a94d784ccc2c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_151%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-636f9ef6ee37.png)
 
 # @SpringBootApplication注解有什么用？为什么一定要写它？
 
@@ -527,7 +527,7 @@ SpringBoot在启动的过程中，会找出项目中所有的spring.factories文
 
 内置的这些配置类，也可以叫做自动配置类，我们在依赖了spring-boot-starter-web后，会间接的依赖到spring-boot-autoconfigure这个jar，这个jar中都包含了很多的自动配置类：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/365147/1673876857703-8dd2abe1-6432-4585-b439-9e0233c101ac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-e6ab9372584f.png)
 
 这其实就是SpringBoot的自动配置，帮程序员提前配置了很多东西，Bean或者注解。
 
@@ -640,7 +640,7 @@ ApplicationContext（应用上下文）继承了BeanFactory接口，是Spring提
 
 ### 2.2 功能差异
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1744198548153-6b552ad8-1c14-4869-b5eb-41d8b8f043ec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_117%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/0427-hnf1tsxt4echn1eb/img-732179c7538a.png)
 
 ApplicationContext比BeanFactory提供了更多的企业级功能：
 

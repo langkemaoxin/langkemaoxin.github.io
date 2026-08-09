@@ -48,7 +48,7 @@ MCP 遵循客户端-服务器架构（client-server），其中包含以下几�
 - 本地资源（Local Resources）：本地计算机中可供 MCP server 安全访问的资源（例如文件、数据库）。
 - 远程资源（Remote Resources）：MCP server 可以连接到的远程资源（例如通过 API）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742389521876-a8843876-d24d-4da6-99f9-1d493741fcd5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-d1c772763b20.png)
 
 这样架构划分带来的好处显而易见：开发者无需为每次需求重新开发独立的功能模块，而是可以通过一次性开发实现全局复用，大幅降低开发成本。
 
@@ -56,7 +56,7 @@ MCP 遵循客户端-服务器架构（client-server），其中包含以下几�
 
 当大模型识别到非自身原生能力的请求时，MCP 会自动将请求路由到对应的工具模块，执行任务并将结构化的结果返回给大模型，从而实现更高效的交互和扩展性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742460076971-dba69e38-dbdb-41e3-ad47-751190c0bb3f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-6c93d34cb0be.png)
 
 所以总结一句：MCP 是一个大模型能力扩展插件平台。
 
@@ -71,7 +71,7 @@ MCP 遵循客户端-服务器架构（client-server），其中包含以下几�
 **准备工作环境：**
 新建了一个文件夹“windsurf”当做工作空间
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742386906325-cf397763-a86e-4e61-87a9-a7c56dd94bfe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-496522f637f5.png)
 
 **设置规则**
 
@@ -79,7 +79,7 @@ MCP 遵循客户端-服务器架构（client-server），其中包含以下几�
 
 同时在这里打开自动化效果。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742387672695-dfd8f79d-ed78-41ad-be03-e8d0bb114282.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-f84aff771a15.png)
 
 在弹出页面中，Edit workspace rules，来设置当前工作区的规则。
 此时，系统会自动打开一个叫做  .windsurfrules ，这个文件中的内容，就是每次交易执行过程中，会固定发送给模型的话语。
@@ -179,25 +179,25 @@ firecrawl 是一个 AI 友好的网络爬虫工具，他会读取指定URL的内
 填写到 windsurf 新建的 Cascade 模式中，模型使用 Claude 3.7 Sonnet （Thinking）
 效果如下：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388100276-9019fe6a-6f25-424a-af13-99c1f3dbd1c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-8efb8290c054.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388113225-d0f41521-cc59-40e1-9715-ebc3e857fccc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-b61cf2376f19.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388180234-23b886e1-7ab0-4c28-815e-ef87113547f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-8581d06c63a2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388229777-98343d04-2016-40e4-951c-1a7db7f0fbb2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-0728ad2b9a42.png)
 
 在此期间，他自动解决了 虚拟环境问题，库依赖问题，代码错误等等。最终为效果如下：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388464398-a94b1495-93dd-446a-96df-5b295c064523.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-24b90e6271c7.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388479184-f97fc1dd-fe15-4821-93b4-2c5096a326d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-74354896bfb1.png)
 
 如果使用其他 AI 开发工具也能使用上述流程，以下是 cursor 实现的最终结果：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388333577-1293ad7f-a385-4097-9118-f0a005b06b89.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-f66cdb38a15c.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742388348268-9e631588-df10-4250-aa9b-397b3cd1a07c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1472-yxh01c6ilrt7pq2y/img-64089beff08f.png)
 
 =
 

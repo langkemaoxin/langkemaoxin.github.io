@@ -79,7 +79,7 @@ article: false
 
 比如4000000数据量无过滤条件时间差不多。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740030761222-d89f9ab8-0bbe-4cd5-9745-5a2724eb7412.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0333-zxxswr2ounp9qd7k/img-3e013fc81e25.png)
 
 如果业务需要的统计结果不需要特别精确
 
@@ -98,15 +98,15 @@ WHERE Table_schema = 'demo'
 
 查询结果：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740030819665-5aebeb19-34c5-4281-9f9f-4e7bc32f60c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0333-zxxswr2ounp9qd7k/img-0b8765bce45d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740030846027-4ddfd950-089b-4aaf-84a3-418ec776d7f9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0333-zxxswr2ounp9qd7k/img-b7e7b6f0e8a2.png)
 
 #### 2，explain分析sql看是否有优化的余地，最好能走主键索引。
 
 通过上面explain可以看到 key走的不是primary ，加上过滤条件id>0速度能提升一截
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740031050235-b77c8db5-5521-42ed-9b31-3a2956ffb7c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0333-zxxswr2ounp9qd7k/img-5027d20ad48f.png)
 
 #### 3，分批查询或者数据分片汇总统计
 

@@ -13,7 +13,7 @@ article: false
 
 > 来源：[大白话讲解RBAC：从入门到实践的四级模型解析](https://www.yuque.com/tulingzhouyu/db22bv/wp1nrlfnhsqr4lvr)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778193956-1e435da4-25f6-47f4-8f1a-6a434addd985.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-10355883871b.png)
 
 **摘要：** 在现代软件设计中，权限管理是不可或缺的一环。一个混乱的权限系统不仅会带来巨大的维护成本，更可能引发严重的安全漏洞。基于角色的访问控制（Role-Based Access Control, RBAC）是解决这一问题的业界标准方案。本文将用最直白的方式，带您深入理解NIST标准的RBAC四级模型，帮助您在“权限混乱”与“井然有序”之间，做出最适合您业务的架构选择。
 
@@ -23,7 +23,7 @@ article: false
 
 在系统建设初期，为了快速实现功能，我们常常采用将权限直接分配给用户的方式。短期来看，这似乎很直接；但随着用户和权限数量的增加，系统会迅速演变成一张错综复杂、难以维护的“权限蜘蛛网”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778203230-ce7aee3b-80f1-4e1d-a45e-ab21e460d080.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-8a23e956d8c9.png)
 
 如上图左侧所示，直接分配模式导致了用户与权限之间的网状关系。当需要调整一个用户的权限，或者回收某个即将离职员工的所有权限时，管理员需要在一团乱麻中逐一操作，极易出错和遗漏。更糟糕的是，我们很难从宏观上审计“谁到底拥有哪些权限”，安全风险极高。
 
@@ -40,7 +40,7 @@ RBAC模型通过引入“角色（Role）”这一核心概念，优雅地解决
 
 很多人误以为“角色”就是用户的“职位”，例如“销售经理”或“财务总监”。这只说对了一部分。一个设计良好的角色系统，其定义是多维度的，并且包含明确的属性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778212916-fcc48a1f-46a8-45c3-9431-5550cacf0558.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-6023756b67c5.png)
 
 **1. 角色的四大维度：** 在实践中，我们可以从以下四个维度来综合定义一个角色，使其更具业务贴合性：
 
@@ -65,7 +65,7 @@ NIST（美国国家标准与技术研究院）将RBAC模型按其能力和复杂
 
 这是最基础、最核心，也是应用最广泛的RBAC模型。它只包含了用户、角色、权限三个核心实体，以及它们之间的多对多关系。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778221555-c27445e5-38ae-430b-b86a-30d4a79debbf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-e9f17639ddf7.png)
 
 0级模型的核心思想是：一个用户可以拥有多个角色，一个角色可以包含多个权限，同时一个角色也可以被分配给多个用户，一个权限也可以归属于多个角色。其结构扁平，没有角色之间的层级关系。因其简单、灵活且完全能满足大量中小系统的需求，**超过70%的场景使用的都是0级模型或其变体**。
 
@@ -73,7 +73,7 @@ NIST（美国国家标准与技术研究院）将RBAC模型按其能力和复杂
 
 1级模型在0级的基础上，增加了**角色之间的继承关系**，从而形成角色层级。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778230595-b51ce066-2281-4b8d-a1dd-74ea3aa7f701.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-1c25e5dba180.png)
 
 上图生动地展示了其核心理念：高级别角色可以自动继承低级别角色的所有权限。例如，“销售总监”继承了“销售经理”的所有权限，而“销售经理”又继承了“销售专员”的所有权限。这种设计完美映射了现实世界中的组织架构和职级体系，极大地减少了权限的重复配置工作。当需要为所有销售人员增加一项新权限时，只需将其添加到最基础的“销售专员”角色上即可。
 
@@ -81,7 +81,7 @@ NIST（美国国家标准与技术研究院）将RBAC模型按其能力和复杂
 
 2级模型在1级模型的基础上，引入了**职责分离（Separation of Duty, SoD）**的约束。职责分离是内部风险控制的关键原则，旨在防止单一用户拥有过大权限而产生舞弊行为。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778236477-ae83f27d-1e47-48b0-89bc-a657ff19d086.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-4241cceed12c.png)
 
 2级模型主要包含两种约束实现：
 
@@ -92,7 +92,7 @@ NIST（美国国家标准与技术研究院）将RBAC模型按其能力和复杂
 
 3级模型是RBAC的“完全体”，它整合了前述所有级别的功能（角色继承与职责分离），并增加了**权限审查**机制。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778243526-cec9e88d-7e6d-429b-9e67-d36859bce498.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-3c50c3bcc08d.png)
 
 该模型要求系统提供定期或按需的权限审查功能，能够清晰地回答“某个用户当前究竟拥有哪些有效权限？”这类审计问题。这通常需要强大的工作流引擎和审计日志支持。由于其极高的复杂性和维护成本，3级模型仅在金融、军工、政务等对安全与合规有极致要求的领域中被应用。
 
@@ -102,7 +102,7 @@ NIST（美国国家标准与技术研究院）将RBAC模型按其能力和复杂
 
 经过对四个级别的分析，我们可以得出一个清晰的选型图谱。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762778254678-7befb5ea-f837-49c7-851b-23a52fc0e324.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0962-wp1nrlfnhsqr4lvr/img-00838c6cea81.png)
 
 虽然RBAC模型从0级到3级越来越强大，但这并不意味着我们应该盲目追求“大而全”。在软件工程领域，“恰到好处”远比“功能堆砌”更有价值。
 

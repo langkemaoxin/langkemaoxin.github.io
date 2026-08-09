@@ -172,8 +172,8 @@ ConsumeQueue 是消费者能快速定位消息的关键。它采用**定长设�
 
 ## 总结：RocketMQ 存储性能公式
 
-![](https://cdn.nlark.com/yuque/__latex/d29b5180c06cca69675f00aebe43345b.svg)
+![](/面试题/Rocketmq/0634-xmoqrypne7cv9pft/img-9924392ae1ae.svg)
 
-![](https://cdn.nlark.com/yuque/__latex/12517cd6076ca2aabcff9f6b9bf27311.svg)
+![](/面试题/Rocketmq/0634-xmoqrypne7cv9pft/img-59967cd3d9f3.svg)
 
 通过这种将硬盘当内存用的设计，RocketMQ 实现了在普通硬件上单机十万级甚至百万级的 TPS。

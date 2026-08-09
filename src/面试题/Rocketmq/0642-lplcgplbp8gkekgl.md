@@ -35,7 +35,7 @@ RocketMQ 的事务消息，本质上是把 **MQ 消息变成了“两阶段提�
 
 注意看图中的 **"Real Topic"** 和 **"Half Topic"** 的区别，这是理解的钥匙。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/29768021/1767949549744-db5f5a06-5c93-48f5-980c-fb7d003d8cf8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Rocketmq/0642-lplcgplbp8gkekgl/img-41cb68855d17.png)
 
 这张图展示了消息在 Broker 内部的“隐身”与“现身”过程。
 

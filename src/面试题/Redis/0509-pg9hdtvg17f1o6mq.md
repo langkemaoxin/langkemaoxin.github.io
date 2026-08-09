@@ -21,7 +21,7 @@ article: false
 
 Redisson分布式锁默认用“看门狗”机制守护锁。加锁成功后，如果业务执行时间超过锁的默认过期时间（30秒），看门狗会周期性自动为锁续期（一般每10秒续一次，每次续到30秒），避免锁被提前释放。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1745479133034-3d40bd84-296e-416d-a08e-c40bc819ff18.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0509-pg9hdtvg17f1o6mq/img-299fc7ad8eb8.png)
 
 ---
 

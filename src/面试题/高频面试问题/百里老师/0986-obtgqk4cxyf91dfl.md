@@ -15,7 +15,7 @@ article: false
 
 在现代软件开发中，“发布”是连接代码与价值的最后一公里，却也常常是开发者最心惊胆战的一环。一次失败的发布，轻则引发用户抱怨，重则可能导致服务中断和经济损失。为了确保发布的稳定性和可控性，业界探索出了多种发布策略，其中，灰度发布、蓝绿部署和滚动发布无疑是应用最广、最高效的三种模式。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761122238891-d45f760d-c260-42fd-9363-9f1cd2b15d00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0986-obtgqk4cxyf91dfl/img-6fac78048c01.png)
 
 本文将通过深入浅出的方式，带你彻底理解这三种策略的核心思想、工作流程、关键差异以及它们各自的最佳适用场景。
 
@@ -23,7 +23,7 @@ article: false
 
 灰度发布，又称金丝雀发布，其名源于矿工用金丝雀来探测矿井中有害气体的典故。在软件发布中，“金丝雀”就是我们的新版本，我们先让一小部分用户（比如内部员工、特定地区或特征的用户）去“试用”这个新版本，以此来“探测”它是否存在问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761122259782-9c8255d2-af61-4e64-8a8a-65cdd1dcc195.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0986-obtgqk4cxyf91dfl/img-ad0400b3d135.png)
 
 **工作流程：**
 
@@ -38,7 +38,7 @@ article: false
 
 蓝绿部署的核心在于通过“空间换时间”的策略，实现零停机和近乎瞬时的回滚。它要求准备两套完全相同且独立隔离的生产环境，分别称为“蓝色”环境和“绿色”环境。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761122282862-6d205020-3ed7-4788-a9e6-d89a63a1de7b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0986-obtgqk4cxyf91dfl/img-571257e1968b.png)
 
 **工作流程：**
 
@@ -53,7 +53,7 @@ article: false
 
 滚动发布是三种策略中最常见、最易于理解的一种。它通过逐个或分批次地用新版本实例替换旧版本实例，来实现系统的平滑升级，就像“蚂蚁搬家”一样。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761122331239-cd2702cc-3f46-4724-aafd-53fae1dd3a35.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0986-obtgqk4cxyf91dfl/img-2afeba20a989.png)
 
 **工作流程：**
 
@@ -67,7 +67,7 @@ article: false
 
 发布策略的优劣，不仅体现在上线过程的平顺，更体现在出现问题时的“补救”能力。回滚机制是衡量一个发布策略成熟度的关键。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761122381305-75bd1cea-4817-475e-b0a2-1995605385e1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0986-obtgqk4cxyf91dfl/img-5614ff6a7c2b.png)
 
 - **蓝绿部署的回滚**：堪称“王者”。如图所示，只需再次操作负载均衡器，将流量指回仍然在待命的旧版本环境即可。这个过程是**瞬时**的，对用户几乎无感知。
 - **灰度发布的回滚**：非常**快速**。只需在流量网关层面修改规则，将新版本的流量权重降为 0%，所有用户流量就会立刻回归到稳定的旧版本。
@@ -77,7 +77,7 @@ article: false
 
 没有放之四海而皆准的“银弹”，只有最适合当前业务场景的选择。下面这张决策矩阵可以帮助你做出判断。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761122401332-4b2ff8e0-eee6-4783-a6e4-de6034a851d7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0986-obtgqk4cxyf91dfl/img-0a987c8bfceb.png)
 
 **一句话总结：**
 

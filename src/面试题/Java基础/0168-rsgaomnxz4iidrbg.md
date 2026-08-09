@@ -17,7 +17,7 @@ article: false
 
 今天跟大家一起聊聊线上服务出现OOM问题的6种场景，希望对你会有所帮助。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724923208303-0a73fb4f-db5f-4186-9ae4-7d8cce5beaf4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0168-rsgaomnxz4iidrbg/img-6ef5cbd7d590.png)
 
 ## 堆内存OOM
 
@@ -47,7 +47,7 @@ public void test01() {
 
 执行结果：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1724995427551-f648f9e6-9740-4384-98e4-5a0359588a45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0168-rsgaomnxz4iidrbg/img-6bcb4462dc86.png)
 
 出现了java.lang.OutOfMemoryError: Java heap space的堆内存溢出。
 
@@ -109,7 +109,7 @@ public static void recursiveMethod() {
 
 执行结果：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1725000891486-d9713e33-3faa-4321-84fb-bf38c4a7ac7b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0168-rsgaomnxz4iidrbg/img-cf188df8399f.png)
 
 出现了java.lang.StackOverflowError栈溢出的错误。
 

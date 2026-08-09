@@ -15,7 +15,7 @@ article: false
 
 在 AI 应用落地的过程中，我们经常听到这三个词：Workflow（工作流）、Agent（智能体）和 Multi-Agent（多智能体）。它们不仅仅是技术名词的堆砌，更代表了 AI 解决问题时三种截然不同的思维范式。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766992473312-7c8a77be-e504-4b59-a63f-87cbf6924edc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0900-ogcuc5h9b657gxyu/img-2d5ec08c1580.png)
 
 本文将结合可视化图表，带你深入理解这三种架构的本质区别与选型策略。
 
@@ -23,7 +23,7 @@ article: false
 
 ### 1. Workflow：确定性的工业流水线
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766992484190-f952f22b-f196-4823-808b-ed900fc9abaa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0900-ogcuc5h9b657gxyu/img-c71f7a94d356.png)
 
 如上图所示，**Workflow（工作流）的本质是“静态规划（Static Planning）”**。
 
@@ -36,7 +36,7 @@ article: false
 
 ### 2. Agent：拥有大脑的独立决策者
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766992490384-fe3e8a7c-f402-4e3c-a27f-f31c4333d0a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0900-ogcuc5h9b657gxyu/img-6084f41e6d37.png)
 
 当我们把视角切换到 **Agent（智能体）**，架构发生了根本性的变化。
 
@@ -49,7 +49,7 @@ article: false
 
 ### 3. Multi-Agent：复杂系统的社会化分工
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766992498036-0d0603f6-0771-4f32-ae0b-e9dd6fdfde59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0900-ogcuc5h9b657gxyu/img-2e5764c5a943.png)
 
 当任务的复杂度进一步提升，单个 Agent 的上下文窗口和推理能力捉襟见肘时，我们就需要 **Multi-Agent（多智能体）**。
 
@@ -62,7 +62,7 @@ article: false
 
 ### 4. 核心对比与选型指南
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766992504091-a6092726-bb75-4ca7-8bb4-7518c389dfd4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0900-ogcuc5h9b657gxyu/img-806f7aca51e1.png)
 
 最后，我们通过这张核心对比图来总结选型策略。
 

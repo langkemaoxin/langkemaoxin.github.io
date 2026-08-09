@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751686059503-02a209a7-2361-4b2a-8dd5-f16a7b8c2b44.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1430-yutf95krsvp8qeh8/img-5d644ad8ba41.png)
 
 混合专家模型（MoE）通过**稀疏激活机制**降低计算成本，其核心是让每个输入仅激活少量专家（如Top-2），而非全量计算。具体实现路径如下：
 
@@ -39,7 +39,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751686087408-2c88925d-e8dc-4618-b311-ff0fd761df4b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1430-yutf95krsvp8qeh8/img-38535395a049.png)
 
 #### **案例1：DeepSeek-V2的工业级MoE实现**
 
@@ -77,7 +77,7 @@ article: false
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751686099220-3ee7527c-bb5f-46d5-9381-f28e1852c4c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1430-yutf95krsvp8qeh8/img-ed374ba22005.png)
 
 **面试官**：请解释MoE如何降低计算成本，并举例说明实际应用。 **候选人**：
 MoE的核心是通过**稀疏激活**降低计算量。例如DeepSeek-V2模型包含2360亿参数，但每次推理仅激活约210亿参数（约8.9%）。这是通过门控网络动态选择Top-2专家实现的，计算量公式为`FLOPs = 2 × P_activated × L`，相比稠密模型降低一个数量级。

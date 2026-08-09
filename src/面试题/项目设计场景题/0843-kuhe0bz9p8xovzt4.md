@@ -42,22 +42,22 @@ article: false
 
 **缓存问题**：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1717057899471-cce52ea0-55d8-4941-b696-c7f00838864e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0843-kuhe0bz9p8xovzt4/img-e59576e3d7b9.png)
 
 **消息中间件问题**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1717057921647-15935e75-1e9f-4349-b9bb-ef6803d8b4d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0843-kuhe0bz9p8xovzt4/img-5ea61bddf452.png)
 
 **分布式问题**：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1717057929324-c072bbdd-c449-4a0a-a449-bd8f8229ce8f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0843-kuhe0bz9p8xovzt4/img-ea8101767b4c.png)
 
 **系统问题**：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1717057934957-fa667f38-9a12-4832-b671-3bf7ab7f15bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0843-kuhe0bz9p8xovzt4/img-330037a07b42.png)
 
 **线上故障排查方式**等。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1717057943544-012a19d4-7b79-4039-984d-0d4e8bc0561f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0843-kuhe0bz9p8xovzt4/img-2786eae7588e.png)
 
    如果你的项目是高并发，这些问题都有可能会问到，不会可以联系我主页的联系方式进行学习。

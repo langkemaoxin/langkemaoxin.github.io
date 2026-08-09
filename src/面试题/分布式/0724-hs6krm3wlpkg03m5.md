@@ -35,7 +35,7 @@ PS:幂等和防重有些不同，防重强调的防止数据重复，幂等强�
 
 ## 怎么保证接口幂等性？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1696575754311-fb0282b1-889d-447b-a7c5-b80abea1a542.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0724-hs6krm3wlpkg03m5/img-8f4da63da02a.png)
 
 接口幂等性
 

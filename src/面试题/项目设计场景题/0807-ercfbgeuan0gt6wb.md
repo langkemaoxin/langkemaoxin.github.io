@@ -21,13 +21,13 @@ article: false
 
 短URL生成器，也称作短链接生成器，就是将一个比较长的URL生成一个比较短的URL，当浏览器通过短URL生成器访问这个短URL的时候，重定向访问到原始的长URL目标服务器，访问时序图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597445944-2435a73d-57dc-4809-9cb0-afeffec19d7c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-2b184dbb4337.png)
 
 对于需要展示短URL的应用程序，由该应用调用短URL生成器生成短URL，并将该短URL展示给用户，用户在浏览器中点击该短URL的时候，请求发送到短URL生成器（短URL生成器以HTTP服务器的方式对外提供服务，短URL域名指向短URL生成器），短URL生成器返回HTTP重定向响应，将用户请求重定向到最初的原始长URL，浏览器访问长URL服务器，完成请求服务。
 
 #### **1.1 短URL生成器的用例图**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597446144-3845af3c-de92-4a69-82e5-af1e7fb6ce36.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-5b40cd97e7c8.png)
 
 1. 用户client程序可以使用短URL生成器Fuxi为每个长URL生成唯一的短URL，并存储起来。
 2. 用户可以访问这个短URL，Fuxi将请求重定向到原始长URL。
@@ -83,7 +83,7 @@ small646approx680亿𝑠𝑚𝑎𝑙𝑙646𝑎𝑝𝑝𝑟𝑜𝑥680亿
 
 通常的设计方案是，将长URL利用MD5或者SHA256等单项散列算法，进行Hash计算，得到128bit或者256bit的Hash值。然后对该Hash值进行Base64编码，得到22个或者43个Base64字符，再截取前面的6个字符，就得到短URL了，如图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597445861-20fe95b7-7bef-458b-acf1-e5cade0f76b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-b975308e53c6.png)
 
 但是这样得到的短URL，可能会发生Hash冲突，即不同的长URL，计算得到的短URL是相同的（MD5或者SHA256计算得到的Hash值几乎不会冲突，但是Base64编码后再截断的6个字符有可能会冲突）。所以在生成的时候，需要先校验该短URL是否已经映射为其他的长URL，如果是，那么需要重新计算（换单向散列算法，或者换Base64编码截断位置）。重新计算得到的短URL依然可能冲突，需要再重新计算。
 
@@ -105,7 +105,7 @@ small646approx680亿𝑠𝑚𝑎𝑙𝑙646𝑎𝑝𝑝𝑟𝑜𝑥680亿
 
 Fuxi的业务逻辑比较简单，相对比较有挑战的就是**高并发的读请求如何处理、预生成的短URL如何存储以及访问**。高并发访问主要通过负载均衡与分布式缓存解决，而海量数据存储则通过HDFS以及HBase来完成。具体架构图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597446028-7b40655f-43f1-4fc7-89b5-2cce2b03967a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-bc95b2d15bf5.png)
 
 系统调用可以分成两种情况，一种是用户请求生成短URL的过程；另一种是用户访问短URL，通过Fuxi跳转到长URL的过程。
 
@@ -113,13 +113,13 @@ Fuxi的业务逻辑比较简单，相对比较有挑战的就是**高并发的�
 
 短URL预加载服务器此前已经从短URL预生成文件服务器（HDFS）中加载了一批短URL存放在自己的内存中，这时，只需要从内存中返回一个短URL即可，同时将短URL与长URL的映射关系存储在HBase数据库中，时序图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597445981-4b37776c-92e7-474c-a8df-1f1f009efb51.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-7cbbb69203d0.png)
 
 对于用户通过客户端请求访问短URL的过程（即输入短URL，请求返回长URL），请求通过负载均衡服务器发送到短URL服务器集群，短URL服务器首先到缓存服务器中查找是否有该短URL，如果有，立即返回对应的长URL，短URL生成服务器构造重定向响应返回给客户端应用。
 
 如果缓存没有用户请求访问的短URL，短URL服务器将访问HBase短URL数据库服务器集群。如果数据库中存在该短URL，短URL服务器会将该短URL写入缓存服务器集群，并构造重定向响应返回给客户端应用。如果HBase中没有该短URL，短URL服务器将构造404响应返回给客户端应用，时序图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597446597-f0014974-8a9b-4b35-b30c-2f2db12a04ea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-15ef541698d5.png)
 
 过期短URL清理服务器会每个月启动一次，将已经超过有效期（2年）的URL数据删除，并将这些短URL追加写入到短URL预生成文件中。
 
@@ -165,7 +165,7 @@ Wdj4FbOxTw9CHtvPM1
 
 与之对应的URL链表类图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597446569-3b6d06b0-6ce5-4964-94fa-359862227576.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-06615e554b2b.png)
 
 **URLNode**：URL链表元素类，成员变量uRL即短URL字符串，next指向下一个链表元素。
 
@@ -181,12 +181,12 @@ Fuxi允许用户自己定义短URL，即在生成短URL的时候，由用户指�
 
 标准Base64编码表如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597446513-f117ce24-a926-4e5d-bf91-adb5e66ef8ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-381df0f9f62a.png)
 
 其中“+”和“/”在URL中会被编码为“%2B”以及“%2F”，而“%”在写入数据库的时候又和SQL编码规则冲突，需要进行再编码，因此直接使用标准Base64编码进行短URL编码并不合适。URL保留字符编码表如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597446577-7d78b153-c736-4acb-bcf5-a5ad7e767528.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-9e2b6bb88bb2.png)
 
 所以，我们需要针对URL场景对Base64编码进行改造，使用URL保留字符表以外的字符对Base64编码表中的62，63进行编码：将“+”改为“-”，将“/”改为“_”，Fuxi最终采用的URL Base64编码表如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597446629-205ffc23-59fd-404a-b037-bdf9a2f4f543.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0807-ercfbgeuan0gt6wb/img-f735e2e7786d.png)

@@ -86,4 +86,4 @@ AI知识滞后、专业度不足，避免“幻觉”
 
 厘清MCP、RAG、Agent的核心区别，是掌握AI技术落地逻辑的第一步。三者并非“谁更先进”的竞争关系，而是基于不同角色分工的互补技术——MCP解决“执行落地”问题，RAG解决“知识可靠”问题，Agent解决“决策规划”问题。只有明确各自的技术边界与适用场景，才能在后续的协同应用中精准调度资源，让AI技术真正贴合业务需求，而非陷入“技术堆砌”的误区。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766142799485-103375af-4804-4fc4-b7b8-150c367a2b24.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_87%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1148-gwa9yds7hekqdrtc/img-97652c540150.png)

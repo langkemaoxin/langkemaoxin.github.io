@@ -23,7 +23,7 @@ Redlock 是 Redis 创始人提出的一种分布式锁算法，主要用于解�
 
 ### 实现原理
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1747924180155-560ce866-b613-4989-93a4-8dcf12d5b9d0.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0506-qw8x7dd695ocvyyr/img-bb731bfeeead.jpg)
 
 #### 部署要求
 
@@ -35,7 +35,7 @@ Redlock 是 Redis 创始人提出的一种分布式锁算法，主要用于解�
 
 为了**获取锁，客户端执行以下操作**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747924202770-8aa7875f-f6b0-4335-898a-d535d1e59fe0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0506-qw8x7dd695ocvyyr/img-31dceffa1c5e.png)
 
 1. **记录时间：** 客户端先记录下当前的毫秒时间（比如 `start_time`），用来计算整个加锁过程的耗时。
 2. **尝试加锁：** 客户端依次（其实可以并行，为简化描述暂且理解为依次）向所有 N 个独立 Redis 实例，使用相同的“key”和唯一的随机“value”（一般为 UUID）尝试加锁，且每个锁的有效期都一致，比如 10 秒。
@@ -45,7 +45,7 @@ Redlock 是 Redis 创始人提出的一种分布式锁算法，主要用于解�
 6. **加锁失败的处理：** 如果没有在大多数实例抢到锁，或者加锁太慢导致剩余可用锁时间明显不足，客户端应该立即向所有实例发送解锁（释放锁）操作，无论这些实例是否加锁成功，这样可以减少“脏锁”残留。
 7. **重试：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747924220785-017f9b34-6782-4133-970c-27eea44b7bff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0506-qw8x7dd695ocvyyr/img-c0c1bb706896.png)
 
 同时向所有的Redis服务器，发送`SET key value EX senconds NX`命令，当所有服务器都返回结果后，判断是否以达成“锁获取成功的两个条件”，如果达成了，则锁获取成功。如果没有，则立即将已获取的锁释放掉，并
 

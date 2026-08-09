@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245937691-d2d69102-acc4-4336-8da7-19f7e53fca5f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1409-gd4tl8xv7gf64kle/img-7cfe359c722f.png)
 
 在面试大模型开发工程师时，面试官可能会问到“大模型API服务部署优化”这一问题。为了回答这个问题，我们需要从以下几个方面进行结构化解答：
 
@@ -27,7 +27,7 @@ article: false
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245947636-fa2d6c47-ec6c-4f08-8812-3ba0df79f6c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1409-gd4tl8xv7gf64kle/img-dde42c14671b.png)
 
 #### 案例背景
 
@@ -49,7 +49,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245966219-40d345dc-0cb5-4f2b-82cc-f84a8fd4e674.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1409-gd4tl8xv7gf64kle/img-6b72eab0acfa.png)
 
 在回答面试官的问题时，可以按照以下结构进行：
 
@@ -84,6 +84,6 @@ article: false
 
 ### 四、总结收尾
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245981646-fbd38e81-3b7b-4eb4-abf2-e10e756ea85f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1409-gd4tl8xv7gf64kle/img-c8e19f1038b4.png)
 
 在回答面试官的问题时，不仅要详细说明优化策略和实施过程，还要强调这些策略的实际效果和价值。通过具体案例的说明，可以让面试官更直观地了解你的技术能力和解决问题的思路。最后，总结优化工作的整体效果，强调优化策略的重要性和实际应用价值，给面试官留下深刻的印象。

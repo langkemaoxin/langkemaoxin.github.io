@@ -28,7 +28,7 @@ article: false
 
 在工程实践中，我们通常采用以下三个层级的手段来保证结构化输出的稳定性：
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781597308177-147c81c8-90f3-4a6a-a563-1863c675c1be.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1282-qqk86bzvhxebvbn0/img-5d5bba0f958c.png)
 
 ### Level 1: 提示词工程与原生 API 支持 (基础防线)
 

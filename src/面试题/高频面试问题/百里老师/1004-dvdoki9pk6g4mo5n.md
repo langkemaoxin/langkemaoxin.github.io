@@ -23,7 +23,7 @@ article: false
 
 今天，我们就将这个问题的答案，彻底讲透。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760062707404-54300b40-2376-41b2-86b7-ae2f66145211.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1004-dvdoki9pk6g4mo5n/img-eebca005c90d.png)
 
 ---
 
@@ -39,7 +39,7 @@ article: false
 
 这就是高吞吐量带来的“甜蜜的烦恼”：**并发消费打破了“先进先出”（FIFO）的理想模型**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760062732566-0002988a-96e6-4248-90e3-7656507a3ef7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1004-dvdoki9pk6g4mo5n/img-bdc61ace9b09.png)
 
 上图左侧的“并发下的混乱”直观地展示了这个问题：生产者P1（创建）和P2（支付）的消息被不同消费者（C1, C2）无序处理。而右侧，则是我们期望的理想状态：同一业务（订单）的消息，被同一个消费者严格按照发送顺序处理。
 
@@ -57,7 +57,7 @@ RocketMQ为此提供了 `MessageQueueSelector` 接口。我们可以在发送消
 
 只要我们的业务标识（`orderId`）是固定的，那么无论发送多少条与该订单相关的消息（创建、支付、完成），它们最终都会落入完全相同的队列中。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760062752575-b16fbc55-16a2-4908-b57e-dbd7a6d36125.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1004-dvdoki9pk6g4mo5n/img-d49625e86478.png)
 
 如图所示，所有 `OrderID` 为 "A001" 的消息，经过 `MessageQueueSelector` 的计算（`hash("A001") % 3 = 1`），都被精准地投递到了 `Queue 1` 这条**“专属高速车道”**上。
 
@@ -100,7 +100,7 @@ producer.send(payMsg, /* ...同样的Selector... */, orderId);
 
 RocketMQ 为此提供了 `MessageListenerOrderly`。它就像一个纪律严明的“专属收费员”。当一个消费者线程开始处理某个队列时，它会先**获取该队列的分布式锁**。只要它没有释放锁，其他线程就无法消费此队列中的任何消息。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760062768614-85dac1e1-a1dc-4ff9-b1ea-4148da7a2908.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1004-dvdoki9pk6g4mo5n/img-7f92eb61429a.png)
 
 请看上图的生动演示：
 
@@ -145,7 +145,7 @@ consumer.start();
 
 全局顺序看似简单，但它牺牲了整个系统的并行处理能力，吞吐量极低，扩展性极差，在现代分布式应用中几乎不可接受。而分区顺序，则是在顺序性与性能之间找到了完美的平衡。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760062785896-5732da9f-90c8-4ce2-8c6d-2b4171648d95.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1004-dvdoki9pk6g4mo5n/img-1160a7e4da94.png)
 
 如表格所示，分区顺序在吞吐量和扩展性上拥有压倒性优势，是如今互联网架构下的**“事实标准”**。
 
@@ -155,7 +155,7 @@ consumer.start();
 
 现在，让我们回到最初的问题。当面试官问你如何保证消息顺序性时，你可以自信地给出下面这张图所展示的完整流程：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760062792819-4dbc75fa-be49-4cfa-9abc-9c0ce26dc999.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1004-dvdoki9pk6g4mo5n/img-2f149b811b54.png)
 
 然后，你可以这样总结：
 

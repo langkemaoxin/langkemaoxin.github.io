@@ -13,31 +13,31 @@ article: false
 
 > 来源：[5亿用户数据，面试官的‘死亡追问’你敢接吗？](https://www.yuque.com/tulingzhouyu/db22bv/chgdt98fpor0baz5)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758809829643-93e1de9f-b90c-447a-9384-e0ece8abd1de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_56%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1121-chgdt98fpor0baz5/img-44e10165c610.png)
 
 ****我敢说，90%的同学在面试时，都掉进过面试八股的陷阱。面试官问：“做过分库分表吗？”，你张口就来：“做过！”然后面试官提一个业务场景：“五亿用户数据，怎么分库分表”。你下意识的就想到那些你背得滚瓜烂熟的面试八股，什么分库分表、垂直分、水平分，脱口而出。你回答得没错，但你可能已经与这个Offer失之交臂了。
 
 为什么？因为你要知道，面试最终希望考察的不是你的记忆力，而是你思考问题解决问题的能力。谈到分库分表，表怎么分？数据怎么查？重要业务场景怎么设计？这些才是真正能够打动面试官的。今天，我就带你走完这“从背书到实战”的最后一公里。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758809880394-0c80edb4-f9d5-40dd-b896-47b99fdf04b3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1121-chgdt98fpor0baz5/img-4fa493882621.png)
 
 我们回到这个经典的面试场景：5亿用户的巨型表t_user，登录缓慢。**(手指向“垂直分表”)**第一刀，垂直拆分。冷热分离，把不常用的用户资料，拆到【冷表】t_user_profile；把登录要用的认证信息，留在【热表】t_user_auth。业务上进行一些隔离，这样每次登录时要读的数据就能少一些。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758809891369-a88e5216-a39c-4d10-8e3e-1d20f1f84379.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1121-chgdt98fpor0baz5/img-0740f65c5fee.png)
 
 但这样毕竟改变不了数据量太多的本质问题。所以第二刀，水平拆分。把这张最常用的认证表，按user_id哈希，切成1024张小表。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758809905867-6df22c46-8ae9-42cd-bd2e-72e1dc90ba49.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1121-chgdt98fpor0baz5/img-1bec92e40b6b.png)
 
 好，到此为止，这是所有教科书都会教你的标准流程。但对于一个真实的线上系统，噩梦才刚刚开始。
 
 此时，一个顶尖的面试官，会立刻抛出他的**“死亡追问”**：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758809930710-2f8d64df-51e2-4f46-b5f3-16bae1421adc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1121-chgdt98fpor0baz5/img-e0ceb27716c8.png)
 
 **你按 user_id 分片，那用户现在用 username 来登录，你告诉我，数据在哪张表里？难道你要让我的系统去轮询1024张表吗？你的登录接口不是要爆炸吗？”这个问题，就是程序员的试金石！它考验的根本不是你记住了什么，而是你有没有能力去设计一个**优雅、高效、且能预见未来**的系统！而我们的破局点，就是这个听起来有点科幻的——**基因分片法！**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758809951076-f669f5a9-ca1f-4b3d-9e6e-65c30db523e6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1121-chgdt98fpor0baz5/img-954bbada37e0.png)
 
 别眨眼，我们分三步，彻底解构这个方案：
 
@@ -54,7 +54,7 @@ article: false
 
 这种将技术方案与业务场景深度绑定的能力，这种预见问题并提前设计解决方案的思维，才是让你在面试中脱颖而出，拿到offer的真正价值所在。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758809989012-d08defe7-ec0e-42c3-a653-9ebdef952d81.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1121-chgdt98fpor0baz5/img-97ce655d61db.png)
 
 ****面试，从来不是让你背题，而是给你一个机会，展示你的思考深度。
 

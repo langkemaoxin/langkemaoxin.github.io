@@ -112,7 +112,7 @@ VALUES
 	(10, 'Apple Watch', 10);
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681647534852-79c6b665-6a01-4e76-8ced-a59bd08408b7.png#averageHue=%23f8f7f6&clientId=u12bf0ef1-bbb0-4&from=paste&height=192&id=u357ecc93&originHeight=431&originWidth=838&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=73260&status=done&style=none&taskId=ue7c8470c-09fd-4365-9bb2-99c7de15579&title=&width=372.44444444444446?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-9223aa52b07e.png)
 
 此时orders表存在（3,7），（7,10），（10,正无穷）。
 **操作步骤如下**：
@@ -175,7 +175,7 @@ SELECT * FROM orders WHERE order_id = 15 FOR UPDATE;
 临键锁（Next-key Locks）是MySQL InnoDB存储引擎实现的一种数据行级别的锁机制，它是**行级锁与间隙锁的组合**，即位于索引记录与索引区间之间的一种排它锁。
 临键锁主要目的是为了解决幻读问题，能够封锁该条记录相邻两个键之间的空白区域，防止其他事务在这个区域内插入、修改、删除数据。临键锁只与非唯一索引列有关，在唯一索引列（包括主键列）上不存在临键锁
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1681647534852-79c6b665-6a01-4e76-8ced-a59bd08408b7.png#averageHue=%23f8f7f6&clientId=u12bf0ef1-bbb0-4&from=paste&height=192&id=XSHJF&originHeight=431&originWidth=838&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=73260&status=done&style=none&taskId=ue7c8470c-09fd-4365-9bb2-99c7de15579&title=&width=372.44444444444446?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-9abf16e1a4d0.png)
 
 ```sql
 #事务A
@@ -220,7 +220,7 @@ MySQL的索引机制中，有一点可谓是路人皆知，既默认使用B+树�
 
 依次存入数据，如果数据是递增的，则原二叉树退化为链表结构。
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/35268836/1686214243821-6cde3ce8-35d1-40f9-8dbb-88bec7e46aaa.gif#averageHue=%23fefdfc&clientId=ufdf09677-241b-4&from=drop&height=578&id=u6d7bd644&originHeight=920&originWidth=1838&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=328505&status=done&style=none&taskId=uf33aff06-5c2e-47e3-8b56-6f60513c57a&title=&width=1155?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-1d5d70c121b2.gif)
 
 从动画中可以明显看到，需要经过5次查询才能找到目标数据，由于树结构在磁盘中存储的位置也不连续，所以最终需要发生**5次磁盘IO**才能找到目标数据。
 二叉树不适合作为索引结构的原因：
@@ -232,7 +232,7 @@ MySQL的索引机制中，有一点可谓是路人皆知，既默认使用B+树�
 
 相比于二叉树，红黑树则进一步做了优化，它是一种自适应的平衡树，会根据插入的节点数量以及节点信息，自动调整树结构来维持平衡。
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/35268836/1686214099705-769e08b2-416d-49f0-837e-18a2b88ee0d3.gif#averageHue=%23faf9f7&clientId=ufdf09677-241b-4&from=drop&id=u5c05813e&originHeight=801&originWidth=1816&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=231480&status=done&style=none&taskId=u6c7f2ffc-726b-4e01-86aa-937a569af85&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-c9bcaca8fd94.gif)
 
 由于树变矮了，其效果也很明显，在红黑树中只需要经过**3次IO**就可以找到目标数据，似乎看起来还不错对嘛？但MySQL为啥不用这颗名声远扬的红黑树呢？
 红黑树不适合作为索引结构的原因：
@@ -244,7 +244,7 @@ MySQL的索引机制中，有一点可谓是路人皆知，既默认使用B+树�
 
 B树和红黑树相比，其单节点可容纳多个数据，就能在很大程度上改善其性能，使B树的树高远远小于红黑树的高度。
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/35268836/1686214655643-aacb5aaa-8c3c-4a71-a87a-5edc6d345020.gif#averageHue=%23e7dab3&clientId=ufdf09677-241b-4&from=drop&id=u4713928a&originHeight=760&originWidth=1816&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=171307&status=done&style=none&taskId=u5e9b5f2f-4a81-455a-9fa5-5cbd3eceee3&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-8ea6fe10575b.gif)
 
 对比红黑树可以发现，每个节点上可以存储更多的数据，且树高固定，数据插入之后横向扩展。观察动画只需要**2次IO**就可以找到目标数据，搜索效率大大提高了。并且每个节点的元素我们可以自己控制。
 **那么为什么MySQL没有采用B树结构了？**
@@ -257,7 +257,7 @@ B树不适合作为索引结构的原因：
 
 B+树是在B树的基础进一步优化，一方面节点分为了**叶节点和叶子节点**两类，另一方面叶子节点之间存在**单向链表指针**。
 
-![image](https://cdn.nlark.com/yuque/0/2023/gif/35268836/1686215864124-362a70fa-a7af-42dc-8e7c-1a809817456f.gif#averageHue=%23bfc07c&clientId=ufdf09677-241b-4&from=drop&id=ud4febbd0&originHeight=778&originWidth=1824&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=197120&status=done&style=none&taskId=u8f08e69e-9820-450e-9cd4-a2c9b192d07&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-0d56653225fb.gif)
 
 B+树相比于B树叶子节点之间多了个单项指针，当需要做范围查询时，只需要定位第一个节点，然后就可以直接根据各节点之间的指针，获取到对应范围之内的所有节点，也就是只需要发生一次IO，就能够确定所查范围之内的所有数据位置。
 其实**MySQL底层真正的索引结构**还对叶子节点之间的指针进行了优化，B+树叶子节点的单向指针无法友好支持的倒叙查询，因此MySQL针对单向指针优化成了双向指针，也就是**双向链表结构**。即**可以快速按正序进行范围查询，而可以快速按倒序进行范围操作**，在某些业务场景下又能进一步提升整体性能！
@@ -277,7 +277,7 @@ B+树相比于B树叶子节点之间多了个单项指针，当需要做范围�
 索引下推（INDEX CONDITION PUSHDOWN，简称 ICP）是在 MySQL 5.6 针对**扫描二级索引**的一项优化改进。总的来说是通过把索引过滤条件下推到**存储引擎**，来减少 MySQL 存储引擎访问基表的次数以及 MySQL 服务层访问存储引擎的次数。ICP 适用于 MYISAM 和 INNODB，本篇的内容只基于 INNODB。
 在讲这个技术之前你得对mysql架构有一个简单的认识，见下图：
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003706280-de5986c6-f305-460a-af5f-0afcbee448ee.png#averageHue=%23f7f2e1&clientId=uf8e23505-f563-4&from=paste&height=369&id=u1a9e53d9&originHeight=468&originWidth=619&originalType=binary&ratio=1&rotation=0&showTitle=false&size=31985&status=done&style=none&taskId=ue4023ba3-c347-4742-9154-9142b4479e8&title=&width=487.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-9d9bd8ece445.png)
 
 - MySQL 服务层：也就是 SERVER 层，用来解析 SQL 的语法、语义、生成查询计划、接管从 MySQL 存储引擎层上推的数据进行二次过滤等等。
 - MySQL 存储引擎层：按照 MySQL 服务层下发的请求，通过索引或者全表扫描等方式把数据上传到 MySQL 服务层。
@@ -319,23 +319,23 @@ set optimizer_switch="index_condition_pushdown=off";
 
 不使用索引下推实现，**认真观看数据流转步骤**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684911293119-d8ab199d-b383-4039-b6ec-ff806fb6419b.png#averageHue=%23f8f7f1&clientId=u416c5e87-ce03-4&from=paste&height=423&id=u7f8e1475&originHeight=951&originWidth=2809&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=203520&status=done&style=none&taskId=u904cb879-824e-4372-b399-18fe2e7b542&title=&width=1248.4444444444443?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_80%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-f51604fb81b8.png)
 
 ```plsql
 Explain SELECT * FROM user1 WHERE name LIKE 'A%' and age = 40;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684910526901-277dc73b-ab09-4f0a-b5b0-c16d7e67ef2d.png#averageHue=%23f6f5f5&clientId=u54447a70-9041-4&from=paste&height=85&id=u189cabf5&originHeight=192&originWidth=2649&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=25192&status=done&style=none&taskId=ud1706499-123c-4227-88a8-3b1221ec5b0&title=&width=1177.3333333333333?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-ebe0c245d7cc.png)
 
 使用索引下推实现，**认真观看数据流转步骤**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684911337782-8a0d9866-db27-4ab4-885b-e2904d09b61e.png#averageHue=%23f9f8f2&clientId=u416c5e87-ce03-4&from=paste&height=410&id=uaf4ed5ee&originHeight=922&originWidth=2837&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=175179&status=done&style=none&taskId=u9579b76c-a554-4a9e-bcfb-9158dcb3585&title=&width=1260.888888888889?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-349075864886.png)
 
 ```plsql
 Explain SELECT * FROM user1 WHERE name LIKE 'A%' and age = 40;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684910563222-95b45c8a-6cf7-44ab-af51-1d7b7e4cd7be.png#averageHue=%23f6f5f5&clientId=u54447a70-9041-4&from=paste&height=88&id=u283f304d&originHeight=198&originWidth=2694&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=25648&status=done&style=none&taskId=uedde530a-c293-4c73-bae3-07242d19bf1&title=&width=1197.3333333333333?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-d11b0ecfce1f.png)
 
 ## 索引下推的使用条件
 
@@ -349,7 +349,7 @@ Explain SELECT * FROM user1 WHERE name LIKE 'A%' and age = 40;
 
 # 慢SQL你是怎么优化的
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680009272711-8a8e62aa-31c1-4845-95a0-02a74a15306d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-dd059a2f868a.jpg)
 
 ### 1. SQL语句优化
 
@@ -436,7 +436,7 @@ END
 
 阿里规范：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1679833438373-bb9be90a-ea5e-4ea6-9c76-25cf88bd9dde.png#averageHue=%23f4f4f3&clientId=u48e78e21-4cca-4&from=paste&height=203&id=e8Qko&originHeight=457&originWidth=2377&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=150862&status=done&style=none&taskId=ua4d97059-7bcc-4212-b699-227838bbee4&title=&width=1056.4444444444443?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_68%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-e0688cc9a1a8.png)
 
 分析：
 查看执行计划（，select * 走全表扫描，没有用到任何索引，已修正）会走索引，不过需要回表。查询效率偏低；所需要的列都是索引列那么这些列被称为覆盖索引。这种情况下查询的相关字段都能走索引，索引查询的效率相对较高。
@@ -453,7 +453,7 @@ EXPLAIN select * from student where name like 'mock_name%';--替换成表对应�
 SHOW WARNINGS;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1679907093052-e96f1904-b7cf-444c-abdb-f86952d8f13a.png#averageHue=%23f9f8f7&clientId=uffc78a2e-b509-4&from=paste&height=105&id=uf704fce9&originHeight=237&originWidth=2837&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=156625&status=done&style=none&taskId=uc4d6ccc9-3da6-4ca6-912e-e5158457222&title=&width=1260.888888888889?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-618f292fb368.png)
 
 总结：
 
@@ -462,11 +462,11 @@ SHOW WARNINGS;
 - 在实际应用中我们通常只需要使用某几个字段，其他不需要使用的字段也查出来**浪费CPU、内存资源**；
 - 文本数据、大字段数据数据传输**增加网络消耗**。
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1679895428685-931f82f5-ce79-410a-a0cd-4104b5a96150.jpeg#averageHue=%23f6f3e4&clientId=udf5378ba-f4f9-4&from=drop&id=u6601c681&originHeight=1029&originWidth=1341&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=100405&status=done&style=none&taskId=ube600b02-37f6-455b-995c-5443c786470&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-c861bcf8000c.jpg)
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680414456643-db561b76-ec69-430a-9b3d-7bee93b2a498.jpeg#averageHue=%23f2efe1&clientId=u1e287963-b0cf-4&from=drop&id=u9f4d8c1b&originHeight=909&originWidth=979&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=126365&status=done&style=none&taskId=u748acfb7-99be-4c52-874e-62bbbdcee6a&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-90a7377c50da.jpg)
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680874940944-32aa1d07-82f6-4dd8-b3c8-f98fcdb01f9a.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-db34193f3e2b.jpg)
 
 ##### 1.2.2. 小表驱动大表
 
@@ -478,14 +478,14 @@ EXPLAIN
 select * from student left join scores on student.id = scores.student_id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680182182469-d69c3714-7715-41f9-9e91-6dd2ad551cb8.png#averageHue=%23f9f8f6&clientId=u9e641ede-7d98-4&from=paste&height=109&id=u50690d6c&originHeight=245&originWidth=2850&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=152793&status=done&style=none&taskId=u90c15014-5ae7-4146-a6c0-53950301c5b&title=&width=1266.6666666666667?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-54231dcfb624.png)
 
 ```sql
 EXPLAIN
 select * from scores left join student on student.id = scores.student_id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680182212063-2213e902-f8ee-465d-bf8d-420a97dc49c3.png#averageHue=%23faf9f7&clientId=u9e641ede-7d98-4&from=paste&height=120&id=u3077df2d&originHeight=271&originWidth=2962&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=156367&status=done&style=none&taskId=u7b39cf49-dc0f-4f8d-af07-e9383e7ae80&title=&width=1316.4444444444443?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_84%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-7c7da179fc75.png)
 
 Join Buffer（连接缓冲区）是优化器用于处理连接查询操作时的临时缓冲区。简单来说当我们需要比较两个或多个表的数据进行Join操作时，Join Buffer可以帮助MySQL临时存储结果，以减少磁盘读取和CPU负担，提高查询效率。需要注意的是每个join都有一个单独的缓冲区。
 Block nested-loop join（BNL算法）会将驱动表数据加载到join buffer里面，然后再批量与非驱动表进行匹配；如果驱动表数据量较大，join buffer无法一次性装载驱动表的结果集，将会分阶段与被驱动表进行批量数据匹配，会增加被驱动表的扫描次数，从而降低查询效率。所以开发中要遵守小表驱动大表的原则。
@@ -498,7 +498,7 @@ Block nested-loop join（BNL算法）会将驱动表数据加载到join buffer
 6、然后用scores表去匹配join buffer中的后15条。
 7、记录下匹配结果。
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680182275517-453a9fad-190b-4aee-b52a-857b6d8ee3c9.jpeg#averageHue=%23f4f5f3&clientId=u9e641ede-7d98-4&from=drop&height=785&id=u77fbf90b&originHeight=969&originWidth=1155&originalType=binary&ratio=2.4750001430511475&rotation=0&showTitle=false&size=118917&status=done&style=none&taskId=u1bdb270f-b90a-4822-81fb-13d8cdabb42&title=&width=936?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-72ce882d1d23.jpg)
 
 ##### 1.2.3. 用连接查询代替子查询
 
@@ -543,11 +543,11 @@ select remarks from scores group by remarks;
 
 添加索引前：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680009924139-fd0faa83-2ea0-4df5-8222-cbe3e5fd3517.png#averageHue=%23f8f7f7&clientId=u8eee4ac2-bb8b-4&from=paste&height=140&id=ud6af27e4&originHeight=316&originWidth=2516&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=81715&status=done&style=none&taskId=u5770aed5-10b3-4585-a02e-1dd23c68899&title=&width=1118.2222222222222?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-22fb90e0676a.png)
 
 添加索引后：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680009975989-b2c20052-c6f8-4103-8cb7-506e379b9540.png#averageHue=%23f8f7f7&clientId=u8eee4ac2-bb8b-4&from=paste&height=144&id=u3b1751d7&originHeight=323&originWidth=2504&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=81665&status=done&style=none&taskId=ue9197e89-d0d9-453c-ac6e-6e1323e569a&title=&width=1112.888888888889?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-54341735d802.png)
 
 - 调整查询：查询的写法也会影响group by的效率。可以尝试不使用子查询或临时表，或者可以使用JOIN或EXISTS来代替IN子查询。
 - 限制结果集的数量：如果你只需要查看一小部分结果，可以在查询中添加LIMIT子句，以便只返回一定数量的结果。
@@ -576,7 +576,7 @@ union all
 select id,student_id,score from scores
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680010654025-dbaa938f-f592-4991-91a5-26b979fb21ed.png#averageHue=%23f7f7f6&clientId=u7bd28ca5-0a87-4&from=paste&height=184&id=u84dc3946&originHeight=413&originWidth=2519&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=155255&status=done&style=none&taskId=u5f5da474-8e2c-4863-9a11-eef6504a675&title=&width=1119.5555555555557?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-eb35e81871cd.png)
 
 ```sql
 select id,name,department from student
@@ -584,7 +584,7 @@ union
 select id,student_id,score from scores
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680010615392-70b04309-469c-4e6e-907e-171a3bc5d171.png#averageHue=%23f8f8f7&clientId=u7bd28ca5-0a87-4&from=paste&height=184&id=r3A1O&originHeight=415&originWidth=2521&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=111067&status=done&style=none&taskId=u88220c5d-d2ed-49a1-9007-2d4aa2eea94&title=&width=1120.4444444444443?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-d5e36a33e496.png)
 
 那么union all与union如果当然它业务数据容许出现重复的记录，我们更推荐使用union all，因为union去重数据需要遍历、排序和比较，它更耗时，更消耗cpu资源，但是数据结果最完整。
 
@@ -815,7 +815,7 @@ commit;
 
 上一讲和大家聊到，隔离性本质上是因为同时存在多个并发事务可能会导致脏读、幻读等情况。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680157573957-b40fefce-a3d7-475b-916c-ef36c92d48f1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-645a2788ec78.png)
 
 要解决并发问题只有一种方案就是加锁。当然，锁不可避免的会导致性能下降，但是，锁也有乐观和悲观之分，上一讲我们聊到的，隔离级别中的串行化就是一种悲观的思想，可以直接避免并发事务中所有的问题，但是性能也是下降的非常严重。而`MySQL`是如何在性能和一致性中权衡的呢？我们接着往下看。
 
@@ -832,11 +832,11 @@ MVCC全称（多版本并发控制），本质就是通过一种乐观锁的思�
 
 InnoDB 里面每个事务有一个唯一的事务 ID，叫作 transaction id。它是在事务开始的时候向 InnoDB 的事务系统申请的，是按申请顺序严格递增的。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680071884160-c066d323-0ea4-4b3f-8f09-3ea38ce3330f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-1edd08c61842.png)
 
 如上图所示，针对`id=10001`的这条数据，都会将旧值放到一条`undo`日志中，就算是该记录的一个旧版本，随着更新次数的增多，所有的版本都会被 `roll_pointer` 属性连接成一个链表，我们把这个链表称之为**版本链**，根据版本链就可以找到这条数据历史的版本。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680089702903-13895075-6e1a-47b4-b0f2-a299b7176d4e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-062246f5f292.png)
 
 利用`undo log`日志我们已经保留下了数据的各个版本，那么现在关键的问题是要读取哪个版本的数据呢？
 
@@ -844,16 +844,16 @@ InnoDB 里面每个事务有一个唯一的事务 ID，叫作 transaction id。�
 
 更多细节可超链接：[天明](https://www.yuque.com/tianming-aroh0/sagnbd/nfkf7dvzxgp26nw4)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680095929852-60ae40d0-a547-44dd-b419-677e29347107.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-0c0b2080ccab.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740032620507-03f5705b-d889-4038-8524-688de3ab3fff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-d18015119bfb.png)
 
 - trx_ids: 指的是在创建 ReadView 时，当前数据库中「活跃事务」的事务 id 列表，注意是一个列表， **“活跃事务”指的就是，启动了但还没提交的事务**。
 - min_trx_id: 指的是在创建 ReadView 时，**当前数据库中「活跃事务」中事务 id 最小的事务**，也就是 m_ids 的最小值。
 - max_trx_id：这个并不是 m_ids 的最大值，而是**创建** ReadView **时当前数据库中应该给下一个事务的 id 值，也就是全局事务中最大的事务 id 值 + 1**；
 - creator_trx_id ：指的是创建该 ReadView 的事务的事务 id, 只有在对表中的记录做改动时（执行INSERT、DELETE、UPDATE这些语句时）才会为 事务分配事务id，否则在一个只读事务中的事务id值都默认为0。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680095960762-04342929-209b-4705-b013-a77e6c294eda.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-858070b27f40.png)
 
 对于当前事务的启动瞬间来说，读取的一个数据版本的trx_id，有以下几种可能：
 
@@ -869,11 +869,11 @@ InnoDB 里面每个事务有一个唯一的事务 ID，叫作 transaction id。�
 
 为了方便大家深入理解。[我](https://www.yuque.com/tianming-aroh0/sagnbd/nfkf7dvzxgp26nw4)这里给大家通过源码整理图表。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740032712840-f93f6a56-77f9-46fa-9bc7-1f11c81c2d2f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-3de80c7908bc.png)
 
 不同事务是否可见可参看如下高低水位图。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1740032759387-c47384a2-a648-48dc-8503-b78c73276c57.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-da396da1c478.png)
 
 如果你对MVCC机制的整个流程还是比较模糊，我们现在举例来说明下。比如student表中有一个事务`id`为`10001`的插入记录：
 
@@ -902,9 +902,9 @@ begin
 SELECT * FROM student WHERE id = 10001;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680179062059-b0d38f09-c952-4985-8a6b-c4e4006d70d9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-92970d4a71ad.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680179084203-0d51bb36-caff-423f-a7b0-c3f49dbef6bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-829efcbdf58f.png)
 
 事务`A`和`B`均未提交，现在事务`C`执行`select`, 那么得到的结果是什么呢？
 
@@ -936,9 +936,9 @@ SELECT * FROM student WHERE id = 10001;
 
 读已提交`READ COMMITTED`是每次读取数据前都生成一个`ReadView`。这就是为啥RC读多次读可能结果不一致的原因。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680176728820-fd131d06-d868-4aef-951c-e195acf4e2cc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-5f43799d717d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1680180052328-998ea2ad-345a-41d6-b37a-036fcb0f5223.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-85a7c06bfe3e.png)
 
 这里重点介绍了`MVCC`机制，以及 `MVCC` 在 `READ COMMITTD`、 `REPEATABLE READ` 这两种隔离级别的事务在执行快照读操作时访问记录的版本链的过程。这样使不同事务的 `读-写` 、 `写-读` 操作并发执行，从而提升系统性能。
 
@@ -1047,7 +1047,7 @@ SELECT * FROM user_login_log LIMIT 10000, 100000;
 SELECT * FROM user_login_log LIMIT 10000, 1000000;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683361357061-7aee02f7-cd70-4caf-84c4-96277f30ea78.png#averageHue=%23fbfaf8&clientId=u8f76aee0-2cb6-4&from=paste&height=395&id=uf6429767&originHeight=908&originWidth=863&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=180807&status=done&style=none&taskId=u061fd994-4440-4237-a99c-b6b2494b704&title=&width=375?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-275280c51464.png)
 
 从上面结果可以得出结论：数据量越大，花费时间越长
 
@@ -1061,7 +1061,7 @@ SELECT * FROM user_login_log LIMIT 100000, 100;
 SELECT * FROM user_login_log LIMIT 1000000, 100;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683345934554-bba7393f-5593-4e0f-a868-c18f2a1e9e73.png#averageHue=%23fbf9f8&clientId=u82252b09-a573-4&from=paste&height=403&id=u31d198c2&originHeight=907&originWidth=837&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=189655&status=done&style=none&taskId=ua1e969be-a637-4db7-8cd1-5e5d54bdc07&title=&width=372?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-6a83c9b37963.png)
 
 从上面结果可以得出结论：偏移量越大，花费时间越长
 
@@ -1074,7 +1074,7 @@ SELECT * FROM user_login_log LIMIT 1000000, 100;
 SELECT * FROM user_login_log LIMIT 10000, 100000;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683346388590-3314e7a9-12c8-47aa-a574-fcf0f814791f.png#averageHue=%23fbfaf9&clientId=u82252b09-a573-4&from=paste&height=95&id=ud130f224&originHeight=214&originWidth=1292&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=52848&status=done&style=none&taskId=u9426eb0a-555b-48a5-be09-1d086a673fa&title=&width=574.2222222222222?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-a3047fafe7ca.png)
 
 ##### 1.明确查询字段，避免使用select *，减少MySQL优化器负担。
 
@@ -1083,7 +1083,7 @@ SELECT * FROM user_login_log LIMIT 10000, 100000;
 select user_id, ip, attr1, attr2, attr3, attr4, attr5, attr6, attr7, attr8, attr9, attr10 from user_login_log LIMIT 10000, 100000;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683346404273-2938327f-e90c-4070-9ce1-97dd4a86ac45.png#averageHue=%23faf8f7&clientId=u82252b09-a573-4&from=paste&height=102&id=u5d74e054&originHeight=230&originWidth=1737&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=63200&status=done&style=none&taskId=u9ea1ec14-5e18-4e20-89d9-decfd59c327&title=&width=772?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-6f473cbbb1c1.png)
 
 ##### 2.按需查找字段，减少网络IO消耗。
 
@@ -1093,7 +1093,7 @@ SELECT id FROM user_login_log LIMIT 10000, 100000;
 SELECT user_id FROM user_login_log LIMIT 10000, 100000;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683346513601-e64985ab-336b-4c4b-bb12-39ef476566b0.png#averageHue=%23faf9f8&clientId=u82252b09-a573-4&from=paste&height=179&id=u2bf48eeb&originHeight=402&originWidth=1246&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=96050&status=done&style=none&taskId=u59eb0bcd-fbfd-42f5-8f06-ad9f14957bf&title=&width=553.7777777777778?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-5a06c5e43f84.png)
 
 ##### 3.查询字段索引覆盖，通过辅助索引提升查询效率（与MySQL的B+树存储结构有关系，不了解的小伙伴可以查看为什么要避免select * 小节）。
 
@@ -1105,7 +1105,7 @@ SELECT user_id FROM user_login_log LIMIT 10000, 100000;
 alter TABLE user_login_log drop index idx_user_id;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683346473522-f5f6c3c9-8f4d-4dc2-b78d-34d8c03ff125.png#averageHue=%23f7f7f6&clientId=u82252b09-a573-4&from=paste&height=105&id=ua2d105eb&originHeight=237&originWidth=1358&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=55415&status=done&style=none&taskId=u695731a7-02a4-40c4-8de2-11c274aedbb&title=&width=603.5555555555555?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-f30d28ab9c07.png)
 
 针对数据量大的情况，我们可以做如下优化：
 
@@ -1120,7 +1120,7 @@ alter TABLE user_login_log drop index idx_user_id;
 SELECT * FROM user_login_log LIMIT 1000000, 100;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683350550067-640a27cc-ac56-4e50-8014-c8fcfc354743.png#averageHue=%23fbfaf8&clientId=u82252b09-a573-4&from=paste&height=76&id=ubc3f1eb1&originHeight=171&originWidth=1023&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=38864&status=done&style=none&taskId=u61587051-6947-49cc-a221-834460fb685&title=&width=454.6666666666667?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-7d7479d40832.png)
 
 **偏移量大的场景我们也可以使用数据量大的优化方案，除此之外还可以将偏移量改为使用Id限定的方式提升查询效率。**
 
@@ -1129,7 +1129,7 @@ SELECT * FROM user_login_log LIMIT 1000000, 100;
 SELECT * FROM user_login_log where id > 1000000 LIMIT 100;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683351737191-156c0921-f63a-4a4f-a798-5494ba32dfbe.png#averageHue=%23faf9f8&clientId=u82252b09-a573-4&from=paste&height=100&id=uc73eed6c&originHeight=224&originWidth=1259&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=57498&status=done&style=none&taskId=u220fe73e-2e21-4cd0-81fd-0a9297f8ae0&title=&width=559.5555555555555?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-fcf198f0f107.png)
 
 针对偏移量越大的情况，我们可以做如下优化：
 
@@ -1238,11 +1238,11 @@ ALTER TABLE scores ADD index idx_student_id (student_id) , ALGORITHM=COPY, LOCK=
 
 不是所有的ddl都支持online ddl；如下官网给出的部分支持场景：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680509607122-5e10d223-1b05-44b5-80dc-03b7594755ff.png#averageHue=%23f5f5f5&clientId=u457b8701-5e5d-4&from=paste&height=294&id=u3ed311f5&name=image.png&originHeight=661&originWidth=2430&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=119308&status=done&style=none&taskId=u77d8976d-8ffc-44cb-a020-77d900245fc&title=&width=1080#averageHue=%23f5f5f5&id=XTGkm&originHeight=661&originWidth=2430&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_69%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-7651f6f7b3c6.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680509744854-3ae979f5-ef47-401f-a5b3-317a95bd104b.png#averageHue=%23f5f5f5&clientId=u457b8701-5e5d-4&from=paste&height=202&id=u61f32b9d&name=image.png&originHeight=454&originWidth=2429&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=87185&status=done&style=none&taskId=u8ff08e83-7a9e-49e0-b737-0651c0ef03a&title=&width=1079.5555555555557#averageHue=%23f5f5f5&id=vw0XB&originHeight=454&originWidth=2429&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_69%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-73663b642b36.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1680509756926-7c09c2d5-bcf8-4db2-a849-62f5ef978805.png#averageHue=%23f7f6f6&clientId=u457b8701-5e5d-4&from=paste&height=588&id=uda1cbbb2&name=image.png&originHeight=1323&originWidth=2465&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=219202&status=done&style=none&taskId=u408ed99f-d882-42b3-bce5-1c4fa9e8d2b&title=&width=1095.5555555555557#averageHue=%23f7f6f6&id=lJaU6&originHeight=1323&originWidth=2465&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_70%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-ef2873a0d41a.png)
 
 更多Online ddl支持场景，可以通过MySQL官方文档去获取
 [https://dev.mysql.com/doc/refman/5.7/en/innodb-online-ddl-operations.html](https://dev.mysql.com/doc/refman/5.7/en/innodb-online-ddl-operations.html)
@@ -1402,7 +1402,7 @@ INSERT INTO movies (movie_name, actors, price, release_date) VALUES
 select * from movies order by actors asc;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741007330440-a3e2a56b-3c26-4b87-ad03-44d47874bd83.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-a6c51a743a72.png)
 
 ```plsql
 -- 查询并按演员名的自定义顺序排序
@@ -1410,7 +1410,7 @@ SELECT * FROM movies
 ORDER BY FIELD(actors, '靳东', '刘亦菲', '范冰冰', '成龙');
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741007347863-8b9ff118-5265-4257-b963-df56764b4e26.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-c3e0a1be5362.png)
 
 ## 2.空值NULL排序（**ORDER BY IF(ISNULL**）)
 
@@ -1421,14 +1421,14 @@ ORDER BY FIELD(actors, '靳东', '刘亦菲', '范冰冰', '成龙');
 select * from movies ORDER BY actors, price desc;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741007362621-92faafee-d444-42eb-ba05-6180ffabddd7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-f3fa35c06317.png)
 
 ```plsql
 -- NULL 降序
 select * from movies ORDER BY if(ISNULL(actors),1,0), actors, price;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741007440706-660c82fe-4638-45da-9b83-a4e22922a6f0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-3537a2dbe22b.png)
 
 ## 3.CASE表达式（CASE···WHEN）
 
@@ -1466,7 +1466,7 @@ select *,case when score > 90 then '优秀'
 from student;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741009641442-47ecb3b9-b323-4475-abb3-d93a7f81dc2e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-02b673dd32b6.png)
 
 ## 4.分组连接函数（GROUP_CONCAT）
 
@@ -1479,7 +1479,7 @@ GROUP_CONCAT(movie_name) as movie_name,
 GROUP_CONCAT(price) as price from movies GROUP BY actors;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741008250275-6a64948f-f5ce-4f4e-ab97-0103bf308f7c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-e170c5d368fd.png)
 
 ```plsql
 select actors,
@@ -1488,7 +1488,7 @@ GROUP_CONCAT(price order by price desc SEPARATOR '_') as price
 from movies GROUP BY actors;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741008259228-88794a8a-6642-4bde-b10c-b48b641f4cf8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-2af5268d98ed.png)
 
 ## 5.分组统计数据后再进行统计汇总（with rollup）
 
@@ -1498,13 +1498,13 @@ from movies GROUP BY actors;
 SELECT actors, SUM(price) FROM movies GROUP BY actors;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741008389823-8b175b81-3f83-4eba-a00a-632d57f0e78f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-5f600a7457b3.png)
 
 ```plsql
 SELECT actors, SUM(price) FROM movies GROUP BY actors WITH ROLLUP;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741008375109-34def87a-7ed8-48da-9753-7d0855cb6768.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-3d48db65da80.png)
 
 ## 6.子查询提取（with as）
 
@@ -1518,7 +1518,7 @@ select * from m1 where m1.id
 not in (select m2.id from m2) and m1.actors = '刘亦菲';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741008578356-162f0ba6-078a-46dd-8501-dd0a62ae7ed1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-b3d414c61136.png)
 
 ## 7.优雅处理数据插入、更新时主键、唯一键重复
 
@@ -1538,9 +1538,9 @@ INSERT IGNORE INTO movies (id, movie_name, actors, price, release_date) VALUES
 (14, '神话2', '成龙', 114, '2005-12-22');
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741008774673-df21cbaa-958b-4e74-951f-1c0506a5a814.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-e92a66a206a5.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741008927438-d50b9582-bb85-4d8d-a643-6d04056a2030.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-200e01d68dd7.png)
 
 2.还可以使用**REPLACE**关键字，当插入的记录遇到主键或者唯一键重复时先删除表中重复的记录行再插入，即**有则删除+插入，无则插入**，示例如下：
 
@@ -1552,7 +1552,7 @@ REPLACE INTO movies (id, movie_name, actors, price, release_date) VALUES
 (15, '神话3', '成龙', 115, '2005-12-22');
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741009080468-7d4ff11a-0b7e-491d-b909-365af9a96bd4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-dc6b471a8ddc.png)
 
 3.更新数据时使用**on duplicate key update**。它的作用就是当插入的记录遇到主键或者唯一键重复时，会执行后面定义的UPDATE操作。相当于先执行Insert 操作，再根据主键或者唯一键执行update操作，即**有就更新，没有就插入**。示例如下：
 
@@ -1564,7 +1564,7 @@ INSERT INTO movies (id, movie_name, actors, price, release_date) VALUES
 (16, '神话4', '成龙', 75, '2005-12-22') on duplicate key update price = price + 10;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741009118730-56414e05-a0ec-4a76-87e3-f78825fd98d5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-63c0f2c3e24b.png)
 
 # MySQL表设计经验汇总篇
 
@@ -1828,7 +1828,7 @@ WHERE
 
 ## 隔离级别的划分
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713701321250-68f56ec1-8ac9-4655-b042-318043ed61aa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-c98cc62c9341.png)
 
 SQL-92 标准定义了 4 种隔离级别，从低到高依次为：
 **读未提交(Read Uncommitted)、读已提交(Read Committed)、可重复读(Repeatable Reads)、序列化(Serializable)**。
@@ -1842,7 +1842,7 @@ SQL-92 标准定义了 4 种隔离级别，从低到高依次为：
 
 Oracle 数据库只支持 SQL92 中的 Serializable 和 Read Committed，但实际上根据Oracle官方文档的介绍，Oracle支持三种隔离级别：Read Committed、Serializable 和 Read-Only，[官网地址](https://docs.oracle.com/cd/E11882_01/server.112/e40540/consist.htm#CNCPT621)。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713704153308-c4461b3d-50ac-486c-bc79-6b4f4321b0f1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-5735a71a1c08.png)
 
 MySQL 数据库支持SQL92 中的四种隔离级别。
 
@@ -1935,13 +1935,13 @@ INSERT INTO products (product_id, product_name, category, price) VALUES
 SELECT * FROM products WHERE category NOT IN ('Electronics');
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713776030532-527ed037-6282-4fc4-98af-0ea43d8fa675.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-364bb438b72a.png)
 
 ```sql
 SELECT * FROM products WHERE category NOT IN ('Electronics', NULL);
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713776048452-a516c605-0b3c-43e0-86e3-2fc27b34a7bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-6ab6e7b4a799.png)
 
 到这里大家是不是就发现问题了，使用 Not In 会导致数据丢失，那么为什么会出现这种情况？
 
@@ -1976,7 +1976,7 @@ SELECT * FROM products WHERE category NOT IN ('Electronics') OR category IS NULL
 
 直接上一个索引结构图。 对索引底层结构不太了解的小伙伴点这个，[索引底层结构详解](https://www.yuque.com/tulingzhouyu/db22bv/yylct2c6wu76hurr?singleDoc# 《深入精讲》 密码：yk3o)：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713774435678-c7d371a5-a449-4066-b84a-c2093cb6777b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-0b489628f50f.png)
 
 以上图为例子，如果我们执行这条 SQL：
 
@@ -1988,7 +1988,7 @@ select * from student where name not in ('李四','周九');
 
 是不是要先找到 【李四，钱六】两条记录，然后在向两边发散，形成了好几个区间段，如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713774888167-c495094d-e298-414b-a69d-b4f82ae0bb73.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-14870dd1b215.png)
 
 由于我们的 SQL 需要整行数据，所以不仅仅是区间段扫描，还需要进行回表，这种时候大多数的情况，MySQL 的优化器通常都会选择直接扫描全表，因为多次回表的成本会比直接全表扫描的成本更大。
 
@@ -2084,7 +2084,7 @@ INSERT INTO increnment_test (col1, col2, col3)
 select * from increnment_test;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682324106016-8417f4a6-ba8d-476c-bd0b-fda14b6b75ae.png#averageHue=%23fbfafa&clientId=u637c4ea5-0922-4&from=paste&height=139&id=u7bb7aa54&originHeight=313&originWidth=1059&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=34820&status=done&style=none&taskId=ue1fd811b-d966-4a20-b26e-57993421b91&title=&width=470.6666666666667?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-b380fd1cc8a8.png)
 
 #### 插入col1为3的数据
 
@@ -2101,7 +2101,7 @@ INSERT INTO increnment_test (col1, col2, col3) VALUES
 select * from increnment_test;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682325663382-6a7ee876-1781-47bb-8b7f-d07ff18d494d.png#averageHue=%23fcf9f9&clientId=u637c4ea5-0922-4&from=paste&height=157&id=u58d8910c&originHeight=354&originWidth=1168&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=42169&status=done&style=none&taskId=ue9a54b20-252d-4969-b2c9-601bae293c6&title=&width=519.1111111111111?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-9eb585ed4444.png)
 
 ### 事务回滚
 
@@ -2119,7 +2119,7 @@ INSERT INTO increnment_test (col1, col2, col3) VALUES
 COMMIT;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682325715073-bb87fd0f-d233-4ef7-8784-5fa6c70d556e.png#averageHue=%23fbf9f8&clientId=u637c4ea5-0922-4&from=paste&height=184&id=u74a54cd1&originHeight=415&originWidth=1048&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=47359&status=done&style=none&taskId=uc76fa22c-920e-48e4-96c1-c3329ed038b&title=&width=465.77777777777777?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-d76d561d43ee.png)
 
 ### 批量插入数据
 
@@ -2144,7 +2144,7 @@ VALUES (8, 8, 8);
 SELECT * FROM increnment_test2;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682325747417-ae0ef2fa-8ec6-4a0b-a1ed-4c2d3522f44f.png#averageHue=%23fcf9f8&clientId=u637c4ea5-0922-4&from=paste&height=211&id=udd8183f7&originHeight=475&originWidth=1113&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=53658&status=done&style=none&taskId=ub9a4f611-ee20-47af-ac02-57c0f22ac33&title=&width=494.6666666666667?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-f126f02eaca8.png)
 
 因为increnment_test2表中批量插入了5条数据，按照自增ID的批量申请策略，5条数据分3次进行申请：
 第1次：id-1
@@ -2566,7 +2566,7 @@ database3 (id%3=2)
 
 在数据写入MySQL的同时，通过编程逻辑将相同数据写入ES。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715782155225-39e87a9e-45fa-4a69-9d43-6dd452f7b232.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-500c6075e67a.png)
 
 ### 优点：
 
@@ -2589,7 +2589,7 @@ database3 (id%3=2)
 
 利用消息队列（MQ）异步处理数据写入操作。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715782166537-a01992b8-4f54-4a8a-9066-f28e8fcd4ee0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-d08f56473ff4.png)
 
 ### 优点：
 
@@ -2612,7 +2612,7 @@ database3 (id%3=2)
 
 通过定时任务，根据数据库中的时间戳字段变化来抽取并同步数据至ES。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715782181187-3db911ba-0406-49c1-bd8a-10740efbf8d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-673bf1e9b7ec.png)
 
 ### 优点：
 
@@ -2635,7 +2635,7 @@ database3 (id%3=2)
 
 利用MySQL的Binlog日志，通过消息队列或直接消费Binlog变化来同步数据至ES。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715782204303-ab5d8250-493b-4b20-bae3-0ab252cd73a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-514e3471323b.png)
 
 ### 优点：
 
@@ -2716,13 +2716,13 @@ drop table user;
 cat /etc/my.cnf
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718701411534-3e7e70c8-6f67-481c-b719-171fbcdecc06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-59c91fd15944.png)
 
 ```plsql
 cd /var/lib/mysql
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718701617720-4baea9c1-38e7-452d-b92f-3df85d2d5d0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-65c1f23951a6.png)
 
 如果大家有全量备份，那么先全量恢复，在使用 binlog 增量恢复，增量恢复就需要确定好边界值；而如果说没有就全部从 binlog 里面解析。
 
@@ -2738,7 +2738,7 @@ mysqlbinlog -v binlog.000007 | grep -i "drop table user"
 mysqlbinlog -v binlog.000007 > data.sql
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718702682524-73e6af95-9f70-4434-bd0b-4b142a6c72c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-15bcef6665d1.png)
 
 这里可以看到我们需要恢复的节点 position: 1023，接下来开始恢复数据：
 
@@ -2790,7 +2790,7 @@ INSERT IGNORE INTO `user` (`id`, `id_card`, `name`, `age`, `city`) VALUES (9, '3
 INSERT IGNORE INTO `user` (`id`, `id_card`, `name`, `age`, `city`) VALUES (10, '310110190000009', 'User9', 61, 'Guangzhou');
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721050255959-f38a357f-33bb-4799-a664-5272f83a9969.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-3a4146da6bfa.png)
 
 我们现在有这么一个需求：**查询前 10 个，来自深圳员工的姓名、年龄、城市，并且按照年龄小到大排序**。对应的 SQL 语句就可以这么写：
 
@@ -2806,7 +2806,7 @@ select name,age,city from staff where city = 'shenzhen' order by age limit 10;
 
 我们先用**Explain**关键字查看一下执行计划
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721113503195-aead0a99-e683-404b-88a7-f5df52b27a0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-b81c015d52bc.png)
 
 - 执行计划的**key**这个字段，表示使用到索引 idx_city
 - Extra 这个字段的 **Using index condition** 表示索引条件
@@ -2820,11 +2820,11 @@ MySQL 会给每个查询线程分配一块小**内存**，用于**排序**的，
 
 我们回顾下索引是怎么找到匹配的数据的，现在先把索引树画出来吧，**idx_city**索引树如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721050028705-4a95a474-af70-47ff-88a6-96ecf4366e9e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-c83a1f2c9f1b.png)
 
 idx_city 索引树，叶子节点存储的是**主键 id**。还有一棵 id 主键聚族索引树，我们再画出聚族索引树图吧
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721050038505-d85af2e0-aa59-4c58-86d9-fbbdd06982c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-aa0cd5a61d5d.png)
 
 **我们的查询语句是怎么找到匹配数据的呢**？先通过**idx_city**索引树，找到对应的主键 id，然后再通过拿到的主键 id，搜索**id 主键索引树**，找到对应的行数据。
 
@@ -2840,7 +2840,7 @@ idx_city 索引树，叶子节点存储的是**主键 id**。还有一棵 id 主
 
 执行示意图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721043622047-556818f1-e768-4d9f-8ebc-8a36c878bc00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-aea6340ca532.png)
 
 将查询所需的字段全部读取到 sort_buffer 中，就是**全字段排序**。这里面，有些小伙伴可能会有个疑问,把查询的所有字段都放到 sort_buffer，而 sort_buffer 是一块内存来的，如果数据量太大，sort_buffer 放不下怎么办呢？
 
@@ -2895,7 +2895,7 @@ rowid 排序就是，只把查询 SQL**需要用于排序的字段和主键 id**
 show variables like 'max_length_for_sort_data';
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721111826875-e59c6b4c-a003-4eb4-9b14-8e6f55845b19.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-d476cf49c413.png)
 
 **max_length_for_sort_data** 值为 1024。
 
@@ -2921,7 +2921,7 @@ select name,age,city from user where city = 'shenzhen' order by age limit 10;
 
 执行示意图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721043588113-e63880ba-bf74-4738-b997-f4046fab5587.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0329-so6mi5fptaanzosx/img-344a6c067056.png)
 
 对比一下**全字段排序**的流程，rowid 排序多了一次**回表**。
 

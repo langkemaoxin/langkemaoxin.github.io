@@ -21,7 +21,7 @@ article: false
 
 对于非幂等操作，如“插入订单数据”或“扣减库存”，重复消费将导致灾难性后果：数据库主键冲突、库存重复扣减等。因此，保证消费逻辑的**幂等性**（Idempotency）——即无论一个操作执行多少次，其结果都和执行一次完全相同——就成了消费者必须解决的课题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758263563914-638eea01-4ef0-48e6-ba8a-ce049af0af9d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1024-icbcuwa0f29o4igg/img-ce38457c08d7.png)
 
 ## 二、为什么：简单的去重方案为何“不堪一击”
 
@@ -40,7 +40,7 @@ if(order == null) {
 
 这个方案在低并发下或许有效。但在高并发场景下，它存在明显的“竞态条件”（Race Condition）。假设两条重复的消息在毫秒级间隔内同时到达，它们可能都执行了第一步的`select`，并且都得到了`null`的结果。随后，它们会双双“穿透”这层简陋的防线，导致业务逻辑被重复执行。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758263587739-e1d946b6-58e2-42a7-8c8d-f799d2fb9756.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1024-icbcuwa0f29o4igg/img-9b1eb73ae808.png)
 
 ## 三、怎么做：从“堵漏”到“架构”的四重演进
 
@@ -64,7 +64,7 @@ if(order.status == null) {
 
 这样，第一条消息的事务会锁定相关记录，后续的重复消息在执行`select for update`时会被阻塞，直到第一个事务提交。这确实解决了并发问题，但引入了新的代价：事务的粒度变大，锁定了业务表，导致整个消费链路性能下降，吞吐量降低。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758263601916-01f133e0-dec9-4d6a-932f-df5675670210.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1024-icbcuwa0f29o4igg/img-02d295b853cd.png)
 
 ### 方案二：消息表与业务事务绑定 (本地消息表)
 
@@ -82,7 +82,7 @@ if(order.status == null) {
 - **强依赖关系型数据库事务**：消费逻辑中若包含RPC调用、操作Redis等不支持事务的环节，则无法保证原子性。
 - **单库限制**：无法解决跨数据库的事务问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758263897261-866c96b3-e250-401c-a8cd-bd7dbb8c93eb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1024-icbcuwa0f29o4igg/img-d24d357bb584.png)
 
 ### 方案三：终极演进 - “状态机”幂等方案（非事务性）
 
@@ -104,7 +104,7 @@ if(order.status == null) {
 
 **超时机制的重要性**: 如果一条消息将状态置为`CONSUMING`后，消费者进程意外崩溃，该记录将永远“卡住”。超时机制（通过定时任务扫描或利用Redis的TTL）能自动删除这些过期的“消费中”记录，确保消息有机会被重新消费，防止消息丢失。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758263878944-baf2db7e-8e2c-40d5-a183-bac881ca165e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1024-icbcuwa0f29o4igg/img-dee437cbc3dc.png)
 
 ### 方案四：存储媒介的选择 (Redis vs. MySQL)
 
@@ -115,11 +115,11 @@ if(order.status == null) {
 
 选择哪种媒介取决于业务对性能和数据一致性的具体取舍。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758263765929-2b4acadb-3c9a-4948-9422-3a501df0d2e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1024-icbcuwa0f29o4igg/img-a127ea4b3df8.png)
 
 ## 四、优缺点：这套方案是“银弹”吗？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1758263824957-696d62b2-05a0-4ff5-9f74-d320f2c45f1e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1024-icbcuwa0f29o4igg/img-10c9188370b7.png)
 
 **不是银弹，但价值巨大。**
 

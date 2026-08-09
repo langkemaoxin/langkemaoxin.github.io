@@ -17,7 +17,7 @@ article: false
 
 面试官你好。关于“三高架构”，市面上很多解释都把它割裂成了三个独立的概念去背诵，但在我看来，**三高不是三个孤岛，它们是架构设计中一组“相爱相杀”的三角关系**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767501927079-f1583068-0ab0-4736-9716-7125547d718e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1348-wp5mha6nxbcbkhdb/img-29094b70172c.png)
 
 要回答这个问题，我认为必须从**核心定义、关键手段**以及**架构取舍（Trade-off）**这三个维度来拆解。
 
@@ -30,7 +30,7 @@ article: false
 - **核心武器：缓存 (Cache)**。
 - **实战逻辑：** 就像我在之前的项目中做的，把 Redis 怼在数据库前面，将热点数据挡在内存里。内存的读写速度是磁盘的十万倍，这是解决性能问题的“大杀器” 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767501884476-5fccb979-469f-42f5-9dd1-0fae65bcf8ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1348-wp5mha6nxbcbkhdb/img-225a158c5f97.png)
 
 - **第二高：高并发 (High Concurrency) —— 扛住洪峰**
 
@@ -42,7 +42,7 @@ article: false
 1. **水平扩展：** 利用 Nginx 做负载均衡，后端 Tomcat 集群扩容，用“群殴”战术分摊流量 。
 2. **异步队列：** 引入 MQ（消息队列）建立“水库”。洪峰来了先蓄水，解耦上下游，保证后台不被冲垮 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767501966081-690fa23d-868b-4c45-b432-20872e035701.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1348-wp5mha6nxbcbkhdb/img-746ee2e34f83.png)
 
 - **第三高：高可用 (High Availability) —— 永不宕机**
 
@@ -50,7 +50,7 @@ article: false
 - **核心武器：冗余 (Redundancy)**。
 - **实战逻辑：** 无论是数据库的主从复制，还是服务的异地多活，核心逻辑只有一个：**如果你只有一套系统，那就是在听天由命。** 必须要有备胎，主节点挂了，从节点立马无感知顶上 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767502000118-a946508e-fc0a-41de-a23d-34af282d4805.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1348-wp5mha6nxbcbkhdb/img-ee29ef8a7e4c.png)
 
 #### 2. 进阶得分点：三者的“爱恨情仇” (Trade-off)
 
@@ -61,14 +61,14 @@ article: false
 - **场景：** 为了保证高可用，我们必须做数据冗余（主从同步）。
 - **代价：** 数据同步是需要网络传输时间的。这就产生了**同步等待时间 (Sync Wait Time)**。为了等从库确认，主库的写操作响应时间就会变长。**想要高可用，往往要牺牲一部分性能**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767502106942-44359b2a-07ce-4589-acb7-79a81caeb9ac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1348-wp5mha6nxbcbkhdb/img-8de0d29f99dd.png)
 
 - **冲突二：高并发 VS 数据一致性**
 
 - **场景：** 为了抗住高并发，我们使用了 MQ 做异步处理。
 - **代价：** 请求还在 MQ 里排队时，数据库还没更新，用户看到的可能是旧数据。这就出现了**数据不一致窗口**。我们实现了最终一致性，但**牺牲了强一致性**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767502133025-e6fd010a-7bf9-427b-920e-1a40b250920d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1348-wp5mha6nxbcbkhdb/img-aa62feebaf67.png)
 
 #### 3. 总结升华：架构师的哲学
 
@@ -81,4 +81,4 @@ article: false
 
 一句话总结：**脱离业务场景谈三高，都是耍流氓**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767502760741-1302d9ad-53a7-4133-a78e-cb9cbcde52b0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1348-wp5mha6nxbcbkhdb/img-f0dd0aa1fca3.png)

@@ -89,7 +89,7 @@ mysql> select * from `t_2`;
 
 - row_id 用完的效果验证
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1686210870831-c41e1d5d-918c-4485-9f03-132c86d6ff9d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0348-te3xwgo1cr4ostea/img-a897f3983ed9.png)
 
 可以看到，在我用 gdb 将 dict_sys.row_id 设置为 2^48之后，再插入的 a=2 的行会出现在表 t 的第一行，因为这个值的 row_id=0。之后再插入的 a=3 的行，由于 row_id=1，就覆盖了之前 a=1 的行，因为 a=1 这一行的 row_id 也是 1。
 
@@ -135,7 +135,7 @@ InnoDB 数据可见性的核心思想是：每一行数据都记录了更新它�
 
 我在上一篇文章的末尾留给你的思考题，就是关于从 innodb_trx 表里面查到的 trx_id 的。现在，我们一起来看一个事务现场：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1686212114725-93a4332c-ec62-4363-a03e-cac96101f4cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0348-te3xwgo1cr4ostea/img-c3947a9c3bb4.png)
 
 session B 里，我从 innodb_trx 表里查出的这两个字段，第二个字段 trx_mysql_thread_id 就是线程 id。显示线程 id，是为了说明这两次查询看到的事务对应的线程 id 都是 5，也就是 session A 所在的线程。
 
@@ -172,7 +172,7 @@ session B 里，我从 innodb_trx 表里查出的这两个字段，第二个字�
 
 首先我们需要把当前的 max_trx_id 先修改成 2^48-1。注意：这个 case 里使用的是可重复读隔离级别。具体的操作流程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1686212148301-2097eafb-2389-4b0a-9626-f5aca4927afa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0348-te3xwgo1cr4ostea/img-b2c8b2b54ff6.png)
 
 由于我们已经把系统的 max_trx_id 设置成了 2^48-1，所以在 session A 启动的事务 TA 的低水位就是 2^48-1。
 

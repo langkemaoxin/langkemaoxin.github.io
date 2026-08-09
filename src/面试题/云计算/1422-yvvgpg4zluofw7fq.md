@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751698587451-4b1374fe-d3c3-4fb4-8da9-a134cfadba24.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1422-yvvgpg4zluofw7fq/img-4cdddcfe3e16.png)
 
 回答需围绕三大核心维度展开：
 
@@ -59,7 +59,7 @@ article: false
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751698618906-2acf223b-48a5-4c7a-97b8-66597648baa3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1422-yvvgpg4zluofw7fq/img-52dc152e02fc.png)
 
 #### （一）技术原理与优劣对比
 
@@ -80,7 +80,7 @@ article: false
 
 - **原理**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751698480495-306f1583-6f94-402c-8ac1-ec4b3e659e48.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1422-yvvgpg4zluofw7fq/img-4408bc3e6cf3.png)
 
 - **优势**：
 
@@ -107,7 +107,7 @@ article: false
 
 #### （二）项目实践关键发现
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751698705927-864dbf4f-8cff-4106-a3dc-8538830c4e56.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1422-yvvgpg4zluofw7fq/img-cf78f32e828b.png)
 
 1. **数据成本对比**
 
@@ -125,7 +125,7 @@ article: false
 
 #### （三）场景选型建议
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751698725475-32964fab-2d37-4bae-ad0d-52669e1b7ac8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1422-yvvgpg4zluofw7fq/img-e46f4d176ab4.png)
 
 场景
 推荐技术
@@ -147,7 +147,7 @@ SFT
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751698744562-9e508dca-ade1-4bcd-924c-e0b62a90f920.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1422-yvvgpg4zluofw7fq/img-ab107eb701de.png)
 
 1. **技术演进本质**：
 

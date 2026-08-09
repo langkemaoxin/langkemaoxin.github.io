@@ -115,13 +115,13 @@ SELECT * FROM orders WHERE MBRContains(GeomFromText(CONCAT('POLYGON((', @deliver
 
 示意图：通过GeoHash将经纬度转换成bit位的字符串，如果经纬度越接近，他们的前缀匹配位数也就越长，如此即可快速检索到附近多少的
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747726417556-3225cf12-1e2f-4519-84ea-ab95dd668e09.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0798-votgz88flvvmqilt/img-b641276ec485.png)
 
 **注意**：（细节追问）此方案可能追问 **数据一致性问题**，这里就过多解答，可参看保险项目中的解答（旁路缓存+MQ+最终一致 + 版本号等）
 
 还有一个问题需要思考和处理。得到的**最近可能不是最近**。比如这样：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1747726768122-80346272-00f6-4c43-a6ba-79e254fb2d27.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0798-votgz88flvvmqilt/img-c8155bbd6f0b.png)
 
 用geohash那结果显然是AB更近，但是实际上A与B的距离比AE、AC、AD都远。这其实是一个边缘性的问题。实际上此问题很简单，但为了让你的脑袋跟着来，我这等你看评论吧。（tips：格>扩，码>点）
 

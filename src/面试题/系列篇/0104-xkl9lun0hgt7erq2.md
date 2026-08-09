@@ -23,7 +23,7 @@ article: false
 
 消息队列（Message Queue）是一种应用间的通信方式，消息发送后可以立即返回，有消息系统来确保信息的可靠专递，消息发布者只管把消息发布到MQ中而不管谁来取，消息使用者只管从MQ中取消息而不管谁发布的，这样发布者和使用者都不用知道对方的存在。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690613122316-4f3b55e0-af5a-4e39-b508-0f30259ac512.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0104-xkl9lun0hgt7erq2/img-ee3a8b4a7ef4.png)
 
 - Producer：消息生产者，负责产生和发送消息到 Broker；
 - Broker：消息处理中心。负责消息存储、确认、重试等，一般其中会包含多个 queue；
@@ -79,7 +79,7 @@ Kafka是一个分布式流处理系统，流处理系统使它可以像消息队
 
 ### Kafka与传统消息队列的对比
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690613810956-354f0a8a-b2da-4b00-a722-0f3dc016335b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0104-xkl9lun0hgt7erq2/img-6bfa950c1820.png)
 
 各种对比之后，有如下建议：
 
@@ -120,7 +120,7 @@ Kafka 有 Topic 和 Partition 两个概念，一个 Topic 可以有多个 Partit
 
 Segment File 的大概意思是：将大文件拆分成小文件来存储，这样一个大文件就变成了一段一段（Segment 段）。这样的好处是 IO 加载速度快，不会有很长的 IO 加载时间。Kafka 的消息存储就采用了这种方式。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690640952523-157ab09a-08b9-4fdd-911c-c6ba25898f78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0104-xkl9lun0hgt7erq2/img-4a59d4e429bf.png)
 
 如上图所示，在一个文件夹下的数据会根据 Kafka 的配置拆分成多个小文件。拆分规则可以根据文件大小拆分，也可以根据消息条数拆分，这个是 Kafka 的一个配置，这里不细说。
 
@@ -130,11 +130,11 @@ Segment File 的大概意思是：将大文件拆分成小文件来存储，这�
 
 索引文件的命名统一为数字格式，其名称表示 Kafka 消息的偏移量。我们假设索引文件的数字为 N，那么就代表该索引文件存储的第一条 Kafka 消息的偏移量为 N + 1，而上个文件存储的最后一条 Kafka 消息的偏移量为 N（因为 Kafka 是顺序存储的）。例如下图的 368769.index 索引文件，其表示文件存储的第一条 Kafka 消息的偏移量为 368770。而 368769 表示的是 0000.index 这个索引文件的最后一条消息。所以 368769.index 索引文件，其存储的 Kafka 消息偏移量范围为 368769-737337。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690641015311-7db1e045-e083-4853-922d-4aff101fb21f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0104-xkl9lun0hgt7erq2/img-cffdc2f121a0.png)
 
 索引文件存储的是简单地索引数据，其格式为：「N,Position」。其中 N 表示索引文件里的第几条消息，而 Position 则表示该条消息在数据文件（Log File）中的物理偏移地址。例如下图中的「3,497」表示：索引文件里的第 3 条消息（即 offset 368772 的消息，368772 = 368769+3），其在数据文件中的物理偏移地址为 497。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690648378970-c5060b0b-b17f-4e67-a81f-cf772577eee7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0104-xkl9lun0hgt7erq2/img-b7b6c9b88b36.png)
 
 其他的以此类推，例如：「8,1686」表示 offset 为 368777 的 Kafka 消息，其在数据文件中的物理偏移地址为 1686。
 
@@ -146,7 +146,7 @@ Segment File 的大概意思是：将大文件拆分成小文件来存储，这�
 
 数据文件就是所有消息的一个列表，而每条消息都有一个固定的格式，如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1690648401699-24913c41-1d9e-44e9-a4f0-793280a238ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0104-xkl9lun0hgt7erq2/img-522cd359dc80.png)
 
 从上图可以看到 Kafka 消息的物理结构，其包含了 Kafka 消息的 offset 信息、Kafka 消息的大小信息、版本号等等。有了这些信息之后，我们就可以正确地读取到 Kafka 消息的实际内容。
 
@@ -166,7 +166,7 @@ Segment File 的大概意思是：将大文件拆分成小文件来存储，这�
 
 当前，截止到我在写这份笔记的时候，kafka当前最新的版本是3.5.0，这套课程里我也会选择这个版本带领大家去学习kafka。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1688990926470-80012078-09a3-4dc2-95fe-1d50bc6a662f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0104-xkl9lun0hgt7erq2/img-153c90872b2d.png)
 
 当屏幕前的你，拿到这份笔记打开地址的时候，你当前看到的版本可能随着时间的推移会有些变化，但是要找到我们要下载的包还是没问题的。从版本号的位置往下看，下载包分为了2块，源码下载和二进制包下载，我们如果只安装不需要源码编译改造的话，直接关注二进制下载部分。但是这块也分了2个下载链接，这里最大的区别是关于`Scala`版本的问题。在下面是有一段注释的来帮助我们做决策的。
 

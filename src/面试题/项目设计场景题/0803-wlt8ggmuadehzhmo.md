@@ -175,7 +175,7 @@ QPS 和 服务器 / 数据库之间的关系：
 
 下图的架构中，主要实现了用户发微博、浏览微博时间线和搜索的场景。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1716889704681-139ca5d8-a7ca-4589-b439-548e4e3f102f.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0803-wlt8ggmuadehzhmo/img-d2d58ef7a63c.jpg)
 
 ### 设计核心模块
 
@@ -238,11 +238,11 @@ QPS 和 服务器 / 数据库之间的关系：
 - MySQL 服务器。这里存储着用户信息、微博信息等，也承载了很大的流量，可以考虑将读写进行分离，同时引入主从服务器来保证高可用。
 - 读微博服务。在某些热点事件时，读微博服务会接收巨大的流量，可以引入相应的手段对读服务进行自动扩展，比如 K8s 的水平扩展等，方便应对各种突发情况。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1716889757738-1612d2ab-6c4f-47fc-9105-fd4873516f21.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0803-wlt8ggmuadehzhmo/img-9b66d8bffba3.jpg)
 
 下面是进一步优化之后的系统架构图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1716889807261-0b924bdd-faf3-46ea-906d-53dcc4aa6b03.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0803-wlt8ggmuadehzhmo/img-13027836e5d3.jpg)
 
 针对这个系统，我们还可以进一步优化，以下是几个思路，也可以自己思考看看
 

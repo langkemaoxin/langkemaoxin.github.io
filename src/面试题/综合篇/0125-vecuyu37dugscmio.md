@@ -148,7 +148,7 @@ public class BitmapChecker {
 - 对于 **32位无符号整数**，取值范围为 0≤*x*<232（即0到4,294,967,295）。
 - 所需内存计算：
 - 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950595208-87f4c6bd-d496-46ea-9c23-63533838464a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-764e18138c32.png)
 
 - **映射规则**： 每个整数 *x* 直接映射到位图中的第 *x* 个二进制位，存在则置1，否则为0。
 
@@ -343,11 +343,11 @@ public class RoaringBitmapChecker {
 - **元素数量**：*n*=4×10^9
 - **哈希函数数量**（理论最优）：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950494299-7abd3b3d-a088-4b7a-8e1d-1c8f69f9724a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-c71fa11041bf.png)
 
 - **误判率**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950642751-a5c8d374-3507-4489-a899-dfb227673729.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-907aefbf5915.png)
 
 ### **示例代码**
 
@@ -430,19 +430,19 @@ public class BloomFilterChecker {
 
 误判率 *p* 由以下公式决定：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950736111-ed21335f-9353-4abb-acf0-c9a1692fdf4d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-68baf77d109e.png)
 
 #### (2) 最优哈希函数数量
 
 当 *k*=*n**m*ln2 时，误判率最低：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950743059-ce21b959-2406-48a6-8b15-9bd15a4f01c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-61d2e8ee7d97.png)
 
 #### (3) 内存需求公式
 
 给定目标误判率 *p*，所需内存位数 *m* 为：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950752235-b3e84d84-e85d-485f-b581-8b6cac01aa6a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-f8abd2c0b034.png)
 
 ---
 
@@ -454,15 +454,15 @@ public class BloomFilterChecker {
 - **元素数量**：*n*=4×109
 - **每个元素分配位数**：
 - 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950780146-c8afa0eb-bb4e-414c-a024-d392d0f12c78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-2e439ca34a7c.png)
 
 ##### (2) 计算最优哈希函数数量
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950792749-897bf139-2974-44b9-a3bf-720ba317784a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-175dfc528142.png)
 
 ##### (3) 计算实际误判率
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950799480-8eb22b04-d515-4cd5-a064-002ce2daca00.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-0c6586f8e400.png)
 
 ---
 
@@ -473,13 +473,13 @@ public class BloomFilterChecker {
 - **目标误判率**：*p*=0.01
 - **所需内存计算**：
 - 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950832965-9d644d74-9790-4218-bd85-dadbc7743cb9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-d5046664125d.png)
 - **最优哈希函数数量**：
 - 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950820897-63a39c5a-935f-4240-ac04-b3931d9cbf0c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-4e05f962a745.png)
 - **实际误判率**：
 - 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746950845722-c8689b7b-e7ee-45ab-91e0-78d337087e2d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0125-vecuyu37dugscmio/img-89619326e689.png)
 
 ##### 场景二：固定内存下的参数权衡
 

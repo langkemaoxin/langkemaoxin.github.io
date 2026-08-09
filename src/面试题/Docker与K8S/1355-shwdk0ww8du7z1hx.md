@@ -47,7 +47,7 @@ article: false
 
 由于政策限制， 很多镜像无法使用， 但是也有很多零星的一些镜像可以用，所以最好用魔
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22309163/1729758233358-8a95f2a3-65e8-46d8-9845-4c9ba11057b6.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Docker与K8S/1355-shwdk0ww8du7z1hx/img-bfc1fffec9f5.jpg)
 
 ```powershell
  

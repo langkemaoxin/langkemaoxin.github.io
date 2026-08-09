@@ -19,7 +19,7 @@ SpringBoot出现循环依赖报错怎么办？  我建议你不要直接开启�
 
 Spring的循环依赖是一个老生常谈的问题，说白了就是2个Bean相互依赖注入，形成了依赖的闭环造成死循环依赖。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715309163780-11df4071-5eec-4b54-bfc9-8e06e3a0a06e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0464-wdt0zc7d1eqbtd5s/img-66b98292eb3b.png)
 
 Spring虽然通过三级缓存帮我们解决了，但是循环依赖其实 增加了对象依赖的混乱性，会让对象的依赖关系变得错综复杂，是一种不好的代码设计。
 
@@ -33,7 +33,7 @@ Spring虽然通过三级缓存帮我们解决了，但是循环依赖其实 增�
 
 1. **使用@Lazy注解**，可以再循环依赖注入的属性加上**@Lazy 注解**，这样可以使属性延迟注入从而呢就中断了循环的依赖。
 2. **打破循环依赖**，把相互依赖的代码放在一个新的bean中， 这样就可以打破循环依赖的闭环
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1715309238509-c0f92c1a-fe10-47ad-a5c5-cf64ad608150.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0464-wdt0zc7d1eqbtd5s/img-c9c58826ccf9.png)
 
 1. 在方法中通过动态调用Spring容器的getBean方法达到延迟获取bean。而不在类中依赖注入循环依赖的Bean，从而中断了循环的依赖。
 

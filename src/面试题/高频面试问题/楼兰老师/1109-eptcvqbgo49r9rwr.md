@@ -17,7 +17,7 @@ article: false
 
 我们今天来聊一个在后端面试中几乎无法回避，甚至被戏称为“价值百万”的面试题：如何保证数据库和缓存的**双写一致性**？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760002995170-a7123704-b0c3-4a5a-96eb-1523d518f63f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-27fc9879946a.png)
 
 屏幕前的你可能已经接触过像**延迟双删**、**消息队列**这些方案，但你是否真的理解它们背后的**并发陷阱**和**脏数据**问题？如果你没有理解这些问题，而只是直接回答各种方案，那么面试官很容易发现你是背的。这样的答案还不如不答。
 
@@ -27,7 +27,7 @@ article: false
 
 那么，问题到底出在哪？我们来看屏幕上的这个最常见的场景。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003006919-f556f8af-a0b0-4d62-9971-34be2c533241.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-9d19822d3cee.png)
 
 你的应用更新了数据库，现在数据库里存的是最新的数据 v2。但与此同时，一个用户的读请求来了。
 
@@ -37,7 +37,7 @@ article: false
 
 最简单粗暴的方法是什么？**加锁**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003023692-fdc91472-9ba7-4223-81de-a95c9cbcaf91.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-147faf576809.png)
 
 就像屏幕上展示的，无论来多少个读写线程，都给我排好队，一个一个来。当一个线程在更新数据时，它会锁住资源，其他所有线程都必须等待。
 
@@ -47,7 +47,7 @@ article: false
 
 好，既然不能用锁，那我们是不是只要规定好操作顺序就行了？我们先来看方案A：**先删除缓存，再更新数据库**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003046335-472f504c-70ec-449a-a4f7-f7d33c9ceadf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-a47a789ebe25.png)
 
 请看屏幕上的时序图：
 
@@ -67,7 +67,7 @@ article: false
 
 我们来看第二种方案：方案B：**先更新数据库，再删除缓存**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003061500-bbd18fe7-1f53-40d3-b946-a705cdd8b517.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-e2b2d132d539.png)
 
 同样看这个时序图：
 
@@ -85,7 +85,7 @@ article: false
 
 刚刚的方案 B 已经很不错了，但它依然有一个极小概率的风险。为了解决这个风险，就有了“延迟双删”这个优化方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003077167-b32f63e6-bb5f-4195-8a7d-b73bb0a4aa9b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-745fa146b9f5.png)
 
 看屏幕上的流程，它其实就是在我们刚刚方案 B 的基础上，增加了一个“保险”步骤：
 
@@ -101,7 +101,7 @@ article: false
 
 如果想让系统更可靠、性能更高，我们就需要引入**异步**思想。这就是基于**消息队列**的方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003090833-7643c06c-46bf-4357-b3cf-b0a7e25c3eeb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-31a46dad19d0.png)
 
 看这个架构图，写请求的流程变了：
 
@@ -117,7 +117,7 @@ article: false
 
 还有没有更优雅的方案？有，那就是**订阅数据库的 Binlog**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003103171-87dcf884-b714-4b4f-85a5-bc33f220ed45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-c15df84f1ff5.png)
 
 看屏幕上这个终极架构。我们的业务代码变得极其纯粹：**它只负责更新数据库**，完全不用关心缓存的存在。
 
@@ -133,7 +133,7 @@ article: false
 
 好了，我们回顾一下。从**加锁**的强一致，到**延迟双删**的准实时，再到**消息队列**和**订阅 Binlog**的最终一致。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760003118704-2c3de252-ceda-4ae5-be8d-d374aa123601.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1109-eptcvqbgo49r9rwr/img-f55c9843c438.png)
 
 正如屏幕上这个表格总结的：
 

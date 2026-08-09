@@ -29,7 +29,7 @@ article: false
 
 假设想在的有三台机器搭建集群：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/12590378/1693810241595-e55a8ad8-b1aa-45a8-9444-077cb201ba85.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Zookeeper/0628-bbdebhegggl2f2x6/img-c88781f92797.png)
 
 1. **每个Server发出一个投票投给自己**。当server1启动的时候，为Looking状态，对应的myid记为1，ZXID为0，他先投自己一票，此时他的投票为(1,0);然后需要把自己的选票发给集群中的其他机器。
 2. server2这个时候也启动了，也是Looking状态，也先投自己一票，也就是(2,0)，然后需要把自己的选票发给集群中的其他机器。
@@ -46,7 +46,7 @@ article: false
 
 ## 非第一次启动Leader选举
 
-![image](https://cdn.nlark.com/yuque/0/2023/webp/12590378/1693810240917-33b74676-8224-4a21-8589-20be50958c8d.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Zookeeper/0628-bbdebhegggl2f2x6/img-38981ea556cf.webp)
 
 在zookeeper运行期间，即便有新服务器加入，也不会影响到Leader，**新加入的服务器会将原有的Leader服务器视为Leader，进行同步。但是一旦Leader宕机了，那么整个集群就将暂停对外服务，进行新一轮Leader的选举**，其过程和启动时期的Leader选举过程基本一致。假设正在运行的有Server1、Server2、Server3三台服务器，当前Leader是Server2，若某一时刻Leader挂了，此时便开始Leader选举。这里我们假设server3为原本的Leader，其余四台均为Follower，某一时刻server3和server5都宕机了，那么选举过程如下：
 

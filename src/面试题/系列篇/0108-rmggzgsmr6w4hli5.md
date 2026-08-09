@@ -84,7 +84,7 @@ sudo sed -e 's|^metalink=|#metalink=|g' \
 sudo yum update -y
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716282945088-f1512b02-ad5d-41fd-a01a-78e46b8dac8d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-1c6e81925bb7.png)
 
 ### 下载安装 Redis
 
@@ -109,7 +109,7 @@ make install
 ll /usr/local/bin
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716282659428-cb236dec-d036-4713-afd8-45eeb6252986.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-be9f98036aac.png)
 
 文件介绍：
 
@@ -137,7 +137,7 @@ Redis 源码路径下启动
 redis-server
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716290916620-0bc40575-d99c-447c-b880-0cd9423bb455.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-d15358a9f597.png)
 
 ### 配置Redis
 
@@ -192,7 +192,7 @@ redis-cli
 auth 1qaz@WSX
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716293135037-3e57cbee-a157-4942-becc-4854552a8388.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-1773be6e752d.png)
 
 ### 退出 OR 关闭 redis
 
@@ -206,7 +206,7 @@ redis-cli shutdown
 
 ## 主从部署（Master-Slave Replication）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716379414621-476955f4-7de9-4776-ad49-a1b1ee70490c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-975c842278a2.png)
 
 主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(Master)，后者称为从节点(Slave)；数据的复制是单向的，只能由主节点到从节点。默认情况下，每台Redis服务器都是主节点；且一个主节点可以有多个从节点(或没有从节点)，但一个从节点只能有一个主节点。
 
@@ -221,7 +221,7 @@ d）高可用基石：除了上述作用以外，主从复制还是哨兵和集�
 
 整体架构图
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718106998028-c66a516d-a9c8-4224-922d-9143a04b891d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-9080a109f0a3.png)
 
 主节点不需要做任何改变，从节点都需要修改配置加上主节点信息，配置完成后，可以再主库检查从节点信息
 
@@ -230,14 +230,14 @@ d）高可用基石：除了上述作用以外，主从复制还是哨兵和集�
 replicaof 192.168.75.129 6379 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716383113230-fa20552c-3fef-4ce1-958d-fcd2e40f801c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-90401a286c70.png)
 
 ```shell
 -- 主节点查看从节点信息
 info Replication
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716383218107-b085eb32-9e19-4a3d-bb08-1aecfc6748b3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-2d04215cc245.png)
 
 ### 主从复制缺点
 
@@ -257,7 +257,7 @@ Redis的主从复制主要用于实现数据的冗余备份和读分担，并不
 
 Redis哨兵模式是通过在独立的哨兵节点上运行特定的哨兵进程来实现的。这些哨兵进程监控主从节点的状态，并在发现故障时自动完成故障发现和转移，并通知应用方，实现高可用性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716380615568-9681a760-dc9c-4e94-b77c-33c273a336cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-7ccb84efed69.png)
 
 ### 哨兵
 
@@ -294,7 +294,7 @@ Redis哨兵模式是通过在独立的哨兵节点上运行特定的哨兵进程
 
 整体架构图
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718114759846-fca7d8be-e549-4111-bde0-ef28b366a919.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-32ea90469186.png)
 
 3 个机器都需要修改 sentinel.conf 配置，配置完成之后先从主节点开始启动哨兵。
 
@@ -314,7 +314,7 @@ sentinel failover-timeout mymaster 180000        #234行，故障节点的最大
 redis-cli -p 26379 info sentinel
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716445980256-a26267d8-06e4-41af-9e74-25f920d5b0c1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-a1558f00fdd2.png)
 
 故障模拟
 
@@ -337,18 +337,18 @@ tail -f sentinel.log
 redis-cli -p 26379 shutdown
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716446783957-c2308449-6769-4f6f-b885-8c50956d6f24.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_59%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-35aed82acb01.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716446783957-c2308449-6769-4f6f-b885-8c50956d6f24.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_59%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-35aed82acb01.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716447015315-774376ea-556d-41b8-b1c4-4fc5388b5689.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-647f062df1b0.png)
 
 ```shell
 -- 切换到131服务，已经为主节点。
 redis-cli info replication
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716447108743-41e6821d-b85d-4556-929a-359e28e43ac2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-b1897477d0a7.png)
 
 当触发了哨兵选举之后，会再后台更改 redis.conf 与 sentinel.conf，可以检查每台机器的文件末尾的数据
 
@@ -357,9 +357,9 @@ cat redis.conf
 cat sentinel.conf
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716447327154-09be9b8b-2ec4-4ce0-be23-a9fa6037525c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-13fc37ed3e64.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716447327154-09be9b8b-2ec4-4ce0-be23-a9fa6037525c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-13fc37ed3e64.png)
 
 ### 哨兵使用建议
 
@@ -417,7 +417,7 @@ Redis集群引入了哈希槽的概念 Redis集群有16384个哈希槽（编号0
 
 ### Reids 集群部署
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747811396688-f0a11375-46bc-4486-85d3-58cdaaa308ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-8d1660e66f79.png)
 
 #### redis 环境简述
 
@@ -512,9 +512,9 @@ appendfilename "appendonly6380.aof"
 dbfilename "dump6380.rdb" 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716452720810-f9615d39-597a-4894-91f5-b859a4f44552.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-54e2c64804f6.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716453022235-f728fad3-3014-46bb-a39c-c213c83cf627.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-d30138522e39.png)
 
 #### Redis 集群数据读写
 
@@ -524,7 +524,7 @@ redis-cli info replication
 -- 直接连接读写可能会出现以下问题，是因为不同的节点的槽位不同，图中就是提示我们去132:6379进行写入数据
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716454411362-5853a4c7-5085-405d-9507-48246e5086c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-42ced949c994.png)
 
 ```shell
 -- 不过我们也可以开启路由规则 -c，进行处理
@@ -533,7 +533,7 @@ redis-cli -c
 set k1 b1
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716454725658-5fe7e4e2-bcb5-4b7c-8314-05e371e8dfdf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-21fae9d3cdac.png)
 
 #### 模拟故障转移
 
@@ -547,9 +547,9 @@ cat redis6380.log
 redis-cli cluster nodes
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718193788512-77f75eaf-b5e8-4694-9544-607c176d64d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-208398c1d640.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718193821646-3fc72696-b139-48f7-a732-eec08c373cb3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-1ed82cf1f9bb.png)
 
 ```shell
 -- 在重新启动129.6379服务
@@ -559,9 +559,9 @@ redis-cli -p 6379 info replication
 -- 观察131.6380日志，129.6379 重新加入集群
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718194068127-d8dcbc98-6d05-4ec1-b088-8958738eecde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-4ff177fe5f57.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1718194117583-b9ae76cd-3bd3-4016-9fd2-3a25cf444eab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-2c213f9dc5e3.png)
 
 至此 Redis 部署篇章结束，完结撒花~~~~~
 
@@ -575,13 +575,13 @@ Redis Insight 是 Redis 官方推荐的客户端工具，功能非常的齐全�
 
 安装完成之后，默认会添加本地 Redis 服务
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1717829245720-ba891052-ce7f-4deb-b435-5e9106642f04.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-3f120e201cfc.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1717829059624-81c81fdf-cce5-4a20-bda7-04e0d53d0150.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-be1406d8de80.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1717829662424-ccb61b81-21be-49c4-a171-b5d6dae257e7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-90601639eef3.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1717829925337-3b9027de-5a74-450a-be13-afc62aac7035.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-44b78c8ce8ff.png)
 
 ### tips
 
@@ -604,13 +604,13 @@ SET key1 value1  # 在数据库 0 中设置键值对
 
 基友网地址：[https://github.com/tiny-craft/tiny-rdm/tree/main](https://github.com/tiny-craft/tiny-rdm/tree/main)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716294522827-dd2c157d-437e-473e-8d56-763740624cd4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-924d5a4eaafc.png)
 
 我这边使用 windows 绿色版，打开之后，然后添加新链接，然后里面的功能很 nice，大家可以自行摸索下了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716294807723-a06acbc9-af3a-46a0-9219-002724b65473.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-da3a5a892ec6.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716294878402-93d89428-a94e-4e58-9db2-e3c4f6583c58.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-38867f1730ee.png)
 
 ## Java 客户端连接 Redis
 
@@ -1899,7 +1899,7 @@ flushall :清空所有库
 
 使用redis做一个缓冲操作，让请求先访问到redis，而不是直接访问MySQL等数据库：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1691911161900-02a5e730-8b09-4ac6-9186-93c5a5ee0bca.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-eb7950ca3815.png)
 
 读取缓存步骤一般没有什么问题，但是一旦涉及到数据更新：数据库和缓存更新，就容易出现缓存(Redis)和数据库（MySQL）间的数据一致性问题。
 
@@ -1922,7 +1922,7 @@ flushall :清空所有库
 
 #### 队列 + 重试机制
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1691917750473-32ce4f56-aa89-4e07-afc1-5bbb25541a3f.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-d3970a5a7e89.png)
 
 更新数据库数据；
 
@@ -1936,7 +1936,7 @@ flushall :清空所有库
 
 #### 异步更新缓存(基于订阅binlog的同步机制)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1691925278364-ae26d897-a6b6-4418-9348-728b7284d066.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-99a46a87cf84.png)
 
 其实这种机制，很类似MySQL的主从备份机制，因为MySQL的主备也是通过binlog来实现的数据一致性。
 
@@ -1985,7 +1985,7 @@ Redis之所以能够提供高速读写操作是因为数据存储在内存中，
 RDB持久化方案进行备份时，Redis会单独fork一个子进程来进行持久化，会将数据写入一个临时文件中，持久化完成后替换旧的RDB文件。
 在整个持久化过程中，主进程（为客户端提供服务的进程）不参与IO操作，这样能确保Redis服务的高性能，RDB持久化机制适合对数据完整性要求不高但追求高效恢复的使用场景。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716354913470-c291fb7c-8d90-48ba-b2d5-d266a7e46c22.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-08dc17d77de7.png)
 
 #### RDB触发规则
 
@@ -2008,19 +2008,19 @@ save 300 100 -- 300 秒内有100个key被修改，触发RDB
 
 save 60 10000 -- 60 秒内有10000个key被修改，触发RDB
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716357628204-3c5285da-e442-4029-8c9a-a288c6faf37c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-31ddb3c97f05.png)
 
 - shutdown触发
 
 shutdown触发Redis的RDB持久化机制非常简单，我们在客户端执行shutdown即可
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716361159464-8f140955-d37c-4390-8ca2-2afb823a6ddf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-7c8ad095b784.png)
 
 - flushall触发
 
 flushall清空Redis所有数据库的数据（16个库数据都会被删除）（等同于删库跑路）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716361302641-5cb23c8b-2490-46b4-8f4e-f2a1f75c3370.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-00bba65b6f1b.png)
 
 #### 优点
 
@@ -2041,7 +2041,7 @@ AOF持久化需要手动修改conf配置开启。
 
 #### AOF持久化流程
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716355296617-e5a79f8c-f374-4beb-aa83-d763adf054e3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-0d18c20ab1fa.png)
 
 AOF持久化方案进行备AOF持久化方案进行备份时，客户端所有请求的写命令都会被追加到AOF缓冲区中，缓冲区中的数据会根据Redis配置文件中配置的同步策略来同步到磁盘上的AOF文件中，同时当AOF的文件达到重写策略配置的阈值时，Redis会对AOF日志文件进行重写，给AOF日志文件瘦身。Redis服务重启的时候，通过加载AOF日志文件来恢复数据。
 
@@ -2060,23 +2060,23 @@ AOF默认不开启，默认为appendonly no，开启则需要修改为appendonly
 
 redis 7版本，AOF文件存储在appendonlydir文件下，base是基准文件，incr是追加数据。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716361720778-797e5d46-4b51-414b-8c8f-f9383bd887e7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-f41b27b8aaa8.png)
 
 先存入三条数据，然后破坏incr结尾的文件内容，末尾加上baili
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716361888374-b2a60188-d701-41e2-8a75-1617a17efbe1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-3ec893063412.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716361851950-168ca8cc-5e01-48d9-9288-5da752bbe4af.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-fee0a82432c4.png)
 
 重新启动 Redis 出现异常：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716361990021-6f9c6963-5640-4850-b6af-ff3bc37322b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-c84726ef2f80.png)
 
 使用redis-check-aof --fix appendonlydir/appendonly.aof.1.incr.aof 对AOF日志文件进行修复
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716362154061-354803b0-261a-4082-a228-95958f0a7dc0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-1b554089aee1.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716361990021-6f9c6963-5640-4850-b6af-ff3bc37322b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-c84726ef2f80.png)
 
 观察数据可以知道，丢失了 baili3 的数据。这种丢失是被允许的。再启动恢复正常。
 
@@ -2096,13 +2096,13 @@ redis 7版本，AOF文件存储在appendonlydir文件下，base是基准文件�
 
 正常启动后存在三个文件
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716363379052-40920b0c-e99f-40f7-b29d-c940b1ad2fed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-3f41ca086e3c.png)
 
 连接 redis 之后，针对已存在的 key，重新赋值，然后手动重写：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716363123631-9ba008cc-e7b5-49da-9527-14ded94e8c0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-f5081441af22.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716363379052-40920b0c-e99f-40f7-b29d-c940b1ad2fed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-3f41ca086e3c.png)
 
 #### 优点
 
@@ -2123,13 +2123,13 @@ Redis4.0版本开始支持混合持久化，因为RDB虽然加载快但是存在
 
 #### 混合持久化流程
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716364971302-1fb32b00-3d01-4804-aefb-5a2fc673e1c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-33192f95a072.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716364133740-8b235306-462d-4ee7-9485-973f081e7dc4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-b7d8dca101bd.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716364971302-1fb32b00-3d01-4804-aefb-5a2fc673e1c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-33192f95a072.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716364407943-940ed0e9-67fb-4b49-925e-675ab49dfad3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-cbc2d904fd7b.png)
 
 # 完整的文件目录与配置文件与使用过程中的命令
 
@@ -2142,7 +2142,7 @@ Redis4.0版本开始支持混合持久化，因为RDB虽然加载快但是存在
 /opt/software/redis/redis-stable/cluster  -- Redis集群配置文件存放路径
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716701083307-7024fa77-1108-4d81-bd4d-3e748c2978ca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0108-rmggzgsmr6w4hli5/img-b164f2705a8b.png)
 
 ## 配置文件
 

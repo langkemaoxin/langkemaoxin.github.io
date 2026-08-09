@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752367464484-1b09fd6e-f3a6-420f-8a22-951453eb51a9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1405-toc9arz6umfzzp54/img-c815473e0b88.png)
 
 大模型安全防护是当前AI领域的重要议题，面试中需结合技术原理、实际案例和解决方案展开。以下为系统性答题框架：
 
@@ -27,7 +27,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752369933591-4d0f3ad0-4d0b-4b44-9f4a-957cbd397f07.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1405-toc9arz6umfzzp54/img-ef2d5c011450.png)
 
 #### 案例背景：某三甲医院大模型辅助诊断系统
 
@@ -46,7 +46,7 @@ article: false
 
 #### （一）数据安全防护方案
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752369954803-517c4983-bebe-4849-942d-a0a677b7929a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1405-toc9arz6umfzzp54/img-46c9d88d0d97.png)
 
 **技术实现**：
 
@@ -71,7 +71,7 @@ article: false
 
 #### （二）模型鲁棒性增强方案
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752369970207-31357daa-0f08-4aeb-ad40-0c4faf883a90.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1405-toc9arz6umfzzp54/img-7e46672b0138.png)
 
 **技术实现**：
 
@@ -91,7 +91,7 @@ article: false
 
 #### （三）权限与合规管理方案
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752369987744-6b396159-f2da-438d-ab98-2ddde3c4d216.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1405-toc9arz6umfzzp54/img-735b131f252f.png)
 
 **技术实现**：
 
@@ -111,7 +111,7 @@ article: false
 
 #### （四）对抗攻击防御实战
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370002541-a86ea539-c7c2-498f-a486-9d1b86cf5222.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1405-toc9arz6umfzzp54/img-d9c0eb74dc08.png)
 
 **案例：金融风控大模型的攻防演练**
 **场景**：某银行使用大模型预测贷款违约风险，遭遇黑产通过构造虚假征信数据实施对抗攻击。
@@ -132,7 +132,7 @@ article: false
 
 ### 四、总结归纳
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370014746-37a4dc06-6e12-4520-8484-c9e83b511a03.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1405-toc9arz6umfzzp54/img-c20c20c4b332.png)
 
 1. **安全防护核心原则**：
 

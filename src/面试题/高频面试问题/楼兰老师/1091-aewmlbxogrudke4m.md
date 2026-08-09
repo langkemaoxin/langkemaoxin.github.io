@@ -15,7 +15,7 @@ article: false
 
 上周有位工作五年的朋友，好不容易得到一个面试机会。面试时被面试官问了个很常见的问题：“电商系统，用户可以维护多个收货地址，下单时选一个。订单表和地址表你怎么设计？"
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901565997-f6a6bc88-486b-4457-8530-fbbe477255f0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-06ade260550a.png)
 
 他很自信地说：”按数据库三范式啊，设计订单表和地址表两张表，主外键关联呗。“
 
@@ -53,7 +53,7 @@ article: false
 
 好，理论清楚了。按三范式，标准设计应该是这样：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901565860-5782408b-525b-4a6f-9acb-7909367a18f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-039b7bfe0730.png)
 
 看起来很规范对吧？一个最明显的问题就是数据一致性问题
 
@@ -61,7 +61,7 @@ article: false
 
 所以很多人会说，那我冗余呗。把地址信息直接冗余到订单表里。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901565739-0df64061-65aa-483d-a0d0-8c5d4111a65d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-0eaaec490bfc.png)
 
 但新问题又来了：
 
@@ -148,25 +148,25 @@ DDD是什么？它是Eric Evans在2004年提出的一套软件设计方法论，
 
 所以，对于之前面试问到的下单场景，当中，订单是实体，地址是值对象，那么地址信息可以很直接的冗余到订单表当中。像这样
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901565748-77aa4a25-3c90-49ba-9681-f4ffa60d1e09.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-63222bcfc5a3.png)
 
 **甚至，你可以更大胆一点。地址信息不管他是个什么形式，最终他就是一个和订单总价格一样的值而已。那就干脆用一个字段，直接保存JSON格式的地址信息，也无不可。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901565831-3d98a143-5cd3-4667-b3b5-c794e7c7a456.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-eb38e83f5cb5.png)
 
 甚至这种设计在某些特殊场景，还能带来一些意料之外的好处。比如地址的结构不稳定时。这个你可以看看淘宝的下单页面，他的地址信息的结构就是不一样的。选择不同的地区，如“中国大陆”或者“中国台湾”或者“美国”，地址信息的相关字段都是不同的。
 
 比如这是淘宝上中国大陆的地址信息
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901566579-6c6a44cb-d3ca-49e8-9ae9-6a2dba7f40d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-2311b77cc6d5.png)
 
 这是淘宝上中国台湾的地址信息
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901566513-ecf73697-9411-40b1-8f7a-403f37ee5816.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-94846eb4232f.png)
 
 这是淘宝上美国的地址信息
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761901566528-47fb46a6-c83f-4b34-a3ed-8e0c1cf506fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1091-aewmlbxogrudke4m/img-aa336785b328.png)
 
 用一个JSON来存地址，连冗余的字段都不需要改了。
 

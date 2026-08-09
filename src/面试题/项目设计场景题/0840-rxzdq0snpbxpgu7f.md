@@ -29,7 +29,7 @@ article: false
 
 说回我们的场景：  用户新增昵称时需要首先计算K个哈希值，
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1718332704322-328c77e9-be1d-4983-9ca5-035c69cebef7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0840-rxzdq0snpbxpgu7f/img-4e49f7494c97.png)
 
 如果K个哈希值有一个不为0呢，代表昵称不存在，否则代表昵称已存在。
 
@@ -39,7 +39,7 @@ article: false
 
 当然也可以通过增加K个哈希个数，
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1718333229713-ef7a9811-5c2d-4f2c-8009-2558e32954c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0840-rxzdq0snpbxpgu7f/img-661608e01427.png)
 
  或者增加bit位数组长度减少误判率。
 

@@ -15,7 +15,7 @@ article: false
 
 在系统设计（System Design）面试中，“设计一个打车软件”是出现频率极高的题目。它不仅考察候选人对高并发的理解，还涉及地理位置服务（LBS）、实时消息推送、分布式锁等多个硬核技术点。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095786709-74dcccaf-1035-4df7-9b18-68ee44aef432.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-9f6d4ac6ff70.png)
 
 本文将剥离细枝末节，从上帝视角带你拆解一个“迷你滴滴”的核心架构演进。
 
@@ -23,7 +23,7 @@ article: false
 
 ### 1. 宏观视角：领域驱动设计
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095797783-e8000d5f-006a-43ca-9042-90cda8f49afe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-fafbc0ebfbe1.png)
 
 在动手写代码前，首先要进行业务领域的拆解。
 
@@ -36,7 +36,7 @@ article: false
 
 ### 2. 流量漏斗：分层架构落地
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095808269-eff547b6-8da1-4e86-9549-10bfe1658344.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-edf2f3d9c3ad.png)
 
 为了承载千万级的日活流量，我们需要一个清晰的分层架构来作为骨架。
 
@@ -47,7 +47,7 @@ article: false
 
 ### 3. LBS 引擎：如何从百万司机中秒级圈人？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095824953-a692a9af-529e-487a-9a1e-982ea20d369a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-12521b7d06af.png)
 
 这是整个系统最硬核的技术难点：**如何高效地存储和查询地理位置？**
 
@@ -62,7 +62,7 @@ article: false
 
 ### 4. 并发挑战：防止订单超卖与撞单
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095837201-9abd7aad-b728-45b0-8313-efba916a0724.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-2ff31154169c.png)
 
 在“派单模式”或“抢单模式”下，同一个订单可能会被推给多个司机。如果两个司机在同一毫秒点击“抢单”，如何保证数据一致性？
 
@@ -75,7 +75,7 @@ article: false
 
 ### 5. 实时触达：Netty 长连接通道
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095846526-9b6d8d1f-dbda-4e4a-ab35-979d71a791d0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-17fdfdbff122.png)
 
 抢单成功后，系统需要立刻通知司机。传统的 HTTP 轮询（Polling）方式延迟高且浪费服务器资源，无法满足打车场景对“实时性”的苛刻要求。
 
@@ -88,7 +88,7 @@ article: false
 
 ### 6. 数据治理：冷热分离策略
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095856036-fabacfc8-9af9-4b79-941a-efb812531033.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-f8c193ca2afe.png)
 
 随着业务发展，订单表和轨迹表的数据量会呈指数级增长。单表超过 2000 万行后，MySQL 的性能会显著下降。
 
@@ -102,7 +102,7 @@ article: false
 
 ### 7. 总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765095865021-95675145-151b-4829-a003-f69daa2edddb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0930-ssz519y5uneo7wdp/img-13c7e126d68f.png)
 
 设计一个迷你滴滴，本质上是在做**空间换时间**与**分层治理**的权衡。
 

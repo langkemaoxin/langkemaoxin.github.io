@@ -13,7 +13,7 @@ article: false
 
 > 来源：[PBAC：从“静态管人”到“动态管事”的架构进化](https://www.yuque.com/tulingzhouyu/db22bv/wzfol5ms3zfkq0a6)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764072428977-2eba03d1-c0a0-4f2a-a9c8-a137c9198333.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0944-wzfol5ms3zfkq0a6/img-4391afcbe02c.png)
 
 在数字化转型的浪潮中，企业的业务复杂度与合规要求正以前所未有的速度增长。传统的权限管理模式，如基于角色的访问控制（RBAC），在应对日益动态化和细粒度的安全需求时，已显得力不从心。本文将深入解析一种面向未来的架构思想：**PBAC（Policy-Based Access Control，基于策略的访问控制）**，探讨它是如何实现从“静态管人”到“动态管事”的权限架构进化的。
 
@@ -29,7 +29,7 @@ PBAC 不仅仅是一种技术，它更是一种旨在实现安全逻辑与业务
 
 #### 核心公式：权限的重构
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764072554068-c853dca3-7737-4fb3-8295-3806321619c1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0944-wzfol5ms3zfkq0a6/img-aadadc9ac4c3.png)
 
 PBAC 的核心公式可以概括为：
 
@@ -47,7 +47,7 @@ PBAC 的核心公式可以概括为：
 
 RBAC 在应对静态组织结构时很有效，但在现代微服务和复杂业务场景下，它面临以下三大挑战，促使权限管理发生“范式转移”：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764072618695-c352465b-870b-4cd3-ae5a-8b43f4a8e2d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0944-wzfol5ms3zfkq0a6/img-99204d20368f.png)
 
 1. **角色爆炸 (Role Explosion)：** 当业务规则（如时间、金额、地域）需要嵌入权限时，RBAC 必须为每个条件组合创建新角色，导致角色数量呈指数级增长，维护难度极大。
 2. **逻辑侵入 (Logic Intrusion)：** 为了弥补角色的不足，开发者不得不在 Service 层使用 `if-else` 进行硬编码判断，将安全逻辑耦合进业务代码，造成架构“坏味道”。
@@ -59,7 +59,7 @@ PBAC 以其**动态性、解耦性**和**敏捷性**，有效地解决了 RBAC �
 
 要落地 PBAC，我们通常参考 **XACML（eXtensible Access Control Markup Language）标准所定义的架构模型。我们借鉴的主要是它的“架构思想”和“组件拆分”**，这套模型是现代 PBAC 系统的理论基石。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764072666479-c522c0a1-5f52-4c47-8067-27594e430be4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0944-wzfol5ms3zfkq0a6/img-cd6078e8d889.png)
 
 XACML 将权限系统拆解为四个核心组件，形成一个清晰的决策流：
 
@@ -92,7 +92,7 @@ Policy Administration Point
 
 在云原生微服务架构中，最现代化且主流的 PBAC 落地实践是引入 **OPA (Open Policy Agent)**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764072697686-42dfc22d-f734-4e63-9094-1c608007cf27.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0944-wzfol5ms3zfkq0a6/img-9111695e2c37.png)
 
 #### Sidecar 模式与低延迟决策
 
@@ -109,7 +109,7 @@ OPA 最核心的价值在于它通过声明式的 **Rego 语言**，实现了 **
 
 ### 5. 核心价值总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1764072708662-e3ddba13-8beb-4887-b96c-81c8468c43ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0944-wzfol5ms3zfkq0a6/img-51a6d00fb733.png)
 
 PBAC 是权限管理的未来，它为企业提供了以下核心价值：
 

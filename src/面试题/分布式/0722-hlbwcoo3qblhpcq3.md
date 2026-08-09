@@ -40,7 +40,7 @@ article: false
 
 分布式锁常见的实现有三种实现，下文我们会一一介绍这三种锁的实现方式：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695888165410-57969aed-4bdb-40cf-8f0e-3e92c3381576.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-31b47093c311.png)
 
 - 基于数据库的分布式锁；
 - 基于Redis的分布式锁；
@@ -157,7 +157,7 @@ try {
 
 如下图为Redisson客户端加锁和释放锁的逻辑：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697375990478-f49a5f6a-b3af-40ea-8e05-b76d9d792abe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-6c6eebee0032.png)
 
 #### 加锁机制
 
@@ -200,7 +200,7 @@ end;
 return redis.call('pttl', KEYS[1]);
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/22309163/1695888239381-f4433c80-a298-4d4a-b428-6adafe1f41e8.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-383eaf089478.jpg)
 
 #### 看门狗逻辑
 
@@ -232,31 +232,31 @@ Zookeeper实现的分布式锁适用于引入Zookeeper的服务，如下所示�
 
 首先，在 Zookeeper 当中创建一个持久节点 ParentLock。当第一个客户端想要获得锁时，需要在ParentLock这个节点下面创建一个临时顺序节点 Lock1。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377677178-6f296188-13cc-4d83-8d85-fa185453dff7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-b49ba90a1812.png)
 
 之后，Client1 查找 ParentLock 下面所有的临时顺序节点并排序，判断自己所创建的节点 Lock1 是不是顺序最靠前的一个。如果是第一个节点，则成功获得锁。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377677324-4faa8987-088e-4eed-8655-ea41beffda58.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-81bd564299db.png)
 
 这时候，如果再有一个客户端 Client2 前来获取锁，则在 ParentLock 下再创建一个临时顺序节点Lock2。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377677403-4f393742-e7dd-4e2b-992f-7b0d4fce5f5e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-c42ddfbfa17e.png)
 
 Client2 查找 ParentLock 下面所有的临时顺序节点并排序，判断自己所创建的节点 Lock2 是不是顺序最靠前的一个，结果发现节点 Lock2 并不是最小的。
 
 于是，Client2 向排序仅比它靠前的节点 Lock1 注册 Watcher，用于监听 Lock1 节点是否存在。这意味着 Client2 抢锁失败，进入了等待状态。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377677213-1b477f60-51b4-4f67-8c00-3f783f6c17ae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-afcb75c1d4ad.png)
 
 这时候，如果又有一个客户端 Client3 前来获取锁，则在ParentLock下载再创建一个临时顺序节点Lock3。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377677238-50ec9efa-eef8-4098-94d2-e737d8bb89b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-70d1a4ddb64f.png)
 
 Client3 查找 ParentLock 下面所有的临时顺序节点并排序，判断自己所创建的节点 Lock3 是不是顺序最靠前的一个，结果同样发现节点 Lock3 并不是最小的。
 
 于是，Client3 向排序仅比它靠前的节点 Lock2 注册 Watcher，用于监听 Lock2 节点是否存在。这意味着 Client3 同样抢锁失败，进入了等待状态。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377677736-37a2fc75-c0e5-4863-be35-579ecdef6ca3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-bdc92c5caf05.png)
 
 这样一来，Client1 得到了锁，Client2 监听了 Lock1，Client3 监听了 Lock2。这恰恰形成了一个等待队列，很像是 Java 当中 ReentrantLock 所依赖的 AQS（AbstractQueuedSynchronizer）。
 
@@ -268,25 +268,25 @@ Client3 查找 ParentLock 下面所有的临时顺序节点并排序，判断自
 
 当任务完成时，Client1 会显示调用删除节点 Lock1 的指令。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377677913-3d672421-5a5e-45d7-a243-c484085a85eb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-0c4d73a67044.png)
 
 2.任务执行过程中，客户端崩溃
 
 获得锁的 Client1 在任务执行过程中，如果 Duang 的一声崩溃，则会断开与 Zookeeper 服务端的链接。根据临时节点的特性，相关联的节点 Lock1 会随之自动删除。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377678121-c68c6350-4028-46c0-9b42-2dd6d0224d79.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-0fdaa1b0c2dc.png)
 
 由于 Client2 一直监听着 Lock1 的存在状态，当 Lock1 节点被删除，Client2 会立刻收到通知。这时候 Client2 会再次查询 ParentLock 下面的所有节点，确认自己创建的节点 Lock2 是不是目前最小的节点。如果是最小，则 Client2 顺理成章获得了锁。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377678218-5086c742-5070-4ec3-b468-632d6ae8fa3d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-877d8bcaf5b4.png)
 
 同理，如果 Client2 也因为任务完成或者节点崩溃而删除了节点 Lock2，那么 Client3 就会接到通知。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377678253-61e98f5d-e1b6-4677-b466-bc5a121e049d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-c902a7e4b567.png)
 
 最终，Client3 成功得到了锁。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697377678541-aa8148f6-5b08-4e12-8671-cb51a501c453.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0722-hlbwcoo3qblhpcq3/img-e8c8f8bdd0d1.png)
 
 ### 五、三种锁的优缺点
 

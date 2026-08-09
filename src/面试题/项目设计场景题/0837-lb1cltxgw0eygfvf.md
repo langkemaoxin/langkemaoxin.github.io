@@ -41,11 +41,11 @@ article: false
 
 这个时候就需要生成**分布式 ID**了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876026-757e1ce1-8a1b-4079-b134-ad6a1d7ff3e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-a7460ea305f6.png)
 
 ### 分布式 ID 需要满足哪些要求?
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876154-fb797c77-aac1-4cfa-a050-ad88aa5b1c54.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-f9036d1e4585.png)
 
 分布式 ID 作为分布式系统中必不可少的一环，很多地方都要用到分布式 ID。
 
@@ -71,7 +71,7 @@ article: false
 
 这种方式就比较简单直白了，就是通过关系型数据库的自增主键产生来唯一的 ID。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876232-84620fb3-cae5-4485-bd64-5f2a6b6dfe3f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-9f555a79db54.png)
 
 以 MySQL 举例，我们通过下面的方式即可。
 
@@ -162,7 +162,7 @@ CREATE TABLE `sequence_id_generator` (
 
 current_max_id 字段和step字段主要用于获取批量 ID，获取的批量 id 为：current_max_id ~ current_max_id+step。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876294-1046ec20-d580-46ca-96aa-c204f10afd20.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-e2650aef0aa8.png)
 
 version 字段主要用于解决并发问题（乐观锁）,biz_type 主要用于表示业务类型。
 
@@ -212,7 +212,7 @@ id current_max_id step version biz_type
 
 #### NoSQL
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876379-15a519e2-3993-425f-accf-faf735261dc5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-20b7a3efdfa3.png)
 
 一般情况下，NoSQL 方案使用 Redis 多一些。我们通过 Redis 的 incr 命令即可实现对 id 原子顺序递增。
 
@@ -234,7 +234,7 @@ OK
 
 除了 Redis 之外，MongoDB ObjectId 经常也会被拿来当做分布式 ID 的解决方案。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876463-7529d10c-c28c-47cf-92de-1b14a6411c6c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-c3c33d03bfb9.png)
 
 MongoDB ObjectId 一共需要 12 个字节存储：
 
@@ -263,7 +263,7 @@ UUID.randomUUID().tostring().replaceA11("-","");
 
 [RFC 4122](https://tools.ietf.org/html/rfc4122) 中关于 UUID 的示例是这样的：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876532-f2c0b034-0460-44ef-adea-390c8291a4bf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-d7e7b2cf1f88.png)
 
 我们这里重点关注一下这个 Version(版本)，不同的版本对应的 UUID 的生成规则是不同的。
 
@@ -276,7 +276,7 @@ UUID.randomUUID().tostring().replaceA11("-","");
 
 下面是 Version 1 版本下生成的 UUID 的示例：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876591-461ffcb2-31fc-4d5b-afc8-923657235854.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-41b813b6cef3.png)
 
 JDK 中通过 UUID 的 randomUUID() 方法生成的 UUID 的版本默认为 4。
 
@@ -303,7 +303,7 @@ int version = uuid.version();// 4
 
 Snowflake 是 Twitter 开源的分布式 ID 生成算法。Snowflake 由 64 bit 的二进制数字组成，这 64bit 的二进制被分成了几部分，每一部分存储的数据都有特定的含义：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876674-503ea3bc-d69d-4054-83c1-31b63471ccdd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-0b1d54480aea.png)
 
 - **sign(1bit)**:符号位（标识正负），始终为 0，代表生成的 ID 为正数。
 - **timestamp (41 bits)**:一共 41 位，用来表示时间戳，单位是毫秒，可以支撑 2 ^41 毫秒（约 69 年）
@@ -325,7 +325,7 @@ Snowflake 是 Twitter 开源的分布式 ID 生成算法。Snowflake 由 64 bit 
 
 不过，UidGenerator 对 Snowflake(雪花算法)进行了改进，生成的唯一 ID 组成如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876795-08c4f066-3124-44f9-b235-9fa5f3264648.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-93b5df301138.png)
 
 - **sign(1bit)**:符号位（标识正负），始终为 0，代表生成的 ID 为正数。
 - **delta seconds (28 bits)**:当前时间，相对于时间基点"2016-05-20"的增量值，单位：秒，最多可支持约 8.7 年
@@ -336,7 +336,7 @@ Snowflake 是 Twitter 开源的分布式 ID 生成算法。Snowflake 由 64 bit 
 
 UidGenerator 官方文档中的介绍如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569876938-6047d39a-df9a-47e9-ab99-d88fe6bcc163.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-5fe6bef5059f.png)
 
 自 18 年后，UidGenerator 就基本没有再维护了
 
@@ -350,7 +350,7 @@ Leaf 的诞生主要是为了解决美团各个业务线生成分布式 ID 的�
 
 Leaf 对原有的号段模式进行改进，比如它这里增加了双号段避免获取 DB 在获取号段的时候阻塞请求获取 ID 的线程。简单来说，就是我一个号段还没用完之前，我自己就主动提前去获取下一个号段
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569877026-a190aab9-165c-450f-aec2-e5dcdfbcad13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-c3128ecdb8bf.png)
 
 根据项目 README 介绍，在 4C8G VM 基础上，通过公司 RPC 方式调用，QPS 压测结果近 5w/s，TP999 1ms。
 
@@ -362,7 +362,7 @@ Leaf 对原有的号段模式进行改进，比如它这里增加了双号段避
 
 为了搞清楚这个问题，我们先来看看基于数据库号段模式的简单架构方案。（图片来自于 Tinyid 的官方 wiki:[《Tinyid 原理介绍》](https://github.com/didi/tinyid/wiki/tinyid%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D)）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569877088-402e9c44-9893-44d6-b473-ff495f8d949b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-bf519eca7374.png)
 
 在这种架构模式下，我们通过 HTTP 请求向发号器服务申请唯一 ID。负载均衡 router 会把我们的请求送往其中的一台 tinyid-server。
 
@@ -375,7 +375,7 @@ Leaf 对原有的号段模式进行改进，比如它这里增加了双号段避
 
 Tinyid 的原理比较简单，其架构如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569877157-f83b74a9-7cdd-4ae3-a9f7-248af58d54f9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-22bcd574d119.png)
 
 相比于基于数据库号段模式的简单架构方案，Tinyid 方案主要做了下面这些优化：
 
@@ -398,7 +398,7 @@ Tinyid 的优缺点这里就不分析了，结合数据库号段模式的优缺�
 
 IdGenerator 生成的唯一 ID 组成如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1717569877240-4ec35fa0-c68f-4f5a-b332-81bbb055c0d4.png#averageHue=%23e3f3eb&from=url&id=CWJty&originHeight=151&originWidth=762&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0837-lb1cltxgw0eygfvf/img-7cf6994c7d73.png)
 
 - **timestamp (位数不固定)**:时间差，是生成 ID 时的系统时间减去 BaseTime(基础时间，也称基点时间、原点时间、纪元时间，默认值为 2020 年) 的总时间差（毫秒单位）。初始为 5bits，随着运行时间而增加。如果觉得默认值太老，你可以重新设置，不过要注意，这个值以后最好不变。
 - **worker id (默认 6 bits)**:机器 id，机器码，最重要参数，是区分不同机器或不同应用的唯一 ID，最大值由 WorkerIdBitLength（默认 6）限定。如果一台服务器部署多个独立服务，需要为每个服务指定不同的 WorkerId。

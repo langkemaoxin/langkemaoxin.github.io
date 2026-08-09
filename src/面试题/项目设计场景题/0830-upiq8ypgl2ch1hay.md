@@ -32,7 +32,7 @@ article: false
 
 ## 2.1 架构
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657852792-f8132bcb-fa91-4d76-8776-27d51e1fe83f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-68cf247e1f60.png)
 
 **网关 1.0 版本架构设计图**
 
@@ -59,7 +59,7 @@ article: false
 
 ## 3.1 整体架构
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657852766-1a5dd7c3-1378-444f-ab04-12e76da0766a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-a979ae3b1eaa.png)
 
 **网关 2.0 版本架构设计图**
 
@@ -75,7 +75,7 @@ article: false
 
 网络状态良好的情况下，完成如下图所示步骤 1 到步骤 6 之后，直接进入 WebSocket 流程；网络环境较差的情况下，WebSocket 的通信模式会退化成 HTTP 方式，客户端通过 POST 方式推送消息到服务端，再通过 GET 长轮询的方式从读取服务端返回数据。客户端初次请求服务端连接建立的握手流程：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657852837-8661b003-4896-44b5-8fcc-a62afb130669.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-7657e89dd6ff.png)
 
 1. Client 发送 GET 请求尝试建立连接；
 2. Server 返回相关连接数据，sid 为本次连接产生的唯一 Socket ID，后续交互作为凭证；
@@ -92,7 +92,7 @@ article: false
 
 客户端与服务端连接建立采用的 wss 协议，在 1.0 版本中 TLS 证书挂载在 Nginx 上，HTTPS 握手过程由 Nginx 完成，为了降低 Nginx 的机器成本，在 2.0 版本中我们将证书挂载到服务上，通过分析服务内存，如下图所示，TLS 握手过程中消耗的内存占了总内存消耗的大概 30% 左右。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657852933-71e65c08-2a71-4fb5-a8df-0c7cc7208a5f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-df6ea73e298b.png)
 
 这个部分的内存消耗无法避免，我们有两个选择：
 
@@ -272,7 +272,7 @@ X-Trace-ID
 
 在 Kafka Headers 中写入了 trace id 和 时间戳，可以追中某条消息的完整消费链路以及各阶段的时间消耗。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657852908-54b2c912-a724-405e-8e43-0dc28290bbda.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-d335d54b3ee1.png)
 
 ## 3.8 消息接收与发送
 
@@ -364,11 +364,11 @@ ping -s {a} {ip}
 
 a = 1400 时，实际传输包大小为：1428。其中 28 由 8（ICMP 回显请求和回显应答报文格式）和 20（IP 首部）构成。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657853436-a3d77585-a96a-4613-bd4d-9fa18868bb64.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-77b555d2ef48.png)
 
 如果 a 设置过大会导致应答超时，在实际环境包大小超过该值时会出现分包的情况。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657853460-7bd919a9-c7a6-46b5-b2f5-36b02588a30e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-38631bf43647.png)
 
 在调试合适的 MTU 值的同时通过 MessagePack 对消息体进行序列号，进一步压缩数据包的大小，并减小 CPU 的消耗。
 
@@ -376,21 +376,21 @@ a = 1400 时，实际传输包大小为：1428。其中 28 由 8（ICMP 回显�
 
 使用 EGO 框架（ [https://github.com/gotomicro/ego](https://github.com/gotomicro/ego) ）进行服务开发：业务日志打印，异步日志输出，动态日志级别调整等功能，方便线上问题排查提升日志打印效率；微服务监控体系，CPU、P99、内存、goroutine 等监控。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719740172254-7fc7d0f5-2e6d-4c3c-ab70-951bc67b163f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-bfeb6eef641d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657853525-5fd5db81-40c2-4a96-8843-c700892ee1b8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-f4d7024b5bc7.png)
 
 客户端 Redis 监控：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657853528-c2f9cf8e-00cc-4ba4-b244-84292ca14950.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-920268701fd9.png)
 
 客户端 Kafka 监控：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657853597-2f665ae6-1aa4-4363-a3db-9c1e4660c77c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-9013fa6b7d59.png)
 
 自定义监控大盘：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854007-b9a77326-3656-4c9f-b2f4-776656653f78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-721b0949ad8d.png)
 
 # 4 性能压测
 
@@ -427,25 +427,25 @@ WS-Gateway
 
 测试经过 5 分钟后，服务异常重启，重启原因是内存使用量到超过限制。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854013-bbd9ff79-8a89-41aa-a35e-af0e7d38e243.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-3a5d64a68ade.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854003-b7a59903-cc3a-4f51-9991-d62903263da4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-fdf25545ac55.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854034-f9f21368-37c3-4999-b995-896f7d75ad4a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-e8d403f97239.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854343-74dc1cc6-204f-4b49-9725-52b21fedfe7a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-bd1322157c88.png)
 
 分析内存超过限制的原因：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854497-57871958-9676-45e9-a790-549a42d7c167.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-6395a412cb5f.png)
 
 新增的广播代码用掉了 9.32% 的内存。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854518-9c562785-141e-4955-a6c1-1d6cac02ae37.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-3d9afaeb58d4.png)
 
 接收用户回执消息的部分消耗了 10.38% 的内存。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854542-5f45c067-df6e-4933-bec7-da618b01cfe1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-007d23490905.png)
 
 进行测试规则调整，测试时间 15 分钟，在线用户 48w，每 5s 推送一条所有用户，用户有回执。
 
@@ -493,17 +493,17 @@ WS-Gateway
 
 连接数建立峰值：1.1w 个 / s，发送数据峰值 10w 条 / s，出内存占用过高之外，其他没有异常情况。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854913-08183e85-a45d-4a65-9329-b0f3b9353f56.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-92a3ee07d187.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854928-32582e76-bbeb-4304-b02f-52476add16f0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-e76da8a872e1.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854965-4769304e-6bfa-4d36-986c-7bac079480a4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-68f14b129158.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854953-c1ea9d5c-e0e1-4780-b4ff-bebe27f4d055.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-a42107652fdc.png)
 
 内存消耗极高，分析火焰图，大部分消耗在定时 5s 进行广播的操作上。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657854993-88d55ba6-6b66-4dce-a889-f0f65d619fa8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-1029c362fd3c.png)
 
 ## 4.5 场景四
 
@@ -529,13 +529,13 @@ WS-Gateway
 
 连接数建立峰值：18570 个 / s，接收数据峰值：329949 条 / s，发送数据峰值 393542 条 / s，未出现异常情况。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657855420-894e2981-782a-4cc5-8a4b-adbc0c16a323.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-c5db205bd780.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657855389-7e996c28-375e-46d3-b3e4-c3ff807fd6e0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-5021622e8cbd.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657855448-e1d30a21-5ab4-499a-a9ea-e93810bef838.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-bd2caba88d15.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719657855476-d6c72864-4012-4d8b-87b7-811412985ff7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0830-upiq8ypgl2ch1hay/img-4571827c9439.png)
 
 ## 4.6 压测总结
 

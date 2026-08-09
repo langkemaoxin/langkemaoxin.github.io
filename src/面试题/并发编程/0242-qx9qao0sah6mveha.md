@@ -61,11 +61,11 @@ System.out.println(values);
 
 3个同时并行：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1726391736748-562c6ac3-22af-4e02-874e-197ab334c455.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0242-qx9qao0sah6mveha/img-26863b25df19.png)
 
 发生线程安全问题：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1726391818546-fc2ad3c2-bef7-4463-812c-f19e7ee2b79b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0242-qx9qao0sah6mveha/img-4e7e2c803f18.png)
 
 可以发现还是并发执行了，因为`synchronized (new String("字符串常量"))`
 **锁的对象不是同一个，仅仅是值相等**，此时的字符串是在堆栈中。将代码修改为如下
@@ -87,11 +87,11 @@ System.out.println(values);
 
 不同学校并行:
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1726392024080-265e199e-6231-4df7-abbc-bfccde4f02ea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_9%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0242-qx9qao0sah6mveha/img-c85a51c8dff0.png)
 
 同一个学校串行：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1726392091084-64fde7a8-20fe-4774-b05c-1f451de69b83.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0242-qx9qao0sah6mveha/img-b3ccc1801d77.png)
 
 通过上面结果可以看出此时通过**school.intern()把字符串对象放入常量池中，则"清华”地址是同一个**。
 

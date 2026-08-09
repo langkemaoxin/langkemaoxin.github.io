@@ -13,7 +13,7 @@ article: false
 
 > 来源：[通用三层缓存架构背后的架构思维](https://www.yuque.com/tulingzhouyu/db22bv/nw5yg1tonio5g5if)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766412089266-d698c00a-4e22-4648-99f5-3c4b607792cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_96%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1077-nw5yg1tonio5g5if/img-23108e11d7ee.png)
 
 架构到底是设计些什么？为什么别人一聊架构，就是一套一套的，说个没完。但是到你聊架构了，就只是加机器，重启试试，然后就没词了？其实核心问题不是你的技术不行，而是你还没有掌握架构思维。
 
@@ -29,7 +29,7 @@ article: false
 
 以大家非常熟悉的布隆过滤器为例，其实在布隆过滤器的背后，就经常隐藏着三个常见的误解。而真正理解这些误解，是你打开架构思维的第一步。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766412118326-97ac65d8-7c9a-409b-9038-0a47496017fa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_87%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1077-nw5yg1tonio5g5if/img-22a565ea4007.png)
 
 **误解一：”黑名单校验功能简单，MySQL够用了，布隆过滤器多此一举“**  这里借用某位主播的观点，黑名单校验就是单条数据的检索，MySQL加上索引，轻松5000+的QPS，完全够绝大部分企业用了。**真相是：布隆过滤器不只是完成业务，更重要的是分担压力。**黑名单不是简单的做登录判断。大部分的业务，黑名单的作用就是要快速过滤掉大部分的非法请求。比如支付系统禁止黑名单用户转账，这是要在海量的请求中去过滤掉那些黑名单请求。这些被过滤掉的请求，是没有任何业务价值的。放到压力本来就大的数据库里去判断，这放在高并发的场景下，就属于 土豪请客-不拿家产当回事了。
 
@@ -47,7 +47,7 @@ article: false
 
 咱们还是以“**黑名单校验**”这个业务为例。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766412138205-382ca75a-36de-4e20-8a90-3719375eb79f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_95%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1077-nw5yg1tonio5g5if/img-d67894cb8bcd.png)
 
 **阶段 1：裸奔时代 —— MySQL 单表硬扛** ：
 
@@ -91,7 +91,7 @@ article: false
 
 ## 三、举一反三：实战案例深度解析
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766412151243-60a87d29-5705-4055-be3b-b6c4b467ce45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_93%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1077-nw5yg1tonio5g5if/img-205235a677fa.png)
 
 这套 **L1 本地 + L2 分布式 + L3 数据库** 的思路，学会了就是通杀，很多类似的场景，都可以套用这一套缓存思路。我给你们举两个最典型的真实案例，一定要听懂，面试再被问到，绝对拿捏。
 
@@ -119,7 +119,7 @@ article: false
 
 ## 四、核心原则：三级缓存的底层逻辑
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766412171847-956ad4b2-b1ad-4b79-a933-684c5e975525.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_97%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1077-nw5yg1tonio5g5if/img-4bef37a62d6c.png)
 
 讲了这么多案例，这套架构的底层逻辑，其实就三句话。大家把这三句话刻在脑子里，以后做任何设计都能用得上：
 
@@ -133,7 +133,7 @@ article: false
 
 ## 五、总结与升华：架构即人生
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766412183771-a5927007-c8cd-4cf4-8f27-f3d6e76f5f44.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_96%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1077-nw5yg1tonio5g5if/img-1f9e764800c6.png)
 
 回到开场的问题：架构设计到底在设计什么？ **它设计的是代码怎么写吗？不是！是组合哪些中间件吗？也不是。甚至是怎么才能做好这个项目吗？还不是。很多问题并没有标准答案。我觉得，架构设计的是“思想”。** 是在混乱的、变化的业务中，建立一条高效、有序的思维模式。让整个团队处理问题，有法可依，而不是所有问题都要临时决策。
 

@@ -80,7 +80,7 @@ article: false
 
 为了解决这些难点，我们把数据的迁移分成三个阶段，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170931820-b0d5f3ee-ce39-4e3d-a5a1-1309dcdfd4c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-112c3a81231c.png)
 
 数据库迁移的三个步骤
 
@@ -116,13 +116,13 @@ article: false
 
 改进前通过 SQLServser 的复制分发技术实现读写分离，SQLServser 的两个源头数据库通过复制分发中间库，分发到 14 个目标库中，800 多个源头表，3800 多条复制分发链路，部门内外 247 个应用直接访问数据库。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170931848-87a238b2-daf4-4159-9488-533b569fc0a3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-cc04d32bab49.png)
 
 复制分发改造前
 
 初期，梳理出所有依赖的系统以及相关 SQL 语句，涉及到几乎所有度假子系统，针对各个系统对于原始数据的需求与转 MySQL 的过程同步进行，迁移数据并提供替代直接访问 DB 的 API，下游系统接入 API 切换数据源。改造后的依赖如下图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170931847-7e33982b-1a04-4199-a8d5-7ffc95a0467d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-b54919d290ab.png)
 
 复制分发改造后
 
@@ -140,7 +140,7 @@ article: false
 
 在转 MySQL 的过程中，将两类模型拆分，各自保存独立的字段。两套表根据数据量做了不同的分表策略，API 也分别提供不同的接口给下游系统。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170931900-2483212c-1b0f-45cb-aef0-7cae19654612.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-d00c1a5c1bf2.png)
 
 产品和资源数据结构拆分
 
@@ -170,7 +170,7 @@ SQLServser 作为数据存储时，下游系统很多业务场景需要监听数
 
 解决这个问题的方案是在系统改造过程中建立消息机制。下游系统通过消费消息完成业务逻辑，这样的方式降低了系统间的耦合度，也提高了数据实时性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170931935-99028392-d281-43ed-ae32-af38201ed4d4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-08f7dce4321a.png)
 
 产品消息系统
 
@@ -178,7 +178,7 @@ SQLServser 作为数据存储时，下游系统很多业务场景需要监听数
 
 第一类是 Canal 消息，在数据发生变化时发送变更内容。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1720170932440-53e625a3-ba96-4c1d-a640-71f99e1008e4.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-94b6eb4bb7cc.jpg)
 
 原理相对比较简单：
 
@@ -202,13 +202,13 @@ SQLServser 作为数据存储时，下游系统很多业务场景需要监听数
 
 2）新的架构前后端分离，前端交互分别设计，存储层 API 结构统一。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170932337-e6073ff9-a9dc-40c0-9bc0-257e33c1f703.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-31884da84c59.png)
 
 系统合并前后对比
 
 ## **3.1 系统合并**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170932320-4dfd3d6e-6a37-45ff-bfab-5459247fade9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-2127d1394eac.png)
 
 系统合并
 
@@ -220,7 +220,7 @@ SQLServser 作为数据存储时，下游系统很多业务场景需要监听数
 
 底层架构 “求同存异”，“同“是指系统的底层数据结构和领域模型相同，对下游的 API 相同。“异” 则是对于前端系统对于不同的交互和展现方式可以不同。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170932338-a9b79ec9-1a97-4310-9aa5-5b4110a3f9cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-46849332b912.png)
 
 模块划分
 
@@ -230,7 +230,7 @@ SQLServser 作为数据存储时，下游系统很多业务场景需要监听数
 
 前端使用 ReactJS 技术，内外网分别部署，通过权限隔离用户。后端使用基于 Java 开发的 API。底层存储包括 MySQL 关系型数据库。系统数据变化时通过 ElasticSearch 建立索引，Hbase 保存日志内容。通过统一的 Service 与外部 API 对接。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720170932388-ea14541c-58f8-412b-b6b2-c171bb4e0d08.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0828-mf3m6dug2ombuyqe/img-65772507dadf.png)
 
 系统逻辑架构
 

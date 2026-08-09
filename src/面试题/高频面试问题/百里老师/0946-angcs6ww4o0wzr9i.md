@@ -19,7 +19,7 @@ article: false
 
 很多团队在初期使用默认配置的注册中心（无论是 Zookeeper 还是 Nacos 1.x）时岁月静好，但一旦扩容至上万实例，作为微服务“心脏”的注册中心往往会突然骤停。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763907772566-a84ab3dd-1ce2-4456-9c1c-bb24eedfe146.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0946-angcs6ww4o0wzr9i/img-131964e84931.png)
 
 面对这种量级的挑战，简单的堆机器配置往往无济于事。本文将复盘一次真实的性能调优实战，提供一套从客户端到服务端、再到架构层面的全链路优化方案。
 
@@ -27,7 +27,7 @@ article: false
 
 要解决问题，首先要理解问题。在万级实例场景下，注册中心主要面临三大维度的“风暴”冲击：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763907764640-484e2037-261d-4ad1-96be-d0e1827814a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0946-angcs6ww4o0wzr9i/img-eb382eeb29d7.png)
 
 1. **写压力：心跳风暴 (Heartbeat Storm)** 默认情况下，每个服务实例每隔几秒（通常是 5秒）就会向注册中心发送一次心跳保活请求。
 
@@ -51,7 +51,7 @@ article: false
 
 客户端是压力的源头，优化客户端行为性价比最高。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763907784258-47301ffe-049b-431d-b4a1-79aaa835f80c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0946-angcs6ww4o0wzr9i/img-3bddd105b2a5.png)
 
 - **开启增量同步 (Delta Fetch)**：
 
@@ -67,7 +67,7 @@ article: false
 
 在服务端，我们需要构建更高效的数据处理流水线，避免线程阻塞：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763907794410-b3fe4a7a-8bbb-4107-8f24-7f7dfd98760a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0946-angcs6ww4o0wzr9i/img-09e1646f6013.png)
 
 - **三级缓存架构（读写分离）**： 参考 Nacos 或 Eureka 的设计，服务端应实现读写分离。写请求更新内存注册表，读请求走只读缓存（Response Cache）。
 
@@ -81,7 +81,7 @@ article: false
 
 这也是 Nacos 2.0 相比 1.x 性能提升 10 倍的核心秘密，本质是通信模型的代际升级：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763907802973-f27e5f57-9369-402c-adbd-83b6df5a9871.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0946-angcs6ww4o0wzr9i/img-39578ba3ae48.png)
 
 - **告别轮询，拥抱流式推送**：
 
@@ -92,7 +92,7 @@ article: false
 
 如果实例数继续增长到 5万、10万甚至更高，单集群优化已达极限，必须进行架构层面的隔离。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763907814834-2155f9f1-f380-4a0d-9874-53592edebffc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0946-angcs6ww4o0wzr9i/img-b05dffe9cc13.png)
 
 - **逻辑隔离 (Namespace)**：按交易、物流、用户等业务域进行逻辑拆分，避免非核心业务拖垮核心业务。
 - **物理隔离 (Cluster Group)**： 不要把鸡蛋放在一个篮子里。按业务域拆分 Namespace，甚至部署物理上独立的注册中心集群。
@@ -104,7 +104,7 @@ article: false
 
 最后，我们将整套优化方案浓缩为这张路线图，建议保存备用：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763907824510-1aef37ce-b3d5-4c5b-a278-aa702311d79d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0946-angcs6ww4o0wzr9i/img-f95aefd77ee1.png)
 
 - **Phase 1 选型层**：弃用 ZK，拥抱支持 AP + gRPC 的 Nacos 2.x。
 - **Phase 2 配置层**：开启增量同步、压缩与读写分离。

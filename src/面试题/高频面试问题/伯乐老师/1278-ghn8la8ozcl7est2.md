@@ -73,7 +73,7 @@ article: false
 
 在成熟的企业级 AI 应用中，通常不会“二选一”，而是采用**混合架构（Hybrid Approach）**。这也是面试中最能体现架构师思维的回答。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781246439335-0ae0bf62-c9bb-45cf-9b52-e6c9d894baaf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1278-ghn8la8ozcl7est2/img-19b1c8d29a9b.png)
 
 ### 什么是 LLM Router？
 

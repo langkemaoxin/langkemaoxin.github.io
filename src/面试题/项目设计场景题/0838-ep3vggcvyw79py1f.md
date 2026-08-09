@@ -267,7 +267,7 @@ float 和 double 类型主要用于科学工程计算。它们执行二进制浮
 
 基本类型（primitive）例如 int、double、long 和 boolean。每个基本类型都有一个对应的引用类型，称作装箱基本类型（boxed primitive），对应为 Integer、Double、Long 和 Boolean。如书中提到，它们的区别如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1718702662592-9062d91f-4b81-45e9-8be3-02d9955e7939.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0838-ep3vggcvyw79py1f/img-1f822c75c33a.png)
 
 ```java
 /** 推荐 */

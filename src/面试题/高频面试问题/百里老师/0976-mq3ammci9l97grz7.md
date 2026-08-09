@@ -17,7 +17,7 @@ article: false
 
 在处理海量数据的场景下，一个看似简单的查询，其性能表现可能会天差地别。未经优化的 Elasticsearch 查询在面对数十亿级别的数据时，响应时间达到 5-10 秒甚至更长是常态，这对于追求极致用户体验的系统而言是不可接受的。而通过一系列系统性的优化，我们完全可以将响应时间稳定在 100 毫秒以内，实现超过 100 倍的性能飞跃。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761829551396-0ebce1bd-12a2-488f-acf9-3ae27c75cf32.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-1069b607196f.png)
 
 本文将围绕我们总结的七大优化策略，深入剖析其背后的原理与实践细节。我们将提供具体的代码示例和配置方案，帮助您理解看板中每一个酷炫图表背后的技术实现，将这些优化策略真正落地到您的项目中。
 
@@ -25,7 +25,7 @@ article: false
 
 一切优化的前提，都源于对核心矛盾的深刻理解。对于 ES 而言，这个核心矛盾就是数据存储介质的性能差异。内存的访问速度远超磁盘，二者之间存在着高达百倍的性能鸿沟。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761829557492-02537728-06b7-4b9a-8468-646c8fbf8f88.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-30866879fd64.png)
 
 上图直观地揭示了查询命中内存（热数据路径）与查询访问磁盘（冷数据路径）时的巨大耗时差异。因此，我们所有优化的**终极目标**只有一个：**尽可能让高频访问的热数据命中内存中的缓存（Filesystem Cache），避免穿透到磁盘。** 接下来的所有策略，都是围绕这一核心目标展开的。
 
@@ -33,7 +33,7 @@ article: false
 
 与其被动地等待用户首次查询来将数据加载到内存，不如我们主动出击。数据预热的核心思想，就是通过一个后台任务，在低峰期主动、定期地访问热点数据，提前将其加载到操作系统的 Filesystem Cache 中。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761829564533-c9bfee05-2734-4740-a92c-eb101fcb90f1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-3f4e3f024f4c.png)
 
 这个流程的实现并不复杂，关键在于构建一个轻量级的“预热子系统”：
 
@@ -47,7 +47,7 @@ article: false
 
 数据总有热度之分。对于一个拥有数年历史数据的系统，用户绝大部分的查询都集中在最近的“热”数据上。冷热分离就是将不同热度的数据存储在不同性能的索引和节点上，让宝贵的内存资源只服务于热数据。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761829570472-953a07a8-1049-4b1b-904a-d51d38d47e07.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-71e08abf7727.png)
 
 上图清晰地展示了分离后的架构。在 ES 中，我们主要通过 **索引生命周期管理（ILM）** 来自动化地实现这一点：
 
@@ -90,7 +90,7 @@ node.attr.box_type: cold
 
 **永远不要让 ES 去做它不擅长的事情**，比如处理复杂的数据关联（JOIN）。ES 的核心优势在于海量数据的快速检索，而不是关系型数据库那样的事务和关联操作。在查询时进行 JOIN 操作，是导致性能问题的常见元凶。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761829624988-ac65cd2c-3e37-479f-b27b-235f5488e977.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-3812e7948fd7.png)
 
 正确的做法是在数据**写入 ES 之前**，就完成所有必要的关联，将多张表的数据预处理成一张“宽表”文档。
 
@@ -126,7 +126,7 @@ JOIN users u ON o.user_id = u.user_id;
 
 深分页是另一个常见的性能陷阱。当用户请求第一万页的数据时，很多分页方式会导致 ES 在全部分片上检索大量数据，然后在协调节点上进行合并排序，最后再丢弃掉前 9999 页的结果，造成巨大的资源浪费。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761829614448-50a30eef-2676-4d2f-b82a-cd92ccfbaf2b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-8f93c5c60167.png)
 
 这三种分页方式的选择至关重要：
 
@@ -172,7 +172,7 @@ JOIN users u ON o.user_id = u.user_id;
 - **合理的索引规划**：避免创建过大的分片（单个分片建议不超过 50GB），并根据数据的时间范围或业务模块进行索引拆分。
 - **架构升级**：当上述优化都已做到极致，性能仍无法满足需求时，就需要考虑最终的“核武器”——架构升级。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761829641544-af237b95-8345-44f3-b102-a89cd54f18c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-1a21e3ed7406.png)
 
 如图所示，架构升级位于金字塔的顶端，是成本最高但效果最显著的手段，主要包括：
 
@@ -183,6 +183,6 @@ JOIN users u ON o.user_id = u.user_id;
 
 Elasticsearch 的性能优化是一个系统性工程，而非单一技巧的应用。它要求我们从数据生命周期的全链路进行思考和设计。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761830017424-8d0e665e-e237-46d7-a172-cf7798e3d7f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0976-mq3ammci9l97grz7/img-30c8c6aa07e7.png)
 
 请遵循上图展示的最佳实践路径，层层递进地审视和改造您的系统。始终牢记**“内存为王”**的核心原则，将数据预处理、冷热分离和高效分页作为优化的基石。通过这套组合拳，您一定能将系统的查询性能提升到一个全新的高度。

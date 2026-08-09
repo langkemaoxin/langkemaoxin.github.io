@@ -900,7 +900,7 @@ private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundE
 
 - `Throwable` 的子类结构如下：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737350587517-26c4f095-5cb3-4930-9b16-69beeef6ab40.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-591ace305aa0.png)
 
 ---
 
@@ -1147,9 +1147,9 @@ Java 程序运行时，JVM 会将内存划分为多个区域，用来存储不�
 
 根据 JVM 规范，JVM 的运行时数据区包括以下几个主要部分：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290081677-eddc95cf-5692-47fa-a1b3-871c3fd3b74d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-098f123fbb18.jpg)
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737379048962-302a248d-75b3-457c-b33c-0580586c2fed.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-1f04c2fbfb6d.jpg)
 
 ---
 
@@ -1421,7 +1421,7 @@ Java 程序运行时，JVM 会将内存划分为多个区域，用来存储不�
 
 #### JVM 的堆内存分代模型：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737290532409-ccb2319c-924d-4f93-8bbf-8b468c210528.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-52b1791cdfda.png)
 
 1. **新生代 (Young Generation)**：
 
@@ -1457,7 +1457,7 @@ Java 使用 **可达性分析算法 (Reachability Analysis)** 来判断对象是
 
 1. **可达性分析 (Reachability Analysis)**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737290566104-e26bfba8-5558-4e5d-a9c9-b8209828d045.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-b33feba0ba6b.png)
 
 - JVM 会从一组称为**GC Roots**的引用对象出发，遍历所有可以被引用的对象。如果某对象不可达（即无法通过 GC Roots 找到该对象），则认为该对象是垃圾。
 - **GC Roots** 的来源：
@@ -1476,7 +1476,7 @@ Java 使用 **可达性分析算法 (Reachability Analysis)** 来判断对象是
 
 1. **标记 - 清除算法**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290707831-9eda451a-9b3c-4d60-a85a-ede4d3b9f0b0.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-29062cf35318.jpg)
 
 - **过程**：
 
@@ -1489,7 +1489,7 @@ Java 使用 **可达性分析算法 (Reachability Analysis)** 来判断对象是
 
 1. **复制算法**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290717367-5063181d-0222-4ca0-b887-ae3296427b89.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-083aeb7baca9.jpg)
 
 - **过程**：
 
@@ -1509,7 +1509,7 @@ Java 使用 **可达性分析算法 (Reachability Analysis)** 来判断对象是
 
 1. **标记 - 整理算法**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290725463-a0963241-f6c0-479c-a517-92eb22a8e74a.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-c58725a23e86.jpg)
 
 - **过程**：
 
@@ -1526,7 +1526,7 @@ Java 使用 **可达性分析算法 (Reachability Analysis)** 来判断对象是
 
 1. **分代收集算法**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290735000-0fb2202b-c44e-47af-90d5-11e13b734c08.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-d7cca2374173.jpg)
 
 - **原理**：
 
@@ -1547,7 +1547,7 @@ JVM 提供了多种垃圾收集器，可以根据应用场景选择合适的实�
 
 1. **Serial GC**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290747025-ef8b6426-1e80-4dbd-abae-a7e08bc555f2.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-1d01fb4b996f.jpg)
 
 - **特点**：单线程的垃圾收集器，效率高，但会导致长时间停顿（`Stop The World`，简称 STW）。
 - **适用场景**：适用于单线程程序、小内存场景。
@@ -1555,7 +1555,7 @@ JVM 提供了多种垃圾收集器，可以根据应用场景选择合适的实�
 
 1. **ParNew GC**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290754240-3a995626-2a35-4300-9da5-4e0786860839.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-37e213481c29.jpg)
 
 - **特点**：并行收集器，和 Serial 相比，支持多线程。
 - **适用场景**：默认与 CMS GC 配合使用。
@@ -1571,7 +1571,7 @@ JVM 提供了多种垃圾收集器，可以根据应用场景选择合适的实�
 
 1. **CMS GC (Concurrent Mark-Sweep)**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1737290809846-23ef1428-3c86-41d8-9126-9a99b48f842d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-d9787808cc7d.jpg)
 
 - **特点**：
 
@@ -1583,7 +1583,7 @@ JVM 提供了多种垃圾收集器，可以根据应用场景选择合适的实�
 
 1. **G1 GC (Garbage First)**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737290831967-c61506dd-71ce-4d0d-aa0f-79aec8481b9e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-590dc242c28a.png)
 
 - **特点**：
 
@@ -1597,7 +1597,7 @@ JVM 提供了多种垃圾收集器，可以根据应用场景选择合适的实�
 
 1. **ZGC (Z Garbage Collector)**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737290859763-204cb3fe-e755-408f-a55e-2948f939d605.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-215877669013.png)
 
 - **特点**：关注超低延迟，STW 时间不到 10 ms。
 - **适用场景**：适合大规模、低延迟应用。
@@ -1683,13 +1683,13 @@ JVM 提供了多种垃圾收集器，可以根据应用场景选择合适的实�
 
 Java 的类加载主要分为 **加载（Loading）**、**连接（Linking）** 和 **初始化（Initialization）** 三个阶段：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737290173869-459f81ac-0836-4fad-902d-bce0494bdd91.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-45bfa4c1b6a0.png)
 
 **（1）加载（Loading）**：
 
 - **含义**：将类的字节码文件（`.class` 文件）加载到内存（方法区中），并生成对应的 `Class` 对象。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737290351441-7483c983-9594-4585-b876-a45006d97e82.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-f01ae19e28cb.png)
 
 - **步骤**：
 
@@ -1755,7 +1755,7 @@ public static int num = 10;
 
 - 当一个类加载器需要加载某个类时，它首先会**委托它的父加载器**尝试加载，只有当父加载器无法加载该类时，子加载器才会尝试加载。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737290368533-d8035143-bc34-4b0d-80bd-ade6bde36168.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-02156b30d9bf.png)
 
 **步骤：**
 
@@ -2193,7 +2193,7 @@ public class CustomClassLoader extends ClassLoader {
 
 Java 内存模型 **(Java Memory Model, JMM)** 是 Java 定义的一组规范，用于解决并发编程中多线程对共享内存的访问问题。它规定了 **变量的读写** 操作如何在线程间进行交互和有序化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737442679995-58330a4c-7830-4185-9079-bf962f883de2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-b873cdb9eaec.png)
 
 ---
 
@@ -2256,7 +2256,7 @@ JMM 用于解决以下问题：
 - `volatile` 规则：对 `volatile` 变量的写操作 Happens-Before 之后对它的读操作。
 - 传递性：如果 A Happens-Before B，且 B Happens-Before C，那么 A Happens-Before C。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1737444444545-e3b2d9c9-1a05-4640-aba5-cd3b8d1f982b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-7580e24a1b8c.png)
 
 ---
 
@@ -2528,7 +2528,7 @@ System.out.println("Thread finished!");
 **线程状态之间的关系**：
 以下是线程状态转换的常见形式：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1738736370269-aafbc2d2-6099-42b3-bdbb-2dcd29d35d4d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-355a43f4e1f1.png)
 
 ---
 
@@ -3111,7 +3111,7 @@ public class ThreadLocalExample {
 
 **工作流程图：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1738935334286-9806fd67-8766-4e8a-be2f-a05b86b02786.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0114-cskvddizyihg1v6y/img-2bc829a989e9.png)
 
 ---
 

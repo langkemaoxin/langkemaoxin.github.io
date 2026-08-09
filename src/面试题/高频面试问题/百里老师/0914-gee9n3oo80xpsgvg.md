@@ -15,7 +15,7 @@ article: false
 
 Java 虚拟机（JVM）是一个高度复杂的运行时环境，其性能表现取决于内存管理、垃圾回收算法以及即时编译器的协同工作。对于资深开发者而言，调优不应止步于对启动参数的试错，而应建立对底层机制的深刻理解。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766038516322-21c01e80-5452-430b-89c9-36920e240cbd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0914-gee9n3oo80xpsgvg/img-f7661b758e34.png)
 
 本文将结合可视化模型，深入剖析影响 Java 性能的四大核心维度。
 
@@ -23,7 +23,7 @@ Java 虚拟机（JVM）是一个高度复杂的运行时环境，其性能表现
 
 ## 1. The Memory
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766038509593-b1d18cbf-0f52-46d7-9865-062d493e4267.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0914-gee9n3oo80xpsgvg/img-0d25c92f0ba1.png)
 
 在并发编程中，理解 JVM 的内存模型（JMM）是性能优化的基石。如上图所示，我们可以将内存区域划分为**线程私有（Stack）与线程共享（Heap）**两大部分。
 
@@ -40,7 +40,7 @@ Java 虚拟机（JVM）是一个高度复杂的运行时环境，其性能表现
 
 ## 2. The Cleanup
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766038503259-6c2aabd4-e448-483d-8aa3-1803ad75a256.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0914-gee9n3oo80xpsgvg/img-52619a966b7c.png)
 
 Java 的自动内存管理依赖于垃圾回收器（GC），但这一便利机制伴随着不可忽视的运行时开销——**Stop-The-World (STW)**。
 
@@ -57,7 +57,7 @@ Java 的自动内存管理依赖于垃圾回收器（GC），但这一便利机�
 
 ## 3. The Speed
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766038494879-9d6a8397-31bd-4d28-b984-70a532b52847.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0914-gee9n3oo80xpsgvg/img-0b3981cac5de.png)
 
 Java 常被误解为"解释执行"的语言，实际上，现代 JVM 采用的是**解释器与编译器并存**的混合模式。代码的执行效率是一个动态"进化"的过程。
 
@@ -73,7 +73,7 @@ Java 常被误解为"解释执行"的语言，实际上，现代 JVM 采用的�
 
 ## 4. The Truth
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766038482484-8109b06b-d507-4a96-918a-ccf011ce5c8b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0914-gee9n3oo80xpsgvg/img-a7497fa7e6f2.png)
 
 在实际的生产环境调优中，我们往往容易陷入"参数调优"的误区。
 

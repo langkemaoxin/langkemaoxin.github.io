@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694669634-f6599dc5-d925-4736-bc66-8e499ede1340.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1424-lt1dqeazskafq6zi/img-760f3ba6279a.png)
 
 全参数微调（Full Parameter Fine-Tuning）的显存需求是LLM开发的核心问题，需从**模型参数、梯度、优化器状态、激活值**四个维度计算。核心公式：
 **显存占用 ≈ 参数量 × (2 + 2 + 12) × 精度系数 + 激活值**
@@ -31,7 +31,7 @@ article: false
 
 ### 二、项目案例：医疗问答系统微调
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694682084-8d2c443f-156c-4623-9c99-90c89a365658.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1424-lt1dqeazskafq6zi/img-c92002050461.png)
 
 #### 背景需求
 
@@ -69,7 +69,7 @@ article: false
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694694385-513b8595-11bd-4158-92cb-b670cd93d94f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1424-lt1dqeazskafq6zi/img-27f3458d85be.png)
 
 面试官您好！关于全参数微调的显存需求，我结合参与的医疗问答系统项目说明：
 
@@ -96,7 +96,7 @@ article: false
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694713068-1a5ddee9-9ca0-4238-8608-e523228e0a74.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1424-lt1dqeazskafq6zi/img-a34bedf1a6b8.png)
 
 #### 关键结论
 

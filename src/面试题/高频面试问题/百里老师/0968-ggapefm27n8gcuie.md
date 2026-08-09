@@ -13,7 +13,7 @@ article: false
 
 > 来源：[【GIT】你还不知道Merge和Rebase的区别吗？](https://www.yuque.com/tulingzhouyu/db22bv/ggapefm27n8gcuie)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762345666523-f0fda9ab-0281-4864-9061-dbb5b43d793b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0968-ggapefm27n8gcuie/img-a67c89999baa.png)
 
 ## 前言：为何要关心分支合并策略？
 
@@ -23,7 +23,7 @@ article: false
 
 ## 一、Git Merge：忠实记录每一次“相遇”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762345690672-4cc5c8df-b100-4dfd-8799-ed980cb434da.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0968-ggapefm27n8gcuie/img-af9e18747f6a.png)
 
 `git merge` 的核心是**尊重并保留历史**。如上图所示，它会创建一个特殊的“合并提交”（Merge Commit），这个提交就像一个项目日志，明确宣告：“在此时此刻，`feature` 分支的工作成果正式汇入 `release` 分支。”
 
@@ -39,7 +39,7 @@ git merge feature
 
 ## 二、Git Rebase：让你的提交历史“宛如新生”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762345715185-f000bb96-d99a-4d68-b320-895d39a9e324.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0968-ggapefm27n8gcuie/img-1f7c79570d1d.png)
 
 `git rebase` 的目标是**创造一个更整洁、更具叙事性的线性历史**。它通过“变基”操作，将你的分支“嫁接”到目标分支的最新位置。
 
@@ -59,7 +59,7 @@ git merge feature # 此处为Fast-forward，无合并提交
 
 ## 三、核心禁忌：为何绝不能Rebase公共分支？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762345725172-aa16a3d3-7c98-4e89-906c-b612f8608227.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0968-ggapefm27n8gcuie/img-c87e42a1f1b2.png)
 
 **黄金法则：永远不要对一个已被推送到远程、且团队共享的分支执行 **`rebase`** 操作。**
 
@@ -69,7 +69,7 @@ git merge feature # 此处为Fast-forward，无合并提交
 
 ## 四、实战指南：何时用Merge，何时用Rebase？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762345732610-b367bf76-6f03-47dc-a0fb-7b5272bb3b16.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0968-ggapefm27n8gcuie/img-692092bce041.png)
 
 上图的决策流程，源于两种策略各自的核心价值。
 
@@ -84,7 +84,7 @@ git merge feature # 此处为Fast-forward，无合并提交
 
 ## 五、总结：两种哲学的最终抉择
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762345738783-000f702c-45a1-4b33-bbe3-eae19e383ad3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0968-ggapefm27n8gcuie/img-aa1d2b9bb11a.png)
 
 正如上图所清晰展示的，`Merge` 与 `Rebase` 的选择，并非技术优劣之争，而是**两种版本控制哲学的权衡**。
 

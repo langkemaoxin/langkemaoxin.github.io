@@ -23,7 +23,7 @@ ConcurrentSkipListSet   有序Set
 
 TreeMap和TreeSet使用红黑树按照key的顺序（自然顺序、自定义顺序）来使得键值对有序存储*，*但是只能在单线程下安全使用；多线程下想要使键值对按照key的顺序来存储，则需要使用ConcurrentSkipListMap和ConcurrentSkipListSet，分别用以代替TreeMap和TreeSet，存入的数据按key排序。在实现上，ConcurrentSkipListSet 本质上就是ConcurrentSkipListMap。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737701914429-e1d1a14d-2339-434a-a99d-85904d853778.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0280-ln9qeqinrwe13ugn/img-04743d8e3ac9.png)
 
 ## （一）了解什么是SkipList？
 
@@ -39,7 +39,7 @@ TreeMap和TreeSet使用红黑树按照key的顺序（自然顺序、自定义顺
 
 传统意义的单链表是一个线性结构，向有序的链表中插入一个节点需要O(n)的时间，查找操作需要O(n)的时间。
 
-![image](https://cdn.nlark.com/yuque/0/2020/jpeg/350923/1592467466063-e0a21f5c-652d-4383-a7f9-523640e6f97d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5byg5L-K5p2wODM0MTE2NDA0%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0280-ln9qeqinrwe13ugn/img-0a8eed387784.jpg)
 
 如果我们使用上图所示的跳跃表，就可以减少查找所需时间为O(n/2)，因为我们可以先通过每个节点的最上面的指针先进行查找，这样子就能跳过一半的节点。
 

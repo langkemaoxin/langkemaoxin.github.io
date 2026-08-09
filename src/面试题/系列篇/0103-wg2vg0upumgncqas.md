@@ -25,7 +25,7 @@ article: false
 
 > 分布式事务是指一个业务流程跨越多个**分布式系统或服务**的**事务处理**。它需要确保在多个参与者之间的数据一致性和原子性。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679291666988-0109f5f5-2fd4-4e5f-a6ce-e74116242e3c.png#averageHue=%23fbfbfb&clientId=uee3c1c30-8d81-4&from=paste&height=178&id=u2b8344eb&originHeight=356&originWidth=1634&originalType=binary&ratio=2&rotation=0&showTitle=false&size=49208&status=done&style=none&taskId=u81983e77-06c5-4dc6-8915-ee2897877cc&title=&width=817?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-dbdf37db7f9d.png)
 
 在传统的单体应用程序中，事务通常是通过使用数据库管理系统（DBMS）来实现的，而在分布式系统中，由于数据分布在多个节点上，使用传统的事务管理方法会遇到一些问题，例如：
 
@@ -63,11 +63,11 @@ article: false
 
 成功情况：
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/6e9e42ed-3ab7-46f1-a317-2fcb828d1af7.png#id=G3aWR&originHeight=628&originWidth=849&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-67d270d9a674.png)
 
 失败情况：
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/c5a6f9e5-57ef-45cb-9ef2-c11cd12a1f2f.png#id=MAtjV&originHeight=605&originWidth=803&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-f1e2d7d6a602.png)
 
 缺点：
 
@@ -83,7 +83,7 @@ article: false
 
 在2PC协议中，协调者和参与者之间的通信故障是不可避免的。为了保证分布式事务的一致性和可靠性，需要采取一些解决方案来处理这种故障。以下是几种常见的解决方案：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679298931190-4d88d90b-a9cf-4d38-9e84-3ebd18ac3b05.png#averageHue=%23fbfafa&clientId=u9a33680b-4314-4&from=paste&height=544&id=u3003cb82&originHeight=628&originWidth=849&originalType=binary&ratio=2&rotation=0&showTitle=false&size=65547&status=done&style=none&taskId=u279adb9f-b9f6-41f9-b620-f0d2b572a34&title=&width=735.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-17b15c627316.png)
 
 1. 超时机制：在2PC协议中，每个阶段都有一个预定的超时时间。如果在超时时间内没有收到响应，协调者将会进行相应的处理。例如，如果在第一阶段中协调者无法收到参与者的响应，它可以将参与者视为失败，并通知所有其他参与者回滚事务。
 
@@ -163,7 +163,7 @@ XA是一种扩展的事务处理架构，它提供了一种在分布式事务中
 
 三阶段提交协议（3PC, Three-Phase Commit）是在两阶段提交协议（2PC）的基础上进行了优化的一种分布式事务协议。它通过增加一个额外的阶段来减少同步阻塞和单点故障的风险。3PC协议的三个阶段如下：
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/fa1941b3-082e-4b92-9ef9-64ebb9d09cea.png#id=V2Ml9&originHeight=634&originWidth=810&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-e7843c6c54b9.png)
 
 - CanCommit阶段：协调者向所有参与者发送CanCommit请求，询问它们是否可以提交事务。参与者收到请求后，根据自身状态回复协调者，如果可以提交事务，则返回"Yes"；如果不能提交事务，则返回"No"。
 
@@ -199,7 +199,7 @@ XA是一种扩展的事务处理架构，它提供了一种在分布式事务中
 
 TCC协议是一种基于补偿机制的分布式事务协议，它通过三个阶段来实现事务的原子性和一致性。这三个阶段分别是：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679315160906-4ef86352-ffd9-4195-91fb-0f36c6e11cf5.png#averageHue=%23f2f2f2&clientId=uddcca32d-4524-4&from=paste&height=360&id=ud3df45e0&originHeight=720&originWidth=1219&originalType=binary&ratio=2&rotation=0&showTitle=false&size=3517195&status=done&style=none&taskId=u10d773fc-69b8-4111-96f2-442b174d152&title=&width=609.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-297188024821.png)
 
 1. 尝试（Try）：在这个阶段，TCC协议会尝试执行所有的事务操作。这些操作不会直接影响数据库中的数据，而是会在本地进行预处理，并在本地缓存中记录下来。如果在执行过程中出现任何问题，TCC协议将直接跳转到撤销阶段。
 
@@ -207,13 +207,13 @@ TCC协议是一种基于补偿机制的分布式事务协议，它通过三个�
 
 1. 撤销（Cancel）：在这个阶段，TCC协议会执行所有已经执行的事务操作的逆操作。这些逆操作会将数据库中的数据恢复到事务执行之前的状态，从而实现事务的撤销。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679315388389-92f061a7-e0a7-46bd-b910-e03b093056cc.png#averageHue=%23010101&clientId=u3c56ca14-96f9-4&from=paste&height=397&id=u25e1d6f2&originHeight=794&originWidth=1028&originalType=binary&ratio=2&rotation=0&showTitle=false&size=70085&status=done&style=none&taskId=u70b53c7c-64bd-4976-a800-b9f496c56fb&title=&width=514?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-d64c6583fe71.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679315394248-b6e69656-ab83-4f5a-9af8-623cf2e5ee47.png#averageHue=%23070706&clientId=u3c56ca14-96f9-4&from=paste&height=518&id=ue2312c9b&originHeight=1035&originWidth=1620&originalType=binary&ratio=2&rotation=0&showTitle=false&size=168967&status=done&style=none&taskId=uc79d875f-251d-4f56-b8de-ee4f45848b3&title=&width=810?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-3512b9abe5cd.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679315400085-fca03dfb-f009-4485-ba23-85c2fec680ee.png#averageHue=%23080707&clientId=u3c56ca14-96f9-4&from=paste&height=510&id=ud2a1073f&originHeight=1020&originWidth=1652&originalType=binary&ratio=2&rotation=0&showTitle=false&size=218409&status=done&style=none&taskId=uc24d213c-0c8c-47f3-8479-a65ffa91c64&title=&width=826?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-5d5b2a5ca334.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679315418558-aa475ad7-2dfa-4504-a32b-503968bf5102.png#averageHue=%23080707&clientId=u3c56ca14-96f9-4&from=paste&height=510&id=u6f213bc7&originHeight=1020&originWidth=1652&originalType=binary&ratio=2&rotation=0&showTitle=false&size=218279&status=done&style=none&taskId=ue35557d9-91b3-40ca-a4b8-036bffd2ace&title=&width=826?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-02fabe411ae3.png)
 
 ### TCC协议的优点
 
@@ -263,17 +263,17 @@ AT模式是一种分布式事务解决方案，它是基于本地事务和全局
 
 在AT模式中，全局事务协调者（Coordinator）负责管理和协调分布式事务，而参与者（Participant）则负责执行本地事务并向协调者报告其执行结果。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679319273751-fe3fc8fe-137a-4fe8-8365-18a4d03f2f02.png#averageHue=%23e4e0c9&clientId=ua84eec29-4286-4&from=paste&height=284&id=u91c1ee0b&originHeight=285&originWidth=640&originalType=binary&ratio=2&rotation=0&showTitle=false&size=114279&status=done&style=none&taskId=uceea8524-8a8e-404b-bcf2-e777c2dd0c6&title=&width=637?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-b769f29dea23.png)
 
 具体来说，AT模式的执行过程如下：
 
 1. 尝试阶段：协调者向所有参与者发送分布式事务的开始请求，参与者收到请求后会执行本地事务，并将执行结果返回给协调者。此时，参与者并不会立即提交事务，而是等待协调者的确认。
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679319285034-0d8e4b64-3c64-464c-a3ec-eb9fe6ec92d3.png#averageHue=%23f0efec&clientId=ua84eec29-4286-4&from=paste&height=431&id=dswU4&originHeight=386&originWidth=640&originalType=binary&ratio=2&rotation=0&showTitle=false&size=128663&status=done&style=none&taskId=ue97ac76b-124b-4cb6-9e48-44a93f54ed4&title=&width=715?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-f9613502bd38.png)
 
 1. 确认阶段：在协调者收到所有参与者的执行结果后，会对这些结果进行汇总和分析。如果所有参与者都成功执行了本地事务，则协调者会向所有参与者发送提交事务的请求，参与者收到请求后会提交本地事务并向协调者返回提交结果。如果任何一个参与者在执行本地事务时出现了错误或者超时，协调者会向所有参与者发送回滚事务的请求，参与者收到请求后会撤销本地事务并向协调者返回回滚结果。
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679319290855-1de9ca1d-1dbd-4360-9785-68c80ccbd5f8.png#averageHue=%23edece9&clientId=ua84eec29-4286-4&from=paste&height=333&id=MvIFz&originHeight=287&originWidth=640&originalType=binary&ratio=2&rotation=0&showTitle=false&size=63337&status=done&style=none&taskId=uad4cd512-c1ef-4850-87d8-b763d318d13&title=&width=743?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-ae879c769b68.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679319952771-773a6c52-a9f9-46e4-b4ce-6ad44512a128.png#averageHue=%23edeeeb&clientId=uf539b68d-4d9e-4&from=paste&height=524&id=u1c9aaa1d&originHeight=447&originWidth=640&originalType=binary&ratio=2&rotation=0&showTitle=false&size=126712&status=done&style=none&taskId=u7ca3ca48-10d9-4401-9b1d-c8802225021&title=&width=750?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-458357a46bc6.png)
 
 AT模式相对于其他分布式事务解决方案具有以下优点：
 
@@ -371,7 +371,7 @@ Saga模式相对于其他分布式事务解决方案具有以下优点：
 
 Saga是一种用于解决分布式事务问题的模式，它通过将一个复杂的事务拆分成多个小事务，从而保证了分布式系统中的数据一致性。Saga模式是分布式系统领域的一个经典问题，它已经成为了许多公司在处理分布式事务时的首选方案之一。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679375161013-94d6ec2a-ca00-4d3a-8ad3-d27aecb2e045.png#averageHue=%23e7e0aa&clientId=u6f5759d4-0e72-4&from=paste&height=322&id=u7ff566b8&originHeight=556&originWidth=1280&originalType=binary&ratio=2&rotation=0&showTitle=false&size=2851954&status=done&style=none&taskId=u064977e4-50b3-4ada-b3b8-90a0803579c&title=&width=741?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-277c4327d772.png)
 
 Saga的实现有很多种方式，其中最流行的两种方式是：
 
@@ -381,7 +381,7 @@ Saga的实现有很多种方式，其中最流行的两种方式是：
 
 我们继续以订单流程为例，说明一下该模式。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679376772543-5f5d4847-634d-49a0-9b96-7e7279d69511.png#averageHue=%23fcfcfb&clientId=u6f5759d4-0e72-4&from=paste&height=314&id=ubf588279&originHeight=627&originWidth=1024&originalType=binary&ratio=2&rotation=0&showTitle=false&size=106084&status=done&style=none&taskId=u20a6d6ef-f400-40df-9bb4-4c962b4895c&title=&width=512?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-041d4f034050.png)
 
 假设一个完整的订单流程包含了如下几个服务：
 
@@ -398,7 +398,7 @@ Saga的实现有很多种方式，其中最流行的两种方式是：
 在基于事件的方式中，第一个服务执行完本地事务之后，会产生一个事件。其它服务会监听这个事件，触发该服务本地事务的执行，并产生新的事件。
 采用基于事件的saga模式的订单处理流程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679376783759-9fc3c149-327c-4ab7-bdf1-bd94b7ccecd3.png#averageHue=%23fafafa&clientId=u6f5759d4-0e72-4&from=paste&height=498&id=uf10a0ba5&originHeight=996&originWidth=936&originalType=binary&ratio=2&rotation=0&showTitle=false&size=216815&status=done&style=none&taskId=u4d1555e2-8a59-4ea0-973f-dd748a0534c&title=&width=468?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-8c33b7c096b0.png)
 
 1. 订单服务创建一笔新订单，将订单状态设置为"待处理"，产生事件ORDER_CREATED_EVENT。
 
@@ -415,7 +415,7 @@ Saga的实现有很多种方式，其中最流行的两种方式是：
 为了在异常情况下回滚整个分布式事务，我们需要为相关服务提供补偿操作接口。
 假设库存服务由于库存不足没能正确完成备货，我们可以按照下面的流程来回滚整个Saga事务：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679376817515-bf34404e-3b43-4959-9016-6414461ba04b.png#averageHue=%23fafafa&clientId=u6f5759d4-0e72-4&from=paste&height=400&id=u6f86f0e0&originHeight=736&originWidth=1074&originalType=binary&ratio=2&rotation=0&showTitle=false&size=184638&status=done&style=none&taskId=u5def8f84-d119-486a-806e-e0eeb0b4f6c&title=&width=584?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-7ef30a61c108.png)
 
 1. 库存服务产生事件PRODUCT_OUT_OF_STOCK_EVENT。
 
@@ -434,7 +434,7 @@ Saga的实现有很多种方式，其中最流行的两种方式是：
 在基于命令的方式中，我们会定义一个新的服务，这个服务扮演的角色就和一支交响乐乐队的指挥一样，告诉各个业务参与方，在什么时候做什么事情。我们管这个新服务叫做协调中心。协调中心通过命令/回复的方式来和Saga中其它服务进行交互。
 我们继续以之前的订单流程来举例。下图中的Order Saga Orchestrator就是新引入的协调中心。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679376835695-f572089a-0a17-484e-9b5f-7ceacb401912.png#averageHue=%23fafaf9&clientId=u6f5759d4-0e72-4&from=paste&height=398&id=u84a136d1&originHeight=796&originWidth=1300&originalType=binary&ratio=2&rotation=0&showTitle=false&size=313552&status=done&style=none&taskId=u6d1878f9-b2ec-4514-b5df-9a5f3d44957&title=&width=650?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-33b2a9b99850.png)
 
 1. 订单服务创建一笔新订单，将订单状态设置为"待处理"，然后让Order Saga Orchestrator（OSO）开启创建订单事务。
 
@@ -452,7 +452,7 @@ Saga的实现有很多种方式，其中最流行的两种方式是：
 **该模式下分布式事务的回滚**
 该模式下的回滚流程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1679376845435-4554ff6c-84ca-4fd7-a487-f327fb6791fc.png#averageHue=%23fbfbfa&clientId=u6f5759d4-0e72-4&from=paste&height=414&id=u50d0ed89&originHeight=828&originWidth=1300&originalType=binary&ratio=2&rotation=0&showTitle=false&size=335440&status=done&style=none&taskId=ueae704ca-7f41-4106-ab1f-4f928fa4fd1&title=&width=650?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0103-wg2vg0upumgncqas/img-3edccdc69a8e.png)
 
 1. 库存服务回复OSO一个"库存不足"消息。
 

@@ -288,7 +288,7 @@ Map：
 
 其实没啥难的，就是对HashMap里的Node又包装了一层，搞了个before和after，来记录存取顺序
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1736833118066-52a8f6a5-63eb-4899-a473-1c7b8c130e32.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0160-qpirnvr2l4h7mvq0/img-3144b1d3d1d7.png)
 
 **当插入重复元素时，内部流程怎么走的？**
 
@@ -465,7 +465,7 @@ Process finished with exit code 1
 
 源码可见：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1736837293777-daa2da40-d89d-4f54-a17a-c21e578be848.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0160-qpirnvr2l4h7mvq0/img-7788945e27e9.png)
 
 其他实现单例方式在反序列化后，要确保唯一实列，需要定义**readResolve**方法
 

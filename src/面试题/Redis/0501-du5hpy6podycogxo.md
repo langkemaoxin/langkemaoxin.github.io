@@ -29,7 +29,7 @@ Redis之所以能够提供高速读写操作是因为数据存储在内存中，
 
 ### RDB持久化流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690442924685-3c3fb9f3-187c-4775-93a6-5b46b71b90e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_56%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-81db30e28626.png)
 
 RDB持久化方案进行备份时，Redis会单独fork一个子进程来进行持久化，会将数据写入一个临时文件中，持久化完成后替换旧的RDB文件。
 
@@ -53,7 +53,7 @@ Redis主进程fork创建子进程，由子进程完成持久化，阻塞时间�
 
 - 在Redis安装目录下的redis.conf配置文件中搜索 /snapshot即可快速定位，配置文件默认注释了下面三行数据，通过配置规则来触发RDB的持久化，需要开启或者根据自己的需求按照规则来配置。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690443464611-3a8ff6a5-0231-4e7d-a363-0a4c08f17883.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_63%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-2d977795701e.png)
 
 save 3600 1 -- 3600 秒内有1个key被修改，触发RDB
 save 300 100 -- 300 秒内有100个key被修改，触发RDB
@@ -63,13 +63,13 @@ save 60 10000 -- 60 秒内有10000个key被修改，触发RDB
 
 - shutdown触发Redis的RDB持久化机制非常简单，我们在客户端执行shutdown即可。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690443816682-c00d5a78-4b20-4311-b863-5106810e72bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-c6ae017b94fc.png)
 
 ##### flushall触发:
 
 - flushall清空Redis所有数据库的数据（16个库数据都会被删除）（等同于删库跑路）
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690444134757-801a4f7c-8e6e-491f-8194-9c9fbede2bec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_65%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-fcebaf3cdf2f.png)
 
 ### 优点：
 
@@ -90,7 +90,7 @@ AOF持久化需要手动修改conf配置开启。
 
 ### AOF持久化流程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690445284780-e580af7d-a1cb-435e-a769-d713282aa816.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_57%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-d9324ef43197.png)
 
 AOF持久化方案进行备份时，客户端所有请求的写命令都会被追加到AOF缓冲区中，缓冲区中的数据会根据Redis配置文件中配置的同步策略来同步到磁盘上的AOF文件中，同时当AOF的文件达到重写策略配置的阈值时，Redis会对AOF日志文件进行重写，给AOF日志文件瘦身。Redis服务重启的时候，通过加载AOF日志文件来恢复数据。
 
@@ -98,15 +98,15 @@ AOF持久化方案进行备份时，客户端所有请求的写命令都会被�
 
 AOF默认不开启，默认为appendonly no，开启则需要修改为appendonly yes
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690445466874-a6515360-95ed-4ad6-b1ed-62281df6859d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-d5cbefb38c5f.png)
 
 关闭AOF+RDB混合模式，设为no：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690451988744-6e525b7a-73a4-413e-8d9a-7844a09049e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-7f3cd4357f36.png)
 
 ### AOF同步策略：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690445805405-f92c28cd-2fbf-4106-9422-c05206557bdb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-46dbcebb9d0a.png)
 
 #### appendfsync always：
 
@@ -124,21 +124,21 @@ AOF默认不开启，默认为appendonly no，开启则需要修改为appendonly
 
 redis 7版本，AOF文件存储在appendonlydir文件下，base是基准文件，incr是追加数据。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690452025161-490b228f-e58c-4a37-90af-8cfcc4661793.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-91ad616c7b45.png)
 
 先存入三条数据，然后破坏incr结尾的文件内容，末尾加上baili
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690449228450-5dd29889-c444-4c40-85c5-8bb261e80994.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-edc257439279.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690449722994-2cdeb9e0-4d57-4314-a799-0ebcc48d7328.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-9b9ed8fef314.png)
 
 重新启动报错：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690449695178-a3142a04-15be-454e-a08b-6dc049579103.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-50bf6165c6a2.png)
 
 使用redis-check-aof --fix appendonlydir/appendonly.aof.1.incr.aof 对AOF日志文件进行修复
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690449901508-493d9fbe-bb68-414c-bb30-2b2667b62764.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-833a7b4d0489.png)
 
 观察数据可以知道，丢失了cc-key值。这种丢失是被允许的。
 
@@ -152,7 +152,7 @@ redis 7版本，AOF文件存储在appendonlydir文件下，base是基准文件�
 
 ##### 重写阈值配置：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690447212053-f6b7929d-fc0f-447e-9691-7f2029058863.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-33316911f838.png)
 
 - auto-aof-rewrite-percentage 100：当AOF文件体积达到上次重写之后的体积的100%时，会触发AOF重写。
 - auto-aof-rewrite-min-size 64mb：当AOF文件体积超过这个阈值时，会触发AOF重写。
@@ -163,15 +163,15 @@ redis 7版本，AOF文件存储在appendonlydir文件下，base是基准文件�
 
 正常启动后存在三个文件：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690452025161-490b228f-e58c-4a37-90af-8cfcc4661793.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-91ad616c7b45.png)
 
 通过set命令存储三条数据，最后在修改aa数据，然后手动重写：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690452285943-6b3f4cc7-c535-47e5-8f28-88b1ab0736fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-401b290828f9.png)
 
 观察结果可以得知key值aa历史轨迹已经被删除
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690452307033-be943d10-801a-48cd-929d-835fe374ea47.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-815fc8e2c04b.png)
 
 ### 优点：
 
@@ -189,17 +189,17 @@ Redis4.0版本开始支持混合持久化，因为RDB虽然加载快但是存在
 
 混合持久化通过aof-use-rdb-preamble yes开启，Redis 4.0以上版本默认开启
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690457012755-85e24fa8-2eb7-4fdf-b88e-4375e74374d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-3984a06c9622.png)
 
 开启混合持久化之后：appendonlydir文件下存在一个rdb文件与一个aof文件
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690456991861-55545427-5154-4848-a6d0-903c6088856f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_56%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-c467060c710b.png)
 
 存入数据，然后执行bgrewriteaof重写文件。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690457218879-92f5ea6a-123e-44b0-9f5b-862205f74837.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-d796afef616a.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690457335654-b8b3ca6e-98ef-45c9-8ec7-888403a2c898.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-373a7060549c.png)
 
 ## 总结
 
@@ -318,7 +318,7 @@ Redis4.0版本开始支持混合持久化，因为RDB虽然加载快但是存在
 
 Redis的主从复制主要用于实现数据的冗余备份和读分担，并不是为了提供高可用性。因此在系统高可用方面，单纯的主从架构无法很好的保证整个系统高可用。比如说：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690979398655-fee550b6-dba7-4979-b3be-2f6b86a03c32.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-8366a3727aef.png)
 
 - 需要人工介入：需要人工介入进行主节点切换。当主节点发生故障时，主从复制无法自动进行主节点的切换。需要管理员手动干预，修改配置将一个从节点提升为新的主节点。这增加了人工操作的复杂性和潜在的延迟。
 - 主节点写能力有限：主节点的写能力受限于单个节点。在主从复制中，所有写操作都必须发送给主节点处理，然后再同步到从节点。这导致主节点成为写入瓶颈，其写能力受限于单个节点的硬件和性能。如果负载过大，主节点的响应时间可能会增加，影响整体性能。
@@ -332,7 +332,7 @@ Redis哨兵机制是通过在独立的哨兵节点上运行特定的哨兵进程
 
 以下是哨兵机制的工作原理：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1690979157166-85450979-37c1-4797-a6e3-46fcd5ab665b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-31c327382bb7.png)
 
 ### 哨兵选举：
 
@@ -386,7 +386,7 @@ redis哨兵的作用:
 
 使用redis做一个缓冲操作，让请求先访问到redis，而不是直接访问MySQL等数据库：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1691911161900-02a5e730-8b09-4ac6-9186-93c5a5ee0bca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-394bd65fc5d7.png)
 
 读取缓存步骤一般没有什么问题，但是一旦涉及到数据更新：数据库和缓存更新，就容易出现缓存(Redis)和数据库（MySQL）间的数据一致性问题。
 
@@ -412,7 +412,7 @@ redis哨兵的作用:
 
 ### 队列 + 重试机制
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1691917750473-32ce4f56-aa89-4e07-afc1-5bbb25541a3f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-89c023985c05.png)
 
 - 更新数据库数据；
 - 缓存因为种种问题删除失败
@@ -426,7 +426,7 @@ redis哨兵的作用:
 
 ### 异步更新缓存(基于订阅binlog的同步机制)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1691925278364-ae26d897-a6b6-4418-9348-728b7284d066.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-761109f94c4a.png)
 
 MySQL中产生了新的写入、更新、删除等操作，就可以把binlog相关的消息推送至Redis，Redis再根据binlog中的记录，对Redis进行更新。
 
@@ -618,7 +618,7 @@ end;
 
 当前开源框架Redisson解决了这个问题。我们一起来看下Redisson底层原理图吧：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1744352576867-f1ea8563-d322-48f5-9725-4fecc96174b5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-caf924597056.png)
 
 只要线程一加锁成功，就会启动一个watch dog看门狗，它是一个后台线程，会每隔10秒检查一下，如果线程1还持有锁，那么就会不断的延长锁key的生存时间。因此，Redisson就是使用Redisson解决了**「锁过期释放，业务没执行完」**问题。
 
@@ -626,7 +626,7 @@ end;
 
 ## Redis分布式锁方案六：多机实现的分布式锁Redlock+Redisson
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714026095624-5b31bc0f-378b-4769-b0eb-f42aa3cc4322.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-0c31fcc4de40.png)
 
 如果线程一在Redis的master节点上拿到了锁，但是加锁的key还没同步到slave节点。
 
@@ -638,7 +638,7 @@ end;
 
 我们假设当前有5个Redis master节点，在5台服务器上面运行这些Redis实例。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1714026129858-28a32470-320b-4df4-9cb5-e84d5041e29c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-3fa65056b98b.png)
 
 RedLock的实现步骤:如下
 
@@ -790,25 +790,25 @@ Redis 没有显示定义大 Key，这是一个通用的术语，用来描述那�
 
 ### 正常执行：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716102426275-d9656ea8-2da3-4348-aee1-1e298cf27ee0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-9423f2c901c3.png)
 
 ### 主动放弃事务：
 
 使用 discard 主动中断 multi 操作，然后清空并放弃执行当前事务。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716102448498-61f5bbc2-9c87-46b1-ba97-fd335b3e9c5d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-4c0482261212.png)
 
 ### 全部回滚：
 
 开启 multi 之后，命令语法导致执行错误，会放弃当前所有队列中的命令。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716102669766-2621b62d-b067-45c5-a10f-dd724cbd3310.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-d4ee878f6161.png)
 
 ### 部分支持事务：
 
 开启 multi 之后，命令逻辑执行错误，会主动忽略报错语句，继续执行后续命令。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716104103891-9228cc7d-9b33-4e2b-92ac-58c05eb13ab1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-07cb4e0dca84.png)
 
 ### WATCH：
 
@@ -816,11 +816,11 @@ Redis 的 watch 命令是一种乐观锁的实现方式。余额修改示例：
 
 #### 正常情况：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716104356898-8db2e1ea-44f3-4d50-a62e-e346bc9f9777.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-81468ae01d4c.png)
 
 #### 并发修改情况：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1716104471782-6e49bbdc-0710-4d57-a017-2e35a2b81f59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0501-du5hpy6podycogxo/img-d534078cdea8.png)
 
 在 watch 监控后，有人修改了balance，会导致事务会被打断，必须更新最新值，才能成功执行事务，类似于乐观锁的版本号机制。
 

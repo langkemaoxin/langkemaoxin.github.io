@@ -15,7 +15,7 @@ article: false
 
 > 针对中小型项目实现全托管数据可视化平台
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011558052.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-dfd4daf76a3e.png)
 
 ### 环境介绍
 
@@ -39,7 +39,7 @@ article: false
 
 `Prometheus`是一个开源的系统监控和报警系统，现在已经加入到`CNCF`基金会，成为继`K8S`之后第二个在`CNCF`托管的项目，在`Kubernetes`容器管理系统中，通常会搭配`Prometheus`进行监控，同时也支持多种`exporter`采集数据，还支持`pushgateway`进行数据上报，`Prometheus`性能足够支撑上万台规模的集群。
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011603186.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-92ae51871753.png)
 
 - **Prometheus 服务器**
 
@@ -63,7 +63,7 @@ Prometheus 收集到数据之后，由 WebUI 界面进行可视化图标展示�
 
 Grafana 是一款用 GO 语言开发的开源数据可视化工具，可以做数据监控和数据统计，带有告警功能。
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011619302.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-bd8f7667a647.png)
 
 **特点：**
 
@@ -168,7 +168,7 @@ http://你的IP:你的端口/actuator/prometheus
 
 - 效果演示
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011629468.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-45fe055daeae.png)
 
 ### Prometheus安装
 
@@ -241,7 +241,7 @@ services:
 
 访问地址：http://localhost:9090/
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011639018.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-7765a1e660ca.png)
 
 ### Grafana安装
 
@@ -270,31 +270,31 @@ volumes:
 
 - 访问
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011638706.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-f8c946595fa3.png)
 
 - 数据源配置
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011649845.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-661f09e75d77.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011650601.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-18e8feb50e7c.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011650107.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-20bb4a33fd0b.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011651956.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-c772c11742a8.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011652990.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-cde2e97a0a92.png)
 
 - 打开grafana官方地址：[https://grafana.com/grafana/dashboards/](https://grafana.com/grafana/dashboards/)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011654807.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-2050114cec35.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011655980.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-aeb1852bbcbe.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011656324.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-bd907e068528.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011702555.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-58e9fcba46ad.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011707441.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-f7f3aa8451fd.png)
 
 ### MySQL监控
 
@@ -307,7 +307,7 @@ volumes:
       - DATA_SOURCE_NAME=账号:密码@(你的IP:3306)/数据库名称
 ```
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011709524.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-5699e683b469.png)
 
 ### 机器监控
 
@@ -320,14 +320,14 @@ volumes:
       - "9100:9100"
 ```
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011710173.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-3ff2c4187c95.png)
 
 ### Redis监控，不用配置探针
 
 > 直接面板可以监控
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011713358.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-5cba42e7c22d.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011715276.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-9af855122e8c.png)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/doc/202303011716745.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0135-slqukz1g48gkng2q/img-129b8f2a6725.png)

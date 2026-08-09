@@ -42,9 +42,9 @@ public class RandomLoadBalance implements LoadBalance{
 
 第二步，在`META-INF/services/`目录创建一个文件名LoadBalance全限定名的文件，文件内容为RandomLoadBalance的全限定名
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848535705-6c23233a-1973-4f10-bc02-51d6ebd29a46.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-44ca9f915381.webp)
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848535812-74979a5c-c722-429c-b68f-52206af23df7.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-8c998d243fe1.webp)
 
 测试类：
 
@@ -65,7 +65,7 @@ public class ServiceLoaderDemo {
 
 测试结果：
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848535786-a63ac8b0-e41b-4939-9110-0a740bc4477d.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-b57d4d850822.webp)
 
 此时就成功获取到了实现。
 
@@ -75,15 +75,15 @@ public class ServiceLoaderDemo {
 
 如下是ServiceLoader中一段核心代码
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848535837-9294add4-48ef-4718-95d9-ec97e700081c.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-2b996ed76fe8.webp)
 
 首先获取一个fullName，其实就是`META-INF/services/接口的全限定名`
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848535803-19427735-f75e-4b97-9000-8539fff3b9d3.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-95461d1306e1.webp)
 
 然后通过ClassLoader获取到资源，其实就是接口的全限定名文件对应的资源，然后交给`parse`方法解析资源
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536128-3a618699-bb99-4438-ba58-66edc96b56b9.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-93ad8c3c54ed.webp)
 
 `parse`方法其实就是通过IO流读取文件的内容，这样就可以获取到接口的实现的全限定名
 
@@ -123,9 +123,9 @@ Spring的SPI机制的约定如下：
 
 在`META-INF/`目录下创建spring.factories文件，LoadBalance为键，RandomLoadBalance为值
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536201-b9359088-1366-42c5-8415-31c731c3c6f8.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-48d3434c3d15.webp)
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536313-62d4bc57-db9f-4ba7-b92b-78b3595ca0f3.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-43fc505aec8d.webp)
 
 测试：
 
@@ -144,7 +144,7 @@ public class SpringFactoriesLoaderDemo {
 
 运行结果：
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536386-035ffde2-fed2-4308-b2ad-85091114305c.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-c9a36a2aee17.webp)
 
 成功获取到了实现对象。
 
@@ -152,7 +152,7 @@ public class SpringFactoriesLoaderDemo {
 
 如下是SpringFactoriesLoader中一段核心代码
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536538-0853f0db-b2bf-4cd8-9677-d56094c41b78.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-15844e040620.webp)
 
 其实从这可以看出，跟Java实现的差不多，只不过读的是`META-INF/`目录下spring.factories文件内容，然后解析出来键值对。
 
@@ -164,11 +164,11 @@ Spring的SPI机制在内部使用的非常多，尤其在SpringBoot中大量使�
 
 在SpringBoot3.0之前的版本，自动装配是通过SpringFactoriesLoader来加载的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536601-85801daa-4a99-4c05-abc9-c5f1bfb4df45.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-ca4adc8b3c90.webp)
 
 但是SpringBoot3.0之后不再使用SpringFactoriesLoader，而是Spring重新从`META-INF/spring/`目录下的`org.springframework.boot.autoconfigure.AutoConfiguration.imports`文件中读取了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536611-3a29c2a5-7247-4c3c-952e-42089ebd07f8.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-a707cbfd3e2c.webp)
 
 至于如何读取的，其实猜也能猜到就跟上面SPI机制读取的方式大概差不多，就是文件路径和名称不一样。
 
@@ -176,13 +176,13 @@ Spring的SPI机制在内部使用的非常多，尤其在SpringBoot中大量使�
 
 PropertySourceLoader是用来解析application配置文件的，它是一个接口
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536693-60cd745e-3a49-41fb-b47f-c04975aa17cd.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-74b086e513e8.webp)
 
 SpringBoot默认提供了 PropertiesPropertySourceLoader 和 YamlPropertySourceLoader两个实现，就是对应properties和yaml文件格式的解析。
 
 SpringBoot在加载PropertySourceLoader时就用了SPI机制
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536671-b5ff1add-e846-48b8-9c09-87b27c74dbd6.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-dd0718386949.webp)
 
 #### 与Java SPI机制对比
 
@@ -243,7 +243,7 @@ public class ExtensionLoaderDemo {
 
 测试结果：
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536768-e28b4275-3d45-4ff2-b638-60fbafeaf3b3.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-a89928487684.webp)
 
 dubbo的SPI机制除了解决了无法获取指定实现类的问题，还提供了很多额外的功能，这些功能在dubbo内部用的非常多，接下来就来详细讲讲。
 
@@ -293,7 +293,7 @@ public class RoundRobinLoadBalance implements LoadBalance {
 
 这种方式在Dubbo中也很常见，比如如下的一个场景
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536878-90d76241-f28f-4a98-a8fa-de602ec9136c.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-f6925adca23d.webp)
 
 RegistryProtocol中会注入一个Protocol，其实这个注入的Protocol就是一个自适应对象。
 
@@ -301,7 +301,7 @@ RegistryProtocol中会注入一个Protocol，其实这个注入的Protocol就是
 
 Dubbo也提供了一些类似于Spring的一些接口的回调功能，比如说，如果你的类实现了Lifecycle接口，那么创建或者销毁的时候就会回调以下几个方法
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536938-89e758df-c9d6-4929-bdde-df7980d333b0.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-852b9d5bbe7b.webp)
 
 在dubbo3.x的某个版本之后，dubbo提供了更多接口回调，比如说ExtensionPostProcessor、ExtensionAccessorAware，命名跟Spring的非常相似，作用也差不多。
 
@@ -339,7 +339,7 @@ roundrobin=com.sanyou.spi.demo.RoundRobinLoadBalance
 
 测试结果
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536954-b6a265a6-7d63-4b0e-aaee-1b83dbc6b5ed.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-64464dcfce8d.webp)
 
 从结果可以看出，虽然指定了`random`，但是实际获取到的是RoundRobinLoadBalance，而RoundRobinLoadBalance内部引用了RandomLoadBalance。
 
@@ -384,7 +384,7 @@ public interface RandomLoadBalance {
 
 Filter是dubbo中的一个扩展点，可以在请求发起前或者是响应获取之后就行拦截，作用有点像Spring MVC中的HandlerInterceptor。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848536948-744f3306-2707-4596-9dfd-322c01cf4658.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-d09fb17af33f.webp)
 
 Filter的一些实现类
 
@@ -392,7 +392,7 @@ Filter的一些实现类
 
 比如说ConsumerContextFilter这个Filter就作用于Consumer端。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/35268836/1731848537032-5217c99f-2091-4e93-98aa-159b8949d55e.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0227-pulzrwazeuldai89/img-9891c706ee95.webp)
 
 ConsumerContextFilter
 

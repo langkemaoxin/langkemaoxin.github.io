@@ -41,7 +41,7 @@ for(Long id : userIds) {
 通过上面的内容，你可以知道为什么我们不能用通用计数系统实现系统通知未读数了吧？那正确的做法是什么呢？
 要知道，系统通知实际上是存储在一个大的列表中的，这个列表对所有用户共享，也就是所有人看到的都是同一份系统通知的数据。不过不同的人最近看到的消息不同，所以每个人会有不同的未读数。因此，你可以记录一下在这个列表中每个人看过最后一条消息的ID，然后统计这个ID之后有多少条消息，这就是未读数了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1724745910831-c6129de9-fc10-44f6-b8fa-0b06eaa5b29f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0818-mulvb89y3emaw4dw/img-2cbfd384c52e.png)
 
 这个方案在实现时有这样几个关键点：
 
@@ -51,12 +51,12 @@ for(Long id : userIds) {
 
 这是一种比较通用的方案，即节省内存，又能尽量减少获取未读数的延迟。 这个方案适用的另一个业务场景是全量用户打点的场景，比如像下面这张微博截图中的红点。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1724745910791-8b766ad6-8ad2-4c24-8fbd-423ed543747c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0818-mulvb89y3emaw4dw/img-cece0c697d4b.png)
 
 这个红点和系统通知类似，也是一种通知全量用户的手段，如果逐个通知用户，延迟也是无法接受的。因此可以采用和系统通知类似的方案。
 首先为每一个用户存储一个时间戳，代表最近点过这个红点的时间，用户点了红点，就把这个时间戳设置为当前时间；然后也记录一个全局的时间戳，这个时间戳标识最新的一次打点时间，如果你在后台操作给全体用户打点，就更新这个时间戳为当前时间。而在判断是否需要展示红点时，只需要判断用户的时间戳和全局时间戳的大小，如果用户时间戳小于全局时间戳，代表在用户最后一次点击红点之后又有新的红点推送，那么就要展示红点，反之，就不展示红点了
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1724745910655-2eb46108-fc4d-43cb-b4d6-ec3100bedbc8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0818-mulvb89y3emaw4dw/img-392e71fffd4e.png)
 
 这两个场景的共性是全部用户共享一份有限的存储数据，每个人只记录自己在这份存储中的偏移量，就可以得到未读数了。
 你可以看到，系统消息未读的实现方案不是很复杂，它通过设计避免了操作全量数据未读数，如果你的系统中有这种打红点的需求，那我建议你可以结合实际工作灵活使用上述方案。
@@ -76,7 +76,7 @@ for(Long id : userIds) {
 - 然后在Redis或者Memcached中记录一个人所有关注人的博文数快照，当用户点击未读消息重置未读数为0时，将他关注所有人的博文数刷新到快照中；
 - 这样，他关注所有人的博文总数减去快照中的博文总数就是他的信息流未读数。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1724745910774-e79748ca-4611-4f26-8f57-d7801649f0d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0818-mulvb89y3emaw4dw/img-4da760ae57b0.png)
 
 假如用户A，像上图这样关注了用户B、C、D，其中B发布的博文数是10，C发布的博文数是8，D发布的博文数是14，而在用户A最近一次查看未读消息时，记录在快照中的这三个用户的博文数分别是6、7、12，因此用户A的未读数就是（10-6）+（8-7）+（14-12）=7。
 

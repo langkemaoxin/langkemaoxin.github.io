@@ -29,7 +29,7 @@ article: false
 
 #### 2.1独立数据库模式
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728395262473-0611629e-9e85-4faf-9de9-42ffe4b6a6e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0151-mtggz9h1ebao5b5z/img-d216912d316a.png)
 
 **2.1.1特征**
 
@@ -54,7 +54,7 @@ article: false
 
 #### 2.2共享数据库独立数据架构
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728395303256-5f3ba9b4-a7b4-411c-8693-691cc219db23.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0151-mtggz9h1ebao5b5z/img-8d307615936e.png)
 
 **2.2.1**
 
@@ -80,7 +80,7 @@ article: false
 
 #### 2.3共享数据库共享数据架构
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728395319475-ac24da08-bd71-4020-86e5-dcaa7e883181.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0151-mtggz9h1ebao5b5z/img-1b8e8edd01a0.png)
 
 **2.3.1特征**
 
@@ -108,7 +108,7 @@ article: false
 3. **业务复杂度：**有些核心业务是比较复杂的，对整体的服务和底层资源的考验都比较大，其它业务可以适当做一些简化；
 4. **应用成本：**既然选用多租户技术框架，那么说明用户肯定是达到了一定的量级，运营、维护、硬件等的综合成本一定要考虑。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728395515834-d2c1fbac-27e1-4810-bef2-2cfe3fb81bde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0151-mtggz9h1ebao5b5z/img-87c47a21e9d1.png)
 
 ---
 
@@ -118,7 +118,7 @@ article: false
 
 在这里笔者分为了3个层次：管理层、服务层、基础设施，如多租户架构图示（一）所示，下面展开讲一下这样分层的原因。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728395535881-71a49025-a478-44ce-bc2b-d937ba1dde14.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0151-mtggz9h1ebao5b5z/img-5aa7bb8339db.png)
 
 - **管理层**
 
@@ -150,7 +150,7 @@ article: false
 
 这个模型里我理解可以分为 4 种体系：SaaS平台体系、权限角色体系、业务体系与云资源体系。如多租户架构图示（二）所示，每种体系之间都有各自的关联关系。为方便大家理解，每种关系我都展开讲讲。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728395560087-a708bf04-309e-46fa-b948-90503e4f389d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0151-mtggz9h1ebao5b5z/img-75aca4c57320.png)
 
 - **SaaS平台与租户的关系：**这个平台里面有多个租户，一般的话采用共享数据库独立数据架构的模式，容纳几十个租户应该问题不大。
 - **租户与组织用户的关系：**租户一般指的是企业或者组织，通常会有一些员工担任管理员的角色来管理购买的 SaaS 服务。

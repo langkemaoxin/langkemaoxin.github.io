@@ -15,7 +15,7 @@ article: false
 
 ## MySQL如何实现的索引机制？
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003550348-e666ef88-89b0-4585-a9b3-d58290d3a621.png#averageHue=%236b6c3d&clientId=uf8e23505-f563-4&from=paste&height=435&id=u842a8208&originHeight=469&originWidth=832&originalType=binary&ratio=1&rotation=0&showTitle=false&size=750355&status=done&style=none&taskId=u6e6c1dbe-fec9-4e2e-98dc-d3deac42baa&title=&width=772?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-96e7a9da21bb.png)
 
 > 💡**什么是索引？**
 > 
@@ -48,7 +48,7 @@ article: false
 
 ## InnoDB的索引和MyISAM的索引有什么区别？
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003570759-851ca5e5-f048-4614-885f-89ce9b2c6b7e.png#averageHue=%23eae8e3&clientId=uf8e23505-f563-4&from=paste&height=425&id=ub6b77b17&originHeight=850&originWidth=1260&originalType=binary&ratio=1&rotation=0&showTitle=false&size=639820&status=done&style=none&taskId=u31d8a3cf-6079-4726-859a-8a35d314356&title=&width=630?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-44427cfd8968.png)
 
 首先InnoDB和MyISAM都是使用的B+树实现的，但是InnoDB使用的是聚簇索引而MyISAM使用的是**非聚簇索引**，聚簇索引根据主键创建一颗B+树，叶子节点则存放的是数据行记录，也可以把叶子结点称为数据页。通俗点来说就是把数据和索引存在同一个块，找到了索引也就找到了数据。
 
@@ -66,11 +66,11 @@ article: false
 
 > 🛎️在这部分只介绍InnoDB和MyISAM主键索引的不同？辅助索引后面在说
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003586483-cde2c837-3196-4693-a79e-2393b4bac82c.png#averageHue=%23f5f5f5&clientId=uf8e23505-f563-4&from=paste&height=550&id=u1361e1cc&originHeight=1100&originWidth=2854&originalType=binary&ratio=1&rotation=0&showTitle=false&size=451951&status=done&style=none&taskId=ucda02cdf-822f-47f2-8e64-d6bb9208f8b&title=&width=1427?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-b23937ea3cb5.png)
 
 而非聚簇索引是将索引和数据分开存储，那么在访问数据的时候就需要2次查找，但是和InnoDB的非聚簇部分还是有所区别。InnoDB是需要查找2次树，先查找辅助索引树，再查找聚簇索引树（这个过程也叫回表）。而MyISAM的主键索引叶子结点的存储的部分还是有所区别。InnoDB中存储的是**索引和聚簇索引ID**，但是MyISAM中存储的是**索引和数据行的地址**，只要定位就可以获取到。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003601011-5e14d25f-25d0-4a02-bd87-9706ce9e212f.png#averageHue=%23f9f9f9&clientId=uf8e23505-f563-4&from=paste&height=750&id=ua09e8aa1&originHeight=1500&originWidth=2822&originalType=binary&ratio=1&rotation=0&showTitle=false&size=400316&status=done&style=none&taskId=ub62e8da7-bece-4bbf-8930-414dd8060e5&title=&width=1411?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_80%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-016c6347a87c.png)
 
 其实看到这个部分会有一个疑惑，那就是InnoDB的聚簇索引比MyISAM的主键快，那为什么会认为MyISAM查询效率比InnoDB快呢？
 
@@ -152,7 +152,7 @@ show index from table_name (表名)
 
 ## 如果表中有字段为NULL 索引是否会失效？
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003619095-bd82181a-231d-4aa2-8ea7-a0d1b60a1250.png#averageHue=%23f8f7f6&clientId=uf8e23505-f563-4&from=paste&height=784&id=ub81ebb0e&originHeight=1568&originWidth=2872&originalType=binary&ratio=1&rotation=0&showTitle=false&size=593764&status=done&style=none&taskId=ud46f46a8-4d0e-4911-883a-4199a0c8db2&title=&width=1436?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-ee2563fa7197.png)
 
 首先讲答案不一定。即使我们使用`is null` 或者`is not null` 它其实都是会走索引的。那为什么会有这样的言论呢？这里首先就得来讲讲NULL值是怎么在记录中存储的，又是怎么在B+树中存储的呢。
 
@@ -170,7 +170,7 @@ show index from table_name (表名)
 
 当我们创建表的时候默认会创建一个`*.idb` 文件，这个文件又称为独占表空间文件，它是由段、区、页、行组成。InnoDB存储引擎独占表空间大致如下图；
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003628219-b9895533-c29a-441a-8cad-977b931a74bd.png#averageHue=%23cedac2&clientId=uf8e23505-f563-4&from=paste&height=472&id=ud21f06df&originHeight=651&originWidth=686&originalType=binary&ratio=1&rotation=0&showTitle=false&size=191077&status=done&style=none&taskId=ua189c00f-8db2-4497-a40e-d7c569d3a56&title=&width=497?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-42fbbb55d682.png)
 
 **Segment**(**表空间**) 是由各个段（segment）组成的，段是由多个区（extent）组成的。段一般分为数据段、索引段和回滚段等。
 
@@ -208,7 +208,7 @@ InnoDB 提供了 4 种行格式，分别是 Redundant、Compact、Dynamic和 Com
 
 那么我们来看看**Compact**里面长什么样，先混个脸熟。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003639328-f949537c-fef4-4e2b-911e-7b3065552158.png#averageHue=%23f8ede7&clientId=uf8e23505-f563-4&from=paste&height=223&id=u6959a892&originHeight=445&originWidth=1346&originalType=binary&ratio=1&rotation=0&showTitle=false&size=99331&status=done&style=none&taskId=u946a638a-1ad5-4d8e-a4b2-2bc751ad39f&title=&width=673?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-6591b58fe4ab.png)
 
 这里简单介绍一下，**Compact**行格式其他内容后面单独出一个章节介绍。
 
@@ -228,7 +228,7 @@ InnoDB 提供了 4 种行格式，分别是 Redundant、Compact、Dynamic和 Com
 
 在InnoDB中非聚簇索引是通过B+树的方式进行存储的
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003658014-c01aef0e-b3bc-4ba2-943f-4a0c45c5221e.png#averageHue=%23faf7f6&clientId=uf8e23505-f563-4&from=paste&height=605&id=u4fe3ae96&originHeight=1210&originWidth=862&originalType=binary&ratio=1&rotation=0&showTitle=false&size=329316&status=done&style=none&taskId=u1c99bb57-b598-4d98-a262-7071db5743d&title=&width=431?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-b27c818e2206.png)
 
 从图中可以看出，对于`s1`表的二级索引`idx_key1`来说，值为`NULL`的二级索引记录都被放在了`B+`树的最左边，这是因为设计`InnoDB`的大叔有这样的规定：
 
@@ -351,7 +351,7 @@ SELECT col1, col2, col3 FROM table WHERE col1 = x AND col2 = y
 
 结合“聚簇索引与非聚集索引的特点是什么？”加上下图就明白了
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003672024-87ff60e3-c4cb-49af-8d90-5be81eca5442.png#averageHue=%23f5f5f5&clientId=uf8e23505-f563-4&from=paste&height=550&id=u132114f6&originHeight=1100&originWidth=2854&originalType=binary&ratio=1&rotation=0&showTitle=false&size=451951&status=done&style=none&taskId=u2d69de55-e4e8-4786-ab30-4212fc279dd&title=&width=1427?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-2e3c70d48554.png)
 
 ## 一个表中可以有多个（非）聚簇索引吗？
 
@@ -391,7 +391,7 @@ SELECT col1, col2, col3 FROM table WHERE col1 = x AND col2 = y
 
 那什么是**自适应哈希索引**(Adaptive Hash Index, AHI)呢?
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003692458-1e4aa5ea-c627-4155-9218-b5d75c62b9f2.png#averageHue=%23f6f4f3&clientId=uf8e23505-f563-4&from=paste&height=220&id=u49e20971&originHeight=286&originWidth=643&originalType=binary&ratio=1&rotation=0&showTitle=false&size=27931&status=done&style=none&taskId=u917c960c-905e-4fd5-8905-961191d6463&title=&width=495.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-ce18ed6fbea8.png)
 
 1、自适应即我们不需要自己处理，当InnoDB引擎根据查询统计发现某一查询满足hash索引的数据结构特点，就会给其建立一个hash索引；
 
@@ -403,7 +403,7 @@ SELECT col1, col2, col3 FROM table WHERE col1 = x AND col2 = y
 
 在讲这个技术之前你得对mysql架构有一个简单的认识，见下图
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003706280-de5986c6-f305-460a-af5f-0afcbee448ee.png#averageHue=%23f7f2e1&clientId=uf8e23505-f563-4&from=paste&height=234&id=u1a9e53d9&originHeight=468&originWidth=619&originalType=binary&ratio=1&rotation=0&showTitle=false&size=31985&status=done&style=none&taskId=ue4023ba3-c347-4742-9154-9142b4479e8&title=&width=309.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-94ee444831d0.png)
 
 - MySQL 服务层：也就是 SERVER 层，用来解析 SQL 的语法、语义、生成查询计划、接管从 MySQL 存储引擎层上推的数据进行二次过滤等等。
 
@@ -412,10 +412,10 @@ SELECT col1, col2, col3 FROM table WHERE col1 = x AND col2 = y
 - MySQL 索引扫描：根据指定索引过滤条件，遍历索引找到索引键对应的主键值后回表过滤剩余过滤条件。
 
 - MySQL 索引过滤：通过索引扫描并且基于索引进行二次条件过滤后再回表。
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003728948-337a6fe2-7266-41f6-9fd1-4e51ae6ea5be.png#averageHue=%23f2f1f1&clientId=uf8e23505-f563-4&from=paste&height=468&id=u6883ae79&originHeight=936&originWidth=2050&originalType=binary&ratio=1&rotation=0&showTitle=false&size=152642&status=done&style=none&taskId=u0808de18-45d4-4dba-ba14-666293cfd58&title=&width=1025?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-21c90cc39eef.png)
 
 - 使用索引下推实现
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003734248-9a0400c4-e897-4e95-bc77-5793bb03daed.png#averageHue=%23f3f3f3&clientId=uf8e23505-f563-4&from=paste&height=469&id=ued5d43ad&originHeight=938&originWidth=2158&originalType=binary&ratio=1&rotation=0&showTitle=false&size=140290&status=done&style=none&taskId=u7c3f56b6-d08c-4be2-97c9-f323880ba33&title=&width=1079?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-9b1069560f7c.png)
 
 ### 索引下推的使用条件
 
@@ -466,7 +466,7 @@ set optimizer_switch="index_condition_pushdown=off";
 
 我们通过和普通索引来做一个对比，有查询和插入两个场景。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1671003746785-a913ebf4-7c05-4f69-be36-7f7b586a4360.png#averageHue=%23fbfbfb&clientId=uf8e23505-f563-4&from=paste&height=321&id=uab03f745&originHeight=281&originWidth=621&originalType=binary&ratio=1&rotation=0&showTitle=false&size=15778&status=done&style=none&taskId=u295565c2-8554-4d63-b053-fbc01adda16&title=&width=709.5?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0099-fqeezp2rignkyd95/img-299952daf73e.png)
 
 首先第一个数据查询，一般情况下来说索引是通过`B+树`从根节点开始层序遍历到叶子结点，数据页内部通过二分搜索。
 

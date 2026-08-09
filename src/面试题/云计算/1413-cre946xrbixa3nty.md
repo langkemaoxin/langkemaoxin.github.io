@@ -17,11 +17,11 @@ article: false
 
 在回答“大模型输出格式控制”问题时，需结合项目经验，从**场景痛点分析→解决方案设计→技术实现路径→效果验证优化**四个维度展开。重点突出对业务需求的理解、工程化落地能力以及对大模型特性的把控。以下为结构化思路：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244059848-0e6e86c8-e87d-42ea-ab96-e7e2a8400fd9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1413-cre946xrbixa3nty/img-e766876ff18d.png)
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244073097-93eaaa98-cb8a-492f-a7b9-f6f2736a661a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1413-cre946xrbixa3nty/img-cbc84a0792d0.png)
 
 #### **案例背景：某电商智能客服系统输出格式失控问题**
 
@@ -37,7 +37,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244085944-991e4f53-da6c-4de9-b180-3297a73c1f66.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1413-cre946xrbixa3nty/img-bee8d0eccf4f.png)
 
 #### **1. 问题诊断与需求分析**
 
@@ -109,7 +109,7 @@ article: false
 
 ### 四、总结收尾
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244102741-638a3c49-c229-46f1-806f-6b2b4b858634.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1413-cre946xrbixa3nty/img-fd5c7cd50036.png)
 
 **核心要点**：
 

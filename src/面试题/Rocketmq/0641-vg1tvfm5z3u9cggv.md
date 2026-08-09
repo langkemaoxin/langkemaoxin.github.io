@@ -145,7 +145,7 @@ Broker 把消息给到了 Consumer，如果 Consumer 代码写得有问题，或
 
 为了让你一眼看清这三个关卡，我为你生成一张架构图。这张图展示了同步刷盘和同步复制是如何像两道闸门一样拦截数据丢失的。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/29768021/1767949052569-2b5c9d64-af3c-439e-a906-ab76d4b1919c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Rocketmq/0641-vg1tvfm5z3u9cggv/img-267bf603fe79.png)
 
 这张图清晰地展示了“最严格”的路径：
 
@@ -157,4 +157,4 @@ Broker 把消息给到了 Consumer，如果 Consumer 代码写得有问题，或
 
 RocketMQ 保证消息不丢失的**终极公式**：
 
-![](https://cdn.nlark.com/yuque/__latex/36017f3e1671151ddda8b71b90aa2665.svg)
+![](/面试题/Rocketmq/0641-vg1tvfm5z3u9cggv/img-a2279e67076e.svg)

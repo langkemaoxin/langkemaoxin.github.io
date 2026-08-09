@@ -19,7 +19,7 @@ JVM内存划分
 
 堆、方法区（元空间）、虚拟机栈、本地方法栈、程序计数器。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392429834-096dad13-8dd8-47d2-97d2-c78badf58505.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-25e57cdb7968.png)
 
 Heap(堆)：
 
@@ -52,7 +52,7 @@ PC，指的是存放下一条指令的位置的一个指针。它是一块较小
 
 **2、堆内存分配策略**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392429844-67f3021a-90de-45a8-ac9e-7c431c24a014.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-13c5470f5fc3.png)
 
 - 对象优先分配在Eden区，如果Eden区没有足够的空间进行分配时，虚拟机执行一次MinorGC。而那些无需回收的存活对象，将会进到 Survivor 的 From 区（From 区内存不足时，直接进入 Old 区）。
 - 大对象直接进入老年代（需要大量连续内存空间的对象）。这样做的目的是避免在Eden区和两个Survivor区之间发生大量的内存拷贝（新生代采用复制算法收集内存）。
@@ -97,7 +97,7 @@ JVM类加载过程
 
 **过程：加载、验证、准备、解析、初始化**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392429867-47d54d98-02b7-4fc3-b485-2994f78fe1d5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-7aede7f0b0ec.png)
 
 **加载阶段：**
 
@@ -137,7 +137,7 @@ JVM类加载过程
 
 每⼀个类都有⼀个对应它的类加载器。系统中的 ClassLoder 在协同⼯作的时候会默认使⽤ 双亲委派模型 。即在类加载的时候，系统会⾸先判断当前类是否被加载过。已经被加载的类会直接返回，否则才会尝试加载。加载的时候，⾸先会把该请求委派该⽗类加载器的 loadClass() 处理，因此所有的请求最终都应该传送到顶层的启动类加载器 BootstrapClassLoader 中。当⽗类加载器⽆法处理时，才由⾃⼰来处理。当⽗类加载器为null时，会使⽤启动类加载器 BootstrapClassLoader 作为⽗类加载器。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392429959-a0c092fa-03a0-404f-9c22-5c2a2d443afb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-1be0b5f0c2ad.png)
 
 **使用好处：**
 
@@ -214,7 +214,7 @@ JVM垃圾回收
 
 Safepoint 当发生 GC 时，用户线程必须全部停下来，才可以进行垃圾回收，这个状态我们可以认为 JVM 是安全的（safe），整个堆的状态是稳定的。如果在 GC 前，有线程迟迟进入不了 safepoint，那么整个 JVM 都在等待这个阻塞的线程，造成了整体 GC 的时间变长。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392429959-03958e94-12ef-493a-b622-d15366116187.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-ce419692389b.png)
 
 MinorGC、MajorGC、FullGC
 
@@ -246,7 +246,7 @@ MinorGC、MajorGC、FullGC
 
 **3、垃圾收集器**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392430222-27ca397f-bbd9-4d91-9862-a5b4de30092a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-1f7553c3a62a.png)
 
 JDK3：Serial Parnew 关注效率
 
@@ -412,7 +412,7 @@ Shenandoah GC (GC 算法)停顿时间和堆的大小没有任何关系，并行�
 
 **瞬时态和历史态**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392430282-bdfc1db4-cd01-45f2-ae97-3a4746c1e1ec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-33ae0e4cb292.png)
 
 查看比如 CPU、系统内存等，通过历史状态可以体现一个趋势性问题，而这些信息的获取一般依靠监控系统的协作。
 
@@ -586,7 +586,7 @@ jhsdb jmap  --heap --pid  37340jhsdb jmap  --pid  37288jhsdb jmap  --histo --pid
 
 有些数据需要使用 HttpClient 来获取进行补全。提供数据的服务提供商有的响应时间可能会很长，也有可能会造成服务整体的阻塞。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392430255-1fbd85f4-8b6d-44ed-b8a4-317bf9cb7854.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0045-gu4keuyemo2sfi71/img-3b0d5c4cf84c.png)
 
 接口 A 通过 HttpClient 访问服务 2，响应 100ms 后返回；接口 B 访问服务 3，耗时 2 秒。HttpClient 本身是有一个最大连接数限制的，如果服务 3 迟迟不返回，就会造成 HttpClient 的连接数达到上限，**概括来讲，就是同一服务，由于一个耗时非常长的接口，进而引起了整体的服务不可用。**
 

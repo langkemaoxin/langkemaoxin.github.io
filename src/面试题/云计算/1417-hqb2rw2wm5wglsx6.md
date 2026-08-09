@@ -19,7 +19,7 @@ article: false
 
 1. **核心组件**：需明确RAG的模块划分（检索器、生成器、索引、后处理等），并解释各组件功能与技术选型。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227717603-007745b3-c5c2-4eea-9b7f-63aed542b5f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1417-hqb2rw2wm5wglsx6/img-9c53b653dabd.png)
 
 1. **工作逻辑**：描述数据流从用户查询到最终生成的完整链路，强调检索与生成的协同机制。
 2. **案例结合**：通过真实项目（如客服知识库、医疗诊断辅助）说明组件如何协同工作，体现技术落地能力。
@@ -29,7 +29,7 @@ article: false
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227749116-e7dcc531-18c5-4958-861e-47e64ef25584.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1417-hqb2rw2wm5wglsx6/img-28c70529ab6f.png)
 
 以**电商客服智能问答系统**为例，某公司日均处理5万+用户咨询，需快速响应商品详情、售后政策等问题。传统基于规则匹配的系统存在回答僵化、无法处理复杂查询的问题，因此采用RAG技术提升回答准确性。
 
@@ -100,7 +100,7 @@ RAG系统通过**检索增强生成**提升大语言模型（LLM）的准确性�
 
 ##### **3. 技术挑战与解决方案**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227776693-99da1a67-ad6b-4506-8264-ba7a8645a270.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1417-hqb2rw2wm5wglsx6/img-4dc2994216e2.png)
 
 挑战
 解决方案
@@ -200,7 +200,7 @@ RAG系统通过检索增强生成提升大语言模型的准确性与可靠性�
 
 #### **三、总结收尾**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752227788237-c388ae1f-f7f0-48eb-9ea7-502c8bd266c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1417-hqb2rw2wm5wglsx6/img-c7362ea56cda.png)
 
 RAG系统通过**检索增强生成**有效解决了传统LLM的幻觉问题与知识更新滞后问题，其核心在于：
 

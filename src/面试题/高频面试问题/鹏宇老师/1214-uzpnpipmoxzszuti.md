@@ -49,7 +49,7 @@ Token 过期虽保障安全，但会直接影响用户体验：
 
 #### 3.1.2 实现流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759915418930-1c8e7f44-7ef5-45e5-982c-8d619293498e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1214-uzpnpipmoxzszuti/img-f4691c23e3d6.png)
 
 1. 用户提交用户名 / 密码登录，服务端验证通过后：
 
@@ -277,7 +277,7 @@ public class AuthController {
 
 #### 3.2.2 实现流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759915521693-8b57d77d-6628-4153-87b8-bbb6d60f6e45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1214-uzpnpipmoxzszuti/img-a9715ded53e6.png)
 
 1. 用户登录，服务端生成有效期为 T（如 2 小时）的 Token，客户端存储并携带 Token 发起请求。
 2. 服务端拦截器验证 Token 有效性：
@@ -383,7 +383,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 #### 3.3.2 实现流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759915608327-f65e246e-ab34-43ec-8f38-30817cd96595.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1214-uzpnpipmoxzszuti/img-7af82608293a.png)
 
 1. 用户登录，客户端获取 Token（如双令牌机制中的 Access Token + Refresh Token），并解析 Token 过期时间（如从 JWT 的 `exp` 字段获取）。
 2. 前端设置定时器：在 Token 过期前 N 分钟（如 10 分钟）触发续期逻辑；或在每次发起 API 请求前，检查 Token 剩余有效期。
@@ -493,7 +493,7 @@ export default request;
 
 #### 3.4.2 实现流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759915670925-3e95a8ec-0be4-4f84-8ed1-9710edf1134f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1214-uzpnpipmoxzszuti/img-eedfcdb2babe.png)
 
 1. 用户登录，服务端生成短期有效 Token（如 1 小时），客户端存储并携带 Token 发起请求。
 2. 服务端验证 Token：

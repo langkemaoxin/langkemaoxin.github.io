@@ -90,4 +90,4 @@ MCP、RAG、Agent的协同模式已广泛应用于ToC（面向消费者）与ToB
 
 如果说明确MCP、RAG、Agent的区别是“知其然”，那么掌握三者的协同逻辑就是“知其所以然”。从“单一技术调用”到“多技术协同联动”，AI正在从“碎片化工具”进化为“全流程助手”。Agent的决策能力、RAG的知识支撑、MCP的执行能力形成的闭环体系，不仅解决了复杂场景的落地难题，更降低了AI技术的应用门槛。未来，这种“分工协作”的模式将成为AI融入千行百业的核心路径，推动技术价值从“概念”走向“实效”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766143065507-b88ff4ec-0719-4499-a4bc-d20c0a33adae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_125%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1146-tn7hkxwfkxrgx2vv/img-b8bae43ea97e.png)

@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689137801-edae87bd-be56-4041-9cf8-708fafd6e922.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1438-sexah8ngq7nk1qde/img-9c815ac8711f.png)
 
 梯度消失和爆炸是深度神经网络训练的经典问题，在大模型训练中尤为突出。其本质是反向传播时梯度因链式法则发生指数级变化：
 
@@ -26,7 +26,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689159705-5ffee083-dcdb-4769-b362-af1f9c79e9de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1438-sexah8ngq7nk1qde/img-158dd097b7b2.png)
 
 #### 案例1：金融领域BERT微调中的梯度消失
 
@@ -76,7 +76,7 @@ class PreLNTransformerBlock(nn.Module):
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689188527-6b1aa84f-10c6-4174-a288-e33477810b72.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1438-sexah8ngq7nk1qde/img-53855589260a.png)
 
 #### 1. 模型架构优化（根本性解决）
 
@@ -133,7 +133,7 @@ for i, batch in enumerate(data):
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751689209992-dfa36fd5-bc5f-4590-8b2d-366098db5bca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1438-sexah8ngq7nk1qde/img-932dfe53575d.png)
 
 解决方案
 适用场景

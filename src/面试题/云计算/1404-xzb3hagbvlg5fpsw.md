@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370571651-3e64c1a5-7da0-4133-9145-6d3c6223dd1c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1404-xzb3hagbvlg5fpsw/img-a64ee6d83ad9.png)
 
 大模型推理性能优化是实际落地应用中的核心挑战，需结合具体场景需求，从模型压缩、硬件加速、算法优化、系统工程等多维度综合施策。以下为结构化解题框架：
 
@@ -28,7 +28,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370590397-b9b146b8-a079-4ee9-b8cd-90bc7e674385.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1404-xzb3hagbvlg5fpsw/img-3655a2dcd991.png)
 
 #### 案例1：电商推荐系统实时推理优化
 
@@ -134,7 +134,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370605643-681664ba-0d00-418c-b339-57e56dc614ff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1404-xzb3hagbvlg5fpsw/img-cf43617bc486.png)
 
 **面试官**：请结合真实项目案例，阐述大模型推理性能优化方案。
 
@@ -195,7 +195,7 @@ article: false
 
 ### 四、总结归纳
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370619643-8fb73060-4757-4890-b973-652063290bee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1404-xzb3hagbvlg5fpsw/img-d34c391aed8d.png)
 
 大模型推理性能优化需遵循以下原则：
 

@@ -21,7 +21,7 @@ article: false
 
 在讨论任何分布式方案之前，理解其背后的理论权衡至关重要。CAP与BASE理论正是这一切的起点。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763281581586-0cb6e55d-4bb6-4f84-bd94-df7a24f661bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0954-rsl47hlz0di9o9fv/img-614056a8063f.png)
 
 上图清晰地展示了分布式系统设计的核心困境。由于网络分区（P）的普遍存在，我们必须在强一致性（C）和高可用性（A）之间做出选择。BASE理论正是这种权衡下的产物，它放弃了对强一致性的苛刻要求，转而追求“最终一致性”，为构建弹性和高可用的分布式系统提供了理论依据。我们接下来要讨论的所有方案，本质上都是BASE理论在不同场景下的具体工程实践。
 
@@ -31,7 +31,7 @@ article: false
 
 这是在没有外部MQ时最简单、最可靠的实现方式，其核心思想是巧妙地利用业务数据库自身的事务能力。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763281589930-014d83c5-d369-4e15-ab41-43de11b8da45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0954-rsl47hlz0di9o9fv/img-0f2ba19a6c5d.png)
 
 该流程的核心在于，将“业务数据操作”和“待发送消息的创建”捆绑在同一个数据库事务中。如图所示，这保证了业务操作与消息生成的原子性，杜绝了“业务成功但消息未发出”的风险。后续独立的轮询任务则扮演了一个简单的、异步的消息投递者角色。
 
@@ -43,7 +43,7 @@ article: false
 
 此方案是“本地消息表”的金融级增强版，它通过增加一层独立的校验机制，将系统的可靠性推向极致。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763281597317-0dfa2d8c-679d-4913-8d91-683dfbcc9f9f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0954-rsl47hlz0di9o9fv/img-13c8e7a0e827.png)
 
 如图所示，该方案构建了两道防线。第一道防线是与方案一相同的“实时消息推送”，它保证了绝大多数情况下的快速响应。第二道防线，也是该方案的精髓，是一套独立的“定时对账”系统。它像一个严谨的审计员，在业务低峰期全面核对上下游数据，捕获并修复所有因极端异常（如程序Bug、长时间网络中断）导致的不一致。
 
@@ -55,7 +55,7 @@ article: false
 
 当业务流程变得漫长且复杂，跨越多个服务时，Saga模式提供了一种应用层面的事务编排方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763281649101-8497a9a6-67d8-4c07-9ad5-483c437baca9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0954-rsl47hlz0di9o9fv/img-006f41b5a2d8.png)
 
 Saga的核心思想是“补偿”而非“回滚”。从上图的正向与逆向流程可以看出，它将一个长事务分解为一系列独立的本地事务。如果其中任何一步失败，系统不会尝试去撤销已经提交的事务（这通常是不可能的），而是执行预先定义好的“补偿操作”，从业务层面“抵消”之前操作的影响。
 
@@ -67,7 +67,7 @@ Saga的核心思想是“补偿”而非“回滚”。从上图的正向与逆�
 
 TCC（Try-Confirm-Cancel）提供了比Saga更强的一致性保证，它更接近于传统的二阶段提交协议，但实现在应用层面。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763281674622-38231562-9079-484e-8b91-5421af4f0134.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0954-rsl47hlz0di9o9fv/img-6b72c0eaf489.png)
 
 如果说Saga是“先斩后奏，出错了再补救”，那么TCC就是“先申请许可，再执行操作”。如图所示，`Try`阶段预留资源，相当于获取了对资源的“锁定”；所有参与方`Try`成功后，`Confirm`阶段才进行真正的业务提交；一旦任何一方`Try`失败，则所有已成功的参与方都会执行`Cancel`来释放预留的资源。
 
@@ -79,7 +79,7 @@ TCC（Try-Confirm-Cancel）提供了比Saga更强的一致性保证，它更接�
 
 #### 方案的战略选择
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763281610518-6568f050-5dc1-4b04-88de-21b74826cfa1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0954-rsl47hlz0di9o9fv/img-7715e0acd51c.png)
 
 上图直观地展示了四种方案在不同维度上的表现。综合来看，不存在唯一的“最佳”方案，只有“最适合”场景的选择。
 

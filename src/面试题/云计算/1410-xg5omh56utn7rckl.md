@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245388751-d3a76bb2-8ceb-4604-82b1-bbd180ece2d4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1410-xg5omh56utn7rckl/img-c36e10d1b410.png)
 
 在设计多Agent协作系统架构时，需要从以下几个方面进行考虑：
 
@@ -28,7 +28,7 @@ article: false
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245413846-a0dd95c6-be53-4888-b2cf-7e1a4c9b334e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1410-xg5omh56utn7rckl/img-54cfd3ea40e2.png)
 
 #### 案例背景：智能物流仓储系统
 
@@ -71,7 +71,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245442171-aebaad94-2ae2-4757-a01e-f9987ea122a2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1410-xg5omh56utn7rckl/img-ea6c63505a72.png)
 
 在设计多Agent协作系统架构时，可以按照以下步骤进行：
 
@@ -94,7 +94,7 @@ article: false
 
 ### 四、总结收尾
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752245467362-edb7f5e3-3c56-4f5d-88f8-b0979f823ae4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1410-xg5omh56utn7rckl/img-8d472f07a56a.png)
 
 多Agent协作系统架构通过将复杂任务分解为多个子任务，并由专门的Agent负责执行，能够显著提高系统的效率和可靠性。在智能物流仓储系统中，多Agent协作不仅解决了订单处理效率低、错误率高的问题，还通过动态资源调度和路径优化，提高了资源利用率和系统响应速度。
 

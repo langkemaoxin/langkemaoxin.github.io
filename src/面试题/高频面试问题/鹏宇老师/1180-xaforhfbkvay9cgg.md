@@ -55,7 +55,7 @@ HDD / 对象存储（低成本、大容量）
 - 家居收纳：常用的餐具放厨房台面（热），换季的被子塞衣柜顶层（冷）；
 - 图书馆：热门畅销书放入口显眼区（热），老旧工具书存地下室书架（冷）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761902618783-3c0c1a35-605d-452a-a22e-a817d384929e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1180-xaforhfbkvay9cgg/img-42c41bf93caa.png)
 
 ## 二、为什么必须做冷热分离？3 个核心价值（附数据支撑）
 
@@ -77,7 +77,7 @@ HDD / 对象存储（低成本、大容量）
 - 合规需求：金融、电商等行业需留存历史数据（如《支付业务管理办法》要求订单存 5 年），冷存储可实现 “长期留存不影响热库性能”；
 - 扩展性：冷数据用高扩展存储（如 HDFS），热库无需频繁扩容，应对 10 倍数据增长也无需重构架构。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761902674842-344d2f80-fdf5-4040-9f43-f1744df175d0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1180-xaforhfbkvay9cgg/img-30b89c4d3d8a.png)
 
 ## 三、怎么区分冷热数据？2 个核心维度 + 判断逻辑代码
 
@@ -132,7 +132,7 @@ public boolean isColdDataByVisit(String dataId, int days, int minVisitCount) {
 - 新数据（3 个月内）：即使访问少，也暂存热库（防止突然变热门）；
 - 旧数据（1 年以上）：无论访问次数，直接归为冷数据。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761902695468-230ac5be-9952-48a4-b14c-26eccd75d8c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1180-xaforhfbkvay9cgg/img-ced5d0c429ff.png)
 
 ## 四、4 种冷数据迁移方案：优缺点 + 代码示例（附选型建议）
 
@@ -338,7 +338,7 @@ DBA 人工
 无
 ★★★☆☆ / ★★★☆☆
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761902762979-af4284c2-8368-40ec-bd4c-56c462e116df.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1180-xaforhfbkvay9cgg/img-4ced32da64c7.png)
 
 ## 五、进阶：组合方案（中间表 + 定时任务 + binlog）—— 解决单一方案痛点
 
@@ -346,7 +346,7 @@ DBA 人工
 
 ### 1. 方案核心流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761902797781-8c257c49-5ca1-4234-a7cd-b503311e11a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1180-xaforhfbkvay9cgg/img-616d7056a1b9.png)
 
 1. **定时任务**：凌晨扫描热库，判断冷数据，写入「冷数据迁移中间表」（标记 “待迁移”）；
 2. **binlog 监听**：Canal 监听中间表的新增事件，触发迁移服务；
@@ -554,7 +554,7 @@ PARTITION BY RANGE (TO_DAYS(create_time)) (
 );
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761902828805-4ea75e69-a6ce-442c-980c-38490f64fc4f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1180-xaforhfbkvay9cgg/img-17b23ee8f8e2.png)
 
 ## 七、实战案例：2 个真实项目的冷热分离落地
 
@@ -598,4 +598,4 @@ PARTITION BY RANGE (TO_DAYS(create_time)) (
 
 按照本文的方案，你可以快速在项目中落地冷热分离，既解决性能问题，又控制成本 —— 下次面试官再问，你就能自信地从原理讲到代码了！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761902851530-78055b51-c2b9-4964-aabb-a178cc77cef3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1180-xaforhfbkvay9cgg/img-5016b434c1b7.png)

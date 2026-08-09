@@ -44,7 +44,7 @@ article: false
 2. **多样数据结构**：Hash（精准存储）、Bitmap（省内存）、HyperLogLog（极致省内存）覆盖不同场景；
 3. **原生支持统计命令**：无需手动实现去重、计数逻辑，直接调用 API 即可。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760951960670-0c7a9b14-9e0f-4127-8059-e6881fa92e9c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1190-ghk4geob01hx83ng/img-42273e9e1212.png)
 
 ## 三、方案一：Hash 方案（精准统计・低并发适用）
 
@@ -56,7 +56,7 @@ article: false
 - **Field**：用户唯一标识（已登录用户用 ID，未登录用户用随机串）；
 - **Value**：固定为 `1`（仅用于标识 “用户已访问”，无额外业务含义）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760951986527-a739bc5c-22f1-45de-b5eb-2225f8815593.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1190-ghk4geob01hx83ng/img-8a3be7a91a18.png)
 
 ### 3.2 核心 Redis 命令
 
@@ -340,7 +340,7 @@ public class VisitStatsController {
 - **核心映射规则**：用户标识（ID / 随机串）→ 哈希函数 → 连续整数索引 → 对应 bit 位；
 - **内存计算**：1 字节 = 8 bit（可存 8 个用户），1 亿用户仅需～12MB 内存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760952022444-c3ffe546-78f4-46b6-8ce4-75f2a4d833fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1190-ghk4geob01hx83ng/img-136b4dee23c2.png)
 
 ### 4.2 核心 Redis 命令
 
@@ -568,7 +568,7 @@ public class BitmapVisitStatsService {
 - **核心逻辑**：用户标识 → 哈希转换 → 统计哈希值 “最长前导 0 个数” → 基于公式估算不重复用户数（误差率 ≈ 0.81%）；
 - **优势**：12KB 可统计 1 亿 + 用户，内存效率远超 Hash 和 Bitmap。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760952047026-67aeff68-cae0-4c72-87a1-0d6a7893d255.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1190-ghk4geob01hx83ng/img-0f830928faf8.png)
 
 ### 5.2 核心 Redis 命令
 

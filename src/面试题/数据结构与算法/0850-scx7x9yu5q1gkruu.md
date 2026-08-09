@@ -57,7 +57,7 @@ QQ号其实是一串数字，范围是4字节的无符号正整数，也就是32
 
 比如，我们需要记录QQ号：1、4、6。传统方法可能需要用3个整型变量，每个4字节，总共12字节。但是BitMap只需要用一个字节（8位），直接把第1、4、6位分别置为1即可，是不是更高效？这里节省了 12倍空间。
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1740313594613-f4202416-b7d9-483d-8bc5-c4ca1a89f02b.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/数据结构与算法/0850-scx7x9yu5q1gkruu/img-66d8c70bc900.webp)
 
 BitMap最大的优势在于能够用**极小的存储空间**去表示**巨大的数值范围**，并且支持快速查询、去重等操作。它特别适合这种“有或没有”的问题，不需要存储原始数据。
 
@@ -79,7 +79,7 @@ BitMap最大的优势在于能够用**极小的存储空间**去表示**巨大�
 
 比如，QQ号“12345678”会直接映射到BitMap的第“12345678”个位置，然后置为1，表示它已经出现过。
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1740313594686-dcf49ea9-8109-4716-bd85-4fe4d72f2327.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/数据结构与算法/0850-scx7x9yu5q1gkruu/img-c96f537acd22.webp)
 
 3）通过遍历BitMap，找出所有bit值为1的位置，这些就是所有的去重后的QQ号。
 

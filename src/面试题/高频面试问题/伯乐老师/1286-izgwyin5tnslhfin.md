@@ -22,7 +22,7 @@ article: false
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1782218506589-251c3c14-d6bf-4712-bc5e-381eada451d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1286-izgwyin5tnslhfin/img-1df38eedbc68.png)
 
 ## 二、 核心解法第一步：多路召回 (Hybrid Search)
 
@@ -46,9 +46,9 @@ article: false
 **解决方案**：使用 RRF（倒数秩融合）算法。它不看绝对分数，只看**排名（Rank）**。
 公式：$
 
-![](https://cdn.nlark.com/yuque/__latex/600f267666e623108a089452c3363f0b.svg)
+![](/面试题/高频面试问题/伯乐老师/1286-izgwyin5tnslhfin/img-d984bfc30c64.svg)
 
-![](https://cdn.nlark.com/yuque/__latex/22c920ae38081e9bcbe6134b1e343ef0.svg)
+![](/面试题/高频面试问题/伯乐老师/1286-izgwyin5tnslhfin/img-4857102c66a3.svg)
 
 k$ 通常取 60）。通过 RRF，可以将两路结果公平地合并去重，得到一个粗筛的 Top-N（如 Top 100）候选集。
 

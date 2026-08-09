@@ -30,7 +30,7 @@ article: false
 3. **实战经验**：你是否了解相关的监控指标？遇到过类似大 Key 淘汰阻塞的问题吗？如何解决？
 4. **知识体系**：你是否能将内存淘汰与 Redis 的其他机制（如 `lazy-free`）关联起来？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204384371-8f4bf69f-7458-43c5-af9a-70c59152fe60.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-bd03b9961ba5.png)
 
 ### **二、Why：触发机制是一切的起点**
 
@@ -44,7 +44,7 @@ article: false
 
 这里有一个至关重要的注意事项：如果根据当前策略**无法找到任何可供淘汰的 Key**（例如，在 `volatile-lru` 策略下，所有 Key 都没有设置过期时间），Redis 将拒绝执行此次写命令，并向客户端返回一个 OOM (Out Of Memory) 错误。这正是默认策略 `noeviction` 的行为。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204455200-c73b688a-3bb3-4b06-bd55-3f70f551032a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-9eb6feefd3df.png)
 
 ### **三、What：巧记八大策略**
 
@@ -62,9 +62,9 @@ article: false
 - **Random**：随机淘汰。简单粗暴，CPU开销最小，但牺牲了缓存命中率的科学性。
 - **TTL**：在 `volatile-ttl` 策略中独有，专门淘汰那些**剩余存活时间最短**的 Key。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204486858-5b70ed35-a608-40c2-8a4c-d7912c25bca3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-193ec3043415.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204522821-017061bd-f176-4148-8f8a-b0bbf351c1f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-dfe7b550f0c5.png)
 
 ### **四、How：场景驱动的技术选型**
 
@@ -75,13 +75,13 @@ article: false
 - **纯缓存场景**：如果你的 Redis 完全用作缓存，数据没了可以从后端数据库再加载，那么**首选 **`allkeys-lfu`。如果你的 Redis 版本低于 4.0，那么 `allkeys-lru` 是一个稳妥的备选方案。
 - **混合数据场景**：如果你既有需要持久化的数据，又有缓存数据，那么就使用 `volatile-lfu`** 或 **`volatile-lru`。但此时必须牢记一个前提：**一定要给你需要作为缓存的数据设置上 TTL！** 否则，淘汰机制将无的放矢，最终导致 OOM。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204599570-8163158b-4992-4e8b-a457-5a31b6621912.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-f97d4796c32a.png)
 
 ### **五、Ops：用数据说话的监控与调优**
 
 选择了策略，如何验证其效果？这就进入了运维监控（Ops）环节，也是你展现专业度的绝佳机会。通过 `INFO` 命令，我们可以获取 Redis 的“体检报告”，其中有两个指标是必须死死盯住的。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204689405-5cdbc24d-b34c-4e0e-803d-c222a20a3ee1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-b17db3be04f1.png)
 
 #### **核心指标（一）：内存碎片率 **`mem_fragmentation_ratio`
 
@@ -92,7 +92,7 @@ article: false
 - **警告区 (> 1.5)**：说明内存碎片过多，你的“地盘”里全是无法利用的“坑”，导致严重的内存浪费，需要警惕。
 - **危险区 (：这是**最危险的信号**！它意味着 Redis 需要的内存比操作系统给的物理内存还多，系统已经开始使用硬盘作为虚拟内存（Swap）。这对 Redis 来说是**致命的性能杀手**，响应速度会急剧下降，必须立即处理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204724943-4df697c9-b5de-4068-91a6-1e4ed28ee3a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-eb52999f84f7.png)
 
 #### **核心指标（二）：缓存命中率**
 
@@ -102,7 +102,7 @@ article: false
 - 这个值没有绝对标准，但对于一个健康的缓存系统，我们通常期望**命中率至少在 80% 以上，优秀的情况下应达到 95% 甚至更高**。
 - 如果命中率长期低于 80%，则说明你的缓存系统可能“形同虚设”。大量的请求直接穿透到后端数据库，不仅拖慢了应用响应，更给数据库带来了巨大的压力，随时有被压垮的风险。此时，你需要立即审视你的淘汰策略、内存容量或业务逻辑是否存在问题。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204752179-90fd57aa-6954-4f06-a1ec-eb523eb21c1d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-8c5e1117d313.png)
 
 ### **面试加分项：规避大 Key 淘汰的“天坑”**
 
@@ -116,7 +116,7 @@ article: false
 
 这样一套“发现问题 -> 分析原因 -> 解决问题”的组合拳打出来，面试官自然会明白，你不是一个只会纸上谈兵的理论派。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758204771474-21098436-9583-4af7-bb82-f4137cc4b93e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1269-qv1syzkb03yt5pt3/img-f92661bdc6ca.png)
 
 ---
 

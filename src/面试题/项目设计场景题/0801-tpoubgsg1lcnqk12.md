@@ -20,15 +20,15 @@ article: false
 
 在互联网早期的时候，单体架构就足以支撑起日常的业务需求，大家的所有业务服务都在一个项目里，部署在一台物理机器上。所有的业务包括你的交易系统、会员信息、库存、商品等等都夹杂在一起，当流量一旦起来之后，单体架构的问题就暴露出来了，机器挂了所有的业务全部无法使用了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412268-6ef93367-a1a0-4d7a-9868-6a5cee6bdd29.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-7e3a93a2f25d.jpg)
 
 于是，集群架构的架构开始出现，单机无法抗住的压力，最简单的办法就是水平拓展横向扩容了，这样，通过负载均衡把压力流量分摊到不同的机器上，暂时是解决了单点导致服务不可用的问题。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412306-d54085b4-5df1-43b5-b49c-a2f4f29286e2.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-5530b882f520.jpg)
 
 但是随着业务的发展，在一个项目里维护所有的业务场景使开发和代码维护变得越来越困难，一个简单的需求改动都需要发布整个服务，代码的合并冲突也会变得越来越频繁，同时线上故障出现的可能性越大。微服务的架构模式就诞生了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412374-8630e4f5-458e-47ce-84fd-58109311008f.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-bf53dee03e4f.jpg)
 
 把每个独立的业务拆分开独立部署，开发和维护的成本降低，集群能承受的压力也提高了，再也不会出现一个小小的改动点需要牵一发而动全身了。
 
@@ -38,7 +38,7 @@ article: false
 
 微服务化的拆分带来的好处和便利性是显而易见的，但是与此同时各个微服务之间的通信就需要考虑了。传统HTTP的通信方式对性能是极大的浪费，这时候就需要引入诸如Dubbo类的RPC框架，基于TCP长连接的方式提高整个集群通信的效率。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412446-fcad0aa3-ab34-4540-b9a1-565314070060.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-e2f6fdc196dd.jpg)
 
 我们假设原来来自客户端的QPS是9000的话，那么通过负载均衡策略分散到每台机器就是3000，而HTTP改为RPC之后接口的耗时缩短了，单机和整体的QPS就提升了。而RPC框架本身一般都自带负载均衡、熔断降级的机制，可以更好的维护整个系统的高可用性。
 
@@ -52,7 +52,7 @@ article: false
 4. 拿到代理对象之后，consumer通过代理对象发起接口调用
 5. provider收到请求后对数据进行反序列化，然后通过代理调用具体的接口实现
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412473-b89e9d70-9cc9-4e9d-a51e-216e69c68fd5.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-4f1d3bb5c64a.jpg)
 
 #### Dubbo负载均衡策略
 
@@ -60,7 +60,7 @@ article: false
 2. 最小活跃数：每个服务提供者对应一个活跃数 active，初始情况下，所有服务提供者活跃数均为0。每收到一个请求，活跃数加1，完成请求后则将活跃数减1。在服务运行一段时间后，性能好的服务提供者处理请求的速度更快，因此活跃数下降的也越快，此时这样的服务提供者能够优先获取到新的服务请求。
 3. 一致性hash：通过hash算法，把provider的invoke和随机节点生成hash，并将这个 hash 投射到 [0, 2^32 - 1] 的圆环上，查询的时候根据key进行md5然后进行hash，得到第一个节点的值大于等于当前hash的invoker。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412734-55b73ddc-e4c4-4048-90d8-3bfc512cc9b3.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-1865ad77ddbf.jpg)
 
 图片来自dubbo官方
 
@@ -81,7 +81,7 @@ article: false
 
 对于一些不需要同步执行的接口，可以通过引入消息队列的方式异步执行以提高接口响应时间。在交易完成之后需要扣库存，然后可能需要给会员发放积分，本质上，发积分的动作应该属于履约服务，对实时性的要求也不高，我们只要保证最终一致性也就是能履约成功就行了。对于这种同类性质的请求就可以走MQ异步，也就提高了系统抗压能力了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412774-5a7ed09e-818f-4b09-84bd-299728147ea7.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-46e5a7f68b27.jpg)
 
 对于消息队列而言，怎么在使用的时候保证消息的可靠性、不丢失？
 
@@ -103,7 +103,7 @@ article: false
 4. JOB轮询超过一定时间（时间根据业务配置）还未发送成功的消息去重试
 5. 在监控平台配置或者JOB程序处理超过一定次数一直发送不成功的消息，告警，人工介入。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412779-0deb4a28-4068-4ed9-ad46-c178e05534e7.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-156f87c727bd.jpg)
 
 一般而言，对于大部分场景来说异步回调的形式就可以了，只有那种需要完全保证不能丢失消息的场景我们做一套完整的解决方案。
 
@@ -134,7 +134,7 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 
 消费方不返回ack确认，重发的机制根据MQ类型的不同发送时间间隔、次数都不尽相同，如果重试超过次数之后会进入死信队列，需要手工来处理了。（Kafka没有这些）
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412959-b4c454ac-2f56-436e-a308-70fc67cb4641.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-50b71d18794d.jpg)
 
 #### 消息的最终一致性
 
@@ -154,7 +154,7 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 
 最终，如果MQ收到二次确认commit，就可以把消息投递给消费者，反之如果是rollback，消息会保存下来并且在3天后被删除。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590412959-9f1b9fab-6727-486b-b0cb-d5607e919f3f.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-e2489e4ba32f.jpg)
 
 ### 数据库
 
@@ -162,7 +162,7 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 
 对于整个系统而言，流量应该是一个漏斗的形式。比如我们的日活用户DAU有20万，实际可能每天来到提单页的用户只有3万QPS，最终转化到下单支付成功的QPS只有1万。那么对于系统来说读是大于写的，这时候可以通过读写分离的方式来降低数据库的压力。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413283-5c6e1760-21b9-4963-840f-6a6a0aa8bd12.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-3c49de0002f7.jpg)
 
 读写分离也就相当于数据库集群的方式降低了单节点的压力。而面对数据的急剧增长，原来的单库单表的存储方式已经无法支撑整个业务的发展，这时候就需要对数据库进行分库分表了。针对微服务而言垂直的分库本身已经是做过的，剩下大部分都是分表的方案了。
 
@@ -189,7 +189,7 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 5. slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
 6. slave记录自己的binglog
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413291-b356e7c2-1440-4dc7-b4f4-820f33a5bc57.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-2f1693fdcddf.jpg)
 
 由于mysql默认的复制方式是异步的，主库把日志发送给从库后不关心从库是否已经处理，这样会产生一个问题就是假设主库挂了，从库处理失败了，这时候从库升为主库后，日志就丢失了。由此产生两个概念。
 
@@ -205,7 +205,7 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 
 缓存作为高性能的代表，在某些特殊业务可能承担90%以上的热点流量。对于一些活动比如秒杀这种并发QPS可能几十万的场景，引入缓存事先预热可以大幅降低对数据库的压力，10万的QPS对于单机的数据库来说可能就挂了，但是对于如redis这样的缓存来说就完全不是问题。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413251-f97081fe-17c6-46a3-aa69-44204df9cf2e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-a51d3c9cdde4.jpg)
 
 以秒杀系统举例，活动预热商品信息可以提前缓存提供查询服务，活动库存数据可以提前缓存，下单流程可以完全走缓存扣减，秒杀结束后再异步写入数据库，数据库承担的压力就小的太多了。当然，引入缓存之后就还要考虑缓存击穿、雪崩、热点一系列的问题了。
 
@@ -213,7 +213,7 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 
 所谓热key问题就是，突然有几十万的请求去访问redis上的某个特定key，那么这样会造成流量过于集中，达到物理网卡上限，从而导致这台redis的服务器宕机引发雪崩。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413515-4f81722a-9ecc-49e8-a772-e7f6fd2ec91e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-0890ff2af1f6.jpg)
 
 针对热key的解决方案：
 
@@ -229,13 +229,13 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 1. 加锁更新，比如请求查询A，发现缓存中没有，对A这个key加锁，同时去数据库查询数据，写入缓存，再返回给用户，这样后面的请求就可以从缓存中拿到数据了。
 2. 将过期时间组合写在value中，通过异步的方式不断的刷新过期时间，防止此类现象。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413701-3db27683-80d2-49ca-ba8e-0d46cd93c197.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-6c3eb5f3a39f.jpg)
 
 #### 缓存穿透
 
 缓存穿透是指查询不存在缓存中的数据，每次请求都会打到DB，就像缓存不存在一样。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413871-9acf9b0e-9e00-41e9-8628-38d8df562700.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-d73c4f98001c.jpg)
 
 针对这个问题，加一层布隆过滤器。布隆过滤器的原理是在你存入数据的时候，会通过散列函数将它映射为一个位数组中的K个点，同时把他们置为1。
 
@@ -243,13 +243,13 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 
 显然，使用布隆过滤器之后会有一个问题就是误判，因为它本身是一个数组，可能会有多个值落到同一个位置，那么理论上来说只要我们的数组长度够长，误判的概率就会越低，这种问题就根据实际情况来就好了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413939-0569cee2-d64c-4e0c-aa83-3d00f5c3a349.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-5ef1c9a6ef02.jpg)
 
 #### 缓存雪崩
 
 当某一时刻发生大规模的缓存失效的情况，比如你的缓存服务宕机了，会有大量的请求进来直接打到DB上，这样可能导致整个系统的崩溃，称为雪崩。雪崩和击穿、热key的问题不太一样的是，他是指大规模的缓存都过期失效了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413916-1ab01d04-66ee-4e94-89a7-783efd829aac.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-ce0da262a700.jpg)
 
 针对雪崩几个解决方案：
 
@@ -259,7 +259,7 @@ RocketMQ默认是需要消费者回复ack确认，而kafka需要手动开启配�
 
 ### 稳定性
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720590413997-1eadd34f-4b3f-4010-9452-7b79de8182ba.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0801-tpoubgsg1lcnqk12/img-d970b07fa6b8.jpg)
 
 **熔断**
 

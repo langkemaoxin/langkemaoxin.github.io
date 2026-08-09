@@ -19,7 +19,7 @@ article: false
 
 但是你要注意，面试的一大忌讳就是让面试官官觉得你是个'题库型选手'。我一直跟大家强调，面试不是考试，不是题答上了，就好了。而是要真正展现出你的技术经验，思考深度，从单体到分布式，从简单到复杂，层层递进的**系统化思考能力**！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469633086-3a171f3b-7625-442d-bdbf-051ddf63363a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_79%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-30cfc1635ac8.png)
 
 这一次，我就从这个接口幂等性问题，再次给你分享下如何从**应对面试**到**构建高可用系统**的**思维跃迁**。
 
@@ -32,7 +32,7 @@ article: false
 
 准备任何一个面试题之前，都要思考下为什么。如果不确定一个具体的业务背景，所有的面试题都是夸夸其谈，背再多也没用。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469647222-18f98207-2f0c-415a-8bd3-a63610f46737.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_84%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-428e85549a4a.png)
 
 这里，我们要先明确一件事：幂等性控制，不是锦上添花，而是**必须要做**的！
 
@@ -46,7 +46,7 @@ article: false
 
 **第一招：查询+插入**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469657080-7eb2e557-9620-476d-89d2-39abdf96dc1e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-b2a56849c2c0.png)
 
 这是最朴素的想法：先`SELECT`查一下，如果数据不存在，我再`INSERT`。但这是个典型的**错误示范**。在高并发下，两个请求就像百米赛跑，可能同时冲过`SELECT`检查点，都发现'没数据'，然后前后脚`INSERT`，最终导致数据重复。所以，这招基本不用。"
 
@@ -58,7 +58,7 @@ article: false
 
 **第二招：悲观锁**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469684064-89439bd9-205a-42fb-9f83-428ccd7f17c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_79%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-19e5762d60c9.png)
 
 在查询时就上锁，`SELECT 查询时加上 FOR UPDATE`。这相当于在处理这条数据时，挂上'请勿打扰'的牌子，其他所有想操作这条数据的请求都得在门外排队。直到我处理完，释放锁，下一个人才能进来。"
 
@@ -70,7 +70,7 @@ article: false
 
 **第三招：乐观锁**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469698646-34affed0-0fa1-485f-bc68-09bb8c6e025b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-126f5e2281a4.png)
 
 相比悲观锁，这招就聪明多了。我们给核心表加一个`version`字段。当要更新数据时，SQL这么写。Update的时候增加判断version，同时更新version。这样只有携带正确`version`的请求才能更新成功，并且成功后立刻让`version`加1。其他迟到的、携带旧`version`的请求，都会因为`WHERE`条件不满足而更新失败。"
 
@@ -82,7 +82,7 @@ article: false
 
 **第四招：唯一索引**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469713501-a8ddab16-9eb0-4629-8dde-6d8f512b4f1b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-87cfb31af9ba.png)
 
 这是数据库层面的**金钟罩**。给订单号、流水号这种天然唯一的字段加上唯一索引。当重复的请求想`INSERT`同样的数据时，数据库会第一个站出来拒绝，直接抛出异常。你的代码只需要捕获这个异常，然后就可以轻松的抛弃掉这些重复的请求。
 
@@ -94,7 +94,7 @@ article: false
 
 **第五招：防重表**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469731519-a2389922-a4fe-47c4-bcfb-c4d5ad8cec2e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-ccf02954134c.png)
 
 当业务表本身不适合加唯一索引时，我们可以建一张独立的'防重表'，把它当成一个'登记处'。这张表结构很简单，只有一个字段，就是你要防重的那个唯一ID，并给它加上唯一索引。每次处理业务前，先`INSERT`一条记录到防重表里。如果插入成功，就继续处理业务；如果因为唯一索引冲突而失败，就说明是重复请求，直接返回成功。"
 
@@ -106,7 +106,7 @@ article: false
 
 **第六招：状态机**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469744976-1eeb2a46-6743-43ba-98c3-cf8d1b06e704.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-8cead67a91b7.png)
 
 很多业务流程本身就是一条单行道，比如订单状态只能从'待支付'变成'已支付'，不能反过来。我们可以利用这个特点，在Update时，把状态作为严格的判断条件。只有当订单是'待支付'状态时，更新才会成功。如果订单已经是'已支付'状态，`WHERE`条件不成立，更新0行，操作自然就幂等地完成了。"
 
@@ -118,7 +118,7 @@ article: false
 
 **第七招：分布式锁**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469759611-c3e99f3e-0665-4657-9621-e323cdf89956.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-8683a5432e0f.png)
 
 进入微服务时代，服务都部署成集群了，内存锁和数据库锁就有点力不从心了。这时需要一个所有服务都能访问的'中央锁'，Redis的`SETNX`命令就是最佳人选。例如，`SET lock:order:xxx 'processing' NX EX 60`，这个命令是原子的，`NX`保证了只有第一个请求能成功设置这个锁，`EX 60`是给锁加个保质期，防止服务挂了导致死锁。"
 
@@ -132,7 +132,7 @@ article: false
 
 **第八招：Token令牌**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469771526-2f18ce1e-22f2-4a80-8491-0958995ba41e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_76%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-66ed93fabb06.png)
 
 这是前后端协作的经典方案，像发一张'一次性门票'。前端在进入操作页面时，先调接口领一个唯一令牌。提交操作时，把这个令牌一起发给后端。后端收到请求，先判断令牌是否正确，如果正确，就删除这个令牌。如果删除成功，说明是第一次请求，处理业务；如果删除失败，说明令牌已经被用过了，直接拒绝。
 
@@ -142,7 +142,7 @@ article: false
 
 **【总结与升华】**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761469780618-424f6e41-4e52-4e00-b2ef-ab4544d204d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1095-cy5ql53rdx18rmgv/img-4ecf02f304f2.png)
 
 所以你看，一个看似简单的接口幂等型问题，从数据库到业务，再到分布式架构，没有哪一招是万能的。而这背后，其实是从单一方案的“点”**，串联成整个业务流程的**“线”**，最终构成了整个系统架构的**“面”。
 

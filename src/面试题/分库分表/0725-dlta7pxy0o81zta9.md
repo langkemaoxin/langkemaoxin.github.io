@@ -23,11 +23,11 @@ article: false
 
 - 分表：将一个表中的数据按照某种规则分拆到多张表中，**降低锁粒度以及索引树**，提升数据查询效率。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/396745/1649636520376-794ab398-7a14-47d7-ba3c-fd78166b1b96.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-29d38f2185df.png)
 
 - 分库：将一个数据库中的数据按照某种规则分拆到多个数据库中，以**缓解单服务器的压力**（CPU、内存、磁盘、IO）。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/396745/1649636520393-e710393b-9361-42be-860c-b7fe0ade942d.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-7cb2be70ed30.png)
 
 分库分表手段，其在解决如 IO 瓶颈、读写性能、物理存储瓶颈、内存瓶颈、单机故障影响面等问题的同时也带来如事务性、主键冲突、跨库 join、跨库聚合查询等问题。anyway，在综合业务场景考虑，正如缓存的使用一样，本着非必须勿使用原则。如数据库确实成为性能瓶颈时，在设计分库分表方案时也应充分考虑方案的扩展性，或者考虑采用成熟热门的分布式数据库解决方案，如 TiDB。
 
@@ -51,7 +51,7 @@ article: false
 
 面对上述问题，常见的优化手段有：
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/396745/1673244705154-1b5c574a-1d71-496a-9d7a-fd4f8ff7868a.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-676f4dd819a8.jpg)
 
 索引优化、主从同步、缓存、分库分表每个技术手段都可以作为一个专题进行讲解，本文主要介绍分库分表的技术方案实现。
 
@@ -140,13 +140,13 @@ article: false
 
 通常在提到分库分表的时候，大多是以水平切分模式（水平分库、分表）为基础来说的，数据分片它将原本一张数据量较大的表 t_order 拆分生成数个**表结构完全一致**的小数据量表（拆分表） t_order_0、t_order_1、···、t_order_n，每张表只存储原大表中的一部分数据。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414455720-327410ac-98f2-4749-8f06-574c38a004f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-a6c44ec439f3.png)
 
 ## 数据节点
 
 数据节点是数据分片中一个不可再分的最小单元（表），它由数据源名称和数据表组成，例如上图中 DB_1.t_order_1、DB_2.t_order_2 就表示一个数据节点。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414455613-3d1cd298-9f23-455e-a8ce-e3499e4fa198.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-065d476aefa8.png)
 
 ## 逻辑表
 
@@ -172,7 +172,7 @@ select * from DB_1.t_order_n where order_no='A11111'
 
 真实表就是在数据库中真实存在的物理表DB_1.t_order_n。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414455704-79ad571d-6c93-474f-ba67-3d543110309a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-d1967fa80ee5.png)
 
 ## 广播表
 
@@ -190,7 +190,7 @@ select * from DB_1.t_order_n where order_no='A11111'
 
 订单管理系统中，往往需要查询统计某个城市地区的订单数据，这就会涉及到省份地区表t_city与订单流水表DB_n.t_order_n进行JOIN查询，因此可以考虑将省份地区表设计为广播表，核心理念就是**避免跨库JOIN操作**。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414455609-0bb04ecd-7fc7-4e98-bb91-e2d84e32ce96.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-fc81c7c5386c.png)
 
 **注意**：上边提到广播表在数据插入、更新与删除会实时在每个分片数据源均执行，也就是说如果有1000个分片数据源，那么修改一次广播表就要执行1000次SQL，所以尽量不在并发环境下和业务高峰时进行，以免影响系统的性能。
 
@@ -208,7 +208,7 @@ select * from DB_1.t_order_n where order_no='A11111'
 
 在这个过程中，order_no 就是 t_order 表的分片键。也就是说，每一条订单数据的 order_no 值决定了它应该存放的数据库实例和表。选择一个适合作为分片键的字段可以更好地利用水平分片带来的性能提升。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414456067-16ce50d4-036b-4469-9904-148bbd489e09.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-f3480ca34952.png)
 
 这样同一个订单的相关数据就会落在同一个数据库、表中，查询订单时同理计算，就可直接定位数据位置，大幅提升数据检索的性能，避免了全库表扫描。
 
@@ -220,7 +220,7 @@ select * from DB_1.t_order_n where order_no='A11111'
 
 分片策略是由分片算法和分片健组合而成，分片策略中可以使用多种分片算法和对多个分片键进行运算。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414456194-5ffaacae-9282-48eb-beae-7dfbf5e8f3c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-785e136ca3ff.png)
 
 分库、分表的分片策略配置是相对独立的，可以各自使用不同的策略与算法，每种策略中可以是多个分片算法的组合，每个分片算法可以对多个分片健做逻辑判断。
 
@@ -260,7 +260,7 @@ SELECT * FROM t_order_1 o JOIN t_order_item_0 i ON o.order_no=i.order_no
 SELECT * FROM t_order_1 o JOIN t_order_item_1 i ON o.order_no=i.order_no
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414456307-7fbd80f2-321b-4288-9a3f-86024f0568bb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-44f7a8dc7a9f.png)
 
 而配置绑定表关系后再进行关联查询时，分片规则一致产生的数据就会落到同一个库表中，那么只需在当前库中 t_order_n 和 t_order_item_n 表关联即可。
 
@@ -269,7 +269,7 @@ SELECT * FROM t_order_0 o JOIN t_order_item_0 i ON o.order_id=i.order_id
 SELECT * FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414456214-82f2c248-9df3-451c-b894-8edcf89449a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-26b97e79c177.png)
 
 **注意**：在关联查询时 t_order 它作为整个联合查询的主表。所有相关的路由计算都只使用主表的策略，t_order_item 表的分片相关的计算也会使用 t_order 的条件，所以要保证绑定表之间的分片键要完全相同。
 
@@ -277,7 +277,7 @@ SELECT * FROM t_order_1 o JOIN t_order_item_1 i ON o.order_id=i.order_id
 
 分库分表后在应用层面执行一条 SQL 语句时，通常需要经过以下六个步骤：SQL 解析 -> 执⾏器优化 -> SQL 路由 -> SQL 改写 -> SQL 执⾏ -> 结果归并 。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414456408-e717f939-c2de-4bef-9d70-6f34825ffc69.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-9899c1ce13b5.png)
 
 SQL解析过程分为词法解析和语法解析两步，比如下边查询用户订单的SQL，先用词法解析将这条SQL拆解成不可再分的原子单元。在根据不同数据库方言所提供的字典，将这些单元归类为关键字，表达式，变量或者操作符等类型。
 
@@ -287,7 +287,7 @@ SELECT order_no FROM t_order where  order_status > 0  and user_id = 10086
 
 接着语法解析会将拆分后的SQL关键字转换为抽象语法树，通过对抽象语法树遍历，提炼出分片所需的上下文，上下文包含查询字段信息（Field）、表信息（Table）、查询条件（Condition）、排序信息（Order By）、分组信息（Group By）以及分页信息（Limit）等，并标记出 SQL中有可能需要改写的位置。
 
-![抽象语法树](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414456688-68483c9c-fe1c-4d18-af4a-7ce151d86825.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![抽象语法树](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-f376e26598c7.png)
 
 ## 执行器优化
 
@@ -303,7 +303,7 @@ SELECT order_no FROM t_order where user_id = 10086 and order_status > 0
 
 简单点理解就是拿到分片策略中配置的分片键等信息，在从SQL解析结果中找到对应分片键字段的值，计算出 SQL该在哪个库的哪个表中执行，SQL路由又根据有无分片健分为 分片路由 和 广播路由。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/396745/1684414456618-69b1cb72-4b53-4135-948a-e87cdbde75de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-3c05642eed9d.png)
 
 有分片键的路由叫分片路由，细分为直接路由、标准路由和笛卡尔积路由这3种类型。
 
@@ -403,7 +403,7 @@ USE order_db;
 
 #### 1、水平分库
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215767-d45d3719-12e1-4eaf-93ed-c5d3b31b3147.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-2aa8eb548d21.png)
 
 ##### 概念：
 
@@ -425,7 +425,7 @@ USE order_db;
 
 #### 2、水平分表
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215705-1ef193c3-1105-413c-8b42-d18a8c83fa0c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-5361bbaea6d3.png)
 
 ##### 概念：
 
@@ -447,7 +447,7 @@ USE order_db;
 
 #### 3、垂直分库
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215745-98a00b7b-e7e7-4fb0-8063-7c14563e87ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-e4ec38f57da5.png)
 
 ##### 概念：
 
@@ -469,7 +469,7 @@ USE order_db;
 
 #### 4、垂直分表
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215845-550522f9-38ae-4ba8-b908-0caf850b8b78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-c2368673a10a.png)
 
 ##### 概念：
 
@@ -524,11 +524,11 @@ USE order_db;
 
 ##### 索引表法、缓存映射法
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215822-bebd5782-e0bc-4c6c-80c3-89df5fda7178.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-3984e91df6c9.png)
 
 ##### 基因法
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078216093-4901de74-662f-4f58-8130-1ce01cd9e8dd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-1ade69a63b49.png)
 
 注：
 
@@ -542,11 +542,11 @@ USE order_db;
 
 ##### 索引表法、缓存映射法
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078216155-d3212acb-b9f2-47c8-95c0-34553d54cd2b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-64edb50f18d7.png)
 
 **冗余法**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1715078216191-74cb7977-e70f-4b47-afc6-d4277c9d296c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分库分表/0725-dlta7pxy0o81zta9/img-b50abafa3d18.jpg)
 
 - 异步双写：包含线上异步(ESB)和线下异步(Log)
 - 按照 order_id 或 buyer_id 查询时路由到 db_o_buyer 库中，按照 seller_id 查询时路由到 db_o_seller 库中

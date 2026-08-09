@@ -30,7 +30,7 @@ article: false
 
 ## ⚙️ 第二维度：精准诊断（分析工具的迭代）
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458711707-62ac3ea3-79ce-4958-83ab-bac85e3513bd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0332-iubmavhw2bml7arg/img-d5e3056eee74.png)
 
 这里有个**关键区分点**，能体现你的技术深度：
 
@@ -42,7 +42,7 @@ article: false
 - `Using index`：完美（索引覆盖）。
 - `Using filesort`：**注意！** 只有当 `sort_buffer` 装不下，需要磁盘排序时才是大忌。如果内存够用，其实还好。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458548620-33fc83c4-e67c-444c-b7c3-531fce763cbc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0332-iubmavhw2bml7arg/img-f1d70c612383.png)
 
 ### 2. 弃用 `SHOW PROFILE`，拥抱 `Performance Schema`
 
@@ -50,7 +50,7 @@ article: false
 
 “很多老教材教大家用 `SHOW PROFILE` 查看 CPU/IO 消耗。但这个命令早被废弃了。 我们团队现在主要用 **Performance Schema** 或 **sys schema**。 比如查询 `sys.statement_analysis` 视图，能看到全实例最耗 IO 的 SQL 是哪条，比 Profile 强大得多。”
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458562667-a2a48978-c9d9-4795-9909-d309df995863.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0332-iubmavhw2bml7arg/img-43e47d5eed35.png)
 
 ### 3. Optimizer Trace（绝杀）
 
@@ -70,13 +70,13 @@ article: false
 - 以前说：联合索引 `(a,b,c)`，查 `WHERE b=1` 必死。
 - **现在说**：在 MySQL 8.0+，如果字段 `a` 的区分度很低（如状态枚举），优化器会触发 **索引跳跃扫描**，依然能利用上索引！*（加上这句话，面试官就知道你技术在持续更新）*
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458578230-0c1702a8-e251-4554-8b09-66b17df82ee4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0332-iubmavhw2bml7arg/img-8cef9e35ba1d.png)
 
 ### 2. 深分页的“特效药”
 
 - **错误示范**：`LIMIT 1000000, 10`。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458621660-f8bf8f5f-6ece-46d1-91d6-3a6fab24baf2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0332-iubmavhw2bml7arg/img-e783bf3a6007.png)
 
 **条件解法**：
 
@@ -108,7 +108,7 @@ SQL 优化总有极限（物理极限）。当单表数据量突破 2000 万，�
 
 - 报表类的慢 SQL 强制走从库，绝不让它拖垮主库的写性能。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1768458646223-92e6de87-ff7a-4d1a-8564-1dd3dea7ba96.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0332-iubmavhw2bml7arg/img-0aadab4610a9.png)
 
 ---
 

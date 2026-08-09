@@ -57,7 +57,7 @@ article: false
 - Mac：Command + F9
 - Windows：Ctrl + F9
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727419453569-e77dae1a-d5c7-40a2-8559-03cb21eeed9d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0150-orglz6qr4ggvgcuz/img-c5ef4b5aa948.png)
 
 此时，IDEA 控制台会看到 Spring Boot 重新启动的日志如下：
 
@@ -84,7 +84,7 @@ article: false
 
 ③ 可能有会觉得**手动**`Build Project` 有点麻烦，IDEA 还提供的**自动编译**的选项。设置方式，点击 IDEA 的菜单 `IntelliJ IDEA` -> `Preference...`，然后选择 `Compiler` 选项卡，将 `Build project automatically` 勾选上，修改完成后将焦点移出 IDEA ，触发自动编译。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727421567066-5fb0b96b-e05b-4bb4-a967-8e2f4a040c9d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0150-orglz6qr4ggvgcuz/img-8143c353607a.png)
 
 > “注意，`Build project automatically` 后面的一行提示，自动编译仅在项目**不处于运行**，或者处于 **Debug 运行中**时，才会自动生效。
 
@@ -92,7 +92,7 @@ article: false
 
 ## 方式二： IDEA 提供了 HotSwap 插件，可以实现真正的热部署。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727421881199-a5b780aa-e1a6-4a1a-91d8-2f3a8197dc4d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0150-orglz6qr4ggvgcuz/img-60f1b1c7720c.png)
 
 ### **演示**
 
@@ -107,17 +107,17 @@ article: false
 - Mac：Command + F9
 - Windows：Ctrl + F9
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727419453569-e77dae1a-d5c7-40a2-8559-03cb21eeed9d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0150-orglz6qr4ggvgcuz/img-c5ef4b5aa948.png)
 
 此时，我们在 IDEA 中可以看修改的类被重载的提示。如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727422294572-90e36fff-fe1c-49ed-b64c-69b80a745511.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0150-orglz6qr4ggvgcuz/img-457f5f921d9f.png)
 
 使用浏览器，再次访问 `http://localhost:8081/HotSwap/01` 接口，返回结果为 `"NO.2"`，成功！
 
 ③ 尝试将 `Build project automatically` 勾选上，希望实现自动编译，操作步骤如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727422164132-3811deee-e3ee-4697-b600-943c9a22fc9b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0150-orglz6qr4ggvgcuz/img-9c1b0ab5fc9f.png)
 
 - 要注意，需要**焦点**从 IDEA 离开。例如说，在我们修改完接口的代码之后，可能会切换到浏览器或者 Postman 对该接口进行测试，此时 IDEA 就会自动更新代码和资源，进行热部署。
 
@@ -125,7 +125,7 @@ article: false
 
 **鼠标点击电脑操作系统任务栏**，以达到 IDEA **失去焦点**的效果。我们在 IDEA 中可以看修改的类被重载的提示。如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727422294572-90e36fff-fe1c-49ed-b64c-69b80a745511.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0150-orglz6qr4ggvgcuz/img-457f5f921d9f.png)
 
 使用浏览器，再次访问 `http://localhost:8081/HotSwap/01` 接口，返回结果为 `"No.2"`，成功！
 

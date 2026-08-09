@@ -45,15 +45,15 @@ Redis中的内存淘汰策略用于在内存不足时选择要淘汰的键，以
 
 **先回顾下基本流程**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737699350774-db3cf7ce-d44d-4714-bf4c-c6b59ef942d4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0503-fn1agyxs0t15wlvu/img-e375891f58a0.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737699330073-167213fd-bfb1-4d73-aa55-533b14270b86.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0503-fn1agyxs0t15wlvu/img-60035f726baf.png)
 
 再过一下源码流程图
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737699395145-04a1f877-b772-4a79-a5a3-4fdc9e2ccec5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0503-fn1agyxs0t15wlvu/img-d7f2e7d58377.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737699410027-41f0c757-2340-4ae0-b014-e06007b48c7f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0503-fn1agyxs0t15wlvu/img-6dd2892c2413.png)
 
 最后再给大家详细分析
 

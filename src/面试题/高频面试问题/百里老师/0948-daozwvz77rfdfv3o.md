@@ -13,7 +13,7 @@ article: false
 
 > 来源：[亿级任务调度：时间轮算法的革命性重构](https://www.yuque.com/tulingzhouyu/db22bv/daozwvz77rfdfv3o)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763711425778-e9655ba8-4900-4f99-9aae-2270eb672ab2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0948-daozwvz77rfdfv3o/img-199dc9de8e32.png)
 
 在分布式系统中，定时任务调度是一个极其基础却又容易成为瓶颈的环节。当任务数量从几千上升到百万、亿级时，传统的调度模型会迅速崩溃。
 
@@ -23,7 +23,7 @@ article: false
 
 ### 一、 传统方案的崩溃点
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763711444171-66a0cf12-6f7f-4220-a5e9-02730477bedf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0948-daozwvz77rfdfv3o/img-2f5e926ce9d9.png)
 
 如上图所示，当面对海量延时任务时，我们最直观的反应是使用“优先队列”（PriorityQueue）或“最小堆”（Min-Heap）。这些数据结构在任务量较小时表现良好，但在亿级规模下，它们存在致命缺陷：
 
@@ -36,7 +36,7 @@ article: false
 
 ### 二、 破局：单级时间轮的 O(1) 魔法
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763711459624-fe688f70-f221-42bd-9fed-533145043165.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0948-daozwvz77rfdfv3o/img-125c8fdf96b4.png)
 
 时间轮的核心思想来源于我们墙上的挂钟。它利用了**哈希表**的思想，将线性时间“卷”成了一个环。
 
@@ -51,7 +51,7 @@ article: false
 
 ### 三、 进阶：多级时间轮的层级结构
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763711470853-3be36401-af65-4b26-be65-e34495bb817a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0948-daozwvz77rfdfv3o/img-b0656c47679f.png)
 
 为了解决单级时间轮的空间膨胀问题，我们引入了**层级（Hierarchy）**概念，这与水表的读数机制或时钟的时分秒针完全一致。
 
@@ -68,7 +68,7 @@ article: false
 
 ### 四、 核心机制：任务下沉（Temporal Sinking）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763711485723-b7ee297e-5a86-4898-9ffa-806c24d7af62.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0948-daozwvz77rfdfv3o/img-f6a70f8feda2.png)
 
 这是多级时间轮最精妙的设计，也是很多开发者容易困惑的地方：**外层轮的任务是如何被执行的？**
 
@@ -85,7 +85,7 @@ article: false
 
 ### 五、 总结：核心价值与应用
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1763711496100-69c81394-35fa-4168-842e-cc6b9474ab74.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0948-daozwvz77rfdfv3o/img-7af8b7cb3f73.png)
 
 时间轮算法（Timing Wheel）通过空间换时间的设计，彻底改变了定时任务的调度范式：
 

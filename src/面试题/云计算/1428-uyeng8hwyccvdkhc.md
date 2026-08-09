@@ -19,14 +19,14 @@ article: false
 
 1. **问题本质**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751688892941-f167a4a0-fd1c-43b4-8b73-28349d33d17d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1428-uyeng8hwyccvdkhc/img-444bb637efce.png)
 
 - Transformer的自注意力机制本身无法感知序列顺序，需显式注入位置信息。
 - 核心挑战：如何编码位置信息，使其既能保留相对/绝对位置关系，又能高效支持长序列推理。
 
 1. **演进脉络**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751688908016-11316761-d4b9-410a-ae72-0a5f29fb6478.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1428-uyeng8hwyccvdkhc/img-57948f99eb0e.png)
 
 - **Sinusoidal编码**（原始Transformer）：固定三角函数编码，无外推能力。
 - **可学习位置嵌入**（BERT/GPT）：可训练向量，但长度受限。
@@ -35,7 +35,7 @@ article: false
 
 1. **案例选择**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751688921177-0dba8c15-fab4-4654-9f65-6e54f0425f4e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1428-uyeng8hwyccvdkhc/img-857ce043b556.png)
 
 - 以ChatGLM项目为例，展示RoPE如何解决长文本处理问题。
 
@@ -43,7 +43,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751688933474-3307d0ba-5848-49e6-ad66-d74c3614cfea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1428-uyeng8hwyccvdkhc/img-f30ff3b3c919.png)
 
 #### **案例：ChatGLM-6B的长文本对话优化**
 
@@ -85,7 +85,7 @@ def apply_rope(q, k, pos_ids):
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751688950446-f9a096f7-8824-4725-b543-114a83ac7f76.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1428-uyeng8hwyccvdkhc/img-f044c58d2742.png)
 
 **面试官**：请说明位置编码的演进过程，并举例说明RoPE的实际应用。
 
@@ -131,7 +131,7 @@ def apply_rope(q, k, pos_ids):
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751688962082-f4a23c0e-3fd9-416e-adfb-0af02b937218.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1428-uyeng8hwyccvdkhc/img-2b7d93e2393a.png)
 
 1. **技术趋势**：
 

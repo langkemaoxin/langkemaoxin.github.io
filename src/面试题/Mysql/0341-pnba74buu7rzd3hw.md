@@ -19,17 +19,17 @@ article: false
 
 ### **1. B+树索引结构限制**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747317753732-3fa5f873-fbf5-44b2-91b4-90c5152f3cc2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0341-pnba74buu7rzd3hw/img-b7a4ed68718f.png)
 
 InnoDB使用B+树组织数据，主键索引（聚簇索引）的叶子节点直接存储行数据。
 
 B+树的高度直接影响查询效率，树越高，磁盘I/O次数越多。以下为具体计算：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747317828754-6aef92cd-2107-4059-9122-83d54f463c2c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0341-pnba74buu7rzd3hw/img-f00a35c60397.png)
 
 #### **关键参数**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747317855029-436fe338-27ce-4996-afba-eed1100e1e8e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0341-pnba74buu7rzd3hw/img-b7b26d94fa19.png)
 
 - **页大小（Page Size）**：默认16KB（16384字节）。
 - **主键类型**：假设使用`BIGINT`（8字节）或`INT`（4字节）。
@@ -48,14 +48,14 @@ B+树的高度直接影响查询效率，树越高，磁盘I/O次数越多。以
 - **高度为3时**： 根页 + 1170个二级页 + 1170×1170个叶子页。 叶子页总数：`1170 × 1170 ≈ 1.37M页`。 若每页存储约15行（1KB/行）：总行数 `1.37M × 15 ≈ 20.5M`。
 - **高度为4时**： 总行数飙升至 `1170^3 × 15 ≈ 24亿`，但查询需4次I/O，性能显著下降。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747547163604-7fba5c1b-01c6-4a19-a038-179b765c11b5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0341-pnba74buu7rzd3hw/img-044e349387bd.png)
 
 #### **为何建议两千万？**
 
 - **经验平衡点**：在高度为3时，若单页存储行数更少（如因大字段或行格式限制），总行数可能降至约2000万。
 - **性能拐点**：数据量接近B+树层级跃升临界值时（如从3层到4层），写入和范围查询效率会骤降。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747547120502-f030243e-6b9b-47d1-8fd0-f2ae1783f53a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0341-pnba74buu7rzd3hw/img-093559b6b816.png)
 
 ---
 
@@ -86,4 +86,4 @@ B+树的高度直接影响查询效率，树越高，磁盘I/O次数越多。以
 
 ### **优化建议**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1747547082813-c7a3c414-086a-4545-90ef-5b63ad58dc7f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0341-pnba74buu7rzd3hw/img-3a61f26e9454.png)

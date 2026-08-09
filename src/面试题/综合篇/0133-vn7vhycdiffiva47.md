@@ -29,9 +29,9 @@ IDEA打开远程启动的springboot应用程序所对应的
 
 1.选择 Edit Configuration
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684151235511-0a25c00c-d00b-490a-a60a-fd37d30044aa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0133-vn7vhycdiffiva47/img-fc15b4c1d8c2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684151240305-85abe69c-d710-4bae-a455-158314b81dd3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0133-vn7vhycdiffiva47/img-6459f4a7aab1.png)
 
 注意：注意端口别被占用。后续这个端口是用来跟远程的java进程通信的。
 
@@ -86,7 +86,7 @@ java ^
 3. 我给的脚本是后台运行的，如不需要后台运行，自行去掉 nohup 和 &
 4. 启动springboot，启动IDEA里的
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684151411490-b9ebdf09-5e45-49a5-8403-1c5aec48e0d0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0133-vn7vhycdiffiva47/img-72a346a0b67a.png)
 
 ### 细节
 
@@ -96,7 +96,7 @@ java ^
 
 以下面的代码为例，在第一行停住了。然后IDEA中停掉，发现停掉之后控制台还是打印了剩下的日志。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684151437805-1c1144cc-6a6f-4170-b3a0-cb16fac63380.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0133-vn7vhycdiffiva47/img-13fafb08cdee.png)
 
 #### 细节2：jar包代码和本地不一致会怎么样？
 
@@ -141,13 +141,13 @@ public String test1() {
 
 如图 userMapper.insert(eo) ，本方法没有使用 @Transactional 修饰，mapper方法执行过后事务会被立即提交，则库表里多了一行记录，如果drop frame后，再次进行调试，再次执行这代码，于是又插入了一条记录。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684151533533-2daa089a-9f15-4438-868a-53f348287f49.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0133-vn7vhycdiffiva47/img-8eb9448b71ff.png)
 
 如果加上 @Transational 就不会有两条记录了，`dropframe`的时候事务没被提交，再次执行该插入代码也不会插入2条。
 
 ##### 关于什么是drop frame
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1684151559430-531da4b9-b32b-4e67-8ec0-9f1a4b41e132.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0133-vn7vhycdiffiva47/img-701e395db7a6.png)
 
 #### 细节7：跟上面一样，是dropframe问题
 

@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682831409-10ff9388-ed30-431f-b294-d09ff9a56408.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1440-oga89cdsv8ob5ra8/img-4ec704652a0a.png)
 
 在回答LayerNorm与BatchNorm的适用场景时，需从**技术原理、核心差异、典型场景**三个维度切入，并结合真实项目案例说明两者的选择逻辑。以下是结构化思路：
 
@@ -51,7 +51,7 @@ CV（CNN）、固定尺寸输入
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682969425-2149739e-2460-4ac5-a45e-eddcab8262a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1440-oga89cdsv8ob5ra8/img-b49672d79353.png)
 
 #### 案例1：LayerNorm在NLP长文本分类中的应用
 
@@ -135,7 +135,7 @@ class UNetBlock(nn.Module):
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682984158-1c268d9d-8fb6-43b1-bd67-939afd8921f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1440-oga89cdsv8ob5ra8/img-ec4ceaf31e98.png)
 
 **问题**：LayerNorm和BatchNorm的适用场景有何不同？请结合实际项目说明。
 

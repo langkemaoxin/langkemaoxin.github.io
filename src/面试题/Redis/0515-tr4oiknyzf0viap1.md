@@ -15,7 +15,7 @@ article: false
 
 在使用Redis缓存作为数据库的加速层时，可能会遇到缓存和数据库双写不一致的问题。这种不一致通常发生在更新操作时，即数据写入数据库但未及时更新缓存或者缓存更新后数据库未同步，导致读取到过时的数据。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1723038105342-19355060-69ea-4cb4-abd1-a3ea9827c08a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0515-tr4oiknyzf0viap1/img-68a07f82ed40.png)
 
 为了解决Redis缓存和数据库双写不一致问题，可以使用以下策略：
 
@@ -74,7 +74,7 @@ public class SynchronizedCache {
 
 #### 3. 用canal中间件**异步更新缓存**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1723038142809-be419152-1ef8-45d7-a639-ca2f593168b1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0515-tr4oiknyzf0viap1/img-e49a067a67a7.png)
 
 4. **利用过期时间**
 

@@ -25,7 +25,7 @@ article: false
 
 下载MC服务端，最新版的服务器端可以官网下载
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1696592234024-cbdf7dd0-12ce-452a-8ad9-0cde999c5e34.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1485-zctu2dzi2mdimegg/img-e81971294e1b.png)
 
 ### Minecraft服务器下载地址：
 
@@ -44,19 +44,19 @@ java -Xmx1500M -Xms512M -jar server.jar nogui
 
 第一次启动以后，你会看到文件夹有多出来一些文件，找到eula.txt这个文件并打开，将eula=false改为eula=true，然后保存。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1696592480341-3fe4861f-7560-4da1-b334-07ea58c54f58.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1485-zctu2dzi2mdimegg/img-e0811d0880b9.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1696592511324-8afac221-5258-4fe6-b12b-fd532ce7d926.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1485-zctu2dzi2mdimegg/img-81288d8ca468.png)
 
 打开`server.properties`文件，做如下改动：`online-mode=false`（关闭正版验证），其他改动可以按照自己的喜好。至此服务器已经配置完毕，服务器的设置详情都在`server.properties`。再次执行服务端启动命令即可 。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1696592621733-ec01f350-81b5-4323-a5a6-ca2221f5082c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1485-zctu2dzi2mdimegg/img-2a2c13795c16.png)
 
 ## 客户端下载
 
 我个人推荐用官方启动器或者HMCL启动器；其他第三方启动器，不好说，如果服务器建好，端口也放行，但是连接不上，建议用HMCL或者官方启动器。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1696592662044-4cab116e-2411-49c7-ac22-f6821658ce92.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1485-zctu2dzi2mdimegg/img-0177f7d72d93.png)
 
 ### 下载地址
 

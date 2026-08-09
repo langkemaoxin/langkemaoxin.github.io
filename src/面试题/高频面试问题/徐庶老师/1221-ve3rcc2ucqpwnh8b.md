@@ -23,7 +23,7 @@ article: false
 
 ### 什么是 MarkWord？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1764081171742-d47d95e2-c91d-46c3-9d5c-8ea07745e21a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1221-ve3rcc2ucqpwnh8b/img-3c096a5a3838.png)
 
 每个 Java 对象都包含一个**对象头**，其中最核心的部分就是 **MarkWord**。在 64 位 JVM 中，MarkWord 占据 8 字节（64 位），记录了对象的所有元数据：
 
@@ -42,7 +42,7 @@ article: false
 
 ## 二、偏向锁：为懒人设计的锁
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1764081224598-90eb3a12-d40d-4a2c-928d-3dd62aaced4e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1221-ve3rcc2ucqpwnh8b/img-1046c8ad3a7b.png)
 
 ### 现象：大多数锁是偏心的
 
@@ -93,7 +93,7 @@ synchronized(obj) {
 
 ## 三、轻量级锁：有竞争的时候
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1764081247277-18497b4f-d5e3-4ace-b775-379efb6ee514.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1221-ve3rcc2ucqpwnh8b/img-06aa4ec00658.png)
 
 ### 触发场景
 
@@ -133,7 +133,7 @@ MarkWord: [Ptr to LockRecord] [LockState: 00]
 
 ## 四、重量级锁：竞争激烈的救世主
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1764081258035-5b8f7959-cf3b-4614-a23f-b8e1b3b956a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/徐庶老师/1221-ve3rcc2ucqpwnh8b/img-6839849b8878.png)
 
 ### 触发场景
 

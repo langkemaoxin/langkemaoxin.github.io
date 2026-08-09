@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751687815710-069bf44d-4d25-4d89-b15b-b7d5f655046e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1429-mf1cfzzbz8ggogm2/img-4eea7271fb10.png)
 
 长文本处理是大模型的核心挑战之一，主要受限于计算资源、位置编码和上下文建模能力。优化方案需从**架构设计**、**工程实现**和**训练策略**三个维度展开：
 
@@ -27,7 +27,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751687838105-bb3c3e52-851e-45cc-94c0-08532d3ca5ad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1429-mf1cfzzbz8ggogm2/img-d09b4a09cc5f.png)
 
 #### 案例1：金融研报分析系统（2023）
 
@@ -40,7 +40,7 @@ article: false
 
 **优化方案**：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751687664851-78fd7791-df58-420d-b017-fbda7512dc66.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_111%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1429-mf1cfzzbz8ggogm2/img-3632621e96e3.png)
 
 **关键技术点**：
 
@@ -113,7 +113,7 @@ def dynamic_chunking(text, max_len=2048):
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751687865215-0a9d0aaa-d79b-42c3-96b2-94641892eb11.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1429-mf1cfzzbz8ggogm2/img-56def78d14d0.png)
 
 在大模型长文本处理优化中，我们采用分层优化策略。以金融研报分析项目为例：
 
@@ -153,7 +153,7 @@ cache = KV_Cache(quant_bits=8, eviction_policy="lru")
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751687953990-ad57bd03-d14b-4c57-b4eb-da816daf7d36.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1429-mf1cfzzbz8ggogm2/img-8314e62a62ce.png)
 
 长文本处理需**三位一体**优化：
 

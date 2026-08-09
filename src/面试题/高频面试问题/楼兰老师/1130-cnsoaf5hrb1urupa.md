@@ -21,7 +21,7 @@ MySQL是一个实战工具，如果你只是背面试题，那你就有背不完
 
 ## **第一个模块：基础架构 —— 五层都答不全，还说 “熟悉”？**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758263599742-0aef3baa-6e7c-4020-b14b-c1266db04369.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1130-cnsoaf5hrb1urupa/img-1457ad0d727f.png)
 
 面试官必问：“一个SQL语句在MySQL中是如何执行的？” 你只说 “SQL解析，数据检索”—— 错！大错特错！记好这 “五层逻辑链”，少一层都不行：
 
@@ -35,7 +35,7 @@ MySQL是一个实战工具，如果你只是背面试题，那你就有背不完
 
 ## **第二个模块：存储引擎 —— 只知道 InnoDB，等于没懂！**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758263615406-1c98f85d-2a17-47e8-8039-f593d22a746a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1130-cnsoaf5hrb1urupa/img-d61a0670db03.png)
 
 面试官最常问的问题：“MySQL有哪些存储引擎？各适合啥场景？” 如果你就只记得一个InnoDB，那等于白记。因为没有对比，你是说不清楚什么是InnoDB的。记住这几种常见的引擎，尤其是InnoDB和MyISAM，面试全覆盖：
 
@@ -51,7 +51,7 @@ MySQL是一个实战工具，如果你只是背面试题，那你就有背不完
 
 ## **第三个模块：索引机制 —— 别只会说 “B + 树快”，说不出为啥快！**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758263635430-371d5f9b-45f7-4c4c-8a57-8a663d366034.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1130-cnsoaf5hrb1urupa/img-07cc1dcad5f9.png)
 
 面试官灵魂拷问：“联合索引 (a,b) 查 where b=10 为啥不走索引？聚簇索引和非聚簇索引有啥区别？” 你只说 “不知道，反正加索引就快”—— 等于白说！记好这 “3 个核心点”：
 
@@ -63,7 +63,7 @@ MySQL是一个实战工具，如果你只是背面试题，那你就有背不完
 
 ## **第四个模块：事务机制 —— 只说 ACID，等于没懂底层！**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758263650610-5199cba7-fee6-4edf-8da6-bec27b4b0471.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1130-cnsoaf5hrb1urupa/img-755dd0262e1a.png)
 
 面试官追问：“事务的原子性靠啥实现？InnoDB 的可重复读怎么解决幻读？” 你只说 “ACID 重要”—— 面试官心里已经给你打低分了！
 
@@ -75,7 +75,7 @@ MySQL是一个实战工具，如果你只是背面试题，那你就有背不完
 
 ## **第五个模块：日志系统 ——Redo/Binlog 分不清，面试必挂！**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758263663212-d2ff8e8f-a8de-4f13-b6a0-e45c446a4fbe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1130-cnsoaf5hrb1urupa/img-2616b4eb1417.png)
 
 面试官常见的问题：“Redo Log、Undo Log、Binlog 有啥区别？MySQL 写数据先写哪？” 你只说 “都是日志”—— 直接凉！记好这 “3 日志 + 1 机制”：
 
@@ -88,7 +88,7 @@ MySQL是一个实战工具，如果你只是背面试题，那你就有背不完
 
 ## **第六个模块：高可用架构 —— 只知道主从，太浅了！**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1758263679133-e1768de3-4c20-48b4-9d4b-73228522a84e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1130-cnsoaf5hrb1urupa/img-ca4bef17fea5.png)
 
 面试官聊嗨了，就会继续问：“生产环境 MySQL 怎么保证不宕机？分库分表用啥中间件？” 你只说 “主从复制”—— 不够！记好这 “3 架构 + 1 中间件”：
 

@@ -41,7 +41,7 @@ article: false
 
 #### 1、水平分库
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215767-d45d3719-12e1-4eaf-93ed-c5d3b31b3147.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-2aa8eb548d21.png)
 
 ##### 概念：
 
@@ -63,7 +63,7 @@ article: false
 
 #### 2、水平分表
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215705-1ef193c3-1105-413c-8b42-d18a8c83fa0c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-5361bbaea6d3.png)
 
 ##### 概念：
 
@@ -85,7 +85,7 @@ article: false
 
 #### 3、垂直分库
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215745-98a00b7b-e7e7-4fb0-8063-7c14563e87ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-e4ec38f57da5.png)
 
 ##### 概念：
 
@@ -107,7 +107,7 @@ article: false
 
 #### 4、垂直分表
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215845-550522f9-38ae-4ba8-b908-0caf850b8b78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-c2368673a10a.png)
 
 ##### 概念：
 
@@ -162,11 +162,11 @@ article: false
 
 ##### 索引表法、缓存映射法
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078215822-bebd5782-e0bc-4c6c-80c3-89df5fda7178.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-3984e91df6c9.png)
 
 ##### 基因法
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078216093-4901de74-662f-4f58-8130-1ce01cd9e8dd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-1ade69a63b49.png)
 
 注：
 
@@ -180,11 +180,11 @@ article: false
 
 ##### 索引表法、缓存映射法
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1715078216155-d3212acb-b9f2-47c8-95c0-34553d54cd2b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-64edb50f18d7.png)
 
 **冗余法**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1715078216191-74cb7977-e70f-4b47-afc6-d4277c9d296c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0835-ozq1myqzagouzdvk/img-b50abafa3d18.jpg)
 
 - 异步双写：包含线上异步(ESB)和线下异步(Log)
 - 按照 order_id 或 buyer_id 查询时路由到 db_o_buyer 库中，按照 seller_id 查询时路由到 db_o_seller 库中

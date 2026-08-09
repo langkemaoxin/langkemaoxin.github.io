@@ -27,11 +27,11 @@ NoSQL数据库四大家族
 
 Aerospike（简称AS）是一个分布式，可扩展的键值存储的NoSQL数据库。T级别大数据高并发的结构化数据存储，采用混合架构，索引存储在内存中，而数据可存储在机械硬盘(HDD)或固态硬盘(SSD) 上，读写操作达微妙级，99%的响应可在1毫秒内实现。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820152-84f927f1-45e0-490b-b456-91cc58f59466.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-d5cd1c7dad23.png)
 
 Aerospike作为一个大容量的NoSql解决方案，适合对容量要求比较大，QPS相对低一些的场景，主要用在广告行业，个性化推荐厂告是建立在了和掌握消费者独特的偏好和习性的基础之上，对消费者的购买需求做出准确的预测或引导，在合适的位置、合适的时间，以合适的形式向消费者呈现与其需求高度吻合的广告，以此来促进用户的消费行为。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820135-27710baa-71de-4bf9-86e8-19d468d617e7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-1c6a6e7ae974.png)
 
 （ETL数据仓库技术）抽取（extract）、转换（transform）、加载（load）
 
@@ -40,7 +40,7 @@ Aerospike作为一个大容量的NoSql解决方案，适合对容量要求比较
 - 收集用户最近浏览、最长停留等特征，分析商品相似性、用户相似性、相似性等算法。
 - 把推荐引擎的结果存入Aerospike集群中，并提供给广告投放引擎实时获取分别通过HDFS和HBASE对日志进行离线和实时的分析，然后把用户画像的标签(tag : 程序猿、宅男...)结果存入高性能的Nosql数据库Aerospike中，同时把数据备份到异地数据中心。前端广告投放请求通过决策引擎（投放引擎）向用户画像数据库中读取相应的用户画像数据，然后根据竞价算法出价进行竞价。竞价成功之后就可以展现广告了。而在竞价成功之后，具体给用户展现什么样的广告，就是有上面说的个性化推荐广告来完成的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820148-7ddbd8ab-c5a6-492b-8c64-3ecb3729d444.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-687a4a19cd97.png)
 
 **图谱Neo4j**
 
@@ -52,19 +52,19 @@ Neo4j是一个开源基于java开发的图形noSql数据库，它将结构化数
 
 自己项目主要用作好友推荐，图数据库(Graph database)指的是以图数据结构的形式来存储和查询数据的数据库。关系图谱中，关系的组织形式采用的就是图结构，所以非常适合用图库进行存储。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820158-77ea2d88-6ff0-41de-919c-b0a4a4835439.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-1ffbd9b19de5.png)
 
 - 优势总结:
 - 性能上，使用cql查询，对长程关系的查询速度快
 - 擅于发现隐藏的关系，例如通过判断图上两点之间有没有走的通的路径，就可以发现事物间的关联
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820186-1fe9db23-e135-400e-909c-dc0f4b082777.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-afba65f55472.png)
 
 **文档 MongoDB**
 
 MongoDB 是一个基于分布式文件存储的数据库，是非关系数据库中功能最丰富、最像关系数据库的。在高负载的情况下，通过添加更多的节点，可以保证服务器性能。由 C++ 编写，可以为 WEB 应用提供可扩展、高性能、易部署的数据存储解决方案。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820506-96864085-f02a-47db-b5d9-bf8cb7d35e94.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-002450e8eaec.png)
 
 **什么是 BSON**
 
@@ -95,7 +95,7 @@ MySQL 8.0 版本
 
 **云存储**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820526-81866979-a369-4ced-8a62-8b2bbec74a9f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-4a31eea1b5fa.png)
 
 **使用步骤**
 
@@ -131,7 +131,7 @@ MySQL 8.0 版本
 
 **弹性存储: **可以根据业务需要灵活地增删存储池中的资源，而不需要中断系统运行。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820523-99f5b2a8-448a-4a48-92bb-6073694f396c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-0abc32e9216f.png)
 
 **特性**
 
@@ -153,11 +153,11 @@ MySQL 8.0 版本
 
 **上传**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820576-c11048ee-81c0-4395-a249-3700cec5cc98.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-c5479f46bab4.png)
 
 **下载**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820831-48cc0eb7-75e4-4e93-b2ac-47cfa1c6a0b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-82f839b72508.png)
 
 **断点续传**
 
@@ -197,7 +197,7 @@ MySQL 8.0 版本
 
 **串行化：**最⾼的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执⾏，这样事务之间就完全不可能产⽣⼲扰。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820865-36a2cc6f-c83e-4ab2-8e40-d93c79f1171c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-c56531bb665e.png)
 
 **3 默认隔离级别-RR**
 
@@ -215,7 +215,7 @@ MySQL 8.0 版本
 
 事务隔离级别RC(read commit)和RR（repeatable read）两种事务隔离级别基于多版本并发控制MVCC(multi-version concurrency control）来实现。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820887-72ce9fc2-76e3-4ed0-8f8c-e07add80c2ec.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-eb74200f1b7d.png)
 
 **5 行锁，表锁，意向锁**
 
@@ -251,7 +251,7 @@ InnoDB 支持多粒度锁（multiple granularity locking），它允许行级锁
 
 **意向排他锁**（intention exclusive lock, IX）：事务有意向对表中的某些行加排他锁（X锁）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392820911-1ad11e58-fc37-47c1-8de7-9bd80e4df668.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-910b53798f05.png)
 
 **6 MVCC多版本并发控制**
 
@@ -329,7 +329,7 @@ B+树是B树的升级版，B+树只有叶节点存放数据，其余节点用来
 
 查询语句：
 
-![image](https://cdn.nlark.com/yuque/0/2024/svg/22811459/1714392820970-fce18d69-bd7e-4f3c-90a3-9d615c4e2b14.svg)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-7368930da524.svg)
 
 结合上面的说明，我们分析下这个语句的执行流程：
 
@@ -411,7 +411,7 @@ B+树是B树的升级版，B+树只有叶节点存放数据，其余节点用来
 
 **4 JOIN 查询**
 
-![image](https://cdn.nlark.com/yuque/0/2024/svg/22811459/1714392821102-d1f183c8-b160-466a-87c7-f8a18ee6454f.svg)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-06688ceaf820.svg)
 
 **left join(左联接) **返回包括左表中的所有记录和右表中关联字段相等的记录
 
@@ -462,11 +462,11 @@ Keepalived + VIP + MySQL 主从/双主
 
 当写节点 Master db1 出现故障时，由 MMM Monitor 或 Keepalived 触发切换脚本，将 VIP 漂移到可用的 Master db2 上。当出现网络抖动或网络分区时，MMM Monitor 会误判，严重时来回切换写 VIP 导致集群双写，当数据复制延迟时，应用程序会出现数据错乱或数据冲突的故障。有效避免单点失效的架构就是采用共享存储，单点故障切换可以通过分布式哨兵系统监控。
 
-![image](https://cdn.nlark.com/yuque/0/2024/svg/22811459/1714392821150-aa777650-c4df-4081-a50d-77959f30c7c2.svg)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-b27a68477012.svg)
 
 **架构选型：**MMM 集群 -> MHA集群 -> MHA+Arksentinel。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392821193-e3b2c56b-9c17-4a46-b1d6-894abc3ef4a4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-817a80d7baa2.png)
 
 **4 故障转移和恢复**
 
@@ -636,7 +636,7 @@ Mycat 这种 proxy 层方案的缺点在于需要部署，自己运维一套中�
 
 通常的解决方式是强行加入分页功能，或者对一些必填的参数进行校验
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392821263-f956045d-8be8-467e-8c5f-0949852d6fb6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0041-pn9pgf6ffmdupig0/img-d8c357f80589.png)
 
 **Controller 层**
 

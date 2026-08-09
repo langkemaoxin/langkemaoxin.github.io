@@ -45,7 +45,7 @@ Spring AOP就是基于动态代理的，如果要代理的对象，实现了某�
 
 死亡：当对象长时间不用且没有其它对象引用时，由java的垃圾回收机制回收
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393164856-aa8758d2-d78b-41ca-a2ca-ce6489deb6d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0035-vx7ltk4d4imugfzh/img-1dd18ac1843a.png)
 
 IOC容器初始化加载Bean流程：
 
@@ -116,7 +116,7 @@ public void refresh() throws BeansException, IllegalStateException {
 
 **4、Bean作用域**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393164898-8d554cf4-922a-4118-ab69-1aacc0edf1b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0035-vx7ltk4d4imugfzh/img-7d7805b7af03.png)
 
 默认作用域是singleton，多个线程访问同一个bean时会存在线程不安全问题
 
@@ -147,7 +147,7 @@ Spring 启动的时候会把所有bean信息(包括XML和注解)解析转化成S
 
 **三级缓存解决循环依赖问题**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393164891-83f42aae-7e22-4c89-8661-ce070aa1e329.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0035-vx7ltk4d4imugfzh/img-1efc705fd94a.png)
 
 1. Spring容器初始化ClassA通过构造器初始化对象后提前暴露到Spring容器中的singletonFactorys（三级缓存中）。
 2. ClassA调用setClassB方法，Spring首先尝试从容器中获取ClassB，此时ClassB不存在Spring 容器中。
@@ -220,7 +220,7 @@ EnableAutoConfigurationImportSelector选择器给Spring容器中来导入一些�
 
 **SpringMVC原理**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714393164935-0cc52177-49df-4d10-a28f-41068d0315de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0035-vx7ltk4d4imugfzh/img-eba42af588cc.png)
 
 1. 客户端（浏览器）发送请求，直接请求到 DispatcherServlet 。
 2. DispatcherServlet 根据请求信息调⽤ HandlerMapping ，解析请求对应的 Handler 。

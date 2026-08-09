@@ -19,7 +19,7 @@ article: false
 
 然而，在高并发的生产环境中，我们却遇到了一个棘手的问题：两个 XXL-Job 实例竟然同时执行了同一个任务，导致了数据重复处理。这表明，那道看似牢固的“唯一约束”防线，在特定条件下被离奇地击穿了。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761272377586-bbfa76ed-8c41-4562-a00a-19b92370a1b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0984-lfgs8qbq2pawghcw/img-d7196c48b81c.png)
 
 本文将化身侦探，通过层层剖析，揪出导致这起并发“悬案”的三个核心元凶，并最终给出一套“亡羊补牢”的终极解决方案。
 
@@ -27,7 +27,7 @@ article: false
 
 在探寻元凶之前，我们首先需要明确，这套基于数据库的锁机制在理想状态下是如何运作的。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761272398860-307bd55b-ec7e-48fa-b343-2affabe9f72d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0984-lfgs8qbq2pawghcw/img-47e73d5dbff7.png)
 
 其工作流程如下：
 
@@ -45,7 +45,7 @@ article: false
 
 第一个，也是最直接的元凶，在于“修改状态”和“插入日志”这两个本应是“原子”的操作，被分割在了两个独立的数据库事务中。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761272424322-72b4fd03-c858-4f82-8636-758086550a55.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0984-lfgs8qbq2pawghcw/img-232e34432470.png)
 
 上图清晰地揭示了并发执行下的“危险空窗期”：
 
@@ -60,7 +60,7 @@ article: false
 
 如果说原子性破坏是程序设计层面的失误，那么错误的事务隔离级别则是数据库层面的“帮凶”。这个问题尤其在使用 PostgreSQL 或 Oracle（默认隔离级别为 `READ COMMITTED`）时更为突出。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761272435012-3e5de9da-4de5-4a9f-8910-c2760c8e8cfe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0984-lfgs8qbq2pawghcw/img-2ed1a9e0bada.png)
 
 在 `READ COMMITTED` 隔离级别下，事务只能读到已经提交的数据，并且不会产生“脏读”，但它无法阻止“幻读”（Phantom Read）。
 
@@ -73,7 +73,7 @@ article: false
 
 这是最隐蔽，也最致命的元凶。它源于开发人员对异常处理的疏忽。即使前两个问题都存在，只要能正确处理 `DuplicateKeyException`，重复执行仍然可以被阻止。然而，在真实代码中，我们常常看到如下的致命写法：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761272486196-2f9c086e-8b26-42c9-837d-240ba0e18add.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0984-lfgs8qbq2pawghcw/img-a6c3586ad7e9.png)
 
 ```java
 @Transactional
@@ -100,7 +100,7 @@ public void processTask(Task task) {
 
 在揪出三大元凶后，我们可以对症下药，重建防线。以下是不同解决方案的决策矩阵。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761272520523-332d7043-0e75-4cb2-90c6-aa27df42a59e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0984-lfgs8qbq2pawghcw/img-cdc7b8376ba4.png)
 
 1. **保证原子性**：这是首要任务。使用Spring等框架时，确保“修改状态”和“插入日志”的完整逻辑被 `@Transactional` 注解包裹，并置于同一个方法中。
 2. **严肃处理异常**：对 `DuplicateKeyException` 保持敬畏。在 `catch` 到这个异常后，必须立即终止当前任务的执行逻辑。记录日志是必要的，但终止流程是必须的。

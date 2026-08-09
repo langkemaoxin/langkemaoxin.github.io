@@ -56,39 +56,39 @@ save：在主线程中执行，会导致阻塞；对于内存比较大的实例�
 
 命令实战演示
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888889049-88c0d02f-c92a-4023-ae2e-c302cab3a7c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-8f6239bf6f67.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888889055-ffa0c0db-73f1-4efb-9bb7-928e81af48aa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-0cb5e8c46ce2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888889106-17563c2f-4ac1-4a51-9381-6a97ac65fe8c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-ec505c3f3541.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888889268-66515d01-a449-4c77-8e21-b9fbc878c62b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-ff5431488873.png)
 
 除了执行命令手动触发之外，Redis内部还存在自动触发RDB 的持久化机制，例如以下场景:
 
 1)使用save相关配置,如“save m n”。表示m秒内数据集存在n次修改时，自动触发bgsave。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888889289-cb33a9fe-66e5-4e4f-8d91-5f66cad06dc5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-baf82087d36b.png)
 
 2）如果从节点执行全量复制操作，主节点自动执行bgsave生成RDB文件并发送给从节点。
 
 3)执行debug reload命令重新加载Redis 时，也会自动触发save操作。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890151-5a79e422-870b-41f7-98e2-c264bf69a9a9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-30e6679ad05e.png)
 
 4）默认情况下执行shutdown命令时，如果没有开启AOF持久化功能则自动执行bgsave。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890198-cc27c7f6-c1c2-4cd8-9e05-b2c75a3b3654.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-58fc198cc8b8.png)
 
 关闭RDB持久化，在课程讲述的Redis版本（6.2.4）上，是将配置文件中的save配置改为 save “”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890208-3f783135-8e06-43c3-b656-333192529aab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-884623093144.png)
 
 #### bgsave执的行流程
 
 为了快照而暂停写操作，肯定是不能接受的。所以这个时候，Redis 就会借助操作系统提供的写时复制技术（Copy-On-Write, COW），在执行快照的同时，正常处理写操作。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890262-f757ec8a-42dc-472a-8b1d-1c6c8f3bfc2e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-0e97a37ffca6.png)
 
 bgsave 子进程是由主线程 fork 生成的，可以共享主线程的所有内存数据。bgsave 子进程运行后，开始读取主线程的内存数据，并把它们写入 RDB 文件。
 
@@ -100,11 +100,11 @@ bgsave 子进程是由主线程 fork 生成的，可以共享主线程的所有�
 
 RDB文件保存在dir配置指定的目录下，文件名通过dbfilename配置指定。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890242-4886282e-924a-4c10-b9ef-3e5f5f5b01a7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-6dd0acc89f89.png)
 
 可以通过执行config set dir {newDir}和config set dbfilename (newFileName}运行期动态执行,当下次运行时RDB文件会保存到新目录。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890579-97af5be5-5a7b-43fe-8d3d-0524647582a2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-4fe8ca5af41b.png)
 
 Redis默认采用LZF算法对生成的RDB文件做压缩处理，压缩后的文件远远小于内存大小，默认开启，可以通过参数config set rdbcompression { yes |no}动态修改。虽然压缩RDB会消耗CPU，但可大幅降低文件的体积，方便保存到硬盘或通过网维示络发送给从节点,因此线上建议开启。如果 Redis加载损坏的RDB文件时拒绝启动,并打印如下日志:
 
@@ -112,7 +112,7 @@ Short read or OOM loading DB. Unrecoverable error，aborting now.
 
 这时可以使用Redis提供的redis-check-rdb工具(老版本是redis-check-dump)检测RDB文件并获取对应的错误报告。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890639-a08c3066-c542-4e3a-8cc7-c582fcae2f5f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-c1363efc4d41.png)
 
 #### RDB的优缺点
 
@@ -136,7 +136,7 @@ RDB文件使用特定二进制格式保存，Redis版本演进过程中有多个
 
 如下图所示，我们先在 T0 时刻做了一次快照（下一次快照是T4时刻），然后在T1时刻，数据块 5 和 8 被修改了。如果在T2时刻，机器宕机了，那么，只能按照 T0 时刻的快照进行恢复。此时，数据块 5 和 8 的修改值因为没有快照记录，就无法恢复了。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890667-e8469d40-f040-4770-bda0-4e66f03eadd4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-d79bc1382a9a.png)
 
 所以这里可以看出，如果想丢失较少的数据，那么T4-T0就要尽可能的小，但是如果频繁地执行全量快照，也会带来两方面的开销：
 
@@ -154,17 +154,17 @@ AOF(append only file)持久化:以独立日志的方式记录每次写命令，�
 
 开启AOF功能需要设置配置:appendonly yes，默认不开启。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890649-689e2972-94d3-407a-a576-3501f9213ec1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-516f20c9b398.png)
 
 AOF文件名通过appendfilename配置设置，默认文件名是appendonly.aof。保存路径同RDB持久化方式一致，通过dir配置指定。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888890786-89ace925-582e-4cb1-8175-97063274ca8a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-4f7accc99a12.png)
 
 ### AOF的工作流程
 
 AOF的工作流程主要是4个部分:命令写入( append)、文件同步( sync)、文件重写(rewrite)、重启加载( load)。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891051-75c00ab5-7356-4695-aa7c-27ee1d11f964.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-bfe70c4728b4.png)
 
 #### 命令写入
 
@@ -184,7 +184,7 @@ Redis使用单线程响应命令，如果每次写AOF文件命令都直接追加
 
 Redis提供了多种AOF缓冲区同步文件策略，由参数appendfsync控制。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891095-2804a40d-6bbf-47d1-b90c-59d1d4cc28cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-b54f2aa9deb7.png)
 
 **always**
 
@@ -216,7 +216,7 @@ Redis提供了多种AOF缓冲区同步文件策略，由参数appendfsync控制�
 
 2)旧的AOF文件含有无效命令，如set a 111、set a 222等。重写使用进程内数据直接生成，这样新的AOF文件只保留最终数据的写入命令。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891101-9027fe97-c4b9-435c-b42d-b0e328ad10de.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-91ea14ec641a.png)
 
 3）多条写命令可以合并为一个，如:lpush list a、lpush list b、lpush list c可以转化为: lpush list a b c。为了防止单条命令过大造成客户端缓冲区溢出，对于list、set、hash、zset等类型操作，以64个元素为界拆分为多条。
 
@@ -226,11 +226,11 @@ AOF重写过程可以手动触发和自动触发:
 
 手动触发:直接调用bgrewriteaof命令。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891160-93f87874-f4d6-4e65-bd95-d161c28fe69a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-91e950b859ce.png)
 
 自动触发:根据auto-aof-rewrite-min-size和 auto-aof-rewrite-percentage参数确定自动触发时机。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891349-947e3c39-26d0-41cc-a29b-e6f4c570db21.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-1c7163a3ecee.png)
 
 auto-aof-rewrite-min-size:表示运行AOF重写时文件最小体积，默认为64MB。
 
@@ -242,7 +242,7 @@ auto-aof-rewrite-percentage :代表当前AOF 文件空间(aof_currentsize）和�
 
 AOF和 RDB 文件都可以用于服务器重启时的数据恢复。redis重启时加载AOF与RDB的顺序是怎么样的呢？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891589-ce900d14-0e23-4e97-bbb2-8bf8581a7aab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-ead94ad097c9.png)
 
 1，当AOF和RDB文件同时存在时，优先加载AOF
 
@@ -258,13 +258,13 @@ AOF和 RDB 文件都可以用于服务器重启时的数据恢复。redis重启�
 
 AOF文件可能存在结尾不完整的情况，比如机器突然掉电导致AOF尾部文件命令写入不全。Redis为我们提供了aof-load-truncated 配置来兼容这种情况，默认开启。加载AOF时当遇到此问题时会忽略并继续启动,同时如下警告日志。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891577-a3292142-11c1-441a-a8b6-d8b461b1b025.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-56bab81a23e3.png)
 
 ### RDB-AOF混合持久化
 
 通过 `aof-use-rdb-preamble` 配置项可以打开混合开关，yes则表示开启，no表示禁用，默认是禁用的，可通过config set修改
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891563-155c53cf-0ef5-46d6-92b1-ed20970b76e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-516c7e30f9f9.png)
 
 该状态开启后，如果执行bgrewriteaof命令，则会把当前内存中已有的数据弄成二进程存放在aof文件中，这个过程模拟了rdb生成的过程，然后Redis后面有其他命令，在触发下次重写之前，依然采用AOF追加的方式
 
@@ -274,7 +274,7 @@ AOF文件可能存在结尾不完整的情况，比如机器突然掉电导致AO
 
 #### 主线程、子进程和后台线程的联系与区别？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891602-a9ba52b5-b3be-492a-b031-cd31c18e8bb0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-96b2878f690b.png)
 
 **进程和线程的区别**
 
@@ -302,7 +302,7 @@ Redis 启动以后，本身就是一个进程，它会接收客户端发送的�
 
 对于高流量的Redis实例OPS可达5万以上，如果fork操作耗时在秒级别将拖慢Redis几万条命令执行，对线上应用延迟影响非常明显。正常情况下fork耗时应该是每GB消耗20毫秒左右。可以在info stats统计中查latest_fork_usec指标获取最近一次fork操作耗时,单位微秒。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744888891842-f1e48056-fdc7-4ffd-a328-403e1ce5db06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0504-lefz0ffra2wp5veg/img-658e58187658.png)
 
 如何改善fork操作的耗时:
 

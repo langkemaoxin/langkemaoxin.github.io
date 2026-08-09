@@ -19,7 +19,7 @@ article: false
 - **JRE（java runtime environment）：java运行时环境，针对java用户。**
 - **JVM（java virtual machine）：java虚拟机用来解释执行字节码文件(class文件)的。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1688730807079-8f7b10b1-02d5-4e0e-a8fe-1514b7c94bb6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-55fa76f62eb0.png)
 
 # Java 中创建对象的几种方式？
 
@@ -951,11 +951,11 @@ public void stringDemo1() {
 
 - **接口的实现类可以有多个**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1689083756715-955badce-7fd4-4ed4-ab37-35c3aef2483f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_81%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-72391cebb6f4.png)
 
 - **抽象类的子类，只能继承一个抽象类，抽象类的子类，只能继承一个抽象类**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1689083796474-a151ab4c-0962-4810-bf5b-1151e938110a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-9cc1980c1e6b.png)
 
 **在 Java 语言中，一个类只能继承一个父类（单继承），但可以实现多个接口。**
 
@@ -963,11 +963,11 @@ public void stringDemo1() {
 
 - **接口中属性的访问控制符只能是public（接口中的属性默认是 public static final 修饰的）**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1689084379962-992d8a10-0da6-41fd-be1d-4ff3e8f80ed4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-1d8c8bc58b35.png)
 
 - **抽象类中的属性访问控制符无限制，可为任意控制符。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1689084113452-7c09fe08-c825-4ade-8874-91e66919d117.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_75%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-ea0bae64dbba.png)
 
 # **什么是浅拷贝和深拷贝？**
 
@@ -1393,7 +1393,7 @@ public void errorDemo(){
 
 # 常见的异常类有哪些？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1739968598268-a5cb710e-a97b-4149-ba41-c1a7c794b99c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-042b14039ac1.png)
 
 **在Java中，有一些常见的异常类，可以根据其特性和使用场景进行分类。以下是一些常见的异常类：**
 
@@ -1425,7 +1425,7 @@ public void errorDemo(){
 
 **JVM 内存区域最粗略的划分可以分为堆和栈，当然，按照虚拟机规范，可以划分为以下几个区域：**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1695278627789-8b134b0f-8ee3-4b86-ace0-1fcad9db43d7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-166d9d8f901c.png)
 
 **JVM 内存分为线程私有区和线程共享区，其中方法区和堆是线程共享区，虚拟机栈、本地方法栈和程序计数器是线程隔离的数据区。**
 
@@ -1454,7 +1454,7 @@ public void errorDemo(){
 
 # 对象创建的过程了解吗？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1695285250201-3f8e70a0-3299-4f2b-bd7b-30befa9d8689.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-48b5e73fb16d.png)
 
 **在Java中，对象的创建主要包括以下几个步骤：**
 
@@ -1469,9 +1469,9 @@ public void errorDemo(){
 
 **指针碰撞（Pointer Bumping）和空闲列表（Free List）分别是内存分配策略和内存管理策略，常用于描述动态内存分配的过程。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1695298578382-170d4b35-b40b-4724-ba6c-7e2944e61382.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-90a7806c59cf.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1695298586541-d9a08e0e-8944-4f95-918d-f88d4eeb1f10.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-d3ec7b269aa8.png)
 
 1. **指针碰撞（Pointer Bumping）：指针碰撞是一种内存分配策略，通常用于实现固定大小的对象的分配。**
 
@@ -1489,7 +1489,7 @@ public void errorDemo(){
 
 # JVM创建对象时，堆会发生抢占吗？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1694695630880-f1d49e99-a72b-450b-9954-95e4926e9440.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-0047d0219913.png)
 
 **有可能会******
 
@@ -1508,7 +1508,7 @@ public void errorDemo(){
 
 **在 HotSpot 虚拟机里，对象在堆内存中的存储布局可以划分为三个部分：对象头（Header）、实例数据（Instance Data）和对齐填充（Padding）。 **
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1694761480855-c4eb604a-fd94-4888-8bdb-72746f7572e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-4d75128603b9.png)
 
 **
  对象头主要由两部分组成：**
@@ -1527,11 +1527,11 @@ public void errorDemo(){
 
 - **引用计数法：该方法通过对对象进行引用计数，即记录对象被引用的次数。当引用计数为0时，表示对象没有被引用，可以被回收。但是引用计数法无法解决循环引用的问题，导致内存泄漏。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1695624496167-98045ce3-03ce-4be7-87f2-baf1ed9c13a7.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-959965253ba5.jpg)
 
 - **可达性分析法：常见的垃圾回收算法中，主要采用的是可达性分析算法。该算法从一组称为"根"的特定对象（如全局变量、活动线程等）开始，通过追踪对象之间的引用关系形成引用图，然后检查哪些对象可以从"根"对象访问到。如果一个对象可以从"根"对象访问到，那么它就被认为是存活的。而对于无法从"根"对象访问到的对象，则被判定为不再存活，垃圾回收器将对其进行回收。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1695624768508-32d47955-d2c6-4e6b-873d-f5c9d4c23d3e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-2ca3a85a14f8.jpg)
 
 # 垃圾收集算法了解吗？
 
@@ -1541,7 +1541,7 @@ public void errorDemo(){
 
 - **标记-清除算法：该算法通过标记对象的可达性来确定存活对象，然后清除未被标记的对象。这种算法简单且灵活，但可能会产生内存碎片。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1695627945022-12dd54a3-7948-4720-8e54-ea70cac254da.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-a2e09b45921f.jpg)
 
 - **优点：**
 
@@ -1554,7 +1554,7 @@ public void errorDemo(){
 
 - **标记-复制算法：该算法将内存分为两个区域，每次只使用其中一个区域。当发生垃圾回收时，将存活对象从一个区域复制到另一个区域，然后清除当前使用的区域。这种算法避免了内存碎片的问题，但需要额外的内存空间。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1695627891539-b8e4ac04-da15-43dd-809d-016ca8153b0d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-118b88b100ea.jpg)
 
 - **优点：**
 
@@ -1568,7 +1568,7 @@ public void errorDemo(){
 
 - **标记-整理算法：该算法首先标记存活对象，然后将它们紧凑地移动到内存的一端，清除未被标记的对象。这样可以消除内存碎片，但也需要移动对象的操作。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1695627954117-b1bf42ce-0819-48dc-945b-a4054f34d793.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-ba679e8ad3c8.jpg)
 
 - **优点：**
 
@@ -1591,7 +1591,7 @@ public void errorDemo(){
 
 **CMS收集器的垃圾收集过程主要分五个阶段：**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1695640589833-87cda607-695a-4ff2-9ba9-c06d480c5cdf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-572a1d8a61c4.png)
 
 1. **初始标记阶段：**
 
@@ -1629,7 +1629,7 @@ public void errorDemo(){
 
 1. **区域化内存布局：G1收集器将堆内存划分为多个大小相等的区域（Region）。每个区域可以是Eden区、Survivor区或Old区。这种内存布局有助于提高垃圾收集的效率。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1695642524361-cf35e3c6-f46b-43b0-b0b7-0fb6847135e2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-3f90cff66205.png)
 
 1. **并行与并发：G1收集器使用并行和并发的方式执行垃圾回收操作。它通过并行处理来加快标记和复制阶段的速度，同时利用并发处理来减少垃圾回收对应用程序的停顿时间。**
 2. **垃圾优先策略：G1收集器使用Garbage-First策略来确定优先处理哪些区域中的垃圾。它会根据区域中的垃圾数量、回收成本等因素来选择下一个要回收的区域，以最大程度地提高垃圾回收的效率。**
@@ -1638,7 +1638,7 @@ public void errorDemo(){
 
 **工作原理：**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1696574891115-01a05083-14aa-4ab6-8dd1-dac317ee1871.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-a032fe3c01b6.jpg)
 
 - **初始标记：停顿所有的应用程序线程，识别出GC Roots直接关联的对象，并标记这些对象。**
 - **并发标记：从第一步得到的标记点继续向下遍历对象图，标记所有被引用的存活对象，此步骤与应用程序并发运行。**
@@ -1731,11 +1731,11 @@ public class Main {
 - **List：存储的元素有序，可重复。**
 - **Set：存储的元素不无序，不可重复。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1696917806576-efb9bbe2-9bce-438c-b2e4-0ed2f014f166.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-9bd9af3845fd.png)
 
 **Map是另外的接口，是键值对映射结构的集合。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1696843805355-3e901729-206a-47f2-9a72-31693c49000b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-be17e4d0d512.png)
 
 # ArrayList和LinkedList有什么区别？
 
@@ -1746,7 +1746,7 @@ public class Main {
 - **ArrayList是基于数组实现的动态数组。它内部使用数组来存储元素，当数组空间不足时，会自动扩展容量。**
 - **LinkedList是基于双向链表实现的。每个元素都包含一个指向前一个元素和后一个元素的引用。这种结构允许在任何位置高效地插入和删除元素。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1696854319360-7beebcd1-dbf6-4d77-a729-34869265c9d4.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-586ee8ea0423.jpg)
 
 1. **随机访问：**
 
@@ -2022,7 +2022,7 @@ public boolean add(E e) {
 
 **为了提高查询效率，Java 8 在 HashMap 中引入了红黑树。当一个桶中的链表长度超过了阈值****，默认为 8，且当前 HashMap 的大小大于等于 64(即元素个数大于等于 64 * 0.75 = 48)时，该链表将****被转化为红黑树。红黑树节点个数小于 6 转为链表。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1697030002397-5cc153cd-a4f5-438e-bd5b-69d9214eb87c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_56%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-e2564f791de7.jpg)
 
 - **哈希值计算：HashMap 使用键的哈希码来计算哈希值，以确定在哪个桶中存储元素。**
 - **存储桶： 哈希值用于确定键-值对在数组的哪个位置（桶）存储。每个桶可以包含多个键-值对。**
@@ -2038,7 +2038,7 @@ public boolean add(E e) {
 - **每个红色节点的两个子节点一定都是黑色。**
 - **从任一节点到其子树中每个叶子节点的路径都包含相同数量的黑色节点。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1697032028817-af21986b-7705-49bf-91e2-0836d0a9d59b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-10aecbb2f9fe.png)
 
 **这些规则确保了树的平衡性，从而保持了查找、插入和删除操作的可预测性和高效性。**
 
@@ -2061,16 +2061,16 @@ public boolean add(E e) {
 - **左旋将一个节点的右子树提升为其父节点，**
 - **右旋则将一个节点的左子树提升为其父节点，以保持树的平衡。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1697094920291-5c17b600-768c-434d-80a8-927aa3138932.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-21551f8b98e2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1697094929017-ebbaa202-5fc4-436c-9c1b-c5a9a404b4f9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-9ab09cd6e4cf.png)
 
 - **节点染色操作： 红黑树中的节点颜色有红色和黑色两种。**
 
 - **节点染色操作包括将节点着为红色或黑色，通常根据插入和删除操作的需要来改变节点的颜色。**
 - **染色操作用于满足红黑树的规则，例如，保证相邻节点不同时为红色，以维持平衡。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1697094942268-c653dd1d-1dcc-4cac-bb92-a293294107b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-d4788e71bd61.png)
 
 **这两种操作相互配合，以保持树的平衡。**
 
@@ -2145,7 +2145,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1697547078178-2fe3e924-e562-4fa7-9bf8-a94b42f1eb4f.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-601ac4c1c249.jpg)
 
 **这段代码展示了 HashMap 的 put 方法的实现，包括计算哈希值、定位桶、处理哈希冲突、插入节点、扩容等关键步骤。该方法确保了键值对能够正确插入到哈希表中，并在需要时进行扩容以维护性能。**
 
@@ -2241,7 +2241,7 @@ final Node<K,V> getNode(int hash, Object key) {
 - **链地址法：这是一种常见的解决哈希冲突的方法，它使用一个数组来存储链表，每个哈希值的冲突元素都存储在链表中。链地址法不需要额外的空间来处理冲突，但需要遍历链表来查找元素。**
 - **线性探测：在线性探测中，当发生哈希冲突时，通过顺序查找哈希表中的下一个槽位，直到找到一个空闲的槽位来存储数据。这种方法可以形成一个线性探测序列。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1684156756942-50757abd-7245-4033-b544-e8df1ccda19e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-52843dd84e4b.png)
 
 - **双重哈希：双重散列是一种使用两个哈希函数的方法。当发生哈希冲突时，首先使用第一个哈希函数找到一个位置，如果该位置已被占用，就使用第二个哈希函数来查找下一个位置。这种方法通常能够更好地分散数据。**
 - **建立公共溢出区：建立公共溢出区是一种简单的解决哈希冲突的方法。当发生哈希冲突时，将冲突的元素存储在一个公共溢出区中，每个桶只存放一个元素。在查找时，如果对应的桶为空，则说明要查找的元素不存在；如果对应的桶中存放了元素，则在公共溢出区中查找对应的元素。**
@@ -3500,7 +3500,7 @@ spring:
 
 # 接口性能优化策略
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1726709386448-01c45850-44d2-422f-ae8b-89be7f2e01bb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-a56e9aeba7d4.png)
 
 # 扫码登录究竟是怎么回事
 
@@ -3510,39 +3510,39 @@ spring:
 
 手机端很容易，我们最常干的操作。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730355789492-531b0fdd-3b33-42f5-afd7-c0f533f83b06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-8d969acee919.png)
 
 ## PC端完成登录
 
 类似手机端，都是账号密码，只是减少了设备信息部分。（有的会带上 mac 地址，收费软件之类的）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730355824526-edd1e507-9c4e-4df2-8dba-663daa872477.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-bfd007e54c7a.png)
 
 ## 生成二维码
 
 想要扫码登录就先需要生成带有当前设备信息的二维码，不然无法区分设备。同时也需要做好状态处理，过期处理，不能一直占用内存。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730355844508-2358144d-4904-4404-84de-19cfb243c5c2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-6ef6468f0445.png)
 
 ## 手机端扫码登录
 
 二维码生成之后，就利用手机端的 token 验证信息，其实就是等同于输入了账号密码，然后生成临时 Token（保证确认登录时是同一个设备）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730355858330-7d3fd361-7111-45bb-8a02-b77ed455b0dc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-3f84d124d4dd.png)
 
 ## PC端扫码登录
 
 拿着临时 Token 在确认登录，这时候才会生成 Pc Token。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730355875557-8508b185-1e29-410e-9694-6a499ee4af2d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-24b302640397.png)
 
 ## 扫码登录完整流程
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730355891750-a8304e6c-2852-4f64-a31d-638d86c32e43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-37e835cfc269.png)
 
 ## PC端获取二维码状态
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730355906101-7382d36a-6d18-4a34-8130-0662767d0110.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_61%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-0d5e7c28943c.png)
 
 ## 二维码状态
 
@@ -3599,7 +3599,7 @@ INNER JOIN table1 t2
 ON t1.column = t2.column;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1698322220728-53ae9d81-c9a9-4fee-8b48-8683f958d163.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-f824200d7990.jpg)
 
 **以上是常见的数据库表连接方式，不同的连接方式可以根据实际需求选择使用。**
 
@@ -3611,15 +3611,15 @@ ON t1.column = t2.column;
 
 1. **第一范式（1NF） ：第一范式是指数据库表中的每个列都必须是原子性的，也就是说，每个列中的值都不能再分解成更小的数据项。同时，每个表必须有一个主键，用于唯一标识每条记录。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1698221298417-ee8f1b3a-37e3-4037-aefe-8075e7d94b1c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-7b46c2151a92.jpg)
 
 1. **第二范式（2NF） ：第二范式是指表中的非主键列必须完全依赖于主键，而不是依赖于主键的一部分。如果有非主键列依赖于主键的一部分，那么就需要将这些列拆分到另一个表中。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1698221316606-d638de91-4443-4962-b3b4-879249cc017a.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-f6cb6b51f831.jpg)
 
 1. **第三范式（3NF） ：第三范式是指表中的非主键列之间不能存在传递依赖关系。也就是说，如果A列依赖于B列，B列依赖于C列，那么A列就不能直接依赖于C列，而是应该将A列拆分到另一个表中。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1698221326380-4d9c10b2-de28-4d88-b33e-6b032750e7ce.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-2a7fd7d34bc2.jpg)
 
 **当然 Mysql 数据库的范式不止三大范式，除了三大范式，还有巴斯-科德范式（BCNF）、第四范式(4NF）、第五范式（5NF，又称“完美范式"）。**
 
@@ -3633,7 +3633,7 @@ ON t1.column = t2.column;
 
 - **CHAR（定长字符型）：CHAR类型的列存储固定长度的字符串********，如果存储的字符串长度小于指定长度，则会使用空格进行填充。**
 - **VARCHAR（可变长度字符型）：VARCHAR类型的列可以存储可变长度的字符串，它只占用实际存储的字符串长度加上额外的字节用于记录长度信息。**
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1698232967418-92774748-ef02-44d2-86c8-ef74b52c92ee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-c9cda5d04e54.png)
 
 1. **存储效率：******
 
@@ -3737,14 +3737,14 @@ WHERE EXISTS (subquery);
 - **每个节点可以包含多个关键字和对应的指针，即B树的每个节点都会存储数据。**
 - **B树的叶子节点之间是无指针相连接的。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1698751850045-cb34af82-8aa5-413b-9c21-d61824936f1f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-3d205d68e009.png)
 
 **B+树也是一种自平衡的多路搜索树。**
 
 - **与B树类似，但在B+树中，所有关键字都存储在叶子节点上，非叶子节点只存储索引列和指向子节点的指针。**
 - **叶子节点通过指针连接起来，形成一个有序的链表，可以支持顺序访问和范围查询。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1698751866375-4c90f949-21b5-40e7-bf06-f1ceb42d8928.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-45d029cb618d.png)
 
 **Mysql使用B+树作为其索引结构的主要原因有以下几点：**
 
@@ -3772,7 +3772,7 @@ select * from test where c = 'c';  --不走索引
 
 **综上所述，最左前缀原则是指在联合索引中只有从最左侧列开始连续使用时，索引才能被有效利用，这有助于提高查询性能和选择性。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1698822259762-d5eadd14-f496-426d-b631-af6107f5be5b.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-6fc14f87b6eb.jpg)
 
 # 索引覆盖是什么
 
@@ -3780,7 +3780,7 @@ select * from test where c = 'c';  --不走索引
 
 **简单来说，当一个查询需要返回的数据列都包含在一个或多个索引中时，就可以利用索引覆盖来避免额外的磁盘读取操作，从而提高查询性能。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680414456643-db561b76-ec69-430a-9b3d-7bee93b2a498.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-7adbfb42563d.jpg)
 
 **通常，当一个查询需要访问大量数据行时，如果没有索引覆盖，数据库引擎需要在磁盘上读取相应的数据页，并检索出满足查询条件的数据行。然后，再根据查询需要返回的数据列，将所需数据从内存中筛选出来。这个过程会导致磁盘I/O的开销，并且可能会有大量的数据需要从磁盘读取到内存中，影响查询的性能。**
 
@@ -3798,7 +3798,7 @@ select * from test where c = 'c';  --不走索引
 
 **MySQL中的聚簇索引也被称为主键索引，它是一种特殊类型的索引，用于存储表中的数据记录。与聚簇索引不同，非聚簇索引用于存储对表中数据记录的引用地址。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1698762369566-00f520e3-96f3-4c27-847c-3a60641d73b7.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-ba0198a8cba9.jpg)
 
 **下面是聚簇索引和非聚簇索引的区别：**
 
@@ -3881,12 +3881,12 @@ EXPLAIN SELECT * FROM IndexValidation WHERE name = 'Alice' OR age = 30;
 2. **考虑查询类型：根据常见的查询模式和性能需求，选择合适的索引类型。例如，对于范围查询，B树索引可能更适合；对于全文搜索，全文索引可能更合适。**
 3. **避免过多的索引：过多的索引会增加写操作的开销，并占用更多的存储空间。因此，需要权衡索引的数量和性能需求，避免过度索引。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1699278895919-1125bd5c-f1e6-43d5-83ba-c1e795e542c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-eb4f4ef8ae96.png)
 
 1. **注意索引的维护成本：索引的创建和维护会带来额外的开销，包括磁盘空间、CPU和内存资源的消耗。因此，需要综合考虑索引的性能收益和维护成本，避免过度索引。**
 2. **联合索引的使用：联合索引可以包含多个列，通过多个列的组合来创建索引。在创建联合索引时，需要根据查询的频率和顺序选择合适的列顺序。将最常用的列放在前面可以提高索引的效果。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1680414456643-db561b76-ec69-430a-9b3d-7bee93b2a498.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fresize%2Cw_979%2Climit_0%2Finterlace%2C1%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-06c3399204ce.jpg)
 
 1. **定期优化和重建索引：随着数据的变化，索引的效果可能会下降。因此，需要定期对索引进行优化和重建，以保持索引的最佳状态。**
 
@@ -4150,7 +4150,7 @@ VALUES
 
 **order_id = 2 的这条记录会进行加锁，防止其他事务针对该记录进行删改。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1699884606714-c5e1e33a-16b9-4683-b52f-6af59a1ce119.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-29d6ec5e585e.png)
 
 - **间隙锁（Gap Lock）：间隙锁是用于保护一个数据范围的锁机制，它会在索引范围内的间隙（两个索引值之间）上设置锁。**
 
@@ -4160,7 +4160,7 @@ VALUES
 
 **由于 orders 表中不存在 order_id = 8 的记录，会将区间 (7,10) 进行加锁，防止其他事务在这个区间进行增删改。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1699884707101-cba2be0f-14c0-43e3-81f0-30b3bf88d59a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-5894f5d3aabf.png)
 
 - **临健锁（Next-Key Lock）：临健锁是结合了记录锁和间隙锁的特性，用于保护一个数据范围的间隙和索引上的数据行。**
 
@@ -4170,7 +4170,7 @@ VALUES
 
 **该 SQL 将锁定 [3,7) 这个区间，防止其他事务针对该记录进行增删改。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1699884778764-3026bf14-f8d0-46fc-a99b-2bb84d3a2b23.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-4480f4d5c2f1.png)
 
 **需要注意间隙锁与临健锁，只在 InnoDb 的 RR 隔离级别下生效。**
 
@@ -4203,7 +4203,7 @@ VALUES
 
 **同时 online dll 对不同的 ddl 操作支持也不同，大家可以看看官网提供的文档：**[官网online dll支持描述](https://dev.mysql.com/doc/refman/5.7/en/innodb-online-ddl-operations.html)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1699880355582-ae3becf0-32c5-46fc-94af-8745220783e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-ec14109341c0.png)
 
 **虽然 online dll 针对锁表进行了优化，但是在执行的过程中还是会进行锁表的。只是 online dll 的锁表时间大大的减少了。**
 
@@ -4235,7 +4235,7 @@ VALUES
 
 **排他锁和共享锁之间存在互斥关系，即当一个事务持有排他锁时，其他事务无法获取该数据项的共享锁；同样地，当一个事务持有共享锁时，其他事务无法获取该数据项的排他锁。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1699885413183-21d2039f-0dc1-4b91-bd99-d3bd839089b7.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-9b233ab07969.jpg)
 
 **X：共享锁；IX：意向共享锁；S：排他锁；IS：意向排他锁；**
 
@@ -4392,7 +4392,7 @@ explain format =  json select * from test ignore index(idx_var) where var = '1';
 
 # 为什么大厂的线上数据库禁止 delete
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1727441139702-3b6c86a1-a925-4dcc-8ed4-e85c87fbc3fa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-152eae573be0.png)
 
 # 当前读与快照读
 
@@ -4421,7 +4421,7 @@ SELECT ... LOCK IN SHARE MODE
 
 下图右侧黄色部分是数据：一行数据记录，主键 ID 是 10，object = 'Goland' ，被 update 更新为 object = 'Python' 。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729078504913-88f1a004-3756-47e5-b427-ce6619ef9600.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-cf66e4960d71.png)
 
 事务会先使用“排他锁”锁定该行，将该行当前的值复制到 undo log 中，然后再真正地修改当前行的值，最后填写事务的 DB_TRX_ID ，使用回滚指针 DB_ROLL_PTR 指向 undo log 中修改前的行。
 
@@ -4464,11 +4464,11 @@ delete from T where age = 7;
 
 进行下面的实验：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729078504897-8b20eb16-5a65-4dae-8373-abd1fa89dd3e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-0293e0bb2371.png)
 
 测试可知 delete from T where age = 7; 语句在 age 上的加锁区间为 (4,10) ,图解如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1729078505209-a2cad768-9e18-43d1-807f-9b2dd71173d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0093-ecg9nv4gqlb5uwck/img-02ecb49ecba7.png)
 
 # 什么是 Spring 的 IOC
 

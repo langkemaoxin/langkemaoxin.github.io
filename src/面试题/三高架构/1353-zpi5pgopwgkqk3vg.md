@@ -28,7 +28,7 @@ article: false
 - **轮询（Round Robin）：** 也就是大家最熟悉的“你一次、我一次”。请求按顺序分发给服务器 A、B、C，公平公正，无需复杂配置 。
 - **随机（Random）：** 闭着眼扔，扔到谁算谁 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765392560-cf24857c-41fb-4b7c-be3c-43aee56d479b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-408019264047.png)
 
 **面试官的陷阱：** “这看起来很完美，但你确定线上的服务器配置都是一样的吗？”
 
@@ -47,7 +47,7 @@ Nginx 的 weight 参数就是为此而生 。
 - 8核16G的机器，Weight 设为 4。
 - 2核4G的机器，Weight 设为 1。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765371876-de8a0eda-22c1-45c4-86b2-c77383c0df09.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-101f2170e670.png)
 
 这样，每 5 个请求中，高性能机器处理 4 个，老机器处理 1 个，实现了按能力分配流量 。
 
@@ -67,7 +67,7 @@ Nginx 的 weight 参数就是为此而生 。
 
 算法公式：index = hash(client_ip) % N （N为服务器数量） 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765491798-80e45e54-87c1-4fa6-a3c7-81b266adfe46.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-41428843c171.png)
 
 只要客户端的 IP 不变，计算出的哈希值就不变，取模后的索引也不变，请求就会死死地“绑定”在某一台服务器上 。
 
@@ -87,7 +87,7 @@ No, no, no! 真正的“面试杀手”在这里。
 
 原本映射到服务器 A 的请求，现在去了 B；原本在 B 的去了 C。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765417727-7afd8f25-88e9-4c27-9721-c1899ccbc65c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-a488920b01f7.png)
 
 这意味着，全局缓存瞬间失效（Cache Avalanche）。海量请求穿透缓存，直接打在数据库上，导致数据库瞬间崩溃 。这就是“扩容即雪崩”。
 
@@ -95,7 +95,7 @@ No, no, no! 真正的“面试杀手”在这里。
 
 我们要引入 一致性哈希（Consistent Hashing）。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765197307-abb6ebe7-968f-420d-89b4-0e841cd46126.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-bd3b65dd0554.png)
 
 1. **哈希环：** 我们不再对服务器数量 N 取模，而是对 **$2^{32}$** 取模。这就形成了一个首尾相接的巨大哈希环（0 到 $2^{32}-1$） 。
 2. **节点映射：** 把服务器的 IP 进行 Hash，落在这个环上 。
@@ -119,7 +119,7 @@ No, no, no! 真正的“面试杀手”在这里。
 
 引入 虚拟节点（Virtual Nodes）。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765136535-f8b3992c-6f09-48e5-89cf-fe387885441b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-dec2d77672ed.png)
 
 我们不仅把物理服务器 A 放到环上，还给它创建 100 个“分身”（A1, A2... A100）。
 
@@ -133,16 +133,16 @@ No, no, no! 真正的“面试杀手”在这里。
 
 1. **最小连接数 (Least Connections)：** 谁闲着（当前活跃连接数最少），新请求就给谁。适合处理长连接 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765098961-03351022-a1db-4ecf-a6af-8630b5ac631e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-06dcb7cb1c08.png)
 
 1. **自适应/最快响应 (Adaptive/Fastest Response)：** 动态监测谁响应最快，就给谁发。这是最智能的动态策略 。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765113506-6b7ae5f5-f860-4fb9-ae63-ce352eefcda6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-0bfb7e8113c4.png)
 
 ### 总结：面试通关宝典
 
 下次面试官再问你负载均衡，请直接甩出这张表，告诉他你不仅懂使用，更懂底层原理：
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767765066145-001d379b-4e16-4411-b59c-249ca21a819f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1353-zpi5pgopwgkqk3vg/img-8d40528638ad.png)
 
 **记住：技术没有最好的，只有最适合的。** 根据业务场景选择算法，才是架构设计的精髓。

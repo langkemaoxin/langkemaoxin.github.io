@@ -17,7 +17,7 @@ article: false
 
 这不仅仅是一个技术问题，更是对系统设计者在性能、一致性和复杂性之间做权衡（Trade-off）能力的考验。因此，它也成为了各大厂技术面试中的高频考点。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760604862428-e5e1b3f9-5db9-4725-94b9-6ecf81f81c8d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0994-oxayz76xt46szloh/img-74ca89d0f925.png)
 
 本文将从最经典的“旁路缓存”模式出发，层层递进，为你剖析四种主流的数据一致性解决方案，并提供一个清晰的决策框架，助你从容应对面试，并在实际工作中做出明智的技术选型。
 
@@ -27,7 +27,7 @@ article: false
 
 这是最经典、最通用的解决方案，其核心思想是：写操作只操作数据库，然后**删除（delete）**缓存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760604874935-6da4d2b9-d144-4de6-aafa-eacbf6f24327.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0994-oxayz76xt46szloh/img-5ff6771d9978.png)
 
 你可能会问，为什么是删除缓存，而不是更新缓存？
 
@@ -62,7 +62,7 @@ public void updateUser(User user) {
 
 当写请求的并发量极高，数据库成为瓶颈时，“旁路缓存”模式中同步写数据库的操作会拖慢整个系统的响应速度。为此，我们可以引入消息队列（MQ）进行异步解耦。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760604887808-7957b80d-24a3-4139-abc8-ec4f866cd784.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0994-oxayz76xt46szloh/img-49d75b437d65.png)
 
 如图所示，此方案将写操作拆分为两部分：
 
@@ -103,7 +103,7 @@ public void onMessage(Message message) {
 
 对于那些不容许丝毫数据差错的场景，如金融交易，我们需要引入分布式事务来保证 Redis 和 MySQL 操作的原子性，要么都成功，要么都失败。TCC（Try-Confirm-Cancel）是一种成熟的分布式事务模型。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760604896237-8e25b97e-3909-48e2-9291-55aff3e6151a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0994-oxayz76xt46szloh/img-8fe0dd789c02.png)
 
 TCC 将一个大的操作拆分为三个独立的阶段：
 
@@ -121,7 +121,7 @@ TCC 将一个大的操作拆分为三个独立的阶段：
 
 在某些特定场景下，比如统计文章点赞数、视频播放量，写操作的频率可能达到“核弹级”，但数据本身的实时一致性要求不高，甚至可以容忍少量数据丢失。此时，“数据回写”方案便成了特定场景的利器。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760604903371-2f4f433d-8f05-4ef5-a4f5-3090e5b541cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0994-oxayz76xt46szloh/img-0e3ddd50f3c1.png)
 
 该方案的流程正如我们设计的“漏斗”图所示：
 
@@ -143,7 +143,7 @@ TCC 将一个大的操作拆分为三个独立的阶段：
 
 经过以上分析，我们可以得出一个清晰的决策框架。在面对具体业务需求时，你可以通过以下思路来选择最合适的方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760604925229-5215bbc8-43d5-4887-b1ab-743bcc2cd563.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0994-oxayz76xt46szloh/img-b49efedd5d69.png)
 
 1. **首先问自己：我的业务主要是读还是写？**
 

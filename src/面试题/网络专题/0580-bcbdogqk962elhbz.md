@@ -13,7 +13,7 @@ article: false
 
 > 来源：[URL vs URI](https://www.yuque.com/tulingzhouyu/db22bv/bcbdogqk962elhbz)
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1727678251778-b9d71c5e-974c-4468-aa40-6fd522bba1a6.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/网络专题/0580-bcbdogqk962elhbz/img-9a7dc24cd9bd.jpg)
 
 互联网的使用因人而异，有些人用它进行研究，有些人则用来交换信息或数据。在我们浏览网站和网页时，常常会遇到 URL 和 URI 这两个术语。由于它们的发音相似，很多人对它们之间的区别并不清楚。
 

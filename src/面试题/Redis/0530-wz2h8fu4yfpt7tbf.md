@@ -24,4 +24,4 @@ Redis的常用应用场景主要包括：
 
 需要注意根据具体场景合理使用，充分考虑内存容量和数据持久化等因素。同时，Redis也可与其他存储系统结合使用构建复杂应用架构。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1742883626681-4aeca697-fd2a-45a9-bcfe-b66cc4f746f1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0530-wz2h8fu4yfpt7tbf/img-2b0f9288f899.png)

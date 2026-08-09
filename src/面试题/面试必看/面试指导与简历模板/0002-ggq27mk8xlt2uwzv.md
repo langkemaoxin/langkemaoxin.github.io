@@ -19,7 +19,7 @@ article: false
 
 话不多说，先上大图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1750294607111-535461a0-8695-4e57-ac3e-1ff12ca0ef1c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/面试指导与简历模板/0002-ggq27mk8xlt2uwzv/img-b34c5006a12a.png)
 
 更多细节可：验证码TiMi
 

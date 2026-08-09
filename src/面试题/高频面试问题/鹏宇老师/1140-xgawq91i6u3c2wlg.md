@@ -429,13 +429,13 @@ Spring AI Alibaba 1.1 版本为 Java 开发者提供了强大的 AI 集成能力
 
 #### 1、新建项目：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766725964857-905b3ff4-d60c-4a34-b4dc-9a494baf1a57.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1140-xgawq91i6u3c2wlg/img-a2f53a5481d4.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766726264830-b662f4b5-d0db-492c-8c0e-953566d709e1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1140-xgawq91i6u3c2wlg/img-832c11d24464.png)
 
 #### 2、项目结构：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766726733396-fc553f5c-daff-47f8-88b4-1cf01b3b03ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1140-xgawq91i6u3c2wlg/img-071914a83980.png)
 
 #### 3、详细代码
 
@@ -943,4 +943,4 @@ public class WeatherController {
     `GET /weather/puns?location={location}` - 获取带有趣味描述的天气信息
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766727026846-4051b6d8-8e3f-4c01-9bf6-dea841f00700.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1140-xgawq91i6u3c2wlg/img-70f69017e34b.png)

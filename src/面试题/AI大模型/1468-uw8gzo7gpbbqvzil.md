@@ -15,7 +15,7 @@ article: false
 
 3月6日凌晨，阿里巴巴发布并开源全新的推理模型通义千问QwQ-32B。通过大规模强化学习，千问QwQ-32B在数学、代码及通用能力上实现质的飞跃，整体性能比肩DeepSeek-R1。在保持强劲性能的同时，千问QwQ-32B还大幅降低了部署使用成本，在消费级显卡上也能实现本地部署。
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1741243474620-4fc5af02-60d8-4e36-b2d9-6c64b2b029f5.webp?x-oss-process=image%2Fresize%2Cw_1031%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1468-uw8gzo7gpbbqvzil/img-b64f5a0bdb4d.webp)
 
 目前，千问QwQ-32B已在魔搭社区、HuggingFace及GitHub等平台基于宽松的Apache2.0协议开源，所有人都可免费下载模型进行本地部署，或者通过阿里云百炼平台直接调用模型API服务。
 具体链接如下：
@@ -26,7 +26,7 @@ article: false
 **如何实现本地部署QwQ-32B**
 如果想要快速本地部署尝试，可以借助Ollama快速部署
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1741243474629-84a0998b-98af-4395-810b-98588b354ccc.webp?x-oss-process=image%2Fresize%2Cw_1016%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1468-uw8gzo7gpbbqvzil/img-2d6e593a834f.webp)
 
 具体细节可以参考我之前的文章：
 [三分钟轻松搞定！Windows本地部署DeepSeek-R1推理模型，小白也能快速上手！](https://mp.weixin.qq.com/s?__biz=MzU1ODk1NTQ0Mg==&mid=2247485207&idx=1&sn=d8ac478fa0d83edde16df959ef616c91&scene=21#wechat_redirect)
@@ -35,17 +35,17 @@ article: false
 **通过阿里云百炼平台直接调用模型API服务**
 https://bailian.console.aliyun.com/#/model-market
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1741243474642-93f829f7-d674-4204-9c4f-078d54b2697a.webp?x-oss-process=image%2Fresize%2Cw_1031%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1468-uw8gzo7gpbbqvzil/img-236d43a884f7.webp)
 
 模型调用限时免费
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1741243474656-6807388e-2a8d-4cf3-bf7a-f8677452f0d2.webp?x-oss-process=image%2Fresize%2Cw_553%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1468-uw8gzo7gpbbqvzil/img-5adda60644e4.webp)
 
 **开通阿里云百炼账号，获取API-KEY**
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1741243474618-7d88db45-7ab9-4a11-a043-a5ec001708ad.webp?x-oss-process=image%2Fresize%2Cw_345%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1468-uw8gzo7gpbbqvzil/img-2568403a9082.webp)
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1741243475080-30920a05-436e-42b7-88ab-b7498f8fee86.webp?x-oss-process=image%2Fresize%2Cw_1031%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1468-uw8gzo7gpbbqvzil/img-4283c652c8d5.webp)
 
 **SpringBoot接入QwQ-32B实战**
 使用 Spring AI Alibaba 开发应用与使用普通 Spring Boot 没有什么区别，只需要增加 spring-ai-alibaba-starter 依赖，将 ChatClient Bean 注入就可以实现与模型聊天了。
@@ -108,6 +108,6 @@ import reactor.core.publisher.Flux;
 
 **4.启动服务后测试**
 
-![image](https://cdn.nlark.com/yuque/0/2025/webp/12590378/1741243475081-35f985ac-1610-49aa-a76b-4245af6bddfb.webp?x-oss-process=image%2Fresize%2Cw_1031%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1468-uw8gzo7gpbbqvzil/img-d4bea025a86a.webp)
 
 若有收获，就点个赞吧

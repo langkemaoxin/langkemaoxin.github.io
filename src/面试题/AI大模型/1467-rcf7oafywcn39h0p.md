@@ -15,7 +15,7 @@ article: false
 
 原本想在 IntelliJ IDEA 中接入 deepseek 的，打开官网 API 平台时，我沉默了
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739105096410-1654acad-3311-4acf-bc52-024b65280aac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-8a3b25c6ba77.png)
 
 不能充值了，好吧，到此结束，关灯睡觉。
 
@@ -23,19 +23,19 @@ article: false
 
 ## 一、注册硅基流动账号
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739105986181-4a73424a-b6e5-49b1-b9e2-ec819a8a7ef2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-25b082001faa.png)
 
 访问 [硅基流动](https://cloud.siliconflow.cn/i/wn4Ok7Iz)（[https://cloud.siliconflow.cn/i/wn4Ok7Iz](https://cloud.siliconflow.cn/i/wn4Ok7Iz)），直接点击注册（获得2000万的Tokens）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739106079768-aeac6c61-9103-404e-9212-d595aa2a44fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-b714b7946ccc.png)
 
 注册完成后，你会发现这里提供了丰富的模型资源，包括华为云部署的满血 R1 和 V3。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739106212194-646a808d-906e-4748-bce5-52db177d0998.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-08390e7fddcf.png)
 
 在左侧的 **API 密钥** 菜单栏中，生成你的 API 密钥。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739106334316-a0c41d6f-b712-4333-bf98-37e5cb55704b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-ba103e740737.png)
 
 ## 二、通过 Continue 插件接入 deepseek
 
@@ -47,11 +47,11 @@ article: false
 
 在Idea插件市场中搜索 **Continue** 并安装。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739106487693-7c437afe-1d4f-4212-a706-a36fdc1a3eab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-71ae44ff540c.png)
 
 安装完成后，分别点击右侧边栏的 **Continue** 图标和设置按钮。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739106592104-717b45a2-4d71-4061-9631-1df524b6b9b2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-53bf13f1cc01.png)
 
 此时，你将看到 Continue 的配置文件。我简单地写了一些配置，你可以直接拷贝以下配置，并替换为你在硅基流动上生成的 API 密钥。如果需要更多配置，请参考插件官网：[配置文件参考](https://docs.continue.dev/reference)([https://docs.continue.dev/reference](https://docs.continue.dev/reference))。
 
@@ -165,16 +165,16 @@ article: false
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739104029860-caa8b8cd-c1b2-43ca-b1c4-bea4b00244c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-d779536644d7.png)
 
 在对话窗口中，你将看到我们加入的模型。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739104174940-0fdf3d7e-94f5-4c0a-9036-6e4f9973de0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-bc3d8e555dbe.png)
 
 我们来测试一下。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739104425836-de04aa93-4c1f-41c6-a7be-e6652d3cba49.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-8919565aaef7.png)
 
 帮我用Java实现一个冒泡排序。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1739104931054-7a9150ae-9db3-40eb-9926-dfef41e1ef6a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/AI大模型/1467-rcf7oafywcn39h0p/img-00ffef3bed48.png)

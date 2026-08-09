@@ -33,7 +33,7 @@ article: false
 
 下面放一张JWT官网的一张图，描述的是JWT的认证过程，可以先看看这张图，有个印象：
 
-![image](https://cdn.nlark.com/yuque/0/2023/webp/8380143/1683893534867-f9e66ac4-3e8f-4976-a963-81f6d6923174.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0141-ms1gpvnvnnxci5zx/img-e86e8bb0b790.webp)
 
 下面简单讲讲JWT的概念：
 

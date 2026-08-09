@@ -17,51 +17,51 @@ article: false
 
 **整体架构 **
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737364842297-52298ffb-67f5-4df6-87c6-e41a06d6871d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-49edeb3db0de.png)
 
 **核心流程：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737364892946-e35fefcf-8cec-4469-9a0a-dc34e37bd370.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-fc4d6a497c64.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737442872385-c44fe549-9cc6-44cd-90ba-247488fc51a4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-a25db092c850.png)
 
 **消息分发流程：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737441811053-2e22d684-b811-4c9c-b4f5-8fce5d50549b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-b771d6a24af2.png)
 
 ** 消息拉取流程：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737441857236-341d8c10-95c5-445a-8c0a-3c324d538d4d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-7c2e06b98d4a.png)
 
 **长连接消息分发整体架构：**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737443125832-01782966-22a4-4990-8bc3-aa90d75e4102.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-720a85155a27.png)
 
 **k8s集群部署**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1736846508090-c6092266-4fe4-4d18-83cc-0be4e03276f5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-4ea3de80857d.png)
 
 ## IM 核心功能
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737364993084-3232c7ad-cf61-4f97-b970-5ab3fa91b2c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-f60eb433e960.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365035999-45eb9a76-eb8b-4108-a471-1e3c68c5714f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-8ac262f55422.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365075677-b17cf636-4365-4b52-aea1-d61a2994874c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-d4018c235a9d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365108080-7a6ffd22-4047-4266-965a-58659f2c4d14.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-0a8a81e25548.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365122748-e2ecd8ea-cb88-4cd8-b9cf-9fc1745918b1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-6b6aed36dada.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365139764-4e41a1e2-abc9-4101-b4fc-6e0112c5d218.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-6cee2f79697d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365152547-5750d3ab-4b29-42a1-b243-13852537d85a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-93cdc55547fb.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365172844-3b76ad2c-d624-4aaf-aa18-6a1045181615.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-a6b15cc04963.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737365198583-5f079ef2-39b0-4b47-a591-b77561992aa9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-11c077b958b6.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737442693820-df183811-5e0d-4b1f-a8ec-f9bff76f66f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-f1314eb8992e.png)
 
 ### [竞品方案类比](https://www.yuque.com/tianming-aroh0/sagnbd)
 
@@ -69,12 +69,12 @@ article: false
 **微信**
 虽然微信很多基础框架都是自研，但这并不妨碍我们理解微信的架构设计。微信采用的主要是：写扩散 + 推拉结合。由于群聊使用的也是写扩散，而写扩散很消耗资源，因此微信群有人数上限（目前是 500）。所以这也是写扩散的一个明显缺点，如果需要万人群就比较难了。可以看出，微信采用了多数据中心架构
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944678627-6d46ab8b-928a-4f30-ad10-00ac2609daea.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_316%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-4557d999b12f.png)
 
 微信每个数据中心都是自治的，每个数据中心都有全量的数据，数据中心间通过自研的消息队列来同步数据。为了保证数据的一致性，每个用户都只属于一个数据中心，只能在自己所属的数据中心进行数据读写，如果用户连了其它数据中心则会自动引导用户接入所属的数据中心。而如果需要访问其它用户的数据那只需要访问自己所属的数据中心就可以了。同时，微信使用了三园区容灾的架构，使用 Paxos 来保证数据的一致性。
 微信的 ID 设计采用的是：基于申请 DB 步长的生成方式 + 用户级别递增。如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679460-37abff7f-5b4d-4a03-b73d-05c0107e24b4.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_512%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-07d17554be79.png)
 
 微信的序列号生成器由仲裁服务生成路由表（路由表保存了 uid 号段到 AllocSvr 的全映射），路由表会同步到 AllocSvr 跟 Client。如果 AllocSvr 宕机的话会由仲裁服务重新调度 uid 号段到其它 AllocSvr。
 **钉钉**
@@ -84,12 +84,12 @@ article: false
 什么？Twitter 不是 Feeds 系统吗？不是讨论 IM 的吗？是的，Twitter 是 Feeds 系统，但 Feeds 系统跟 IM 系统其实有很多设计上的共性，研究下 Feeds 系统有助于我们在设计 IM 系统时进行参考。再说了，研究下 Feeds 系统也没有坏处，扩展下技术视野嘛。
 Twitter 的自增 ID 设计估计大家都耳熟能详了，即大名鼎鼎的 [Snowflake](https://xie.infoq.cn/link?target=https%3A%2F%2Fdeveloper.twitter.com%2Fen%2Fdocs%2Fbasics%2Ftwitter-ids)，因此 ID 是全局递增的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679558-1279c0e5-353e-4365-8324-bf2d0f8c6449.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1126%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-d449715f036a.png)
 
 Twitter 一开始使用的是写扩散模型，Fanout Service 负责扩散写到 Timelines Cache（使用了 Redis），Timeline Service 负责读取 Timeline 数据，然后由 API Services 返回给用户。
 但由于写扩散对于大 V 来说写的消耗太大，因此后面 Twitter 又使用了写扩散跟读扩散结合的方式。如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679997-d2e833ad-a6c0-4a41-8bcf-aeefaac35a5e.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1126%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-1a0b743d1494.png)
 
 对于粉丝数不多的用户如果发 Twitter 使用的还是写扩散模型，由 Timeline Mixer 服务将用户的 Timeline、大 V 的写 Timeline 跟系统推荐等内容整合起来，最后再由 API Services 返回给用户。
 **抖音**
@@ -115,7 +115,7 @@ Twitter 一开始使用的是写扩散模型，Fanout Service 负责扩散写到
 
 **原理** ：读扩散架构下，发送消息时不立即写入所有收信人信箱，而是先写入消息中心，用户读取消息时再从消息中心拉取。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679269-0e74b923-33d9-4da9-a699-ea2f4e7955d5.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1126%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-66721613077d.png)
 
 我们先来看看**读扩散**。如上图所示，A 与每个聊天的人跟群都有一个信箱（有些博文会叫 Timeline），A 在查看聊天信息的时候需要读取所有有新消息的信箱。这里的读扩散需要注意与 Feeds 系统的区别，在 Feeds 系统中，每个人都有一个写信箱，写只需要往自己的写信箱里写一次就好了，读需要从所有关注的人的写信箱里读。但 IM 系统里的读扩散通常是每两个相关联的人就有一个信箱，或者每个群一个信箱。
 读扩散的优点：
@@ -130,7 +130,7 @@ Twitter 一开始使用的是写扩散模型，Fanout Service 负责扩散写到
 
 示意图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679291-83a2ef89-8eb8-4f1e-b0e2-804b2e66b66a.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-9f4dccc9620f.png)
 
 在**写扩散**中，每个人都只从自己的信箱里读取消息，但写（发消息）的时候，对于单聊跟群聊处理如下：
 ●单聊：往自己的信箱跟对方的信箱都写一份消息，同时，如果需要查看两个人的聊天历史记录的话还需要再写一份（当然，如果从个人信箱也能回溯出两个人的所有聊天记录，但这样效率会很低）。
@@ -289,13 +289,13 @@ CREATE TABLE conversation_mapping (
 
 #### 推模式简化图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679180-b6df0443-4cbc-4685-a1e9-56b402a15b49.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-c8da9f9b1bae.png)
 
 如上图所示，正常情况下，用户发的消息经过服务器存储等操作后会推给接收方的所有端。但推是有可能会丢失的，最常见的情况就是用户可能会伪在线（是指如果推送服务基于长连接，而长连接可能已经断开，即用户已经掉线，但一般需要经过一个心跳周期后服务器才能感知到，这时服务器会错误地以为用户还在线；伪在线是本人自己想的一个概念，没想到合适的词来解释）。因此如果单纯使用推模式的话，是有可能会丢失消息的。
 
 #### 推拉结合模式简化图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679431-bbc46dd3-aaf9-4670-a83a-bc22c22fcf82.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-f5aef00264a7.png)
 
 可以使用推拉结合模式解决推模式可能会丢消息的问题。在用户发新消息时服务器推送一个通知，然后前端请求最新消息列表，为了防止有消息丢失，可以再每隔一段时间主动请求一次。可以看出，使用推拉结合模式最好是用写扩散，因为写扩散只需要拉一条时间线的个人信箱就好了，而读扩散有 N 条时间线（每个信箱一条），如果也定时拉取的话性能会很差。
 
@@ -418,7 +418,7 @@ tips： 回放时，读取数据顺序是: local cache -> Redis -> mysql。
 
 在聊天室进行自动销毁时，需先判断当前聊天室是否应该是本节点的。如果不是，跳过销毁逻辑，避免 Redis 中的数据因为销毁逻辑而丢失。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737442108672-b6cb1779-a18a-452f-abe5-dc1111d680f0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-3f343be29318.png)
 
 1）在扩容时：我们根据聊天室的活跃程度逐步转移人员。
 
@@ -445,7 +445,7 @@ tips： 回放时，读取数据顺序是: local cache -> Redis -> mysql。
 
 更多详情转移到**用户在线状态怎么做**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737443027508-a40858b1-5cc2-4a80-aad0-3bc618e92ba7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-eb2d196b27e0.png)
 
 ### 消息的实时性
 
@@ -478,13 +478,13 @@ tips： 回放时，读取数据顺序是: local cache -> Redis -> mysql。
 很多 IM 系统都需要展示用户的状态：是否在线，是否忙碌等。主要可以使用 Redis 或者分布式一致性哈希来实现用户在线状态的存储。
 1，Redis 存储用户在线状态
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944679996-eaef37d6-84b7-42de-8493-e5c51b2c32e1.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-5200821ae750.png)
 
 看上面的图可能会有人疑惑，为什么每次心跳都需要更新 Redis？如果我使用的是 TCP 长连接那是不是就不用每次心跳都更新了？确实，正常情况下服务器只需要在新建连接或者断开连接的时候更新一下 Redis 就好了。但由于服务器可能会出现异常，或者服务器跟 Redis 之间的网络会出现问题，此时基于事件的更新就会出现问题，导致用户状态不正确。因此，如果需要用户在线状态准确的话最好通过心跳来更新在线状态。
 由于 Redis 是单机存储的，因此，为了提高可靠性跟性能，我们可以使用 Redis Cluster 或者 Codis。
 2，分布式一致性哈希存储用户在线状态
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944680071-6f3376e0-a466-4d74-a521-5991dfd4d640.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-2ada956a5cb6.png)
 
 使用分布式一致性哈希需要注意在对 Status Server Cluster 进行扩容或者缩容的时候要先对用户状态进行迁移，不然在刚操作时会出现用户状态不一致的情况。同时还需要使用虚拟节点避免数据倾斜的问题。
 
@@ -514,7 +514,7 @@ tips： 回放时，读取数据顺序是: local cache -> Redis -> mysql。
 
 对于 IM 来说，历史消息的存储有很强的时间序列特性，时间越久，消息被访问的概率也越低，价值也越低。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944680489-0e828a6b-10e4-4281-b3c0-4ddbf979b75a.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-ee27ec7d96c4.png)
 
 如果我们需要存储几年甚至是永久的历史消息的话（电商 IM 中比较常见），那么做历史消息的冷热分离就非常有必要了。数据的冷热分离一般是 HWC（Hot-Warm-Cold）架构。对于刚发送的消息可以放到 Hot 存储系统（可以用 Redis）跟 Warm 存储系统，然后由 Store Scheduler 根据一定的规则定时将冷数据迁移到 Cold 存储系统。获取消息的时候需要依次访问 Hot、Warm 跟 Cold 存储系统，由 Store Service 整合数据返回给 IM Service。
 
@@ -558,7 +558,7 @@ tips： 回放时，读取数据顺序是: local cache -> Redis -> mysql。
 
 ** 其次**：针对上行消息设计流控机制。为了能全局控制上行消息体量，设计了逐级流控方案。上层级根据下层级能够支撑处理能力设计相对较粗粒度的本地流控机制。在弹幕反垃圾业务阶段，因需要全局控制消息量，因此采用分布式全局流控方案；弹幕广播阶段则根据业务广播需求再一次进行消息流控。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1737443481547-f7d9ff42-6f79-4c8e-a540-78b4d786e082.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-2cf923916062.png)
 
 **上行消息通过反垃圾监测后被投递到弹幕服务处理。**基于优先级队列的弹幕服务首先按业务划分不同的消息队列，例如：系统广播、高优先级礼物、低优先级、弹幕，然后按队列分配消息比例，最后根据单位时间（1秒）内用户需要接收到的消息量计算各个队列应该投递的消息数量。在实际投递消息的过程中，若前一个队列消息量不足，可将剩余的消息数量叠加到下一个队列，以确保每一个周期都发送足够的消息给用户。
 
@@ -577,7 +577,7 @@ tips： 回放时，读取数据顺序是: local cache -> Redis -> mysql。
 4，DNS + 4 层负载均衡：4 层负载均衡一般比较稳定，很少改动，比较适合于长连接。
 对于长连接的接入层，如果我们需要更加灵活的负载均衡策略或者需要做灰度的话，那我们可以引入一个调度服务，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1734944680525-105954a9-0621-4023-ae69-8b80ec3d10c4.png?x-oss-process=image%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0796-rb7gfu08kchy88sx/img-8db134f97e70.png)
 
 Access Schedule Service 可以实现根据各种策略来分配 Access Service，例如：
 ●根据灰度策略来分配

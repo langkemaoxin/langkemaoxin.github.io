@@ -13,11 +13,11 @@ article: false
 
 > 来源：[电商大促如何落地 TCC 事务，避免“钱扣了，货没发”？](https://www.yuque.com/tulingzhouyu/db22bv/fd68ztyku4etr57v)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759845843692-b8aca6d1-03df-4f6e-b91f-af46547fcfe8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1008-fd68ztyku4etr57v/img-e97bec6f6ba0.png)
 
 ## **引言：微服务时代的“数据鸿沟”**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759845834525-3fee81b5-2e27-4746-b06b-581899d87b2b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1008-fd68ztyku4etr57v/img-d332cbf9f88e.png)
 
 在电商大促的洪峰流量下，订单创建、库存扣减、积分发放、优惠券核销等一系列操作被拆分到不同的微服务中。这种架构带来了高度的灵活性和可扩展性，但也埋下了一颗危险的“地雷”：**数据一致性问题**。
 
@@ -35,7 +35,7 @@ TCC的核心思想是将一个大的业务操作，拆分为三个由“事务�
 
 这个流程可以用下图清晰地表示：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759845806083-0e25a220-7668-4d4d-810f-28ea0264b1db.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1008-fd68ztyku4etr57v/img-6b8f67ca2fcc.png)
 
 理论看似简单，但在真实的生产环境中，网络延迟、程序Bug、进程崩溃等异常情况，会给这个标准流程带来三大严峻挑战。
 
@@ -47,7 +47,7 @@ TCC的核心思想是将一个大的业务操作，拆分为三个由“事务�
 
 **问题描述：** 由于网络重试、协调器故障恢复等原因，`Confirm`或`Cancel`指令可能会被重复发送。如果业务接口没有做幂等性设计，就会导致灾难性后果，例如，用户的钱被重复扣除，或者一次失败的订单补偿了双倍库存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759845866958-8ee35809-a87f-420a-a39e-b02281b31294.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1008-fd68ztyku4etr57v/img-3635b3a4b675.png)
 
 **解决方案：为所有阶段设计状态机，利用事务状态防止重复执行。**
 
@@ -109,7 +109,7 @@ public void confirm(String tx_id) {
 
 **问题描述：** 在极端情况下，协调器调用某个服务的`Try`请求因为网络拥堵而超时。协调器判定该分支失败，于是发起了`Cancel`请求。但`Cancel`请求却比拥堵的`Try`请求更早到达了业务服务。此时，服务根本没有执行过`Try`，业务资源也未被预留。如果不加处理，`Cancel`操作可能会错误地修改了业务数据（例如，为一个从未预留过的账户增加了余额）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759845876788-7e3f76f2-3c1c-4baa-af4a-11ce933a402c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1008-fd68ztyku4etr57v/img-04cf284d9eff.png)
 
 **解决方案：阻止没有**`Try`**的**`Cancel`**。**
 
@@ -148,7 +148,7 @@ public void cancel(String tx_id) {
 
 **问题描述：** 这是空回滚的“孪生兄弟”。`Try`请求因为网络拥堵长时间未到达服务端。协调器超时后发起`Cancel`，并且`Cancel`已经成功执行（在上一步“防空回滚”逻辑下，`Cancel`可能只是记录了一条“已取消”的日志）。在这之后，那个“迟到”的`Try`请求终于到达了服务端。此时，全局事务已经结束，但这个`Try`请求却在不知情的情况下预留了业务资源，导致这部分资源被**永久悬挂**，无法被释放。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1759845886035-50d184d3-8333-4b0e-8e03-2ef137660058.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1008-fd68ztyku4etr57v/img-72fd4f23f7f3.png)
 
 **解决方案：拒绝迟到的**`Try`**请求。**
 

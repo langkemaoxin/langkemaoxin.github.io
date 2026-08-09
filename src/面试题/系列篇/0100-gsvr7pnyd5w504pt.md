@@ -13,7 +13,7 @@ article: false
 
 > 来源：[😇 史上最全MySQL各种锁详解](https://www.yuque.com/tulingzhouyu/db22bv/gsvr7pnyd5w504pt)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1685274115329-c6798541-2e59-483d-832c-4c1012b8f3d6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0100-gsvr7pnyd5w504pt/img-de27313096af.png)
 
 一、前言
 
@@ -42,7 +42,7 @@ MySQL全局锁的典型使用场景是，进行一些需要确保整个数据库
 
 虽然全局锁有其应用场景，但是过度使用或不正确使用全局锁可能导致性能问题。因此，根据应用的特性和需求选择适合的锁策略是很重要的。对于大多数应用，优先使用更精细粒度的锁，如行锁和表锁，可以更有效地处理并发请求，同时避免全局锁的开销。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1685340025512-b9227f96-0949-4b63-af12-6e7f2af21ce4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0100-gsvr7pnyd5w504pt/img-f1d6ac5a84dd.png)
 
 ### Q: 全局锁有哪些应用场景
 

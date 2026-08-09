@@ -39,7 +39,7 @@ INSERT INTO student_invalid VALUES
 
 **解决方案**：拆分表，将多值字段拆分为独立表，确保每列原子化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340358611-26cfaa63-0e90-4ae0-80e2-90dff78c3fb5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-d1a739084820.png)
 
 ```sql
 -- 符合1NF的设计：拆分学生表和电话表
@@ -94,7 +94,7 @@ INSERT INTO order_invalid VALUES
 
 **解决方案**：拆分表，将 “部分依赖” 的字段抽离到独立表，确保非主键字段完全依赖主键。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340385483-b25b08ab-1f05-48a0-8742-a7b0abcc61a7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-f641a1ee6548.png)
 
 ```sql
 -- 符合2NF的设计：拆分订单详情表和商品表
@@ -146,7 +146,7 @@ INSERT INTO employee_invalid VALUES
 
 **解决方案**：拆分表，将 “传递依赖” 的字段抽离到独立表，确保非主键字段直接依赖主键。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340414517-85e32b8b-fc30-4b21-99ea-04dc72d6466e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-a6745f9208d4.png)
 
 ```sql
 -- 符合3NF的设计：拆分员工表和部门表
@@ -207,7 +207,7 @@ WHERE o.user_id = 12345;
 
 **反范式解决方案**：在订单表中冗余 “用户名、地址” 字段，避免 JOIN。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340439812-9433cf90-48aa-411f-969d-2c13a5d4f0ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-f3e785cc8b17.png)
 
 ```sql
 -- 反范式设计：订单表冗余用户名、地址
@@ -262,7 +262,7 @@ GROUP BY p.product_name, d.month;
 
 **反范式解决方案**：采用 “星型模型”，在事实表中冗余维度信息（产品名、月份）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340492756-0c4408d9-10c6-4bfc-94fa-a0b22c9b4df2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-153c486f6b45.png)
 
 ```sql
 -- 反范式设计：销售事实表冗余产品名、月份
@@ -310,7 +310,7 @@ GROUP BY u.username;
 
 **反范式解决方案**：在用户表中冗余 “好友数量” 字段，写入时更新，读取时直接返回。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340518063-03bb643c-894c-45e0-8089-335fff459ef1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-8c972d877449.png)
 
 ```sql
 -- 反范式设计：用户表冗余好友数量
@@ -356,7 +356,7 @@ WHERE a.category_id = 2;
 
 **反范式解决方案**：在文章表中冗余 “分类名称” 字段，单表查询即可完成需求。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340546011-2e28f2ca-c683-4dcf-8fe2-866075b9a056.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-c502d837a660.png)
 
 ```sql
 -- 反范式设计：文章表冗余分类名称
@@ -400,7 +400,7 @@ INSERT INTO user_profile (user_id, birthday, hobby, job) VALUES (12345, '1990-01
 
 **反范式解决方案**：将所有用户信息合并为一张表，快速完成开发，上线后再按需拆分。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340576528-d21e78d3-e605-40f8-8287-641e6dcb6c91.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-b9a5aac2a44f.png)
 
 ```sql
 -- 反范式设计：单表存储所有用户信息
@@ -446,7 +446,7 @@ JOIN task_status s ON t.status_id = s.status_id;
 
 **反范式解决方案**：在任务表中冗余 “项目名称、责任人姓名、状态描述”，表结构自解释。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340608992-93b9c498-68ba-4c86-9e6a-6d4591f63093.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-3a280fcc2e56.png)
 
 ```sql
 -- 反范式设计：任务表冗余名称字段
@@ -491,7 +491,7 @@ WHERE u.user_id = 12345;
 
 **反范式解决方案**：在用户表中冗余 “积分、等级” 字段，写入时更新，读取时直接返回。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762340643585-b9f5f076-1318-4f54-93df-04196dea3f81.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1176-uunrnmxpvdy5emks/img-f18aa3ccbf9f.png)
 
 ```sql
 -- 反范式设计：用户表冗余积分、等级

@@ -13,7 +13,7 @@ article: false
 
 > 来源：[为什么MySQL用B+树，MongoDB用B树](https://www.yuque.com/tulingzhouyu/db22bv/hzcgigs9ixa139nq)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765203341042-c9d2c74e-39fa-47dd-b1f9-4c38715041fd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0926-hzcgigs9ixa139nq/img-37eec5d5e347.png)
 
 很多开发者在面试或选型时，常把 MySQL 和 MongoDB 的区别简单归结为“关系型 vs 非关系型”。但作为架构师，我们需要向下再挖一层：**它们底层的数据结构差异，究竟决定了怎样的 I/O 命运？**
 
@@ -23,7 +23,7 @@ article: false
 
 ### 1. 结构 DNA：数据究竟存在哪？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765203347653-a14357a2-dc16-4ed1-abc1-2e0dd025b289.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0926-hzcgigs9ixa139nq/img-668d5faa725e.png)
 
 如上图所示，这两种树最直观的区别在于**“数据（Data）”存放的位置**：
 
@@ -41,7 +41,7 @@ article: false
 
 ### 2. MySQL 的杀手锏：为什么范围查询它是王？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765203361905-cebb1f13-6c1b-49eb-8341-3e339c1d7bdf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0926-hzcgigs9ixa139nq/img-5eeb8517ac9f.png)
 
 当你执行 `SELECT * FROM users WHERE id > 100` 时，MySQL 展示了它的统治力。
 
@@ -56,7 +56,7 @@ article: false
 
 ### 3. MongoDB 的极致：单点读取的 O(1) 诱惑
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765204251168-42cb2fad-4aac-4b7f-aba7-80c14548fe7d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0926-hzcgigs9ixa139nq/img-f694f371ed87.png)
 
 既然 B+ 树这么好，为什么 B 树（MongoDB 的理论原型）还有立足之地？请看上图的“高光时刻”。
 
@@ -71,7 +71,7 @@ article: false
 
 ### 4. 架构师的真相时刻：理论 vs 现实
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765204393110-a802cef0-9325-415d-88d0-89f360dd4f4c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0926-hzcgigs9ixa139nq/img-82cea44f940d.png)
 
 这里有一个反直觉的事实，也是本文最大的“反转”。
 
@@ -89,7 +89,7 @@ article: false
 
 ### 5. 终极总结：如何选型？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765204404241-5e995f16-74a5-46f0-8b85-cb26377eae7e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0926-hzcgigs9ixa139nq/img-70d27b95740e.png)
 
 抛开底层实现细节，从应用层来看，两者的性能特征总结如下：
 

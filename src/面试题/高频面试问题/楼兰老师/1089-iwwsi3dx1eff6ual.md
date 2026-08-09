@@ -17,7 +17,7 @@ article: false
 
 今天咱们聊一个大模型面试中的高频难题：**如何保证实时性和多轮对话一致性？**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160582345-2f5cd939-9316-413f-a85d-e3cf556ce389.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-25407d5fa322.png)
 
 这道题看似简单，实则非常考验你的综合能力。回答好了，能让面试官眼前一亮；回答不好，很容易暴露你对系统设计和工程实践的理解不足。
 
@@ -29,7 +29,7 @@ article: false
 
 首先你得明白，面试官问这道题，背后到底想考察你什么？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160590347-6e98ffc2-137b-4e73-8d77-55cf1528a60f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_94%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-7bbdb1084224.png)
 
 其实就三点：
 
@@ -43,7 +43,7 @@ article: false
 
 ## 【第二部分：答题思路怎么组织？】
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160601442-545f2300-c951-4a9f-93dd-b967c1d9d1bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-330475bcf913.png)
 
 明白了面试官的意图，接下来咱们看看怎么组织答案。我建议按三步走：
 
@@ -59,7 +59,7 @@ article: false
 
 好，咱们先看第一个难点：实时性。怎么让响应速度飞起来？我总结了四大手段。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160615097-bd41b262-2baa-4dbc-90c9-6d56a7ca0087.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-2b53de594477.png)
 
 ### 1. **模型侧优化**
 
@@ -101,7 +101,7 @@ article: false
 
 说完实时性，咱们再看第二个难点：多轮对话一致性。核心挑战是什么？就是模型要记住上下文，不能聊着聊着就忘了前面说啥。怎么解决？我总结了三大策略。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160627139-5bb41c9f-4938-47af-8339-fb2c42ee4b23.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_94%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-63f911b29541.png)
 
 ### 1. **上下文窗口管理**
 
@@ -137,7 +137,7 @@ article: false
 
 说完了实时性和一致性的具体优化手段，咱们站在更高的层次，看看整个系统的架构应该怎么设计。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160641633-467ade9e-2202-4103-b255-7f1fe98f78d5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-e20503ea6a04.png)
 
 一个完整的生产级系统，大概是这样的：
 
@@ -161,7 +161,7 @@ article: false
 
 讲了这么多方案，你可能觉得都很完美。但真实场景中，你会面临很多权衡，没有绝对的最优解。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160654290-20af9804-8dcd-4ca0-a868-7a0b85081352.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_60%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-4d36f9838188.png)
 
 ### 1. **实时性 vs 一致性**
 
@@ -199,7 +199,7 @@ article: false
 
 说了这么多方案，怎么知道做得好不好？得用数据说话，看评估指标。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160669037-ea8c20ff-f6f2-493a-af89-05b3cef5faaf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-2bee815bcc4c.png)
 
 我把指标分成两大类：
 
@@ -225,7 +225,7 @@ article: false
 
 这些指标要建立完整的监控体系，实时追踪，出问题及时响应。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160698957-a1c22d09-f308-48e6-b844-349144ba0dca.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_58%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-ab08431d99aa.png)
 
 ---
 
@@ -233,7 +233,7 @@ article: false
 
 好，说了这么多，咱们来总结一下完整的答题框架。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160715067-db5e5b00-1bcd-4508-b15d-747b2286a65f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_85%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-38b5bda4a1f0.png)
 
 **开场部分**，你要先说明自己理解了面试官的考察意图，然后快速梳理一下答题思路，让面试官知道你接下来要讲什么。
 
@@ -249,7 +249,7 @@ article: false
 
 ## 【结尾】
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1762160725661-e2ac79d9-9c07-4e05-a442-483f3fcc3213.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1089-iwwsi3dx1eff6ual/img-2ec6a5314fd8.png)
 
 好了，今天的分享就到这里。最后再总结四个词：
 

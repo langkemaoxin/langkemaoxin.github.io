@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752367321331-2ff57137-31fa-4ad0-8005-882f77461720.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1406-plxame44uzef2zaa/img-938716206b5b.png)
 
 在面试中回答“模型监控指标设计”问题时，需结合 **技术原理 + 实际场景 + 方法论**，展示系统性思维。以下是核心思路：
 
@@ -28,7 +28,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752367360975-8908d5ab-e72b-447f-8a75-c0b26dd692ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1406-plxame44uzef2zaa/img-f86981a2c250.png)
 
 #### **场景：电商推荐系统的实时模型监控**
 
@@ -45,7 +45,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752367381426-a172a731-f424-4d26-bbb6-9c02df55900b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1406-plxame44uzef2zaa/img-40234b6ab079.png)
 
 #### **1. 模型性能监控指标**
 
@@ -106,7 +106,7 @@ article: false
 
 ### 四、总结归纳
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752367394477-063effe1-06aa-4616-be3b-09be7773070a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1406-plxame44uzef2zaa/img-97db0b150250.png)
 
 1. **指标设计原则**：
 

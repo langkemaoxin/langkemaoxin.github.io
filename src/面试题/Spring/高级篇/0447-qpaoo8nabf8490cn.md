@@ -15,7 +15,7 @@ article: false
 
 在多线程环境下，Spring事务管理默认情况下无法保证全局事务的一致性。这是因为Spring的本地事务管理是基于线程，每个线程都有自己的独立事务。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1743572856343-6a94e555-f30f-4f67-95cd-585a14434d6b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/高级篇/0447-qpaoo8nabf8490cn/img-0b7f03c85a1d.png)
 
 Spring的事务管理通常将事务信息存储在ThreadLocal中（为了实现事务传播），这意味着每个线程只能拥有一个事务。这确保了在单个线程内的数据库操作处于同一个事务中，保证了原子性。
 
@@ -71,7 +71,7 @@ Spring的事务管理通常将事务信息存储在ThreadLocal中（为了实现
 
 分布式事务如果不懂，可以先去了解：
 
-![](https://www.yuque.com/tulingzhouyu/db22bv/veg93i11n9qqs45e?singleDoc#)
+[https://www.yuque.com/tulingzhouyu/db22bv/veg93i11n9qqs45e?singleDoc#](https://www.yuque.com/tulingzhouyu/db22bv/veg93i11n9qqs45e?singleDoc#)
 
 这里介绍2pc手动实现方式：
 

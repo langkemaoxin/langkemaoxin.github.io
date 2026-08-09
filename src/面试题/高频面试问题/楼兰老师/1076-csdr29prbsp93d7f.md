@@ -15,7 +15,7 @@ article: false
 
 不同程序员之间的差距在哪里？ 是发际线有多高？还是会背多少个API？还是PPT画得有多好？或者是AI用得有多溜？ 都是，但又都不全是。这中间有一道巨大的鸿沟，即便是AI也无法弥补。这道鸿沟叫——**“思维的颗粒度”**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1767157789403-7ee622e5-5669-401f-829b-23aa79dade36.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1076-csdr29prbsp93d7f/img-8c2f2914f0a3.png)
 
 很多同学写了五年代码，API越来越熟，可能只是把第一年的经验重复了五年。你没有尝试过去接受更多的思想，那你的技术，也就定在了那个层次。
 
@@ -33,7 +33,7 @@ article: false
 
 对于初级或者中级工程师来说，这个需求通常会触发一种“肌肉记忆”般的线性思维。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1767157803765-d953fe47-031f-4dbc-a819-ba88151472e8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1076-csdr29prbsp93d7f/img-386b82a87fb7.png)
 
 第一步，为了不影响业务执行效率，会把访问记录发送到Kafka，再从kafka里消费访问日志，进行专门的统计。
 
@@ -63,7 +63,7 @@ article: false
 
 发现了问题的症结，我们就能进入第二层思维。 在设计系统时，首先要问：**我们如何定义时间？以哪个时间为准？**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1767157817330-bf33b0b5-e5b5-4ae4-b803-62e0c971214c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1076-csdr29prbsp93d7f/img-cb91f7072e62.png)
 
 这里我们需要引入流计算中至关重要的**时间语义**概念：
 
@@ -81,7 +81,7 @@ article: false
 
 确定了使用 Event Time，我们就解决了所有问题吗？ 并没有。我们迎来了分布式系统中最棘手的难题——**乱序（Out-of-Order）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1767157834134-baa41992-aa3b-408b-ac34-6e512030a2d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1076-csdr29prbsp93d7f/img-228eb82fba96.png)
 
 在真实的网络环境中，数据到达的顺序往往是不确定的。 可能12:05的数据先到了，而12:04的数据因为路由切换或网络重传，还在路上。
 
@@ -99,7 +99,7 @@ article: false
 
 为了解决乱序问题，Flink 引入了 **Watermark（水位线）** 机制。 从本质上讲，Watermark 是一种**基于概率的承诺**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1767157844608-d1b33890-b696-44ca-8b21-65b76b68cdc4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1076-csdr29prbsp93d7f/img-3123d903df8e.png)
 
 有经验的程序员会根据业务对延迟的容忍度，设定一个规则，比如：“我们认为数据在网络中的最大延迟通常不超过1秒。” 那么，Watermark 就是当前观测到的最大事件时间减去这1秒。
 
@@ -117,7 +117,7 @@ Watermark 机制，实际上是程序员人为地引入了**计算延迟**，用
 
 对于金融、计费等关键业务，**数据丢失是不可接受的**。 因此，我们需要第五层思维——**多重兜底机制**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1767157854921-88ba1daa-6838-4bb8-8227-24763f0c714f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1076-csdr29prbsp93d7f/img-eab96f977a6b.png)
 
 Flink 提供了两级保障： 第一级：**Allowed Lateness（允许迟到）**。 我们可以设置窗口在Watermark触发计算后，依然保留一段时间的状态（比如10分钟）。 在这10分钟内，每当有迟到数据到达，窗口会重新聚合计算，并输出修正后的结果。这保证了在一定容忍度内的数据最终一致性。
 
@@ -129,7 +129,7 @@ Flink 提供了两级保障： 第一级：**Allowed Lateness（允许迟到）*
 
 #### 结尾：技术态度决定职业高度
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1767157864918-252e60de-2b29-4ae0-8769-d59f3d59fbe6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1076-csdr29prbsp93d7f/img-51d50daa427a.png)
 
 回顾刚才的推演，我们可以清晰地看到思维的进阶路径：
 

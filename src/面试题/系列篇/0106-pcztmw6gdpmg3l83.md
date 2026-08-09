@@ -27,13 +27,13 @@ RocketMQ是一款由阿里巴巴开源的分布式消息中间件。它具有低
 - **NameServer**：可以理解成注册中心，负责更新和发现Broker服务。在NameServer的集群中，NameServer与NameServer之间是没有任何通信的，它是无状态的。
 - **Broker**：可以理解为消息中转角色，负责消息的存储和转发，接收生产者产生的消息并持久化消息；当用户发送的消息被发送到Broker时，Broker会将消息转发到与之关联的Topic中，以便让更多的接收者进行处理。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682494557603-cdaeec45-92ee-49c4-8df1-6f567111f8b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-b3d392ca0ef6.png)
 
 ### 1.2.消息模型
 
 ### 1.3.部署模型
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682494599538-544c73a6-9681-4e9c-8ed6-4b09c12971b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-c5a43eeb88d8.png)
 
 ## 2.下载RocketMQ
 
@@ -53,7 +53,7 @@ Github地址：[https://github.com/apache/rocketmq](https://github.com/apache/ro
 [root@localhost bin]# uname -a
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401176294-e504aa3a-f6e1-469d-b175-7b31bba713ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-b10e232e33fd.png)
 
 ### 3.2.安装JDK
 
@@ -70,7 +70,7 @@ Github地址：[https://github.com/apache/rocketmq](https://github.com/apache/ro
 [root@localhost jdk]# tar -zxvf jdk-8u171-linux-x64.tar.gz
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401393351-e34a836e-cb16-46a3-9ad5-7e72ef6acc13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-37c03a249f68.png)
 
 #### 2.配置jdk环境变量，将JAVA_HOME变量加上;将path路径替换成相应配置
 
@@ -81,9 +81,9 @@ export JAVA_HOME=/app/jdk/jdk1.8.0_171/
 PATH=$JAVA_HOME/bin:$PATH:$HOME/.local/bin:$HOME/bin
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401414849-468ea3f0-2d72-4351-b060-5033553fe84c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-77d3e15f1885.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401352215-7d913952-47fe-485f-b433-3aad4e3aae2b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-d9c60519a6bf.png)
 
 #### 3.更新配置并查看jdk版本，显示以下信息则安装成功。
 
@@ -92,7 +92,7 @@ PATH=$JAVA_HOME/bin:$PATH:$HOME/.local/bin:$HOME/bin
 [root@localhost jdk]# java -version
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401215293-d73baa9e-d432-4b0a-be25-97cda2fe826d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-9c3aa1816dec.png)
 
 ### 3.3.安装RocketMQ
 
@@ -108,7 +108,7 @@ PATH=$JAVA_HOME/bin:$PATH:$HOME/.local/bin:$HOME/bin
 [root@localhost rocketMQ]# unzip rocketmq-all-5.1.0-bin-release.zip
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401467533-c1d81d87-bf82-47d0-b64c-553e2bce44ee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-4fbc831f59da.png)
 
 #### 3.3.2.配置rocketMQ环境变量
 
@@ -122,7 +122,7 @@ export PATH=$ROCKETMQ_HOME/bin:$JAVA_HOME/bin:$PATH:$HOME/.local/bin:$HOME/bin
 export NAMESRV_ADDR='worker1:9876;worker2:9876;worker3:9876'
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401532373-9c48810a-d897-4780-a2ce-70fde18c5f0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-b884a8f98110.png)
 
 #### 3.3.3.更新配置
 
@@ -143,7 +143,7 @@ RocketMQ启动流程如下：
 - 启动NameServer
 - 启动Broker
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682055456856-9f846b00-4c1b-49a3-b1d7-4d2a32c66583.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-82f4886ea7ed.png)
 
 ### 3.5.NameServer服务搭建
 
@@ -161,7 +161,7 @@ RocketMQ启动流程如下：
 #将JAVA_OPT="${JAVA_OPT} -server -Xms4g -Xmx4g -Xmn2g 修改为 -server -Xms512m -Xmx512m -Xmn256m
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401691966-d7b93ecc-6651-4bff-9038-413618dfbfb4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-96968499642d.png)
 
 #### 3.5.2.启动NameServer
 
@@ -174,9 +174,9 @@ NameServer的配置修改完成，然后我们用静默启动的方式启动Name
 [root@localhost bin]# tail -f nohup.out 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401747500-a50b6776-5eab-4123-b2d0-564469fa9269.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-bd7dfb54c321.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401758763-7e10d111-cccc-458f-acae-9b0e607cc21d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-8d27ad8cdd5d.png)
 
 ### 3.6.Broker服务搭建
 
@@ -189,7 +189,7 @@ NameServer的配置修改完成，然后我们用静默启动的方式启动Name
 #将JAVA_OPT="${JAVA_OPT} -server -Xms8g -Xmx8g" 修改为 JAVA_OPT="${JAVA_OPT} -server -Xms512m -Xmx512m"
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401807656-bd9d1221-2029-4326-8096-83b8db620815.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_56%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-0b07209901cf.png)
 
 #### 3.6.2.修改broker配置文件
 
@@ -203,7 +203,7 @@ autoCreateTopicEnable=true
 namesrvAddr=localhost:9876
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401869646-f3d7e718-824e-4b41-9707-0ba23683e6c4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-5aeb4e6945d2.png)
 
 #### 3.6.3.启动broker服务
 
@@ -218,9 +218,9 @@ Broker的配置修改完成，然后我们用静默启动的方式启动Broker�
 [root@localhost bin]# jps
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401918149-0761f3d6-ee5f-4931-86a3-2d4ccf6f28e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_91%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-5d3fab371d3a.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401962365-fd9ab684-5298-4453-b386-9431d68e5e5a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-99aea3b26a20.png)
 
 ### 3.7.测试RocketMQ消息发送与消费
 
@@ -237,7 +237,7 @@ Broker的配置修改完成，然后我们用静默启动的方式启动Broker�
 
 #### 2.出现以下提示则代表消息发送成功
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682401999161-676df375-6ad1-4ec1-bf62-a206966068d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-88e9c3fb4957.png)
 
 #### 3.执行以下命令测试消息接收，Consumer执行不会自动关闭，会一直挂起等待新消息过来；
 
@@ -250,7 +250,7 @@ Broker的配置修改完成，然后我们用静默启动的方式启动Broker�
 
 #### 4.出现以下提示则代表消息接收成功
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402024027-8dfc7e99-692c-4588-88fa-0c77210fac42.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_86%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-690c96bd2fab.png)
 
 ### 3.8.关闭RocketMQ服务
 
@@ -262,7 +262,7 @@ Broker的配置修改完成，然后我们用静默启动的方式启动Broker�
 sh ./mqshutdown broker
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402042198-c89f5c65-9872-42af-a598-ddb098cc5060.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-41217d94a607.png)
 
 #### 2.关闭NameServer
 
@@ -270,11 +270,11 @@ sh ./mqshutdown broker
 sh ./mqshutdown namesrv
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402056230-1a622989-eee2-4953-bdf1-86e9dd683752.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-72fa52e34e0a.png)
 
 #### 3.查看服务
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402072819-598e9feb-6deb-4835-be56-4e148deb04c6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-845b31854d2b.png)
 
 **至此RockMQ单机测试成功，接下来搭建集群。**
 
@@ -282,7 +282,7 @@ sh ./mqshutdown namesrv
 
 刚才的演示中，我们已经体验到了RocketMQ是如何工作的。我们回头看RocketMQ的集群架构，就能够有更全面的理解了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682055456856-9f846b00-4c1b-49a3-b1d7-4d2a32c66583.png?x-oss-process=image%2Fresize%2Cw_1883%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-688faa88bfa3.png)
 
 ### 4.1.RocketMQ集群架构解析
 
@@ -299,9 +299,9 @@ sh ./mqshutdown namesrv
 
 准备三台虚机，并配置机器名。可以利用安装好的虚机通过克隆出另外两个机器。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682065550569-f0bc546d-f9e2-4a99-82bc-c935837649ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-35fe24cf46d3.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682069415085-7eb17954-b3df-4fbf-8b2f-85f001967950.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_57%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-96bf6753568d.png)
 
 #### 4.2.1.系统配置
 
@@ -314,7 +314,7 @@ sh ./mqshutdown namesrv
 192.168.43.136 worker3
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402142590-a1286c28-475b-4f7c-877c-198c253f3687.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-71db8312f3bc.png)
 
 ##### 2.服务之间设置免密登陆，三个机器都使用ssh-keygen生成秘钥。提示录入直接回车即可
 
@@ -322,7 +322,7 @@ sh ./mqshutdown namesrv
 [root@localhost ~]# ssh-keygen
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402219424-6f23afe7-a2dd-41f3-9ba8-30f0a2be4e09.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-c92ce9777905.png)
 
 ##### 3.三个机器都使用以下命令分发给其他机器，输入yes，然后输入密码；这样可以直接某个机器使用ssh或者scp到另外的机器。
 
@@ -332,7 +332,7 @@ sh ./mqshutdown namesrv
 [root@localhost ~]# ssh-copy-id worker3
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402321111-73467679-8e92-4f77-85ad-85102d4cc7e3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-c58387e8a42d.png)
 
 ##### 4.停止并禁用防火墙或者删除防火墙，我这边使用的是删除防火墙。
 
@@ -346,7 +346,7 @@ sh ./mqshutdown namesrv
 [root@localhost ~]# yum remove firewalld
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682402416840-7b707361-5535-45eb-a297-d717a424152e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-69d64a9eaca3.png)
 
 #### 4.2.2.配置RocketMQ主从集群
 
@@ -685,7 +685,7 @@ RocketMQ5.X版本兼容之前旧版本的启动方式，即如下部署方式：
 #也可以使用tail -f ~/logs/rocketmqlogs/namesrv.log 观察日志
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682403715954-6f7aa472-4287-441a-86ed-fe4b460305c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-88901629bab8.png)
 
 ##### 4.2.3.2.worker2上启动broker-a节点与broker-b-s节点
 
@@ -701,7 +701,7 @@ RocketMQ5.X版本兼容之前旧版本的启动方式，即如下部署方式：
 #也可以使用tail -f ~/logs/rocketmqlogs/broker.log 观察日志
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682403855079-6239d3b9-45e4-4fc5-8563-574f0c234390.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_91%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-d8bc9dae59a1.png)
 
 ##### 4.2.3.3.worker3上启动broker-b节点与broker-a-s节点
 
@@ -715,7 +715,7 @@ RocketMQ5.X版本兼容之前旧版本的启动方式，即如下部署方式：
 #The broker[broker-b, 192.168.43.136:10911] boot success. serializeType=JSON and name server is worker1:9876;worker2:9876;worker3:9876
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405188142-a2e12c85-39aa-4ec9-8fdf-5a1f58ab75d0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_91%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-a4a101cdf55b.png)
 
 ##### 4.2.3.4.使用测试工具测试消息收发
 
@@ -724,14 +724,14 @@ RocketMQ5.X版本兼容之前旧版本的启动方式，即如下部署方式：
 [root@localhost bin]# ./tools.sh org.apache.rocketmq.example.quickstart.Producer
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405328890-fad4362a-178b-4441-8cfd-d6585226fb01.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_88%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-f1815bce5926.png)
 
 ```powershell
 # worker3接受消息
 [root@localhost bin]# ./tools.sh org.apache.rocketmq.example.quickstart.Consumer
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405425065-baf3cb68-229c-48ca-af48-56ad30073952.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_91%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-437a8f737b09.png)
 
 RocketMQ5.X版本兼容之前旧版本部署完成。在部署新版之前先通过maven安装一个rocketmq-dashboard可视化界面查看我们的集群。
 
@@ -751,7 +751,7 @@ RocketMQ5.X版本兼容之前旧版本部署完成。在部署新版之前先通
 [root@localhost maven]# mkdir repository
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405761027-f951332a-19e9-4b8e-87c7-036682aad2b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-7f1288c9a54d.png)
 
 ##### 4.2.4.2.配置maven环境变量
 
@@ -762,7 +762,7 @@ export MAVEN_HOME=/app/maven/apache-maven-3.9.1
 $MAVEN_HOME/bin:
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405636539-64bd711f-39a5-43b0-988b-7bd708d16227.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_44%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-7b97d8c0cfcb.png)
 
 ##### 4.2.4.3.更新环境配置，查看maven是否成功
 
@@ -772,7 +772,7 @@ $MAVEN_HOME/bin:
 #显示如下信息即安装成功
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405778553-23ea46d7-9fe0-4a91-8dd8-59735537920b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-ef6183405e25.png)
 
 ##### 4.2.4.4.修改maven仓库配置
 
@@ -793,9 +793,9 @@ $MAVEN_HOME/bin:
 &lt;/mirror&gt;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405918403-79f0363c-cde8-40f3-ad8a-4401e14f5b74.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_56%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-36c55d9a936e.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405927708-3f0c6c35-f052-4f57-996d-50f3fffb3188.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-5dc7d0ad91dd.png)
 
 ##### 4.2.4.5.安装dashboard
 
@@ -808,7 +808,7 @@ $MAVEN_HOME/bin:
 [root@localhost dashboard]# unzip rocketmq-dashboard-rocketmq-dashboard-1.0.0.zip
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682405994630-c9185d07-7950-4561-abab-1b780284c22e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-adda5ee73269.png)
 
 ##### 4.2.4.6.编译dashboard
 
@@ -822,7 +822,7 @@ $MAVEN_HOME/bin:
 [root@localhost rocketmq-dashboard-rocketmq-dashboard-1.0.0]# mvn clean install -U -Dmaven.test.skip=true
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406135232-976ae3d3-a4c2-4218-9e7f-2a6f3ab75596.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-cd2e10bb4008.png)
 
 ##### 4.2.4.7.启动dashboard
 
@@ -836,13 +836,13 @@ $MAVEN_HOME/bin:
 [root@worker1 target]# tail -f nohup.out
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406205434-9586ea01-f1e6-4488-b295-f4d87527229f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_60%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-80f4866d0e12.png)
 
 ##### 4.2.4.8.启动成功后访问：[http://192.168.43.134:8080/#/](http://192.168.43.134:8080/#/)  操作dashboard界面:
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406282646-a19f4c6b-eb46-485c-8a44-578992a7c274.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_96%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-1a33bc99a300.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406292904-2d0c7cf1-d436-430a-870a-0d72bc23b350.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_98%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-624638ef9669.png)
 
 #### 4.2.5.部署5.x版本-Local模式
 
@@ -872,9 +872,9 @@ Apache RocketMQ 5.0 版本完成基本消息收发，包括 NameServer、Broker�
 # 2023-04-23 15:09:34 INFO main - grpc server start successfully.
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406751967-b9bf08fe-6ebd-4a1c-99ef-379507783779.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-3d6621fc6651.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406791488-3b2eab72-0a17-4120-8b03-91096a06b8cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_77%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-072a2294dfa2.png)
 
 ##### 4.2.5.3.测试消息收发
 
@@ -883,13 +883,13 @@ Apache RocketMQ 5.0 版本完成基本消息收发，包括 NameServer、Broker�
 [root@localhost bin]# ./tools.sh org.apache.rocketmq.example.quickstart.Consumer
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406860017-621c07e1-58d5-4d57-aa71-7df850c6e031.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-4e22baf37dd2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406947042-068c6f36-1890-4d2d-81a3-ba5fda9b490e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-9ea1cd6e24ef.png)
 
 ##### 4.2.5.4.登录dashboard页面查看注册成功
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682406993296-3256d583-1b9a-4732-8fbf-b5b8ebc3524e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_97%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-b79bcf11819d.png)
 
 ##### 4.2.5.5.其他部署模式
 
@@ -911,11 +911,11 @@ Apache RocketMQ 5.0 版本完成基本消息收发，包括 NameServer、Broker�
 
 接下来使用IDEA搭建一个Maven项目:
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682663876526-f469a066-38cb-449f-990b-b4c2a6d554ba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-afc7a0cec040.png)
 
 工程创建后，我们添加Pom依赖：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682663965503-65f0da62-c550-4cf5-bdd9-a1234ef846c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-e513b84fb111.png)
 
 这样工程就搭建完成了，接下来我们进入API实战。
 
@@ -1912,7 +1912,7 @@ RocketMQ只定义了一些基本语法来支持这个特性。我们可以很容
 
 #### 5.7.2.事务消息的实现机制
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682254344862-453d269a-4d6d-4c29-bb34-1c7f82302fde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-fee4be0f965c.png)
 
 事务消息机制的关键是在发送消息时会将消息转为一个half半消息，并存入RocketMQ内部的一个Topic(RMQ_SYS_TRANS_HALF_TOPIC)，这个Topic对消费者是不可见的。再经过一系列事务检查通过后，再将消息转存到目标Topic，这样对消费者就可见了。
 
@@ -2051,9 +2051,9 @@ public class TransactionListenerImpl implements TransactionListener {
 
 #### 6.1.RocketMQ如何保证消息不丢失
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682409718455-057a0eaa-52dd-4322-9d5f-61a67b36a5be.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-9ddf1dc035df.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682410620811-813c407e-1f7c-4fa3-b79d-f7e72f7d1713.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-068410e68184.png)
 
 我们将消息流程分为三大部分，每一部分都有可能会丢失数据。
 
@@ -2093,11 +2093,11 @@ IndexFile文件大小固定400M，可以保存2000W个索引。
 
 三个角色构成的消息存储结构如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682421840048-14c12602-4a44-49d0-ac6c-ec51bc0a70bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_74%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-661cf3cc2e4e.png)
 
 消息存储过程：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1683876636207-c79f4974-ab55-4e91-ad9f-cde81b1cdc07.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-b37b9f66a190.png)
 
 #### 6.3.RocketMQ如何保证消息顺序
 
@@ -2120,7 +2120,7 @@ RocketMQ 的消费者可以开启多个消费线程同时消费同一个队列�
 
 rokectMQ消息模型：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682494557603-cdaeec45-92ee-49c4-8df1-6f567111f8b7.png?x-oss-process=image%2Fresize%2Cw_1084%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-b9eb0a9e54ed.png)
 
 #### 6.4.RocketMQ的事务消息原理
 
@@ -2133,7 +2133,7 @@ RocketMQ 的事务消息是一种保证消息可靠性的机制。在RocketMQ中
 
 需要注意的是，如果在消息发送的过程中出现异常或者网络故障等问题，RocketMQ 会触发消息回查机制。在回查过程中，RocketMQ 会调用消息发送方提供的回查接口来确认事务的提交状态，从而解决消息投递的不确定性。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682254344862-453d269a-4d6d-4c29-bb34-1c7f82302fde.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_62%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-fee4be0f965c.png)
 
 #### 6.5.RocketMQ 消息积压问题
 
@@ -2275,60 +2275,60 @@ nohup java -jar rocketmq-dashboard-1.0.0.jar &
 
 三个机器都是如此
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682309624800-83b0d376-9d02-401b-9024-7db40af53fd8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-4d2c97795626.png)
 
 ### 8.2.bash_profile配置：cat ~/.bash_profile
 
 ##### 8.2.1worker1：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310017975-0fabb150-203e-4224-8b02-53be79332023.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-9a9bb4addd4a.png)
 
 ##### 8.2.2.worker2、worker3：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310060407-1050a3fb-621f-44e4-a696-95653005ca6a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-dd73d3e15a01.png)
 
 ### 8.3.conf/broker.conf配置文件：cat borker.conf
 
 #### 8.3.1.worker1：borker.conf
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310261074-ab371d69-b787-4253-85e8-97c78e263ab5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-52ba8e3a8994.png)
 
 #### 8.3.2.主2从架构：cd conf/2m-2s-async/
 
 ##### 8.3.2.1.worker2：broker-a.properties
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310467610-4660c136-063e-4667-85fb-099edc873458.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-95e3c5bdbfe3.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310489037-cfb29ca6-4327-475e-8c71-959cf89a4f59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-08a3b3ae51aa.png)
 
 ##### 8.3.2.2worker2：broker-b-s.properties
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310549000-b78c0d3a-2f81-4342-a75c-a488de446c5c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-b86b0dd791a2.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310568431-7a641c39-fe67-44b8-8371-cb42baef21d9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-99628dbc3632.png)
 
 ##### 8.3.2.3.worker3：broker-b.properties
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682403477459-e19ae8e8-d1be-460f-9c52-ec1da60b7e9e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-4a8d937841e3.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682403488311-5109c6be-942c-4e5a-a04a-9288fc30518e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-51cade64273b.png)
 
 ##### 8.3.2.4.worker3：broker-a-s.properties
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682403511347-0275aacb-2051-4938-910d-2a496c0fcd8b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-6fb17c757008.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682403525043-2f11c9d1-c822-4427-b7db-8f2cd0f634c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-bf5346e06195.png)
 
 ### 8.4.Maven配置（worker1）
 
 #### 8.4.1.本地仓库路径
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310837447-3009d601-8200-4019-ae43-14de07ca8755.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-cd6d30195a88.png)
 
 #### 8.4.2.阿里云配置
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310877791-18aea129-a929-436e-a387-d63f447ef2bd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-a81f18f30f0c.png)
 
 ### 8.5.整体文件目录结构
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1682310143055-1f5bf414-23f2-4162-afef-b32dcac62ce3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0106-pcztmw6gdpmg3l83/img-7b548b5620ca.png)

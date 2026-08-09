@@ -43,7 +43,7 @@ article: false
 3. 履约记录复现：对于一笔订单的状态推进记录可以复现，以帮助技术、运营、客服定位问题。
 4. 履约日常监控：对不同的业务，可以统一提供履约结果的监控，业务也可能根据自身需要单独配置监控和报警。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720506339524-6e55595c-4307-45aa-84d6-28d841a5f79d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_59%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0820-ca3lqckwqpgphkhx/img-aa68bedcaab1.png)
 
 ## **解决方案**
 
@@ -62,7 +62,7 @@ article: false
 
 针对上节最后提出的问题，我们用抽象的思维，思考在状态流程履约中，哪些是不变的点、哪些是变化的点。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720506340836-235ddd32-bd4c-4d82-8a08-cbf197331c13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0820-ca3lqckwqpgphkhx/img-bd22539cb72a.png)
 
 可以看到，不变的操作有：
 
@@ -77,13 +77,13 @@ article: false
 
 通过一个 Executor 模板化的执行每个状态履约动作的步骤，如前置判断 (validate)、执行状态动作 (action)、后置动作 (postAction)。对于不同的履约执行动作，抽象出 PerformProcessor 接口，交给业务具体实现。在某个履约流程执行时，Executor 会执行对应的 PerformProcessor。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720506343010-8228bced-9bb0-446b-8bb2-b51fc691391b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0820-ca3lqckwqpgphkhx/img-ad1aee79d52b.png)
 
 ### **拓扑抽象**
 
 对于拓扑定义以及状态流处理定义，进行以下抽象：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720506340112-68f59f9b-5377-4065-a5a5-d21a964442a6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0820-ca3lqckwqpgphkhx/img-f6a739d78fcd.png)
 
 ### **状态流程处理器**
 
@@ -95,7 +95,7 @@ article: false
 - • postAction：执行后置逻辑
 - • finalize：执行收尾工作 (本方法一定会被执行，无论其他方法是否抛异常)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720506341458-b4a8eea3-a3fd-4123-996b-4c0a9b293281.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0820-ca3lqckwqpgphkhx/img-700b2d0239b4.png)
 
 如上图，Executor 执行器中，会模板化的调用这些方法。
 
@@ -103,13 +103,13 @@ article: false
 
 我们期望定义一个简明易用的 API，来将状态拓扑以及履约处理器串联在一起，完成整个状态机的定义，示意如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720506341300-fe81f9f7-ea26-40ca-bb73-8b29f5287fc1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_69%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0820-ca3lqckwqpgphkhx/img-d0a05a9967d8.png)
 
 ### **整体框架结构**
 
 框架包含三层：核心层、胶水层、业务层。核心层提供纯粹的状态机定义、拓扑构造、执行引擎等能力，设计的薄一些，控制架构防腐化；胶水层引入中台订单查询、更新等能力，相对厚一些，简化业务适配成本、优化业务流程。业务层则基于通用的框架接口，面向业务应用，提供表达能力。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1720506340866-3f975172-b355-41eb-bcd1-03e444b6ccee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_79%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0820-ca3lqckwqpgphkhx/img-bcb0f71656c6.png)
 
 **框架核心层：**聚焦于三个能力：状态拓扑定义、拓扑查询、状态推进。状态拓扑定义对应 FlowBuilder。拓扑查询和状态推进对应核心层的 FlowManager，他会查询 FlowDefination(拓扑定义封装类) 和 调用 FlowExecutor 执行 PerformProcessor。**胶水层**在状态机核心层和业务交互层之间，我们抽取了一层胶水层。目的有两个
 

@@ -19,7 +19,7 @@ article: false
 
 首先，让我们回顾一下RabbitMQ最经典的核心模型：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760000481120-492c821f-7087-4e83-aa6d-6a9dd832f03c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1006-tcqqecfgzhht921a/img-c8634e8e57a4.png)
 
 看起来很简单，对吗？但在消息从生产者到消费者的这段旅程中，却隐藏着三个致命的“黑洞”。
 
@@ -27,7 +27,7 @@ article: false
 
 任何一个环节的疏忽，都可能导致消息石沉大海。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760000493239-b7275f72-7bf0-4573-bd41-eb9971643492.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1006-tcqqecfgzhht921a/img-ac80a1f5c9af.png)
 
 1. **黑洞A (生产者 -> Broker):** 生产者发送消息后，因为网络问题或Broker的瞬时故障，消息根本没有成功抵达RabbitMQ。而生产者对此毫不知情，以为已经发送成功。
 2. **黑洞B (Broker内部):** 消息成功进入了Broker的队列，但它们默认仅存在于内存中。此时如果Broker服务宕机或重启，所有内存中的消息将全部丢失。
@@ -48,7 +48,7 @@ article: false
 
 这样，生产者就能清晰地知道每条消息的投递状态，并对失败的NACK消息进行处理（如：记录日志、报警、或进行重试）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/gif/35268836/1760000686459-11085280-845c-4b6b-a856-69488d9ddb27.gif)
+![image](/面试题/高频面试问题/百里老师/1006-tcqqecfgzhht921a/img-d51123f56581.gif)
 
 **代码实现（以Java为例）：**
 
@@ -116,7 +116,7 @@ channel.basicPublish("", "my-durable-queue",
 - Master节点的数据会自动同步到所有Slave节点。
 - 当Master节点宕机时，集群会自动从Slave节点中选举出一个新的Master，继续对外提供服务，整个过程对生产者和消费者几乎是透明的。
 
-![image](https://cdn.nlark.com/yuque/0/2025/gif/35268836/1760000757596-e7b3b9b9-e6ba-43ce-9738-7cea512a7807.gif)
+![image](/面试题/高频面试问题/百里老师/1006-tcqqecfgzhht921a/img-88ee00d0eefd.gif)
 
 **结论：** 持久化是数据安全的必选项。对于生产环境的核心业务，强烈推荐配置集群和镜像队列，以实现服务层面的高可用，彻底消除单点故障。
 
@@ -129,7 +129,7 @@ channel.basicPublish("", "my-durable-queue",
 
 如果消费者在处理过程中崩溃，或者手动调用了`channel.basicNack()`，Broker会知道消息没有被成功处理，并会将其**重新投递**给其他消费者（或同一个消费者），保证了业务逻辑的“至少执行一次”（At-Least-Once）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/gif/35268836/1760000857972-c7f1befd-7f32-48b2-9912-0168b55d7fdf.gif)
+![image](/面试题/高频面试问题/百里老师/1006-tcqqecfgzhht921a/img-c6ce069dcce0.gif)
 
 **代码实现（以Java为例）：**
 
@@ -160,7 +160,7 @@ channel.basicConsume(QUEUE_NAME, autoAck, new DefaultConsumer(channel) {
 
 回顾我们的旅程，为了实现数据100%不丢失，我们需要将以上三种机制组合成一套“组合拳”。下面这个决策矩阵可以帮助你理解它们的选型：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760000869711-ca05901c-a4f9-4be5-86a0-2064e0d62479.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/1006-tcqqecfgzhht921a/img-c7175d53542a.png)
 
 总而言之，一个生产级的、高可靠的RabbitMQ消息管道，其标准配置应该是：
 

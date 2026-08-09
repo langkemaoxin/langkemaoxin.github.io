@@ -278,11 +278,11 @@ public class HashPartitioner {
 
 我们真的需要存储整数本身吗？我们只关心每个整数的**出现次数状态**：`0次`、`1次`、`2次`、`超过2次`。这四种状态正好可以用 **2个bit** 来表示：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1756272917776-46c70738-54be-4a9f-b136-73af11eff1b0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5YWs5LyX5Y-377yaRm9454ix5YiG5Lqr%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0126-dzx7r7rgk290gcxb/img-4f24af042b30.png)
 
 **示例**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1756275702619-63a673d6-5d8c-46dc-bf06-6ef8bee8c373.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5YWs5LyX5Y-377yaRm9454ix5YiG5Lqr%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0126-dzx7r7rgk290gcxb/img-147813162eaf.png)
 
 **第二步：空间估算**
 

@@ -25,7 +25,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752020788936-9f1dda74-1367-4007-840e-7da6f2bfeeb5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1419-shltect7fimgaa12/img-20ff8db6b874.png)
 
 假设我们有一个大型的自然语言处理（NLP）项目，需要训练一个基于Transformer架构的语言模型。由于模型的参数量非常大，训练过程中显存占用较高，容易导致训练效率低下甚至训练失败。因此，我们决定采用混合精度训练来优化训练过程。
 
@@ -33,13 +33,13 @@ article: false
 
 #### 1. 混合精度训练的基本概念
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752020751926-6a04585e-9c25-4b03-877d-0757ed58ca27.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1419-shltect7fimgaa12/img-4491890aa6aa.png)
 
 混合精度训练是一种在深度学习模型训练过程中同时使用单精度（FP32）和半精度（FP16）浮点数的技术。其主要目的是通过减少显存占用和加快计算速度来提高训练效率，同时尽量避免精度损失。
 
 #### 2. 实现步骤
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752020765746-49c9c91f-470f-42dd-b044-0b51668dbbc9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1419-shltect7fimgaa12/img-7569adbff553.png)
 
 混合精度训练的实现步骤主要包括以下几个方面：
 
@@ -67,7 +67,7 @@ article: false
 
 #### 3. Loss Scaling的作用
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752020775613-e0fa4db3-7431-4003-bef8-eebc232e9ac1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1419-shltect7fimgaa12/img-b4de636123a6.png)
 
 Loss Scaling的主要作用是防止在混合精度训练过程中梯度下溢。由于FP16的数值范围较小，直接计算损失函数可能会导致梯度值变为0，从而无法进行有效的参数更新。通过损失放大，可以将损失值放大到一个安全的范围内，确保梯度值不会因为FP16的数值范围限制而变为0。反向传播完成后，再将梯度值恢复到原始的尺度，以保证参数更新的正确性。
 
@@ -118,7 +118,7 @@ scaler = GradScaler()
 
 #### 5. 总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752020800783-956cfbf0-e315-401c-802f-623023bb97a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1419-shltect7fimgaa12/img-2de93804fd86.png)
 
 混合精度训练通过同时使用FP32和FP16浮点数，显著减少了显存占用和加快了计算速度，同时通过损失放大和精度累加等技术保证了训练的稳定性和精度。在实际项目中，混合精度训练已经成为训练大规模深度学习模型的标准方法之一。通过合理地应用混合精度训练，可以显著提高训练效率和模型性能，为深度学习模型的广泛应用提供了强有力的支持。
 

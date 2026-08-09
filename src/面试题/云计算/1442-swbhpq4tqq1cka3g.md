@@ -28,13 +28,13 @@ article: false
 
 #### 1. 定义解释
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682428921-6e4d243c-5e07-4847-97df-620e657fd511.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1442-swbhpq4tqq1cka3g/img-57431a7d7c45.png)
 
 涌现能力是指大模型在未经直接训练的任务上表现出的惊人性能。这种能力不是通过简单的参数增加或结构变化来实现的，而是在模型达到一定的复杂度和规模后突然出现的。
 
 #### 2. 原因分析
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751682445103-a81ba5a5-0019-4c07-9ffb-dec1bc429936.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1442-swbhpq4tqq1cka3g/img-ad584b977fc2.png)
 
 - **数据量的增加**：随着互联网的发展和数字化信息的爆炸增长，可用于训练模型的数据量大大增加。更多的数据可以提供更丰富、更广泛的语言知识和语境，使得模型能够更好地理解和生成文本。
 - **计算能力的提升**：随着计算硬件的发展，特别是图形处理器（GPU）和专用的AI芯片（如TPU）的出现，计算能力大幅提升。这使得训练更大、更复杂的模型成为可能，从而提高了模型的性能和涌现能力。

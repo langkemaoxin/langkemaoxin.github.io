@@ -19,7 +19,7 @@ article: false
 
 本笔记基于MySQL 8.0版本，全面拆解锁的分类、实现原理、实战案例、排查工具及优化策略，兼顾理论深度与生产实操，适配面试与工作需求。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1766998867688-9a6c3a72-5d5a-47d0-bc26-df4792704bcd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_106%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1031-ps7kmr2pukdvlnez/img-12adc4e1720f.png)
 
 # 二、按锁的粒度分类（核心分类方式）
 

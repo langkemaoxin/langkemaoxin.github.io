@@ -38,7 +38,7 @@ article: false
 2. 每次赋值都需要更新计数器，伴随着加法和减法操作，这增加了时间开销
 3. 引用计数器有一个严重的问题，即无法处理循环引用的情况。这是一条致命缺陷，导致在Java的垃圾回收器中没有使用这类算法。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1728305689628-57f54a8a-e59a-4cec-9c2f-406f8dabf91f.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0165-qwxwgiugvbcrl5np/img-3b84b3de2c23.jpg)
 
 # 可达性分析算法
 
@@ -68,7 +68,7 @@ article: false
 
 - 如果只针对了java堆中的某一块区域进行垃圾回收（比如：典型的只针对新生代），必须考虑到内存区域是虚拟机自己的实现细节，更不是孤立封闭的，这个区域的对象完全有可能被其他区域的对象所引用，这时候就需要一并将关联的区域对象也加入GCRoots集合中去考虑，才能保证可达性分析的准确性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1728290906197-af81e6cd-4dcc-438b-8c24-a9129b0bd02e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_96%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0165-qwxwgiugvbcrl5np/img-1bd56363ca83.png)
 
 小技巧：
 

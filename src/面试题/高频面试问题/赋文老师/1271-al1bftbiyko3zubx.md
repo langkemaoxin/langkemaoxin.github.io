@@ -47,7 +47,7 @@ article: false
 
 **点评：** 开局即展现你的分析能力，而不是急于抛出技术方案。这证明你懂得“技术服务于业务”，是架构师的优秀特质。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758203503429-37bfb132-e615-4f8c-b975-3683f64b6699.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1271-al1bftbiyko3zubx/img-d0ab02c093a2.png)
 
 #### **第二层：层层设防 —— 多级缓存的攻击阵型**
 
@@ -59,7 +59,7 @@ article: false
 
 **点评：** 提出了具体的量化目标（99.9%），并引入了“业务缓存”这一区别于普通数据缓存的深度概念，展现了你的技术细节思考。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758203751444-f0652bc4-587d-48a6-89f4-da900ef5af67.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1271-al1bftbiyko3zubx/img-3187a88ec30f.png)
 
 #### **第三层：攻坚克难 —— 核心瓶颈与解决方案**
 
@@ -74,7 +74,7 @@ article: false
 
 **点评：** 精准地抓住了库存这个最难啃的骨头，并清晰地阐述了基于业务取舍的技术方案，体现了你在架构设计上的成熟度。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758203664749-1bc06457-d307-4d46-a8c7-da566f4f240b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1271-al1bftbiyko3zubx/img-c87500581b1e.png)
 
 #### **第四层：固若金汤 —— 系统的韧性与高可用**
 
@@ -96,7 +96,7 @@ article: false
 
 **点评：** 展现了你对系统稳定性的系统性思考，证明你不仅能把系统“建起来”，更能让系统“活得好”，这是高级技术人才与普通工程师的关键区别。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758203707862-0f4b45d9-3780-49ae-911e-47748b7d1c4f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1271-al1bftbiyko3zubx/img-dcdc92e4b96f.png)
 
 ### **结论：从回答问题到引领对话**
 
@@ -106,4 +106,4 @@ article: false
 
 下次再遇到这个问题，请记住，它是一个绝佳的舞台。用一个漂亮的架构回答，去征服你的面试官。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/29768021/1758203793574-c879bd54-ad06-48e8-9103-68788a26548c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/赋文老师/1271-al1bftbiyko3zubx/img-31cc5d53d123.png)

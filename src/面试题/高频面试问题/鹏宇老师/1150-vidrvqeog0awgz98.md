@@ -19,7 +19,7 @@ article: false
 
 对话式 AI 的工作流程并非单一模块的独立运作，而是多个技术组件协同配合的闭环系统。从用户输入文本到最终生成回复，整体可分为 7 个核心环节，各环节层层递进、相互支撑，构成了完整的技术链路。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981029241-f15fec95-2931-42d2-bb38-8bd1b4eece3c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-dc6ab5ea9311.png)
 
 这 7 个环节看似独立，实则存在紧密的逻辑关联：输入预处理为后续环节提供 “干净、标准化” 的文本原料；上下文管理保障对话连贯性；提示词优化引导模型精准理解任务；RAG 知识增强弥补模型 “知识过期” 短板；Agent 决策解决复杂任务的多步推理；回复生成优化提升输出质量；反馈迭代则实现系统持续进化。
 
@@ -37,7 +37,7 @@ article: false
 2. 按语义规则拆分的 Token 序列（["你好", "，", "我", "要", "学习", "RAG"]）；
 3. 将 Token 转换为模型可计算的数字 ID（Token ID），最终形成模型可识别的输入格式。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981047386-6a774079-12ed-42ff-a689-05b5af01a299.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-c3a52b8ab8a0.png)
 
 Token 分词的关键价值在于：一方面将非结构化文本转化为结构化数据，另一方面通过统计 Token 数量，避免输入内容超过模型 “上下文窗口”（即模型单次可处理的最大 Token 数）限制。
 
@@ -52,7 +52,7 @@ Token 分词的关键价值在于：一方面将非结构化文本转化为结�
 3. 过滤恶意内容、无效字符和无关信息；
 4. 输出干净、安全、有效的文本，传递至下一环节。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981067447-ad3f91cd-42ae-45cd-b585-35854b5195ed.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-a223c71e0262.png)
 
 输入过滤是对话式 AI 的 “安全防线”，不仅能避免模型生成有害回复，还能减少无效数据对后续环节的干扰，提升系统整体运行效率。
 
@@ -74,7 +74,7 @@ Memory 组件的核心作用是存储和管理会话历史，让模型在生成�
 2. 第二轮对话：用户问 “它和 Agent 的关系？”；
 3. Memory 存储两轮对话历史，模型接收 “历史对话 + 第二轮提问” 的组合输入，从而生成关联回复。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981084582-8443d361-d34b-4593-817d-a95b7ec33a79.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-7e11ac684abb.png)
 
 ### 3.2 上下文压缩：解决长会话超限问题
 
@@ -88,7 +88,7 @@ Memory 组件的核心作用是存储和管理会话历史，让模型在生成�
 
 上下文压缩的核心目标是 “平衡连贯性与承载能力”—— 既不丢失影响当前回复的关键历史，又能将总 Token 数控制在模型限制范围内。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981099440-253ee0a1-4330-4d03-bc48-be5b8831544c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-2ca193499cf0.png)
 
 ## 四、提示词优化：引导模型精准干活的 “指令系统”
 
@@ -122,7 +122,7 @@ PromptTemplate 是 LangChain 框架中的核心组件，它通过定义固定模
 要求：{requirement}
 要求：分步骤说明，配流程示意图
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981150361-3001683a-ecf4-47f1-b3eb-3ab4f5366663.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-68117ad24fbc.png)
 
 ### 4.2 提示词工程：提升回复质量的核心技巧
 
@@ -135,7 +135,7 @@ PromptTemplate 提供了结构化框架，而提示词工程则通过优化指�
 
 这些技巧的核心逻辑是 “降低模型的理解成本”—— 通过清晰、具体的指令，让模型快速定位任务目标，减少无效推理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981164207-1bfa35d4-34a9-4cb0-a6d7-fd759e829fd8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-6dbf3e9b732a.png)
 
 ## 五、RAG 知识增强：解决模型 “知识过期” 的关键方案
 
@@ -151,7 +151,7 @@ PromptTemplate 提供了结构化框架，而提示词工程则通过优化指�
 2. 通过 Embedding 模型（如 OpenAIEmbeddings、BgeEmbeddings）进行转换；
 3. 输出向量（如 [0.12, 0.45, -0.32, ..., 0.89]），实现语义的数字化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981183072-f2453382-2ee2-4adb-9889-c499210ca1b8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-5524b566eeef.png)
 
 Embedding 是 RAG 的基础 —— 没有语义数字化，就无法实现精准的知识库检索。
 
@@ -167,7 +167,7 @@ Embedding 是 RAG 的基础 —— 没有语义数字化，就无法实现精准
 
 以 10000 字的长文档为例，分块后会生成多个 200 字左右的 Chunk，每个 Chunk 聚焦一个核心知识点，后续检索时能精准匹配用户提问的语义。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981201349-c64bd256-849f-42a0-9d1f-3ead0bf0caae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-0d4f419b17cf.png)
 
 ### 5.3 向量数据库：存储与检索向量的 “专用仓库”
 
@@ -186,7 +186,7 @@ Embedding 是 RAG 的基础 —— 没有语义数字化，就无法实现精准
 - 相似度计算：提供余弦相似度、欧氏距离等多种匹配算法；
 - 快速检索：基于索引技术，实现毫秒级查询响应。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981229312-93dcaa89-391d-4131-91a5-a13bb8a50da8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-9f10fc4454d1.png)
 
 ### 5.4 RAG 检索流程：从知识库到提示词的增强链路
 
@@ -211,7 +211,7 @@ RAG 的完整流程可分为 “预处理 - 检索 - 增强” 三步，形成�
 2. 将增强后的提示词输入大模型；
 3. 模型结合自身参数知识和外部检索知识，生成精准回复。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981254380-d7d13990-7ced-414f-ad38-15cfb16e1caa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-be52c85482f0.png)
 
 RAG 的核心价值在于：让模型 “知其然，也知其所以然”，既保留了大模型的语言生成能力，又通过外部知识库实现了知识的实时更新和精准匹配。
 
@@ -228,7 +228,7 @@ Agent 的本质是 “能自主决策、自主执行的智能体”，其核心�
 3. Observe（观察）：获取工具返回结果，判断是否完成当前步骤（如 “检索到组件用法，可进行代码编写” 或 “代码报错，需要调试”）；
 4. 循环迭代：重复 “思考 - 行动 - 观察”，直至完成所有任务步骤，生成最终回复。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981290670-485f936a-37a8-4cb6-82b9-3da77abaff88.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-7a3333cb4ef7.png)
 
 ### 6.2 工具调用：扩展 Agent 的能力边界
 
@@ -241,7 +241,7 @@ Agent 本身仅具备 “思考” 能力，需通过调用外部工具实现 �
 
 工具调用的关键是 “工具描述”—— 每个工具需配备清晰的功能说明（如 “该工具用于运行 Python 代码，支持 LangChain、向量数据库相关库”），让 Agent 能根据任务需求自主判断 “何时调用哪个工具”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981310454-3dcb5731-188d-43d4-adbc-38c17f8eb2f4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-1b7a2d77e598.png)
 
 ### 6.3 工具链：组合工具完成复杂任务
 
@@ -254,7 +254,7 @@ Agent 本身仅具备 “思考” 能力，需通过调用外部工具实现 �
 
 工具链的核心是 “流程编排”——Agent 根据任务拆解结果，按顺序调用工具，将前一个工具的输出作为后一个工具的输入，形成端到端的执行链路。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981328073-b62919a2-2a77-49bc-b947-6727654f7ebe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-cd0ff1b02241.png)
 
 ## 七、回复生成与优化：从模型输出生成可用回复
 
@@ -271,7 +271,7 @@ Agent 本身仅具备 “思考” 能力，需通过调用外部工具实现 �
 
 这些参数可根据任务场景灵活调整，例如：技术总结类任务设置 temperature=0.2、max_tokens=500，确保回复准确、简洁；创意类任务设置 temperature=0.8、max_tokens=1000，鼓励模型发散思考。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981349862-0573cf10-1e8b-45bc-b1d7-23d1c8872121.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-eb6ef472807d.png)
 
 ### 7.2 响应解析器：将原始输出转化为结构化格式
 
@@ -289,7 +289,7 @@ Agent 本身仅具备 “思考” 能力，需通过调用外部工具实现 �
 2. 按预设格式解析、提取关键信息；
 3. 输出结构化数据（如表格、JSON），方便后续使用。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981363816-1b4f03e9-1523-4725-8679-04376f7af25d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-abd23eb26d68.png)
 
 ## 八、反馈迭代：实现系统持续优化的闭环
 
@@ -306,7 +306,7 @@ Agent 本身仅具备 “思考” 能力，需通过调用外部工具实现 �
 
 对话日志的核心价值是 “数据沉淀”—— 为后续的问题排查、效果评估、模型优化提供原始素材。例如，通过分析日志发现 “某类技术问题回复准确率低”，可针对性优化知识库或提示词。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981379005-e55dea77-77cf-4754-9a34-87e7ab16a8b7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-da7115596849.png)
 
 ### 8.2 RLHF：基于人类反馈的强化学习
 
@@ -319,7 +319,7 @@ RLHF 是对话式 AI 优化的核心技术，通过 “人类标注→模型训�
 - 训练奖励模型（RM）：让模型能自动判断回复质量；
 - 强化学习微调：用 PPO（Proximal Policy Optimization）算法微调大模型，让模型更倾向于生成 “奖励模型评分高” 的回复。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981396312-11a79465-0f79-4053-a597-0557fcc35655.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-f309cdf132c6.png)
 
 ### 8.3 模型微调：适配特定场景的个性化优化
 
@@ -337,7 +337,7 @@ RLHF 是对话式 AI 优化的核心技术，通过 “人类标注→模型训�
 3. 训练模型，让模型学习场景特定的知识和表达风格；
 4. 部署微调后的模型，实现个性化回复。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765981418251-a38a3dc5-ea2e-4e85-a7eb-2850bb355b64.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1150-vidrvqeog0awgz98/img-3e6855082680.png)
 
 ## 九、总结：对话式 AI 的技术核心与未来趋势
 

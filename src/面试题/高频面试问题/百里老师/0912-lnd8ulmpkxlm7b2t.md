@@ -13,7 +13,7 @@ article: false
 
 > 来源：[如何设计一个敏感词过滤系统？](https://www.yuque.com/tulingzhouyu/db22bv/lnd8ulmpkxlm7b2t)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766392588021-3589d2d3-3ec6-45cb-af13-c3d318c07e04.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-2aa59d220055.png)
 
 在当今的互联网环境下，内容安全（Content Security）已经成为各大平台不可忽视的生命线。无论是社交媒体、直播弹幕，还是电商评论，海量的用户生成内容（UGC）中往往夹杂着违规信息。
 
@@ -23,7 +23,7 @@ article: false
 2. **动态更新**：如何在不重启服务、不中断业务的情况下，实时生效最新的违规词库？
 3. **对抗变种**：面对“火星文”、拼音拆解等恶意规避手段，系统如何保持健壮性？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766393923092-f2034b32-c57b-4551-9905-4380dc0eb35e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-d23e69a35192.png)
 
 本文将围绕这三个目标，从最基础的算法选型开始，一步步演进到支撑亿级流量的分布式智能架构。
 
@@ -35,7 +35,7 @@ article: false
 
 我们需要的是一种**时间复杂度与词库大小无关**的算法。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766392635952-bf231056-5377-40cb-9c04-ab5ad21109c0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-3e1756829827.png)
 
 如上图所示，引入 **Trie 树（字典树）** 或 **AC 自动机（Aho-Corasick Automaton）** 后，性能发生了质的飞跃。无论词库里有 1 万个词还是 100 万个词，检测耗时只与**被检测文本的长度**（K）有关。这种“空间换时间”的策略，将响应时间从秒级压缩到了毫秒级。
 
@@ -45,7 +45,7 @@ Trie 树的核心思想是利用字符串的**公共前缀**来减少查询时�
 
 当文本流进入系统时，我们像查字典一样逐字匹配：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766393942169-ff6a5074-59d6-4325-911e-585512f7bd34.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-18892603256c.png)
 
 1. **指针游走**：读取文本中的字符，在树上寻找对应的子节点。
 2. **状态判定**：如果路径断开，说明不匹配；如果路径走到了标记为“结束”的节点，说明命中了敏感词。
@@ -57,7 +57,7 @@ Trie 树的核心思想是利用字符串的**公共前缀**来减少查询时�
 
 在多线程高并发环境下，直接修改正在使用的 Trie 树是非常危险的，极易导致并发冲突或服务崩溃。这里我们引入了并发编程中常用的**Copy-On-Write** 思想与 **双 Buffer 机制**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766393953574-b07de4f8-a7f8-495e-9475-7a0817f32b8d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-795362b40070.png)
 
 **设计方案如下：**
 
@@ -73,7 +73,7 @@ Trie 树的核心思想是利用字符串的**公共前缀**来减少查询时�
 
 在亿级流量的场景下，仅仅依赖 Redis 也是不够的。每一次网络 I/O 都是成本。为了追求极致性能，我们采用了**三级存储架构**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766393965404-ed32c530-1100-48d0-9276-d2794d3ae8d5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-6d2ace14b368.png)
 
 - **L1 (In-Process Cache)**：这是性能的关键。我们将构建好的 Trie 树对象直接驻留在应用服务的堆内存（Heap）中。命中 L1 意味着**零网络开销**，检测耗时通常在微秒级别。
 - **L2 (Distributed Cache)**：使用 Redis 存储全量的词库数据、黑名单配置以及版本信息，作为各个服务节点之间的数据同步源。
@@ -91,7 +91,7 @@ Trie 树的核心思想是利用字符串的**公共前缀**来减少查询时�
 
 如果把这些变种都加入词库，词库会无限膨胀且难以维护。更优雅的解法是建立一个**标准化管道（Normalization Pipeline）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766393973055-104a5e00-1277-468d-85a4-1c7937ee7307.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-ca61653322c2.png)
 
 在文本进入 Trie 树匹配之前，先经过一系列标准化清洗：
 
@@ -108,7 +108,7 @@ Trie 树虽然快，但它不懂上下文。比如“他在**吸毒**气”和�
 
 为了解决“误杀”和“漏杀”的矛盾，现代内容安全系统通常采用**分层防御体系（Layered Defense）**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766394027285-9b6d66f5-9c45-45b6-b168-137ec91b5760.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-9c132994c9e9.png)
 
 1. **第一道防线（规则引擎）**：利用 Trie 树快速拦截 90% 的明显违规词。计算成本最低，响应速度最快。
 2. **第二道防线（AI 模型）**：对于规则引擎放行但存在嫌疑的文本，送入 NLP 模型（如 BERT、TextCNN）进行语义分析。
@@ -118,7 +118,7 @@ Trie 树虽然快，但它不懂上下文。比如“他在**吸毒**气”和�
 
 ## 结语
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766394102230-f82d8c76-9ca0-40b4-a0f2-47f92dc637c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0912-lnd8ulmpkxlm7b2t/img-d0043cf516f4.png)
 
 敏感词过滤系统的演进，本质上是**架构复杂度随业务规模增长**的缩影。从简单的代码内嵌，到引入热更新、多级缓存，再到结合 AI 的智能化防御，每一步都是为了解决特定的工程痛点。
 

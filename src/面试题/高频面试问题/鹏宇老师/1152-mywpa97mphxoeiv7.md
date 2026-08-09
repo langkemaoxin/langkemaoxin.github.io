@@ -36,7 +36,7 @@ LLM 推理全流程本质是「自然语言版的 Java Web 请求 - 响应流程
 
 `请求预处理` → `Memory上下文管理` → `Token分词` → `Embedding向量化` → `RAG检索` → `PromptTemplate构造` → `Agent决策` → `LLM核心推理` → `响应优化` → `输出闭环`
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765806914052-3f27670c-87f5-4653-8c50-e36fe2e7fd93.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-4f0f1fd36f12.png)
 
 ### 对应 Java Web 核心流程
 
@@ -90,7 +90,7 @@ StringUtils.trim ()、正则替换
 
 该环节无技术壁垒，核心逻辑完全复用 Java 中 “Controller 层参数预处理” 的设计思想 ——“先净化数据，再传递处理”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765806941091-abf4c2e5-b7f1-4fdb-bf96-9f6b04e2923d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-b82f2919e7fd.png)
 
 ### 步骤 2：上下文管理（核心名词：Memory）
 
@@ -128,7 +128,7 @@ Redis/MySQL
 - 核心作用：解决大模型 “无状态” 问题，让模型能 “记住” 过往交互，实现连续、连贯的对话响应；
 - Java 类比总结：Memory = Session（短期状态） + Redis/MySQL（长期存储），核心设计思想完全一致。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765806964546-39e50d45-526c-4542-ba6c-3f49bc5c25c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-09ac6feaef5b.png)
 
 ### 步骤 3：核心推理环节（Token 分词 + Embedding+RAG+PromptTemplate+Agent+LLM）
 
@@ -343,7 +343,7 @@ LLM 生成 Token 序列 = Java Service 返回 POJO，均为 “核心处理的�
 - 核心能力：语义理解（懂用户问题）、逻辑推理（基于数据推导答案）、自然语言生成（输出人能懂的文字）；
 - Java 类比总结：LLM = Java Service 层核心逻辑，是整个流程的 “计算核心”，负责接收结构化输入、执行核心处理、输出原始结果。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765806992840-56c8e057-0c4c-48cb-9304-69cb30815e83.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-e69236be7a44.png)
 
 ### 步骤 4：响应优化
 
@@ -377,7 +377,7 @@ LLM 排版（分段 / 加粗） = Java 用 Result 类封装（`{code:200, msg:"s
 @ControllerAdvice 全局异常处理、RetryTemplate 重试
 LLM 重试 / 敏感词过滤 = Java 捕获业务异常返回友好提示、重试失败的数据库操作，均为 “保证流程稳定性，避免无效输出”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765807013745-22effe51-ff17-437c-9127-405ed159fa5c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-670154c7379b.png)
 
 ### 步骤 5：输出返回与闭环
 
@@ -409,7 +409,7 @@ LLM 存储对话历史 = Java 存储订单日志、缓存用户偏好，均为 �
 SLF4J/Logback 日志打印、SkyWalking 链路追踪
 LLM 记录推理信息 = Java 记录接口调用日志、链路耗时，均为 “用于问题排查、性能优化”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765807034997-cbf2a8e6-75fc-4698-a9c9-be57151efceb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-0d5094105398.png)
 
 ## 三、核心名词对照表
 
@@ -467,7 +467,7 @@ LLM 推理全流程与 Java Web 流程的核心架构思想高度一致，Java �
 - 核心计算：LLM = Service 核心逻辑；
 - 异常处理：响应优化 = 全局异常处理 + 响应格式化。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765807075414-1df8ef1f-6bff-4fef-b247-1ed080d7409d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-8c5a1c8372f6.png)
 
 ### 2. Java 程序员的核心优势
 
@@ -475,7 +475,7 @@ LLM 推理全流程与 Java Web 流程的核心架构思想高度一致，Java �
 - 架构思维复用：多年积累的 “分层、封装、解耦、状态管理” 思想可直接迁移到 AI 应用理解中；
 - 技术壁垒低：后续学习 LangChain4j（Java 版 LangChain）时，其组件设计（DocumentLoader、VectorStore、RagChain）与 Java 的 POI、MyBatis、Service 逻辑完全同源，上手极快。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1765807060868-e4509691-b50e-47e2-b788-dc4c69eed8ae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1152-mywpa97mphxoeiv7/img-0ec3fe99e681.png)
 
 ### 3. 关键认知升级
 

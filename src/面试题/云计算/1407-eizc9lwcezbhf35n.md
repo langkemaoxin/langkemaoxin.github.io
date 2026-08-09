@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366837648-588b1892-2f83-4f1b-93af-ac0c33cba0c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1407-eizc9lwcezbhf35n/img-80cf6efcb56a.png)
 
 大模型服务GPU选型需结合**业务场景需求**、**模型特性**、**成本约束**及**技术生态**综合评估。需分三步走：
 
@@ -25,7 +25,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366866165-f2bc7a6a-c1e8-4b08-98ca-d0893774cd6e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1407-eizc9lwcezbhf35n/img-9f7cb665c5a5.png)
 
 #### 案例1：医疗影像智能诊断系统（训练场景）
 
@@ -98,7 +98,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366926663-134ebe68-80a9-4331-acb3-d1e7d498fee8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1407-eizc9lwcezbhf35n/img-4e902e0ecf2a.png)
 
 **面试官**：请结合实际项目经验，谈谈大模型服务GPU选型的核心考量与典型场景。
 
@@ -127,7 +127,7 @@ article: false
 
 ### 四、总结归纳
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752366943852-43c9e3d1-8002-4817-a9a8-bd89c7a69e3f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1407-eizc9lwcezbhf35n/img-44088850438a.png)
 
 GPU选型需遵循场景驱动、性能优先、成本可控”**原则：
 

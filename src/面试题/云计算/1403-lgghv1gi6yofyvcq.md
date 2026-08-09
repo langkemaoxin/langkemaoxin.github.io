@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370681903-321d6a7b-5bef-4258-8e1b-b4b04127e905.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1403-lgghv1gi6yofyvcq/img-502e1cef661b.png)
 
 **梯度累积**是分布式训练中解决显存限制的核心技术之一，其本质是通过延迟梯度更新来模拟大批次训练效果。以下从原理、案例、实现细节三个维度展开分析：
 
@@ -44,7 +44,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370700848-676327b8-941d-47b7-ae76-ef3fe6d8e6d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1403-lgghv1gi6yofyvcq/img-21b9db911a9b.png)
 
 #### **案例背景：医疗文本分类系统**
 
@@ -65,7 +65,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370728622-dbace692-e828-46d6-843a-db1ba82594e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1403-lgghv1gi6yofyvcq/img-d400d8e02412.png)
 
 #### **梯度累积的实现原理**
 
@@ -107,7 +107,7 @@ effective_batch_size = 32 * 8 = 256
 
 #### **案例中的梯度累积应用**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370752741-7e5dc86c-c46e-4bd1-9df7-9031e2a24c95.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1403-lgghv1gi6yofyvcq/img-76392d96b8ca.png)
 
 1. **场景适配**
 
@@ -181,7 +181,7 @@ torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
 
 ### 四、总结归纳
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752370887948-faee3357-b60d-4505-b06f-393b144cd7f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1403-lgghv1gi6yofyvcq/img-203f8cc5f6e0.png)
 
 #### **梯度累积的核心价值**
 

@@ -28,7 +28,7 @@ Redis的过期监听机制并不可靠。官方说明指出，过期事件是在
 
 这种不可靠的机制，绝对不适合用于过期订单的管理。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/12590378/1728632003658-d48a0914-361e-41cf-832b-7365aabbd6d3.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_640%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0508-xc858dvm27dcanyx/img-b54b636c955b.png)
 
 ### 2. RabbitMQ 死信队列
 
@@ -38,7 +38,7 @@ RabbitMQ提供死信机制，要让消息成为死信，必须满足特定条件
 
 虽然可以用来排查消息，但它并不理想。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/12590378/1728632002991-e67bf6ae-327b-433d-8eaa-84c68a0c44ab.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_640%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0508-xc858dvm27dcanyx/img-5568a8c07921.png)
 
 ### 3. 时间轮
 
@@ -48,7 +48,7 @@ RabbitMQ提供死信机制，要让消息成为死信，必须满足特定条件
 
 在使用时间轮之前，请务必考虑其风险性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/12590378/1735464396958-d8cac87d-f620-4c14-ba8c-1e689275abc3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0508-xc858dvm27dcanyx/img-fba95fc2c4d3.png)
 
 ## 推荐方案
 
@@ -56,7 +56,7 @@ RabbitMQ提供死信机制，要让消息成为死信，必须满足特定条件
 
 对于延时任务，推荐使用 **RocketMQ** 或 **Pulsar** 等具有定时投递功能的专业消息队列。这些系统设计上为高并发和可靠性做了优化，确保消息的准确投递。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/12590378/1728632002977-70069c25-c236-44e8-bae8-4bf97c56827c.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_640%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0508-xc858dvm27dcanyx/img-5e1c986df6ac.png)
 
 ### Redisson DelayedQueue
 
@@ -64,7 +64,7 @@ RabbitMQ提供死信机制，要让消息成为死信，必须满足特定条件
 
 同时，请设计补偿机制以应对潜在的Redis崩溃。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/12590378/1728632003211-253bc6f4-75a4-49cc-986a-db1646c5ca95.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_640%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Redis/0508-xc858dvm27dcanyx/img-e8885ab8a0e4.png)
 
 ## 方案比较
 

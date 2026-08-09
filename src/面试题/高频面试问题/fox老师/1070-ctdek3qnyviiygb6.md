@@ -19,7 +19,7 @@ article: false
 
 多数用户默认 “腾讯系统中存着自己的原密码”，但从安全架构设计来看，这是典型的认知偏差。若采用 “明文存储” 模式，即直接将用户输入的密码（如 “1314520”）以原文形式存入数据库，会面临致命安全风险：一旦数据库遭遇黑客入侵，所有用户的密码将直接泄露，攻击者可轻松登录账号，造成隐私泄露、财产损失等严重后果。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758457509498-ed5179c8-6f42-41c1-a3f2-481318ba0348.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1070-ctdek3qnyviiygb6/img-8cb832f09616.png)
 
 显然，正规互联网企业绝不会采用明文存储方案。腾讯作为用户规模超 10 亿的平台，其密码存储架构从设计之初就规避了这一风险，核心技术手段便是 “哈希加密” 与 “加盐防御” 的组合。
 
@@ -27,7 +27,7 @@ article: false
 
 为避免明文存储的风险，QQ 采用 “哈希加密” 技术对密码进行处理。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758457578826-3461a31d-c0b7-4d6c-af2e-b16453acee54.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1070-ctdek3qnyviiygb6/img-ca18fc10bb46.png)
 
 哈希算法（如 SHA-256、MD5 等，腾讯实际采用更安全的定制算法）的核心特性是 “单向不可逆”：
 
@@ -45,7 +45,7 @@ article: false
 2. **比对破解**：若黑客获取到数据库中的哈希值，只需在彩虹表中查找匹配的哈希值，即可快速反推出用户的原密码（例如，查到哈希值 “e10adc3949ba59abbe56e057f20f883e” 对应密码 “123456”）；
 3. **风险场景**：对于使用 “弱密码”（如简单数字、常见单词）的用户，哈希加密 + 彩虹表攻击的组合，会让密码安全形同虚设。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758457595602-d48cf061-a487-40e0-a899-5e53502ec548.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1070-ctdek3qnyviiygb6/img-e0a11111ef5e.png)
 
 ## 四、终极防御：加盐哈希 —— 让彩虹表彻底失效
 
@@ -56,11 +56,11 @@ article: false
 3. **存储内容**：数据库中会同时存储 “加盐后的哈希值” 和 “对应的随机盐”（盐本身无敏感信息，可安全存储）；
 4. **防御效果**：由于每个用户的 “盐” 不同，即便两个用户设置相同的原密码，最终的哈希值也会完全不同（例如，用户 A “1314520”+“% t7#k” 与用户 B “1314520”+“x2@9p” 的哈希值差异极大）。此时，黑客的彩虹表因缺乏 “盐” 的信息，无法预计算出对应的哈希值，彻底失去破解能力。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758457612467-70ed641f-b1b4-4404-84e8-4f60af1fa7a4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1070-ctdek3qnyviiygb6/img-de4a4f46da64.png)
 
 ## 五、为何无法 “告知原密码”？只能重置的技术逻辑
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758457648019-c41983f1-53c4-427f-abda-f54b5e899199.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1070-ctdek3qnyviiygb6/img-7922bb5085b1.png)
 
 理解了加盐哈希的原理后，“无法告知原密码” 的问题便迎刃而解：
 

@@ -42,9 +42,9 @@ article: false
 1. **分头策略设计**
 
 - 选择8头注意力（经验公式：，d_model=512）
-![](https://cdn.nlark.com/yuque/__latex/2d0b5aa2870d78a671b30b35fbb62232.svg)
+![](/面试题/云计算/1443-ztisq7nq0gpq4beu/img-2f36233da93e.svg)
 - 每个头维度：
-![](https://cdn.nlark.com/yuque/__latex/cb2e47c50151f0060f9b55b9243aa892.svg)
+![](/面试题/云计算/1443-ztisq7nq0gpq4beu/img-fbc396cfdc9e.svg)
 
 1. **矩阵变换实现**
 
@@ -101,7 +101,7 @@ attention_scores = torch.matmul(Q, K) / sqrt(d_k)
 实际应用时需注意：
 
 - 头数选择经验公式：
-![](https://cdn.nlark.com/yuque/__latex/cf9cd9fadba6d6b57742195c35fd8df3.svg)
+![](/面试题/云计算/1443-ztisq7nq0gpq4beu/img-23d56592dd0e.svg)
 - 超过8头时建议采用参数共享策略
 - 长文本场景优先使用稀疏注意力
 - 工业级实现必须考虑显存优化（如KV Cache）

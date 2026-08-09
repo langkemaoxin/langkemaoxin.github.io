@@ -143,7 +143,7 @@ Java的泛型是伪泛型，使用泛型的时候加上类型参数，在编译�
 
 #### 7、Java异常体系
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392679006-6536c1a7-119e-4f0d-b591-ccac754effbb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0044-eivhfmeh91kchwio/img-8a58825b3d5f.png)
 
 Throwable是Java语言中所有错误或异常的超类。下一层分为Error 和Exception。
 
@@ -171,7 +171,7 @@ Throwable是Java语言中所有错误或异常的超类。下一层分为Error �
 
 **数据结构**
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392679031-a4900f82-bffe-46da-87e5-3e2cbc85a33a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0044-eivhfmeh91kchwio/img-c5a0359152fd.png)
 
 #### 1、ArrayList和LinkedList
 
@@ -254,7 +254,7 @@ HashMap在底层数据结构上采用了数组＋链表＋红黑树，通过散�
 
 put操作步骤：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392679005-3d961abe-b4a2-4ae2-8e0a-2bf6b620b758.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0044-eivhfmeh91kchwio/img-925850e32b21.png)
 
 1、判断数组是否为空，为空进行初始化;
 
@@ -296,7 +296,7 @@ JDK1.8 HashMap：
 
 **JDK1.7的ConcurrentHashMap**底层采⽤ 分段的数组+链表 实现；采用 **分段锁**（Sagment） 对整个桶数组进⾏了分割分段(Segment默认16个)，每⼀把锁只锁容器其中⼀部分数据，多线程访问容器⾥不同数据段的数据，就不会存在锁竞争，提⾼并发访问率。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392679106-1eb593f3-0d14-496a-a90c-32ca28395c56.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0044-eivhfmeh91kchwio/img-55b73301dbdc.png)
 
 **JDK1.8的 ConcurrentHashMap**采⽤的数据结构跟HashMap1.8的结构⼀样，数组+链表/红⿊树；摒弃了Segment的概念，⽽是直接⽤ Node 数组+链表+红⿊树的数据结构来实现，通过并发控制**synchronized**和**CAS**来操作保证线程的安全。
 
@@ -410,6 +410,6 @@ StringBuffer对方法加了同步锁，线程安全，效率略低于StringBuild
 
 **基本数据类型和包装类**
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392679106-903b872a-3108-4c11-95a8-c5a42920da9d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0044-eivhfmeh91kchwio/img-ded32bfa0313.jpg)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392679389-f6f7eb27-bf8d-42f7-bb6b-05d3bcde8561.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0044-eivhfmeh91kchwio/img-d300cb784dda.png)

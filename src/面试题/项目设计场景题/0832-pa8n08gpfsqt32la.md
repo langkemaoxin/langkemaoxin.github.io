@@ -144,7 +144,7 @@ SLA：服务等级协议（简称：SLA，全称：service level agreement）。
 
 **失败重试：**要区分调用失败的类型。有些失败是短暂偶然的（比如网络抖动），进行重试即可。而有些失败是确定，那么重试反而会造成调用请求量的放大，加重对调用系统的负担。经验值：**重试的次数一般设为3次**，再多次的重试没有好处。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719756126462-95226482-4647-4ef7-8bf0-6bfcf71e273e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0832-pa8n08gpfsqt32la/img-3c872eccee6e.png)
 
 **快速回滚：**出现问题后，能有有效的回滚机制。涉及到数据修改的，发布后会引起脏数据的写入，需要有可靠的回滚流程，保证脏数据的清除。
 
@@ -218,7 +218,7 @@ Server.xml、maxConnect、maxThreads
 
 计数器算法是限流算法里最简单也是最容易实现的一种算法，简单来说就是规定单位时间处理的请求数量规定单位时间处理的请求数量。比如我们规定我们的一个接口一分钟只能访问100次的话。在一开始，我们设置一个计数器counter，每当一个请求过来，counter就加1，如果counter的值大于100并且该请求与第一个请求的间隔时间还在1分钟之内，那么说明请求数过多，触发限流。如果该请求与第一个请求的间隔时间大于1分钟，且counter的值还在限流范围内，那么就重置 counter，具体算法的示意图如下
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1719758728462-938dc7c3-5d0f-4a15-87b9-c2dbaadfea27.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0832-pa8n08gpfsqt32la/img-6b975efef97c.jpg)
 
 问题：这个算法虽然简单，但是有一个十分致命的问题，那就是临界问题：假设有一个恶意用户，他在0:59时，瞬间发送了100个请求，并且1:00又瞬间发送了100个请求，那么其实这个用户在 1秒里面，瞬间发送了200个请求。我们刚才规定的是1分钟最多100个请求， 瞬间超过我们我们阈值的两倍。用户有可能通过算法的这个漏洞，压垮我们的应用。
 
@@ -236,7 +236,7 @@ Server.xml、maxConnect、maxThreads
 
 漏桶算法的缺陷也很明显，当短时间内有大量的突发请求时，即便此时服务器没有任何负载，每个请求也都得在队列中等待一段时间才能被响应。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719756126961-65dfcdcd-c873-460d-bce2-f651fb1306d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0832-pa8n08gpfsqt32la/img-a3b2d43e4d5e.png)
 
 **代码实现**
 
@@ -324,7 +324,7 @@ public class LeakyBucket {
 
 令牌桶算法既能够将所有的请求平均分布到时间区间内，又能接受服务器能够承受范围内的突发请求，因此是目前使用较为广泛的一种限流算法。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1719756127223-e092ea9c-3c0f-4d27-a0cf-874fa414560e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0832-pa8n08gpfsqt32la/img-74f7b307ad7e.png)
 
 **代码实现**
 
@@ -366,7 +366,7 @@ public class TokenBucket {
 
 滑动窗口计数器是通过将窗口再细分，并且按照时间"滑动"，这种算法避免了固定窗口计数器带来的双倍突发请求，但时间区间的精度越高，算法所需的空间容量就越大。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1719758747942-a1aa0b37-a008-48e8-b7b4-f8c54367bd0d.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0832-pa8n08gpfsqt32la/img-632d51fc724d.jpg)
 
 **代码实现**
 

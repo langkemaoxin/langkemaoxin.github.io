@@ -15,7 +15,7 @@ article: false
 
 面试官：”你简历上写着精通微服务，那这次我们来聊聊微服务的熔断问题把。“
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760945400212-0a5fbc27-23dd-4727-85fe-1eebac6a5114.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_70%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1099-lu7w7y4ddf6z4cnl/img-60df25160e64.png)
 
 “服务熔断是干什么的？解决什么问题？”
 
@@ -37,7 +37,7 @@ article: false
 
 首先服务熔断方案针对的是微服务架构中最可怕的噩梦-**服务雪崩**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760945653058-f10e8424-f34d-42d8-a718-de8962cabab5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_84%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1099-lu7w7y4ddf6z4cnl/img-ae3be5e05b32.png)
 
 想象一个场景：最上游的服务A调用服务B，服务B再调用下游的服务C。现在，服务C因为高负载或者Bug，响应变得极慢甚至直接宕机。服务B的线程在调用C时，就会被卡住、等待超时。当大量请求涌入时，服务B的线程池很快就会被这些等待的线程耗尽。此时，服务B对于服务A来说，也变得无法响应。这个过程会像多米诺骨牌一样，沿着调用链反向传播，最终导致整个系统全线崩溃。
 
@@ -47,7 +47,7 @@ article: false
 
 ## 二、熔断的实现：从拦截到降级
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760945436243-48907e7a-9231-41e1-aaee-1dc074253302.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1099-lu7w7y4ddf6z4cnl/img-4d535c760ce3.png)
 
 我们常用的熔断框架有Hystrix、Resilience4j、Sentinel等，它们的核心都是用一个“**熔断器对象**”，像AOP切面一样，包裹住我们的远程调用。
 
@@ -61,13 +61,13 @@ article: false
 
 ## 三、优雅的恢复：“半开”状态的试探
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760945446708-90d13326-d35b-4fb8-8a77-08c16faf13b2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_74%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1099-lu7w7y4ddf6z4cnl/img-2b75eaf4dd6f.png)
 
 面试的深水区问题：如何恢复服务？很多人的简单想法就是，等后端服务恢复后就简单的恢复远程服务调用就可以了呗。
 
 但这里有一个致命的陷阱就是“**恢复抖动**”。如果熔断恢复后，100%的流量瞬间打过去，一个刚刚“复活”的脆弱服务很可能被再次打垮，导致系统在“熔断”和“恢复”之间反复抽搐。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760945471720-baf9da52-6fd2-46e8-88c8-040fc7834565.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1099-lu7w7y4ddf6z4cnl/img-dfef71d2f41e.png)
 
 为了解决这个问题，我们必须引入 **‘半开（Half-Open）’状态** ，构成一个完整的三态状态机。
 
@@ -82,7 +82,7 @@ article: false
 
 ## 四、王者方案：从被动防御到主动治理
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760945479385-dfb637bc-55d3-4340-b79b-7a1afe53e9d1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_84%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1099-lu7w7y4ddf6z4cnl/img-432600d39773.png)
 
 终极问题：熔断会丢请求，有没有更好的方法？这要求我们把视野从单个组件，拉高到整个架构。
 
@@ -98,7 +98,7 @@ article: false
 
 ## 总结与升华
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760945488609-c2b6078b-cda7-4c72-817a-75b5fee749c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_70%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1099-lu7w7y4ddf6z4cnl/img-a88659c69375.png)
 
 一套顶级的熔断体系，它是一个立体的防御工程：
 

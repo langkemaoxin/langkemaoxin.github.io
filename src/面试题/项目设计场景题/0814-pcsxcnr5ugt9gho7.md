@@ -25,7 +25,7 @@ DBox 还需要实现文件共享的需求。使用 DBox 的不同用户之间可
 
 此外，网盘是一个存储和网络密集型的应用，用户文件占据大量**硬盘资源**，上传、下载需要占用大量网络带宽，并因此产生较高的运营成本。所以用户体验需要向付费用户倾斜，DBox 需要对上传和下载进行**流速控制**，保证付费用户得到更多的网络资源。DBox 用例图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597652833-aeb2d740-37dc-4792-98c2-d7f50c01e866.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0814-pcsxcnr5ugt9gho7/img-a3ee7695f989.png)
 
 image-20231201105140483
 
@@ -67,7 +67,7 @@ DBox 的**存储量**、**吞吐量**、**带宽负载**估算如下：
 
 而 DBox 是将元信息存储在数据库中，文件内容则使用另外专门的存储体系。但是由于DBox 是一个互联网应用，出于安全和访问管理的目的，并不适合由客户端直接访问存储元数据的数据库和存储文件内容的存储集群，而是通过 API 服务器集群和数据块服务器集群分别进行访问管理。整体架构如下图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597653411-b8540f5f-1736-4b3c-8476-3ec0bca6b387.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0814-pcsxcnr5ugt9gho7/img-670b54f7a3b4.png)
 
 对于大文件，DBox 不会上传、存储一整个的文件，而是将这个文件进行切分，变成一个个单独的 Block，再将它们分别上传并存储起来。
 
@@ -77,7 +77,7 @@ Block 服务器就是负责 Block 上传和管理的。客户端应用程序根�
 
 用户上传文件的时序图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597652936-85136e69-2fb9-4fdf-a32b-96455e12339e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0814-pcsxcnr5ugt9gho7/img-13bb13535d7a.png)
 
 image-20231203173232695
 
@@ -89,7 +89,7 @@ image-20231203173232695
 
 类似的，用户下载文件的时序图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597652936-81b56951-ff02-45d9-87c4-6c22e229ac87.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0814-pcsxcnr5ugt9gho7/img-39d94c8b99e9.png)
 
 image-20231203173348916
 
@@ -105,7 +105,7 @@ image-20231203173348916
 
 元数据库表结构设计如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597652832-3950c318-e028-490c-b3b5-7c627f1c151b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0814-pcsxcnr5ugt9gho7/img-9cdbe86d518a.png)
 
 image-20231203173453687
 
@@ -149,7 +149,7 @@ Block 服务器会根据 API 服务器的返回值，来控制客户端能够同
 
 表，如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720597653606-02b59e9c-6284-4f63-929e-c19871bcd863.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0814-pcsxcnr5ugt9gho7/img-ba2e3d29b5dc.png)
 
 image-20231203173716367
 

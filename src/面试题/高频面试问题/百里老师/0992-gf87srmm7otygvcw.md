@@ -15,7 +15,7 @@ article: false
 
 本文将探讨一个经典的海量数据处理问题：如何在有限的硬件资源下，从一个包含14亿条记录的姓名文件中，高效地统计出出现频率最高的100个姓名（Top 100）。我们将深入分析两种主流方案：一种是基于内存的理想化方案，另一种是基于分治思想的现实方案。本文旨在提供一个清晰的解决问题的框架，并提炼出可应用于其他大规模数据场景的通用范式。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760693704004-fc720a3e-fa20-4364-a95b-0db915533baf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0992-gf87srmm7otygvcw/img-d037315ac63f.png)
 
 ---
 
@@ -23,7 +23,7 @@ article: false
 
 在着手解决任何技术问题前，首先需要进行量化分析（Estimation）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760693730301-346f4c4d-bc6b-44a5-8a0b-f6ffa6d2fcf5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0992-gf87srmm7otygvcw/img-531547a3ed8b.png)
 
 - **数据规模：** 14亿条姓名记录。
 - **内存限制：** 假设运行环境为一台主流服务器，可用内存为8GB。
@@ -41,7 +41,7 @@ article: false
 
 要进行频率统计，最简单的工具是哈希表（HashMap）。但对于有大量公共前缀的字符串（如中文姓名，“张”、“王”、“李”姓非常普遍），Trie树是更节省内存的选择。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760693747013-a489bc1b-a76f-452a-9b29-517cce65f2a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0992-gf87srmm7otygvcw/img-5d2be5cca088.png)
 
 如上图所示，Trie树将字符串的公共前缀路径进行合并，从而极大减少了冗余存储。我们只需沿着姓名路径遍历树，并在路径的终点节点上更新一个计数器（`count`），即可完成一次频率更新。
 
@@ -49,7 +49,7 @@ article: false
 
 在通过Trie树得到所有唯一姓名及其频率后，我们需要从数百万的唯一姓名中找出Top 100。全局排序开销巨大，更优的做法是使用一个大小为K（此处K=100）的小顶堆，它就像一个“守门员”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760693762073-eb4de015-be6e-4779-bb11-d06e22fe25d8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0992-gf87srmm7otygvcw/img-cf50930a5761.png)
 
 小顶堆的工作机制如下：
 
@@ -65,7 +65,7 @@ article: false
 
 整个流程可以由下面这一张图完整地概括：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760694139585-883d2cd4-6fe1-475d-a662-7fa8b60545c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0992-gf87srmm7otygvcw/img-3ed6211be826.png)
 
 现在，让我们跟随这张图的指引，一步步解析这个优雅的解决方案：
 
@@ -101,7 +101,7 @@ Trie树 / HashMap + 小顶堆
 
 通过本案例，我们不仅解决了“姓名统计”这一个具体问题，更重要的是掌握了一套处理海量数据的通用思维范式：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760693807438-8b3183f3-d1c7-4a4a-9d91-e5c1f1e9e5a7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0992-gf87srmm7otygvcw/img-daf749532cfd.png)
 
 1. **估算 (Estimate):** 永远先分析问题规模和资源限制，这是选择正确路径的前提。
 2. **分治 (Divide and Conquer):** 当单机资源成为瓶颈时，通过哈希、分段、或按时间切分等手段将大问题分解为小问题，是打破僵局的核心策略。

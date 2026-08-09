@@ -13,4 +13,4 @@ article: false
 
 > 来源：[年薪百万P7+简历模板](https://www.yuque.com/tulingzhouyu/db22bv/wbsmb2zbq9chxaft)
 
-![](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1725025109705-e5a0bca9-55fb-443b-b8b5-22f36f68f01b.pdf)
+[https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1725025109705-e5a0bca9-55fb-443b-b8b5-22f36f68f01b.pdf](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1725025109705-e5a0bca9-55fb-443b-b8b5-22f36f68f01b.pdf)

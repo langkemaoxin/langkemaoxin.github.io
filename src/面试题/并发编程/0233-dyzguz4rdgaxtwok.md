@@ -83,7 +83,7 @@ public class ThreadPoolConfigDemo {
 
 你要甩出这个专业公式，直接降维打击：
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767853483468-28bc4e94-0137-49b2-ac42-fc374b156483.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0233-dyzguz4rdgaxtwok/img-013f236f90ee.png)
 
 **Fox 解析：**
 
@@ -96,7 +96,7 @@ public class ThreadPoolConfigDemo {
 
 带入公式：
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767854118033-822b99dc-90a8-49c5-8dc0-690fde3e11f8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0233-dyzguz4rdgaxtwok/img-7632778c643f.png)
 
 。
 

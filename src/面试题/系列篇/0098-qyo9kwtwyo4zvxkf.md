@@ -23,7 +23,7 @@ article: false
 
 JVM承担的就是一个翻译工作，动态的将Java代码编译成操作系统可以识别的机器码。这样一来，Java就实现了「Write Once，Run Anywhere」的伟大愿景了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676269727038-37cea301-05dd-49ce-b4f6-44c46c928e71.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-6d0804580df4.png)
 
 一次编译、处处运行「Write Once，Run Anywhere」
 
@@ -39,7 +39,7 @@ JVM承担的就是一个翻译工作，动态的将Java代码编译成操作系�
 
 JDK的JRE的区别作为一个Java开发，我相信每个人都知道。但是很多人却不知道JRE是Java虚拟机的实现。它可以分析字节码、解释代码然后执行它。我们作为开发人员，了解JVM的体系结构非常重要。它可以指导我们去写出性能良好的代码。能够很好的去分析性能问题。接下来带领大家来学习JVM的体系结构和它的组成部分。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676272667331-ca4b8fc4-edcb-42cd-9700-6e21bdf10180.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-2c6b9b03487f.png)
 
 我们看上面的体系图，里面的东西虽然有点多看起来很累，我们先别去看细节，我们就先关注三个最外围的部分：
 
@@ -51,7 +51,7 @@ JDK的JRE的区别作为一个Java开发，我相信每个人都知道。但是�
 
 当 Java 虚拟机将 Java 源码编译为字节码之后，虚拟机便可以将字节码读取进内存，从而进行解析、运行等整个过程，这个过程我们叫：Java 虚拟机的类加载机制。JVM 虚拟机执行 class 字节码的过程可以分为七个阶段：**加载、验证、准备、解析、初始化、使用、卸载。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676273586231-499379c4-3560-4068-85e7-d493e2348a55.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-1ab86c6caa40.png)
 
 ### 运行时数据区
 
@@ -59,7 +59,7 @@ JDK的JRE的区别作为一个Java开发，我相信每个人都知道。但是�
 
 `虚拟机栈`和`程序计数器`是线程私有的，而`堆`和`方法区`是线程共享的区域。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676275218059-b16761b8-2a89-4c55-b086-71b2d9f3518b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-44c15bee1d3e.png)
 
 ### 执行引擎
 
@@ -67,17 +67,17 @@ JDK的JRE的区别作为一个Java开发，我相信每个人都知道。但是�
 
 Java是一门半解释半编译型语言，所以执行引擎又分为了`解释器`和`JIT编译器`，解释器就是当Java虚拟机启动时根据预定义的规范把字节码翻译成对应的机器码逐行去解释执行。而JIT编译器是虚拟机将源代码直接编译成机器码。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676275530469-eb977793-c45f-4b96-abf3-89f640b40978.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-cd5ebfe4ca28.png)
 
 ## 你能解释一下JVM类加载器的作用吗？
 
 在前面我们简单聊过类加载器。它就是读取字节码转换成java.lang.Class类的一个实例。通过newInstance()方法就可以创建类的实例。说起来一句话非常简单，实际的情况可能更加复杂，比如Java字节代码可能是通过工具动态生成的，也可能是通过网络下载的。这一讲，我们详细的来聊聊类加载器～
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676278755475-df3c35f2-2873-4d70-a7db-7e238cdeda74.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-907b7da68cdb.png)
 
 **在Java语言里，类型的加载、连接、初始化都是在程序运行期间完成的**，这种策略让类加载时稍微增加一些性能开销，但也为Java应用提供了高度的灵活性，Java天生可以动态扩展的语言特性就是基于运行期动态加载和动态连接这个特点实现的。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676288531247-d5e8b424-6c84-45a7-8833-4c8f2bfa7f1a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-8c47c10808e4.png)
 
 上图就是类的生命周期，从图中可以看出，类从加载到虚拟机内存中开始，到卸载为止，整个生命周期包括：**加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）、卸载（Unloading）7个阶段**。其中验证、准备和解析三个部分统称为连接。加载、验证、准备、初始化和卸载这五个阶段的顺序是确定的，类型的加载过程必须按照这种顺序按部就班地开始，而解析阶段则不一定：它在某些情况下可以在初始化阶段之后再开始，这是为了支持Java语言的运行时绑定特性（也称为动态绑定或晚期绑定）。
 
@@ -209,7 +209,7 @@ JVM设计者把类加载阶段中的“通过'类全名'来获取定义此类的
 
 这些类加载器之间的关系如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676294726195-64d33024-fad7-47be-b688-da92abf77f4a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-4b440768d2b0.png)
 
 如上图所示的类加载器之间的这种层次关系，就称为类加载器的**双亲委派模型**（Parent Delegation Model）。
 
@@ -285,7 +285,7 @@ protected synchronized Class loadClass(String name, boolean resolve)
 
 根据《Java 虚拟机规范》中的说法，Java 虚拟机的内存结构可以分为公有和私有两部分。公有指的是所有线程都共享的部分，指的是 Java 堆、方法区、常量池。私有指的是每个线程的私有数据，包括：PC寄存器、Java 虚拟机栈、本地方法栈。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676275218059-b16761b8-2a89-4c55-b086-71b2d9f3518b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-44c15bee1d3e.png)
 
 ### 线程共享：Java堆、方法区、常量池
 
@@ -301,7 +301,7 @@ Java 堆指的是从 JVM 划分出来的一块区域，这块区域专门用于 
 
 Java 堆根据对象存活时间的不同，Java 堆还被分为年轻代、老年代两个区域，年轻代还被进一步划分为 Eden 区、From Survivor 0、To Survivor 1 区。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676296871408-aec02d9f-3a31-4026-8909-3c1b3c7b2307.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-8e7f6d5a4c40.png)
 
 当有对象需要分配时，一个对象永远优先被分配在年轻代的 Eden 区，等到 Eden 区域内存不够时，Java 虚拟机会启动垃圾回收。
 
@@ -398,7 +398,7 @@ Java 虚拟机的内存结构是学习虚拟机所必须掌握的地方，其中
 
 到这里我们基本上把 JVM 的垃圾回收都将清除了，从一开始什么是垃圾，到之后如何判断垃圾，到如何回收垃圾，到垃圾回收的两个重要思想：分代思想、分区思想。通过这么一个脉络，我们了解了垃圾回收的整体概括。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676297449792-a4466261-c7fc-471f-9e84-7ccbb8501a93.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-5734c9f83eb5.png)
 
 ## 你知道在JVM有哪些垃圾回收器吗？
 
@@ -502,11 +502,11 @@ G1 回收器拥有独特的垃圾回收策略，和之前所有垃圾回收器�
 
 在 G1 回收器之前，所有的垃圾回收器其内存分配都是连续的一块内存，如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676297827844-b8b18a65-2f61-4d84-a796-4d7532b21980.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-d01c1ea27926.png)
 
 而在 G1 回收器中，其将一大块的内存分为许多细小的区块，从而不要求内存是连续的。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676297852174-82fbe74a-6dfc-4b42-81eb-df3965f56e84.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-492e795b7734.png)
 
 从上图可以看到，每个Region被标记了 E、S、O 和 H，说明每个 Region 在运行时都充当了一种角色。所有标记为 E 的都是 Eden 区的内存，它们散落在内存的各个角落，并不要求内存连续。同理，Survivor 区、老年代（Old）也是如此。
 
@@ -543,7 +543,7 @@ G1 收集器的收集过程主要有四个阶段：
 
 从一开始的串行回收器，到后来的并行回收器、CMS回收器，到最后的 G1 回收器，垃圾回收器不断改进，使得垃圾回收效率不断提升。特别是分区思想诞生后，对于垃圾回收停顿时间的控制更加细腻，可以让应用有更完美的延时控制，从而呈现更好的用户体验。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676297939163-380db39b-cd5a-44ab-9c7b-eb3006acac9a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-36c4d25af8ce.png)
 
 ### 垃圾回收的几种类型
 
@@ -702,17 +702,17 @@ logging.level.gc=info
 /Library/Java/JavaVirtualMachines/jdk-17.0.5.jdk/Contents/Home/bin
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676384465582-a78d9deb-02bd-48ff-acef-1b793ad8fc14.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-88c2931ca315.png)
 
 上面是基于JDK17截图的Java工具集，已经删除了VisualVM了，在此我们基于GCEasy来进行GC日志分析。
 
 官网地址为：[https://gceasy.io/](https://gceasy.io/) 它有在线分析版和离线分析版都可以使用～
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676428403161-5343ed7a-03c1-4615-958a-5437567f8bc7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_68%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-955c756b09ff.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676428420180-92b5abf8-95dc-41a1-a892-2293b467c0f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-17d07171275a.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676428559138-e2f84021-9997-4e17-aedd-135315bae9cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-adf83fc1b042.png)
 
 查看当前日志，分析当前JVM参数设置，并且分析当前堆内存快照和gc日志，根据实际的各区域内存划分和GC执行时间，觉得是否进行优化。
 
@@ -767,7 +767,7 @@ java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=&lt;filename&gt; &lt;your-
 
 如果各项参数设置合理，系统没有超时日志出现，GC频率不高，GC耗时不高，那么没有必要进行GC优化，如果GC时间超过1-3秒，或者频繁GC，则必须优化。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676436830572-a4c98ac1-d0a2-4ed7-bfb7-a73910e9a399.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-6c67be755a2a.png)
 
 **如果满足下面的指标，则一般不需要进行GC：**
 
@@ -835,15 +835,15 @@ java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=&lt;filename&gt; &lt;your-
 
 从饼图可以看出，明显有对象占用了大量内存，然后再看 **Problem Suspect1**，已经说明了 main 线程通过局部变量占据了 99.42% 内存的对象，而且是 java.lang.Object[] 数组占据了大量内存。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676441513929-a7697ba9-b216-4caf-a66d-0dc643a1b9a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-b99d3d0aa53f.png)
 
 点击 **Details** 进去查看详细的说明，从 “Accumulated Objects in Dominator Tree” 支配树可以看出，main 线程引用了 OomService 对象，OomService 引用了一个 ArrayList 对象，然后 ArrayList 存储了大量 String 对象。这里基本上就能分析出OOM的根源了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676441560935-7b39505f-975d-449b-ac41-075bfb72eab0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-9c5030355c40.png)
 
 再点击 **See stacktrace** 看看线程栈基本就能定位到问题代码了。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676441706641-97e93eb0-5171-4136-b809-3fe104e44f79.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-89d65136819d.png)
 
 ### 直方图 — 定位根源
 
@@ -851,11 +851,11 @@ java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=&lt;filename&gt; &lt;your-
 
 可以看到，char[] 字节数组占用内存最多，对象数量也很多，第二位的 String 对象数量也非常多，有 9791 个，从这大概可以猜出应该是创建了大量的 String 对象。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676441747206-bea2c4d8-9929-4e98-8c77-f58cebb0a622.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-21d0d38fdead.png)
 
 在 char[] 上点击右键，选择 List objects -> with incoming references，就可以列出所有的 char[] 实例，以及每个 char[] 的整个引用关系链：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676441803299-ac553c3f-36a3-40d8-8733-e41d03d8fdac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-7f8708840f1f.png)
 
 随机展开一个 char[]，如下图所示：
 
@@ -865,17 +865,17 @@ java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=&lt;filename&gt; &lt;your-
 
 **Retained Heap（深堆）** 代表对象本身和对象关联的对象占用的内存，**Shallow Heap（浅堆）** 代表对象本身占用的内存。比如，OOMTest 中的这个 ArrayList 对象本身只有 24 字节，但是其所有关联的对象占用了大概5MB 内存。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676441899977-56ec56a4-9b45-465f-927b-e7e084baa5a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-ddef8ffe24ce.png)
 
 如果希望看到完整内容的话，可以右键选择 Copy->Value，把值复制到剪贴板或保存到文件中：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442169987-eb6d407c-a195-460a-9d36-e01007fa0132.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-8e67657383ff.png)
 
 ### 线程栈 — 分析代码
 
 可以点击工具栏的第五个按钮，打开线程视图来分析 OOMTest 执行什么逻辑。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442272122-46a63b21-8606-4426-af85-4cc6d86704ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-9e0fc1a1d821.png)
 
 ## 如果生产环境出现了CPU飙高问题如何定位解决？
 
@@ -891,33 +891,33 @@ Arthas 官方文档： [alibaba.github.io/arthas/](https://link.juejin.cn?target
 
 启动后，直接找到我们要排查的 JVM 进程，然后可以看到 Arthas 附加进程成功：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442463614-91a9ff67-657d-47ab-a9e1-d92daa5a4c87.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-e6278756644d.png)
 
 输入 help 命令，可以看到所有支持的命令列表。这里主要会用到 dashboard、thread、jad、watch 等命令，来定位高CPU的问题。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442472775-c02c8b23-d965-4239-a4ed-ab45b7ae7454.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-87e4f338cb82.png)
 
 ### dashboard — 展示整体情况
 
 `dashboard` 命令整体展示了进程所有线程、内存、GC 等情况，可以明显看到两个CPU占用很高的线程，从线程名字来看应该是线程池的线程。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442500149-11acdae1-3a9d-4827-9a46-42c42bbb9da7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-c1c61fe5c5aa.png)
 
 ### thread — 查看高CPU的线程
 
 接下来，查看最繁忙的线程在执行的线程栈，可以使用 thread -n 命令。这里，我们查看下最忙的 2 个线程：从线程栈可以看出，应该就是 CpuService 的 randomEncode 方法调用 BCryptPasswordEncoder 的 encode 方法导致CPU负载高的。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442524872-f961b41c-2cc3-4cd9-9a02-f961262a3452.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-23e2649a9834.png)
 
 ### watch — 监控参数
 
 如果想要观察方法的入参和出参，可以用 watch 命令来观察：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442544685-14990973-8ca7-4da3-b9db-4cc82581bde6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-884e04c787a7.png)
 
 ### jad — 反编译
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442586243-178f29ca-5727-463a-9f27-057e68d9d110.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-e0d104e5972f.png)
 
 ### redefine — 重载类
 
@@ -925,24 +925,24 @@ Arthas 官方文档： [alibaba.github.io/arthas/](https://link.juejin.cn?target
 
 1、首先用 jad 把源文件下载下来
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442606124-15203759-1ba1-4f02-80d2-011e172e0bef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-92b93f75de87.png)
 
 然后修改下源码：添加了一行输出日志
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442613630-d9b074e2-fd52-4dca-9477-81ee8427be9a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-edf28e4da85a.png)
 
 2、使用 mc 命令反编译源文件
 
 反编译后会生成对应的 class 文件：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442625034-d370af5d-3ed0-4d4c-a668-8a32ee9410f2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-05764f68313d.png)
 
 3、使用 redefine 重载类
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442632993-34ae6142-c5e9-4724-93a1-44d07391b594.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-b1fb74a8d306.png)
 
 就可以看到控制台已经在输出我们打印的日志了：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1676442639581-37cbe452-00e4-4371-bda7-2d56985d33d2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0098-qyo9kwtwyo4zvxkf/img-7871f4a558c5.png)
 
 需要额外说明的是，由于 monitor、trace、watch 等命令是通过字节码增强技术来实现的，会在指定类的方法中插入一些切面来实现数据统计和观测，因此诊断结束要执行 shutdown 来还原类或方法字节码，然后退出 Arthas。

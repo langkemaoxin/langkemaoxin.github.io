@@ -34,7 +34,7 @@ article: false
 
 ## 二、 痛点：多语言环境下的“Token 税”
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781247204399-748c7a20-f12f-45a0-9e3c-0b206616d11d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1277-gw1dkmllchfybqtv/img-4ed4af387796.png)
 
 ### 1. 为什么中文 Token 消耗极快？
 

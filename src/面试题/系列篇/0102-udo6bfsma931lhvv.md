@@ -2398,11 +2398,11 @@ port
 - **免费（我们知道RedisGUI里面也有一个很好用的RedisDesktopManager，但是它是收费的）**
 - **简单易用的可视化监控**
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667375198568-77367560-2ebf-4f0f-a940-c804e09a88cf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-f7ad871fecf7.png)
 
 我们来看看**RedisInsight**的效果图
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667376198312-a4c993a3-1aa0-49d0-bde1-120841331092.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-d074da220b9e.png)
 
 ## Redis基础数据结构介绍
 
@@ -2498,7 +2498,7 @@ HKEYS、HVALS、HGETALL
 
 ## Redis基础数据结构-List类型
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667972691294-1104ba99-48b6-4dd0-a73b-465a87825b42.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-5db6b3dec48e.png)
 
 命令
 功能
@@ -2553,7 +2553,7 @@ BRPOPLPUSH
 
 ## Redis基础数据结构-Set类型
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667972745123-95688808-babd-444b-8f63-1a67ef44607e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-3ac7e2b5d633.png)
 
 命令
 功能
@@ -2699,7 +2699,7 @@ public static void main(String[] args) {
     }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667465498048-8f1e8565-bc74-44ea-94b4-a26a94b55c70.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-06b1340ba301.png)
 
 ## Redis的Spring-Data-Redis快速入门 & RedisTemplate实战使用
 
@@ -2771,13 +2771,13 @@ georadiusbymenbers
 
 > 它是一同步的方式去创建的RDB文件，那么在执行期间Redis服务器将持续阻塞直到完成。如果已经存在RDB文件则会直接替代，它的时间复杂度为O(N)，其中N指的是整个Redis包含的键值对总和
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667474673483-2262ac2c-4dc3-4eb5-8816-020feb4560ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-22732cf9ac09.png)
 
 #### 非阻塞方式创建RDB文件
 
 > 它区别于SAVE，它是由子进程通过异步方式执行的，它不会等待RDB文件生成完成之后再返回，而是直接返回OK，然后后台执行，那么在BGSAVE同步期间，Redis还是可以处理其他客户端的命令请求。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667474862222-56fd9d6f-cb61-4d04-91f7-bca44a122635.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-8583d486309d.png)
 
 #### 通过配置选项自动创建RDB文件
 
@@ -2945,7 +2945,7 @@ Redis的复制功能可以从性能、安全性和可用性3个方面提升整�
 
 ●最后，通过同时使用Redis的复制功能和Sentinel功能，用户可以为整个Redis系统提供高可用特性。具有这一特性的Redis系统在主服务器停机时，将会自动挑选一个从服务器作为新的主服务器，以此来继续为客户提供服务，避免造成整个系统停机。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667539993400-0821531e-1ce6-48cb-8f45-3d91efcb4283.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-ec7ed9307dc7.png)
 
 ### 全量复制
 
@@ -3003,7 +3003,7 @@ replication buffer：Redis和客户端通信也好，和从库通信也好，Red
 - **配置提供者（Configuration provider）**：客户端在初始化时，通过连接哨兵来获得当前Redis服务的主节点地址。
 - **通知（Notification）**：哨兵可以将故障转移的结果发送给客户端。
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667698675446-10115a7b-0c46-45e7-99ed-5e599b2551ef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-cce1d7c88f2c.png)
 
 ### 哨兵机制的组件
 
@@ -3013,7 +3013,7 @@ replication buffer：Redis和客户端通信也好，和从库通信也好，Red
 
 通过这个方式，哨兵 2 和 3 也可以建立网络连接，这样一来，哨兵集群就形成了。它们相互间可以通过网络连接进行通信，比如说对主库有没有下线这件事儿进行判断和协商。
 
-![image](https://cdn.nlark.com/yuque/0/2022/jpeg/8380143/1667698925289-3b6ee7e2-b432-4394-94a4-77997358b18c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_80%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-455c4ccb0007.jpg)
 
 ### 哨兵监控Redis库
 
@@ -3021,7 +3021,7 @@ replication buffer：Redis和客户端通信也好，和从库通信也好，Red
 
 这是由哨兵向主库发送 INFO 命令来完成的。就像下图所示，哨兵 2 给主库发送 INFO 命令，主库接受到这个命令后，就会把从库列表返回给哨兵。接着，哨兵就可以根据从库列表中的连接信息，和每个从库建立连接，并在这个连接上持续地对从库进行监控。哨兵 1 和 3 可以通过相同的方法和从库建立连接。
 
-![image](https://cdn.nlark.com/yuque/0/2022/jpeg/8380143/1667698983411-458f4424-ed10-46e4-aaa5-9f9dd2a1b8ba.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-7edc7af8d4fd.jpg)
 
 ### 主库下线的判定
 
@@ -3034,7 +3034,7 @@ replication buffer：Redis和客户端通信也好，和从库通信也好，Red
 
 当某个哨兵（如下图中的哨兵2）判断主库“主观下线”后，就会给其他哨兵发送 is-master-down-by-addr 命令。接着，其他哨兵会根据自己和主库的连接情况，做出 Y 或 N 的响应，Y 相当于赞成票，N 相当于反对票。
 
-![image](https://cdn.nlark.com/yuque/0/2022/jpeg/8380143/1667699041719-f54b4bda-d3f1-45ac-b36e-3812bc7c21d4.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_66%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-45f219a61c79.jpg)
 
 如果赞成票数（这里是2）是大于等于哨兵配置文件中的 quorum 配置项（比如这里如果是quorum=2）, 则可以判定**主库客观下线**了。
 
@@ -3077,7 +3077,7 @@ Raft算法你可以参看这篇文章[分布式算法 - Raft算法](/md/algorith
 - 选择salve-priority从节点优先级最高（redis.conf）的
 - 选择复制偏移量最大，只复制最完整的从节点
 
-![image](https://cdn.nlark.com/yuque/0/2022/jpeg/8380143/1667699496776-466e85f9-4a8f-4911-99b9-305df159b57c.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_105%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-19c86dfb821b.jpg)
 
 ### 故障的转移
 
@@ -3085,7 +3085,7 @@ Raft算法你可以参看这篇文章[分布式算法 - Raft算法](/md/algorith
 
 假设根据我们一开始的图：（我们假设：判断主库客观下线了，同时选出sentinel 3是哨兵leader）,**故障转移流程如下**：
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667699839004-2596569f-c801-4239-8260-e8c95ddbeaa7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-ff68e2e5ccbe.png)
 
 - 将slave-1脱离原从节点（PS: 5.0 中应该是replicaof no one)，升级主节点，
 - 将从节点slave-2指向新的主节点
@@ -3094,7 +3094,7 @@ Raft算法你可以参看这篇文章[分布式算法 - Raft算法](/md/algorith
 
 **转移之后**
 
-![image](https://cdn.nlark.com/yuque/0/2022/png/8380143/1667699856210-7b1405f2-60f0-4974-bd68-65c3abc6681a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0102-udo6bfsma931lhvv/img-8dbce58d41fd.png)
 
 ## Redis集群分片
 

@@ -35,7 +35,7 @@ article: false
 
 接下来我们看一张官网提供的示意图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1720592884882-0cfe2cee-dd50-48dd-acc8-15daa8e9c890.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-068ab2cdfaca.png)
 
 # 二、Canal 工作原理
 
@@ -43,7 +43,7 @@ article: false
 
 ## MySQL主从复制原理
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1721219501871-684b8454-3c93-4037-8b9c-d88e169831de.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-79e59ca4e92b.jpg)
 
 - MySQL master 将数据变更写入二进制日志binary log，简称Binlog。
 - MySQL slave 将 master 的 binary log 拷贝到它的中继日志(relay log)
@@ -51,7 +51,7 @@ article: false
 
 ## Canal 工作原理
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1720592884882-0cfe2cee-dd50-48dd-acc8-15daa8e9c890.png?x-oss-process=image%2Fformat%2Cwebp%2Fresize%2Cw_1341%2Climit_0%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-201209f86df1.png)
 
 - Canal 将自己伪装为 MySQL slave(从库) ，向 MySQL master (主库) 发送dump 协议
 - MySQL master (主库) 收到 dump 请求，开始推送 binary log 给 canal
@@ -106,37 +106,37 @@ Canal 可以帮助用户进行多种数据同步操作，如实时同步 MySQL �
 
 *[图片: image]*
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721224286403-e7d7ff73-ab3e-40eb-ace3-e85b036579d4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-d87dc746c3f8.png)
 
 ## 数据库实时监控
 
 Canal 可以实时监控 MySQL 的更新操作，对于敏感数据的修改可以及时通知相关人员。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721224339026-e1c0f6b1-192c-4009-8ef2-a6c039cf9416.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-2eae381a1db1.png)
 
 ## 数据分析和挖掘
 
 Canal 可以将 MySQL 增量数据投递到 Kafka 等消息队列中，为数据分析和挖掘提供数据来源。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721224398696-e458faa1-d9ba-48e1-8c89-87165a7257b1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-769e6e22c36a.png)
 
 ## 数据库备份
 
 Canal 可以将 MySQL 主库上的数据增量日志复制到备库上，实现数据库备份。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721224419071-4445cef7-2eee-40cc-a89e-9fac2fa7dd12.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-db1b22cb0861.png)
 
 ## 数据集成
 
 Canal 可以将多个 MySQL 数据库中的数据进行集成，为数据处理提供更加高效可靠的解决方案。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721224436833-10718b79-4fd4-4071-9942-5351df7b41dc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-e0c4cfdd025f.png)
 
 ## 数据库迁移
 
 Canal 可以协助完成 MySQL 数据库的版本升级及数据迁移任务。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721224470227-e0f3cf87-ef26-4a13-80d7-afbe70647a29.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-047e22a5de82.png)
 
 # 四、Canal安装部署
 
@@ -181,7 +181,7 @@ SHOW VARIABLES LIKE 'server_id';
 systemctl status mysqld.service
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721293432753-7a81f450-b2de-4fdc-aae9-82e93052f1c4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-3f2a68f61e73.png)
 
 找到之后我们看下当前启动时加载那个配置文件
 
@@ -189,7 +189,7 @@ systemctl status mysqld.service
 cat /usr/lib/systemd/system/mysqld.service
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721293501335-7ff99c10-4e05-44ce-80a4-5c9bbff0cecf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-9de618575ab2.png)
 
 修改配置文件为 my.cnf，一般来说 my.cnf 会自动生成，我们可以直接根目录搜索，或者自己创建一个
 
@@ -197,7 +197,7 @@ cat /usr/lib/systemd/system/mysqld.service
 find -type f -name 'my.cnf'
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721293602905-af321f28-f033-41cd-9bdb-f3191ce234b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-34af84eb4543.png)
 
 找到之后将 /etc/my.cnf 路径配置到 environmentFile 属性上
 
@@ -205,7 +205,7 @@ find -type f -name 'my.cnf'
 vim /usr/lib/systemd/system/mysqld.service
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721293781704-f874bd2f-0abd-46db-849b-d8b86b90cacb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-46795fe22826.png)
 
 ##### 修改 my.cnf 配置文件
 
@@ -219,7 +219,7 @@ binlog-format=ROW # 选择 ROW 模式
 server_id=1 # 配置 MySQL replaction 需要定义，不要和 canal 的 slaveId 重复
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721303474942-83bc875a-0642-4d97-a90d-d516e867bd92.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-26fade91fbac.png)
 
 配置完成之后，重启 MySQL 服务
 
@@ -229,15 +229,15 @@ systemctl restart mysqld.service
 
 使用命令查看是否打开binlog模式：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721304960748-878cb4f8-b237-4c64-b1a1-4190deb857fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-f23084178f60.png)
 
 查看binlog日志文件列表：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721305027477-f5281075-8efa-4e8e-88ff-7f590c0b2dc3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-5eda1ccba6ed.png)
 
 查看当前正在写入的binlog文件：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721305058570-7b5d0046-2218-4d10-afc9-2a791ca1ec16.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-be1900297529.png)
 
 MySQL服务器这边基本上就搞定了，很简单。
 
@@ -299,7 +299,7 @@ DELETE FROM test WHERE id = 1;
 
 我这里下载的是1.1.8-alpha 版本（测试 1.1.8-alpha-2 有点问题）：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721566607499-c64b8eb4-b755-4a25-ba32-8b20c5bd3f27.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-5e55376cbab7.png)
 
 上传文件到服务器，然后解压，先处理 deployer 包，**注意文件目录**
 
@@ -317,9 +317,9 @@ rm -rf canal.deployer-1.1.8-SNAPSHOT.tar.gz
 
 解压**canal.deployer-1.1.8.tar.gz**，我们可以看到里面有四个文件夹：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721309131412-ac7a7e8c-ff6e-4db5-86e2-90a39044197a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-8510369ceddb.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721309169738-90c78554-c22c-41dd-9ef9-870fffbdbb21.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-8bf0222edc45.png)
 
 将 admin 包做同样的处理
 
@@ -332,7 +332,7 @@ tar -zxvf canal.deployer-1.1.8-SNAPSHOT.tar.gz
 rm -rf canal.admin-1.1.8-SNAPSHOT.tar.gz 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721309075634-159db943-df54-484f-9898-e6e205d2667a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-34d72f1bacf0.png)
 
 由于我们采用的 admin 来管理 Canal，因此我们只需要将 Canal 服务注册到 admin，然后通过 admin 来创建 instance 同步 MySQL 的变更。
 
@@ -373,15 +373,15 @@ canal:
 
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721309596578-e31c61c0-c48f-4d98-b6e4-8fb71d8c6dbe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-240e87deaa10.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721310124369-bf3e6752-dd3c-47da-9686-cb0b3e3591c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-f3c19c50263d.png)
 
 在启动 admin 服务之前，我们需要将 conf 目录下 SQL 文件，在数据库执行，因为 admin 管理 Canal 是将配置数据存到了数据库中，所以需要相应的库与表，Canal 已经准备好了
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721310779931-ba7825c3-4af8-431b-bbf3-3726148f4e6b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-f173729049ee.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721311103218-1a36d795-911e-44eb-9aa5-98d4be7fb876.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-53881cbb2bb9.png)
 
 万事俱备，现在启动 admin 服务，使用 bin 目录下 startup.sh
 
@@ -389,13 +389,13 @@ canal:
 ./startup.sh
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721311159835-6950e255-ba68-4bfd-808c-db41e359b961.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-c0b20c621f10.png)
 
 访问服务地址+端口 8089，账号密码 admin/123456，（数据库中 canal_user 表配置了相关的账号信息）
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721311275535-c7f7b3c0-7427-4e00-83c7-31022cb6e6c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-e7e783b4632a.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721311313858-f5305f57-2827-46c3-a961-ec6e725cb681.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-daad51396ef4.png)
 
 ### Canal-deployer 服务
 
@@ -427,9 +427,9 @@ canal.admin.register.cluster =
 canal.admin.register.name = 999
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721312100412-5613b2b1-ea77-410e-868b-879755af80d0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-38d0dcb89c24.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721564730200-0011d30b-ddcb-41cb-9222-969dc897e6f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-12a319dbf94b.png)
 
 启动 canal-deployer 服务，再来查看 admin 页面，出现 deployer 服务，启动正常
 
@@ -438,7 +438,7 @@ canal.admin.register.name = 999
 ./bin/startup.sh local
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721565012882-bcf1b0f8-0e20-4ae7-859e-990c5b221832.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-efb091564d28.png)
 
 ### Canal-Instance 服务
 
@@ -446,13 +446,13 @@ canal.admin.register.name = 999
 
 直接在 admin 页面创建 Instance 服务。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721565270077-190d083e-d04e-444c-a33a-98ba266b804b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-b42d4bab9bbb.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721565299092-99e9ec9d-52f3-45f7-a1ac-735699be856f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-91606cfdfc6d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721565515895-531bde91-9602-48a5-a992-0aea3ac28583.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-a7aaa86035d0.png)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721566694278-6e2fb973-0dfd-40e9-9738-e06e11643f49.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-b7dcb03b8e1a.png)
 
 到这里 Canal 服务端的所有配置修改完成，接下来我们将 java 客户端搭起来，就可以获取到 MySQL 的变更数据了。
 
@@ -486,7 +486,7 @@ canal.instance.filter.regex=.*\\..*
 canal.instance.filter.black.regex=
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721566809952-2851e44f-5ba1-4220-b72f-47c2e179f6da.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-2f404e89642f.png)
 
 # 五、Canal 实战
 
@@ -705,4 +705,4 @@ public class CanalListener {
 
 ## 测试
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1721290611454-1d5ed330-189c-44a7-839a-89ae9f0ef03f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0110-ugdfg4q0ccqo0r28/img-fb6baa33f459.png)

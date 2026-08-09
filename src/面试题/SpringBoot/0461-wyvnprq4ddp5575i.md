@@ -75,7 +75,7 @@ spring:
 
 ### 运行程序解密：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22309163/1727339698841-b52ffd0c-f10b-4be1-9d80-f0bb99226659.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0461-wyvnprq4ddp5575i/img-31d0b1f9448b.png)
 
 ### 部署jar包解密：
 
@@ -164,4 +164,4 @@ java -javaagent:xxx-encrypted.jar -jar xxx-encrypted.jar
 java -javaagent:xxx-encrypted.jar='-pwd=密码'-jar xxx-encrypted.jar
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1740726084316-9c2f838d-bcb5-4a04-8224-4de8fbece449.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5b6Q5bq26ICB5biI%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10%2Fformat%2Cwebp%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/SpringBoot/0461-wyvnprq4ddp5575i/img-744ca3b7075f.png)

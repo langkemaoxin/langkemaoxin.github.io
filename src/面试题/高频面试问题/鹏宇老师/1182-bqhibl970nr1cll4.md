@@ -57,7 +57,7 @@ article: false
 自动叠加满减、折扣券、会员价
 优惠规则引擎集成、金额精度控制
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761798854411-2fb270ca-9a35-4e70-bca1-cecd509f3301.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1182-bqhibl970nr1cll4/img-078837b102eb.png)
 
 ### 2.2 Java 功能接口设计（伪代码）
 
@@ -113,7 +113,7 @@ public interface CartService {
 
 登录用户数据需 “跨设备同步”，因此存储于服务端，Java 技术栈下有三种主流方案，需结合业务规模选型。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761798869081-dde8bc35-eb5b-47a4-a216-f3daa3e97191.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1182-bqhibl970nr1cll4/img-cfb4846d4367.png)
 
 ### 3.1 方案 1：仅使用 MySQL 存储
 
@@ -121,7 +121,7 @@ public interface CartService {
 
 基于关系型数据库的 ACID 特性，将购物车数据持久化至 MySQL，通过`user_id`和`sku_id`做唯一索引，避免重复存储。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761798951173-b5c88be8-5f5c-4572-927e-b020d3f52b91.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1182-bqhibl970nr1cll4/img-f304cee749be.png)
 
 #### 3.1.2 Java 实现
 
@@ -274,7 +274,7 @@ public class CartMysqlServiceImpl implements CartService {
 
 利用 Redis 的`Hash`数据结构（Key = 用户 ID，Field = 商品 SKU，Value = 商品 JSON）实现高频读写，通过`RDB+AOF`持久化降低数据丢失风险，Java 端使用 Redisson 客户端简化分布式操作。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761798964127-feff87e2-045d-4f6a-84ee-68a409defffb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1182-bqhibl970nr1cll4/img-5df6d7bbb8fc.png)
 
 #### 3.2.2 Java 实现
 
@@ -411,7 +411,7 @@ RDB+AOF 持久化，降低丢失风险
 - **持久层**：MySQL 负责数据长期存储，避免 Redis 宕机丢失；
 - **同步层**：通过 “定时任务 + 消息队列” 实现 Redis 到 MySQL 的异步同步，兼顾实时性与可靠性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761798978209-dad05a2e-7e87-4d00-9c40-e94653040e9e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1182-bqhibl970nr1cll4/img-8706b0c5cb56.png)
 
 #### 3.3.2 Java 实现
 
@@ -609,7 +609,7 @@ Redis 保障高频性能，MySQL 保障数据安全
 
 未登录用户（游客）无用户 ID，数据暂存于客户端（浏览器），Java 后端需配合实现 “数据暂存 + 登录后同步”，核心方案为 Cookie 和 LocalStorage。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761799010205-02c514f9-fa2e-4455-9f0a-9747815083d7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1182-bqhibl970nr1cll4/img-75c96cb67fb6.png)
 
 ### 4.1 方案 1：Cookie 存储
 
@@ -860,7 +860,7 @@ async function syncLocalCartToServer(userId) {
 
 未登录用户登录后，需将客户端存储（Cookie/LocalStorage）的购物车数据合并至服务端，避免数据丢失，核心流程分 5 步。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1761799054166-b00fd41d-e76b-4c7a-867b-3bfbf40aff0e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1182-bqhibl970nr1cll4/img-3e21dbfbe9bf.png)
 
 ### 5.1 合并核心逻辑（Java 实现）
 

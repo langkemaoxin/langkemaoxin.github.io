@@ -17,13 +17,13 @@ article: false
 这期内容我会从基础到高级，用图文并茂的方式，分享我在生产环境踩过的坑和实战经验。每种方案都是性能优化的利器，学完你就知道该在什么场景用什么方法。
 想要完整代码的，记得给视频点赞收藏，评论区扣1，我会把核心代码整理好发给你们！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809130854-36cd459c-a0d1-4ddd-9350-be7ee00ba004.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-a121e7efed52.png)
 
 ---
 
 ## 为什么要统计接口耗时
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809147552-ed34b5e1-5abd-4a0d-9dd7-8a8866ad11ce.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_92%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-ec68dd5dc861.png)
 
 先说为什么要统计接口耗时。
 第一，这是性能优化的基石。没有耗时数据，你优化就是盲人摸象，根本不知道瓶颈在哪。
@@ -35,7 +35,7 @@ article: false
 
 ## 方法1 - System.currentTimeMillis()
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809196084-811b00fb-351c-4d15-ab67-e179e0975f65.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_93%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-362e67c307b0.png)
 
 第一种方法，System.currentTimeMillis()，这是最基础的。
 逻辑很简单：记录开始时间，执行业务逻辑，记录结束时间，最后算个差值就行。
@@ -48,7 +48,7 @@ article: false
 
 ## 方法2 - System.nanoTime()
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809215747-4d1d4cf8-c852-4e35-9cb7-b865ad0dbdbb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_95%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-177f5d8f94e7.png)
 
 第二种方法，System.nanoTime()，这是高精度版本。
 它提供纳秒级的测量精度，专门用来计算时间间隔，而且不受系统时间调整的影响。
@@ -61,7 +61,7 @@ article: false
 
 ## 方法3 - Spring AOP切面
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809241141-37d55731-8aeb-4e8e-9904-1c87ad89d896.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_94%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-b4cd2ca0bbbe.png)
 
 第三种方法，Spring AOP切面，这个就开始专业了。
 它的核心思想是面向切面编程，关注点分离。你先定义一个自定义注解，比如叫TimeCost，然后编写切面拦截逻辑，最后在需要统计的方法上加这个注解就行。
@@ -74,7 +74,7 @@ article: false
 
 ## 方法4 - 拦截器Interceptor
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809257227-507048e6-7e54-4d93-a4b4-2a1102d462fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_94%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-8f75df00dd63.png)
 
 第四种方法，拦截器Interceptor，这是Spring MVC专用的。
 它的工作流程是：在preHandle里记录开始时间，然后Controller执行，视图渲染，最后在afterCompletion里计算耗时。
@@ -87,7 +87,7 @@ article: false
 
 ## 方法5 - 过滤器Servlet Filter
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809280558-54f8ed3e-6263-440a-a980-bfdfde5a9f0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_94%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-c4c2ae415379.png)
 
 第五种方法，过滤器Servlet Filter，这个更底层。
 Filter是Servlet规范的标准组件，它位于整个请求处理链的最外层。
@@ -101,7 +101,7 @@ Filter是Servlet规范的标准组件，它位于整个请求处理链的最外�
 
 ## 方法6 - Micrometer & APM工具
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809301058-409cdfba-29d0-48be-b2b9-b532c8e92ef8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_94%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-4173386997b2.png)
 
 第六种方法，Micrometer和APM工具，这是生产级的专业方案。
 Micrometer是一个度量门面框架，你集成依赖之后，它会自动采集指标数据，然后暴露Prometheus端点，最后通过Grafana做可视化展示。
@@ -115,7 +115,7 @@ Micrometer是一个度量门面框架，你集成依赖之后，它会自动采�
 
 ## 总结对比
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809324518-bd565e1d-b778-4494-a8a4-1a786f19577d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_93%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-8b0adab868d9.png)
 
 好，6种方法讲完了，我给你总结一下怎么选。
 开发测试阶段，用AOP或者拦截器，方便快捷。
@@ -127,7 +127,7 @@ Micrometer是一个度量门面框架，你集成依赖之后，它会自动采�
 
 记住一句话：度量是改进的开始，优化是卓越的阶梯。持续观察，持续进步！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1761809338530-a46ff63a-38b1-4ded-bdd0-ef3e8895510f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1093-llu69xqtho814dui/img-6bf3eb9ac1e3.png)
 
 想要完整代码和更多技术干货，点赞收藏加关注，评论区扣1我发给你！咱们下期见！
 

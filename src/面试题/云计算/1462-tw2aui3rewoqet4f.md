@@ -64,7 +64,7 @@ RAG是一种用额外数据增强大语言模型知识的技术。
 
 LangChain有许多组件旨在帮助构建问答应用，以及更广泛的RAG应用。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1736307607675-cacaf074-0f77-407c-b09b-4c45972617b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1462-tw2aui3rewoqet4f/img-b857ffa88119.png)
 
 一个典型的RAG应用有两个主要组成部分：
 
@@ -80,14 +80,14 @@ LangChain有许多组件旨在帮助构建问答应用，以及更广泛的RAG�
 2. **分割(Split)**：文本分割器[Text splitters](https://python.langchain.com/docs/concepts/#text-splitters)将大型文档(`Documents`)分成更小的块(chunks)。这对于索引数据和将其传递给模型都很有用，因为大块数据更难搜索，而且不适合模型有限的上下文窗口。
 3. **存储(Store)**：我们需要一个地方来存储和索引我们的分割(splits)，以便后续可以对其进行搜索。这通常使用向量存储[VectorStore](https://blog.frognew.com/library/agi/langchain/components/vector-stores.html)和嵌入模型[Embeddings model](https://blog.frognew.com/library/agi/langchain/components/embedding-models.html)来完成。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1736306619642-e71bb3f9-95bf-4658-9f28-5568685d1304.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_74%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1462-tw2aui3rewoqet4f/img-1af7fd137996.png)
 
 **检索和生成(Retrieval and generation) **
 
 1. **检索(Retrieve)**：给定用户输入，使用检索器[Retriever](https://blog.frognew.com/library/agi/langchain/components/retrievers.html)从存储中检索相关的文本片段。
 2. **生成(Generate)**： [ChatModel](https://blog.frognew.com/library/agi/langchain/components/chat-models.html)使用包含问题和检索到的数据的提示来生成答案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1736306619770-c7136d46-502f-45ff-b182-550407c5a866.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_72%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1462-tw2aui3rewoqet4f/img-9acb9e12a537.png)
 
 #### **1. 用户输入处理**
 

@@ -25,7 +25,7 @@ article: false
 
 `gh-ost` 以其对主库的低侵入性而闻名，其核心是“旁路复制”思想。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760962307267-ce758972-45ac-4651-a282-ac294f9fa662.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0990-aylm5vd4u17acx6b/img-90fda926ffe3.png)
 
 ### 深度解析：为什么是 gh-ost？
 
@@ -65,7 +65,7 @@ gh-ost \
 
 这是最经典、最稳妥的方案，考验的是流程的严谨性和运维的熟练度。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760962184865-1a9ff432-7992-428a-b3a9-c2f46e017b43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0990-aylm5vd4u17acx6b/img-2c7c92e855fd.png)
 
 ### 关键细节与风险
 
@@ -84,7 +84,7 @@ gh-ost \
 
 这是一种典型的“空间换时间”、“物理换逻辑”的架构策略。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760962196046-fcd2ed60-3610-4db7-9717-08ece93f88fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0990-aylm5vd4u17acx6b/img-48c49d365459.png)
 
 ### 架构层面的权衡
 
@@ -102,7 +102,7 @@ gh-ost \
 
 这不仅是技术，更是架构的远见。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760962217688-29a508b1-3d6d-4b38-9619-1d3ce952c9b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0990-aylm5vd4u17acx6b/img-1f6757a78d94.png)
 
 ### 查询性能与索引策略
 
@@ -148,6 +148,6 @@ CREATE INDEX idx_is_live ON orders(is_live);
 
 现在，让我们站在上帝视角，审视这盘多维度的棋局。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1760962238716-d967dcb4-3ef3-4d91-bd7c-1e6e2c564a5d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0990-aylm5vd4u17acx6b/img-0e3baa93cbf7.png)
 
 这张图表是我们决策的核心依据。它清晰地揭示了，技术选型从来不是单选题，而是在**可靠性、性能、复杂度、迭代效率**等多个维度之间进行的动态平衡。

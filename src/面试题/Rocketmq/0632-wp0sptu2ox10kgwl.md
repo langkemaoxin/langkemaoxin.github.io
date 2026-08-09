@@ -41,7 +41,7 @@ RocketMQ 与 Kafka 最大的不同在于：
 
 我为你生成了一张架构图，直观对比这两种模式：
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/29768021/1767948546062-c6ed117a-f0d9-4bba-9541-c862c5fdf7e0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Rocketmq/0632-wp0sptu2ox10kgwl/img-7663cd06da4f.png)
 
 这图左边是普通 MQ 的噩梦，右边是 RocketMQ 的“单行道”策略。所有消息不分 Topic，全部排队进入 CommitLog，这就保证了极致的写性能。
 

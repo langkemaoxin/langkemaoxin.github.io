@@ -17,7 +17,7 @@ article: false
 
 数据库排名：[https://db-engines.com/en/ranking](https://db-engines.com/en/ranking)
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/a6575989-d78f-4cb8-bc7c-8c78466fbc0b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0137-umueacgcmg5gvwpn/img-bf14671413cb.png)
 
 ## 痛点
 
@@ -148,7 +148,7 @@ curl  -X POST 'http://localhost:7700/indexes/movies/documents?primaryKey=id'   -
 
 ### 效果查看
 
-![image](https://beiming-1255643575.cos.ap-shanghai.myqcloud.com/image/a9da3354-2029-4422-95f8-2e435924bb60.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_82%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0137-umueacgcmg5gvwpn/img-570a347946d4.png)
 
 ## 总结
 

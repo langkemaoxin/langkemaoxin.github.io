@@ -25,7 +25,7 @@ Spring切面可以应用5种类型的通知：
 
 **Spring在5.2.7之前的执行顺序是：**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1693988036899-65592d6e-c91e-413b-bc15-aa2d6b0d6983.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Spring/基础篇/0432-xfezqv82xny1nep5/img-77ca0150beed.png)
 
 **Spring在5.2.7之后就改变的通知的执行顺序改为：**
 

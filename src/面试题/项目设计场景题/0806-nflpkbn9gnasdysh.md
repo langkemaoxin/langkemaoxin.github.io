@@ -52,7 +52,7 @@ article: false
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720590928635-7ad5e089-2936-427d-95a4-97f066cddcd2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0806-nflpkbn9gnasdysh/img-442577b23902.png)
 
 那么，原始URL如何变短呢？简单来说， 可以将原始的地址，使用编号进行替代
 
@@ -331,7 +331,7 @@ snowflake算法的吞吐量在 100W ops +
 - 数据容量（存储规模） 的 分治架构、
 - 访问流量 （吞吐量规模）的 分治架构。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720590909993-5a8c8908-03a3-4833-96b7-1a82f067f1cc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0806-nflpkbn9gnasdysh/img-5da369c1356c.png)
 
 这块内容涉的方案，不同的项目，基本是相通的。
 
@@ -369,7 +369,7 @@ snowflake算法的吞吐量在 100W ops +
 
 在数据量比较大的情况下，既满足时间要求，又满足空间的要求。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720590887481-f899959b-a59b-40d3-b689-31be020f9e67.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0806-nflpkbn9gnasdysh/img-f7b807e0682d.png)
 
 布隆过滤器的巨大用处就是，能够迅速判断一个元素是否在一个集合中。
 

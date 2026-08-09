@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751696336190-84ac7e65-9275-4a78-9a10-3aa3c2f7b5bd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1423-lclpu9a6lvfsvs8y/img-ea559b307783.png)
 
 回答需覆盖四大核心：
 
@@ -28,7 +28,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751696349522-d905bab8-f661-485d-bd38-dd474e2d1c75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1423-lclpu9a6lvfsvs8y/img-3d29ed49495c.png)
 
 #### 案例1：医疗问答系统微调（7B模型）
 
@@ -103,7 +103,7 @@ r=16
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751696368832-5ed65da8-4d64-430d-a23d-c69167d5a780.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1423-lclpu9a6lvfsvs8y/img-e04e539537bc.png)
 
 #### 1. LoRA原理
 

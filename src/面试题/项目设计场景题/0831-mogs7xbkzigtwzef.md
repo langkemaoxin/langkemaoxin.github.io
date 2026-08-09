@@ -15,7 +15,7 @@ article: false
 
 **示例代码**
 
-![](https://www.yuque.com/attachments/yuque/0/2024/zip/22811459/1721053280887-a52d6bbb-dc86-473b-844b-7a2c062571c9.zip)
+[https://www.yuque.com/attachments/yuque/0/2024/zip/22811459/1721053280887-a52d6bbb-dc86-473b-844b-7a2c062571c9.zip](https://www.yuque.com/attachments/yuque/0/2024/zip/22811459/1721053280887-a52d6bbb-dc86-473b-844b-7a2c062571c9.zip)
 
 jdk版本：17.0.8
 
@@ -47,7 +47,7 @@ linux版本：CentOS-7.4.1708
 
 查看比如 CPU、系统内存等，通过历史状态可以体现一个趋势性问题，而这些信息的获取一般依靠监控系统的协作。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1714639092689-468f4014-5da3-476f-b3f4-864dab4745ec.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0831-mogs7xbkzigtwzef/img-ff30c36dc387.jpg)
 
 **保留信息**
 

@@ -37,13 +37,13 @@ article: false
 
 看一个场景A 系统发送数据到 BCD 三个系统，通过接口调用发送。如果 E 系统也要这个数据呢？那如果 D 系统现在不需要了呢？A 系统负责人几乎崩溃：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1708869858432-771fedf1-a18e-4217-8062-113ab6935173.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-815395e0ec3c.png)
 
 在这个场景中，A 系统跟其它各种乱七八糟的系统严重耦合，A 系统产生一条比较关键的数据，很多系统都需要 A 系统将这个数据发送过来。A 系统要时时刻刻考虑 BCDE 四个系统如果挂了该咋办？要不要重发，要不要把消息存起来？头发都白了啊！
 
 如果使用 MQ，A 系统产生一条数据，发送到 MQ 里面去，哪个系统需要数据自己去 MQ 里面消费。如果新系统需要数据，直接从 MQ 里消费即可；如果某个系统不需要这条数据了，就取消对 MQ 消息的消费即可。这样下来，A 系统压根儿不需要去考虑要给谁发送数据，不需要维护这个代码，也不需要考虑人家是否调用成功、失败超时等情况。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1708869874950-e1056f78-ac4f-4761-8f86-8b374c8b91cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-2e449ee1878d.png)
 
 **总结**：通过使用 MQ，Pub/Sub 发布订阅消息模型，A 系统就跟其它系统彻底解耦了。
 
@@ -51,13 +51,13 @@ article: false
 
 再来看一个场景，A 系统接收一个请求，需要在自己本地写库，还需要在 BCD 三个系统写库，自己本地写库要 3ms，BCD 三个系统分别写库要 300ms、450ms、200ms。最终请求总延时是 3 + 300 + 450 + 200 = 953ms，接近 1s，用户感觉搞个什么东西，慢死了慢死了。用户通过浏览器发起请求，等待个 1s，这几乎是不可接受的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1708871526049-cffcd96e-c997-489c-b3a9-90836ef7801e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-53f85eee0fd0.png)
 
 一般互联网类的企业，对于用户直接的操作，一般要求是每个请求都必须在 200 ms 以内完成，对用户几乎是无感知的。
 
 如果**使用 MQ**，那么 A 系统连续发送 3 条消息到 MQ 队列中，假如耗时 5ms，A 系统从接受一个请求到返回响应给用户，总时长是 3 + 5 = 8ms，对于用户而言，其实感觉上就是点个按钮，8ms 以后就直接返回了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1708871540897-87a06670-5839-49b3-98a3-2b23020ac291.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-5d5d63dfe8d9.png)
 
 ### 削峰
 
@@ -67,11 +67,11 @@ article: false
 
 但是高峰期一过，到了下午的时候，就成了低峰期，可能也就 1w 的用户同时在网站上操作，每秒中的请求数量可能也就 50 个请求，对整个系统几乎没有任何的压力。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1708871561597-a454233c-3381-4147-a505-3a726228d97f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-19d5ea91368a.png)
 
 如果使用 MQ，每秒 5k 个请求写入 MQ，A 系统每秒钟最多处理 2k 个请求，因为 MySQL 每秒钟最多处理 2k 个。A 系统从 MQ 中慢慢拉取请求，每秒钟就拉取 2k 个请求，不要超过自己每秒能处理的最大请求数量就 ok，这样下来，哪怕是高峰期的时候，A 系统也绝对不会挂掉。而 MQ 每秒钟 5k 个请求进来，就 2k 个请求出去，结果就导致在中午高峰期（1 个小时），可能有几十万甚至几百万的请求积压在 MQ 中。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1708871580022-99e95972-2973-44af-9654-419c5477383c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-3d4f69b266e9.png)
 
 这个短暂的高峰期积压是 ok 的，因为高峰期过了之后，每秒钟就 50 个请求进 MQ，但是 A 系统依然会按照每秒 2k 个请求的速度在处理。所以说，只要高峰期一过，A 系统就会快速将积压的消息给解决掉。
 
@@ -181,7 +181,7 @@ RabbitMQ 有三种模式：单机模式、普通集群模式、镜像集群模�
 
 普通集群模式，意思就是在多台机器上启动多个 RabbitMQ 实例，每个机器启动一个。你**创建的 queue，只会放在一个 RabbitMQ 实例上**，但是每个实例都同步 queue 的元数据（元数据可以认为是 queue 的一些配置信息，通过元数据，可以找到 queue 所在实例）。你消费的时候，实际上如果连接到了另外一个实例，那么那个实例会从 queue 所在实例上拉取数据过来。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709534136213-6ddf476f-aaf0-42c2-94a6-32a7afe39a5f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-9735dab580e1.png)
 
 这种方式确实很麻烦，也不怎么好，**没做到所谓的分布式**，就是个普通集群。因为这导致你要么消费者每次随机连接一个实例然后拉取数据，要么固定连接那个 queue 所在实例消费数据，前者有**数据拉取的开销**，后者导致**单实例性能瓶颈**。
 
@@ -193,7 +193,7 @@ RabbitMQ 有三种模式：单机模式、普通集群模式、镜像集群模�
 
 这种模式，才是所谓的 RabbitMQ 的高可用模式。跟普通集群模式不一样的是，在镜像集群模式下，你创建的 queue，无论元数据还是 queue 里的消息都会**存在于多个实例上**，就是说，每个 RabbitMQ 节点都有这个 queue 的一个**完整镜像**，包含 queue 的全部数据的意思。然后每次你写消息到 queue 的时候，都会自动把**消息同步**到多个实例的 queue 上。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709534152555-110838b5-10e1-4c84-96ad-e2f942a8f08b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-100f02ff36bb.png)
 
  那么**如何开启这个镜像集群模式**呢？其实很简单，RabbitMQ 有很好的管理控制台，就是在后台新增一个策略，这个策略是**镜像集群模式的策略**，指定的时候是可以要求数据同步到所有节点的，也可以要求同步到指定数量的节点，再次创建 queue 的时候，应用这个策略，就会自动将数据同步到其他的节点上去了。
 
@@ -211,11 +211,11 @@ Kafka 0.8 以前，是没有 HA 机制的，就是任何一个 broker 宕机了�
 
 比如说，我们假设创建了一个 topic，指定其 partition 数量是 3 个，分别在三台机器上。但是，如果第二台机器宕机了，会导致这个 topic 的 1/3 的数据就丢了，因此这个是做不到高可用的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709534424083-143f9160-454b-462b-ac27-4c58e0e89c8c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-45f8942793f1.png)
 
 Kafka 0.8 以后，提供了 HA 机制，就是 replica（复制品） 副本机制。每个 partition 的数据都会同步到其它机器上，形成自己的多个 replica 副本。所有 replica 会选举一个 leader 出来，那么生产和消费都跟这个 leader 打交道，然后其他 replica 就是 follower。写的时候，leader 会负责把数据同步到所有 follower 上去，读的时候就直接读 leader 上的数据即可。只能读写 leader？很简单，**要是你可以随意读写每个 follower，那么就要 care 数据一致性的问题**，系统复杂度太高，很容易出问题。Kafka 会均匀地将一个 partition 的所有 replica 分布在不同的机器上，这样才可以提高容错性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709534434433-0d055b31-ff68-41a2-8e2d-4b62ba619dea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-509d56992dc9.png)
 
 这么搞，就有所谓的**高可用性**了，因为如果某个 broker 宕机了，没事儿，那个 broker上面的 partition 在其他机器上都有副本的。如果这个宕机的 broker 上面有某个 partition 的 leader，那么此时会从 follower 中**重新选举**一个新的 leader 出来，大家继续读写那个新的 leader 即可。这就有所谓的高可用性了。
 
@@ -245,7 +245,7 @@ Kafka 实际上有个 offset 的概念，就是每个消息写进去，都有一
 
 有这么个场景。数据 1/2/3 依次进入 kafka，kafka 会给这三条数据每条分配一个 offset，代表这条数据的序号，我们就假设分配的 offset 依次是 152/153/154。消费者从 kafka 去消费的时候，也是按照这个顺序去消费。假如当消费者消费了 offset=153 的这条数据，刚准备去提交 offset 到 zookeeper，此时消费者进程被重启了。那么此时消费过的数据 1/2 的 offset 并没有提交，kafka 也就不知道你已经消费了 offset=153 这条数据。那么重启之后，消费者会找 kafka 说，嘿，哥儿们，你给我接着把上次我消费到的那个地方后面的数据继续给我传递过来。由于之前的 offset 没有提交成功，那么数据 1/2 会再次传过来，如果此时消费者没有去重的话，那么就会导致重复消费。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709712472159-7732d355-d849-4625-bad3-7bd4aee2ad7b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-bc65310eaefb.png)
 
  如果消费者干的事儿是拿一条数据就往数据库里写一条，会导致说，你可能就把数据 1/2 在数据库里插入了 2 次，那么数据就错啦。
 
@@ -266,7 +266,7 @@ Kafka 实际上有个 offset 的概念，就是每个消息写进去，都有一
 - 比如你不是上面两个场景，那做的稍微复杂一点，你需要让生产者发送每条数据的时候，里面加一个全局唯一的 id，类似订单 id 之类的东西，然后你这里消费到了之后，先根据这个 id 去比如 Redis 里查一下，之前消费过吗？如果没有消费过，你就处理，然后这个 id 写 Redis。如果消费过了，那你就别处理了，保证别重复处理相同的消息即可。
 - 比如基于数据库的唯一键来保证重复数据不会重复插入多条。因为有唯一键约束了，重复数据插入只会报错，不会导致数据库中出现脏数据。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709712499513-971ccff0-2458-4ccd-8f84-23df0159f86b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-d9e77a72e43e.png)
 
 # 如何处理消息丢失的问题？
 
@@ -280,7 +280,7 @@ Kafka 实际上有个 offset 的概念，就是每个消息写进去，都有一
 
 数据的丢失问题，可能出现在生产者、MQ、消费者中，接下来从 RabbitMQ 和 Kafka 分别分析一下
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709733134770-17aada7c-2c9a-4f17-a650-db2f6552fb14.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-ce4c22719e58.png)
 
 #### 生产者弄丢了数据
 
@@ -332,7 +332,7 @@ RabbitMQ 如果丢失了数据，主要是因为你消费的时候，**刚消费
 
 这个时候得用 RabbitMQ 提供的 ack 机制，简单来说，就是你必须关闭 RabbitMQ 的自动 ack，可以通过一个 api 来调用就行，然后每次你自己代码里确保处理完的时候，再在程序里 ack 一把。这样的话，如果你还没处理完，不就没有 ack 了？那 RabbitMQ 就认为你还没处理完，这个时候 RabbitMQ 会把这个消费分配给别的 consumer 去处理，消息是不会丢的。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709733126977-5057415a-cb08-49a8-a174-1b9cc5401d03.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-81dadc50d9d8.png)
 
 ### Kafka
 
@@ -375,11 +375,11 @@ MQ 必考知识点了，主要是一些场景需要严格按照顺序来进行�
 
 - **RabbitMQ**：一个 queue，多个 consumer。比如，生产者向 RabbitMQ 里发送了三条数据，顺序依次是 data1/data2/data3，压入的是 RabbitMQ 的一个内存队列。有三个消费者分别从 MQ 中消费这三条数据中的一条，结果消费者2先执行完操作，把 data2 存入数据库，然后是 data1/data3。这不明显乱了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709820060120-388ad165-a814-408b-b3ed-f106288dc0b8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-88301d92c6c7.png)
 
 - **Kafka**：比如说我们建了一个 topic，有三个 partition。生产者在写的时候，其实可以指定一个 key，比如说我们指定了某个订单 id 作为 key，那么这个订单相关的数据，一定会被分发到同一个 partition 中去，而且这个 partition 中的数据一定是有顺序的。 消费者从 partition 中取出来数据的时候，也一定是有顺序的。到这里，顺序还是 ok 的，没有错乱。接着，我们在消费者里可能会搞**多个线程来并发处理消息**。因为如果消费者是单线程消费处理，而处理比较耗时的话，比如处理一条消息耗时几十 ms，那么 1 秒钟只能处理几十条消息，这吞吐量太低了。而多个线程并发跑的话，顺序可能就乱掉了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709820072916-eb29504e-eb55-47b8-a998-c58665630918.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-3c4b629d231b.png)
 
 ### 解决方案
 
@@ -387,14 +387,14 @@ MQ 必考知识点了，主要是一些场景需要严格按照顺序来进行�
 
 拆分多个 queue，每个 queue 一个 consumer，就是多一些 queue 而已，确实是麻烦点；或者就一个 queue 但是对应一个 consumer，然后这个consumer 内部用内存队列做排队，然后分发给底层不同的 worker 来处理。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709820101601-1d9e6972-6a6c-403b-9263-eeb9d6bfb75b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-70b1c6f305a8.png)
 
 #### Kafka
 
 - 一个 topic，一个 partition，一个 consumer，内部单线程消费，单线程吞吐量太低，一般不会用这个。
 - 写 N 个内存 queue，具有相同 key 的数据都到同一个内存 queue；然后对于 N 个线程，每个线程分别消费一个内存 queue 即可，这样就能保证顺序性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1709820116082-63b8499f-dba8-4451-8212-9dc3cd392ebb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-cff75581301f.png)
 
 # 为什么要用缓存？
 
@@ -449,7 +449,7 @@ redis 内部使用文件事件处理器 file event handler，这个文件事件�
 
 来看客户端与 redis 的一次通信过程：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710331531287-cb5fbf0f-9740-4fd3-b17f-424239d55d14.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-6c5b38b4861d.png)
 
 要明白，通信是通过 socket 来完成的，不懂的同学可以先去看一看 socket 网络编程。
 
@@ -652,7 +652,7 @@ redis 的高可用主要涉及到两部分
 
 单机的 redis，能够承载的 QPS 大概就在上万到几万不等。对于缓存来说，一般都是用来支撑**读高并发**的。因此架构做成主从(master-slave)架构，一主多从，主负责写，并且将数据复制到其它的 slave 节点，从节点负责读。所有的**读请求全部走从节点**。这样也可以很轻松实现水平扩容，**支撑读高并发**。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710333274422-9b301438-2605-4049-b81c-ed9d85a634b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-0561959cf62b.png)
 
 redis replication -> 主从架构 -> 读写分离 -> 水平扩容支撑读高并发
 
@@ -675,7 +675,7 @@ redis replication -> 主从架构 -> 读写分离 -> 水平扩容支撑读高并
 
 如果这是 slave node 初次连接到 master node，那么会触发一次 full resynchronization 全量复制。此时 master 会启动一个后台线程，开始生成一份 RDB 快照文件，同时还会将从客户端 client 新收到的所有写命令缓存在内存中。RDB 文件生成完毕后， master 会将这个 RDB 发送给 slave，slave 会先**写入本地磁盘，然后再从本地磁盘加载到内存**中，接着 master 会将内存中缓存的写命令发送到 slave，slave 也会同步这些数据。slave node 如果跟 master node 有网络故障，断开了连接，会自动重连，连接之后 master node 仅会复制给 slave 部分缺少的数据。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710333343905-3fd8bae8-8157-49fc-aa22-79272fe4d895.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e0a84691ccbd.png)
 
 ##### 主从复制的断点续传
 
@@ -706,7 +706,7 @@ slave node 启动时，会在自己本地保存 master node 的信息，包括 m
 
 slave node 内部有个定时任务，每秒检查是否有新的 master node 要连接和复制，如果发现，就跟 master node 建立 socket 网络连接。然后 slave node 发送 ping 命令给 master node。如果 master 设置了 requirepass，那么 slave node 必须发送 masterauth 的口令过去进行认证。master node **第一次执行全量复制**，将所有数据发给 slave node。而在后续，master node 持续将写命令，异步复制给 slave node。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710333388731-8cf7d3e1-0959-4195-b635-20c7fa2208c3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-fa441fc6db5f.png)
 
 ##### 全量复制
 
@@ -817,7 +817,7 @@ sentinel，中文名是哨兵。哨兵是 redis 集群机构中非常重要的�
 
 因为 master->slave 的复制是异步的，所以可能有部分数据还没复制到 slave，master 就宕机了，此时这部分数据就丢失了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710333727639-76cee9ae-b882-448a-b2ad-4c5456fc5bba.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-5914a815cde8.png)
 
 - 脑裂导致的数据丢失
 
@@ -825,7 +825,7 @@ sentinel，中文名是哨兵。哨兵是 redis 集群机构中非常重要的�
 
 此时虽然某个 slave 被切换成了 master，但是可能 client 还没来得及切换到新的 master，还继续向旧 master 写数据。因此旧 master 再次恢复的时候，会被作为一个 slave 挂到新的 master 上去，自己的数据会清空，重新从新的 master 复制数据。而新的 master 并没有后来 client 写入的数据，因此，这部分数据也就丢失了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710333751189-a2446c0f-3512-4ba7-8d31-d2bebe66b68a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e3a4cbb4fca1.png)
 
 #### 数据丢失问题的解决方案
 
@@ -981,7 +981,7 @@ redis 如果仅仅只是将数据缓存在内存里面，如果 redis 宕机了�
 
 这就是缓存雪崩。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710852728464-2e42b9ee-9d9d-468f-9faf-198e94b6f4aa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-8ad2354238c7.png)
 
 缓存雪崩的事前事中事后的解决方案如下。
 
@@ -989,7 +989,7 @@ redis 如果仅仅只是将数据缓存在内存里面，如果 redis 宕机了�
 - 事中：本地 ehcache 缓存 + hystrix 限流&降级，避免 MySQL 被打死。
 - 事后：redis 持久化，一旦重启，自动从磁盘上加载数据，快速恢复缓存数据。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710852772727-4783127d-2eaf-4ef7-b2e4-7616c870c4d0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-0109808f2f19.png)
 
 用户发送一个请求，系统 A 收到请求后，先查本地 ehcache 缓存，如果没查到再查 redis。如果 ehcache 和 redis 都没有，再查数据库，将数据库中的结果，写入 ehcache 和 redis 中。
 
@@ -1009,7 +1009,7 @@ redis 如果仅仅只是将数据缓存在内存里面，如果 redis 宕机了�
 
 举个栗子。数据库 id 是从 1 开始的，结果黑客发过来的请求 id 全部都是负数。这样的话，缓存中不会有，请求每次都“**视缓存于无物**”，直接查询数据库。这种恶意攻击场景的缓存穿透就会直接把数据库给打死。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710852814646-2504f273-a712-4067-bc5a-af2dc9aacb7f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-b3248e37ea7d.png)
 
 解决方式很简单，每次系统 A 从数据库中只要没查到，就写一个空值到缓存里去，比如 set -999 UNKNOWN。然后设置一个过期时间，这样的话，下次有相同的 key 来访问的时候，在缓存失效之前，都可以直接从缓存中取数据。
 
@@ -1054,7 +1054,7 @@ redis 如果仅仅只是将数据缓存在内存里面，如果 redis 宕机了�
 
 问题：先更新数据库，再删除缓存。如果删除缓存失败了，那么会导致数据库中是新数据，缓存中是旧数据，数据就出现了不一致。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1710853284865-9fe1aa26-daf5-418b-800e-2555662ea606.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-ae96d47c3f2a.png)
 
 解决思路：先删除缓存，再更新数据库。如果数据库更新失败了，那么数据库中是旧数据，缓存中是空的，那么数据不会不一致。因为读的时候缓存没有，所以去读了数据库中的旧数据，然后更新到缓存中。
 
@@ -1133,7 +1133,7 @@ select * from product where id = 1;
 
 先来一个上帝视角图，下面就是 MySQL 执行一条 SQL 查询语句的流程，也从图中可以看到 MySQL 内部架构里的各个功能模块。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711369612751-aff34fd0-f5a6-44ac-879e-894f56e95c0e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-8bf5c2bdf273.png)
 
 可以看到， MySQL 的架构共分为两层：**Server 层和存储引擎层**，
 
@@ -1155,11 +1155,11 @@ mysql -h$ip -u$user -p
 
 连接的过程需要先经过 TCP 三次握手，因为 MySQL 是基于 TCP 协议进行传输的，如果 MySQL 服务并没有启动，则会收到如下的报错：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711521022684-16e757a8-9f95-4702-afbb-275f8623d474.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-0735415f50ef.png)
 
 如果 MySQL 服务正常运行，完成 TCP 连接的建立后，连接器就要开始验证你的用户名和密码，如果用户名或密码不对，就收到一个"Access denied for user"的错误，然后客户端程序结束执行。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520946555-a404f352-a084-4cd6-bcf6-f6fcbe0655d3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-75da9212cb50.png)
 
 如果用户密码都没有问题，连接器就会获取该用户的权限，然后保存起来，后续该用户在此连接里的任何操作，都会基于连接开始时读到的权限进行权限逻辑的判断。
 
@@ -1169,7 +1169,7 @@ mysql -h$ip -u$user -p
 
 如果你想知道当前 MySQL 服务被多少个客户端连接了，你可以执行 show processlist 命令进行查看。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711368499042-3a064adf-c96f-4199-8f87-f13db3e6cc47.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-587f8b368466.png)
 
 比如上图的显示结果，共有两个用户名为 root 的用户连接了 MySQL 服务，其中 id 为 6 的用户的 Command 列的状态为 Sleep ，这意味着该用户连接完 MySQL 服务就没有再执行过任何命令，也就是说这是一个空闲的连接，并且空闲的时长是 736 秒（ Time 列）。
 
@@ -1287,11 +1287,11 @@ userinfo
 
 第二件事情，**语法分析**。根据词法分析的结果，语法解析器会根据语法规则，判断你输入的这个 SQL 语句是否满足 MySQL 语法，如果没问题就会构建出 SQL 语法树，这样方便后面模块获取 SQL 类型、表名、字段名、 where 条件等等。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711368498862-e16d2be4-1e25-4001-8d5b-05c71ef430c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-1b438d0abbed.png)
 
 如果我们输入的 SQL 语句语法不对，就会在解析器这个阶段报错。比如，我下面这条查询语句，把 from 写成了 form，这时 MySQL 解析器就会给报错。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711368499404-eebb89c5-de0e-4caf-ba75-48d7582393a2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-4715a71dbb2d.png)
 
 但是注意，表不存在或者字段不存在，并不是在解析器里做的，《MySQL 45 讲》说是在解析器做的，但是经过我和朋友看 MySQL 源码（5.7和8.0）得出结论是解析器只负责检查语法和构建语法树，但是不会去查表或者字段存不存在。
 
@@ -1348,7 +1348,7 @@ ERROR 1146 (42S02): Table 'mysql.test' doesn't exist
 
 怎么样？现在再看这张图，是不是很清晰了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711369612751-aff34fd0-f5a6-44ac-879e-894f56e95c0e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_36%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-8bf5c2bdf273.png)
 
 # MySQL 一行记录是怎么存储的？
 
@@ -1393,11 +1393,11 @@ mysql> SHOW VARIABLES LIKE 'datadir';
 
 比如，我这里有一个名为 my_test 的 database，该 database 里有一张名为 t_order 数据库表。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520523682-93efbfef-a2c7-47bd-abac-6ef8550c874e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_11%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e4d32eafc9e5.png)
 
 然后，我们进入 /var/lib/mysql/my_test 目录，看看里面有什么文件？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711540511947-96d04335-8436-450b-9d9e-8e000b7629ee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-d407c1880da7.png)
 
 可以看到，共有三个文件，这三个文件分别代表着：
 
@@ -1411,7 +1411,7 @@ mysql> SHOW VARIABLES LIKE 'datadir';
 
 **表空间由段（segment）、区（extent）、页（page）、行（row）组成**，InnoDB存储引擎的逻辑存储结构大致如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520523779-1e1b904e-b786-4615-817e-0cbbb237cd4f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-13d3d3f36c43.png)
 
 下面我们从下往上一个个看看。
 
@@ -1473,7 +1473,7 @@ Redundant 行格式我这里就不讲了，因为现在基本没人用了，这�
 
 先跟 Compact 行格式混个脸熟，它长这样：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520523755-df2c520a-6f9f-4095-8c6f-c8c07281db72.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-d912021e1e1d.png)
 
 可以看到，一条完整的记录分为「记录的额外信息」和「记录的真实数据」两个部分。
 
@@ -1503,7 +1503,7 @@ CREATE TABLE `t_user` (
 
 现在 t_user 表里有这三条记录：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520523981-171c3a7c-1385-42fd-b445-4bed07563046.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-7d15c24ff443.png)
 
 接下来，我们看看看看这三条记录的行格式中的 「变长字段长度列表」是怎样存储的。
 
@@ -1515,15 +1515,15 @@ CREATE TABLE `t_user` (
 
 这些变长字段的真实数据占用的字节数会按照列的顺序**逆序存放**（等下会说为什么要这么设计），所以「变长字段长度列表」里的内容是「 03 01」，而不是 「01 03」。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520523755-8c19d598-0906-4b85-9bfa-bf2a187aa6e4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_64%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-7ab8670b9e2a.png)
 
 同样的道理，我们也可以得出**第二条记录**的行格式中，「变长字段长度列表」里的内容是「 04 02」，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524234-d1db4de7-8842-4268-8e90-c6ef0ea44243.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_63%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-f402faff445b.png)
 
 **第三条记录**中 phone 列的值是 NULL，**NULL 是不会存放在行格式中记录的真实数据部分里的**，所以「变长字段长度列表」里不需要保存值为 NULL 的变长字段的长度。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524177-fa35efce-2bde-44c8-859e-91f5616189ac.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_64%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-3a2f7b377859.png)
 
 **为什么「变长字段长度列表」的信息要按照逆序存放？**
 
@@ -1552,31 +1552,31 @@ CREATE TABLE `t_user` (
 
 还是以 t_user 表的这三条记录作为例子：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524192-5c6a779f-1fd6-421c-9f1f-f1875c7e8785.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e2afa2894db1.png)
 
 接下来，我们看看看看这三条记录的行格式中的 NULL 值列表是怎样存储的。
 
 先来看**第一条记录**，第一条记录所有列都有值，不存在 NULL 值，所以用二进制来表示是酱紫的：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524243-e3a3866e-efb6-4bc9-bb5f-49c8af8f0175.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-674c3619f0b7.png)
 
 但是 InnoDB 是用整数字节的二进制位来表示 NULL 值列表的，现在不足 8 位，所以要在高位补 0，最终用二进制来表示是酱紫的：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524441-4a7c9363-8558-410a-89db-aa93feb4c3ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-122f5e512337.png)
 
 所以，对于第一条数据，NULL 值列表用十六进制表示是 0x00。
 
 接下来看**第二条记录**，第二条记录 age 列是 NULL 值，所以，对于第二条数据，NULL值列表用十六进制表示是 0x04。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524720-341daf76-d0bd-4bc6-aeeb-69979c0045b9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e60281fb0b14.png)
 
 最后**第三条记录**，第三条记录 phone 列 和 age 列是 NULL 值，所以，对于第三条数据，NULL 值列表用十六进制表示是 0x06。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524762-2d6c8cdd-ef76-4fe0-bad7-7dbea020c8fe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-886038fce40b.png)
 
 我们把三条记录的 NULL 值列表都填充完毕后，它们的行格式是这样的：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524790-2368b0a1-0acf-4ef3-bdb1-871eabc3b399.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-fd7ed0bbc0a3.png)
 
 **每个数据库表的行格式都有「NULL 值列表」吗？**
 
@@ -1604,7 +1604,7 @@ NULL 值列表也不是必须的。
 
 记录真实数据部分除了我们定义的字段，还有三个隐藏字段，分别为：row_id、trx_id、roll_pointer，我们来看下这三个字段是什么。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520524778-4545b74a-57b7-46fa-921b-aa24b713e57d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-9a1db72a09e0.png)
 
 - row_id
 
@@ -1648,7 +1648,7 @@ CREATE TABLE test (
 
 看能不能成功创建一张表：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520525087-58a6cc6d-1a9d-4d51-8ca3-e4976fea1c8c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e25dca34b44f.png)
 
 可以看到，创建失败了。
 
@@ -1683,11 +1683,11 @@ CREATE TABLE test (
 
 我们先来测试看看 varchar(65533) 是否可行？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520525390-bbc329a5-4c8f-4b99-8948-d36a54bb5b82.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-5d2c3a9f0f98.png)
 
 可以看到，还是不行，接下来看看 varchar(65532) 是否可行？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520525388-fe094467-e182-4e2a-84e9-dd4c6124210f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_53%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-d64216a67502.png)
 
 可以看到，创建成功了。说明我们的推论是正确的，在算 varchar(n) 中 n 最大值时，需要减去 「变长字段长度列表」和 「NULL 值列表」所占用的字节数的。
 
@@ -1709,7 +1709,7 @@ MySQL 中磁盘和内存交互的基本单位是页，一个页的大小一般�
 
 当发生行溢出时，在记录的真实数据处只会保存该列的一部分数据，而把剩余的数据放在「溢出页」中，然后真实数据处用 20 字节存储指向溢出页的地址，从而可以找到剩余数据所在的页。大致如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520525548-7bff0c18-fbf2-4174-8b7d-157b7dd302c4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e5584d6462dd.png)
 
 上面这个是 Compact 行格式在发生行溢出后的处理。
 
@@ -1717,7 +1717,7 @@ Compressed 和 Dynamic 这两个行格式和 Compact 非常类似，主要的区
 
 这两种格式采用完全的行溢出方式，记录的真实数据处不会存储该列的一部分数据，只存储 20 个字节的指针来指向溢出页。而实际的数据都存储在溢出页中，看起来就像下面这样：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711520525711-a87b871d-81ec-4f61-a23e-4eb154271357.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-4897fb15f52d.png)
 
 ## [https://xiaolincoding.com/mysql/base/row_format.html#%E6%80%BB%E7%BB%93](https://xiaolincoding.com/mysql/base/row_format.html#%E6%80%BB%E7%BB%93)总结
 
@@ -1795,7 +1795,7 @@ EXPLAIN
 select * from t where c = 3;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711780679026-df254ad3-f59d-4eaf-a83f-20aa47c3f155.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-87396b7e00b7.png)
 
 这条 SQL 竟然走了索引扫描，WHY？**where c 这个条件并不符合联合索引的最左匹配原则，怎么就查询的时候走了索引呢？**
 
@@ -1808,7 +1808,7 @@ EXPLAIN
 select * from t where c = 3;
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711718382973-b8fa06e9-5cf8-4f9f-b2c8-3a7a8f68cfb2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-64d94dbc4788.png)
 
 经过一番测试，有了个猜测。不过先跟大家解释下**什么是最左匹配原则？因为涉及到这个知识点。**
 
@@ -1919,7 +1919,7 @@ redo log包括两部分：一个是内存中的日志缓冲(redo log buffer)，�
 
 在计算机操作系统中，用户空间(user space)下的缓冲区数据一般情况下是无法直接写入磁盘的，中间必须经过操作系统内核空间(kernel space)缓冲区(OS Buffer)。因此，redo log buffer写入redo log file实际上是先写入OS Buffer，然后再通过系统调用fsync()将其刷到redo log file中，过程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711876706304-da65190b-2d64-44d2-8840-7dbc574d8c51.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-95871fbbbef3.png)
 
 mysql支持三种将redo log buffer写入redo log file的时机，可以通过innodb_flush_log_at_trx_commit参数配置，各参数值含义如下：
 
@@ -1927,13 +1927,13 @@ mysql支持三种将redo log buffer写入redo log file的时机，可以通过in
 - 1（实时写，实时刷）：事务每次提交都会将redo log buffer中的日志写入os buffer并调用fsync()刷到redo log file中。这种方式即使系统崩溃也不会丢失任何数据，但是因为每次提交都写入磁盘，IO的性能较差。
 - N（实时写，延迟刷）：每次提交都仅写入到os buffer，然后是每秒调用fsync()将os buffer中的日志写入到redo log file。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711876727612-b703247b-282b-4084-b29f-840ad0dad354.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-cce15cc92682.png)
 
 ### redo log记录形式
 
 前面说过，redo log实际上记录数据页的变更，而这种变更记录是没必要全部保存，因此redo log实现上采用了大小固定，循环写入的方式，当写到结尾时，会回到开头循环写日志。如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711876720787-5629a842-b6bc-4d63-b0e8-58ca7c837289.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-b5bed8378c69.png)
 
 同时我们很容易得知，**在innodb中，既有redo log需要刷盘，还有数据页也需要刷盘，redo log存在的意义主要就是降低对数据页刷盘的要求**。在上图中，write pos表示redo log当前记录的LSN(逻辑序列号)位置，check point表示**数据页更改记录**刷盘后对应redo log所处的LSN(逻辑序列号)位置。write pos到check point之间的部分是redo log空着的部分，用于记录新的记录；check point到write pos之间是redo log待落盘的数据页更改记录。当write pos追上check point时，会先推动check point向前移动，空出位置再记录新的日志。
 
@@ -2023,7 +2023,7 @@ update t set b = b + 1 where c = 2;
 --需要注意每次测试完成之后都需要执行rollback;或commit; 避免影响后续测试。
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711959537722-7eb29769-7c3b-4d19-b5f7-27dbcc6eaf97.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-9413d040bd37.png)
 
 2.索引失效升级为表锁
 
@@ -2058,7 +2058,7 @@ update t set b = b + 1 where c = 2;
 
 # 为什么阿里不推荐使用外键？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1711976979774-b0d8815f-284f-4ecb-9e25-f87709c6dc03.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-e4d120a4a524.png)
 
 大家在学习数据库的过程中一定都接触过外键这个概念，并且在各种课后习题中外键还是一个非常重要的考察内容，但是在实际的企业开发过程中，你会发现有些公司允许使用外键，有些公司不允许使用外键，各持己见，为什么出现这种情况呢？
 
@@ -2245,15 +2245,15 @@ MySQL 处理 union 的策略是先创建临时表，然后将各个查询结果�
 
 # 防御性编程
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732609197528-9d89b447-106d-4b92-8798-8025141b27b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-661e050c6b37.png)
 
 # 优雅的进行异常处理
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1732709617592-13f6f835-56ad-48f3-974d-648ca9716862.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-68b1dd87e106.png)
 
 # 在 mapper 中如何传递多个参数？
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1733125125760-9e0927d2-9d9b-46fc-b6c6-31f55bd3b06a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0097-gdggs5asoyhqku5n/img-99791bbf38c8.png)
 
 **方法 1：顺序传参法**
 

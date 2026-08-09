@@ -39,7 +39,7 @@ article: false
 - 不损害企业利益（避免 “下单即降价导致亏损”）；
 - 不引发业务纠纷（清晰告知价格变化）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506423553-1ce1a75a-ac09-4a96-924e-4950f29dbdf9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-dc102636c3bd.png)
 
 ## 二、价格同步的技术保障
 
@@ -215,7 +215,7 @@ public class RetryConfig {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506443984-191fcc34-787e-4a3c-984b-5dcc5860479c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-b9ef36a2d5e9.png)
 
 ### 2.2 外部同步：分销部与外部分销商（美团）的最终一致
 
@@ -400,7 +400,7 @@ public class PriceCacheService {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506459894-f53cf46f-79a5-4671-98f2-a3836975c07c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-862994b6159e.png)
 
 ### 2.3 价格同步完整流程（整合内部 + 外部）
 
@@ -410,7 +410,7 @@ public class PriceCacheService {
 4. **对账补偿**：定时任务查询美团价格→对比本地价格→不一致则补同步；
 5. **缓存兜底**：美团接收 API 请求→强制刷新缓存→用户看到最新价。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506474242-4c2812fe-59ea-486d-8d5b-facc25fefd6e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-7d8dfc06dc20.png)
 
 ## 三、下单冲突的优雅处理
 
@@ -506,7 +506,7 @@ public class OrderPriceController {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506518981-43c2aa47-653f-4d3f-851d-b6da3883dce2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-7f4e6dde3246.png)
 
 ### 3.2 分销部的优雅处理策略
 
@@ -604,7 +604,7 @@ public class OrderRollbackService {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506532376-7a063dce-40e2-410f-9390-0a0903633db1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-13efef0c0585.png)
 
 ### 3.3 下单冲突完整流程
 
@@ -615,7 +615,7 @@ public class OrderRollbackService {
 5. **支付兜底**：支付前二次校验价格，差异则补偿或回滚；
 6. **日志追溯**：所有操作记入日志，客服可快速查因。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506547424-fb785c9d-5e8e-44b7-b40e-d85fe0e40a07.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-bbdee69ec5e0.png)
 
 ## 四、方案总结与面试考点提炼
 
@@ -649,7 +649,7 @@ API 回调 + 定时对账 + 版本控制
 4. **异常处理**：若美团 API 调用失败，如何兜底？（定时对账补偿、重试机制、日志记录）；
 5. **用户体验**：如何避免 “下单即涨价” 引发投诉？（实时校验、透明提示、价格锁定可选方案）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762506565554-b7cd31e5-8eae-486b-a032-6e2180524f92.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1174-gsmbsu1xb610y3gb/img-d0a4c5276cfa.png)
 
 ## 五、拓展思考（面试加分项）
 

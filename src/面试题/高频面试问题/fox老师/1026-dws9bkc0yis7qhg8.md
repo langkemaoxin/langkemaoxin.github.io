@@ -27,7 +27,7 @@ article: false
 
 **面试官**：……（挂了）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1767010949459-6f429b0b-b2e8-4020-9845-1adf8b27236a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_51%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1026-dws9bkc0yis7qhg8/img-88642d85b32e.png)
 
 **核心痛点**： 分库分表最大的代价是**查询维度的丧失**。
 
@@ -41,7 +41,7 @@ article: false
 
 适用于**查询维度较少且固定**的场景（如：B 端商家要查订单）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1767011046233-3cc1ac20-a83e-49d5-8c31-b952b0e0682e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_52%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1026-dws9bkc0yis7qhg8/img-1c58847c475a.png)
 
 - **原理**：既然按 C 端用户分表导致 B 端商家查不了，那就**再造一套表**，专门按 B 端商家分片。
 - **架构设计**：
@@ -58,7 +58,7 @@ article: false
 
 适用于**主键查询**场景（如：已知 `order_id` 要查订单详情，但分片键是 `user_id`）。 千万别为了查 `order_id` 再去搞一张异构表，太浪费！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1767011090313-8b50a946-ad3c-4ed8-91df-e9ae872ebbd9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1026-dws9bkc0yis7qhg8/img-74b6a94689df.png)
 
 - **原理**：将分片键 (`user_id`) 的路由规则（基因）**嵌入** 到全局唯一 ID (`order_id`) 中。
 - **实现步骤**：
@@ -80,7 +80,7 @@ article: false
 
 - **痛点**：MySQL 即使不分库分表，也搞不定这种多字段组合检索。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1767011207979-e6d31b02-5273-4e80-8b30-6359acd8ab13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1026-dws9bkc0yis7qhg8/img-60bb785a33e8.png)
 
 - **架构**：**OLTP (交易) 与 OLAP (分析) 分离**。
 

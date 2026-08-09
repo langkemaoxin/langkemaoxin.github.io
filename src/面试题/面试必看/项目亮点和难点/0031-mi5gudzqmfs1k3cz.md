@@ -13,9 +13,9 @@ article: false
 
 > 来源：[Sun-Club程序员社区项目](https://www.yuque.com/tulingzhouyu/db22bv/mi5gudzqmfs1k3cz)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739856447939-d886167e-73e5-48e1-aaaf-d04c2d9eb53a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0031-mi5gudzqmfs1k3cz/img-61a0d3f72f6e.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1739856459928-92f8eb67-40fe-4b45-a1fa-362935324542.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0031-mi5gudzqmfs1k3cz/img-c22c2b828c48.png)
 
 上面这位学员简历的项目二没突出亮点和难点，投出去面试机会可能不多，经过和老师沟通后，着重优化了第二个项目《Sun-Club程序员社区》，优化如下：
 

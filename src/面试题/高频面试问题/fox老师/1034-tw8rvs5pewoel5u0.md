@@ -29,7 +29,7 @@ article: false
 
 G1（Garbage-First）不会像传统 GC（如 CMS）那样将堆分为 “年轻代、老年代” 连续区域，而是将整个堆拆分为**多个大小相等的独立 Region**（类似 “内存块”），所有 Region 共同构成堆内存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760666421136-cc14eb3d-13a5-4098-aa14-520280035533.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1034-tw8rvs5pewoel5u0/img-db3468bcb1e5.png)
 
 #### 1. Region 大小的默认计算规则（大厂面试必问细节）
 
@@ -46,7 +46,7 @@ Region 大小 = 堆总大小 ÷Region 总数≈8192MB÷2048=4MB
 
 且 4MB 是 2 的幂次（2²=4），符合 G1 的 Region 大小规则，因此**堆 8GB 时，G1 默认 Region 大小为 4MB**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760666468940-4e8995d8-cea6-48f1-9aba-e148a9da375e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1034-tw8rvs5pewoel5u0/img-01470e9b2c0b.png)
 
 ### 二、关键结论：8GB 堆下的大对象阈值
 
@@ -56,7 +56,7 @@ G1 对 “大对象” 的定义是：**对象大小超过单个 Region 大小�
 
 也就是说：**当堆内存为 8GB 时，G1 中大小超过 2MB 的对象会被判定为大对象**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760666538224-86cf648d-f4dc-4258-83a1-7395bca04eb2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1034-tw8rvs5pewoel5u0/img-1fe448b70346.png)
 
 #### 补充：大对象的特殊存储逻辑（面试易考点）
 
@@ -64,7 +64,7 @@ G1 对 “大对象” 的定义是：**对象大小超过单个 Region 大小�
 - 若对象大小 > Region 大小的 50%（大对象）：G1 会为其分配**连续的 Humongous Region**（专门存储大对象的 Region 类型），避免大对象跨多个普通 Region 导致的碎片化；
 - 若对象大小远超单个 Region（如 100MB）：会分配多个连续的 Humongous Region 存储，确保大对象存储连续。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1760666619715-077eeab8-171b-4b8c-9776-030856b22f7e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1034-tw8rvs5pewoel5u0/img-358bc38bebe3.png)
 
 ### 三、面试延伸：阈值的可配置性与注意事项
 

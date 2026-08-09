@@ -19,7 +19,7 @@ article: false
 
 ### 1. 核心冲突：物理分代 vs Region 化
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765110790248-320dee8b-9396-41a9-b5cb-61341c6dc98f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0928-ehkrth2k904dhs4s/img-119d2b6bd2a2.png)
 
 在 JDK 8 时代，CMS 是低延迟场景的霸主；但随着堆内存突破 32GB 甚至更大，CMS 的弊端开始显现。JDK 9 之后，G1 正式成为默认收集器，标志着 JVM 进入了“大堆、可预测”的新时代。
 
@@ -27,7 +27,7 @@ article: false
 
 ### 2. 内存布局：打破僵化的边界
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765110798005-274ca1f7-0701-4349-bb5d-6319f5b7199b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0928-ehkrth2k904dhs4s/img-b0d44ae7d45a.png)
 
 **CMS 的痛点：僵化的物理隔离** CMS 沿用了传统的物理分代模型。年轻代（Young）和老年代（Old）是连续的物理内存块，其边界在启动时（或通过 `-Xmn`）一旦划定，就难以动态调整。
 
@@ -43,7 +43,7 @@ article: false
 
 ### 3. 算法内核：彻底终结内存碎片
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765111082049-160e115b-73da-444a-8ec0-3d52b890bcd6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0928-ehkrth2k904dhs4s/img-5e381e1969da.png)
 
 **CMS 的隐患：标记-清除（Mark-Sweep）** CMS 的核心算法是“标记-清除”。它只负责把垃圾对象标记出来并清理掉，**不进行内存整理**。
 
@@ -59,7 +59,7 @@ article: false
 
 ### 4. 执行模型：建立可预测的 SLA
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765110828680-4785006b-bda2-43ff-87ef-15414ae21f4b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0928-ehkrth2k904dhs4s/img-3c60112cdb67.png)
 
 **软实时（Soft Real-Time）的承诺** CMS 的停顿时间是不可控的，它取决于堆的大小和垃圾的多少。而 G1 引入了 **“停顿时间模型”**。 开发者可以通过 `-XX:MaxGCPauseMillis`（默认 200ms）设置期望的停顿时间上限。
 
@@ -73,7 +73,7 @@ article: false
 
 ### 5. 并发标记：SATB vs 增量更新
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765110835429-87c8a269-dbf8-45ea-8e60-90483fa1034f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0928-ehkrth2k904dhs4s/img-2eb59e702202.png)
 
 在并发标记阶段，用户线程仍在运行，对象引用关系随时可能变化。如何保证标记的准确性？
 
@@ -91,7 +91,7 @@ article: false
 
 ### 6. 总结与选型建议
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765110842201-e805c846-abae-49ea-928e-b34dd510fe5e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0928-ehkrth2k904dhs4s/img-25d92d27e65b.png)
 
 随着 JDK 版本的迭代，CMS 已在 JDK 9 中被标记为废弃（Deprecated），并在 JDK 14 中被彻底移除。对于现代 Java 应用架构师而言，选型逻辑已非常清晰：
 

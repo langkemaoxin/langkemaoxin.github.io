@@ -25,7 +25,7 @@ article: false
 
 在企业级落地应用中，我们通常采用以下三种手段（或组合）来控制幻觉：
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781596570787-4f5c42cf-f6b6-480f-b8cb-e7f25e7afdab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1280-pax9adpcwunx5qz9/img-e53c59ba3147.png)
 
 ### 1. RAG（检索增强生成）—— 提供事实锚点
 

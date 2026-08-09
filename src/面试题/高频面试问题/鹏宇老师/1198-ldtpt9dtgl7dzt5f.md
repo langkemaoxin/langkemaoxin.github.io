@@ -52,7 +52,7 @@ MySQL 并非按 “行” 直接存储数据，而是将数据拆分为固定大
 8 Byte
 保证数据正确性
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760079854626-527a3b97-e840-4db9-972b-bcc2cf3c5e7c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1198-ldtpt9dtgl7dzt5f/img-a45e4dd5cea9.png)
 
 ### 2.2 数据页的核心作用
 
@@ -71,7 +71,7 @@ B + 树是一种 “平衡多路查找树”，其结构分为**非叶子节点*
 - **叶子节点**：存储 “完整行数据”，且所有叶子节点通过 “前后指针” 形成链表（方便范围查询，如 “查询 ID 100-200 的数据”）。
 - **层数可控**：常规业务场景下，B + 树层数通常为 2-3 层（层数越多，磁盘 IO 次数越多，性能越差）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760079892308-d2b22d21-2fe8-45fb-b32e-b77bfe8e6f7b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1198-ldtpt9dtgl7dzt5f/img-fafccc5dabfd.png)
 
 ### 3.2 B + 树的查询过程（以 “查询 ID=5” 为例）
 
@@ -83,7 +83,7 @@ B + 树是一种 “平衡多路查找树”，其结构分为**非叶子节点*
 
 整个过程仅需**3 次磁盘 IO**（分别读取顶层、中间层、叶子层的数据页），而磁盘 IO 是 MySQL 中耗时最长的操作，3 次 IO 可保证毫秒级查询响应；若 B + 树增至 4 层，需 4 次磁盘 IO，响应时间会显著增加。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760079915645-72595bc8-2265-4fbd-b5c2-d4a574b107af.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1198-ldtpt9dtgl7dzt5f/img-6b6702f800bc.png)
 
 ## 四、2000 万行阈值的计算：三层 B + 树的承载极限
 
@@ -109,7 +109,7 @@ B + 树能承载的总记录数由以下三个变量决定：
 
 因此，X 的计算为：**X = 非叶子节点可用空间 ÷ 单条 “索引键 + 页号” 占用空间 = 15360 ÷ 12 ≈ 1280**即单个非叶子节点可指向 1280 个下级数据页。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760079975424-365d0196-753c-4fad-a56c-7daf9cf6433b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1198-ldtpt9dtgl7dzt5f/img-208cb40c533a.png)
 
 ### 4.3 变量 Y 的计算（叶子节点行数据量）
 
@@ -117,7 +117,7 @@ B + 树能承载的总记录数由以下三个变量决定：
 
 因此，Y 的计算为：**Y = 叶子节点可用空间 ÷ 单行数据大小 = 15360 ÷ 1024 ≈ 15**即单个叶子节点可存储 15 行实际数据。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760079993499-57e28161-637b-4aa6-b552-49a1fa8f982e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1198-ldtpt9dtgl7dzt5f/img-6b2c129bb4c3.png)
 
 ### 4.4 三层 B + 树的总记录数
 
@@ -125,7 +125,7 @@ B + 树能承载的总记录数由以下三个变量决定：
 
 行业内为预留性能余量（如数据页碎片、索引维护开销等），将 2500 万行简化为 “2000 万行”，即单表数据量的推荐阈值。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760080010494-53180332-9f53-4804-8eb7-b2285d7df47e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1198-ldtpt9dtgl7dzt5f/img-8103b9b53a4e.png)
 
 ## 五、关键变量：单行数据大小对阈值的影响
 
@@ -141,7 +141,7 @@ B + 树能承载的总记录数由以下三个变量决定：
 
 即 “ID 映射表” 在保持三层 B + 树（3 次磁盘 IO）的前提下，单表可承载约 1 亿行数据，性能仍能保持稳定。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1760080033335-634bfe45-249f-4915-8daa-c5dedb893b45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1198-ldtpt9dtgl7dzt5f/img-bfcfcce22394.png)
 
 ## 六、实际业务中的建议：如何判断是否需要分表
 

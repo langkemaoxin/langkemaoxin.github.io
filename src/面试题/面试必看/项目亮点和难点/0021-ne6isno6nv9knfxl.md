@@ -13,7 +13,7 @@ article: false
 
 > 来源：[电商中台系统（亮点与难点）](https://www.yuque.com/tulingzhouyu/db22bv/ne6isno6nv9knfxl)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1744614560401-18dd3405-0b80-4e78-9935-1e0cf393af88.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0021-ne6isno6nv9knfxl/img-9e7e2c099f3e.png)
 
 首先这份简历是**7年经验**，除了项目还有不少地方需要优化（比如技术栈补充，工作经验简化，项目优化2-3即可），当然这里只更新项目相关。重点优化最近这个电商中台的系统。
 

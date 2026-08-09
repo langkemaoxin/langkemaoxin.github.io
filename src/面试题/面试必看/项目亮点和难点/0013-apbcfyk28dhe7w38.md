@@ -19,7 +19,7 @@ article: false
 
 这其实是行业的**“隐性门槛”**。 面试官心里很清楚，绝大多数业务都是 CRUD。但为什么有的人能拿 30k，有的人只能拿 15k？ **区别不在于你“做了什么”，而在于你“挖了多深”。**
 
-![image](https://cdn.nlark.com/yuque/0/2026/jpeg/12590378/1769319849198-1ddb9bf8-7fa1-44fe-912c-740c8bbd47ae.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-f5c45a449c70.jpg)
 
 今天 Fox 不讲虚的，教你 3 个**“合法包装”**技巧。哪怕你做的只是最简单的管理后台，也能讲出**阿里 P7 架构师**的味道！
 
@@ -29,7 +29,7 @@ article: false
 
 **👇 一张图看懂话术区别：**
 
-![image](https://cdn.nlark.com/yuque/0/2026/jpeg/12590378/1769319849311-311bc294-8745-40bc-97ae-69adb7d56e41.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-b5293cd3a6f6.jpg)
 
 初级回答：我用了 Redis 加快查询。
 
@@ -41,7 +41,7 @@ article: false
 
 “面试官，这个项目虽然业务逻辑不复杂，但在高并发下遇到了**严重的缓存穿透问题**。 当时我发现数据库 CPU 突然飙升到 100%，排查日志发现是有黑产在疯狂请求不存在的商品 ID，导致 Redis 缓存完全失效，流量全部打穿到了 DB。
 
-![image](https://cdn.nlark.com/yuque/0/2026/jpeg/12590378/1769319849224-a8aa683f-0e29-4b5b-aa5a-a2740b219f72.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-f9d145b34fd7.jpg)
 
 后来我没有简单地加防火墙，而是**引入了布隆过滤器（Bloom Filter）**，在缓存层之前拦截掉了 99% 的非法请求。同时，为了防止误判，我还设计了一套异步重建机制……”
 
@@ -55,7 +55,7 @@ article: false
 
 **✅高薪包装术（防患于未然）：** 真正的架构师，在选型时考虑的永远是**稳定性**和**边界情况**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/jpeg/12590378/1769319849302-18bcf6c7-c06b-4f0b-81ad-703822934fe7.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-35f3096aab6c.jpg)
 
 **话术模板：**
 
@@ -63,7 +63,7 @@ article: false
 
 所以我最终引入了 **Caffeine**（Spring Boot 默认缓存组件）。 我深入研究过它的 **Window TinyLfu 算法**，发现它比普通的 LRU 算法命中率更高。我配置了 `maximumSize` 和 `expireAfterWrite`，既保证了热点数据的高效读取，又完美规避了内存泄漏的风险。”
 
-![image](https://cdn.nlark.com/yuque/0/2026/jpeg/12590378/1769319849307-f18301da-d5e5-4396-b8bb-26eb6678ae7e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-a1a40fb46320.jpg)
 
 **👉核心逻辑：** 从“只会用 API”进阶到“考虑系统稳定性”。面试官一听就知道：**这人带过生产项目，懂坑在哪里。**
 
@@ -71,7 +71,7 @@ article: false
 
 P6 看功能，P7 看兜底。 你要假设所有的中间件（Redis, MQ, DB）都会挂，然后展示你的**Plan B**。
 
-![image](https://cdn.nlark.com/yuque/0/2026/jpeg/12590378/1769319849764-3c9654f4-1b59-41a2-82ad-cb604caa84f5.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-083b6f98716f.jpg)
 
 **✅高薪包装术（面向失败编程）：**
 
@@ -81,7 +81,7 @@ P6 看功能，P7 看兜底。 你要假设所有的中间件（Redis, MQ, DB）
 
 **👇一张图看懂架构师的思维：**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769319849730-5a088117-39af-48d7-a103-bf4844e44796.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-132eca046d74.png)
 
 **👉核心逻辑：** 展示你具备**“防御性编程”**和**“高可用架构”**的思维。这是大厂最看重的素质。
 
@@ -91,13 +91,13 @@ P6 看功能，P7 看兜底。 你要假设所有的中间件（Redis, MQ, DB）
 
 **💰高薪回答 = 痛点场景（故障） + 选型思考（避坑） + 兜底方案（架构）**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769319849828-f3331f34-0faf-406d-80d3-f8dd27bc034f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-20288095899a.png)
 
 ## **写在最后**
 
 **所谓的“包装”，不是让你去编造没做过的事。** 而是让你学会**戴着“显微镜”看项目**。不要因为现在的 CRUD 而自卑，深挖下去，全是黄金。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1769319849779-9b54a85d-3314-49db-b9c6-076422eb1f1a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0013-apbcfyk28dhe7w38/img-411e1f69061c.png)
 
 **🔥评论区互动福利🔥**
 

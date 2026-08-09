@@ -32,7 +32,7 @@ MySQL 的扩容分两种场景，容器化不仅不拖后腿，还能简化流�
 - **存储扩容（单实例磁盘不够）**：生产环境没人用本地目录！用 K8s 的 PVC+CSI 或云厂商块存储（如阿里云 EBS、AWS gp3），只需修改 PVC 的`storage`字段（比如从 100G 改 500G），不用重启容器，数据目录无缝适配。
 - **实例扩容（需加从库分担压力）**：实例扩容靠的是 MySQL 原生的 binlog/GTID 同步机制，和容器化无关。搭配 Percona Operator 等工具，能自动创建从库、配置同步、处理故障切换 —— 传统要 “天级” 的扩容，现在 “分钟级” 就能完成。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758453929427-58693128-efe3-48d4-86c1-c827af696ef6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1072-dih98gx48dthqqzk/img-e84f418eb283.png)
 
 ### 误区 2：“Docker 没资源隔离，MySQL 会被其他应用挤崩溃”
 
@@ -50,7 +50,7 @@ Docker 靠两大 Linux 技术实现强隔离，完全能避免资源抢占：
 - 单机 Docker：`docker run -m 4G --cpus 2 -v mysql-data:/var/lib/mysql mysql:8.0`，直接限制 MySQL 最多用 4G 内存、2 核 CPU；
 - K8s 部署：在 StatefulSet 中配置`resources.limits: {memory: 4Gi, cpu: 2}`，K8s 会通过 cgroups 强制执行，MQ 再忙也抢不走 MySQL 的资源。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758454134977-b7885655-bcea-4aa1-b92a-e5103f56a8be.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1072-dih98gx48dthqqzk/img-936c3aa30db0.png)
 
 ### 误区 3：“MySQL 容器化只适合自动伸缩、容灾的场景”
 
@@ -64,7 +64,7 @@ MySQL 容器化的价值覆盖从测试到生产的全场景，核心在三点�
 2. **部署自动化**：K8s 的 StatefulSet 支持一键部署、滚动更新、故障自愈 —— 升级 MySQL 版本时，K8s 逐个重启实例，业务无感知；实例崩了，自动在健康节点重建；
 3. **集群化简化**：靠 MySQL Operator 自动搭建 MGR 集群，节点加入 / 退出、主从切换、数据同步全自动化，传统 “数天” 搭建的集群，现在 “分钟级” 搞定。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758454079787-2047c728-560b-4ffb-9e33-f50022d4aebf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1072-dih98gx48dthqqzk/img-7274e8711555.png)
 
 ## 二、正视风险：3 个生产级挑战，这么解决才稳妥
 
@@ -80,7 +80,7 @@ MySQL 容器化的价值覆盖从测试到生产的全场景，核心在三点�
 2. **插件选择**：用云厂商官方 CSI 插件，避开社区实验性版本；
 3. **参数优化**：调整`innodb_flush_log_at_trx_commit`（平衡性能与安全性）、增大`innodb_log_file_size`（减少刷盘次数）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758454051271-aea8bf15-71fc-4fcd-aba8-ab4a5bbe25d7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1072-dih98gx48dthqqzk/img-28f5996038d9.png)
 
 ### 挑战 2：数据可靠性（依赖存储卷与 CSI 插件）
 
@@ -92,7 +92,7 @@ MySQL 容器化的价值覆盖从测试到生产的全场景，核心在三点�
 2. **存储冗余**：选多副本存储（如云盘），避免单点故障；
 3. **恢复测试**：定期验证快照恢复、xtrabackup 备份恢复流程，确保关键时刻能用。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758454157777-6901fb88-da2f-4f3f-8435-98e28e6b8f56.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1072-dih98gx48dthqqzk/img-b645564ea06b.png)
 
 ### 挑战 3：监控排障变复杂（需适配云原生工具链）
 
@@ -104,7 +104,7 @@ MySQL 容器化的价值覆盖从测试到生产的全场景，核心在三点�
 2. **日志管理**：将 MySQL 的 error log、slow query log 挂载到存储卷，用 Filebeat 同步到 ELK 或 Loki，支持历史查询；
 3. **固定地址**：K8s 的 Service 为 MySQL 分配固定访问地址（如`mysql.default.svc`），屏蔽容器迁移的 IP 变化，监控和业务访问都稳定。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758454026219-14c2c137-b854-4be6-a55d-887e022c8b79.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1072-dih98gx48dthqqzk/img-c97f64f2f579.png)
 
 ## 三、生产级方案：别纠结 “能不能”，看 “怎么做”
 
@@ -123,7 +123,7 @@ MySQL 容器化的价值覆盖从测试到生产的全场景，核心在三点�
 
 这套方案不仅能避开所有风险，还能靠环境一致性、部署自动化、集群化简化，大幅提升运维效率 —— 对现代 DBA 来说，MySQL on K8s 早不是 “选不选” 的问题，而是 “必须会” 的技能。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12590378/1758453990479-57762de5-19fb-4775-8d1c-5d0f357bb757.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/fox老师/1072-dih98gx48dthqqzk/img-e989d69e12ef.png)
 
 ## 总结
 

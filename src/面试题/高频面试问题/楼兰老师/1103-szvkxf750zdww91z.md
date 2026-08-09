@@ -19,7 +19,7 @@ article: false
 
 这些玩意儿，说白了就是Java世界里的一帮‘保安’，专门负责维持多线程抢东西时候的秩序。今天，咱不搞那些虚头巴脑的定义，就用大白话，把这帮‘保安’的脾气、性格、还有他们内部的“晋升机制”，给你扒个底朝天！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760702527778-f922a579-c988-4d9d-a8ea-c1d526f92ef7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_67%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1103-szvkxf750zdww91z/img-e1eb4dfe5374.png)
 
 记得点赞收藏，不然想用的时候就找不到了。跟上我的节奏，咱们一个一个盘！
 
@@ -27,7 +27,7 @@ article: false
 
 首先，咱们得搞明白两种最基本的‘世界观’：**悲观锁和乐观锁**。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760702535892-0a2cada1-51ad-427e-a24a-0903a175522e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1103-szvkxf750zdww91z/img-97fa25546461.png)
 
 这一组锁是根据对并发冲突的假设不同进行区分的。要搞清楚这两个锁，你就记住一个场景，**上厕所**就够了。
 
@@ -39,7 +39,7 @@ article: false
 
 好，搞懂了这两种哲学，咱们再来聊聊下一组：**公平锁和非公平锁**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760702586667-c5baea43-efdb-4ac6-99c9-c1e0de44237b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_63%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1103-szvkxf750zdww91z/img-3f5dca832b6f.png)
 
 这一组锁就是根据线程排队的规矩来区分的。公平锁就像银行叫排号，讲究一个先来后到。非公平锁就像路边招手打车，谁快谁上。
 
@@ -51,7 +51,7 @@ article: false
 
 接下来，就轮到下一组容易让人看不懂的锁：**排他锁和共享锁**。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760702606055-8688a188-a1f4-458b-a9a4-45802674a7db.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_70%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1103-szvkxf750zdww91z/img-838b60f280a5.png)
 
 他们的核心区别，就是是否允许有线程并发。
 
@@ -65,7 +65,7 @@ Java里的要实现共享锁很容易，可以用ReentrantReadWriteLock这么一
 
 接下来还有一个面试中经常会问的锁：**可重入锁**。表示同一个线程是否可以重复持有自己的锁。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760702625275-7ce3909b-a295-4eb5-afaf-95b890d472a0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_60%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1103-szvkxf750zdww91z/img-9f508101f181.png)
 
 这个非常重要，因为Java中天天用的Reentrant，其实就是可重入的意思。啥叫**可重入**？就是你拿着你家钥匙打开大门进屋了，然后发现你的卧室门也需要同一把钥匙开。这时候你不需要再跑出去开门，可以直接用手里的钥匙去开卧室门。一个线程拿到了锁之后，可以反复地进入这个锁保护的代码块，而不会被自己锁住。synchronized和ReentrantLock都是可重入的，它们内部有个计数器，你每进一层就+1，出层就-1，直到计数器变成0，才算真正把锁还回去了。要是锁是不可重入的，那你进了大门，想再开卧室门的时候，发现钥匙已经被‘大门锁’占用了，结果自己把自己锁死在客厅，这就搞笑了。
 
@@ -73,7 +73,7 @@ Java里的要实现共享锁很容易，可以用ReentrantReadWriteLock这么一
 
 最后，就是面试的王炸，synchronized内部那套骚气的**锁升级**机制。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760702639948-196f6b21-99d7-43eb-a97b-96e4b593e435.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_73%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1103-szvkxf750zdww91z/img-6fcbeaf7ea6f.png)
 
 JVM为了让synchronized这个‘亲儿子’跑得更快，给它设计了一套从低到高的‘保安’等级，根据资源的竞争激烈程度不同，实现了强大的自动升级功能。还是以上厕所的故事为例。
 
@@ -89,7 +89,7 @@ JVM为了让synchronized这个‘亲儿子’跑得更快，给它设计了一�
 
 “好了，聊到这儿，咱们收个尾。”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1760702660793-96046858-b2e5-4dfd-92ef-a4ee60b5ac23.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_79%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1103-szvkxf750zdww91z/img-24573bdfbf89.png)
 
 “其实，搞懂Java这些锁，真正拉开差距的，不是让你去背诵“锁的八股文”，那只是初级程序员的“肌肉记忆”。”
 

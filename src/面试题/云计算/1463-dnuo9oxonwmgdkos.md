@@ -38,13 +38,13 @@ article: false
 - **记忆与状态管理**（上下文记忆、长期记忆存储）
 - **自我迭代**（反思错误、优化策略）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1739713514216-df08507f-cdd1-4ccf-b066-543bd7020194.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1463-dnuo9oxonwmgdkos/img-58d1af27b20d.png)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1739713522706-6f3d658b-367b-4db6-9fdb-c32f28103eee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_50%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1463-dnuo9oxonwmgdkos/img-3fe6374b132b.png)
 
 ### **2. Agent搭建的核心要素**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1739713558533-f4c67e92-1b14-4f1e-b35b-9385d96280e7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1463-dnuo9oxonwmgdkos/img-17ca85eed473.png)
 
 #### **（1）任务定义与规划**
 

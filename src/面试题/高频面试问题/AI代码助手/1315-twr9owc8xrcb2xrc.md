@@ -21,7 +21,7 @@ article: false
 
 面对日产生1000万条数据，需要支持过去一个月时间范围内的数据查询场景，这是一个典型的大数据OLAP（在线分析处理）问题。一个月的数据量约为3亿条记录，数据规模庞大，对查询性能、存储成本、系统可用性都提出了极高要求。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1300531/1758201505423-9dbb8db1-c262-460c-8697-53845f8f4c15.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/AI代码助手/1315-twr9owc8xrcb2xrc/img-befd38f056b6.png)
 
 ### 技术挑战
 
@@ -31,7 +31,7 @@ article: false
 4. **成本控制**：存储和计算资源的成本优化
 5. **数据一致性**：实时写入与查询的一致性保证
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1300531/1758201542451-eaff88e5-ade7-4ed6-97fe-70dcc86ff54a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_54%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/AI代码助手/1315-twr9owc8xrcb2xrc/img-c1856cfe0128.png)
 
 ## 挑战与约束 (Challenge)
 
@@ -57,7 +57,7 @@ article: false
 
 ### 整体架构设计
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1300531/1758201657090-56b5df43-5690-4e8d-8a4e-94525d13c397.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/AI代码助手/1315-twr9owc8xrcb2xrc/img-32cb787e1d78.png)
 
 ### 核心技术栈选型
 

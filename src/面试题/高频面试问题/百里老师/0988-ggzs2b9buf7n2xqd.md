@@ -19,7 +19,7 @@ article: false
 
 那么，我们该如何应对这个挑战呢？本文将带你走过一条从“青铜”到“王者”的架构演进之路，系统性地探讨五种主流的跨库 Join 解决方案。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761055196305-32975945-7cf8-4d18-92a6-4708b67c5079.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0988-ggzs2b9buf7n2xqd/img-be49b7ee856d.png)
 
 ---
 
@@ -34,7 +34,7 @@ article: false
 3. **查询关联表**：应用服务拿着这些 `user_id`，通过一个 `IN` 查询（`SELECT * FROM users WHERE id IN (...)`），一次性地从用户库中获取所有相关的用户信息。**注意**：这里必须使用 `IN` 批量查询，以避免逐条查询导致的“N+1查询”灾难。
 4. **内存聚合**：在应用服务器的内存中，遍历订单列表，根据 `user_id` 将用户信息组装到对应的订单数据中，最终形成完整的视图（DTO）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761055206646-ad92354e-39b5-470a-b95f-e1b5eeb13136.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0988-ggzs2b9buf7n2xqd/img-54e0ec111c0c.png)
 
 这种方法实现简单，无需引入任何新的技术组件。但它的缺点也显而易见：当需要关联的数据量巨大时，应用服务器会承受巨大的内存和 CPU 压力，同时多次网络查询也增加了响应延迟。因此，它只适用于关联数据量不大、查询频率不高的临时性或非核心业务场景。
 
@@ -52,7 +52,7 @@ article: false
 2. 订单服务监听该消息。
 3. 收到消息后，订单服务根据消息内容，更新订单表中所有相关的冗余字段。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761055270656-5f619d35-abdb-4e7f-aa5f-d4cf7c6ad9ee.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0988-ggzs2b9buf7n2xqd/img-44b8d32622b1.png)
 
 这种方案是业界处理此类问题的优选方案。它将复杂的 `JOIN` 问题转化为简单的单表查询，性能极高。虽然它牺牲了一部分数据一致性（存在短暂的延迟）和存储空间，并增加了数据同步的维护成本，但对于绝大多数核心在线业务而言，这种权衡是完全值得的。
 
@@ -71,7 +71,7 @@ article: false
 3. **结果归并**：收集来自各个分片的查询结果，在中间件内部进行 `JOIN` 和聚合。
 4. **返回结果**：将最终处理好的结果集返回给应用。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761055357126-8b7fdbf7-9b63-4ee8-b2ea-5fcb375aa7a4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0988-ggzs2b9buf7n2xqd/img-b440989bacb9.png)
 
 这种方案的最大优点是对业务代码无侵入，大大降低了开发复杂度。但它也引入了新的运维挑战，中间件本身可能成为性能瓶颈或单点故障，并且并非所有复杂的 `JOIN`（特别是跨多个分片的 `JOIN`）都能得到完美支持。
 
@@ -88,7 +88,7 @@ article: false
 
 在这个数据仓库里，所有数据都汇集一堂，分析师可以不受限制地进行任意复杂度的 `JOIN` 和聚合查询，而完全不会影响到在线业务系统。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761055286577-bde27c35-d45a-4f72-9997-0267ac16dc0d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0988-ggzs2b9buf7n2xqd/img-d4151675304c.png)
 
 此方案的优点是分析能力强大且与在线业务完全隔离。缺点也同样突出：数据同步存在较高延迟（通常是 T+1），不适用于实时查询场景，并且构建和维护一套数据仓库和 ETL 系统的成本非常高昂。
 
@@ -103,7 +103,7 @@ article: false
 - **读路径**：当应用需要查询数据时，首先检查缓存（如 Redis）中是否存在结果。如果命中，则直接返回；如果未命中，则执行数据库查询（可能包含应用层的 `JOIN`），然后将查询结果写入缓存，最后再返回给应用。
 - **写路径**：当底层的业务数据（如用户信息）发生变更时，为了保证数据一致性，最简单的策略是直接**淘汰（删除）**缓存中相关的条目。当下次再有读取请求时，由于缓存未命中，它会自然地从数据库加载最新数据并重新填充缓存。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761055320795-87417bd0-26e5-4d5f-bfac-1e7cf66faf78.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0988-ggzs2b9buf7n2xqd/img-2fd6b41cceb6.png)
 
 缓存方案能极大地提升高频读取场景的性能，有效保护后端数据库。但它同样引入了数据一致性的挑战（缓存与数据库可能不一致），并增加了代码复杂度和基础设施成本。它非常适合缓存那些“读多写少”且对短暂不一致不敏感的数据。
 
@@ -113,7 +113,7 @@ article: false
 
 我们已经探讨了五种各具特色的解决方案，不存在唯一的“银弹”。在实际工作中，我们需要根据具体的业务场景、性能要求、团队技术栈和成本预算来做出最合适的选择。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761055304583-bb98995d-d56f-4707-89a4-d9c50b05d2b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0988-ggzs2b9buf7n2xqd/img-7fb156261c48.png)
 
 总的来说，我们的决策框架可以归纳为：
 

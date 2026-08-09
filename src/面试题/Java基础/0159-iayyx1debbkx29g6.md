@@ -134,7 +134,7 @@ public class Address {
 
 UML类关系图：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1685430139282-cdd67087-d176-4145-9102-814d5496723b.png#averageHue=%23f7f7f7&clientId=u1e76c835-483b-4&from=paste&height=182&id=uc813b31b&originHeight=410&originWidth=1570&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=54439&status=done&style=none&taskId=uc1db5d78-acf5-41ae-b801-a9769a41d63&title=&width=697.7777777777778?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_45%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-f6ea3e4957c5.png)
 
 ## 2.实战：获取用户所在的城市
 
@@ -292,7 +292,7 @@ public class BaiLiNonNullDemo {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1685533580177-a2ece5b5-6002-4ab8-a3ab-0689121afee0.png#averageHue=%23464a4d&clientId=u84ac1d4c-e972-4&from=paste&height=323&id=u0fed00c0&originHeight=727&originWidth=999&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=76754&status=done&style=none&taskId=ub482b64f-7405-423f-9047-73d0a0ccea3&title=&width=444?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-9c161615b254.png)
 
 ### 2.7.额外补充
 
@@ -536,15 +536,15 @@ public class BaiLiConcurrentIteratorTest {
 
 # List操作的一些常见问题
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1686981544814-8ba59757-b43c-4215-a041-f56a069f1e0e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_123%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-3455e146663a.jpg)
 
 ## 阿里巴巴开发手册强制规约：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686901310763-4ebc8717-ea7f-41d2-85d6-2e16d7293971.png#averageHue=%23f3f2f0&clientId=u888c49a1-6888-4&from=paste&height=254&id=EJ64C&originHeight=571&originWidth=2211&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=250041&status=done&style=none&taskId=u5879313c-94f6-4e73-a93b-70b12790271&title=&width=982.6666666666666?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_63%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-3a63e8c11eda.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686901253521-8cca8597-1ff8-4c7e-9056-5c4405dfdd04.png#averageHue=%23f0eeec&clientId=u888c49a1-6888-4&from=paste&height=134&id=NsWCY&originHeight=286&originWidth=2093&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=126757&status=done&style=none&taskId=uf0db8a88-cc61-4587-bf55-1bc7b1f5ddc&title=&width=982.2222290039062?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_60%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-4b1f564d7c11.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686904163567-e24237bb-3693-486f-96b9-4a2a858cabf1.png#averageHue=%23f6f4f3&clientId=u888c49a1-6888-4&from=paste&height=116&id=L7f2J&originHeight=258&originWidth=2196&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=115428&status=done&style=none&taskId=u8e57ec07-4a5a-4670-8378-74ce824c30d&title=&width=988?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_63%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-ba58251685d7.png)
 
 ## 1. Arrays.asList转换基本类型数组
 
@@ -578,7 +578,7 @@ public static List asList(T... a) {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686926941178-2f9824ec-aa06-4c3c-8148-20f0ec90da72.png#averageHue=%233b4145&clientId=u879f0d62-26de-4&from=paste&height=327&id=u4224e401&originHeight=502&originWidth=1672&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=65347&status=done&style=none&taskId=ub0d3d50f-2b77-471b-a0ce-8ba4c1019a8&title=&width=1090.1111450195312?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_48%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-4ec382623931.png)
 
 那我们该如何解决呢？只需要在声明数组的时候，声明类型改为包装类型。
 
@@ -628,15 +628,15 @@ public class BaiLiTestDemo {
 
 为什么会这样？我们看下asList的实现，它返回的ArrayList是Arrays的内部类，而不是我们通常使用的java.util.ArrayList：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686898461741-73844fcd-3c91-40e3-8d13-c8daad41ab50.png#averageHue=%235a6c43&clientId=u888c49a1-6888-4&from=paste&height=364&id=u09341e30&originHeight=818&originWidth=2733&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=260074&status=done&style=none&taskId=u386d3fe6-e2e3-41bd-8a7d-f44f9c7deea&title=&width=1214.6666666666667?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-2ab0a51b3375.png)
 
 可以看到内部类中的ArrayList没有add()与remove()，那我们怎么可以使用增减方法呢，继续往下看：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686898640989-510247c9-c1ee-46f9-b3db-7246a4c1d6c6.png#averageHue=%232e2c2b&clientId=u888c49a1-6888-4&from=paste&height=396&id=u2dea0b9b&originHeight=891&originWidth=2738&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=135871&status=done&style=none&taskId=u30d5b1b1-58fe-46d6-9500-e26d9c285cc&title=&width=1216.888888888889?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-a83e7a89858a.png)
 
 可以看到ArrayList继承了AbstractList类，我们观察AbstractList类的add()与remove()：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686899049898-f0084fac-1a7f-4d3a-ad8c-ee822b2e0c82.png#averageHue=%232c2c2b&clientId=u888c49a1-6888-4&from=paste&height=811&id=ua9ef3be0&originHeight=1824&originWidth=2494&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=287942&status=done&style=none&taskId=u88188331-fce5-4a73-943a-296d9c77472&title=&width=1108.4444444444443?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-a3a9521aee83.png)
 
 现在是不是就理解Arrays.asList返回的List不支持增删操作了。
 
@@ -667,7 +667,7 @@ public class BaiLiTestDemo {
 
 为什么呢？观察ArrayList的实现，可以知道asList创建了 ArrayList，但它直接引用原本的数据组对象。所以只要原本的数组对象一发生变化，List也跟着变化。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686899735032-d2b0a277-905c-4a69-9217-6766aebf2399.png#averageHue=%23322d2c&clientId=u888c49a1-6888-4&from=paste&height=304&id=u079a9635&originHeight=685&originWidth=2382&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=93747&status=done&style=none&taskId=uade0abf8-e80c-446b-8e8d-cf074c799fe&title=&width=1058.6666666666667?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_68%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-d3d5337e8f48.png)
 
 解决方案：new一个新的ArrayList装Arrays.asList返回数据。
 
@@ -724,7 +724,7 @@ Exception in thread "main" java.lang.ClassCastException: java.util.ArrayList$Sub
 
 同样的，我们看下sublist的实现：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1686902512423-77041c61-d8c5-4fde-93a3-271911036bdb.png#averageHue=%23363230&clientId=u888c49a1-6888-4&from=paste&height=680&id=ufbf967cb&originHeight=1530&originWidth=3248&originalType=binary&ratio=2.25&rotation=0&showTitle=false&size=376319&status=done&style=none&taskId=ub6b6e4b5-9a8b-4759-a6f5-de7179ca15c&title=&width=1443.5555555555557?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_93%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-f8542be65d0f.png)
 
 可以看到SubList()实际上没有创建一个新的List，而是直接引用了原来的List，指定了元素的范围。并且返回的是一个内部类实现的SubList对象，该对象只是原始ArrayList的一个引用，而不是一个全新的ArrayList，因此无法直接将其强制转换为ArrayList类型。
 由于是引用的原List，因此也会存在asList的问题，也就是针对subList进行增减数据，会影响原List的值。
@@ -1372,7 +1372,7 @@ public void bigDecimalDemo4(){
 
 ## 总结：
 
-![image](https://cdn.nlark.com/yuque/0/2023/jpeg/35268836/1689942309686-dbb62965-82e3-42a1-9c5a-9639d74b3248.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-de9720e913fa.jpg)
 
 - 尽量使用字符串而非浮点类型来构造 BigDecimal 对象，以避免浮点数转换精度问题。
 - 如果无法避免使用浮点类型，则可使用 BigDecimal.valueOf 方法来构造初始化值，以确保精确表示。
@@ -1385,9 +1385,9 @@ public void bigDecimalDemo4(){
 
 CAP 定理是一个分布式系统设计的基本原则。它指出，在一个分布式系统中，无法同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）三个特性。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1694526102898-b6c829c7-e08b-45dc-b42d-ba309a3e3af7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-0b0401a4baf9.png)
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1694604526137-37a68e3a-1896-4d33-8519-690740999292.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-e3cca978dae2.png)
 
 一致性 C：每次请求都会获取最新的数据或错误。
 
@@ -1409,7 +1409,7 @@ CAP 定理是一个分布式系统设计的基本原则。它指出，在一个�
 
 ## AP、CP 如何理解？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1694608095022-28d7fa66-2a56-41cf-af86-b0a2e7408c57.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-6b9ab2decf99.png)
 
 AP（可用性与分区容忍性）：系统能够在网络故障或部分节点失效的情况下继续可用。它侧重于保证系统的稳定性和用户的访问体验。
 
@@ -1483,7 +1483,7 @@ public void calBigDecimal(){
 
 在 sout 断点，查看debug信息可以发现上述提到的几个属性被赋了值：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713943241242-23ad6e01-d613-4f04-b87e-61f5bf9bb8f5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-dfb3bde9b98e.png)
 
 接下来进到add方法里面，看看它是怎么计算的：
 
@@ -1609,7 +1609,7 @@ private static BigDecimal add(long xs, long ys, int scale) {
 
 这个方法很简单，就是计算和，然后返回BigDecimal对象
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1713961953890-e585fa7e-73bf-41fe-9b18-6f4260fd9d0e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-728bc447fbad.png)
 
 ## 结论
 
@@ -4526,7 +4526,7 @@ Java 会根据字符串的内容自动设置为相应的编码，要么 Latin-1 
 
 给大家提供一种实现思路：动态滑动窗口
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1736753970296-1288e5dd-f06f-48e9-8def-73df475adb19.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0159-iayyx1debbkx29g6/img-6c6ec55be787.png)
 
 ```java
 package com.baili.springboot3.utools;

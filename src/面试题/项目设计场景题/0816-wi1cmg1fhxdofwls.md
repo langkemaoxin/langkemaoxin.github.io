@@ -22,7 +22,7 @@ article: false
 
 Weitter的核心功能只有三个：发微博，关注好友，刷微博。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609069301-edb12c53-b084-4cd7-aef7-027920f67492.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-0b34a3997400.png)
 
 1. 发微博：用户可以发表微博，内容包含不超过140个字的文本，可以包含图片和视频。
 2. 关注好友：用户可以关注其他用户。
@@ -67,13 +67,13 @@ small（200万div5times500KB+200万div10times2MB）times8bit=4.8Tb/s𝑠𝑚𝑎
 
 在需求分析中我们可以看到，Weitter的业务逻辑比较简单，但是**并发量**和**数据量**都比较大，所以，**系统架构的核心就是解决高并发的问题**，系统整体部署模型如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609069258-db892012-0da1-47ed-94ed-4804e90b8b98.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-5aebf61931fa.png)
 
 这里包含了“Get请求”和“Post请求”两条链路，Get请求主要处理刷微博的操作，Post请求主要处理发微博的请求，这两种请求处理也有重合的部分，我们拆分着来看。
 
 我们先来看看**Get请求**的部分。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609069330-1e9c03ef-fae3-4718-a382-8c43113046c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-4b9b6772fcab.png)
 
 用户通过CDN访问Weitter的数据中心、图片以及视频等极耗带宽的请求，绝大部分可以被CDN缓存命中，也就是说，4.8Tb/s的带宽压力，90%以上可以通过CDN消化掉。
 
@@ -83,7 +83,7 @@ small（200万div5times500KB+200万div10times2MB）times8bit=4.8Tb/s𝑠𝑚𝑎
 
 以上处理流程主要是针对读（http get）请求，那如果是发表微博这样的写（http post）请求呢？我们再来看一下**写请求**部分的图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609069305-4707bb00-dad1-4d3f-9545-9506bcbbe041.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-dca1bb5f2092.png)
 
 你会看到，客户端不需要通过CDN和反向代理，而是直接通过负载均衡服务器到达应用服务器。应用服务器一方面会将发表的微博写入Redis缓存集群，一方面写入分片数据库中。
 
@@ -99,13 +99,13 @@ Weitter用户关注好友后，如何快速得到所有好友的最新发表的�
 
 一种简单的办法就是“推模式”，即建一张用户订阅表，用户关注的好友发表微博后，立即在用户订阅中为该用户插入一条记录，记录用户id和好友发表的微博id。这样当用户刷新微博的时候，只需要从用户订阅表中按用户id查询所有订阅的微博，然后按时间顺序构建一个列表即可。也就是说，**推模式是在用户发**微博**的时候推送给所有的关注者**，如下图，用户发表了微博0，他的所有关注者的订阅表都插入微博0。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609069217-ba21ec53-abad-4034-9668-ab29946a2a80.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-a4c5e5f4c022.png)
 
 推模式实现起来比较简单，但是推模式意味着，如果一个用户有大量的关注者，那么该用户每发表一条微博，就需要在订阅表中为每个关注者插入一条记录。而对于明星用户而言，可能会有几千万的关注者，明星用户发表一条微博，就会导致上千万次的数据库插入操作，直接导致系统崩溃。
 
 所以，对于10亿级用户的微博系统而言，我们需要使用“拉模式”解决发表/订阅问题。也就是说，用户刷新微博的时候，根据其关注的好友列表，查询每个好友近期发表的微博，然后将所有微博按照时间顺序排序后构建一个列表。也就是说，**拉模式是在用户刷微博的时候拉取他关注的所有好友的最新微博**，如下图：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609069983-eef088a4-35e1-49af-b3da-6319b3a8c914.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-c642fcc822cc.png)
 
 拉模式极大降低了发表微博时写入数据的负载压力，但是却又急剧增加了刷微博时候读数据库的压力。因为对于用户关注的每个好友，都需要进行一次数据库查询。如果一个用户关注了大量好友，查询压力也是非常巨大的。
 
@@ -137,7 +137,7 @@ Weitter最后确定的本地缓存策略是：针对拥有100万以上关注者�
 
 现在，我们来看一下Weitter整体的缓存架构。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609069890-9915e08c-4d47-4632-a234-b98c418aef3e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-caa1a9697001.png)
 
 #### **3.3 数据库分片策略**
 
@@ -176,7 +176,7 @@ Diana的限流规则可通过配置文件获取，并需要支持本地配置和
 
 Diana的设计目标是一个限流器组件，即Diana并不是一个独立的系统，不可以独立部署进行限流，而是部署在系统网关（或者其他HTTP服务器上），作为网关的一个组件进行限流，部署模型如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720609069903-f52a7619-7b79-4949-b73b-afb7566ea3bb.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-c46b0ab46245.jpg)
 
 用户请求（通过负载均衡服务器）到达网关服务器。网关服务器本质也是一个HTTP服务器，限流器是部署在网关中的一个过滤器（filter）组件，和网关中的签名校验过滤器、用户权限过滤器等配置在同一个过滤器责任链（Chain of Responsibility）上。限流器应该配置在整个过滤器责任链的前端，也就是说，如果请求超过了限流，请求不需要再进入其他过滤器，直接被限流器拒绝。
 
@@ -236,11 +236,11 @@ Diana支持配置4种限流算法，使用者可以根据自己的需求场景�
 
 固定窗口限流算法就是将配置文件中的时间单位unit作为一个时间窗口，每个窗口仅允许限制流量内的请求通过，如图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720609070042-7225f6e9-062a-4cc0-a69c-ab407e7c8724.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-ba2e66b60662.jpg)
 
 我们将时间轴切分成一个一个的限流窗口，每个限流窗口有一个窗口开始时间和一个窗口结束时间，窗口开始时，计数器清零，每进入一个请求，计数器就记录+1。如果请求数目超过rpu配置的限流请求数，就拒绝服务，返回503响应。当前限流窗口结束后，就进入下个限流窗口，计数器再次清零，重新开始。处理流程活动图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720609070007-b2a3a89e-88cb-4fcb-8a1d-bd2976c5b966.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-7cb22cef65ac.jpg)
 
 上图包括“初始化”和“处理流程”两个泳道。初始化的时候，设置“窗口计数器”和“当前窗口结束时间”两个变量。处理请求的时候，判断当前时间是否大于“当前窗口结束时间”，如果大于，那么重置“窗口计数器”和“当前窗口结束时间”两个变量；如果没有，窗口计数器+1，并判断计数器是否大于配置的限流请求数rpu，根据结果决定是否进行限流。
 
@@ -248,7 +248,7 @@ Diana支持配置4种限流算法，使用者可以根据自己的需求场景�
 
 固定窗口实现比较容易，但是如果使用这种限流算法，在一个限流时间单位内，通过的请求数可能是rpu的两倍，无法达到限流的目的，如下图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720609070438-d41d5d9b-8d16-43c6-b469-a3187751c720.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-8a8275fa8495.jpg)
 
 假设单位时间请求限流数rpu为100，在第一个限流窗口快要到结束时间的时候，突然进来100个请求，因为这个请求量在限流范围内，所以没有触发限流，请求全部通过。然后进入第二个限流窗口，限流计数器清零。这时又忽然进入100个请求，因为已经进入第二个限流窗口，所以也没触发限流。在短时间内，通过了200个请求，这样可能会给系统造成巨大的负载压力。
 
@@ -256,7 +256,7 @@ Diana支持配置4种限流算法，使用者可以根据自己的需求场景�
 
 改进固定窗口缺陷的方法是采用滑动窗口限流算法，如下图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720609070424-5af3a055-675c-4162-859d-de60f57b8c7f.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-7fc0f49f9023.jpg)
 
 滑动窗口就是将限流窗口内部切分成一些更小的时间片，然后在时间轴上滑动，每次滑动，滑过一个小时间片，就形成一个新的限流窗口，即滑动窗口。然后在这个滑动窗口内执行固定窗口算法即可。
 
@@ -270,7 +270,7 @@ Diana支持配置4种限流算法，使用者可以根据自己的需求场景�
 
 漏桶限流算法是模拟水流过一个有漏洞的桶进而限流的思路，如图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609070448-bb3a45b7-b968-4e6b-a186-7b1cc7849566.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-27dc8f57d725.png)
 
 水龙头的水先流入漏桶，再通过漏桶底部的孔流出。如果流入的水量太大，底部的孔来不及流出，就会导致水桶太满溢出去。
 
@@ -280,7 +280,7 @@ Diana支持配置4种限流算法，使用者可以根据自己的需求场景�
 
 实践中，可以采用队列当做漏桶。如图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609070562-831fd6b7-9377-49cd-ba91-f280ccc2e53f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-fef6c0e7c7e8.png)
 
 构建一个特定长度的队列queue作为漏桶，开始的时候，队列为空，用户请求到达后从队列尾部写入队列，而应用程序从队列头部以特定速率读取请求。当读取速度低于写入速度的时候，一段时间后，队列会被写满，这时候写入队列操作失败。写入失败的请求直接构造503响应返回。
 
@@ -326,7 +326,7 @@ long sleep时间(){
 
 令牌桶是另一种桶限流算法，模拟一个特定大小的桶，然后向桶中以特定的速度放入令牌（token），请求到达后，必须从桶中取出一个令牌才能继续处理。如果桶中已经没有令牌了，那么当前请求就被限流，返回503响应。如果桶中的令牌放满了，令牌桶也会溢出。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720609070673-67ac3d2f-8dec-4d79-9249-3aacba7c421f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0816-wi1cmg1fhxdofwls/img-2901000add59.png)
 
 上面的算法描述似乎需要有一个专门线程生成令牌，还需要一个数据结构模拟桶。实际上，令牌桶的实现，只需要在请求获取令牌的时候，通过时间计算，就可以算出令牌桶中的总令牌数。伪代码如下：
 

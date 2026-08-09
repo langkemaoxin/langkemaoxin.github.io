@@ -27,7 +27,7 @@ article: false
 
 **初级回答**：“做集群，部署两台 Tomcat。” **面试官追问**：“那用户请求发给谁？你前面总得有个入口吧？比如 Nginx。”
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767604435970-631079dd-2531-4855-bd95-62ec24acc3a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1350-dovcn1fxspk188zv/img-03b78cb6c76b.png)
 
 这就引出了第一关的挑战。
 
@@ -37,7 +37,7 @@ article: false
 
 **解决方案：Keepalived + VIP（虚拟 IP）**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767604470844-19b81605-0671-4265-8094-c5dfece57ef7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1350-dovcn1fxspk188zv/img-df277704cbdb.png)
 
 - **架构设计**：部署两台 Nginx，分为主节点（Master）和备节点（Backup）。
 - **核心机制**：
@@ -55,7 +55,7 @@ article: false
 
 **解决方案：哨兵机制（Sentinel）或 MHA**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767604557695-db687f3c-e499-4f46-9f99-1e6e9de34d69.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1350-dovcn1fxspk188zv/img-45a1ccf643c8.png)
 
 - **架构设计**：引入“哨兵”组件（监控集群）。
 - **核心机制**：
@@ -72,7 +72,7 @@ article: false
 
 **解决方案：限流（Rate Limiting）**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767604581713-6be573ad-d2f8-4f84-9d9a-ed574e5f1907.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1350-dovcn1fxspk188zv/img-e34a101bae18.png)
 
 - **核心思想**：**“扛不住，就别硬扛”**。牺牲一部分用户的体验（直接拒绝多余请求），来保住核心系统的存活。
 - **常见算法**：
@@ -88,7 +88,7 @@ article: false
 
 **解决方案：熔断（Circuit Breaking）**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767604593306-725105c4-0bd1-4c33-91eb-7c22b50dd2b2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1350-dovcn1fxspk188zv/img-288e0592a6c3.png)
 
 - **核心机制**：类似电路中的“保险丝”。
 
@@ -104,7 +104,7 @@ article: false
 
 **解决方案：异地多活（Multi-Site High Availability）**
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767604612342-0e74b1d8-e91b-458f-b59d-0d097e38e90a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/三高架构/1350-dovcn1fxspk188zv/img-2acf8da3fc52.png)
 
 - **架构设计**：
 

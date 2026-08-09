@@ -13,7 +13,7 @@ article: false
 
 > 来源：[数字化农业病虫害监测（亮点与难点）](https://www.yuque.com/tulingzhouyu/db22bv/kn82gynirlia8usd)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1742102514845-a10b927c-6d10-4fc3-8c7a-2de648a6d9a5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/项目亮点和难点/0020-kn82gynirlia8usd/img-d62752814ea9.png)
 
 由于该学员需要隐藏基本信息和只需优化简历中这两项目其他内容就不在此显示了（比如技术栈补充，工作经验简化，项目优化2-3即可）
 

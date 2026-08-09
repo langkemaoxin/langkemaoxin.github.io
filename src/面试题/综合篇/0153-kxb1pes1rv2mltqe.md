@@ -19,7 +19,7 @@ article: false
 
 针对此2014年的一篇文章[《Cuckoo Filter：Better Than Bloom》](https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf)基于**布谷鸟哈希算法**提出了**布谷鸟过滤器**，不过看文章的名字有点碰瓷的感觉了，这篇文章解决了布隆过滤器存在的问题。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730211458443-83b2af87-2df5-497c-b45b-6f614b6d9c08.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0153-kxb1pes1rv2mltqe/img-5a92a3560033.png)
 
 布谷鸟过滤器用更低的空间开销解决了布隆过滤器不能删除元素的问题，做到了更好的效果，具体的
 
@@ -47,11 +47,11 @@ article: false
 
 当然假如存在绝对的空间不足，那老是踢出也不是办法，所以一般会设置一个**踢出阈值**，如果在某次插入行为过程中连续踢出超过阈值，则进行扩容。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730211457889-b4a12dee-8e7f-4457-bae9-679ad906ad03.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0153-kxb1pes1rv2mltqe/img-ee2d23168c1c.png)
 
 ## 3 布谷鸟过滤器
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1730211458193-14344936-ab22-4f08-b570-8cf4f412e482.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0153-kxb1pes1rv2mltqe/img-bfad8d7d1656.jpg)
 
 上图（a）(b)展示了一个基本的布谷鸟哈希表的插入操作，是由一个桶数组组成，每个插入项都有由散列函数h1(x)和h2(x)确定的两个候选桶，具体操作上文中已经描述，此处不再赘述。
 
@@ -96,7 +96,7 @@ f=fingerprint(x)
 
 ### 4.2 不同过滤器比较
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1730211458265-fee36e1c-8ee8-446a-b83c-688987cbc2c9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0153-kxb1pes1rv2mltqe/img-c70b2d87a85a.png)
 
 上图是布谷鸟过滤器其他过滤器比较，假阳性率与每个元素的空间成本。对于低假阳性率（低于3%），布谷鸟过滤器比空间优化的布隆过滤器每个元素需要更少的存储空间。
 
@@ -112,7 +112,7 @@ f=fingerprint(x)
 
 所以要基于以上寻找一个最合适的桶大小
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/35268836/1730211457936-cb546cb8-3153-4eca-b374-4dbc19eb5383.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0153-kxb1pes1rv2mltqe/img-b4ff25be44d7.jpg)
 
 上图是，在不同的不同桶大小下（b=2，4，8），每个项的均摊空间成本与测量的假阳性率。文章的作者对此作了实验，基于上述的结果，空间最优桶大小取决于目标假阳性率ϵ：当ϵ>0.002时，每桶有两个条目比每桶使用四个条目产生的结果略好，当ϵ减小到0.00001<ϵ≤0.002时，桶的大小选取4可以最小化空间。
 

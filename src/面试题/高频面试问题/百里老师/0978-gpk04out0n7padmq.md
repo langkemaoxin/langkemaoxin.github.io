@@ -21,7 +21,7 @@ Java 作为一门常青的编程语言，其强大的生态和稳定性毋庸置
 
 #### **一、核心痛点与变革方向**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761659311424-c3498b65-2523-4709-84ad-293bb200a117.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0978-gpk04out0n7padmq/img-9411968f2a5d.png)
 
 上图直观地揭示了我们即将踏上的重构之旅：从混乱走向清晰，从冗长走向简洁。在传统开发模式中，我们常常为了实现一个简单的功能而被迫编写大量结构性代码，它们掩盖了真正的业务逻辑，降低了代码的可读性和可维护性。Lambda 表达式正是解决这一问题的利器，它将我们从“如何做”的细节中解放出来，让我们能专注于“做什么”的核心逻辑。
 
@@ -29,7 +29,7 @@ Java 作为一门常青的编程语言，其强大的生态和稳定性毋庸置
 
 #### **二、初识 Lambda：一行代码搞定集合排序**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761659327167-b2b3709d-1107-4399-b8df-3ecc42cb9fd7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0978-gpk04out0n7padmq/img-f16187e74075.png)
 
 排序是日常开发中最常见的任务之一。上图展示了使用 Lambda 前后的巨大差异。
 
@@ -40,7 +40,7 @@ Java 作为一门常青的编程语言，其强大的生态和稳定性毋庸置
 
 #### **三、Stream API 的三驾马车：Filter, Map, Reduce**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761659338454-3e0110fc-7f96-42d1-bd52-13cabbda35a8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0978-gpk04out0n7padmq/img-697d5651c550.png)
 
 如果说 Lambda 是新时代的利剑，那么 Stream API 就是挥舞这把剑的强大剑法。上图展示了其最核心的三个中间操作：
 
@@ -52,7 +52,7 @@ Java 作为一门常青的编程语言，其强大的生态和稳定性毋庸置
 
 #### **四、组合的力量：构建声明式数据处理流水线**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761659345552-e6bd906b-2b24-4b3e-a218-2b28ba5874b3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_40%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0978-gpk04out0n7padmq/img-dae4a53190f5.png)
 
 Stream API 最强大的地方在于其链式调用的能力。上图所展示的“流水线”（Pipeline）是现代数据处理的核心思想。相比于使用 `for` 循环和 `if` 判断的命令式编程，这种声明式的方式优势巨大。
 
@@ -75,13 +75,13 @@ List&lt;String&gt; emails = users.stream()             // 1. 获取流
 
 ##### **1. 简化并发编程**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761659404035-4ad9b1cd-bbaf-415d-b711-6dd79f7e8843.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0978-gpk04out0n7padmq/img-9ca3326e5f5d.png)
 
 `Runnable`、`Callable` 等函数式接口（只有一个抽象方法的接口）是 Lambda 的天然盟友。上图展示了在创建线程时，Lambda 如何将原本需要5行代码的匿名内部类简化为一行清晰的表达式，让我们能专注于线程需要执行的任务本身。
 
 ##### **2. 使用 Optional 告别空指针**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761659414761-40edcae3-9bb1-47b9-aec2-a1eb35d81230.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0978-gpk04out0n7padmq/img-342a2dc8ef8b.png)
 
 `NullPointerException` 是 Java 开发者的噩梦。`Optional` 类结合 Lambda，提供了一种优雅的解决方案。它将一个可能为 `null` 的对象包装起来，并提供了一系列函数式方法来处理“有值”或“无值”的场景，从而避免了繁琐的 `if-else` 判空逻辑，让代码的健壮性提升到一个新高度。
 
@@ -89,7 +89,7 @@ List&lt;String&gt; emails = users.stream()             // 1. 获取流
 
 #### **六、何时使用 Lambda？决策指南与收益分析**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1761659374240-1ac56bcd-9ff4-46d7-bd24-9d84ae716d43.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0978-gpk04out0n7padmq/img-d2a276a56aa2.png)
 
 上图的表格为您提供了一个清晰的决策框架。总而言之：
 

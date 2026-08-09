@@ -27,7 +27,7 @@ article: false
 
 ### 2.1 静态数据迁移方案
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746702568772-3b6748ee-5dad-4017-8fa9-59c07caf0ab5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0128-neg4bg6cwmkkoccr/img-ab83d082f5b0.png)
 
 **核心流程**：把数据从 A 服务迁移到 B 服务中，所需的步骤：
 
@@ -48,7 +48,7 @@ article: false
 
 ### 2.2 基于双写的数据迁移方案
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1746702624989-29713c43-15bf-4c99-95ba-2c7a5a6d6c7f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_47%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0128-neg4bg6cwmkkoccr/img-d0864d5488ff.png)
 
 #### 2.2.1 什么叫“双写”呢？
 
@@ -117,6 +117,6 @@ article: false
 有时业务逻辑复杂，迁移成本很高，无法一次性地将接口全部迁移过去。这时我们就需要采取一些“曲线救国”的策略，让两端的数据保持一致，且服务同时可用。
 为此，我们需要添加 B → A 的**反向双写**机制。**通过 B 服务的接口产生**的数据，将会经过反向双写的通道回写至 A 中。这样，两端数据就能保持同步。此时再慢慢地迁移 A 的业务逻辑即可。
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1746692138803-726c3d08-c530-49bd-9f24-1289ad8be59b.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0128-neg4bg6cwmkkoccr/img-bf37a3945acd.jpg)
 
 不过在构建反向双写时，需要格外注意两端数据流向，以避免双写“死循环”的事故出现。

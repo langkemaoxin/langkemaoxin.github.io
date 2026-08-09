@@ -25,11 +25,11 @@ Bingoo的主要技术挑战包括：
 
 一个完整的搜索引擎包括分布式爬虫、索引构造器、网页排名算法、搜索器等组成部分，Bingoo的系统架构如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720602562259-1da56008-a14e-488c-a573-06197d6121bf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-ee4f378c4f7a.png)
 
 分布式爬虫通过存储服务器将爬取的网页存储到分布式文件集群HDFS，为了提高存储效率，网页将被压缩后存储。存储的时候，网页一个文件挨着一个文件地连续存储，存储格式如下。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720602562140-fd39a928-b410-41fc-907c-0f3e35b23b7e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-3c3c41d3e06f.png)
 
 每个网页被分配得到一个8字节长整型docID，docID之后用2个字节记录网页的URL的长度，之后4个字节记录压缩后网页内容数据的长度，所有存储的网页的头14个字节都是同样的格式。之后存储URL字符串和压缩后的网页内容数据。读取文件的时候，先读14个字节的头信息，根据头信息中记录的URL长度和数据长度，再读取对应长度的URL和网页内容数据。
 
@@ -51,15 +51,15 @@ Bingoo的主要技术挑战包括：
 
 首先，索引构造器将所有的网页都读取完，构建出所有的“docID->单词列表”正排索引。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720602562140-2d7bd119-2b17-45a3-8b77-c05ea2787c80.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-eb6e744b50a0.png)
 
 然后遍历所有的正排索引，再按照“单词→docID列表”的方式组织起来，就是倒排索引了。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720602562144-20f47c20-af6c-4288-ace5-2bb7ad16ca06.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-ae72e0c68d41.png)
 
 我们这个例子中只有两个单词、7个网页。事实上，Bingoo数以千亿的网页就是这样通过倒排索引组织起来的，网页数量虽然庞大，但是单词数却是比较有限的。所以，整个倒排索引的大小相比于网页数量要小得多。Bingoo将每个单词对应的网页列表存储在硬盘中，而单词则存储在内存的Hash表，也就是词典中，词典示例：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720602562191-bfd56cf5-8cdc-4604-abed-13cef257c871.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_10%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-eef2648c12d5.png)
 
 对于部分热门的单词，整个网页列表也可以存储在内存中，相当于缓存。在词典中，每个单词记录下硬盘或者内存中的网页列表地址，这样只要搜索单词，就可以快速得到对应的网页地址列表。Bingoo根据列表中的网页编号docID，展示对应的网页信息摘要，就完成了海量数据的快速检索。
 
@@ -77,7 +77,7 @@ Bingoo的主要技术挑战包括：
 
 一个改进的算法是**拉链法**，我们将网页列表先按照docID的编号进行排序，得到的就是这样两个有序链表：
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720602562731-45000dd6-bd08-4fe8-a0b6-b0ed6b3b931e.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-ccbe5bb9596b.jpg)
 
 同时遍历两个链表，如果其中一个链表当前指向的元素小于另一个链表当前指向的元素，那么这个链表就继续向前遍历；如果两个链表当前指向的元素相同，该元素就是交集元素，记录在结果列表中；依此继续向前遍历，直到其中一个链表指向自己的尾部nil。
 
@@ -87,11 +87,11 @@ Bingoo的主要技术挑战包括：
 
 事实上，两个1千万长度的链表求交集，最终的结果可能不过几万，也就是说，大部分的比较都是不相等的。比如下面的例子。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720602562760-11d39a4d-132f-4c9b-a905-8e06616a0012.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-6c236cfb6808.jpg)
 
 第一个链表遍历到自己的最后一个元素，才和第二个链表的第一个元素相同。那么第一个链表能不能跳过前面那些元素呢？很自然，我们想到可以用**跳表**来实现，如下图。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1720602562930-2c88f989-b49a-4214-9991-6a21e077a7d5.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-509b016e62b5.jpg)
 
 **跳表实际上是在链表上构建多级索引**，在索引上遍历可以跳过底层的部分数据，我们可以利用这个特性实现链表的跳跃式比较，加快计算速度。使用跳表的交集计算时间复杂度大约是O(log(n))。
 
@@ -107,7 +107,7 @@ PageRank算法就是计算每个网页的PageRank值，最终的搜索结果也�
 
 以下面四个网页A、B、C、D举例，带箭头的线条表示链接。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720602562855-5ecf3e9f-59d7-4861-9208-f71e74841f3d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-d1b11fe0b93e.png)
 
 B网页包含了A、D两个页面的超链接，相当于B网页给A、D每个页面投了一票，如果初始的时候，所有页面都是1分，那么经过这次投票后，B给了A和D每个页面1/2分（B包含了A、D两个超链接，所以每个投票值1/2分），自己从C页面得到1/3分（C包含了A、B、D三个页面的超链接，每个投票值1/3分）。
 
@@ -121,7 +121,7 @@ smallPR（A）=fracPR（B）2+fracPR（C）3+fracPR（D）1𝑠𝑚𝑎𝑙𝑙�
 
 但是这个算法还有个问题，如果某个页面只包含指向自己的超链接，其他页面不断给它送分，而自己一分不出，随着计算执行次数越多，它的分值也就越高，这显然是不合理的。这种情况就像下图所示的，A页面只包含指向自己的超链接。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720602562724-72da8043-3e47-4e15-bc07-c834190c5dae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0811-swd3eq7yo68qwugs/img-3786a41c1fd0.png)
 
 解决方案是，设想浏览一个页面的时候，有一定概率不是点击超链接，而是在地址栏输入一个URL访问其他页面，表示在公式上，就是
 

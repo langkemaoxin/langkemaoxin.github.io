@@ -35,7 +35,7 @@ Raft 协议将 Server 进程分为三种角色：
 
 三类角色的变迁图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1696575725646-fbcb96b7-e852-4f36-b7a1-5f195b519e3a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0713-ywiia55xxy96lkcg/img-fad332bd6b79.png)
 
 Raft三种角色变迁图
 
@@ -49,7 +49,7 @@ Follower将其当前term加一然后转换为Candidate。它首先给自己投�
 - **收到了Leader的消息，表示有其它服务器已经抢先当选了Leader；**
 - **没有Server赢得多数的选票，Leader选举失败，等待选举时间超时（Election Timeout）后发起下一次选举。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1696575725669-200f7dae-526a-4d0f-bfdf-6cef1fb7896b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0713-ywiia55xxy96lkcg/img-a393f19bbd3f.png)
 
 Leader选举
 

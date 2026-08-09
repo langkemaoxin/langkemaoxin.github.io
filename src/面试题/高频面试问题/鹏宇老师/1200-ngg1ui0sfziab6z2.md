@@ -30,7 +30,7 @@ article: false
 - **经济损失**：支付接口重复处理导致用户被重复扣款，引发投诉与退款。
 - **系统压力增大**：无效重复请求占用数据库连接、线程资源，高并发场景下可能引发服务过载。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911442860-373ca5d4-70cc-4fea-b705-ec7747548b0c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-d01ec595c029.png)
 
 ## 二、5 大实战方案：从单体到分布式，全覆盖
 
@@ -47,7 +47,7 @@ Token 机制是单体应用中最常用的方案，核心逻辑是 “给每个�
 3. 用户提交请求时，前端携带 Token 发送到后端。
 4. 后端验证 Token 有效性：有效则处理业务，处理完成后**立即删除 Token**；无效则拒绝请求。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911468601-35f9db5b-5b88-4c66-b14a-95b1898785be.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-05c2ef9193bb.png)
 
 #### 核心代码实现（Spring Boot 示例）
 
@@ -130,7 +130,7 @@ Token 机制可能因缓存失效、拦截器漏判失效，此时数据库唯�
 2. 正常请求：插入数据时，唯一索引无冲突，插入成功。
 3. 重复请求：插入数据时，唯一索引冲突，数据库抛出`DuplicateKeyException`，后端捕获异常并返回 “请求已处理”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911492124-b77559a2-5ce8-490f-82e0-b86ec68b993c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-20307b6e559b.png)
 
 #### 核心代码实现
 
@@ -202,7 +202,7 @@ public class OrderService {
 2. 锁获取成功：处理核心业务（如创建订单、扣库存），处理完成后释放锁。
 3. 锁获取失败：说明有其他请求正在处理，直接返回 “系统繁忙，请稍后重试”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911510735-63886920-ab9e-40ef-8443-af68c46ceeff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-998b34c4c67a.png)
 
 #### 核心代码实现（Redisson 示例）
 
@@ -298,7 +298,7 @@ public class SeckillService {
 - 未处理：执行业务逻辑，存储结果和状态（如 “处理成功”）。
 - 已处理：直接返回历史结果，不重复执行业务。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911539135-290c7d9b-56d3-4a2b-9068-7ac634151f22.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-3158fe31b611.png)
 
 #### 核心代码实现（支付接口示例）
 
@@ -395,7 +395,7 @@ public class PaymentService {
 - 行数 > 0：更新成功（version 匹配，无并发冲突）。
 - 行数 = 0：更新失败（version 不匹配，有并发冲突，需重试）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911566157-fcf9d228-3e99-4e38-a9b0-19dccb751a6d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-d3e781edddda.png)
 
 #### 核心代码实现（MyBatis 示例）
 
@@ -519,7 +519,7 @@ Redis 分布式锁 + 乐观锁
 中（需配合缓存）
 低
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911576863-469de55c-c01c-4196-81fc-a8db2ec6e557.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-8c9224699add.png)
 
 ## 四、落地建议：让方案更稳、体验更好
 
@@ -528,7 +528,7 @@ Redis 分布式锁 + 乐观锁
 3. **友好的用户反馈**重复请求时，避免返回 “系统错误”，应返回友好提示（如 “您的请求已提交，请稍后刷新”“点击太快啦，休息一下～”），提升用户体验。
 4. **避免过度设计**小项目用 “Token + 数据库唯一约束” 即可，无需上来就上分布式锁；高并发场景再引入 Redis 锁，平衡性能与复杂度。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759911600564-025a970f-5cc0-438a-96df-796de161f385.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1200-ngg1ui0sfziab6z2/img-0add5fea572f.png)
 
 ## 五、总结
 

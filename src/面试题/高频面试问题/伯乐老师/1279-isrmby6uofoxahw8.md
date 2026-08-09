@@ -17,7 +17,7 @@ article: false
 
 在与大语言模型（LLM）交互时，如何设计 Prompt 决定了模型输出的质量。这三种技术代表了引导模型的三种不同深度。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/1300531/1781595607058-258a17ad-8c79-40a0-a350-cc845cb40738.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/伯乐老师/1279-isrmby6uofoxahw8/img-3e1c0facb2b4.png)
 
 ### 1. Zero-Shot (零样本提示)
 

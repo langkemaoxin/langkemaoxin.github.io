@@ -57,7 +57,7 @@ SSO 系统通常包含一个中心认证服务器，它负责对用户的身份�
 
 SSO的实现原理如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741873521749-341dc23e-2435-40c4-b4cd-e2db7a82bbb5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0156-bfiqnz5gam9yqb6o/img-0a7f950020f9.png)
 
 1. 用户首次访问一个需要身份验证的应用程序或系统。
 2. 应用程序或系统将用户重定向到IdP，用户在IdP上进行身份验证，通常是输入用户名和密码。
@@ -92,7 +92,7 @@ SSO的实现原理如下图所示：
 - 客户端应用使用授权码向资源服务器换取访问令牌（Access Token）；
 - 客户端应用使用访问令牌向资源服务器请求访问用户的资源。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1741873528655-69eafe0e-2126-450b-81ab-6470bfd2eef1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0156-bfiqnz5gam9yqb6o/img-314972ec9a2d.png)
 
 ## 3.2 OAuth 2.0
 

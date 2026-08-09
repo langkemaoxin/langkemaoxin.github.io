@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751636338179-d7db248b-944b-489a-bfb7-ddefa29164cd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1434-zcyggxfpw1lz6178/img-50f6ada38612.png)
 
 在面试中被问到对比AE（自动编码器）、VAE（变分自动编码器）、GAN（生成对抗网络）的生成机制时，可以从以下几个方面进行回答：
 
@@ -29,11 +29,11 @@ article: false
 
 假设我们在一个图像生成项目中，需要生成高质量的图像。我们尝试了AE、VAE和GAN三种模型，并记录了它们的表现和效果。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751636397449-253bdeb2-e10f-4892-bb9a-607428612750.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1434-zcyggxfpw1lz6178/img-0d97ff4eaa90.png)
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751636527032-b70d42b9-9902-47b3-815f-bd3b691aa6fe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1434-zcyggxfpw1lz6178/img-49047003fa5e.png)
 
 #### 1. 基本原理
 
@@ -139,6 +139,6 @@ article: false
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751636556080-9bd94057-069c-41a5-b498-fc579aa02959.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1434-zcyggxfpw1lz6178/img-7d3861809ea1.png)
 
 在对比AE、VAE和GAN的生成机制时，可以看出每种模型都有其独特的优势和适用场景。AE适用于数据的降维和特征提取，VAE适用于数据的生成和采样，GAN适用于高质量的图像和数据生成。在实际项目中，选择合适的模型需要根据具体的需求和场景进行权衡和选择。通过实际案例的分析，我们可以更好地理解每种模型的优缺点，从而在实际应用中做出更明智的决策。

@@ -43,7 +43,7 @@ hash（图片名称）% N
 
 而且下次访问某张图片时，直接能够判断出该图片应该存在于哪台缓存服务器上，这样就能满足我们的需求了，我们暂时称上述算法为HASH算法或者取模算法，取模算法的过程可以用下图表示。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678783942971-818b652f-c0df-4d6c-8abe-b764184f4fe3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_49%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-397217dc8235.png)
 
 但是，使用上述HASH算法进行缓存时，会出现一些缺陷，试想一下，如果3台缓存服务器已经不能满足我们的缓存需求，那么我们应该怎么做呢？没错，很简单，多增加两台缓存服务器不就行了，假设，我们增加了一台缓存服务器，那么缓存服务器的数量就由3台变成了4台，此时，如果仍然使用上述方法对同一张图片进行缓存，那么这张图片所在的服务器编号必定与原来3台服务器时所在的服务器编号不同，因为除数由3变为了4，被除数不变的情况下，余数肯定不同，这种情况带来的结果就是当服务器数量变动时，所有缓存的位置都要发生改变，换句话说，当服务器数量发生改变时，所有缓存在一定时间内是失效的。
 
@@ -65,7 +65,7 @@ hash（图片名称）% N
 
 首先，我们把二的三十二次方想象成一个圆，就像钟表一样，钟表的圆可以理解成由60个点组成的圆，而此处我们把这个圆想象成由2^32个点组成的圆，示意图如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793193715-7a18ed0f-2eca-4f15-8bef-4fb6187d1fb8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-f068f08ce461.png)
 
 圆环的正上方的点代表0，0点右侧的第一个点代表1，以此类推，2、3、4、5、6……直到2^32-1,也就是说0点左侧的第一个点代表2^32-1
 
@@ -77,7 +77,7 @@ hash（图片名称）% N
 
 通过上述公式算出的结果一定是一个0到2^32-1之间的一个整数，我们就用算出的这个整数，代表服务器A，既然这个整数肯定处于0到2^32-1之间，那么，上图中的hash环上必定有一个点与这个整数对应，而我们刚才已经说明，使用这个整数代表服务器A，那么，服务器A就可以映射到这个环上，用下图示意
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793196503-9c0930f1-076a-4584-a9e5-4d9be426ff48.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-deaf08c31004.png)
 
 同理，服务器B与服务器C也可以通过相同的方法映射到上图中的hash环中
 
@@ -87,7 +87,7 @@ hash（图片名称）% N
 
 通过上述方法，可以将服务器B与服务器C映射到上图中的hash环上，示意图如下
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793198371-263a1a8c-1df3-4f16-b82d-588733c238fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-c459cb654af1.png)
 
 假设3台服务器映射到hash环上以后如上图所示（当然，这是理想的情况，我们慢慢聊）。
 
@@ -99,17 +99,17 @@ hash（图片名称）% N
 
 映射后的示意图如下，下图中的橘黄色圆形表示图片
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793211379-4af779f7-7da1-4754-aaf2-afffe1a48746.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-b03f3807685d.png)
 
 好了，现在服务器与图片都被映射到了hash环上，那么上图中的这个图片到底应该被缓存到哪一台服务器上呢？上图中的图片将会被缓存到服务器A上，为什么呢？因为从图片的位置开始，沿顺时针方向遇到的第一个服务器就是A服务器，所以，上图中的图片将会被缓存到服务器A上，如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793213315-5e750caa-48c8-489e-a97e-6ea22311c6e1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-e900bd121c39.png)
 
 没错，一致性哈希算法就是通过这种方法，判断一个对象应该被缓存到哪台服务器上的，将缓存服务器与被缓存对象都映射到hash环上以后，从被缓存对象的位置出发，沿顺时针方向遇到的第一个服务器，就是当前对象将要缓存于的服务器，由于被缓存对象与服务器hash后的值是固定的，所以，在服务器不变的情况下，一张图片必定会被缓存到固定的服务器上，那么，当下次想要访问这张图片时，只要再次使用相同的算法进行计算，即可算出这个图片被缓存在哪个服务器上，直接去对应的服务器查找对应的图片即可。
 
 刚才的示例只使用了一张图片进行演示，假设有四张图片需要缓存，示意图如下
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793214683-cdd9443d-fb54-460a-bfe4-f18df68717fa.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-da1a57d51244.png)
 
 1号、2号图片将会被缓存到服务器A上，3号图片将会被缓存到服务器B上，4号图片将会被缓存到服务器C上。
 
@@ -119,11 +119,11 @@ hash（图片名称）% N
 
 假设，服务器B出现了故障，我们现在需要将服务器B移除，那么，我们将上图中的服务器B从hash环上移除即可，移除服务器B以后示意图如下。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793217327-07ac5873-5b50-4d9b-bd1c-14e08a227c63.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-f80952f98130.png)
 
 在服务器B未移除时，图片3应该被缓存到服务器B中，可是当服务器B移除以后，按照之前描述的一致性哈希算法的规则，图片3应该被缓存到服务器C中，因为从图片3的位置出发，沿顺时针方向遇到的第一个缓存服务器节点就是服务器C，也就是说，如果服务器B出现故障被移除时，图片3的缓存位置会发生改变
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793218538-d6f9a1fd-df9a-453d-86b1-d7b43cfdfd83.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-72a4550d2576.png)
 
 但是，图片4仍然会被缓存到服务器C中，图片1与图片2仍然会被缓存到服务器A中，这与服务器B移除之前并没有任何区别，这就是一致性哈希算法的优点，如果使用之前的hash算法，服务器数量发生改变时，所有服务器的所有缓存在同一时间失效了，而使用一致性哈希算法时，服务器的数量如果发生改变，并不是所有缓存都会失效，而是只有部分缓存会失效，前端的缓存仍然能分担整个系统的压力，而不至于所有压力都在同一时间集中到后端服务器上。
 
@@ -133,15 +133,15 @@ hash（图片名称）% N
 
 在介绍一致性哈希的概念时，我们理想化的将3台服务器均匀的映射到了hash环上，如下图所示
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793221937-0103e7b4-86ba-4a01-94c4-9cd3a6275e30.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-97b6f443b078.png)
 
 但是，理想很丰满，现实很骨感，我们想象的与实际情况往往不一样。在实际的映射中，服务器可能会被映射成如下模样。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793237480-20b99fbf-b831-46fd-920c-ef7166b9a7c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-1574fe8a6783.png)
 
 聪明如你一定想到了，如果服务器被映射成上图中的模样，那么被缓存的对象很有可能大部分集中缓存在某一台服务器上，如下图所示。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793249378-00854da4-1fb2-4bed-bf48-51e715740ad3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-0ab2ed8bd445.png)
 
 上图中，1号、2号、3号、4号、6号图片均被缓存在了服务器A上，只有5号图片被缓存在了服务器B上，服务器C上甚至没有缓存任何图片，如果出现上图中的情况，A、B、C三台服务器并没有被合理的平均的充分利用，缓存分布的极度不均匀，而且，如果此时服务器A出现故障，那么失效缓存的数量也将达到最大值，在极端情况下，仍然有可能引起系统的崩溃，上图中的情况则被称之为hash环的偏斜，那么，我们应该怎样防止hash环的偏斜呢？一致性hash算法中使用”虚拟节点”解决了这个问题，我们继续聊。
 
@@ -149,7 +149,7 @@ hash（图片名称）% N
 
 话接上文，由于我们只有3台服务器，当我们把服务器映射到hash环上的时候，很有可能出现hash环偏斜的情况，当hash环偏斜以后，缓存往往会极度不均衡的分布在各服务器上，聪明如你一定已经想到了，如果想要均衡的将缓存分布到3台服务器上，最好能让这3台服务器尽量多的、均匀的出现在hash环上，但是，真实的服务器资源只有3台，我们怎样凭空的让它们多起来呢，没错，就是凭空的让服务器节点多起来，既然没有多余的真正的物理服务器节点，我们就只能将现有的物理节点通过虚拟的方法复制出来，这些由实际节点虚拟复制而来的节点被称为”虚拟节点”。加入虚拟节点以后的hash环如下。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/8380143/1678793268639-a2f1dd0a-0fba-41b8-8960-cf6f9e175a91.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0136-ylpphyge5d6oowqc/img-1fc2e8b70cf6.png)
 
 “虚拟节点”是”实际节点”（实际的物理服务器）在hash环上的复制品,一个实际节点可以对应多个虚拟节点。
 

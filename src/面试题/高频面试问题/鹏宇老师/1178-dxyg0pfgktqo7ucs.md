@@ -26,7 +26,7 @@ article: false
 
 限流的本质，是通过 “牺牲部分非核心请求” 换取 “系统整体稳定性”，就像给水管装阀门，避免水压过高导致管道爆裂。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159338750-257b2497-513b-42dd-9d4e-5d050f44f11d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-4400c3aced3f.png)
 
 ## 二、四种核心限流算法：原理、Java 实现与优缺点
 
@@ -44,7 +44,7 @@ article: false
 
 假设窗口为 1 秒，阈值 100 次。若 0.9 秒时接收 100 次请求（达阈值），1.1 秒时窗口重置，又能接收 100 次请求 ——200ms 内实际处理 200 次请求，远超系统承载，这就是 “窗口临界问题”。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159364275-3448053d-743a-4ee4-8f44-62fa3f6876cb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-aff728c50765.png)
 
 #### Java 实现（单机版）
 
@@ -111,7 +111,7 @@ public class FixedWindowRateLimiter {
 
 例如：1 秒主窗口拆分为 5 个 200ms 子窗口，每个子窗口独立计数；当时间推进 200ms，丢弃最旧的子窗口，纳入最新的子窗口，再累加当前 5 个子窗口的计数判断是否超限。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159387019-62d53d0f-f972-481e-a28e-198c8cb85587.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-c53973427d02.png)
 
 #### Java 实现（单机版）
 
@@ -205,7 +205,7 @@ public class SlidingWindowRateLimiter {
 2. **匀速流出**：漏桶以固定速率将请求 “漏出” 到后端服务；
 3. **桶满丢弃**：若请求入桶速度超过漏出速度，桶满后多余请求直接丢弃。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159411518-764940a7-61fb-4c3f-a78e-2f74085aa655.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-81b25883c420.png)
 
 #### Java 实现（单机版）
 
@@ -295,7 +295,7 @@ public class LeakyBucketRateLimiter {
 
 核心优势：当桶中有缓存的令牌时，能应对短时间的突发流量（一次性消耗多个令牌）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159436077-3d7be3cb-988b-40ba-917a-c96655bad52e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-bccc056a9544.png)
 
 #### Java 实现（单机版）
 
@@ -404,7 +404,7 @@ public class TokenBucketRateLimiter {
 
 单机限流仅适用于单节点部署，分布式系统中需通过**中心化存储（如 Redis）** 共享限流状态，避免多节点各自限流导致的总体超限。Redis 的原子操作（INCR、Hash）和 Lua 脚本可保证限流逻辑的原子性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159456140-5c668a3c-5ae7-4b00-bf8c-0a0236bf096a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-269d8503218e.png)
 
 ### 1. 固定窗口计数器（Redis+Java）
 
@@ -636,7 +636,7 @@ http {
 }
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159495706-8c5342c2-9728-4c4f-b072-1b4f489e8dd3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_16%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-84bb051c004d.png)
 
 ## 五、总结：算法选择与面试应答建议
 
@@ -674,6 +674,6 @@ API 网关、高并发业务（推荐首选）
 3. **延伸分布式**：提及 Redis+Lua 实现分布式限流，体现系统设计思维；
 4. **工具落地**：补充生产工具（如 Sentinel），展示实战经验。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1762159519334-a423acde-3a72-4e04-8b76-160a07a9257e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1178-dxyg0pfgktqo7ucs/img-316cf8bf7a7a.png)
 
 通过以上内容，不仅能全面掌握限流算法的技术细节，更能站在面试官视角拆解考点，轻松应对面试与实际开发需求。

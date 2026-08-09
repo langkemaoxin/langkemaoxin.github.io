@@ -33,7 +33,7 @@ article: false
 
 首先我们知道，ES 集群本身就是保证高可用的，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103203-2bde0e24-9f86-43d9-8409-c8a9c3d9038e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-4ba4681b1a0a.png)
 
 当 ES 集群有一个节点宕机了，会将其他节点对应的 Replica Shard 升级为 Primary Shard，继续提供服务。
 
@@ -45,7 +45,7 @@ article: false
 
 那 ES 的高可用如何做呢？我们的方案是 ES 双中心主备集群架构。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103305-f61ca2a5-0b7f-447b-9d72-b28d96a3083c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-e4b4839a80e6.png)
 
 我们有两个机房，分别是机房 A 和机房 B。我们把 ES 主集群部署在机房 A，把 ES 备集群部署在机房 B。会员系统的读写都在 ES 主集群，通过 MQ 将数据同步到 ES 备集群。
 
@@ -70,7 +70,7 @@ article: false
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103159-da5622cf-4c9c-456c-ab0f-65bc4c5ada18.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-23a4c0264ecc.png)
 
 #### ES 集群深度优化提升
 
@@ -92,11 +92,11 @@ article: false
 
 经过以上优化，成果非常显著，ES 集群的 cpu 大幅下降，查询性能大幅提升。ES 集群的 cpu 使用率：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103303-4bc7a727-7513-42ef-af1e-7bde9543870c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-86af65530934.png)
 
 会员系统的接口耗时：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103223-3f0de2ab-6a17-40ef-8dc7-3c7c6aab9e41.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-c736fcf2f999.png)
 
 ### 会员 Redis 缓存方案
 
@@ -119,7 +119,7 @@ article: false
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103842-f8e69df5-b5d4-4e5f-ac78-41ea1d91eadc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-80b65ecc8367.png)
 
 ES 的近实时机制为什么会导致 Redis 缓存数据不一致呢？具体来讲，假设一个用户注销了自己的 APP 账号，此时需要更新 ES，删除 APP 账号和微信账号的绑定关系。而 ES 的数据更新是近实时的，也就是说，1 秒后你才能查询到更新后的数据。
 
@@ -129,7 +129,7 @@ ES 的近实时机制为什么会导致 Redis 缓存数据不一致呢？具体�
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103837-9086ae8b-430c-4173-b796-030016945b6a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-0ea49746c282.png)
 
 面对该问题，如何解决呢？我们的思路是，在更新 ES 数据时，加一个 2 秒的 Redis 分布式并发锁，为了保证缓存数据的一致性，接着再删除 Redis 中该会员的缓存数据。
 
@@ -137,7 +137,7 @@ ES 的近实时机制为什么会导致 Redis 缓存数据不一致呢？具体�
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103911-f9596947-dac6-4ab3-a441-445726b91844.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-1d62f8e77f60.png)
 
 上述方案，乍一看似乎没什么问题了，但仔细分析，还是有可能导致缓存数据的不一致。
 
@@ -149,7 +149,7 @@ ES 的近实时机制为什么会导致 Redis 缓存数据不一致呢？具体�
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593103850-36725de2-c394-49d1-96ae-98c85f23ba6b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-fb7b2d29fcfb.png)
 
 实施了缓存方案后，经统计，缓存命中率 90%+，极大缓解了 ES 的压力，会员系统整体性能得到了很大提升。
 
@@ -159,7 +159,7 @@ ES 的近实时机制为什么会导致 Redis 缓存数据不一致呢？具体�
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104029-bf91ab0a-8204-402e-bc2c-11fb9720cd75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-cd14bca1a84b.png)
 
 关于 Redis 集群的高可用，我们采用了双中心多集群的模式。在机房 A 和机房 B 各部署一套 Redis 集群。
 
@@ -177,7 +177,7 @@ ES 的近实时机制为什么会导致 Redis 缓存数据不一致呢？具体�
 
 经过调研，我们选择了双中心分库分表的 MySQL 集群方案，如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104318-68a339b5-235d-470d-873f-b8e39a34fde5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-b96530ef1c02.png)
 
 会员一共有十多亿的数据，我们把会员主库分了 1000 多个分片，平分到每个分片大概百万的量级，足够使用了。
 
@@ -211,7 +211,7 @@ MySQL 集群采用 1 主 3 从的架构，主库放在机房 A，从库放在机
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104340-40e9c840-7b0c-44b5-83ce-cbd2cb33200a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-8e5dc07da2a1.png)
 
 讲完了双写，接下来我们看一下“读数据”如何灰度。整体思路是，通过 A/B 平台逐步灰度流量，刚开始 100% 的流量读取 SqlServer 数据库，然后逐步切流量读取 MySQL 数据库，先 1%，如果没有问题，再逐步放流量，最终 100% 的流量都走 MySQL数据库。
 
@@ -221,11 +221,11 @@ MySQL 集群采用 1 主 3 从的架构，主库放在机房 A，从库放在机
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104400-ada55ed8-dc75-4337-8428-f817bcca6498.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-258a464d6d15.png)
 
 所以，整体的实施流程如下：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104462-52b51558-2168-4556-b1d9-070db78578e5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-d860aa3cb630.png)
 
 首先，在一个夜黑风高的深夜，流量最小的时候，完成 SqlServer 到 MySQL 数据库的全量数据同步。
 
@@ -245,13 +245,13 @@ MySQL 集群采用 1 主 3 从的架构，主库放在机房 A，从库放在机
 
 所以，我们再次异构了会员主库的数据源，双写数据到 ES，如下所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104492-35aa38ed-92b8-4e53-81c6-a6e31ab9b551.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-cfa5496af445.png)
 
 如果 dal 组件故障或 MySQL 数据库挂了，可以把读写切到 ES，等 MySQL 恢复了，再把数据同步到 MySQL，最后把读写再切回到 MySQL 数据库。
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104902-ddbf4c0f-4604-45f2-9068-5d1e7c5471fc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-45fa019c0fd0.png)
 
 ### 异常会员关系治理
 
@@ -271,7 +271,7 @@ MySQL 集群采用 1 主 3 从的架构，主库放在机房 A，从库放在机
 
 如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104901-24cafdda-3eb8-48e4-a112-370d372b1771.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-0b583bb3af18.png)
 
 **展望：更精细化的流控和降级策略**
 
@@ -285,7 +285,7 @@ MySQL 集群采用 1 主 3 从的架构，主库放在机房 A，从库放在机
 
 **全局流控规则。**我们会员系统能抗下 tps 3 万多的秒并发请求量，如果此时，有个很恐怖的流量打过来，tps 高达 10 万，与其让这波流量把会员数据库、ES 全部打死，还不如把超过会员系统承受范围之外的流量快速失败，至少 tps 3 万内的会员请求能正常响应，不会让整个会员系统全部崩溃。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1720593104989-85ab3ff7-f012-44c0-ad5f-6d2af7a2b0ae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0809-bzhxgkvpz1ieknkc/img-c374c4e30a69.png)
 
 #### 更精细化的降级策略
 

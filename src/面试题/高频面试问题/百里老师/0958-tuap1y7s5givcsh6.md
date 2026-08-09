@@ -19,7 +19,7 @@ article: false
 
 在着手实现一个分布式锁之前，我们必须首先直面其固有的复杂性。一个健壮的锁，必须能够优雅地处理各种异常情况。这不仅仅是关于“加锁”和“解锁”，更是关于在整个分布式环境下，锁的生命周期管理、高可用性保障以及操作的原子性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762955872386-8d212e15-5f00-4caa-8513-efcbdca1893d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0958-tuap1y7s5givcsh6/img-d65243bb4818.png)
 
 上图直观地展示了我们在设计Redis分布式锁时需要解决的五个核心问题：
 
@@ -37,7 +37,7 @@ article: false
 
 最基础的死锁场景源于客户端的异常退出。当一个线程成功获取锁之后，但在执行`finally`块中的解锁逻辑前发生崩溃，这个锁将永远无法被释放，导致其他所有等待该锁的线程陷入无限期的等待。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762955881089-ae57737b-8aea-42cb-a01b-c03623dadd59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0958-tuap1y7s5givcsh6/img-a04ebc335780.png)
 
 如图所示，在异常流程中，解锁步骤永远不会被执行。为了解决这个问题，我们必须为锁引入一个“生命周期”的概念，即**设置过期时间**。通过在加锁时为key设置一个超时时间（TTL），我们可以保证即使客户端崩溃，锁也能在预设的时间后被Redis自动删除，从而避免永久死锁。
 
@@ -59,7 +59,7 @@ SET lock_key unique_value NX EX 30
 
 引入过期时间解决了死锁，但又带来了新的问题：锁的误删。设想一个场景：线程A获取锁（30秒过期），但业务执行了35秒。在第30秒时，锁被自动释放，此时线程B获取了该锁。当线程A在第35秒执行完毕去解锁时，它删除的将是线程B持有的锁，从而引发混乱。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762955889038-a2adf4e9-4393-427b-8d62-43ff58e71881.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0958-tuap1y7s5givcsh6/img-6006b0af9952.png)
 
 这个问题的根源在于，解锁操作缺乏**“所有权”**校验。线程A并不知道它要删除的锁早已不属于它。
 
@@ -84,7 +84,7 @@ end
 
 到目前为止，我们所有的讨论都基于一个前提：Redis服务是可用的。但在生产环境中，任何单个实例都可能因为硬件故障、网络问题或进程崩溃而宕机。如果我们的锁服务完全依赖于一个单节点的Redis，那么它的可用性将成为整个系统的瓶颈。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762955936578-27804fe8-7ae2-41cb-baf3-722a9964c099.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0958-tuap1y7s5givcsh6/img-f942edab733c.png)
 
 为了实现高可用，我们通常有两种选择：主从+哨兵模式和Redis Cluster集群模式。
 
@@ -97,7 +97,7 @@ end
 
 在某些业务场景中，一个线程可能需要重复获取它已经持有的锁，例如在一个递归方法或者方法嵌套调用中。一个简单的、非重入的锁会导致线程在第二次尝试加锁时被自己阻塞，从而引发死锁。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762955900824-3440de11-e0ff-4faa-838f-6520f6d636ab.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0958-tuap1y7s5givcsh6/img-97d5ded9eb23.png)
 
 上图展示了一个典型的递归调用死锁场景。`businessMethod`获取锁后调用了`recursiveMethod`，后者再次尝试获取同一个锁，由于锁已被持有，导致调用被阻塞，永远无法返回。
 
@@ -119,7 +119,7 @@ end
 
 原子性是分布式锁的灵魂。任何“多步操作”的加锁或解锁过程，都存在被中断的风险，从而导致竞态条件。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762955910941-6a0a2438-b76c-4d8f-817b-433c2c7b0656.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_46%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0958-tuap1y7s5givcsh6/img-4348fbd2cb97.png)
 
 **典型的非原子错误操作包括：**
 
@@ -137,7 +137,7 @@ end
 
 经过对五大问题的剖析，我们可以总结出一套构建生产级Redis分布式锁的最佳实践。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762955963889-9d31ad44-91b2-437d-a5e2-e30c42e35371.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_38%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0958-tuap1y7s5givcsh6/img-44eb771dd260.png)
 
 上表清晰地汇总了每个问题的核心原因与最佳解决方案。在实际工程中，我们强烈建议遵循以下“三板斧”原则：
 

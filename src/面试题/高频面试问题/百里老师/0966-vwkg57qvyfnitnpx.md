@@ -13,7 +13,7 @@ article: false
 
 > 来源：[【高频面试】：MyBatis是如何进行分页的？](https://www.yuque.com/tulingzhouyu/db22bv/vwkg57qvyfnitnpx)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762493708674-0259c91f-fe71-49fa-b285-7413d91321af.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0966-vwkg57qvyfnitnpx/img-b91e55ed1fda.png)
 
 ## 一、引言：为什么分页如此重要？
 
@@ -30,7 +30,7 @@ MyBatis作为业界主流的持久层框架，提供了多种分页实现方式�
 - **逻辑分页 (Logical Pagination)**：这是一种“伪分页”。它会从数据库中查询出**所有**符合条件的数据，然后将这些数据全部加载到应用程序的内存中，最后由代码（例如Java）根据分页参数（如页码、每页大小）截取出一小部分数据返回。
 - **物理分页 (Physical Pagination)**：这是一种“真分页”。它会利用不同数据库自身提供的原生分页语法（如MySQL的`LIMIT`，Oracle的`ROWNUM`），在执行SQL查询时就直接告诉数据库：“我只需要第X页的Y条数据”。数据库只查询、返回指定范围的数据，开销极小。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762493720592-38912660-dd89-44f5-a347-f4147ae1cd01.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0966-vwkg57qvyfnitnpx/img-6af8c2a38e43.png)
 
 显而易见，**物理分页**在性能上远胜于逻辑分页，是处理大数据量时的唯一正确选择。
 
@@ -72,7 +72,7 @@ List&lt;User&gt; users = userMapper.selectAll(new RowBounds(10, 10)); // 获取�
 List&lt;User&gt; selectAll(); // SQL本身不含分页逻辑
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762493741944-90b01a95-0427-43d4-9592-c06238abc94e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0966-vwkg57qvyfnitnpx/img-17d5b4e46174.png)
 
 - **优点**：
 
@@ -94,7 +94,7 @@ List&lt;User&gt; selectAll(); // SQL本身不含分页逻辑
 3. **动态改写SQL**：在拦截方法中，获取原始SQL，判断是否需要分页，如果需要，则根据数据库类型动态地在原始SQL末尾拼接上物理分页子句（如`LIMIT`）。
 4. **执行新SQL**：将改写后的SQL交由MyBatis继续执行。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762493749287-bbc45843-7075-402b-850d-80434943edb7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0966-vwkg57qvyfnitnpx/img-98a87c5fd9b0.png)
 
 - **优点**：
 
@@ -120,7 +120,7 @@ List&lt;User&gt; users = userMapper.selectAll(); // SQL本身依然是干净的
 PageInfo&lt;User&gt; pageInfo = new PageInfo<>(users); // PageInfo包含了总数、总页数等丰富信息
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762493754845-8d9b515c-1144-453f-9321-4efed335eb1b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0966-vwkg57qvyfnitnpx/img-1aac0741fc15.png)
 
 - **优点**：
 
@@ -131,7 +131,7 @@ PageInfo&lt;User&gt; pageInfo = new PageInfo<>(users); // PageInfo包含了总�
 
 ## 四、如何选择最佳方案？决策矩阵
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1762493763137-78e6a191-751d-44da-bfa2-f9fae8d6c1c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_41%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0966-vwkg57qvyfnitnpx/img-858631b9cf35.png)
 
 ## 五、结论
 

@@ -13,13 +13,13 @@ article: false
 
 > 来源：[面试官：MySQL 里有 1 亿条加密数据，如何设计索引？](https://www.yuque.com/tulingzhouyu/db22bv/qx7ycbfzcrorctz3)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766714736151-d6b52429-a964-47a6-bfbf-08b6764d3b59.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0904-qx7ycbfzcrorctz3/img-ce44ff4ac1b6.png)
 
 > ** 前言**：在数据安全日益严苛的今天，"脱敏"和"加密"已成为架构设计的标配。但安全往往伴随着性能的牺牲。当业务方要求对身份证、手机号等敏感字段进行加密存储，同时又要求毫秒级的精确查询，甚至范围查询时，作为架构师的你，该如何破局？
 
 ### 一、 核心冲突：秩序 vs 混沌
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766714741967-a58204c3-022e-4a75-93f1-9f697b0cf193.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0904-qx7ycbfzcrorctz3/img-d15fc6df41e0.png)
 
 如上图所示，这不仅仅是颜色的对立，更是**数据结构层面的根本冲突**。
 
@@ -32,7 +32,7 @@ article: false
 
 ### 二、 致命陷阱：天真的"确定性加密"
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766714751358-ba983213-2ad1-4ff9-bcdc-2f533e377672.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0904-qx7ycbfzcrorctz3/img-863c0d1ed82b.png)
 
 为了解决索引问题，很多初级开发者会想到一个"聪明"的办法：**把加密算法改一改，让同样的明文永远生成同样的密文（如 AES-ECB 模式）**。这样不就可以利用数据库索引了吗？
 
@@ -50,7 +50,7 @@ article: false
 
 ### 三、 黄金方案：盲索引 (Blind Index)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766714760910-e22d5f0c-3069-4a97-99d8-54fb43e9db7a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0904-qx7ycbfzcrorctz3/img-743c9943cea2.png)
 
 如何既要安全的随机加密，又要高效的索引查询？答案是**将"存储"与"索引"解耦**。我们采用**双列策略**，如上图的管道分流模型所示：
 
@@ -74,7 +74,7 @@ article: false
 
 ### 四、 场景化决策指南
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766714767957-5e3d36c6-a179-45eb-b7f9-48e469b71fb7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0904-qx7ycbfzcrorctz3/img-d65044eb6a06.png)
 
 盲索引虽然好，但它只能解决"精确匹配"（Equals）的问题。在实际面试或架构设计中，我们需要根据具体的业务场景，按图索骥，选择最合适的方案：
 

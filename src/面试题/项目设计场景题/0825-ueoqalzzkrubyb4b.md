@@ -55,7 +55,7 @@ article: false
 
 以下是部分历史秒杀活动峰值流量与日常峰值流量的对比数据：
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433913995-82f67f18-bf47-4a91-84c0-25188bdf4308.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-c29929836142.webp)
 
 数据显示出活动的流量激增通常远超系统日常处理的极限，如果没有针对预订交易系统进行优化，用户可能会遇到各种问题，例如：
 
@@ -88,19 +88,19 @@ article: false
 
 当 Redis 面临负载问题时，可以使用水平扩容这种常规手段让流量分摊到更多实例。然而扩容虽能降低大多数实例的 CPU 使用率，但在处理特定热点数据时，各实例的 CPU 使用率仍然可能出现不均衡的情况，即缓存热点问题；此外还会存在缓存大 Key 问题。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914097-3b810c00-e1e7-4373-8464-b0162d964a64.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-dab8ffe10524.webp)
 
 **1) 缓存热点问题**
 
 如下图所示，node-1 节点存在 2 个热点访问，请求量远高于其他节点。缓存热点会导致实例负载不均衡，从而严重影响响应速度。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914081-efbb4b48-72b2-43f7-b7f5-86aba9a054ea.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-4652ba4ad881.webp)
 
 **缓存热点应对方案：热点识别自动构建多级缓存**
 
 将单位时间内高频访问的 Key，识别出来。例如：同一个 Key，1 秒内单机访问 10 次。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914124-5acba750-1010-4c59-92cf-b456ceab00df.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-35c9a6649d6c.webp)
 
 如上图所示，自动发现 Hot keys 或将指定的 Key 加入到本地缓存。
 
@@ -108,19 +108,19 @@ article: false
 
 **优化效果**：开启多级缓存后，同一个缓存 key 访问性能明显提升，对应 Redis 访问量也明显降低（如下图所示）。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914106-dfa83276-ed9e-45bd-854d-01cb9fe3c494.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-fca1c156af48.webp)
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914413-57f11c15-90c8-4e9c-90e9-ee5c695e96a4.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-4c2fe9b4780e.webp)
 
 **2) 缓存大 Key 问题**
 
 缓存大 key 的危害主要包括：阻塞请求、内存占用大、阻塞网络等。不仅会降低 Redis 的性能，还可能影响整个系统的稳定性（如下图所示）。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914428-0a5b514d-274c-47b6-959e-f550ccf7b8d2.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-2c0f15072191.webp)
 
 通过 memtier-benchmark 工具在生产环境下压测：200KB 以上比 10KB 以内的性能慢 3 倍，吞吐能力也下降 76%（如下图所示）。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914447-92967fc5-eefc-4bc5-ba6f-7b060caf8b9d.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-211f38d2ff96.webp)
 
 **缓存大 Key 应对方案：**
 
@@ -134,7 +134,7 @@ d）**长期治理**：建立长期治理机制，定期扫描 Redis 中的大 K
 
 **优化效果**：在大 Key 优化后，Redis 查询性能有较为明显的提升（如下图所示，缓存查询耗时从 300μs 优化至 100μs）。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914510-c5ca0165-92ff-4bf4-8b88-47abe7f73d54.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-e862d4b9ec6b.webp)
 
 **问题二：数据库超负载**
 
@@ -162,13 +162,13 @@ c) **异步更新缓存**：为了进一步降低对数据库的实时压力，�
 
 **缓存更新策略变化如下图所示：**
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914575-6c5b5481-c7fa-47e0-8157-e579666f9365.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-1a475c742d27.webp)
 
 **问题三：供应商系统不稳定**
 
 供应商系统因大流量导致响应缓慢或被限流，影响整体系统的稳定性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914859-125d1b56-d3df-4b5a-9f73-0e96bfa03668.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-2c1e931ffe26.webp)
 
 **应对供应商系统不稳定性的技术策略优化**
 
@@ -192,11 +192,11 @@ b）**供应商系统不稳定**：由于各种原因，供应商系统可能会
 
 • **定期重试**：对于因供应商系统问题而失败的订单，设定了一个重试机制，定期尝试重新提交。同时，根据供应商系统的恢复情况，动态调整重试的频率和次数。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914798-ea2bc384-478f-49f9-a7ba-4f5a5e3ba219.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-e0e24d74f30c.webp)
 
 **优化效果**：通过实施上述技术和策略优化，可以有效确保供应商系统能力不影响下单吞吐量 (如下图所示)。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433915066-f0d399b8-c6d7-485a-9b5f-6e4eb35a1483.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-7dd0be59489e.webp)
 
 上述的优化措施落地后能够提升系统的稳定性，然而鉴于流量的不确定性，**即使流量超过系统负载能力，系统也要正常运行**，因此仍然需要有相应的流量控制策略。
 
@@ -204,13 +204,13 @@ b）**供应商系统不稳定**：由于各种原因，供应商系统可能会
 
 如下图所示，不同页面对应的流量和系统 (承载能力) 是不同的，需要控制好每个过程的流量，确保整体系统的稳定性。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914865-7ca2bab0-1399-469f-9395-84eae2e47e63.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-eaac82f97e8c.webp)
 
 以 70 万人购买 5000 张票的秒杀活动为例，可采取以下限流策略：
 
 **1) SOA 限流：接口与应用级限流**
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433914999-2d4ee9c6-36c0-49bf-a463-da242f5ea21e.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-2546de2a912c.webp)
 
 通过服务治理框架对服务接口进行限流（SOA 限流），在秒杀 / 活动等场景会影响到其他商品的正常售卖。对此可针对秒杀活动的特殊需求，设计自定义的限流策略，如按秒杀商品限流、页面级限流等，细化商品维度的流量控制。
 
@@ -222,13 +222,13 @@ b）同时，对于未知的秒杀突增流量，也可以支持热点商品自�
 
 如下图所示，我们采用了商品维度的自定义限流策略，该策略将 1 秒内的请求流量划分为 10 个独立的 100 毫秒 (可配置) 滑动窗口。每个窗口都会平分一部分流量，以确保下游服务的并发量得到有效控制。这种方法不仅降低了下游服务的压力，也为用户提供更加均衡的流量分配。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433915100-0e7f5145-1d96-4f44-acd0-32c9bf69b46f.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-f5c38b274187.webp)
 
 结合商品级限流能力，控制进入每一个页面的流量，形成多层次的限流防护体系，根据秒杀库存预估售卖时长，控制进入到每一个页面的流量比例，这样也能够大幅减少服务器资源投入。
 
 **优化效果**：自定义限流可控制进入每一个页面的流量，超负载也不影响整体的可用性，服务器资源的投入也可控。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433915270-75ac1e75-b8ec-4699-b415-ce1eda34c0ab.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-e1b2acb79186.webp)
 
 本部分阐述了系统稳定性的挑战及优化，包括 Redis 超负载与缓存热点、数据库超负载、供应商系统不稳定等。通过热点识别自动构建多级缓存、缓存覆盖更新策略、削峰填谷 / 缓冲池、自定义限流等多种技术策略，使得系统稳定性问题得到有效解决。
 
@@ -240,7 +240,7 @@ b）同时，对于未知的秒杀突增流量，也可以支持热点商品自�
 
 **技术策略**：扣减库存异步化，异步扣库存主要分 3 步（见下图）：
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433915320-1964dd4b-f4c9-43d7-9327-3645c50582c0.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-2c89fa0b3dee.webp)
 
 1）初始化：秒杀商品设置好活动场次，将秒杀库存同步至 Redis。
 
@@ -260,7 +260,7 @@ b）同时，对于未知的秒杀突增流量，也可以支持热点商品自�
 
 基于架构健康度实现系统质量的量化管理，实现研发生命周期各个环节的跟踪和优化，如下图所示可细分为三部分：
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433915399-2e1e2573-5a88-4f86-83e7-022a4e9c6cfc.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-2d62781a1afc.webp)
 
 a) 系统运行健康度：通过系统各个维度运行时的健康状态和问题来反映系统质量。
 
@@ -272,7 +272,7 @@ c) 工程化健康度：基于应用的工程质量和效率状态，反应出�
 
 无论大型活动还是节假日，都需要提前准备好应急预案，做好压测，提前保证系统的高可用。
 
-![image](https://cdn.nlark.com/yuque/0/2024/webp/2424104/1720433915416-17e4c3ab-a73d-43dc-8338-15659381f73f.webp?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/项目设计场景题/0825-ueoqalzzkrubyb4b/img-6e1deb536df3.webp)
 
 ### 四、总结
 

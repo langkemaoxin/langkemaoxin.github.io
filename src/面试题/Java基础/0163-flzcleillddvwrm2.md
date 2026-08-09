@@ -17,7 +17,7 @@ article: false
 
 在 **JDK 1.7 **中 HashMap 是以**「数组加链表」**的形式组成的，**JDK 1.8** 之后新增了**「红黑树」**的组成结构，**「当链表长度大于 8 并且 hash 桶的容量大于 64 时，链表结构会转换成红黑树结构」**。所以，它的组成结构如下图所示：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736682333559-14d52d6a-d0c1-4e9d-8ce9-efb3a9e8ce1f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_25%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-01c1b356d0d0.png)
 
 底层数据结构
 
@@ -25,13 +25,13 @@ HashMap 中数组的每一个元素又称为哈希桶，也就是 key-value 这�
 
 因为它本身所有的位置都为 null，在 put 插入的时候会根据 key 的 hash 去计算一个 index 值。比如，我 put （"徐庶"，666），在 HashMap 中插入 "徐庶" 这个元素，通过 hash 算法算出 index 位置是 3。这时的结构如下所示，还是个数组。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736682480944-cdd0b8dd-34e6-4594-b0f6-55476aa0c12b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-7a85adfb3a75.png)
 
 初次 put
 
 以上没 hash 冲突时，若发生 hash 冲突就得引入链表啦。假设我再次 put （"元直"，666），在 HashMap 中插入 "元直" 这个元素，通过 hash 算法算出 index 位置也是 3。这时的结构如下所示：形成了链表。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736685685068-c37dd265-9756-4065-af46-c89856acea46.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-7ffa51faeb0e.png)
 
 再次 put，发生 hash 冲突
 
@@ -171,7 +171,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 
 注释已经很详细了。但新增的方法比较复杂，画个流程图方便方便各位理解：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736682333646-3e1be6d5-54d5-4e03-9e65-219fa83f3c02.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-b634b6ca1d67.png)
 
 put 流程
 
@@ -294,7 +294,7 @@ JDK 1.8 在扩容时并没有像 JDK 1.7 那样，重新计算每个元素的哈
 
 **「这时候得到的结果，高一位为 1，当结果为 1 时，表示元素在扩容时位置发生了变化，新的下标位置等于原下标位置 + 原数组长度」**，如下图所示：key2、kry4 虚线为移动的位置。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736682333655-64159cf6-8512-4694-a357-a417b21779f7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-8354d6dff870.png)
 
 扩容
 
@@ -413,19 +413,19 @@ void transfer(Entry[] newTable, boolean rehash) {
 
 假设 3 个元素 hash 冲突，放到同一个链表上。其中 key1→key2→key3 这样的顺序。没毛病，一切很正常。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736682333955-67de7b66-a24d-4b97-9663-ea6e43a70a87.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-d3f4ff96db82.png)
 
 尾插法
 
 此时放开断点，HashMap 扩容。就有可能变成这样：原来是 key1→key2→key3。很不幸扩容之后，key1 和 key2 还是在同一个位置，这时形成链表，如果 key2 比 key1 后面插入，根据头插法。此时就变成 key2→key1
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736682333985-18655fc8-df01-42ed-9f4f-600f315f9c7d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_13%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-2bc1cd5fc987.png)
 
 链表反转
 
 最终 3 个线程都调整完毕，就会出现下图所示的死循环：这个时候 get (key1) 就会出现 Infinite Loop 异常。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/22309163/1736682334136-9503bc57-6e87-4ce6-b42a-7277ed2dee2e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0163-flzcleillddvwrm2/img-8e122ba6bdb2.png)
 
 循环引用
 

@@ -17,7 +17,7 @@ article: false
 
 你应该背过很多高可用的面试题把？一堆服务器，一会这个机器挂了，一会那个服务崩了。然后问你怎么保证服务高可用？怎么保证数据不丢失？还没见过这样的面试题的朋友，可以在评论区敲个888，我看看还有多少如此单纯的程序员。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039786427-166b7c6e-dd54-4819-aa10-9466e229cefe.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_90%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-f7cca4892a41.png)
 
 这时候很多朋友要吐槽了，这就是典型的“面试造火箭，工作拧螺丝”了。但是，如果抛开这些面试题，真的让你负责一个对数据非常敏感的金融系统，面对非正常断电这种不可抗力，你会怎么保证数据安全呢？你可以把视频先暂停两秒，在评论区留下你的想法。不过，请千万别说你的服务器有UPS这样的答案啊。咱们是来讨论技术的，不是来说相声的。看完视频后，再来看看你的想法是不是成熟。
 
@@ -29,7 +29,7 @@ article: false
 
 ## 第一章：你的数据到底怎么丢的？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039806635-d8f455ad-8bdd-438e-bf89-cdd94941c8c7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-42d9b927fbde.png)
 
 首先，我们要搞清楚，为什么服务器断电会丢数据？ 原因很简单：**内存是易失的，硬盘才是永恒的**。废话。这谁都知道。不过这跟数据有什么关系呢？
 
@@ -37,7 +37,7 @@ article: false
 
 比如，Linux系统就提供了一个write方法，来完成数据写入。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039817542-b9c9d250-35e3-4839-ba1d-f02f1c0428b1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-d3e815a2db5a.png)
 
 你只要调用一下write方法，通知操作系统，我要写入数据，剩下的事情就交由操作系统的内核态去完成了。但这时，操作系统耍了个小聪明。他其实并没有真正去写硬盘，只是把数据拷贝到了内存里的 **Page Cache页缓存里**，然后立马骗你说：“写完了，成功了！” 这时候，数据其实还停在内存。 如果这时候断电，Page Cache 里的数据瞬间灰飞烟灭。你以为你存下来了，其实你存了个寂寞。
 
@@ -47,7 +47,7 @@ article: false
 
 要是这样，那还玩的下去吗？于是，操作系统给我们留了个后门，也是唯一的救命稻草-fsync刷盘。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039833713-8c366be7-836e-46eb-a10f-a13a9c517c13.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_89%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-4d51b974c6bd.png)
 
 `fsync` 的指令非常霸道，它会勒令操作系统：**“别废话，现在、立刻、马上，把 Page Cache 里的脏数据刷到物理硬盘上，不写完不许返回！”**
 
@@ -59,7 +59,7 @@ article: false
 
 原理懂了，但这些操作系统底层的小九九，和我天天写Hello World有什么关系？关系大了。接下来，上Java！
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039851604-c4329b6b-b67f-4890-a66c-0bb261a61c2e.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_96%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-0af47f9eccf9.png)
 
 下面有两个方法，都可以实现往操作系统上写入一个文件：
 
@@ -187,7 +187,7 @@ fsync(4)                                = 0
 
 能够用好write和fsync这两个绝世武器之后，接下来就是如何在项目中规划这些系统调用了。这个事，说起来就太复杂了。用功夫来比喻，那就是已经进入乾坤大挪移的最高境界了。怎么说呢？就是，**看到了你也不一定会。会了也不一定就是绝顶高手。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039903287-95be41eb-d962-474c-a424-8c8b1793d562.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_80%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-ac3ff7c2c75a.png)
 
 wirte虽然不安全，但是他只要写Page cache，快啊。fsync虽然更安全，但是他要写磁盘，相比write肯定要慢很多，频繁调用会加大操作系统的负担。
 
@@ -213,7 +213,7 @@ RabbitMQ 比较传统。对于经典的传统对列classic queue。你只需要�
 
 但是，数据真的安全吗？他的持久化对列是怎么处理刷盘问题的呢？这个不用我做详细分析，官网上的一段说明，很直白的解释了他的策略：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039936891-e2f16aa7-59c6-4f83-9723-95301505ab65.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_86%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-6e78cc9cec11.png)
 
 很明确的告诉了你，RabbitMQ并不会给每个消息调用fsync。如果你要确保消息安全，那么换成他的publisher confirms机制。这个机制是通过生产者确认或者重试，来保证消息安全。另外，RabbitMQ也设计了Quorum、Stream等其他类型的对列，用另外的思路来保证数据安全。
 
@@ -223,7 +223,7 @@ RabbitMQ 比较传统。对于经典的传统对列classic queue。你只需要�
 
 再来看Kafka，他对性能的追求最极致，所以他的刷盘招式也最激进。在Kafka的配置文件中，针对日志刷盘，提供了一系列的参数，可以自由配置。最关键的是这两个：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039964279-39b339eb-3d9e-4ff1-8839-31bc102db611.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_71%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-937cd7f2cdf0.png)
 
 很简单的配置了有多少条消息触发一次刷盘，以及每隔多长时间触发一次刷盘。关注下他的默认值。这种参数配置意味着在 Kafka 的默认配置里，它**完全放弃**了主动调用 `fsync`。 它把刷盘的工作全权扔给了操作系统。 这意味着，单机 Kafka 遇到服务器非正常断电，数据也是会丢失的。
 
@@ -233,7 +233,7 @@ RabbitMQ 比较传统。对于经典的传统对列classic queue。你只需要�
 
 ## 结尾：人生的 Fsync
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1766039992020-89252be5-0d70-4ae7-a5aa-a7ccbf8183a1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_93%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1078-ehwrfy3ctmmnfdt2/img-21c04240495b.png)
 
 看懂了这几个高手的刷盘招式，你当然没有必要全盘照搬他们的设计。因为不同的系统总是会有不同的设计。就像倚天屠龙记里的乾坤大挪移，你很厉害，但总有比你更厉害的武功。
 

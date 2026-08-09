@@ -28,7 +28,7 @@ I/O（Input/Output）本质是 “计算机与外部设备的数据交互”，�
 
 这里要注意**冯・诺依曼结构中的 “存储器”** —— 特指**内存（RAM）** ，而非硬盘！硬盘属于 “辅助存储设备”，归为 “输入 / 输出设备” 范畴（比如从硬盘读文件是输入，写文件是输出），面试时别混淆。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220009178-7677d637-263d-4693-bf6a-6cea27ff69f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_28%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-95188b507e83.png)
 
 ### 2. 用户空间与内核空间：IO 的 “必经之路”
 
@@ -39,7 +39,7 @@ Java 程序不能直接操作 IO 设备，必须依赖操作系统内核，整�
 
 所有 IO 模型的区别，本质就是 “这两步中，应用程序的‘等待方式’不同”—— 而 Java IO 模型，正是对 “操作系统 IO 模型” 的上层封装。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220033408-cba10f35-1fcd-4b4d-95cd-91d665646920.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_27%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-29775220e463.png)
 
 ## 二、操作系统层面的 5 种 IO 模型（Java IO 的底层来源）
 
@@ -71,7 +71,7 @@ Java 程序不能直接操作 IO 设备，必须依赖操作系统内核，整�
 
 **核心关联**：Java 从这 5 种中选择了 3 种落地 ——BIO 对应 “同步阻塞 IO”，NIO 对应 “同步非阻塞 IO（早期）/IO 多路复用（现行）”，AIO 对应 “异步 IO”；跳过了 “信号驱动 IO”（因网络 IO 场景下逻辑复杂、性价比低）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220062614-daddf5e9-3aee-4736-a62c-9e7ed98f6b3d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-db27b59b45c4.png)
 
 ## 三、BIO：对应操作系统 “同步阻塞 IO”，最基础但最 “笨重”
 
@@ -93,7 +93,7 @@ Java 的 BIO（Blocking IO）是对操作系统 “同步阻塞 IO” 的直接�
 
 仅适合 “连接数少、并发低” 的简单场景，比如公司内部的小型管理系统、早期 Tomcat（6.x 之前的 BIO 连接器）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220084565-cd50c961-0d4d-4a7e-9b53-aad26ed1f0f6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-8b410520a8c4.png)
 
 ## 四、NIO：到底是系统 “同步非阻塞 IO” 还是“IO 多路复用”？
 
@@ -112,7 +112,7 @@ Java 的 NIO（Non-blocking IO/New IO）到底对应系统的“同步非阻塞 
 - **无效轮询浪费 CPU**：1000 个连接≈1000 次 / 秒的无效`read()`调用（多数连接无数据），CPU 被 “询问动作” 占满，无法处理业务；
 - **系统调用次数过多**：每个连接的轮询都对应 1 次系统调用，内核需频繁处理无效请求，进一步加剧性能损耗。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220103142-2995d9cd-02ca-4fec-90f4-c4289a33b8b4.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-da295c36c7af.png)
 
 ### 2. 真实使用的方案：对应系统 “IO 多路复用”（高效核心）
 
@@ -135,11 +135,11 @@ Java NIO 的关键改进，是引入**Selector（多路复用器）** ，本质�
 
 高并发核心场景，比如网关（Spring Cloud Gateway）、IM 即时通讯、直播推流，主流框架 Netty、Tomcat 8 + 均基于此实现。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220141898-d5bcb279-eb64-469f-b7f4-27c10a779fd1.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-4605d24d358b.png)
 
 ### 3. 未使用方案：对应系统 “同步非阻塞 IO” VS  现行使用方案：对应系统 “IO 多路复用”（高效核心）
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220202776-4b4bd691-5515-4076-810a-19fb7456a74c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_35%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-1649961a864a.png)
 
 ## 五、AIO：对应系统 “异步 IO”，理想很满但现实受限
 
@@ -171,7 +171,7 @@ AIO 的性能完全依赖操作系统的 “异步 IO 能力”，但**Linux 与
 
 仅适合 “Windows 平台 + 高并发” 场景，如 Windows 服务器上的实时通信应用，Linux 环境几乎无实用价值。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1759220226724-b909309c-46ac-4e7e-8ef9-0628634d8bb7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1202-yiq5swevx9gdsmkp/img-4048bfec9a22.png)
 
 ## 六、总结：Java IO 与操作系统 IO 模型的全对应关系（面试直接用）
 

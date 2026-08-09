@@ -19,7 +19,7 @@ article: false
 
 ### **1. 复制算法**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1748351625795-53244465-cb50-4d34-8582-979d37fb67ad.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0294-vuzh472dhqz50xyh/img-3cf39c964a76.png)
 
 年轻代的设计目标是**快速回收短生命周期对象**。复制算法的核心思想是：
 
@@ -37,7 +37,7 @@ article: false
 
 ### **2. 对象年龄的渐进式晋升**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1748355041167-274dcf03-c5fa-4a2b-bb9a-041601fb47f7.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0294-vuzh472dhqz50xyh/img-bb54514a4f2a.png)
 
 JVM通过**分代年龄（Age）**机制决定对象何时晋升到老年代：
 
@@ -67,7 +67,7 @@ JVM通过**分代年龄（Age）**机制决定对象何时晋升到老年代：
 
 ### **4. 具体流程示例**
 
-![image](https://cdn.nlark.com/yuque/0/2025/jpeg/35268836/1748353256393-b8f8814b-30fb-4127-a3a0-ed8c42dec4d3.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_43%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/JVM/0294-vuzh472dhqz50xyh/img-a85e408d2574.jpg)
 
 1. **对象分配**：
 

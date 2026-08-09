@@ -13,13 +13,13 @@ article: false
 
 > 来源：[一文读懂OLTP和OLAP](https://www.yuque.com/tulingzhouyu/db22bv/hnegzcrltbdxzp22)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117187433-a9526bed-353f-4073-9f07-453b2f349c3d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_87%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-b6b851bc0df2.png)
 
 现在IT大环境确实不好，但是，你会发现一个很扎心的现象：在很多大厂，不管是什么项目，程序员还是程序员，架构师还是架构师。甚至，从写代码晋升到做架构，这道门槛反而变得更高了。
 
 为什么？其实这不仅仅是代码或者技术的问题，而是思维方式的选择问题。这次我们来聊一个很基础也很重要的设计思想：OLTP和OLAP。真正搞清楚这两个概念，是你脱离“功能堆砌”，迈向“架构设计”的第一步。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117218900-f807767a-cd70-46b5-a996-0bbd79627b66.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_97%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-84967cfcbda7.png)
 
 很多做开发的朋友都有个错觉，觉得所谓的“系统架构”，不就是搭积木吗？
 
@@ -37,7 +37,7 @@ article: false
 
 **概念重构——双核驱动的思维模式**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117244017-969ed1e4-d05b-4591-b74a-531bcfc21f33.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_95%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-f2fbb1972b6b.png)
 
 首先，我们要从思维模式上深入理解这两个概念。
 
@@ -53,7 +53,7 @@ article: false
 
 光说概念有点虚，咱们把这两个思维模式投射到具体的业务场景里。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117255170-b3faf1b3-071d-4ab8-b327-c8f22f3fc2dc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_93%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-b6010e501466.png)
 
 **场景一：OLTP 的战场——拼刺刀。** 大网红直播间上架一个热门商品，用户疯狂点击“立即购买”。 这时候，系统面临的是成千上万个并发请求。每一个请求都非常轻量——“张三，买个手机，减库存，扣款”。 这就像战场上的近身肉搏，讲究的是单兵作战能力：动作要快，姿势要帅，绝对不能卡顿。这时候，你的设计重点是**锁机制、事务隔离、索引优化**。
 
@@ -67,7 +67,7 @@ OLTP 处理的是“小而精”的实时操作，OLAP 处理的是“大而全�
 
 为了适应这两种截然不同的场景，技术层面就需要两套完全不同的思考方式。首先，从存储数据的表结构和存储引擎上，就是来个完全不同的设计思路。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117268827-290cbf73-d230-4410-a354-f2322d5674d0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_95%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-32f6d048a1ea.png)
 
 **维度一：表结构——窄表 vs 宽表。**
 
@@ -76,7 +76,7 @@ OLTP 处理的是“小而精”的实时操作，OLAP 处理的是“大而全�
 
 **维度二：存储引擎——行存 vs 列存。**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117279506-d7f1450c-2ae5-4310-bb1a-806fd78f7a30.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_96%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-ebb2f99b57a8.png)
 
 这是最硬核的区别。
 
@@ -87,7 +87,7 @@ OLTP 处理的是“小而精”的实时操作，OLAP 处理的是“大而全�
 
 **思维升华——从数据处理到业务构建**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117317181-d4dfde78-5edd-4c11-a7cf-5b0517e2a174.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_78%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-b44033f9c6f4.png)
 
 除了数据存储，OLTP 和 OLAP 的区别，不仅仅是技术选型，更是**对业务本质理解的两个侧面**。
 
@@ -105,7 +105,7 @@ OLTP 处理的是“小而精”的实时操作，OLAP 处理的是“大而全�
 
 除了理论，也有很多业界用各种项目踩出来的落地建议，下次设计复杂问题时，都拿出来看一看。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117328917-d876fcc6-430f-42e6-87e4-646277c4eb28.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_94%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-3b7649c3870a.png)
 
 **第一条：物理隔离——千万别在同一个锅里吃饭。** 这是新手最容易犯的错：为了省钱或者省事，把 OLTP 和 OLAP 放在同一个数据库实例里跑。**这对于真正想要挣钱的项目来说，是非常危险的。**OLAP 的查询是“资源黑洞”，一个复杂的报表 SQL 跑起来，能瞬间吃光 CPU 和内存。如果这时候还要保证前台业务功能正常，不会超时或者卡死，这就会带来很多的麻烦。 **记住：** 赚钱的系统（OLTP）和算账的系统（OLAP）必须分开部署，至少也要分开设计。别让会计在收银员忙着收钱的时候去查账本，那会把店搞砸的。
 
@@ -117,7 +117,7 @@ OLTP 处理的是“小而精”的实时操作，OLAP 处理的是“大而全�
 
 **人生架构**
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/12973308/1765117348945-140906fc-a9fe-4df4-a9a2-1fc6cab79d8c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_95%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/楼兰老师/1081-hnegzcrltbdxzp22/img-890d4303ba8b.png)
 
 其实，我们每个人的人生，也是一次巨大的架构设计。
 

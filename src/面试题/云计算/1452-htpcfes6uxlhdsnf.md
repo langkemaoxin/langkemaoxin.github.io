@@ -38,11 +38,11 @@ article: false
 
 如果从理论角度出发，这是因为我们会通过识别不同事物之间不同的特征来识别种类，例如分别不同种类的小狗，就可以通过体型大小、毛发长度、鼻子长短等特征来区分。如下面这张照片按照体型排序，可以看到体型越大的狗越靠近坐标轴右边，这样就能得到一个体型特征的一维坐标和对应的数值，从 0 到 1 的数字中得到每只狗在坐标系中的位置。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1729392475132-5a9b671f-98a3-4891-90d8-9c51d8aa80f3.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1452-htpcfes6uxlhdsnf/img-45d35d1f8036.png)
 
 然而单靠一个体型大小的特征并不够，像照片中哈士奇、金毛和拉布拉多的体型就非常接近，我们无法区分。所以我们会继续观察其它的特征，例如毛发的长短。
 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/2424104/1729395865931-b2199ee4-23e2-409d-baac-7c7ef38ab125.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1452-htpcfes6uxlhdsnf/img-e7dcbff823ba.jpg)
 
 这样每只狗对应一个二维坐标点，我们就能轻易的将哈士奇、金毛和拉布拉多区分开来，如果这时仍然无法很好的区分德牧和罗威纳犬。我们就可以继续再从其它的特征区分，比如鼻子的长短，这样就能得到一个三维的坐标系和每只狗在三维坐标系中的位置。
 
@@ -62,7 +62,7 @@ article: false
 
 其中，A 和 B 分别表示两个向量，*n* 表示向量的维度。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1729395294470-1651a4e4-587b-4457-9a77-7e090a84d6db.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1452-htpcfes6uxlhdsnf/img-0e323c1516bb.png)
 
 欧几里得距离算法的优点是可以反映向量的绝对距离，适用于需要考虑向量长度的相似性计算。例如推荐系统中，需要根据用户的历史行为来推荐相似的商品，这时就需要考虑用户的历史行为的数量，而不仅仅是用户的历史行为的相似度。
 
@@ -70,7 +70,7 @@ article: false
 
 余弦相似度（Cosine Similarity）是一种用于衡量两个向量之间相似度的指标。它通过计算两个向量夹角的余弦值来判断它们的相似程度。其值介于 -1 和 1 之间，通常用于文本分析和推荐系统等领域。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/2424104/1729395305603-2de8d99b-bb5d-44a3-a9fb-8b3e7402d4b6.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1452-htpcfes6uxlhdsnf/img-ecc0bf5d78c7.png)
 
 ### **二、技术优势：性能与扩展性**
 

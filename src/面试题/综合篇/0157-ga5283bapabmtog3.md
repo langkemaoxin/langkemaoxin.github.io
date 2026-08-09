@@ -13,7 +13,7 @@ article: false
 
 > 来源：[亿级数据如何高效校验用户名是否被占用](https://www.yuque.com/tulingzhouyu/db22bv/ga5283bapabmtog3)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1744894382606-a17faf09-154e-40f3-988e-cabf92979ee0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_32%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0157-ga5283bapabmtog3/img-7408a80d4e4c.png)
 
 ### **任务拆解**
 
@@ -171,8 +171,8 @@ if (redisTimeoutException || databaseOverload) {
 
 检测流程：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1744890424179-a50f2b43-8b09-4c19-99ef-899d9a8a402a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0157-ga5283bapabmtog3/img-9e40c6e23017.png)
 
 布隆过滤器同步流程：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1744890413836-4f14afcb-f7c9-4dc5-aa46-cc47dbf7c147.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/综合篇/0157-ga5283bapabmtog3/img-050a9e5ac38b.png)

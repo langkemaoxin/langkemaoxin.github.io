@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694514924-14411a9a-3afe-4a88-bbac-51474eb8aff0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1435-pwpd1wmvytpfgh4y/img-766927989add.png)
 
 针对模型量化及推理加速的面试问题，需从以下维度结构化回答：
 
@@ -28,7 +28,7 @@ article: false
 
 ### 二、项目案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694536831-767c46ea-3ea3-4ead-9711-04fbb6014cef.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1435-pwpd1wmvytpfgh4y/img-0a80fa0b5836.png)
 
 #### **案例1：金融客服系统的BERT模型量化部署**
 
@@ -71,7 +71,7 @@ article: false
 
 ### 三、示例回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694558607-c4dd3cbc-773e-40c2-a5c2-77617f5f3edd.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1435-pwpd1wmvytpfgh4y/img-feef98c0e664.png)
 
 **面试官**：请结合项目经验说明模型量化的方法及推理加速效果。
 
@@ -101,7 +101,7 @@ article: false
 
 ### 四、总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1751694585686-74098244-d3d4-464d-85d3-18c6f5f91f62.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1435-pwpd1wmvytpfgh4y/img-333e2ee18681.png)
 
 1. **技术选型优先级**：
 

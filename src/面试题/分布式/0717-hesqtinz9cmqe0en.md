@@ -24,10 +24,10 @@ article: false
 - 可以指**多个不同组件**分布在网络上互相协作，比如说电商网站
 - 也可以**一个组件的多个副本**组成集群，互相协作如同一个组件，比如数据存储服务中为了数据不丢失而采取的多个服务备份冗余，当数据修改时也需要通信来复制数据
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697358155056-209eb260-4080-4695-aa1d-cb6eb5655331.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_29%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0717-hesqtinz9cmqe0en/img-aabcfc0f3399.png)
 
 ***分布式最早出现的目地首先是解决单点问题，避免单点故障，然后解决了性能问题。***
 
 ---
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1697358185815-7205950a-9a62-494c-950c-ca583ac64cd0.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0717-hesqtinz9cmqe0en/img-c7282b14449a.png)

@@ -13,7 +13,7 @@ article: false
 
 > 来源：[什么是 DeepSeek 的 MLA？它的优势是什么？](https://www.yuque.com/tulingzhouyu/db22bv/fvge5i5phuvgbb9f)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766650356004-6887c8f8-d4cb-47b4-b0e5-ddd222d188c8.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0906-fvge5i5phuvgbb9f/img-05709e9cff45.png)
 
 在大模型推理的战场上，长期存在一个艰难的抉择：是为了最强的模型智力保留完整的记忆（MHA），还是为了更快的速度牺牲一部分脑容量（MQA/GQA）？
 
@@ -33,7 +33,7 @@ MLA 并非单纯的“压缩算法”，而是一种针对大模型推理瓶颈�
 
 ### 2. 演进之路：从“昂贵”到“妥协”再到“完美”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766650378254-5ecc23d1-011d-458c-bfc2-5791a4b25a9c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0906-fvge5i5phuvgbb9f/img-4737639dca78.png)
 
 为了理解 MLA 的精妙，我们需要看懂图中三个架构的对比：
 
@@ -47,7 +47,7 @@ MLA 并非单纯的“压缩算法”，而是一种针对大模型推理瓶颈�
 
 ### 3. 核心原理：压缩与吸收的“魔法二重奏”
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766650383943-7d73af2b-369c-4170-8699-a008d6dd4439.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0906-fvge5i5phuvgbb9f/img-280c12d38eb8.png)
 
 MLA 是如何做到“既要又要”的？核心在于将存储和计算分离。
 
@@ -59,7 +59,7 @@ MLA 是如何做到“既要又要”的？核心在于将存储和计算分离�
 
 ### 4. 关键拼图：解耦 RoPE
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766650391157-2ebc58e2-0504-4b10-a46e-5809ddd11620.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0906-fvge5i5phuvgbb9f/img-e5f74db922cc.png)
 
 如果仅仅进行低秩压缩，模型会彻底“迷路”。因为大模型依赖 **RoPE (旋转位置编码)** 来感知词语的位置关系，而 RoPE 对旋转角度极其敏感，一旦被低秩压缩，位置信息就会严重失真。
 
@@ -74,7 +74,7 @@ MLA 的神来之笔在于图中的**“分流机制”**：
 
 ### 5. 总结：MLA 的核心价值
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1766650397218-9f844257-98b4-4523-a6dc-ad7504083aae.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0906-fvge5i5phuvgbb9f/img-7ee2da5024db.png)
 
 DeepSeek MLA 的出现，标志着大模型架构设计进入了精细化运营的新阶段。
 

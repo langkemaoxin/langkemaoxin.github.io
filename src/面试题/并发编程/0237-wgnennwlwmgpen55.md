@@ -55,7 +55,7 @@ article: false
 - **ExclusiveOwnerThread**：记录当前谁拿着锁。
 - **CLH Queue**：没抢到锁的倒霉蛋们在这里排队。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/12590378/1767857709822-f8b5455e-a8dd-4b5c-9946-a6b23c7c6a60.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_42%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/并发编程/0237-wgnennwlwmgpen55/img-14547f466509.png)
 
 ### 三、 代码实战：手写一个简单的锁
 

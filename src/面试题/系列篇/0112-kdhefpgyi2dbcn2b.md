@@ -227,7 +227,7 @@ private static final Object PRESENT = new Object();
 
 **线程池是一种管理和复用线程的机制，可以提高多线程程序的性能和资源利用率。下面是线程池的基本执行流程：**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1694173086579-b6ea6b6c-fcea-4b46-8c21-bc8c2ecb9a8f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_34%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0112-kdhefpgyi2dbcn2b/img-23575e95b823.png)
 
 # 22.如何设置线程池的线程数
 
@@ -1173,7 +1173,7 @@ private static final Object PRESENT = new Object();
 
 **Spring循环依赖指的是在Spring容器中存在相互依赖的Bean对象，形成了一个循环的引用关系。简单来说，就是A依赖于B，同时B也依赖于A，这样就形成了一个循环的依赖。**
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/35268836/1700140919048-c3008ab0-0d29-464d-ae07-8f9c0693d202.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/系列篇/0112-kdhefpgyi2dbcn2b/img-cd2db7039e12.png)
 
 # Spring 事务失效原因
 

@@ -17,7 +17,7 @@ article: false
 
 如下图，是我们证明CAP的基本场景，分布式网络中有两个节点Host1和Host2，他们之间网络可以连通，Host1中运行Process1程序和对应的数据库Data，Host2中运行Process2程序和对应数据库Data。
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695886396622-ac6110b1-8bb1-4f0f-ac7b-d96792d3bbfc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0712-hoqweg9el3zbuhpv/img-03f953c98f71.png)
 
 ## (2) CAP特性
 
@@ -33,7 +33,7 @@ article: false
 > B、分布式系统将数据进行同步操作，将Host1中的Data(1)同步的Host2中``Data(0),使Host2中的数据也变为Data(1)`
 > C、当用户请求主机Host2时，则Process2则响应最新的Data(1)数据
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695886629504-a0f483cb-9ae2-4214-ac88-05f7672311fb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0712-hoqweg9el3zbuhpv/img-8d9fb432ea1a.png)
 
 根据CAP的特性：
 
@@ -47,7 +47,7 @@ article: false
 
 假设Host1和Host2之间的网络断开了，我们要支持这种网络异常，相当于要满足分区容错性(P)，能不能同时满足一致性(C)和可用响应性(A)呢？
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695886761084-76c54fbf-18b9-4998-bec5-56c6424dcf86.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0712-hoqweg9el3zbuhpv/img-ad08ff3b55a4.png)
 
 假设在N1和N2之间网络断开的时候，
 
@@ -66,7 +66,7 @@ article: false
 
 一个分布式系统中，不可能存在不满足P，放弃分区容错性(p)，即不进行分区，不考虑由于网络不通或结点挂掉的问题，则可以实现一致性和可用性。那么系统将不是一个标准的分布式系统。我们最常用的关系型数据就满足了CA，如下：
 
-![image](https://cdn.nlark.com/yuque/0/2023/png/22309163/1695886910435-72d5d22e-85ee-4dee-86d1-c95325f66206.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/分布式/0712-hoqweg9el3zbuhpv/img-f23db2e0dc0b.png)
 
 主数据库和从数据库中间不再进行数据同步，数据库可以响应每次的查询请求，通过事务(原子性操作)隔离级别实现每个查询请求都可以返回最新的数据。
 

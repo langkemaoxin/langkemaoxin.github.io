@@ -13,13 +13,13 @@ article: false
 
 > 来源：[什么？工作三年了，还不知道什么是 Spring 责任链？](https://www.yuque.com/tulingzhouyu/db22bv/wqiqfz90p1tobmza)
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765374059604-f9a176c6-3a1c-4487-8bbe-5b33d23a7d36.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0924-wqiqfz90p1tobmza/img-feb0c3b55519.png)
 
 你是否在维护老项目时，见过这种让人窒息的代码？一个 `OrderService` 的 `createOrder` 方法里塞满了 800 行代码。从参数校验、库存锁定、优惠券计算到积分扣减，所有的逻辑都堆砌在一个巨大的 `if-else` 迷宫里。
 
 每当产品经理跑来说：“给 VIP 用户加一个专属的校验逻辑”，你都得在第 300 行和第 500 行之间小心翼翼地插入代码，生怕一个不小心，把后面的库存逻辑搞崩了。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765374053792-56a7da8d-2023-4136-9630-f919e4870e2a.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0924-wqiqfz90p1tobmza/img-ffb3164dad91.png)
 
 这就是典型的“面条代码”（Spaghetti Code）。它高耦合、低内聚，违反了“单一职责原则”和“开闭原则”。随着业务迭代，这个方法会变成系统的“禁区”，谁都不敢动。
 
@@ -29,7 +29,7 @@ article: false
 
 ### 2. 本质：什么是责任链？
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765374080423-16285404-57a4-4ec0-aba9-09f8de18691d.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0924-wqiqfz90p1tobmza/img-520cb96cbae2.png)
 
 责任链模式的定义很简单：**为请求创建了一个接收者对象的链**。这种模式给予请求的类型，对请求的发送者和接收者进行解耦。
 
@@ -49,7 +49,7 @@ article: false
 
 ### 3. Spring 中的“魔法”实现
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765374090304-70393d8b-2213-4bbe-b021-9f80e4655b55.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0924-wqiqfz90p1tobmza/img-135cf51f3b2f.png)
 
 - **设计意图**：揭示 Spring 如何利用依赖注入（DI）自动收集和排序 Bean，省去了传统模式中手动 `setNext()` 的繁琐。
 
@@ -117,7 +117,7 @@ public class OrderService {
 
 ### 4. 源码级应用：Spring Security
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765374102292-7501d499-d096-4549-b742-a747875b8f21.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0924-wqiqfz90p1tobmza/img-a76e2ff8b2f2.png)
 
 Spring 框架本身就是责任链模式的集大成者。如果你读过 Spring Security 的源码，你会发现它本质上就是一条巨大的**过滤器链（Security Filter Chain）**。
 
@@ -134,7 +134,7 @@ Spring 框架本身就是责任链模式的集大成者。如果你读过 Spring
 
 ### 5. 实战落地：电商下单流程
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765374118364-01440caf-ec8c-4d53-9a25-c147d7d90b9c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0924-wqiqfz90p1tobmza/img-76f46325931f.png)
 
 在复杂的业务系统中，责任链是处理**长流程**的神器。我们以电商下单为例，看看如何用责任链重构业务。
 
@@ -163,7 +163,7 @@ public class OrderContext {
 
 ### 6. 总结
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/35268836/1765374130452-6582a82a-2ef8-42d7-9e1a-d519ac2f4b7f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_55%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/百里老师/0924-wqiqfz90p1tobmza/img-5c84e8b0182d.png)
 
 Spring 责任链不仅仅是一个设计模式的套用，它是一种**“各司其职”**的架构哲学。
 

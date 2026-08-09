@@ -15,7 +15,7 @@ article: false
 
 在互联网产品中，手机验证码登录已成为全终端标配的登录方式，覆盖网页端、电脑客户端、手机 APP、平板设备等 99% 以上的场景。相较于传统密码登录，它无需用户记忆复杂密码、能避免密码泄露风险，且支持登录注册一体化，大幅提升用户体验。对于 Java 开发者而言，如何高效、安全地实现这一功能，是面试高频考点，也是实际开发中的核心需求。本文将从原理拆解、Java 实现细节、三大风险防护三个维度，结合代码示例展开详细说明。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766931803291-03ddc99b-786f-4a4d-8a75-4a9a8ab0c10c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1138-nhnmb44uyqw3vh4s/img-7dda9c84c57c.png)
 
 ## 一、核心登录原理拆解
 
@@ -30,7 +30,7 @@ article: false
 5. 后端从 Redis 中查询该手机号对应的有效验证码；
 6. 对比用户输入的验证码与缓存中的验证码，一致则登录成功（生成 Token），否则返回错误提示。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766931825737-5b092690-47e1-43c8-8587-2d79ecc375db.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1138-nhnmb44uyqw3vh4s/img-10dacef80efe.png)
 
 ### 2. Java 核心模块实现（基于 Spring Boot）
 
@@ -238,7 +238,7 @@ public class AuthController {
 2. 识别异常登录行为（设备、IP、地域），触发二次验证；
 3. 高危操作强制多重验证（如人脸识别、预留信息校验）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766931876392-e02eede6-5664-4d6e-9188-ccfa9b865cff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1138-nhnmb44uyqw3vh4s/img-3cbf9784cc6a.png)
 
 #### （3）代码实现：异常登录检测
 
@@ -314,7 +314,7 @@ public Result&lt;?> login(@RequestParam String phone, @RequestParam String code,
 2. 多维度限流（基于手机号、IP、设备 ID）；
 3. 设置请求频率上限（如 2 分钟 1 次、每日 15 次）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766931911923-6889040c-706f-4fae-a5d9-be029987e2ea.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1138-nhnmb44uyqw3vh4s/img-49ca3864a446.png)
 
 #### （3）代码实现：Redis 限流（基于滑动窗口算法）
 
@@ -399,7 +399,7 @@ public Result&lt;?> getCode(@RequestParam String phone,
 2. 缩短验证码有效期（5 分钟内）；
 3. 增加随机数 + 密钥签名（防止请求被篡改和重复提交）。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766931942707-483b5cea-0f92-47cd-8f3a-794adc45e013.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1138-nhnmb44uyqw3vh4s/img-7c038cd6b0b7.png)
 
 #### （3）代码实现：请求签名校验
 
@@ -487,4 +487,4 @@ public Result&lt;?> login(@RequestParam String phone, @RequestParam String code,
 
 通过本文的代码示例和逻辑拆解，Java 开发者可快速落地安全可靠的验证码登录功能，同时应对面试中的相关问题。实际开发中，还可结合 Spring Security、OAuth2.0 等框架进一步完善认证授权体系，提升系统安全性。
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/1226947/1766931966403-43b1202f-41d2-41ae-8979-6fc22c470b27.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_23%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/高频面试问题/鹏宇老师/1138-nhnmb44uyqw3vh4s/img-a7b074aedca0.png)

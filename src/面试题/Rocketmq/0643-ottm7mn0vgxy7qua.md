@@ -108,7 +108,7 @@ Broker 内部有一个核心服务类 `ScheduleMessageService`。
 
 这张图清晰地展示了消息如何在 Broker 内部经历“整容”和“恢复”的过程。
 
-![image](https://cdn.nlark.com/yuque/0/2026/png/29768021/1767950151428-7dd4390f-8412-48ff-837b-e51152fee566.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Rocketmq/0643-ottm7mn0vgxy7qua/img-d1091a5a8b5a.png)
 
 这就是 RocketMQ 延迟消息的完整生命周期。
 

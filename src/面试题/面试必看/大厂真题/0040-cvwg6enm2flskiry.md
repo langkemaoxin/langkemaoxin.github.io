@@ -21,7 +21,7 @@ Why kafka
 
 如果是**大数据领域**的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392886658-bc2fc0bb-0367-4b1e-936f-e94ee69db95b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_19%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-d0918aebfe38.png)
 
 RabbitMQ
 
@@ -33,7 +33,7 @@ RabbitMQ开始是用在电信业务的可靠通信的，也是少有的几款**�
 - 支持灵活的路由配置。RabbitMQ中，在生产者和队列之间有一个交换器模块。根据配置的路由规则，生产者发送的消息可以发送到不同的队列中。路由规则很灵活，还可以自己实现。
 - RabbitMQ的客户端支持大多数的编程语言，支持AMQP协议。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392886623-2adfc5dc-3b6e-4d11-994a-302c72d52041.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_12%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-ad5d142d7ccf.png)
 
 **缺点：**
 
@@ -72,7 +72,7 @@ What Kafka
 - Consumer API：允许应用程序订阅一个或多个主题并处理为其生成的记录流。
 - Streams API：允许应用程序充当流处理器，将输入流转换为输出流。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392886639-bc2769d0-a91b-48ed-8d2f-701b63072cc9.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_15%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-957535c525ff.png)
 
 消息Message
 
@@ -163,7 +163,7 @@ How Kafka
 
 生产消费基本流程
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392886619-a6ef8ea5-7b1f-4e4f-93fb-44b2359880bc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-d20c4f9fd6b2.png)
 
 1. Producer创建时，会创建一个Sender线程并设置为守护线程。
 2. 生产的消息先经过拦截器->序列化器->分区器，然后将消息缓存在缓冲区。
@@ -219,7 +219,7 @@ kafka-topics.sh --zookeeper localhost:2181/myKafka --create --topic topic_x     
 
 通过查询跳跃表ConcurrentSkipListMap，定位到在00000000000000000000.index ，通过二分法在偏移量索引文件中找到不大于 23 的**最大索引项**，即offset 20 那栏，然后从日志分段文件中的物理位置为320 开始顺序查找偏移量为 23 的消息。
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392886641-c0e168ec-17d3-470f-9216-d25b7b370dd2.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_17%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-58b4ea525e8e.png)
 
 **切分文件**
 
@@ -234,7 +234,7 @@ kafka-topics.sh --zookeeper localhost:2181/myKafka --create --topic topic_x     
 
 保证在消息重发的时候，消费者不会重复处理。即使在**消费者收到重复消息的时候，重复处理**，也要**保证最终结果的一致性**。所谓幂等性，数学概念就是：f(f(x)) = f(x)
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392886997-c4652f59-afc6-4f72-ada1-9c772c2bf0ff.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-08a2a90adac7.png)
 
 **如何实现？**
 
@@ -244,7 +244,7 @@ kafka-topics.sh --zookeeper localhost:2181/myKafka --create --topic topic_x     
 ProducerID：#在每个新的Producer初始化时，会被分配一个唯一的PIDSequenceNumber：#对于每个PID发送数据的每个Topic都对应一个从0开始单调递增的SN值
 ```
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/22811459/1714392887000-c72909f4-1914-462e-ae89-11ea197d72eb.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-c063c0f8d77b.png)
 
 **如何选举**
 
@@ -271,7 +271,7 @@ ProducerID：#在每个新的Producer初始化时，会被分配一个唯一的P
 - 订阅主题数量发生变化
 - 订阅主题的分区数发生变化**组成员崩溃和组成员主动离开是两个不同的场景。**因为在崩溃时成员并不会主动地告知coordinator此事，coordinator有可能需要一个完整的session.timeout周期(心跳周期)才能检测到这种崩溃，这必然会造成consumer的滞后。可以说离开组是主动地发起rebalance；而崩溃则是被动地发起rebalance。
 - 
-![image](https://cdn.nlark.com/yuque/0/2024/jpeg/22811459/1714392887024-7932e3d0-5ecb-4ba4-a4b0-0c1bbbf01d05.jpeg?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_26%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/面试必看/大厂真题/0040-cvwg6enm2flskiry/img-b42e9f582c42.jpg)
 
 解决方案：
 

@@ -60,16 +60,16 @@ article: false
 
 API设计图：
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1743593433908-6b651c28-062d-4ab9-b651-ba5ca4c8ff75.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0343-rdw1hy38srbek0f9/img-9b10b834bd04.png)
 
 BufferPool设计
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1743593485682-1ddf9fcf-d435-4f01-8c77-948714877b54.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_31%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0343-rdw1hy38srbek0f9/img-8252c37dbe01.png)
 
 淘汰策略
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1743593386366-95e6504e-7a06-48f6-8cd0-2b93f3ec796f.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_24%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0343-rdw1hy38srbek0f9/img-f183b4f737fb.png)
 
 doublewrite双写机制
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/43518495/1743593355545-aebcf763-12c0-4935-8b76-e8bde8e8ddbc.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_30%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Mysql/0343-rdw1hy38srbek0f9/img-7214c529b65c.png)

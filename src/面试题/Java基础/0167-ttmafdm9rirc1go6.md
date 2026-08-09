@@ -493,7 +493,7 @@ public class ArrayListCreator {
 
 # 提升编码效率的15种 Stream API
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715664744704-4c276cdf-650a-4bd8-aab2-3687a8a31648.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_61%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0167-ttmafdm9rirc1go6/img-829cf715713c.png)
 
 本文给大家收集了工作常用的 15 种 Java Stream API，可用于进行各种数据处理和操作。具体如下：
 
@@ -698,7 +698,7 @@ System.out.println(partitionedNames); // Output: {false=[Bob], true=[Alice, Char
 
 使用 idea 编码时，如果不知道输入什么，请使用 ctrl + shift + 空格
 
-![image](https://cdn.nlark.com/yuque/0/2024/png/35268836/1715677647733-d1ee8224-530a-4601-ae0d-c5dd9914a5c5.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_33%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/Java基础/0167-ttmafdm9rirc1go6/img-e38b22489214.png)
 
 ## 完整测试代码
 

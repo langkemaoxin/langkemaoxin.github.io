@@ -13,7 +13,7 @@ article: false
 
 > 来源：[保险分销平台(亮点与难点)](https://www.yuque.com/tulingzhouyu/db22bv/nn6meztozbalk68e)
 
-![](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734873976574-d070db3b-7124-44dc-aee3-e66375f8d900.pdf)
+[https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734873976574-d070db3b-7124-44dc-aee3-e66375f8d900.pdf](https://www.yuque.com/attachments/yuque/0/2024/pdf/22811459/1734873976574-d070db3b-7124-44dc-aee3-e66375f8d900.pdf)
 
 上面这位学员简历的项目没什么亮点和难点，投出去面试机会可能不多，经过和老师沟通后，着重优化了第一个项目《分销领客牛平台》，这个项目本质上就是一个**保险分销平台**，优化如下：
 

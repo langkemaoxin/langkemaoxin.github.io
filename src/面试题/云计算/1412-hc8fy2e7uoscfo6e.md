@@ -15,7 +15,7 @@ article: false
 
 ### 一、答题思路
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244212978-d1cec65d-4d50-4989-8b1a-5a643a674f8b.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_22%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1412-hc8fy2e7uoscfo6e/img-7466cab9e7a8.png)
 
 针对「多模态大模型的跨模态对齐方法」的面试问题，需结合真实项目案例进行结构化解答。以下为答题框架：
 
@@ -29,7 +29,7 @@ article: false
 
 ### 二、结合案例
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244226497-4690cbd1-715f-49d3-af77-a1784b749c77.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1412-hc8fy2e7uoscfo6e/img-bce107cb5e82.png)
 
 #### **案例背景：医疗影像与文本报告的跨模态对齐**
 
@@ -44,7 +44,7 @@ article: false
 
 ### 三、参考回答
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244259104-3b732089-2f57-4116-b727-c19b5711d15c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_21%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1412-hc8fy2e7uoscfo6e/img-7141c8d1389f.png)
 
 #### **1. 痛点分析**
 
@@ -119,7 +119,7 @@ loss = contrastive_loss + λ * triplet_loss
 
 ### 四、总结收尾
 
-![image](https://cdn.nlark.com/yuque/0/2025/png/2424104/1752244273250-87991fab-0037-4d9f-ace8-f65757ed30bf.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_20%2Ctext_5Zu-54G16K--5aCC%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![image](/面试题/云计算/1412-hc8fy2e7uoscfo6e/img-8f8f33d9c842.png)
 
 **核心结论**：
 跨模态对齐需兼顾数据特性、任务需求与部署约束，通过**对比学习+知识约束**可有效解决医疗场景中的语义鸿沟问题。未来可探索方向包括：
