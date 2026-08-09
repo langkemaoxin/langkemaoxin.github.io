@@ -5,4 +5,9 @@ export default {
     icon: "leaf",
     order: 1,
   },
+  mybatis: {
+    title: "MyBatis 源码",
+    icon: "database",
+    order: 2,
+  },
 };

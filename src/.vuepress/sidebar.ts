@@ -877,5 +877,15 @@ export default sidebar({
         "s6-17-mvc-parent-child",
       ],
     },
+    {
+      text: "MyBatis 源码",
+      icon: "database",
+      prefix: "mybatis/",
+      collapsible: true,
+      children: [
+        "mb-18-config-parse",
+        "mb-19-sql-exec-flow",
+      ],
+    },
   ],
 });

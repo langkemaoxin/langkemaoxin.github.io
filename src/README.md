@@ -60,7 +60,7 @@ actions:
 - [数据库](数据库/)：MySQL 架构、索引、事务锁、InnoDB、主从与高可用
 - [分布式](分布式/)：Seata AT/TCC、TC 集群、源码与隔离性
 - [微服务](微服务/)：Spring Boot 原理、SCA、Nacos/Sentinel/Seata 内核
-- [源码剖析](源码剖析/)：Spring 6 IOC/AOP/事务/MVC 源码系列
+- [源码剖析](源码剖析/)：Spring 6、MyBatis 源码系列
 - [Windows](Windows/)：权限 ACL 与环境搭建
 - [工具](Tools/)：Git、代理、编码与发布
 - [英语](English/)：技术论文 B1 生词
