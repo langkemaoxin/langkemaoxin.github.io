@@ -15,6 +15,7 @@ import Database from "./sidebar/数据库.mjs";
 import Distributed from "./sidebar/分布式.mjs";
 import Microservices from "./sidebar/微服务.mjs";
 import SourceAnalysis from "./sidebar/源码剖析.mjs";
+import Interview from "./sidebar/面试题.mjs";
 
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
@@ -41,6 +42,7 @@ export const modules = [
   { path: "/分布式/", dir: "分布式" },
   { path: "/微服务/", dir: "微服务" },
   { path: "/源码剖析/", dir: "源码剖析" },
+  { path: "/面试题/", dir: "面试题" },
 ];
 
 /**
@@ -81,6 +83,7 @@ export const folders = {
   ...prefix("分布式", Distributed),
   ...prefix("微服务", Microservices),
   ...prefix("源码剖析", SourceAnalysis),
+  ...prefix("面试题", Interview),
 };
 
 /** 未单独配置 icon 时的默认图标 */

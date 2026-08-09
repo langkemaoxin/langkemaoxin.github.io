@@ -68,6 +68,11 @@ export default navbar([
     link: "/源码剖析/",
   },
   {
+    text: "面试题",
+    icon: "comments",
+    link: "/面试题/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",

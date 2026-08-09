@@ -32,6 +32,7 @@ actions:
 - [全面理解 MySQL 架构](数据库/mysql/mysql-01-architecture.md)：数据库专栏开篇，从 MySQL 架构讲到后续索引与事务。
 - [分布式事务场景与 Seata 总览](分布式/seata/seata-01-distributed-tx-overview.md)：分布式专栏开篇，从分库分表与微服务事务讲到 Seata。
 - [手写模拟 Spring Boot 核心流程](微服务/springboot/boot-01-handwritten-core.md)：微服务专栏开篇，从手写 Boot 核心流程建立直觉。
+- [面试必看 · 突击流程](面试题/面试必看/0001-ffontgkxu12wrn61.md)：图灵 Java+AI 全栈面试核心点（2026）整库入口。
 - [Windows 权限书稿（分卷索引）](Windows/permissions/00-index.md)：从「发明权限」到域 / 权利 / 多对象 / 排障 / .NET（含待写占位章）。
 - [用 B1 英语读 ACM 论文：最终一致性生词精讲](English/vocabulary/eventual-consistency-b1-vocabulary.md)：先背生词再读原文，降低技术论文的查词成本。
 
@@ -39,7 +40,7 @@ actions:
 
 你好，我是 **Corey**。
 
-这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**云原生（Docker / K8s）**、**消息中间件**、**Java 并发编程**、**软件架构（DDD）**、**性能调优（JVM / Tomcat）**、**数据库（MySQL）**、**分布式（Seata）**、**微服务（Spring Cloud Alibaba）**、**源码剖析（Spring 6）**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
+这个站用来沉淀我在工作和自学里真正啃过的东西：**.NET / Java 源码调试**、**大数据与 Hadoop**、**云原生（Docker / K8s）**、**消息中间件**、**Java 并发编程**、**软件架构（DDD）**、**性能调优（JVM / Tomcat）**、**数据库（MySQL）**、**分布式（Seata）**、**微服务（Spring Cloud Alibaba）**、**源码剖析（Spring 6）**、**面试题（Java+AI 全栈）**、**Windows 权限与环境**、**AI 工程化与自动化**，以及一点用 B1 词汇量读论文的英语笔记。
 
 我习惯用西蒙学习法把概念拆开写——先建立直觉，再落到源码、命令和复盘。写给未来的自己，也欢迎路过的你一起看。
 
@@ -61,6 +62,7 @@ actions:
 - [分布式](分布式/)：Seata AT/TCC、TC 集群、源码与隔离性
 - [微服务](微服务/)：Spring Boot 原理、SCA、Nacos/Sentinel/Seata 内核
 - [源码剖析](源码剖析/)：Spring 6、MyBatis 源码系列
+- [面试题](面试题/)：图灵 Java+AI 全栈面试核心点（2026），按语雀左侧栏目分组
 - [Windows](Windows/)：权限 ACL 与环境搭建
 - [工具](Tools/)：Git、代理、编码与发布
 - [英语](English/)：技术论文 B1 生词
