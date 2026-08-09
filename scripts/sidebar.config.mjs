@@ -13,6 +13,7 @@ import SoftwareArch from "./sidebar/软件架构.mjs";
 import PerfTune from "./sidebar/性能调优.mjs";
 import Database from "./sidebar/数据库.mjs";
 import Distributed from "./sidebar/分布式.mjs";
+import Microservices from "./sidebar/微服务.mjs";
 
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
@@ -37,6 +38,7 @@ export const modules = [
   { path: "/性能调优/", dir: "性能调优" },
   { path: "/数据库/", dir: "数据库" },
   { path: "/分布式/", dir: "分布式" },
+  { path: "/微服务/", dir: "微服务" },
 ];
 
 /**
@@ -75,6 +77,7 @@ export const folders = {
   ...prefix("性能调优", PerfTune),
   ...prefix("数据库", Database),
   ...prefix("分布式", Distributed),
+  ...prefix("微服务", Microservices),
 };
 
 /** 未单独配置 icon 时的默认图标 */

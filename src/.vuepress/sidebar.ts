@@ -739,4 +739,75 @@ export default sidebar({
       ],
     },
   ],
+  "/微服务/": [
+    "",
+    {
+      text: "Spring Boot",
+      icon: "leaf",
+      prefix: "springboot/",
+      collapsible: true,
+      children: [
+        "boot-01-handwritten-core",
+        "boot-02-startup-source",
+        "boot-03-autoconfigure",
+      ],
+    },
+    {
+      text: "Spring Cloud Alibaba",
+      icon: "cloud",
+      prefix: "springcloud/",
+      collapsible: true,
+      children: [
+        "sca-01-microservice-overview",
+        "sca-02-practice-summary",
+      ],
+    },
+    {
+      text: "Nacos",
+      icon: "sitemap",
+      prefix: "nacos/",
+      collapsible: true,
+      children: [
+        "nacos-01-architecture",
+        "nacos-02-grpc",
+        "nacos-03-config-center",
+      ],
+    },
+    {
+      text: "Sentinel",
+      icon: "shield-halved",
+      prefix: "sentinel/",
+      collapsible: true,
+      children: [
+        "sentinel-01-architecture",
+      ],
+    },
+    {
+      text: "Seata 内核",
+      icon: "database",
+      prefix: "seata/",
+      collapsible: true,
+      children: [
+        "seata-kernel-01-source",
+      ],
+    },
+    {
+      text: "Spring 扩展",
+      icon: "puzzle-piece",
+      prefix: "spring-ext/",
+      collapsible: true,
+      children: [
+        "spring-ext-01-extension-points",
+      ],
+    },
+    {
+      text: "路线与占位",
+      icon: "map",
+      prefix: "roadmap/",
+      collapsible: true,
+      children: [
+        "ms-12-roadmap-placeholders",
+      ],
+    },
+  ],
 });

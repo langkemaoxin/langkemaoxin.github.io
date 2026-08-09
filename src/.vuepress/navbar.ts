@@ -58,6 +58,11 @@ export default navbar([
     link: "/分布式/",
   },
   {
+    text: "微服务",
+    icon: "cubes",
+    link: "/微服务/",
+  },
+  {
     text: "Windows",
     icon: "laptop-code",
     link: "/Windows/",
