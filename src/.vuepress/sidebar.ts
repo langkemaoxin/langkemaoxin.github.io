@@ -310,6 +310,15 @@ export default sidebar({
   "/English/": [
     "",
     {
+      text: "语法",
+      icon: "book",
+      prefix: "grammar/",
+      collapsible: true,
+      children: [
+        "all-tenses-learn-english",
+      ],
+    },
+    {
       text: "论文生词",
       icon: "language",
       prefix: "vocabulary/",

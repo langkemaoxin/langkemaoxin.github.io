@@ -1,7 +1,7 @@
 ---
-title: "第 3 站：名字 ↔ SID——LSA 去哪里查"
+title: "第 3 讲：名字 ↔ SID——LSA 去哪里查"
 sidebarGroup: "卷一·发明权限"
-shortTitle: "第 3 站：名字 ↔ SID"
+shortTitle: "第 3 讲：名字 ↔ SID"
 order: 4
 date: 2026-08-06
 category: "Windows"
@@ -14,13 +14,13 @@ tag:
   - "安全"
 ---
 
-# 第 3 站：名字 ↔ SID——LSA 去哪里查
+# 第 3 讲：名字 ↔ SID——LSA 去哪里查
 
 ### 麻烦
 
 你在程序里常写 `CONTOSO\Alice`，但对象上要记的是 SID。需要一次「翻译」。
 
-### 这一站只发明：名字与 SID 的互译
+### 这一讲只发明：名字与 SID 的互译
 
 Windows 的 **LSA（Local Security Authority）** 提供 **name ↔ SID 翻译**。  
 来源：[Credentials processes - LSA](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
@@ -60,11 +60,11 @@ Console.WriteLine(name.Value);
 |----------|------------------|--------------|
 | 最上排 | User Mode App / CredUI / Winlogon / Kernel App | 各种「想问安全子系统」的入口。你的 C# `Translate` 也属于**用户态程序**经系统 API 问到 LSA，不必自己懂协议细节。 |
 | 黄色大框 | **Local Security Authority**（`Lsasrv.dll` 等） | **翻译与认证的总调度台**。名字↔SID、验身份相关请求，先汇聚到这里。 |
-| 黄框内一排 SSP | NTLM / Kerberos / Schannel… | 不同场景用的安全支持提供者。本站先记住：**本地账户路径常和 NTLM↔SAM 相关；域账户路径常和 Kerberos / Netlogon↔域控相关**。具体登录协议下一站再展开。 |
+| 黄框内一排 SSP | NTLM / Kerberos / Schannel… | 不同场景用的安全支持提供者。本讲先记住：**本地账户路径常和 NTLM↔SAM 相关；域账户路径常和 Kerberos / Netlogon↔域控相关**。具体登录协议下一讲再展开。 |
 | 右侧 | **SAM（`Samsrv.dll`）→ Registry** | **本机账户**的权威库。本地用户名对应的 SID，答案在本机 SAM（注册表中有受保护副本）。 |
 | 下侧 | **Netlogon**、到 **Domain Controller / KDC** 的箭头 | **域账户**要问域。图上可见到 DC / KDC 的网络路径——这就是 `CONTOSO\Alice` 这类名字最终常落到域控的原因。 |
 
-用一句话把图收束到本站：
+用一句话把图收束到本讲：
 
 > **C# 只负责开口问；本机 LSA 负责调度；本地答案在 SAM，域答案在域控（经 Netlogon / 目录服务相关路径）。**
 
@@ -118,7 +118,7 @@ LSA 还有 Name/SID **查找缓存**，减少反复打域控。
 ### 收束
 
 **你现在会了：** 名字与 SID 如何互译；能对着 LSA 架构图指出「本地走 SAM、域走域控」。  
-**下一站才需要：** 登录时，LSA 不只做翻译，还要**验密码**——过程是怎样的。
+**下一讲才需要：** 登录时，LSA 不只做翻译，还要**验密码**——过程是怎样的。
 
 ---
 
@@ -129,7 +129,7 @@ LSA 还有 Name/SID **查找缓存**，减少反复打域控。
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 2 站：SID](./03-sid.md)
+← 上一章：[第 2 讲：SID](./03-sid.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 4 站：登录与 LSA](./05-logon-lsa.md)
+→ 下一章：[第 4 讲：登录与 LSA](./05-logon-lsa.md)
 <!-- chapter-nav:end -->

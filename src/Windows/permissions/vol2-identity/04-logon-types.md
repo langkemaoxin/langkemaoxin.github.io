@@ -1,7 +1,7 @@
 ---
-title: "第 18 站：登录类型（Logon Type）"
+title: "第 18 讲：登录类型（Logon Type）"
 sidebarGroup: "卷二·网上的身份"
-shortTitle: "第 18 站：登录类型"
+shortTitle: "第 18 讲：登录类型"
 order: 4
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 第 18 站：登录类型（Logon Type）
+# 第 18 讲：登录类型（Logon Type）
 
 > **状态：待写**（占位章）  
 > **分卷：卷二·网上的身份**  
@@ -31,7 +31,7 @@ tag:
 
 ## 依赖与衔接
 
-衔接 [第 4 站登录](../vol1-invent/05-logon-lsa.md)、[第 5 站令牌](../vol1-invent/06-access-token.md)、[第 10 站网络访问](../vol1-invent/11-access-check.md)。
+衔接 [第 4 讲登录](../vol1-invent/05-logon-lsa.md)、[第 5 讲令牌](../vol1-invent/06-access-token.md)、[第 10 讲网络访问](../vol1-invent/11-access-check.md)。
 
 ## 验收标准（写完后自检）
 
@@ -45,7 +45,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 17 站：NTLM 与协商](./03-ntlm.md)
+← 上一章：[第 17 讲：NTLM 与协商](./03-ntlm.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 19 站：SPN](./05-spn.md)
+→ 下一章：[第 19 讲：SPN](./05-spn.md)
 <!-- chapter-nav:end -->

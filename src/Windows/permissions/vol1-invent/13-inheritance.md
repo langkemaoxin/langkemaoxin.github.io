@@ -1,7 +1,7 @@
 ---
-title: "第 12 站：继承——从「子文件太多」一步步发明（重点）"
+title: "第 12 讲：继承——从「子文件太多」一步步发明（重点）"
 sidebarGroup: "卷一·发明权限"
-shortTitle: "第 12 站：继承"
+shortTitle: "第 12 讲：继承"
 order: 13
 date: 2026-08-06
 category: "Windows"
@@ -14,10 +14,10 @@ tag:
   - "安全"
 ---
 
-# 第 12 站：继承——从「子文件太多」一步步发明（重点）
+# 第 12 讲：继承——从「子文件太多」一步步发明（重点）
 
 前面你会：用 `icacls` 看/改**某一个**对象上的 DACL。  
-本站假设你**还没听过** OI、CI、InheritanceFlags 这些词——我们只带着已经会的东西，做最小实验，根据现象再起名字。
+本讲假设你**还没听过** OI、CI、InheritanceFlags 这些词——我们只带着已经会的东西，做最小实验，根据现象再起名字。
 
 > **练习约定：** 只在 `E:\WindowsTest\...` 上改 ACL。主体固定为作者环境账户 `JZFZ\chengongyi`（你机器上请换成自己的 `域名\用户名`）。  
 > 看结果时**只盯你刚加上的那一行**；同路径上从 `E:\` 继承来的其它行一律从略。  
@@ -43,7 +43,7 @@ tag:
         └── file-sub1.txt
 ```
 
-PowerShell（一次建齐本站要用的目录；每步只用其中一棵）：
+PowerShell（一次建齐本讲要用的目录；每步只用其中一棵）：
 
 ```powershell
 $labs = @('Lab00','Lab01','Lab02','Lab03','Lab04','Lab05','Lab06','Lab07')
@@ -141,7 +141,7 @@ E:\WindowsTest\Lab01\Sub\file-sub.txt → 没有
 **推导：**
 
 - 默认的 `/grant …:RX` **只作用于当前对象**，**不会**自动传播到子级。  
-- 若要对下面成百上千个文件生效，要么逐个 grant（正是本站开头的麻烦），要么系统还藏着「请往下流」的开关——下一实验去找。  
+- 若要对下面成百上千个文件生效，要么逐个 grant（正是本讲开头的麻烦），要么系统还藏着「请往下流」的开关——下一实验去找。  
 - 对照实验 0：别人流下来的行带 `(I)`；你刚写的显式行通常**不带** `(I)`。
 
 **你现在会了：** 朴素 grant = 只贴当前。  
@@ -328,7 +328,7 @@ E:\WindowsTest\Lab05\Sub\Sub1\file-sub1.txt  JZFZ\chengongyi:(I)(RX)
 
 **现象：** 根上**仍有**你的行，但多了 `(IO)`；下面的文件 / `Sub` 仍然吃到规则（和实验 4 的子孙侧很像）。
 
-**关键先分清：查看 ≠ 访问检查**（第 9 / 10 站已会）
+**关键先分清：查看 ≠ 访问检查**（第 9 / 10 讲已会）
 
 | | 在干什么 |
 |--|----------|
@@ -612,7 +612,7 @@ icacls E:\WindowsTest\ /restore E:\WindowsTest\acl-backup.txt
 ### 收束
 
 **你现在会了：** 用最小实验自己「发明」了继承与五个括号；事后才对接 InheritanceFlags / PropagationFlags；能在 `E:\WindowsTest` 上验证并读输出。  
-**下一站才需要：** 规则叠太多时，如何一眼看到「最终能不能访问」。
+**下一讲才需要：** 规则叠太多时，如何一眼看到「最终能不能访问」。
 
 ---
 
@@ -623,7 +623,7 @@ icacls E:\WindowsTest\ /restore E:\WindowsTest\acl-backup.txt
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 11 站：安全描述符](./12-security-descriptor.md)
+← 上一章：[第 11 讲：安全描述符](./12-security-descriptor.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 13 站：有效权限](./14-effective-permissions.md)
+→ 下一章：[第 13 讲：有效权限](./14-effective-permissions.md)
 <!-- chapter-nav:end -->

@@ -1,7 +1,7 @@
 ---
-title: "第 19 站：SPN 与计算机账户"
+title: "第 19 讲：SPN 与计算机账户"
 sidebarGroup: "卷二·网上的身份"
-shortTitle: "第 19 站：SPN"
+shortTitle: "第 19 讲：SPN"
 order: 5
 date: 2026-08-06
 category: "Windows"
@@ -12,7 +12,7 @@ tag:
   - "书稿"
 ---
 
-# 第 19 站：SPN 与计算机账户
+# 第 19 讲：SPN 与计算机账户
 
 > **状态：待写**（占位章）  
 > **分卷：卷二·网上的身份**  
@@ -45,7 +45,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 18 站：登录类型](./04-logon-types.md)
+← 上一章：[第 18 讲：登录类型](./04-logon-types.md)
 · [回书稿索引](../00-index.md)
-→ 下一章：[第 20 站：权利与 UAC](../vol3-rights-uac/01-rights-uac.md)
+→ 下一章：[第 20 讲：权利与 UAC](../vol3-rights-uac/01-rights-uac.md)
 <!-- chapter-nav:end -->

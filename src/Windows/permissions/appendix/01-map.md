@@ -1,5 +1,5 @@
 ---
-title: "总图：把各站串回一条线"
+title: "总图：把各讲串回一条线"
 sidebarGroup: "附录"
 shortTitle: "总图"
 order: 1
@@ -14,9 +14,9 @@ tag:
   - "安全"
 ---
 
-# 总图：把各站串回一条线
+# 总图：把各讲串回一条线
 
-回 [索引](../00-index.md) 可按站跳转。下面是整条发明链：
+回 [索引](../00-index.md) 可按讲跳转。下面是整条发明链：
 
 ```text
 无权限
@@ -43,27 +43,27 @@ tag:
 
 | 链上节点 | 对应章 |
 |----------|--------|
-| 无权限 | [第 0 站](../vol1-invent/01-no-permission.md) |
-| 账户 | [第 1 站](../vol1-invent/02-account.md) |
-| SID | [第 2 站](../vol1-invent/03-sid.md) |
-| 名字↔SID | [第 3 站](../vol1-invent/04-name-sid-lsa.md) |
-| 登录认证 | [第 4 站](../vol1-invent/05-logon-lsa.md) |
-| Access Token | [第 5 站](../vol1-invent/06-access-token.md) |
-| Owner | [第 6 站](../vol1-invent/07-owner.md) |
-| 权限位 | [第 7 站](../vol1-invent/08-permission-bits.md) |
-| 组 | [第 8 站](../vol1-invent/09-groups.md) |
-| ACE / DACL | [第 9 站](../vol1-invent/10-ace-dacl.md) |
-| 访问检查 | [第 10 站](../vol1-invent/11-access-check.md) |
-| 安全描述符 | [第 11 站](../vol1-invent/12-security-descriptor.md) |
-| 继承 | [第 12 站](../vol1-invent/13-inheritance.md) |
-| 有效权限 | [第 13 站](../vol1-invent/14-effective-permissions.md) |
-| SACL | [第 14 站](../vol1-invent/15-sacl.md) |
-| 域与域控 | [第 15 站](../vol2-identity/01-domain-dc.md) |
-| Kerberos | [第 16 站](../vol2-identity/02-kerberos.md) |
-| NTLM 与协商 | [第 17 站](../vol2-identity/03-ntlm.md) |
-| 登录类型 | [第 18 站](../vol2-identity/04-logon-types.md) |
-| SPN | [第 19 站](../vol2-identity/05-spn.md) |
-| 权利与 UAC | [第 20 站](../vol3-rights-uac/01-rights-uac.md) |
+| 无权限 | [第 0 讲](../vol1-invent/01-no-permission.md) |
+| 账户 | [第 1 讲](../vol1-invent/02-account.md) |
+| SID | [第 2 讲](../vol1-invent/03-sid.md) |
+| 名字↔SID | [第 3 讲](../vol1-invent/04-name-sid-lsa.md) |
+| 登录认证 | [第 4 讲](../vol1-invent/05-logon-lsa.md) |
+| Access Token | [第 5 讲](../vol1-invent/06-access-token.md) |
+| Owner | [第 6 讲](../vol1-invent/07-owner.md) |
+| 权限位 | [第 7 讲](../vol1-invent/08-permission-bits.md) |
+| 组 | [第 8 讲](../vol1-invent/09-groups.md) |
+| ACE / DACL | [第 9 讲](../vol1-invent/10-ace-dacl.md) |
+| 访问检查 | [第 10 讲](../vol1-invent/11-access-check.md) |
+| 安全描述符 | [第 11 讲](../vol1-invent/12-security-descriptor.md) |
+| 继承 | [第 12 讲](../vol1-invent/13-inheritance.md) |
+| 有效权限 | [第 13 讲](../vol1-invent/14-effective-permissions.md) |
+| SACL | [第 14 讲](../vol1-invent/15-sacl.md) |
+| 域与域控 | [第 15 讲](../vol2-identity/01-domain-dc.md) |
+| Kerberos | [第 16 讲](../vol2-identity/02-kerberos.md) |
+| NTLM 与协商 | [第 17 讲](../vol2-identity/03-ntlm.md) |
+| 登录类型 | [第 18 讲](../vol2-identity/04-logon-types.md) |
+| SPN | [第 19 讲](../vol2-identity/05-spn.md) |
+| 权利与 UAC | [第 20 讲](../vol3-rights-uac/01-rights-uac.md) |
 
 三句总收束：
 
@@ -80,7 +80,7 @@ tag:
 ---
 
 <!-- chapter-nav:start -->
-← 上一章：[第 33 站：.NET 模拟](../vol6-dotnet/03-impersonation.md)
+← 上一章：[第 33 讲：.NET 模拟](../vol6-dotnet/03-impersonation.md)
 · [回书稿索引](../00-index.md)
 → 下一章：[SDDL](./02-sddl.md)
 <!-- chapter-nav:end -->
