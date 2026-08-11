@@ -373,7 +373,8 @@ channel.basicPublish(EXCHANGE, ROUTING_KEY, null, body);
 
 > 上面 nack 只打了日志。**生产级**要在 nack（以及 Channel 异常断开）时把 `outstanding` 里受影响的消息**重发**，两个细节：
 > - **重发要拿新 seq**——重发对 Broker 是一条新消息，必须重新 `getNextPublishSeqNo()` 再入表，不能复用旧号。
-> - **Channel 异常断开**：`outstanding` 里剩余的都是「Broker 是否收到未知」的消息，需在 `addShutdownListener` 里全部重发；既然会重发，消费者就必须**幂等**（消息可能其实已落 Broker，至少一次投递）。
+> - **Channel 异常断开怎么办**：假设你发了 5 条、`outstanding` 里还剩 2 条没收到 ack，这时网线断了 / Broker 重启、Channel 挂了。这 2 条 Broker 到底收到没？**你判断不了**——可能收到了但 ack 还没回、可能收到了还没落盘就崩了、也可能压根没到。既然判断不了，**稳妥起见一律重发**：在 `addShutdownListener`（Channel 异常关闭时触发的回调）里把 `outstanding` 剩下的全发一遍。
+> - **代价：消费者必须幂等**。因为 Broker 可能其实已经收到了那条，你一重发 = 它收到两次 = 下游处理两次。所以消费者要能去重（按业务唯一键），处理两次的效果等于一次——这就是「**至少一次投递（at-least-once）**」：消息不会丢，但可能重复。
 
 异步确认吞吐最好。还可加 **ReturnListener** 监控「已到 Exchange 但无法路由到 Queue」的消息；配合 Exchange 的 **`alternate-exchange`** 做兜底转发。
 
