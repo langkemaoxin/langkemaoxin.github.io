@@ -11,7 +11,7 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 5/10 篇**  
+> **RabbitMQ 系列 · 第 5/11 篇**  
 > 上一篇：[《RabbitMQ 常用消息场景——Work、Pub/Sub、Routing、Topic》](/中间件/rabbitmq/rabbitmq-04-messaging-patterns)  
 > 下一篇预告：[《Classic、Quorum、Stream——如何选择队列类型》](/中间件/rabbitmq/rabbitmq-06-queue-types)
 
@@ -26,6 +26,8 @@ tag:
 ---
 
 ## 一、引入依赖
+
+> 📦 **配套示例项目**：本篇代码可在 GitHub 运行 → [rabbitmq-blog-demo](https://github.com/code-corey/rabbitmq-blog-demo) 的 `ch05-springboot` 模块
 
 Spring Boot 官方集成，核心依赖一个：
 
