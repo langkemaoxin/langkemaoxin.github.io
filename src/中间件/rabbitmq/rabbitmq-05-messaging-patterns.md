@@ -353,6 +353,29 @@ if (outstanding > 0) ch.waitForConfirmsOrDie(5_000);
 
 **整体流程**：发布前先用 `getNextPublishSeqNo()` 占号、把 `seq → 消息体` 存进一张表（`outstanding`）；Broker 回 ack 就从表里删掉那条（说明收到了），回 nack 就得重发。用 `ConcurrentSkipListMap` 是因为它**并发安全**（发布线程和回调线程同时访问）且**有序**——`multiple=true` 时能 `headMap` 一把清掉 seq 及之前全部。
 
+**整个流程跑起来长这样**（左：你的发布线程；右：`outstanding` 表的实时状态；中间：Broker 的异步回调）：
+
+```
+   发布线程                          Broker                  outstanding 表
+   ────────                          ──────                  ──────────────
+   ① seq=getNextPublishSeqNo()      （占号，下一条=1）          {}
+   ② outstanding.put(seq, body1)     （入表）                   {1:body1}
+   ③ basicPublish(body1) ──────────▶ 收到 1
+        │  不等 ack，继续发下一条（非阻塞，所以吞吐高）
+   ① seq=getNextPublishSeqNo()      （占号=2）                 {1:body1}
+   ② outstanding.put(seq, body2)                               {1:body1, 2:body2}
+   ③ basicPublish(body2) ──────────▶ 收到 2
+                                     ……Broker 异步逐条确认……
+
+   ◀──────── ack(seq=1, multiple=false) ────   回调：1 收到了
+   ④ ack 回调：outstanding.remove(1)                           {2:body2}   ← 1 删掉=已确认 ✓
+
+   ◀──────── nack(seq=2, multiple=false) ────  回调：2 没收到
+   ⑤ nack 回调：重发 body2（生产级，拿新 seq）                 ……
+```
+
+一句话：**发布线程只管「占号 → 入表 → 发」一股脑往前冲，不阻塞；Broker 的 ack/nack 回调异步回来，靠 seq 在表里对账——ack 删、nack 重发。**
+
 ```java
 ConcurrentSkipListMap<Long, String> outstanding = new ConcurrentSkipListMap<>();
 
