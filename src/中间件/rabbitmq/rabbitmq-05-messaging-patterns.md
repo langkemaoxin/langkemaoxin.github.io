@@ -115,6 +115,10 @@ Queue 和消息都设 `durable` / `PERSISTENT` 时，消息先写入 **PageCache
 
 ### 2.2 prefetch 调优
 
+**prefetch 是什么**：push 模式（`basicConsume`）下，Broker 不会等消费者 ACK 一条才发下一条——它倾向于**提前推**几条过去，让消费者手头总有活干、压住网络往返延迟。**prefetch（预取数）就是 Broker 允许同一消费者「尚未 ACK 的在途消息上限」**：在途数一到上限，Broker 就暂停往这个消费者推，等它 ACK 释放额度再继续。它由 `channel.basicQos(prefetchCount)` 设定，限的是**未 ACK 的在途数**，不是累计投递量；只对 push 模式有效，`basic.get` 拉模式无所谓。
+
+> 比方：prefetch 是「传菜台最多同时放几盘菜」。台子太小（`1`）——端一盘、收一盘，来回跑，吞吐低但绝不积压；台子很大（几百）——一次摞一堆，吞吐高，但菜全堆在消费者那边、内存吃紧，快慢 Worker 分配也不均。🔗 完整可运行示例：[`PatternsDemoRunner.demoWork()`](https://github.com/code-corey/rabbitmq-blog-demo/blob/main/ch05-messaging-patterns/src/main/java/io/github/codecorey/patterns/PatternsDemoRunner.java) 里 `workerChannel.basicQos(1)` + 手动 ack，两个 Worker 抢 6 个任务，可直接看到「处理完一条才领下一条」的公平分发。
+
 易错点③ 提到用 `basicQos(prefetchCount)` 限流，但**取多少**才是真正的工程问题。核心是一组权衡：
 
 | prefetch | 行为 | 适用 |
