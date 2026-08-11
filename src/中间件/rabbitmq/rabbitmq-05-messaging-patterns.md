@@ -60,13 +60,20 @@ RabbitMQ 客户端 API 本身不复杂，难的是把 Exchange 类型、Routing 
 最简单：Producer 发到指定 Queue，Consumer 从该 Queue 消费，不经 Exchange。
 
 ```java
-// Producer
-channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
+// 非持久化队列：queueDeclare(name, durable, exclusive, autoDelete, args)
+ch.queueDeclare("pattern.hello", false, false, false, null);
 
-// Consumer
-channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-channel.basicConsume(QUEUE_NAME, true, consumer);
+// autoAck=true：Broker 投递即视为确认，consumer 内无需 basicAck
+ch.basicConsume("pattern.hello", true, new DefaultConsumer(ch) {
+    @Override
+    public void handleDelivery(String consumerTag, Envelope envelope,
+                               AMQP.BasicProperties properties, byte[] body) {
+        log.info("[Hello 收到] {}", new String(body, StandardCharsets.UTF_8));
+    }
+});
+
+// 默认交换机 ""：routingKey 即队列名，消息直连该队列
+ch.basicPublish("", "pattern.hello", null, "Hello World!".getBytes(StandardCharsets.UTF_8));
 ```
 
 `basicPublish` 第一个参数传空字符串，表示使用 **默认 Exchange**，routingKey 即为队列名。这就是第二篇控制台的 Demo。
@@ -84,15 +91,27 @@ channel.basicConsume(QUEUE_NAME, true, consumer);
 ![Work Queues：多 Consumer 竞争同一 Queue](/中间件/rabbitmq/13/p14-03.png)
 
 ```java
-// Producer
-channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);
-channel.basicPublish("", TASK_QUEUE_NAME,
-    MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes("UTF-8"));
+// 易错点①：durable=true，队列持久化（重启不丢队列定义）
+ch.queueDeclare("pattern.task_queue", true, false, false, null);
 
-// Consumer
-channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);
-channel.basicQos(1);  // prefetchCount
-channel.basicConsume(TASK_QUEUE_NAME, false, consumer);
+// 两个 Worker 各开 Channel 竞争消费（demoWork 起 2 个）
+Channel w1 = conn.createChannel();
+w1.basicQos(1);                       // 易错点③：prefetch=1（详见 2.2）
+w1.basicConsume("pattern.task_queue", false, new DefaultConsumer(w1) {  // 易错点②：autoAck=false
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties p, byte[] body)
+            throws IOException {
+        log.info("[W1 处理] {}", new String(body, StandardCharsets.UTF_8));
+        w1.basicAck(env.getDeliveryTag(), false);   // 手动 ack，否则形成毒消息
+    }
+});
+// Worker-2 同上……
+
+// 发布持久化任务：PERSISTENT_TEXT_PLAIN（delivery_mode=2）
+for (int i = 1; i <= 6; i++) {
+    ch.basicPublish("", "pattern.task_queue", MessageProperties.PERSISTENT_TEXT_PLAIN,
+            ("task-" + i).getBytes(StandardCharsets.UTF_8));
+}
 ```
 
 ### 2.1 三个易错点
@@ -115,11 +134,25 @@ Queue 和消息都设 `durable` / `PERSISTENT` 时，消息先写入 **PageCache
 
 ### 2.2 prefetch 调优
 
-**prefetch 是什么**：push 模式（`basicConsume`）下，Broker 不会等消费者 ACK 一条才发下一条——它倾向于**提前推**几条过去，让消费者手头总有活干、压住网络往返延迟。**prefetch（预取数）就是 Broker 允许同一消费者「尚未 ACK 的在途消息上限」**：在途数一到上限，Broker 就暂停往这个消费者推，等它 ACK 释放额度再继续。它由 `channel.basicQos(prefetchCount)` 设定，限的是**未 ACK 的在途数**，不是累计投递量；只对 push 模式有效，`basic.get` 拉模式无所谓。
+先把 prefetch 到底是怎么回事讲透。
 
-> 比方：prefetch 是「传菜台最多同时放几盘菜」。台子太小（`1`）——端一盘、收一盘，来回跑，吞吐低但绝不积压；台子很大（几百）——一次摞一堆，吞吐高，但菜全堆在消费者那边、内存吃紧，快慢 Worker 分配也不均。🔗 完整可运行示例：[`PatternsDemoRunner.demoWork()`](https://github.com/code-corey/rabbitmq-blog-demo/blob/main/ch05-messaging-patterns/src/main/java/io/github/codecorey/patterns/PatternsDemoRunner.java) 里 `workerChannel.basicQos(1)` + 手动 ack，两个 Worker 抢 6 个任务，可直接看到「处理完一条才领下一条」的公平分发。
+**Broker 默认会"拼命推"。** push 模式（`basicConsume`）下，Broker 一拿到消息就往消费者推，根本不等它处理完上一条。这有两个坏处：① 消息全挤在消费者那边排队等处理，**内存可能被压垮**；② 多个 Worker 时，Broker 不管谁快谁慢，**平均往各人手里塞一堆**——快的早干完闲死、慢的堆一堆，分配不公平。
 
-**`basicQos(1)` 到底干了什么**：Broker 给这个消费者投 1 条 → 此时「在途未 ACK = 1」，到达上限 → Broker **暂停**再投 → 消费者处理完 `basicAck` → 在途数回 0、腾出额度 → Broker 再投 1 条……循环。一句话：**「一次只给我一条，ack 了再给下一条」**。
+**prefetch 就是给 Broker 划一条线**：「我这个消费者**手上还没 ack 的消息，最多同时这么多条**；超过就别推了，等我 ack 一条、腾出一个名额，你再推一条。」用代码设就是 `channel.basicQos(prefetchCount)`——这个数就是 prefetch。
+
+**prefetch = 1 时具体怎么跑**（demoWork 的写法）：
+
+```
+Broker 推 1 条 ──▶ 你手上 1 条没 ack（到上限了）
+                 │  Broker：你手上已有一条没 ack，先不推了
+                 ▼
+            处理完 → basicAck（名额空出来）
+                 │
+                 ▼
+Broker 再推 1 条 ──▶ ……循环
+```
+
+一句话：**「一次只给我一条，ack 了再给下一条。」** 只对 push 模式有效；`basic.get` 拉模式是你主动去取，无所谓 prefetch。
 
 > ⚠️ **前提：必须配手动 ack**。prefetch 限的是「未 ACK 的在途数」，只有手动 ack（`basicConsume(queue, false, ...)`，处理完才 `basicAck`）才会让在途数累积、才触得到上限；若用 `autoAck=true`（投递瞬间即 acked），在途数永远是 0，prefetch 永远限不住——等于没设。
 
@@ -170,14 +203,20 @@ Queue 和消息都设 `durable` / `PERSISTENT` 时，消息先写入 **PageCache
 ![Fanout：一条消息复制到多个 Queue](/中间件/rabbitmq/13/p16-01.png)
 
 ```java
-// Producer
-channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
-channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes("UTF-8"));
+ch.exchangeDeclare("pattern.logs", "fanout");
 
-// Binding（每个 Consumer 各自声明临时 Queue 并绑定）
-channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
-String queueName = channel.queueDeclare().getQueue();  // 服务端生成队列名
-channel.queueBind(queueName, EXCHANGE_NAME, "");
+// 每个订阅者各自声明服务端命名临时队列并绑定（demoFanout 起 3 个这样的订阅者）
+String q = ch.queueDeclare().getQueue();   // 服务端生成队列名（非持久、独占、自动删除）
+ch.queueBind(q, "pattern.logs", "");        // fanout 忽略 routingKey
+ch.basicConsume(q, true, new DefaultConsumer(ch) {  // autoAck=true
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties p, byte[] body) {
+        log.info("[Sub 收到] {}", new String(body, StandardCharsets.UTF_8));
+    }
+});
+
+// fanout 忽略 routingKey，转发到所有绑定队列
+ch.basicPublish("pattern.logs", "", null, "fanout broadcast".getBytes(StandardCharsets.UTF_8));
 ```
 
 Producer 只关心 Exchange；具体进哪些 Queue 由 Binding 决定，实现进一步解耦。
@@ -195,13 +234,18 @@ Producer 只关心 Exchange；具体进哪些 Queue 由 Binding 决定，实现�
 ![Direct Exchange 按 routingKey 精确路由](/中间件/rabbitmq/13/p17-01.png)
 
 ```java
-// Producer
-channel.exchangeDeclare(EXCHANGE_NAME, "direct");
-channel.basicPublish(EXCHANGE_NAME, routingKey, null, message.getBytes("UTF-8"));
+ch.exchangeDeclare("pattern.direct_logs", "direct");
 
-// Binding
-channel.queueBind(queueName, EXCHANGE_NAME, routingKey1);
-channel.queueBind(queueName, EXCHANGE_NAME, routingKey2);
+String alertQueue = ch.queueDeclare().getQueue();
+ch.queueBind(alertQueue, "pattern.direct_logs", "error");   // Alert 只收 error
+
+String archiveQueue = ch.queueDeclare().getQueue();
+ch.queueBind(archiveQueue, "pattern.direct_logs", "info");   // Archive 收 info
+ch.queueBind(archiveQueue, "pattern.direct_logs", "error");  // …和 error（一个队列绑多个 key）
+
+// routingKey 完全匹配：error→Alert+Archive，info→Archive
+ch.basicPublish("pattern.direct_logs", "error", null, "[error] broke".getBytes(StandardCharsets.UTF_8));
+ch.basicPublish("pattern.direct_logs", "info",  null, "[info] good".getBytes(StandardCharsets.UTF_8));
 ```
 
 ---
@@ -222,10 +266,19 @@ channel.queueBind(queueName, EXCHANGE_NAME, routingKey2);
 ![Topic Exchange 通配符匹配示意](/中间件/rabbitmq/13/p18-01.png)
 
 ```java
-channel.exchangeDeclare(EXCHANGE_NAME, "topic");
-channel.basicPublish(EXCHANGE_NAME, "order.payment.success", null, message.getBytes("UTF-8"));
-channel.queueBind(queueName, EXCHANGE_NAME, "order.*");
-channel.queueBind(queueName, EXCHANGE_NAME, "*.error");
+ch.exchangeDeclare("pattern.topic_logs", "topic");
+
+String orderQueue    = ch.queueDeclare().getQueue();
+ch.queueBind(orderQueue,    "pattern.topic_logs", "order.*"); // order 下恰好两层
+String errorQueue    = ch.queueDeclare().getQueue();
+ch.queueBind(errorQueue,    "pattern.topic_logs", "*.error"); // 所有 error
+String allOrderQueue = ch.queueDeclare().getQueue();
+ch.queueBind(allOrderQueue, "pattern.topic_logs", "order.#"); // order 下全部层级
+
+// 4 条 routingKey 共命中 5 次（'*' 一个词、'#' 零或多个词）
+for (String rk : new String[]{"order.payment.success", "order.shipped", "payment.error", "order.refund.error"}) {
+    ch.basicPublish("pattern.topic_logs", rk, null, ("topic-msg:" + rk).getBytes(StandardCharsets.UTF_8));
+}
 ```
 
 ---
@@ -333,29 +386,44 @@ direct / fanout / topic 都依赖 **routingKey 字符串**。Headers Exchange �
 Consumer 绑定：
 
 ```java
-Map<String, Object> headers = new HashMap<>();
-headers.put("x-match", "any");
-headers.put("loglevel", "info");
-headers.put("buslevel", "product");
-headers.put("syslevel", "admin");
+ch.exchangeDeclare("pattern.header_logs", BuiltinExchangeType.HEADERS);
 
-channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.HEADERS);
-String queueName = channel.queueDeclare("ReceiverHeader", true, false, false, null).getQueue();
-channel.queueBind(queueName, EXCHANGE_NAME, routingKey, headers);
+// 绑定①：x-match=any（任一 header 命中即转发）
+String anyQueue = ch.queueDeclare().getQueue();
+Map<String, Object> anyHeaders = new HashMap<>();
+anyHeaders.put("x-match", "any");
+anyHeaders.put("loglevel", "info");
+anyHeaders.put("buslevel", "product");
+anyHeaders.put("syslevel", "admin");
+ch.queueBind(anyQueue, "pattern.header_logs", "", anyHeaders);
+
+// 绑定②：x-match=all（所有 header 必须全部命中）
+String allQueue = ch.queueDeclare().getQueue();
+Map<String, Object> allHeaders = new HashMap<>();
+allHeaders.put("x-match", "all");
+allHeaders.put("loglevel", "error");
+allHeaders.put("buslevel", "product");
+allHeaders.put("syslevel", "admin");
+ch.queueBind(allQueue, "pattern.header_logs", "", allHeaders);
 ```
 
 Producer 发送：
 
 ```java
-Map<String, Object> headers = new HashMap<>();
-headers.put("loglevel", "error");
-headers.put("buslevel", "product");
-headers.put("syslevel", "admin");
+// 发送：headers = {loglevel=error, buslevel=product, syslevel=admin}
+//   → any 命中（buslevel/syslevel 命中）+ all 命中（三项全中）= 投两条
+Map<String, Object> messageHeaders = new HashMap<>();
+messageHeaders.put("loglevel", "error");
+messageHeaders.put("buslevel", "product");
+messageHeaders.put("syslevel", "admin");
 
-AMQP.BasicProperties.Builder builder = new AMQP.BasicProperties.Builder();
-builder.deliveryMode(MessageProperties.PERSISTENT_TEXT_PLAIN.getDeliveryMode());
-builder.headers(headers);
-channel.basicPublish(EXCHANGE_NAME, routingKey, builder.build(), message.getBytes("UTF-8"));
+AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
+        .deliveryMode(MessageProperties.PERSISTENT_TEXT_PLAIN.getDeliveryMode())
+        .headers(messageHeaders)
+        .build();
+
+// headers 忽略 routingKey，传空串即可
+ch.basicPublish("pattern.header_logs", "", props, "header-msg".getBytes(StandardCharsets.UTF_8));
 ```
 
 Headers 模式性能较低，官方不建议大规模使用，但在多维度标签路由的特殊场景很实用。管理控制台预置 `amq.headers` 即此类型。
