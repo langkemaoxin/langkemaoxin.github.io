@@ -262,7 +262,7 @@ anonymous_login_user = none
 |----|------|------|
 | 开启 Publisher Confirms | 业务关键消息必须开 | [第 05 篇](/中间件/rabbitmq/rabbitmq-05-messaging-patterns) / [第 06 篇](/中间件/rabbitmq/rabbitmq-06-springboot) |
 | 消费者手动 ACK | 处理完再 ack，别 autoAck | [第 03 篇](/中间件/rabbitmq/rabbitmq-03-programming-model) |
-| 合理 prefetch | 别无界拉取，`basicQos` 设上限 | [第 03 篇](/中间件/rabbitmq/rabbitmq-03-programming-model) |
+| 合理 prefetch | 别无界拉取，`basicQos` 设上限；取值依据见 05 篇 2.2 | [第 03 篇](/中间件/rabbitmq/rabbitmq-03-programming-model) · [第 05 篇](/中间件/rabbitmq/rabbitmq-05-messaging-patterns) |
 | 连接自动恢复 | 用客户端自带的重连，别自己造 | [第 14 篇 · 网络](/中间件/rabbitmq/rabbitmq-14-networking) |
 | 生产 / 消费分连接 | 避免流控波及消费者 ACK | [第 14 篇](/中间件/rabbitmq/rabbitmq-14-networking) |
 | 消费者幂等 | 至少一次投递必然有重复 | [第 05 篇](/中间件/rabbitmq/rabbitmq-05-messaging-patterns) |
@@ -312,7 +312,7 @@ anonymous_login_user = none
 
 **根因**：`autoAck = true` 或 `basicQos` 不设上限，Broker 把队列里所有消息一股脑推给消费者，本地缓冲撑爆。
 
-**处方**：手动 ACK + 合理 `basicQos`（如 10~100），让消费者按处理能力拉取。详见 [第 03 篇](/中间件/rabbitmq/rabbitmq-03-programming-model)。
+**处方**：手动 ACK + 合理 `basicQos`（如 10~100），让消费者按处理能力拉取。详见 [第 03 篇](/中间件/rabbitmq/rabbitmq-03-programming-model) 与 [第 05 篇 · 2.2 prefetch 调优](/中间件/rabbitmq/rabbitmq-05-messaging-patterns)。
 
 ### 6.3 消息重复（至少一次的代价）
 

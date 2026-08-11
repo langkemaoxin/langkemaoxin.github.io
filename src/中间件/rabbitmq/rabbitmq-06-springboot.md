@@ -205,7 +205,7 @@ public class DemoConsumer {
 Spring 简化了开发，但以下场景仍需回归原生 API 或扩展 Spring：
 
 - **Stream 队列**：须传 `x-stream-offset`，当前 `@RabbitListener` 无法直接消费 Stream
-- **Publisher Confirms 精细控制**：异步 confirm 与 seq 映射
+- **Publisher Confirms 精细控制**：异步 confirm 与 seq 映射（原生 API 的 `ConcurrentSkipListMap` 实现见 [第 05 篇 · Publisher Confirms](/中间件/rabbitmq/rabbitmq-05-messaging-patterns)，Spring 侧用 `CorrelationData` 封装）
 - **alternate-exchange、死信**：arguments 在 Bean 声明中配置
 
 ---
