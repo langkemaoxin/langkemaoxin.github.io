@@ -1,7 +1,7 @@
 ---
 title: "Classic 队列为什么一堆积就变慢——内存窗口、落盘与流控"
 sidebarGroup: "RabbitMQ"
-shortTitle: "11 堆积为什么变慢"
+shortTitle: "12 堆积为什么变慢"
 order: 12
 date: 2026-09-05
 category: "中间件"

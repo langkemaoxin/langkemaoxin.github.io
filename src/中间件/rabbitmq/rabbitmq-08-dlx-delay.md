@@ -1,7 +1,7 @@
 ---
 title: "死信队列与延迟队列"
 sidebarGroup: "RabbitMQ"
-shortTitle: "07 死信与延迟队列"
+shortTitle: "08 死信与延迟队列"
 order: 8
 date: 2026-09-01
 category: "中间件"

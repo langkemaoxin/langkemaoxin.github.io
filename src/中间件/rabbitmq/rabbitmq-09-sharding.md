@@ -1,7 +1,7 @@
 ---
 title: "消息分片存储插件 Sharding"
 sidebarGroup: "RabbitMQ"
-shortTitle: "08 Sharding 分片"
+shortTitle: "09 Sharding 分片"
 order: 9
 date: 2026-09-02
 category: "中间件"

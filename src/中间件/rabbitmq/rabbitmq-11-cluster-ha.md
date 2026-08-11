@@ -1,7 +1,7 @@
 ---
 title: "RabbitMQ 集群与高可用"
 sidebarGroup: "RabbitMQ"
-shortTitle: "10 集群与高可用"
+shortTitle: "11 集群与高可用"
 order: 11
 date: 2026-09-04
 category: "中间件"

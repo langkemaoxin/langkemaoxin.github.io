@@ -1,7 +1,7 @@
 ---
 title: "SpringBoot 集成 RabbitMQ"
 sidebarGroup: "RabbitMQ"
-shortTitle: "05 SpringBoot 集成"
+shortTitle: "06 SpringBoot 集成"
 order: 6
 date: 2026-08-30
 category: "中间件"

@@ -1,7 +1,7 @@
 ---
 title: "RabbitMQ 常用消息场景——Work、Pub/Sub、Routing、Topic"
 sidebarGroup: "RabbitMQ"
-shortTitle: "04 七种消息场景"
+shortTitle: "05 七种消息场景"
 order: 5
 date: 2026-08-29
 category: "中间件"
@@ -24,6 +24,28 @@ RabbitMQ 客户端 API 本身不复杂，难的是把 Exchange 类型、Routing 
 官方教程（[https://www.rabbitmq.com/tutorials](https://www.rabbitmq.com/tutorials)）总结了七种典型场景。本篇覆盖其中六种常用模式（不含 RPC），并补充 **Headers** 路由。RPC 用 MQ 实现远程调用在实际项目中较少采用，此处略过。
 
 ![RabbitMQ 官方教程七种场景概览](/中间件/rabbitmq/13/p13-01.png)
+
+---
+
+## Exchange 类型一览：先有一张总表
+
+七种场景看着多，其实只有**四种 Exchange 类型**在变（外加一个「默认 Exchange」），区别全在**怎么把消息从 Exchange 路由到 Queue**：
+
+| Exchange 类型 | 路由依据 | Binding Key | 典型场景 | 内置实例 |
+|---------------|----------|-------------|----------|----------|
+| **默认 Exchange**（名字为空 `""`）| routingKey **= 队列名** | 每个 Queue 自动以自己名字绑定 | 直连单队列（Hello World、Work Queue）| `""`（本质是 direct 型，Broker 自动建）|
+| **direct** | routingKey **完全相等** | 一个 Queue 可绑多个 key | 按类别精确路由（error / info 分流）| `amq.direct` |
+| **fanout** | **忽略 routingKey**，广播到所有绑定 Queue | 绑定时 key 无意义 | 发布 / 订阅、广播通知 | `amq.fanout` |
+| **topic** | routingKey **点分单词 + 通配符**（`*` 一个词、`#` 零或多个词）| Binding Key 带通配符 | 多级主题订阅（`order.*`、`*.error`）| `amq.topic` |
+| **headers** | **忽略 routingKey**，按消息 headers 键值对 + `x-match`（all / any）| Binding 时传 headers map | 多维度标签路由 | `amq.headers` |
+
+三点先记住：
+
+- **Producer 永远只往 Exchange 发**（routingKey 随消息走），**Consumer 只从 Queue 收**；中间靠 **Binding** 把 Exchange 和 Queue 连起来，**路由规则由 Exchange 类型决定**。
+- 默认 Exchange `""` 本质是个 **direct** 型，且每个队列一声明就自动以自己名字绑上去，所以 `basicPublish("", 队列名, ...)` 看起来像「直连队列」——Hello World、Work Queue 都靠它。
+- 除这四种核心类型，还有**插件提供的 Exchange 类型**：`x-modulus-hash`（[09 分片](/中间件/rabbitmq/rabbitmq-09-sharding)）、`x-consistent-hash` / `x-delayed-message` / `x-recent-history`（[19 插件巡览](/中间件/rabbitmq/rabbitmq-19-plugins)），按需启用插件即可。
+
+下面的六种场景，就是这张表里几种类型的实战组合：Hello / Work 用默认 Exchange、Pub/Sub 用 fanout、Routing 用 direct、Topics 用 topic，再补一个 Headers。
 
 ---
 

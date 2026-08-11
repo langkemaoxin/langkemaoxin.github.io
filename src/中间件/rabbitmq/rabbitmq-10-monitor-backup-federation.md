@@ -1,7 +1,7 @@
 ---
 title: "RabbitMQ 监控、备份与联邦同步"
 sidebarGroup: "RabbitMQ"
-shortTitle: "09 监控备份与联邦"
+shortTitle: "10 监控备份与联邦"
 order: 10
 date: 2026-09-03
 category: "中间件"

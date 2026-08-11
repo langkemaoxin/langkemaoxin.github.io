@@ -262,6 +262,19 @@ export default sidebar({
             "05-references",
           ],
         },
+        {
+          text: "卷七·安全防护",
+          icon: "folder",
+          prefix: "vol7-defense/",
+          collapsible: true,
+          children: [
+            "01-windows-hello",
+            "02-credential-guard",
+            "03-vbs-hvci",
+            "04-app-control",
+            "05-bitlocker",
+          ],
+        },
       ],
     },
     {

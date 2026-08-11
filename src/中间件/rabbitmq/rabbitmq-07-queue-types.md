@@ -1,7 +1,7 @@
 ---
 title: "Classic、Quorum、Stream——如何选择队列类型"
 sidebarGroup: "RabbitMQ"
-shortTitle: "06 队列类型"
+shortTitle: "07 队列类型"
 order: 7
 date: 2026-08-31
 category: "中间件"
