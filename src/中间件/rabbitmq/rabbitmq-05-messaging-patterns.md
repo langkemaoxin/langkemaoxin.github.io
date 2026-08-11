@@ -198,6 +198,11 @@ Broker 再推 1 条 ──▶ ……循环
 - `global=false`：各自独立，谁先 ack 谁腾自己的名额，互不影响——**绝大多数场景用这个**（包括本篇的 fair dispatch）。
 - `global=true`：三个消费者抢同一个总额度，给谁多给谁少由 Broker 决定；只有想给整条 Channel 封顶时才用，**很少见**。
 
+**举个具体例子**（一条 Channel 上 C1/C2/C3 三个消费者，prefetch=10，队列里消息管够）：
+
+- `global=false`（默认）：Broker **各给三人推满 10 条**——C1 手上 10、C2 手上 10、C3 手上 10，这条 Channel 共 **30 条**在途；三人都满额，Broker 暂停推。接着 C1 处理完 1 条、ack → 只腾出 **C1 自己**的 1 个名额 → Broker 又给 C1 推 1 条（C2/C3 不受影响）。三人**各按各的节奏领、互不干扰**。
+- `global=true`：三人**共享一个 10 的池**。Broker 可能先把 10 条一股脑给了 C1（池满了），C2/C3 **一条都拿不到**，Broker 停推；等 C1 ack 1 条、池腾 1 → Broker 再推 1 条（给谁由 Broker 定，可能还是 C1）。**可能一人独占、另两人饿着**——所以 global=true 只在「我就要给整条 Channel 封顶、不在乎谁多吃」时才用。
+
 > ⚠️ 一个坑：AMQP 规范写的 `global=true` 是「整个连接（per-connection）」，但 **RabbitMQ 实际只做到「整个 Channel」**，没实现 per-connection。所以看规范或别的客户端资料说 `global=true` 管「整条连接」时别照搬——在 RabbitMQ 里它只到 Channel 这一层。
 
 **副作用闭环**：所有 Consumer 都打满 prefetch 后，消息会停在服务端 Queue 里堆积——堆积后 Classic 队列为何断崖式变慢，见 [第 12 篇 · 积压退化](/中间件/rabbitmq/rabbitmq-12-classic-backlog-degradation)；监控侧盯 `unacked` 与 `messages_ready`，见 [第 22 篇 · 生产实践](/中间件/rabbitmq/rabbitmq-22-production-checklist)。
