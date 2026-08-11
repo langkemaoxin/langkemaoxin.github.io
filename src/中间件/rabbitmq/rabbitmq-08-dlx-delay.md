@@ -150,9 +150,73 @@ Producer → 延迟 Queue(设 TTL + DLX，无 Consumer) → TTL 到期成死信 
 3. 下单时 Producer 发到 `delay.exchange` → 消息在 `delay.queue` 里干等 30 分钟。
 4. 30 分钟到期 → 成死信 → 进 `process.exchange` → `process.queue` → Consumer 执行关单。
 
+**完整代码**（截取自 [`ch08-dlx-delay/DelayQueueRunner`](https://github.com/code-corey/rabbitmq-blog-demo/blob/main/ch08-dlx-delay/src/main/java/io/github/codecorey/dlxdelay/runner/DelayQueueRunner.java)，演示用 TTL=5 秒）：
+
+```java
+// === 1. 先声明 process.exchange（死信交换机）——必须先存在，否则 delay.queue
+//         声明 x-dead-letter-exchange 时会因找不到交换机而失败（PRECONDITION_FAILED）===
+channel.exchangeDeclare("process.exchange", BuiltinExchangeType.DIRECT, true);
+channel.queueDeclare("process.queue", true, false, false, null);  // 普通队列，Consumer 执行关单
+channel.queueBind("process.queue", "process.exchange", "process.order");
+
+// === 2. 声明 delay.exchange（Producer 投递目标）===
+channel.exchangeDeclare("delay.exchange", BuiltinExchangeType.DIRECT, true);
+
+// === 3. delay.queue：核心参数 x-message-ttl + x-dead-letter-exchange ===
+Map<String, Object> queueArgs = new HashMap<>();
+queueArgs.put("x-message-ttl", 5000);              // TTL（演示 5 秒；生产 30 分钟=1800000）
+queueArgs.put("x-dead-letter-exchange", "process.exchange");
+queueArgs.put("x-dead-letter-routing-key", "process.order");  // 死信转移时用此 key（覆盖原 key）
+channel.queueDeclare("delay.queue", true, false, false, queueArgs);
+channel.queueBind("delay.queue", "delay.exchange", "delay.order");
+
+// === 4. 注册 process.queue 的 Consumer（TTL 到期后死信到达此处执行关单）===
+channel.basicQos(1);
+channel.basicConsume("process.queue", false, new DefaultConsumer(channel) {
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties props, byte[] body)
+            throws IOException {
+        // 死信带了"案底"——打印诊断 header（见第五节）
+        String reason = "" + props.getHeaders().get("x-first-death-reason");    // expired
+        String fromQ  = "" + props.getHeaders().get("x-first-death-queue");     // delay.queue
+        log.info("[关单] {} | reason={} from={} time={}", new String(body), reason, fromQ, LocalTime.now());
+        channel.basicAck(env.getDeliveryTag(), false);
+    }
+});
+
+// === 5. 向 delay.exchange 发送订单关单任务 ===
+//        delay.queue 没有消费者，消息只能干等到 TTL 到期成死信
+for (int i = 1; i <= 3; i++) {
+    channel.basicPublish("delay.exchange", "delay.order",
+            MessageProperties.PERSISTENT_TEXT_PLAIN,
+            ("订单 ORDER-00" + i + " 关单任务").getBytes(StandardCharsets.UTF_8));
+    log.info("[下单] ORDER-00{} 已发送到 delay.exchange, time={}", i, LocalTime.now());
+    Thread.sleep(1000);  // 间隔 1 秒，便于观察错峰到期
+}
+```
+
+运行效果（`mvn -pl ch08-dlx-delay -am spring-boot:run`）：
+
+```
+14:30:01 [下单] ORDER-001 已发送到 delay.exchange, time=14:30:01.123
+14:30:02 [下单] ORDER-002 已发送到 delay.exchange, time=14:30:02.124
+14:30:03 [下单] ORDER-003 已发送到 delay.exchange, time=14:30:03.125
+
+# 5 秒后（消息排队到期）：
+14:30:06 [关单] 订单 ORDER-001 关单任务 | reason=expired from=delay.queue time=14:30:06.126
+14:30:07 [关单] 订单 ORDER-002 关单任务 | reason=expired from=delay.queue time=14:30:07.127
+14:30:08 [关单] 订单 ORDER-003 关单任务 | reason=expired from=delay.queue time=14:30:08.128
+```
+
+> 每条消息入队间隔 1 秒 → 各自过期时间也差 1 秒 → 错峰到期，Consumer 按 FIFO 逐条收到死信。注意 `x-first-death-reason=expired`、`x-first-death-queue=delay.queue`——死信带的"案底"（见第五节）。
+
 ![TTL + 死信实现延迟队列流程](/中间件/rabbitmq/14/p12-01.png)
 
 > 这个"延迟队列"的 Consumer 通常做**业务补偿**：关单、释放库存、发提醒。
+
+> **那 RabbitMQ 怎么知道消息到期了？不是每条消息一个定时器。** 百万消息就百万定时器，根本扛不住。实际做法：消息入队时打个**过期时间戳**（入队时刻 + TTL），检测是**懒的**——主要在消息排到**队头**（最老的位置）时才查它有没有过期，过期就死信、再查下一个；也会周期性地收割过期的队头消息，所以**延迟队列没有消费者也能正常到期**。后果：**TTL 过期不是毫秒精确**，消息可能在理论到期后一小会儿才被死信（得冒泡到队头才被查），延迟是**秒级**精度。
+>
+> 因此延迟队列要用**队列级 `x-message-ttl`**（所有消息同 TTL、按 FIFO 过期，队头先到期）；**别用单消息 `expiration`**——各条 TTL 不同会**队头阻塞**（一条短 TTL 的消息排在长 TTL 后面，得等前面的排到队头才会被查），延迟严重不准。
 
 ![延迟队列与普通死信队列对比](/中间件/rabbitmq/14/p12-02.png)
 
