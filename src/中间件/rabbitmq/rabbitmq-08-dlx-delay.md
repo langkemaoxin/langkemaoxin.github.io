@@ -17,138 +17,154 @@ tag:
 
 ---
 
-## 开头：订单 30 分钟未支付，怎么自动关单
+## 开头：消息"处理不了"怎么办
 
-RabbitMQ 没有内置「延迟队列」类型，但可以用 **TTL + 死信交换机（DLX）** 实现：消息在普通队列里等到过期，变成死信进入 DLX，再路由到死信队列，由消费者执行关单、释放库存等补偿逻辑。
+订单 30 分钟未支付要自动关单、消费者处理一条消息反复失败（毒消息）、队列积压太久要丢掉旧的——这些场景有个共同点：**消息没法被正常消费了，但又不能就这么无声无息地丢掉**。
 
-死信队列（Dead Letter Queue）是对 **未能正常消费** 消息的补救机制——本质仍是普通 Queue，可继续声明 Consumer 处理。
+RabbitMQ 的答案是 **死信（Dead Letter）+ 死信交换机（DLX）**：给这些消息一个"回收站"，接住后供重试、排查或业务补偿。很多教程一上来就讲 `x-dead-letter-exchange` 参数，却没讲清死信到底怎么回事——这篇先把概念讲透，再上配置。
 
 ---
 
-## 一、核心参数
+## 一、先把概念讲透：什么是死信、死信队列、DLX
+
+**死信（Dead Letter）**：一条消息在队列里"没法被正常消费"了，就成了死信。三种情况会触发（第二节详述）：被消费者拒绝且不重投、TTL 过期、队列超长被挤掉。
+
+**死信队列（Dead Letter Queue，DLQ）**：接住死信的那个队列。**它就是一条普通队列**，没有什么"死信类型"——照样声明、照样挂消费者消费，只不过它收的是"从别的队列转过来的死信"。
+
+**死信交换机（Dead Letter Exchange，DLX）**：把死信送进 DLQ 的那个交换机。**它也是一个普通交换机**（direct / fanout / topic 随便），不是什么特殊类型。
+
+> 🔑 **一个关键认知**：DLX 和 DLQ 都不是特殊的东西，全是普通的 exchange 和 queue。整个死信机制，就是靠**业务队列上的一个参数 `x-dead-letter-exchange`** 串起来的——你告诉 Broker："我这个队列里的消息一旦成了死信，就帮我重新投到这个交换机去。"Broker 照办，剩下按正常的 exchange → binding → queue 规则路由。没有"死信交换机类型"这种东西。
+
+---
+
+## 二、死信是怎么产生的：三种触发
+
+| 触发条件 | 到底什么意思 |
+|----------|--------------|
+| **① 消费者拒绝且不重投** | 消费者 `basicReject` / `basicNack` 时把 `requeue=false`，明确说"这条我处理不了、也别再投给我"→ Broker 把它转成死信 |
+| **② TTL 过期** | 消息在队列里待的时间超过 `x-message-ttl`，还没被消费 → 过期成死信 |
+| **③ 队列超长** | 队列达到 `x-max-length` 上限，新消息进来时把旧的挤掉（按策略），被挤掉的那条成死信 |
+
+> ⚠️ **常被搞混的点**：消费者 ack 失败 / 抛异常 / 断连时，**默认是 requeue（重投回原队列继续重试），不是死信**。只有你**显式 `requeue=false`** 才会进死信。换句话说，死信是"我主动放弃这条"的明确信号，不是"处理出错了"的自动结果。
+
+---
+
+## 三、整个流转：业务队列 → 死信 → DLX → 死信队列
+
+关键在于：**消息成死信的那一刻，Broker 会自动把它重新投递（republish）到你配的 DLX**，无需你写一行代码。然后按正常规则路由到死信队列：
+
+```
+  Producer
+     │ basicPublish（正常发）
+     ▼
+  ┌────────────────┐  消息成了死信           ┌─────┐  binding    ┌────────────────┐
+  │  业务 Queue    │ ───(Broker 自动 ─────▶ │ DLX │ ──────────▶│  死信 Queue    │ ──▶ Consumer
+  │ 挂 x-dead-     │     republish)         │(普通)│             │ (DLQ，普通)    │     （重试/排查/
+  │  letter-       │                        └─────┘             └────────────────┘      业务补偿）
+  │  exchange=DLX  │
+  └────────────────┘
+   触发死信的 3 种情况：① 拒绝 requeue=false   ② TTL 过期   ③ 队列超长
+```
+
+三个要点：
+
+- 业务队列上**只需挂一个参数** `x-dead-letter-exchange`，剩下的 Broker 全包——你不用写"转发"代码。
+- DLX → 死信队列之间，**按正常 exchange→binding→routing-key 规则路由**。所以 DLX 可以是 fanout（一份死信广播给多个排查队列），也可以是 direct/topic（按 key 精确/模糊分流）。
+- 死信转移是 **Broker 内部动作，不经发送端 Confirm**，安全级别低于 Producer 侧发消息。
+
+🔗 完整可运行示例：[`ch08-dlx-delay`](https://github.com/code-corey/rabbitmq-blog-demo/tree/main/ch08-dlx-delay) 的 `DelayQueueRunner`（TTL 5 秒 + DLX 的订单关单链路）。
+
+---
+
+## 四、配置死信
+
+### 4.1 核心参数
 
 | 参数 | 说明 |
 |------|------|
-| `x-dead-letter-exchange` | 死信交换机名称 |
-| `x-dead-letter-routing-key` | 转发到死信交换机时使用的 routing key（可选，会覆盖原 key） |
-| `x-message-ttl` | 消息 TTL（毫秒） |
+| `x-dead-letter-exchange` | 死信交换机名（**挂在业务队列上**） |
+| `x-dead-letter-routing-key` | 转发到 DLX 时用的 routing key（可选；不设则保留原 key） |
+| `x-message-ttl` | 消息 TTL（毫秒），可与 DLX 配合做延迟队列 |
 | `durable` | 建议 `true` |
 
-流程：业务 Queue 上配置 DLX → 消息成为死信 → DLX 按 routing key 转发 → 死信 Queue → Consumer 消费。
-
-![死信队列与 TTL 参数关系示意](/中间件/rabbitmq/14/p08-01.png)
-
-**注意**：Classic 与 Quorum 支持死信；**Stream 不支持**。
-
----
-
-## 二、何时产生死信
-
-以下三种情况，RabbitMQ 将消息转为死信：
-
-| 原因 | 说明 |
-|------|------|
-| **消费者拒绝** | `basicReject` / `basicNack`，且 `requeue=false` |
-| **TTL 过期** | 消息在队列中超过 `x-message-ttl` 仍未被消费 |
-| **队列超长** | 达到 `x-max-length` 等限制，新消息挤掉旧消息或拒绝入队 |
-
-### 2.1 设置 TTL
-
-**策略方式**（作用于匹配的所有队列）：
-
-```bash
-rabbitmqctl set_policy TTL ".*" '{"message-ttl":60000}' --apply-to queues
-```
-
-**声明队列时指定**：
+### 4.2 单队列配置（声明时挂参数）
 
 ```java
+// 1) 先建好 DLX（普通交换机）和死信队列（普通队列），并绑定
+channel.exchangeDeclare("my-dlx", "direct");
+channel.queueDeclare("my-dlx-queue", true, false, false, null);
+channel.queueBind("my-dlx-queue", "my-dlx", "dead");
+
+// 2) 业务队列：挂 x-dead-letter-exchange 指向 DLX
 Map<String, Object> args = new HashMap<>();
-args.put("x-message-ttl", 60000);
-channel.queueDeclare("myqueue", false, false, false, args);
-```
-
-也可在 Web 控制台配置。
-
----
-
-## 三、死信队列配置
-
-### 3.1 策略批量配置
-
-```bash
-rabbitmqctl set_policy DLX ".*" '{"dead-letter-exchange":"my-dlx"}' --apply-to queues
-```
-
-### 3.2 单队列配置
-
-```java
-channel.exchangeDeclare("some.exchange.name", "direct");
-
-Map<String, Object> args = new HashMap<>();
-args.put("x-dead-letter-exchange", "some.exchange.name");
-channel.queueDeclare("myqueue", false, false, false, args);
+args.put("x-dead-letter-exchange", "my-dlx");
+channel.queueDeclare("myqueue", true, false, false, args);
 ```
 
 ![Web 控制台配置死信策略](/中间件/rabbitmq/14/p10-01.png)
 
-### 3.3 x-dead-letter-routing-key
+### 4.3 策略批量配置（运维侧，不改代码）
 
-死信转移时默认 **保留原 routing key**；若配置了 `x-dead-letter-routing-key`，则 **替换** 为该值。
+```bash
+# 给一批队列挂 DLX
+rabbitmqctl set_policy DLX ".*" '{"dead-letter-exchange":"my-dlx"}' --apply-to queues
 
-死信转移 **不经过发送端 Confirm**，无法保证与 Producer 侧同等安全级别。
+# TTL 也能用策略
+rabbitmqctl set_policy TTL ".*" '{"message-ttl":60000}' --apply-to queues
+```
+
+### 4.4 `x-dead-letter-routing-key`
+
+死信转移时**默认保留原 routing key**；若配了 `x-dead-letter-routing-key`，就**替换**成它。
+
+> ⚠️ **Classic 与 Quorum 支持死信；Stream 不支持。**
 
 ---
 
-## 四、如何识别死信
+## 五、如何识别死信：它带了"案底"
 
-消息进入死信队列后，Header 会增加诊断信息，包括：
-
-- 时间、原因（`rejected` / `expired` / `maxlen`）、来源队列
-
-首次成为死信时会写入三个 **不可变** 属性（后续传递不再更改）：
+消息成为死信进 DLQ 时，Broker 给它打上诊断 Header：
 
 | Header | 含义 |
 |--------|------|
-| `x-first-death-reason` | 首次死信原因 |
-| `x-first-death-queue` | 首次死信来源队列 |
-| `x-first-death-exchange` | 首次死信来源交换机 |
+| `x-first-death-reason` | 首次死信原因（`rejected` / `expired` / `maxlen`） |
+| `x-first-death-queue` | 首次死信的来源队列 |
+| `x-first-death-exchange` | 首次死信的来源交换机 |
 
-业务侧可根据这些 Header 做审计、告警或差异化补偿。
+这三个是**首次成死信时写入、之后不可变**的；另有 `x-death` 数组记录每次死信的完整历史（一条消息可能被死信多次）。业务可据此做审计、告警、差异化补偿。
 
 ---
 
-## 五、TTL + DLX 实现延迟队列
+## 六、TTL + DLX = 延迟队列
 
-RabbitMQ **没有** 原生延迟队列。常用模式：
+RabbitMQ **没有原生延迟队列**，但 TTL + DLX 是经典做法：消息进一个**没有消费者**的延迟队列，干等到 TTL 过期成死信 → 经 DLX → 进真正消费队列。
 
 ```
-Producer → 延迟 Queue（设 TTL + DLX，无 Consumer）
-         → TTL 到期 → DLX → 实际消费 Queue → Consumer
+Producer → 延迟 Queue(设 TTL + DLX，无 Consumer) → TTL 到期成死信 → DLX → 消费 Queue → Consumer
 ```
 
-**示例架构**：
+**订单 30 分钟关单**示例：
 
-1. 声明 `delay.exchange`（direct）与 `process.exchange`（direct）
-2. `delay.queue`：绑定 `delay.exchange`，设置 `x-message-ttl=1800000`（30 分钟）、`x-dead-letter-exchange=process.exchange`
-3. Producer 发到 `delay.exchange`，消息在 `delay.queue` 等待
-4. 过期后进入 `process.exchange` → `process.queue` → Consumer 执行关单
+1. 建好 `delay.exchange`、`process.exchange`（都 direct）。
+2. `delay.queue`：绑 `delay.exchange`，设 `x-message-ttl=1800000`（30 分钟）、`x-dead-letter-exchange=process.exchange`，**不挂消费者**。
+3. 下单时 Producer 发到 `delay.exchange` → 消息在 `delay.queue` 里干等 30 分钟。
+4. 30 分钟到期 → 成死信 → 进 `process.exchange` → `process.queue` → Consumer 执行关单。
 
 ![TTL + 死信实现延迟队列流程](/中间件/rabbitmq/14/p12-01.png)
 
-死信 Queue 仍具 FIFO 特性，消费逻辑通常是对失效消息做 **业务补偿**（关单、释放库存、发送提醒）。
+> 这个"延迟队列"的 Consumer 通常做**业务补偿**：关单、释放库存、发提醒。
 
 ![延迟队列与普通死信队列对比](/中间件/rabbitmq/14/p12-02.png)
 
-### 5.1 插件方案（了解）
+### 6.1 插件方案（了解）
 
-社区插件 **`rabbitmq_delayed_message_exchange`** 可在 Exchange 层实现延迟，需单独下载安装，未随官方发行版捆绑。生产环境若对延迟精度、运维复杂度有更高要求，可评估该插件或改用 RocketMQ 等原生支持延迟的产品。
+`rabbitmq_delayed_message_exchange` 插件在 Exchange 层实现延迟，但**已停止维护**（它依赖的 Mnesia 在 4.3 被移除）。生产慎用，可评估改用 RocketMQ 等原生支持延迟的产品。
 
 ---
 
-## 六、与 Quorum 毒消息的配合
+## 七、与 Quorum 毒消息的配合
 
-Quorum 队列通过 `x-delivery-count` 与 **Delivery limit** 自动删除反复投递失败的毒消息。若同时配置 DLX，超阈消息可 **进入死信队列** 人工排查，而不是无限重投。
+Quorum 队列用 `x-delivery-count` + **Delivery limit** 自动处理反复投递失败的毒消息。若同时配了 DLX，超阈消息会**进死信队列**供人工排查，而不是无限重投把队列拖垮。
 
 ---
 
@@ -156,9 +172,11 @@ Quorum 队列通过 `x-delivery-count` 与 **Delivery limit** 自动删除反复
 
 | 要点 | 内容 |
 |------|------|
-| 死信触发 | 拒绝且不 requeue、TTL 过期、队列满 |
-| 配置 | `x-dead-letter-exchange` + 可选 routing key |
-| 延迟队列 | TTL 暂存 + DLX 转发（无原生 delay queue） |
+| 死信是什么 | 消息在队列里"没法正常消费"了：拒绝(requeue=false) / TTL 过期 / 队列超长 |
+| DLX / DLQ | **都是普通的 exchange / queue**，靠业务队列上的 `x-dead-letter-exchange` 参数串起来 |
+| 流转 | 业务队列 →（成死信，Broker 自动 republish）→ DLX → 死信队列 → 消费者 |
+| 配置 | 业务队列挂 `x-dead-letter-exchange`（可选 routing-key）；可用策略批量 |
+| 延迟队列 | TTL 暂存（无消费者）+ DLX 转发；RabbitMQ 无原生 delay queue |
 | 限制 | Stream 不支持 DLX |
 
 下一篇：Sharding 插件——单队列吞吐不够时如何分片存储。
