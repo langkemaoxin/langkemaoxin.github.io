@@ -11,9 +11,9 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 3/10 篇**  
+> **RabbitMQ 系列 · 第 3/22 篇**  
 > 上一篇：[《RabbitMQ 安装与核心概念——Queue、Exchange、Channel》](/中间件/rabbitmq/rabbitmq-02-install-concepts)  
-> 下一篇预告：[《RabbitMQ 常用消息场景——Work、Pub/Sub、Routing、Topic》](/中间件/rabbitmq/rabbitmq-04-messaging-patterns)
+> 下一篇预告：[《RabbitMQ 队列核心概念——命名、顺序、优先级与策略》](/中间件/rabbitmq/rabbitmq-04-queue-concepts)
 
 ---
 

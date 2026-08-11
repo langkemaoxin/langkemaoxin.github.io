@@ -11,7 +11,7 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 2/10 篇**  
+> **RabbitMQ 系列 · 第 2/22 篇**  
 > 上一篇：[《MQ 是什么？——从同步事件到异步消息》](/中间件/rabbitmq/rabbitmq-01-what-is-mq)  
 > 下一篇预告：[《RabbitMQ 基础编程模型——从连接到消费》](/中间件/rabbitmq/rabbitmq-03-programming-model)
 

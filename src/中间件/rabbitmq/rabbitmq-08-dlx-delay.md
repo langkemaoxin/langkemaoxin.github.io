@@ -2,7 +2,7 @@
 title: "死信队列与延迟队列"
 sidebarGroup: "RabbitMQ"
 shortTitle: "07 死信与延迟队列"
-order: 7
+order: 8
 date: 2026-09-01
 category: "中间件"
 tag:
@@ -11,9 +11,9 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 7/10 篇**  
-> 上一篇：[《Classic、Quorum、Stream——如何选择队列类型》](/中间件/rabbitmq/rabbitmq-06-queue-types)  
-> 下一篇预告：[《消息分片存储插件 Sharding》](/中间件/rabbitmq/rabbitmq-08-sharding)
+> **RabbitMQ 系列 · 第 8/22 篇**  
+> 上一篇：[《Classic、Quorum、Stream——如何选择队列类型》](/中间件/rabbitmq/rabbitmq-07-queue-types)  
+> 下一篇预告：[《消息分片存储插件 Sharding》](/中间件/rabbitmq/rabbitmq-09-sharding)
 
 ---
 

@@ -2,7 +2,7 @@
 title: "RabbitMQ 集群与高可用"
 sidebarGroup: "RabbitMQ"
 shortTitle: "10 集群与高可用"
-order: 10
+order: 11
 date: 2026-09-04
 category: "中间件"
 tag:
@@ -11,8 +11,9 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 10/10 篇**  
-> 上一篇：[《RabbitMQ 监控、备份与联邦同步》](/中间件/rabbitmq/rabbitmq-09-monitor-backup-federation)
+> **RabbitMQ 系列 · 第 11/22 篇**  
+> 上一篇：[《RabbitMQ 监控、备份与联邦同步》](/中间件/rabbitmq/rabbitmq-10-monitor-backup-federation)  
+> 下一篇预告：[《Classic 队列为什么一堆积就变慢——内存窗口、落盘与流控》](/中间件/rabbitmq/rabbitmq-12-classic-backlog-degradation)
 
 ---
 

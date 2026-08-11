@@ -2,7 +2,7 @@
 title: "消息分片存储插件 Sharding"
 sidebarGroup: "RabbitMQ"
 shortTitle: "08 Sharding 分片"
-order: 8
+order: 9
 date: 2026-09-02
 category: "中间件"
 tag:
@@ -11,9 +11,9 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 8/10 篇**  
-> 上一篇：[《死信队列与延迟队列》](/中间件/rabbitmq/rabbitmq-07-dlx-delay)  
-> 下一篇预告：[《RabbitMQ 监控、备份与联邦同步》](/中间件/rabbitmq/rabbitmq-09-monitor-backup-federation)
+> **RabbitMQ 系列 · 第 9/22 篇**  
+> 上一篇：[《死信队列与延迟队列》](/中间件/rabbitmq/rabbitmq-08-dlx-delay)  
+> 下一篇预告：[《RabbitMQ 监控、备份与联邦同步》](/中间件/rabbitmq/rabbitmq-10-monitor-backup-federation)
 
 ---
 

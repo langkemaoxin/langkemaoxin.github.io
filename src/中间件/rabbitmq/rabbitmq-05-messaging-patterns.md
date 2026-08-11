@@ -2,7 +2,7 @@
 title: "RabbitMQ 常用消息场景——Work、Pub/Sub、Routing、Topic"
 sidebarGroup: "RabbitMQ"
 shortTitle: "04 七种消息场景"
-order: 4
+order: 5
 date: 2026-08-29
 category: "中间件"
 tag:
@@ -11,9 +11,9 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 4/10 篇**  
-> 上一篇：[《RabbitMQ 基础编程模型——从连接到消费》](/中间件/rabbitmq/rabbitmq-03-programming-model)  
-> 下一篇预告：[《SpringBoot 集成 RabbitMQ》](/中间件/rabbitmq/rabbitmq-05-springboot)
+> **RabbitMQ 系列 · 第 5/22 篇**  
+> 上一篇：[《RabbitMQ 队列核心概念——命名、顺序、优先级与策略》](/中间件/rabbitmq/rabbitmq-04-queue-concepts)  
+> 下一篇预告：[《SpringBoot 集成 RabbitMQ》](/中间件/rabbitmq/rabbitmq-06-springboot)
 
 ---
 

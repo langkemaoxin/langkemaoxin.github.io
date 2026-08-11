@@ -2,7 +2,7 @@
 title: "SpringBoot 集成 RabbitMQ"
 sidebarGroup: "RabbitMQ"
 shortTitle: "05 SpringBoot 集成"
-order: 5
+order: 6
 date: 2026-08-30
 category: "中间件"
 tag:
@@ -11,9 +11,9 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 5/11 篇**  
-> 上一篇：[《RabbitMQ 常用消息场景——Work、Pub/Sub、Routing、Topic》](/中间件/rabbitmq/rabbitmq-04-messaging-patterns)  
-> 下一篇预告：[《Classic、Quorum、Stream——如何选择队列类型》](/中间件/rabbitmq/rabbitmq-06-queue-types)
+> **RabbitMQ 系列 · 第 6/22 篇**  
+> 上一篇：[《RabbitMQ 常用消息场景——Work、Pub/Sub、Routing、Topic》](/中间件/rabbitmq/rabbitmq-05-messaging-patterns)  
+> 下一篇预告：[《Classic、Quorum、Stream——如何选择队列类型》](/中间件/rabbitmq/rabbitmq-07-queue-types)
 
 ---
 

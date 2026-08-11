@@ -11,7 +11,7 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 1/10 篇**  
+> **RabbitMQ 系列 · 第 1/22 篇**  
 > 下一篇预告：[《RabbitMQ 安装与核心概念——Queue、Exchange、Channel》](/中间件/rabbitmq/rabbitmq-02-install-concepts)
 
 ---

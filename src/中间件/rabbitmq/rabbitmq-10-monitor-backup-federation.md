@@ -2,7 +2,7 @@
 title: "RabbitMQ 监控、备份与联邦同步"
 sidebarGroup: "RabbitMQ"
 shortTitle: "09 监控备份与联邦"
-order: 9
+order: 10
 date: 2026-09-03
 category: "中间件"
 tag:
@@ -11,9 +11,9 @@ tag:
   - "消息队列"
 ---
 
-> **RabbitMQ 系列 · 第 9/10 篇**  
-> 上一篇：[《消息分片存储插件 Sharding》](/中间件/rabbitmq/rabbitmq-08-sharding)  
-> 下一篇预告：[《RabbitMQ 集群与高可用》](/中间件/rabbitmq/rabbitmq-10-cluster-ha)
+> **RabbitMQ 系列 · 第 10/22 篇**  
+> 上一篇：[《消息分片存储插件 Sharding》](/中间件/rabbitmq/rabbitmq-09-sharding)  
+> 下一篇预告：[《RabbitMQ 集群与高可用》](/中间件/rabbitmq/rabbitmq-11-cluster-ha)
 
 ---
 
