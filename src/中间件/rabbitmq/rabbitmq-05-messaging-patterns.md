@@ -119,6 +119,19 @@ Queue 和消息都设 `durable` / `PERSISTENT` 时，消息先写入 **PageCache
 
 > 比方：prefetch 是「传菜台最多同时放几盘菜」。台子太小（`1`）——端一盘、收一盘，来回跑，吞吐低但绝不积压；台子很大（几百）——一次摞一堆，吞吐高，但菜全堆在消费者那边、内存吃紧，快慢 Worker 分配也不均。🔗 完整可运行示例：[`PatternsDemoRunner.demoWork()`](https://github.com/code-corey/rabbitmq-blog-demo/blob/main/ch05-messaging-patterns/src/main/java/io/github/codecorey/patterns/PatternsDemoRunner.java) 里 `workerChannel.basicQos(1)` + 手动 ack，两个 Worker 抢 6 个任务，可直接看到「处理完一条才领下一条」的公平分发。
 
+**`basicQos(1)` 到底干了什么**：Broker 给这个消费者投 1 条 → 此时「在途未 ACK = 1」，到达上限 → Broker **暂停**再投 → 消费者处理完 `basicAck` → 在途数回 0、腾出额度 → Broker 再投 1 条……循环。一句话：**「一次只给我一条，ack 了再给下一条」**。
+
+> ⚠️ **前提：必须配手动 ack**。prefetch 限的是「未 ACK 的在途数」，只有手动 ack（`basicConsume(queue, false, ...)`，处理完才 `basicAck`）才会让在途数累积、才触得到上限；若用 `autoAck=true`（投递瞬间即 acked），在途数永远是 0，prefetch 永远限不住——等于没设。
+
+**为什么 Work Queue 偏偏设 1（fair dispatch）**：以 demoWork 的 **2 个 Worker × 6 个任务**为例——
+
+| | 默认（不设 prefetch） | `basicQos(1)` |
+|---|---|---|
+| 投递方式 | round-robin 一股脑倾倒：task-1/3/5→W1、task-2/4/6→W2 | 各发 1 条，**谁先 ack 谁领下一条** |
+| 任务重量不均时 | 快 Worker 干完干等、慢 Worker 堆三条，**不公平** | 快的多领、慢的少领，**按能力分配** |
+
+「能者多劳」靠的就是 prefetch=1 这一下。
+
 易错点③ 提到用 `basicQos(prefetchCount)` 限流，但**取多少**才是真正的工程问题。核心是一组权衡：
 
 | prefetch | 行为 | 适用 |
