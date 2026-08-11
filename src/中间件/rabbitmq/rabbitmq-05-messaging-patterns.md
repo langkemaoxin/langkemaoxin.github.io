@@ -346,44 +346,34 @@ if (outstanding > 0) ch.waitForConfirmsOrDie(5_000);
 
 **异步确认（推荐）**
 
-核心思路：发布前先用 `getNextPublishSeqNo()` 占号，把 `seq → 消息体` 存进一张表；ack 到就删，nack 或 Channel 断开就拿表里的消息重发。选 `ConcurrentSkipListMap` 是因为它**并发安全**（发布线程与 listener 线程同时访问）且**有序**——`multiple=true` 时能一把清掉 `seq` 及之前的全部。
+**先说 `addConfirmListener` 收什么参数**：它接收**两个回调**——第一个是 **ack 回调**（Broker 确认收到时触发），第二个是 **nack 回调**（Broker 没收到时触发）。两个回调签名一样：`(long sequenceNumber, boolean multiple)`，含义是：
+
+- `sequenceNumber`（简称 `seq`，**发布序号**）：开了 confirms 后，Channel 给你发的每条消息都按顺序编号（1、2、3…）。Broker 回调时**带回这个 seq**，告诉你「我确认的是哪一条」——你靠它把回调和你发出去的那条消息对上。
+- `multiple`（**是否批量**）：`false` = 只确认 seq 这一条；`true` = 确认 seq **及它之前所有还没确认的**（一把清）。
+
+**整体流程**：发布前先用 `getNextPublishSeqNo()` 占号、把 `seq → 消息体` 存进一张表（`outstanding`）；Broker 回 ack 就从表里删掉那条（说明收到了），回 nack 就得重发。用 `ConcurrentSkipListMap` 是因为它**并发安全**（发布线程和回调线程同时访问）且**有序**——`multiple=true` 时能 `headMap` 一把清掉 seq 及之前全部。
 
 ```java
-ConcurrentSkipListMap<Long, byte[]> outstanding = new ConcurrentSkipListMap<>();
+ConcurrentSkipListMap<Long, String> outstanding = new ConcurrentSkipListMap<>();
 
+// 两个回调：ack（Broker 收到）+ nack（Broker 没收到），签名都是 (seq, multiple)
 channel.addConfirmListener(
-    (seq, multiple) -> {                              // ack：可安全移除
-        if (multiple) outstanding.headMap(seq, true).clear();
-        else outstanding.remove(seq);
+    (seq, multiple) -> {                       // ack：从表里删掉已确认的
+        if (multiple) outstanding.headMap(seq, true).clear();   // 批量：清 seq 及之前
+        else         outstanding.remove(seq);                    // 单条：只删这一条
     },
-    (seq, multiple) -> {                              // nack：重发受影响消息
-        Map<Long, byte[]> affected = multiple
-            ? new LinkedHashMap<>(outstanding.headMap(seq, true))   // seq 及之前全部
-            : Collections.singletonMap(seq, outstanding.get(seq));  // 仅 seq 一条
-        affected.forEach((s, body) -> {
-            long newSeq = channel.getNextPublishSeqNo();           // 重发是新消息，拿新号
-            outstanding.put(newSeq, body);
-            channel.basicPublish(EXCHANGE, ROUTING_KEY, null, body);
-        });
-        if (multiple) outstanding.headMap(seq, true).clear();
-        else outstanding.remove(seq);
-    }
+    (seq, multiple) -> log.warn("nack seq={} multiple={} —— 需重发", seq, multiple)
 );
 
-// 发布：先占号 → 入表 → 发送
-long seq = channel.getNextPublishSeqNo();
-outstanding.put(seq, body);
+// 发布三步：占号 → 入表 → 发送
+long seq = channel.getNextPublishSeqNo();      // 拿"下一条"的号
+outstanding.put(seq, body);                     // 记住"这个号 = 这条消息"，等回调来对
 channel.basicPublish(EXCHANGE, ROUTING_KEY, null, body);
 ```
 
-| 参数 | 含义 |
-|------|------|
-| `sequenceNumber` | Channel 内单调递增的发布序号 |
-| `multiple` | `true` 表示「确认 seq 及之前所有」，用 `headMap` 批量清理 |
-
-> 两个细节：
-> - **重发会拿新 seq**——它对 Broker 是一条新消息，所以必须重新 `getNextPublishSeqNo()` + 入表，不能复用旧号。
-> - **Channel 异常断开**：`outstanding` 里剩余的都是「Broker 是否收到未知」的消息，需在 `addShutdownListener` 里全部重发；此时消费者必须**幂等**，因为消息可能其实已落 Broker（至少一次投递）。
+> 上面 nack 只打了日志。**生产级**要在 nack（以及 Channel 异常断开）时把 `outstanding` 里受影响的消息**重发**，两个细节：
+> - **重发要拿新 seq**——重发对 Broker 是一条新消息，必须重新 `getNextPublishSeqNo()` 再入表，不能复用旧号。
+> - **Channel 异常断开**：`outstanding` 里剩余的都是「Broker 是否收到未知」的消息，需在 `addShutdownListener` 里全部重发；既然会重发，消费者就必须**幂等**（消息可能其实已落 Broker，至少一次投递）。
 
 异步确认吞吐最好。还可加 **ReturnListener** 监控「已到 Exchange 但无法路由到 Queue」的消息；配合 Exchange 的 **`alternate-exchange`** 做兜底转发。
 
