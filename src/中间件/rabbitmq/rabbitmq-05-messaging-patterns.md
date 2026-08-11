@@ -118,7 +118,14 @@ for (int i = 1; i <= 6; i++) {
 
 **① 必须 Ack**
 
-Consumer 消费完须 `basicAck`（或设 `autoAck=true`）。未 Ack 时 Broker 会反复投递，形成 **Poison Message（毒消息）**，持续消耗资源。
+手动 ack 模式（`basicConsume(queue, false, ...)`）下，Consumer 处理完一条要主动告诉 Broker「这条我处理完了，可以丢了」——否则 Broker 会反复投递，形成 **Poison Message（毒消息）**。这个动作就是：
+
+```java
+workerChannel.basicAck(envelope.getDeliveryTag(), false);
+```
+
+- `envelope.getDeliveryTag()`：这条消息的**投递标签**。Broker 每投递一条，就给它发一个 **Channel 内单调递增的编号**（从 1 开始，Channel 一关就作废），`basicAck` 靠它精确指代「就是这一条」。
+- `false`（`multiple`）：**只 ack 这一条**。若传 `true`，则一口气把「这条 + 它之前所有还没 ack 的」全 ack 掉（批量 ack，用得少）。
 
 **② 持久化不等于绝对不丢**
 
@@ -179,12 +186,19 @@ Broker 再推 1 条 ──▶ ……循环
 - **太大** → 快 Worker 一次性囤积大量消息，慢 Worker 反而闲置，公平性倒退；同时客户端本地缓冲与 Broker 的 unacked 都会膨胀，内存压力上升。
 - **经验值**：小而快的消息（通知、埋点）给几十到几百；大消息或单条处理耗时的给个位数。没有银弹，靠压测。
 
-**`global` 参数**：`basicQos(prefetchCount, global)` 决定上限按谁算——
+**`global` 参数：上限是「每人一份」还是「大家共享一份」**
 
-- `global=false`（默认）：上限**按每个 consumer 独立计算**。
-- `global=true`：上限是**整个 Channel 上所有 consumer 共享的池**。
+`basicQos(prefetchCount, global)` 的第二个参数 `global` 决定 prefetch 上限按谁算。设 prefetch=10、同一个 Channel 上有 3 个消费者（C1/C2/C3）：
 
-> 注意：AMQP 规范原定义 `global=true` 是 per-connection，而 RabbitMQ 实现为 **per-channel 共享池**，二者并不一致。看其他资料或客户端时别照搬规范的字面含义。
+| `global` | 上限怎么算 | 这条 Channel 上最多多少条未 ack |
+|---|---|---|
+| `false`（默认）| **每个消费者各 10 条**（各算各的）| 最多 10 + 10 + 10 = **30** |
+| `true` | **三个消费者共享一个 10 的池** | 合计最多 **10** |
+
+- `global=false`：各自独立，谁先 ack 谁腾自己的名额，互不影响——**绝大多数场景用这个**（包括本篇的 fair dispatch）。
+- `global=true`：三个消费者抢同一个总额度，给谁多给谁少由 Broker 决定；只有想给整条 Channel 封顶时才用，**很少见**。
+
+> ⚠️ 一个坑：AMQP 规范写的 `global=true` 是「整个连接（per-connection）」，但 **RabbitMQ 实际只做到「整个 Channel」**，没实现 per-connection。所以看规范或别的客户端资料说 `global=true` 管「整条连接」时别照搬——在 RabbitMQ 里它只到 Channel 这一层。
 
 **副作用闭环**：所有 Consumer 都打满 prefetch 后，消息会停在服务端 Queue 里堆积——堆积后 Classic 队列为何断崖式变慢，见 [第 12 篇 · 积压退化](/中间件/rabbitmq/rabbitmq-12-classic-backlog-degradation)；监控侧盯 `unacked` 与 `messages_ready`，见 [第 22 篇 · 生产实践](/中间件/rabbitmq/rabbitmq-22-production-checklist)。
 
