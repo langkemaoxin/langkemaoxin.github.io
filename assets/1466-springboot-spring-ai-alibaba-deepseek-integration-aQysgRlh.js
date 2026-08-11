@@ -1,0 +1,120 @@
+import{a as e,c as t,i as n}from"./app-CyKhDe8z.js";import{t as r}from"./plugin-vue_export-helper-BDNMzG2s.js";var i=JSON.parse(`{"path":"/%E9%9D%A2%E8%AF%95%E9%A2%98/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/1466-springboot-spring-ai-alibaba-deepseek-integration.html","title":"SpringBoot + Spring AI Alibaba 整合阿里云百炼DeepSeek大模型，小白也能轻松上手","lang":"zh-CN","frontmatter":{"title":"SpringBoot + Spring AI Alibaba 整合阿里云百炼DeepSeek大模型，小白也能轻松上手","sidebarGroup":"AI大模型","shortTitle":"SpringBoot + Spring AI Alibaba 整合阿里云百炼DeepSeek大模型，小白也能轻松上手","order":1466,"date":"2026-06-21T00:00:00.000Z","category":"面试题","tag":["面试题"],"description":"Spring 官方开源了 Spring AI 框架，用来简化 Spring 开发者开发智能体应用的过程。随后阿里巴巴开源了 Spring AI Alibaba，它基于 Spring AI，同时与阿里云百炼大模型服务、通义系列大模型做了深度集","article":false,"head":[["script",{"type":"application/ld+json"},"{\\"@context\\":\\"https://schema.org\\",\\"@type\\":\\"WebPage\\",\\"name\\":\\"SpringBoot + Spring AI Alibaba 整合阿里云百炼DeepSeek大模型，小白也能轻松上手\\",\\"description\\":\\"Spring 官方开源了 Spring AI 框架，用来简化 Spring 开发者开发智能体应用的过程。随后阿里巴巴开源了 Spring AI Alibaba，它基于 Spring AI，同时与阿里云百炼大模型服务、通义系列大模型做了深度集\\"}"],["meta",{"property":"og:url","content":"https://www.code-corey.com/%E9%9D%A2%E8%AF%95%E9%A2%98/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/1466-springboot-spring-ai-alibaba-deepseek-integration.html"}],["meta",{"property":"og:site_name","content":"Corey 知识库"}],["meta",{"property":"og:title","content":"SpringBoot + Spring AI Alibaba 整合阿里云百炼DeepSeek大模型，小白也能轻松上手"}],["meta",{"property":"og:description","content":"Spring 官方开源了 Spring AI 框架，用来简化 Spring 开发者开发智能体应用的过程。随后阿里巴巴开源了 Spring AI Alibaba，它基于 Spring AI，同时与阿里云百炼大模型服务、通义系列大模型做了深度集"}],["meta",{"property":"og:type","content":"website"}],["meta",{"property":"og:image","content":"https://www.code-corey.com/面试题/AI大模型/1466-springboot-spring-ai-alibaba-deepseek-integration/img-767d41472e46.webp"}],["meta",{"property":"og:locale","content":"zh-CN"}],["meta",{"property":"og:updated_time","content":"2026-08-09T03:10:04.000Z"}],["meta",{"property":"article:tag","content":"面试题"}],["meta",{"property":"article:published_time","content":"2026-06-21T00:00:00.000Z"}],["meta",{"property":"article:modified_time","content":"2026-08-09T03:10:04.000Z"}]]},"git":{"createdTime":1786240216000,"updatedTime":1786245004000,"contributors":[{"name":"langkemaoxin","username":"langkemaoxin","email":"2363613998@qq.com","commits":3,"url":"https://github.com/langkemaoxin"},{"name":"Cursor","username":"Cursor","email":"cursoragent@cursor.com","commits":3,"url":"https://github.com/Cursor"}]},"readingTime":{"minutes":4.42,"words":1326},"filePathRelative":"面试题/AI大模型/1466-springboot-spring-ai-alibaba-deepseek-integration.md","excerpt":"<blockquote>\\n<p>来源：<a href=\\"https://www.yuque.com/tulingzhouyu/db22bv/dh09g2gfy7zb18qd\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\">SpringBoot + Spring AI Alibaba 整合阿里云百炼DeepSeek大模型，小白也能轻松上手</a></p>\\n</blockquote>\\n<p>Spring 官方开源了 Spring AI 框架，用来简化 Spring 开发者开发智能体应用的过程。随后阿里巴巴开源了 Spring AI Alibaba，它基于 Spring AI，同时与阿里云百炼大模型服务、通义系列大模型做了深度集成与最佳实践。基于 Spring AI Alibaba，Java 开发者可以非常方便地开发 AI 智能体应用。</p>"}`),a={name:`1466-springboot-spring-ai-alibaba-deepseek-integration.md`};function o(r,i,a,o,s,c){return t(),n(`div`,null,[...i[0]||=[e(`<blockquote><p>来源：<a href="https://www.yuque.com/tulingzhouyu/db22bv/dh09g2gfy7zb18qd" target="_blank" rel="noopener noreferrer">SpringBoot + Spring AI Alibaba 整合阿里云百炼DeepSeek大模型，小白也能轻松上手</a></p></blockquote><p>Spring 官方开源了 Spring AI 框架，用来简化 Spring 开发者开发智能体应用的过程。随后阿里巴巴开源了 Spring AI Alibaba，它基于 Spring AI，同时与阿里云百炼大模型服务、通义系列大模型做了深度集成与最佳实践。基于 Spring AI Alibaba，Java 开发者可以非常方便地开发 AI 智能体应用。</p><figure><img src="/%E9%9D%A2%E8%AF%95%E9%A2%98/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/1466-springboot-spring-ai-alibaba-deepseek-integration/img-767d41472e46.webp" alt="image" tabindex="0" loading="lazy"><figcaption>image</figcaption></figure><p><strong>开通阿里云百炼账号，获取API-KEY</strong></p><p><a href="https://mp.weixin.qq.com/s?__biz=MzU1ODk1NTQ0Mg==&amp;mid=2247485221&amp;idx=1&amp;sn=18f2cfc6b1fcf9ac39fa171e99ae964a&amp;scene=21#wechat_redirect" target="_blank" rel="noopener noreferrer">官网卡顿怎么办？亲测有效！6种DeepSeek-R1满血模型替代方案分享</a></p><p><a href="https://bailian.console.aliyun.com/#/model-market" target="_blank" rel="noopener noreferrer">https://bailian.console.aliyun.com/#/model-market</a></p><p>其中 deepseek-r1 与 deepseek-v3 分别有 100<br> 万的免费 Token，部分蒸馏模型限时免费体验。</p><figure><img src="/%E9%9D%A2%E8%AF%95%E9%A2%98/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/1466-springboot-spring-ai-alibaba-deepseek-integration/img-c2d8948a1b1f.webp" alt="image" tabindex="0" loading="lazy"><figcaption>image</figcaption></figure><p><strong>SpringBoot接入deepseek实战</strong></p><p>使用 Spring AI Alibaba 开发应用与使用普通 Spring Boot 没有什么区别，只需要增加 <code>spring-ai-alibaba-starter</code> 依赖，将 <code>ChatClient</code> Bean 注入就可以实现与模型聊天了。</p><p>注意：因为 Spring AI Alibaba 基于 Spring Boot 3.x 开发，因此本地 JDK 版本要求为 17 及以上。</p><ol><li><strong>添加依赖</strong></li></ol><p>首先，需要在项目中添加 <code>spring-ai-alibaba-starter</code> 依赖，它将通过 Spring Boot 自动装配机制初始化与阿里云通义大模型通信的 <code>ChatClient</code>、<code>ChatModel</code> 相关实例。</p><div class="language-plain line-numbers-mode" data-highlighter="shiki" data-ext="plain" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34;"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code class="language-plain"><span class="line"><span></span></span>
+<span class="line"><span>&amp;lt;dependency&amp;gt;</span></span>
+<span class="line"><span>  &amp;lt;groupId&amp;gt;com.alibaba.cloud.ai&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>  &amp;lt;artifactId&amp;gt;spring-ai-alibaba-starter&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>  &amp;lt;version&amp;gt;1.0.0-M5.1&amp;lt;/version&amp;gt;</span></span>
+<span class="line"><span>&amp;lt;/dependency&amp;gt;</span></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>注意：由于 spring-ai 相关依赖包还没有发布到中央仓库，如出现 spring-ai-core 等相关依赖解析问题，请在您项目的 pom.xml 依赖中加入如下仓库配置。</p><div class="language-plain line-numbers-mode" data-highlighter="shiki" data-ext="plain" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34;"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code class="language-plain"><span class="line"><span>&amp;lt;repositories&amp;gt;</span></span>
+<span class="line"><span>  &amp;lt;repository&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;id&amp;gt;spring-milestones&amp;lt;/id&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;name&amp;gt;Spring Milestones&amp;lt;/name&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;url&amp;gt;https://repo.spring.io/milestone&amp;lt;/url&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;snapshots&amp;gt;</span></span>
+<span class="line"><span>      &amp;lt;enabled&amp;gt;false&amp;lt;/enabled&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;/snapshots&amp;gt;</span></span>
+<span class="line"><span>  &amp;lt;/repository&amp;gt;</span></span>
+<span class="line"><span>&amp;lt;/repositories&amp;gt;</span></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>完整的pom文件如下</p><div class="language-plain line-numbers-mode" data-highlighter="shiki" data-ext="plain" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34;"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code class="language-plain"><span class="line"><span>&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span>
+<span class="line"><span>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span>
+<span class="line"><span>         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span></span>
+<span class="line"><span>    &amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;parent&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;artifactId&amp;gt;spring-boot-starter-parent&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;version&amp;gt;3.4.3&amp;lt;/version&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;relativePath/&amp;gt; &amp;lt;!-- lookup parent from repository --&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;/parent&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;groupId&amp;gt;com.fox&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;artifactId&amp;gt;alibaba-ai-demo&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;version&amp;gt;0.0.1-SNAPSHOT&amp;lt;/version&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;name&amp;gt;alibaba-ai-demo&amp;lt;/name&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;description&amp;gt;alibaba-ai-demo&amp;lt;/description&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;url/&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    &amp;lt;properties&amp;gt;</span></span>
+<span class="line"><span>        &lt;java.version&gt;17&lt;/java.version&gt;</span></span>
+<span class="line"><span>        &lt;spring-ai.version&gt;1.0.0-M5&lt;/spring-ai.version&gt;</span></span>
+<span class="line"><span>        &lt;spring-ai-alibaba.version&gt;1.0.0-M5.1&lt;/spring-ai-alibaba.version&gt;</span></span>
+<span class="line"><span>    &amp;lt;/properties&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    &amp;lt;dependencies&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>     &amp;lt;dependency&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;groupId&amp;gt;com.alibaba.cloud.ai&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;artifactId&amp;gt;spring-ai-alibaba-starter&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;version&amp;gt;\${spring-ai-alibaba.version}&amp;lt;/version&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;/dependency&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        &amp;lt;dependency&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;/dependency&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        &amp;lt;dependency&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;artifactId&amp;gt;spring-boot-starter-test&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;/dependency&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;/dependencies&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    &amp;lt;dependencyManagement&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;dependencies&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;dependency&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;groupId&amp;gt;org.springframework.ai&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;artifactId&amp;gt;spring-ai-bom&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;version&amp;gt;\${spring-ai.version}&amp;lt;/version&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;/dependency&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;/dependencies&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;/dependencyManagement&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    &amp;lt;repositories&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;!-- spring-ai 相关依赖包还没有发布到中央仓库--&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;repository&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;id&amp;gt;spring-milestones&amp;lt;/id&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;name&amp;gt;Spring Milestones&amp;lt;/name&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;url&amp;gt;https://repo.spring.io/milestone&amp;lt;/url&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;snapshots&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;enabled&amp;gt;false&amp;lt;/enabled&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;/snapshots&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;/repository&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;/repositories&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    &amp;lt;build&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;plugins&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;plugin&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;</span></span>
+<span class="line"><span>                &amp;lt;artifactId&amp;gt;spring-boot-maven-plugin&amp;lt;/artifactId&amp;gt;</span></span>
+<span class="line"><span>            &amp;lt;/plugin&amp;gt;</span></span>
+<span class="line"><span>        &amp;lt;/plugins&amp;gt;</span></span>
+<span class="line"><span>    &amp;lt;/build&amp;gt;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&amp;lt;/project&amp;gt;</span></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**2.配置 <strong><code>application.yml</code></strong> **</p><p>指定 API-KEY（可通过访问阿里云百炼模型服务平台获取，有免费额度可用）</p><div class="language-plain line-numbers-mode" data-highlighter="shiki" data-ext="plain" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34;"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code class="language-plain"><span class="line"><span>spring:</span></span>
+<span class="line"><span>  application:</span></span>
+<span class="line"><span>    name: alibaba-ai-demo</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  ai:</span></span>
+<span class="line"><span>    dashscope:</span></span>
+<span class="line"><span>      api-key: \${AI_DASHSCOPE_API_KEY}   # api key</span></span>
+<span class="line"><span>      chat:</span></span>
+<span class="line"><span>        options:</span></span>
+<span class="line"><span>          model: deepseek-r1   # 模型名称</span></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>3.注入智能体代理 ChatClient</strong></p><p>接下来，在普通 Controller Bean 中注入 <code>ChatClient</code> 实例，这样你的 Bean 就具备与 AI 大模型智能对话的能力了。</p><div class="language-plain line-numbers-mode" data-highlighter="shiki" data-ext="plain" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34;"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code class="language-plain"><span class="line"><span>@RestController</span></span>
+<span class="line"><span>public class ChatController {</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    private final ChatClient chatClient;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    public ChatController(ChatClient.Builder builder) {</span></span>
+<span class="line"><span>        this.chatClient = builder.build();</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    @GetMapping(&quot;/chat&quot;)</span></span>
+<span class="line"><span>    public String chat(@RequestParam(value = &quot;input&quot;) String input) {</span></span>
+<span class="line"><span>        return this.chatClient.prompt()</span></span>
+<span class="line"><span>                .user(input)</span></span>
+<span class="line"><span>                .call()</span></span>
+<span class="line"><span>                .content();</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>以上示例中，ChatClient 使用默认参数调用大模型，Spring AI Alibaba 还支持通过 <code>DashScopeChatOptions</code> 调整与模型对话时的参数，<code>DashScopeChatOptions</code> 支持两种不同维度的配置方式：</p><ul><li>全局默认值，即 <code>ChatClient</code> 实例初始化参数</li></ul><p>可以在 <code>application.yml</code> 文件中指定</p><p>spring.ai.dashscope.chat.options.*</p><p>或调用构造函数</p><p>ChatClient.Builder.defaultOptions(options)完成配置初始化。</p><ul><li>每次 Prompt 调用前动态指定</li></ul><div class="language-plain line-numbers-mode" data-highlighter="shiki" data-ext="plain" style="--shiki-light:#383A42;--shiki-dark:#abb2bf;--shiki-light-bg:#FAFAFA;--shiki-dark-bg:#282c34;"><pre class="shiki shiki-themes one-light one-dark-pro vp-code"><code class="language-plain"><span class="line"><span>String result = dashScopeChatClient</span></span>
+<span class="line"><span>  .prompt(query)</span></span>
+<span class="line"><span>  .options(DashScopeChatOptions.builder().withTopP(0.8).build())</span></span>
+<span class="line"><span>  .call()</span></span>
+<span class="line"><span>  .content();</span></span></code></pre><div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0;"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>4.启动服务后测试</p><figure><img src="/%E9%9D%A2%E8%AF%95%E9%A2%98/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/1466-springboot-spring-ai-alibaba-deepseek-integration/img-4906bd51f9f1.webp" alt="image" tabindex="0" loading="lazy"><figcaption>image</figcaption></figure>`,34)]])}var s=r(a,[[`render`,o]]);export{i as _pageData,s as default};
