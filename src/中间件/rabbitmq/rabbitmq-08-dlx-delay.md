@@ -325,6 +325,24 @@ Producer → 延迟 Queue(设 TTL + DLX，无 Consumer) → TTL 到期成死信 
 3. 下单时 Producer 发到 `delay.exchange` → 消息在 `delay.queue` 里干等 30 分钟。
 4. 30 分钟到期 → 成死信 → 进 `process.exchange` → `process.queue` → Consumer 执行关单。
 
+> **为什么需要两个交换机？能省成一个吗？**
+>
+> 能理解这个问题就真懂 DLX 了。拆开看每个交换机的作用：
+>
+> | 交换机 | 作用 | 能不能省 |
+> |--------|------|----------|
+> | `delay.exchange` | Producer 发消息的入口 → 路由到 `delay.queue` | 可以**省掉**——直接发到默认交换机 `""`，routingKey=`delay.queue`，或用 policy 给队列挂 DLX 后发到任意交换机 |
+> | `process.exchange` | `delay.queue` 的**死信目标**（`x-dead-letter-exchange` 指向它）→ 路由到 `process.queue` | **不能省**——DLX 必须是个已存在的交换机，`delay.queue` 声明时如果找不到它就报 `PRECONDITION_FAILED`。可以是**默认交换机 `""`**（但要确保 routing-key 对得上），也可以是 fanout/topic（看死信要路由到几个队列） |
+>
+> **最简方案**（只用默认交换机）：
+> ```
+> Producer → ""(默认交换机) → delay.queue(TTL + DLX="")
+>           → TTL 到期死信 → ""(默认交换机) → process.queue（routing-key = x-dead-letter-routing-key）
+> ```
+> 两个自定义交换机都不建，全用 `""`。**但**生产环境一般还是建独立的 `process.exchange`——因为死信可能要按 routing-key 分流到不同消费队列（比如"30 分钟关单"和"2 小时退款提醒"走同一个 delay.queue、但 DLX 按 routing-key 分流到不同 process.queue）。
+>
+> **为什么示例里两个都用 direct？** 因为延迟队列的投递场景通常是"一对一"（发到 delay.queue、死信后到 process.queue），direct 足够。如果死信要**广播**给多个排查队列，`process.exchange` 换成 fanout；如果要**按 key 分流**，换 topic。交换机类型取决于**死信的路由需求**，DLX 机制本身不限制类型。
+
 **完整代码**（截取自 [`ch08-dlx-delay/DelayQueueRunner`](https://github.com/code-corey/rabbitmq-blog-demo/blob/main/ch08-dlx-delay/src/main/java/io/github/codecorey/dlxdelay/runner/DelayQueueRunner.java)，演示用 TTL=5 秒）：
 
 ```java
