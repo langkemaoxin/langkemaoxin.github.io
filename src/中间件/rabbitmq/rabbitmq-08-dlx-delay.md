@@ -403,8 +403,6 @@ for (int i = 1; i <= 3; i++) {
 
 > 每条消息入队间隔 1 秒 → 各自过期时间也差 1 秒 → 错峰到期，Consumer 按 FIFO 逐条收到死信。注意 `x-first-death-reason=expired`、`x-first-death-queue=delay.queue`——死信带的"案底"（见第五节）。
 
-![TTL + 死信实现延迟队列流程](/中间件/rabbitmq/14/p12-01.png)
-
 这个"延迟队列"的 Consumer 通常做**业务补偿**：关单、释放库存、发提醒。
 
 ### 6.3 底层原理：Broker 怎么知道消息到期了
@@ -506,6 +504,177 @@ TTL + DLX 这套方案做不到毫秒精确（扫描间隔 + 网络 + Broker 调
 > - **单机进程内**（限流、超时控制、重试间隔）→ **DelayQueue / ScheduledExecutor / 时间轮**，不走 MQ。
 > - **数据库里已有到期字段、量不大** → **定时任务扫表**，最简单。
 
+下面给每种方案一段**最小核心代码**，点出各自的"延迟落点"在哪。各方案依赖的库版本（截至 2026-08，均已按官方文档核对 API）：
+
+| 方案 | 依赖 | 核对版本 |
+|------|------|---------|
+| Redis ZSet | `redis.clients:jedis` | **5.2.0**（生产推荐用 `JedisPooled`，单连接 `Jedis` 非线程安全） |
+| RocketMQ | `org.apache.rocketmq:rocketmq-client` | **5.5.0**（remoting 客户端；gRPC 客户端 `rocketmq-client-java` API 不同） |
+| DelayQueue / ScheduledExecutor | JDK 标准库 | Java 8+（API 自 1.5 起，Java 21 LTS 仍稳定） |
+| 定时扫表 | `com.baomidou:mybatis-plus` + Spring | **3.5.17** + Spring 5.3+/6.x |
+| 时间轮 | `io.netty:netty-common` | **4.1.x**（Netty 5 已废弃，用 4.1） |
+
+#### 方案一：Redis ZSet + 轮询
+
+核心思路：**用 score 存过期时间戳**，后台线程按间隔扫 `score ≤ now` 的成员。
+
+```java
+// === 投递延迟任务 ===
+long fireAt = System.currentTimeMillis() + 30_000;   // 30 秒后执行
+jedis.zadd("delay:tasks", fireAt, "ORDER-001");      // member=任务ID（或 JSON 体）
+
+// === 后台轮询线程：扫到期的任务 ===
+while (!Thread.currentThread().isInterrupted()) {
+    long now = System.currentTimeMillis();
+    // 取出所有 score <= now 的（即已到期）
+    // 注意：Jedis 4.x/5.x 起返回类型从 Set<Tuple> 改为 List<Tuple>
+    List<Tuple> due = jedis.zrangeByScoreWithScores("delay:tasks", 0, now);
+    for (Tuple t : due) {
+        // ZREM 返回 1 才代表"我抢到了"——多实例部署时用 ZREM 做分布式抢锁
+        if (jedis.zrem("delay:tasks", t.getElement()) == 1L) {
+            execute(t.getElement());                  // 执行任务（关单/提醒）
+        }
+    }
+    Thread.sleep(100);   // 轮询间隔=精度上限；要 10ms 精度就 sleep(10)
+}
+```
+
+> 关键：**score 是过期时间戳、`zrangeByScore` 圈出到期范围、`zrem` 抢锁防多实例重复执行**。精度 = 轮询间隔。
+
+#### 方案二：RocketMQ 延迟消息
+
+核心思路：**发消息时指定延迟级别/时间，Broker 到点才把消息投给消费者**。
+
+```java
+// === 4.x：固定延迟级别（Level 1~18 = 1s/5s/10s/30s/1m/2m/3m/4m/5m/6m/7m/8m/9m/10m/20m/30m/1h/2h）===
+Message msg = new Message("OrderTopic", "close", "ORDER-001".getBytes());
+msg.setDelayTimeLevel(3);          // Level 3 = 10s 后投递
+producer.send(msg);
+
+// === 5.x：任意毫秒延迟（两种写法二选一）===
+msg.setDelayTimeMs(30_000L);                                   // 相对延迟 30 秒
+// 或绝对时刻：
+// msg.setDeliverTimeMs(System.currentTimeMillis() + 30_000);
+producer.send(msg);
+
+// === 消费者照常写，Broker 到点才会把消息推给它 ===
+// MessageListenerConcurrently 是双参数接口，lambda 必须带 context 形参
+consumer.registerMessageListener((msgs, context) -> {
+    for (MessageExt m : msgs) {
+        System.out.println("执行关单: " + new String(m.getBody()));
+    }
+    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+});
+```
+
+> 关键：**延迟逻辑在 Broker 侧**，生产端发、消费端收，都不用自己写"等"。4.x 受 18 级限制（秒级），5.x 任意毫秒。
+
+#### 方案三：Java DelayQueue（单机进程内）
+
+核心思路：**每个元素自带"到期时刻"，`take()` 阻塞到最近一条到期**——JDK 自带，零依赖。
+
+```java
+// === 1. 任务实现 Delayed 接口 ===
+class DelayTask implements Delayed {
+    private final String orderId;
+    private final long fireAt;        // 到期时刻
+    DelayTask(String orderId, long delayMs) {
+        this.orderId = orderId;
+        this.fireAt = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(delayMs);
+    }
+    // 剩余延迟：≤0 表示到期，DelayQueue 才允许 take() 出来
+    @Override public long getDelay(TimeUnit unit) {
+        return unit.convert(fireAt - System.nanoTime(), TimeUnit.NANOSECONDS);
+    }
+    // 队列内排序：到期早的排前
+    @Override public int compareTo(Delayed o) {
+        return Long.compare(this.fireAt, ((DelayTask) o).fireAt);
+    }
+}
+
+// === 2. 投递 + 消费 ===
+DelayQueue<DelayTask> dq = new DelayQueue<>();
+dq.offer(new DelayTask("ORDER-001", 30_000));   // 30 秒后到期
+
+while (true) {
+    DelayTask t = dq.take();     // 阻塞，直到最近一条到期才返回（毫秒级精度）
+    closeOrder(t.orderId);
+}
+```
+
+> 关键：**`getDelay` 决定"何时能取"、`compareTo` 决定"谁先取"**。内部基于优先队列 + Leader-Follower，到期前不空轮询。
+
+#### 方案四：ScheduledExecutorService（单机，一次性定时）
+
+核心思路：**`schedule(task, delay, unit)` 直接调度一次性任务**，最简单的"X 秒后干 Y"。
+
+```java
+ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+
+// 30 秒后执行关单（一次性）
+scheduler.schedule(() -> closeOrder("ORDER-001"), 30, TimeUnit.SECONDS);
+
+// 若要固定延迟重复执行（限流/心跳），换 scheduleAtFixedRate
+// scheduler.scheduleAtFixedRate(() -> heartbeat(), 0, 5, TimeUnit.SECONDS);
+
+scheduler.shutdown();   // 应用关闭时记得关，否则 JVM 不退出
+```
+
+> 关键：**比 DelayQueue 更轻——不用实现 Delayed 接口**。但进程重启任务就丢了，**不适合持久化的订单关单**（那得走 MQ 或 DB）。
+
+#### 方案五：定时任务扫表（分钟级，最朴素）
+
+核心思路：**业务表里存 `expire_at`，定时任务定期扫"已到期未处理"的记录**。
+
+```java
+// === 定时任务（Spring @Scheduled 为例，每分钟跑一次）===
+@Scheduled(cron = "0 * * * * ?")
+public void scanExpiredOrders() {
+    // 扫所有"创建已超 30 分钟、且状态仍为待支付"的订单
+    List<Order> due = orderMapper.selectList(
+        new QueryWrapper<Order>()
+            .eq("status", "UNPAID")
+            .lt("expire_at", LocalDateTime.now())   // expire_at < now
+    );
+    for (Order o : due) {
+        closeOrder(o.getId());
+        o.setStatus("CLOSED");        // 改状态，避免下次重复扫
+        orderMapper.updateById(o);
+    }
+}
+```
+
+```sql
+-- 建表时就把过期时间算好存上（创建时刻 + 30 分钟）
+expire_at DATETIME   -- 建索引：CREATE INDEX idx_expire ON orders(status, expire_at)
+```
+
+> 关键：**`expire_at` + `status` 联合索引**，扫表走索引而非全表。精度=扫表间隔（分钟级），但**最可靠、重启不丢**。
+
+#### 方案六：时间轮（Netty HashedWheelTimer，大量短延迟）
+
+核心思路：**把时间分成一个个 tick 格（像钟表表盘），落进同一格的任务一起到期触发**，添加任务 O(1)——适合**海量短延迟**（如连接超时控制）。
+
+```java
+// === 创建时间轮：512 个格子，每格 100ms ===
+HashedWheelTimer timer = new HashedWheelTimer(
+    Executors.defaultThreadFactory(),   // 线程工厂
+    100, TimeUnit.MILLISECONDS,         // tickDuration：每格时长=精度
+    512                                 // ticksPerWheel：格子数
+);
+
+// === 投递延迟任务（30 秒后执行）===
+TimerTask task = timeout -> closeOrder("ORDER-001");
+timer.newTimeout(task, 30, TimeUnit.SECONDS);   // 返回 Timeout，可 cancel()
+
+// ⚠️ 不要紧跟 newTimeout 之后立即 stop()——
+// 时间轮靠内部 worker 线程在 tick 推进时触发任务，立即 stop() 会让任务来不及执行就被取消。
+// 正确做法：把 timer 作为长生命周期组件（如 @Bean），在应用关闭时才 stop()。
+// stop() 返回 Set<Timeout>，是"已注册但未触发"的任务，需要的话可遍历补执行。
+```
+
+> 关键：**`tickDuration` 决定精度、`ticksPerWheel` 决定一轮多长**。任务到点由时间轮线程触发，海量任务下比 DelayQueue（堆，O(log n) 入队）更省内存、添加更快。
+
 ### 6.6 插件方案（了解）
 
 `rabbitmq_delayed_message_exchange` 插件在 Exchange 层实现延迟，但**已停止维护**（它依赖的 Mnesia 在 4.3 被移除）。生产慎用，可评估改用 RocketMQ 等原生支持延迟的产品。
@@ -514,7 +683,446 @@ TTL + DLX 这套方案做不到毫秒精确（扫描间隔 + 网络 + Broker 调
 
 ## 七、与 Quorum 毒消息的配合
 
-Quorum 队列用 `x-delivery-count` + **Delivery limit** 自动处理反复投递失败的毒消息。若同时配了 DLX，超阈消息会**进死信队列**供人工排查，而不是无限重投把队列拖垮。
+第四节讲的普通死信队列,核心动作是**消费者自己 `basicNack(requeue=false)`**——"我知道这条处理不了,主动放弃它,你帮我转去 DLX"。那是 Classic 时代的标准做法:Broker 是个"甩手掌柜",你不说放弃,它就一直帮你重投。
+
+问题是:**消费者崩溃、断连、或者代码有 bug 一直抛异常**时,根本走不到你写的那句 `nack(requeue=false)`——Broker 看到的只是"这条没 ack",于是默认 `requeue` 重投,再失败、再重投……**无限循环**,把消费者和队列一起拖垮。这就是经典的**毒消息(Poison Message)**问题。
+
+Quorum 队列对此的解法是:把"重试几次后放弃"这套逻辑**下沉到 Broker**——叫 **Poison Message Handling**(毒消息处理)。不用消费者自己数第几次了,Broker 替你数,超限自动死信。
+
+> 🔑 **一句话区分两种"放弃"**:
+> - 第四节(普通 DLQ)= **消费者主动放弃**:"我处理不了,`requeue=false`,转走吧。"——**消费者判断**。
+> - 第七节(Quorum 毒消息)= **Broker 强制放弃**:"你都失败 N 次了,我替你转走。"——**Broker 判断**。
+>
+> 前者是"我认输",后者是"裁判判你输"。生产环境两者常**配合用**:消费者该主动放弃时还主动放弃(快速失败),但就算消费者忘了或崩了,Quorum 的 delivery-limit 也会兜底。
+
+### 7.1 两个参数:`x-delivery-limit` 和 `x-delivery-count`
+
+| 参数 | 谁来设 / 在哪 | 作用 |
+|------|--------------|------|
+| `x-delivery-limit` | **队列参数**(声明时)或策略 `delivery-limit` | 设"最多投递几次"的阈值,如 `3` |
+| `x-delivery-count` | **Broker 自动维护**,在消息 Header 里 | 这条消息已经被投递了几次(只读,你不用写) |
+
+**`x-delivery-count` 从 0 开始数**——这是最容易踩的坑。具体语义:`count` 表示"这是第几次投递",**首次投递时 `count=0`**;每次消费失败(没 ack / nack requeue / 断连)导致重新入队,`count` 加 1,再投递;当 `count` **即将超过** `delivery-limit` 时,Broker 不再投递,直接把消息死信掉。
+
+> **为什么是"limit+1"次投递?** 设 `x-delivery-limit=3`,实际投递发生在 `count=0,1,2,3`——**共 4 次**;当 `count` 涨到 4 时,`4 > 3`,Broker 判定超限,死信。所以"投递上限 = limit + 1"。记住 `count` 从 0 起,就不会算错。
+
+| 投递序号 | `x-delivery-count` | 与 limit(=3) 比 | 发生了什么 |
+|----------|---------------------|------------------|------------|
+| 第 1 次 | 0 | 0 ≤ 3 | 正常投递,消费者失败 → requeue |
+| 第 2 次 | 1 | 1 ≤ 3 | 正常投递,失败 → requeue |
+| 第 3 次 | 2 | 2 ≤ 3 | 正常投递,失败 → requeue |
+| 第 4 次 | 3 | 3 ≤ 3 | 正常投递,失败 → requeue(**这是最后一次正常投递**) |
+| 第 5 次 | — | 4 > 3 | **判定超限 → 死信**(不会再投递给消费者了) |
+
+> ⚠️ **只在 Quorum 队列上有**。`x-delivery-limit` 是 Quorum 的特性,Classic 队列声明这个参数会被忽略(Classic 没有内置计数器,毒消息只能靠消费者自己 `nack(requeue=false)`,即第四节的做法)。Stream 则连 DLX 都不支持。
+
+### 7.2 必须同时配 DLX,否则超限消息"直接丢弃"
+
+这是和第二节三种死信触发**最大的区别**,务必记住:
+
+| 死信触发 | 不配 DLX 时会怎样 |
+|----------|-------------------|
+| 第二节① 拒绝(`requeue=false`) | 消息被丢弃 |
+| 第二节② TTL 过期 | 消息被丢弃 |
+| 第二节③ 队列超长 | 消息被丢弃 |
+| **本节 Quorum 超过 delivery-limit** | **消息被丢弃** |
+
+**四者本质一样**:死信机制 = "Broker 决定不再正常处理这条消息";**配了 `x-dead-letter-exchange`,它就被 republish 到 DLX(进 DLQ 供排查);没配,就静默 drop**。所以用 Quorum 毒消息处理,**`x-delivery-limit` 几乎总要和 `x-dead-letter-exchange` 一起挂**——否则超限消息消失得无影无踪,排查都没得查。
+
+> 🔑 **记忆口诀**:`x-delivery-limit` 管"什么时候放弃",`x-dead-letter-exchange` 管"放弃后去哪"。**两个一起挂**,才是完整的毒消息兜底链路;只挂前者 = 光判刑不放逐(直接杀掉),只挂后者 = 没有判刑标准(消费者不主动放弃就永远不进 DLQ)。
+
+### 7.3 完整示例:Quorum + DLX 自动处理毒消息
+
+沿用第四节的拓扑风格(业务队列 + DLX + DLQ),区别只在于业务队列**改成 Quorum 类型**、多挂一个 `x-delivery-limit`,**消费者不再写 `requeue=false`**——让它自然失败、自然 requeue,Broker 自己数:
+
+```java
+// === Quorum 队列 + DLX:Broker 自动毒消息处理 ===
+
+// 1) DLX + DLQ（和第四节一样，都是普通的 exchange / queue）
+channel.exchangeDeclare("pay.dlx", BuiltinExchangeType.DIRECT, true);
+channel.queueDeclare("pay.dlq", true, false, false, null);
+channel.queueBind("pay.dlq", "pay.dlx", "dead");
+
+// 2) 业务队列：Quorum 类型，挂 x-delivery-limit + x-dead-letter-exchange
+Map<String, Object> args = new HashMap<>();
+args.put("x-queue-type", "quorum");              // ← 关键：声明为 Quorum 队列
+args.put("x-delivery-limit", 3);                 // 投递上限 = 4 次（count 0~3），超限死信
+args.put("x-dead-letter-exchange", "pay.dlx");   // ← 必须配！否则超限消息直接丢弃
+args.put("x-dead-letter-routing-key", "dead");
+channel.queueDeclare("pay.queue", true, false, false, args);
+
+// 3) 业务消费者：故意一直失败。注意 requeue=true（或不 nack）——
+//    不用像第四节那样手动 requeue=false，让 Broker 自己数投递次数
+channel.basicQos(1);
+channel.basicConsume("pay.queue", false, new DefaultConsumer(channel) {
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties p, byte[] body)
+            throws IOException {
+        Object cnt = p.getHeaders().get("x-delivery-count");   // 0,1,2,3…（首次为 0）
+        log.info("[消费] body={}, deliveryCount={}", new String(body), cnt);
+        // 模拟毒消息：处理永远失败 → requeue=true 让它重新入队
+        // Broker 每次 requeue 都递增 delivery-count，到 4 就自动死信
+        channel.basicNack(env.getDeliveryTag(), false, true);  // requeue=true
+    }
+});
+
+// 4) 死信消费者：接住超限毒消息，打印"案底"（见第五节）
+channel.basicConsume("pay.dlq", false, new DefaultConsumer(channel) {
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties p, byte[] body)
+            throws IOException {
+        // Quorum 毒消息的 reason 是 delivery_limit_exceeded（区别于第二节的 rejected/expired/maxlen）
+        String reason = "" + p.getHeaders().get("x-first-death-reason");
+        log.info("[毒消息排查] body={}, reason={}", new String(body), reason);
+        channel.basicAck(env.getDeliveryTag(), false);
+    }
+});
+
+// 5) 发一条 → 消费者连续失败 4 次 → 第 5 次投递时 Broker 判定超限 → 死信进 pay.dlq
+channel.basicPublish("", "pay.queue", MessageProperties.PERSISTENT_TEXT_PLAIN,
+        "订单 PAY-001 支付回调".getBytes(StandardCharsets.UTF_8));
+```
+
+运行日志(消费者每次都失败):
+
+```
+[消费] body=订单 PAY-001 支付回调, deliveryCount=0   ← 第 1 次投递
+[消费] body=订单 PAY-001 支付回调, deliveryCount=1   ← 第 2 次（requeue 后）
+[消费] body=订单 PAY-001 支付回调, deliveryCount=2   ← 第 3 次
+[消费] body=订单 PAY-001 支付回调, deliveryCount=3   ← 第 4 次（最后一次正常投递）
+# 第 5 次：count=4 > limit=3，Broker 不再投递，直接死信
+[毒消息排查] body=订单 PAY-001 支付回调, reason=delivery_limit_exceeded
+```
+
+> 注意 `reason=delivery_limit_exceeded`——这是**第四种**死信原因,只出现在 Quorum 的毒消息场景。前三种(`rejected`/`expired`/`maxlen`)是第二节那套,通用;这一种是 Quorum 独有。
+
+### 7.4 四种死信原因,一张表收齐
+
+第二节讲了三种,本节补上 Quorum 的第四种,合起来就是 RabbitMQ 死信原因的全集:
+
+| `x-first-death-reason` | 含义 | 触发场景 | 是否通用 |
+|------------------------|------|----------|----------|
+| `rejected` | 消费者拒绝且不重投 | `basicReject`/`basicNack` 设 `requeue=false` | ✅ 所有支持 DLX 的队列 |
+| `expired` | TTL 过期 | 消息在队列里超过 `x-message-ttl` | ✅ 所有支持 DLX 的队列(延迟队列靠它) |
+| `maxlen` | 队列超长被挤掉 | 队列达到 `x-max-length` | ✅ 所有支持 DLX 的队列 |
+| **`delivery_limit_exceeded`** | **投递次数超限** | **Quorum 队列 `x-delivery-limit` 超限** | ⚠️ **仅 Quorum** |
+
+DLQ 的消费者可以按 `reason` 做差异化处理(第五节已示例):`rejected`/`delivery_limit_exceeded` 多半是毒消息,要看代码 bug;`expired` 是正常的延迟任务到期;`maxlen` 该告警扩容。
+
+### 7.5 Classic vs Quorum:毒消息处理对比
+
+| | Classic 队列 | Quorum 队列 |
+|---|---|---|
+| **谁来数重试次数** | 消费者自己数(或干脆不数) | **Broker 自动数**(`x-delivery-count`) |
+| **超限后怎么办** | 消费者手动 `nack(requeue=false)` 触发死信 | **Broker 自动死信**(`delivery_limit_exceeded`) |
+| **没主动放弃会怎样** | 默认 `requeue` → **无限重投**(毒消息陷阱) | 投递到 limit+1 次后自动停止 → 死信 |
+| **要不要写计数逻辑** | ✅ 要(每个消费者都写一遍) | ❌ 不用,声明队列时挂个参数就行 |
+| **可靠性兜底** | 靠开发者自觉,容易漏 | Broker 兜底,漏不了 |
+| **适用** | 老项目、轻量场景 | **生产推荐**(消息持久化 + 自动毒消息处理) |
+
+> 一句话:**Classic 时代,防毒消息是消费者自己的事(第四节那套手动 nack);Quorum 时代,这事 Broker 包了——你只管挂 `x-delivery-limit`,剩下的它兜底。** 但注意 Quorum 消费者仍可以主动 `nack(requeue=false)` 快速放弃(不用耗满 limit 次),两种机制是**叠加**的,不是二选一。
+
+### 7.6 一个短板:重试之间没有延迟
+
+Quorum 的 delivery-limit 只管"**限制次数**",不管"**间隔**"——每次 requeue 后 Broker **立刻**重新投递,中间没有退避(backoff)。这意味着:
+
+- 如果失败是因为**下游服务短暂不可用**(比如数据库抖动、第三方接口 5 秒后恢复),立刻重试 4 次大概率全失败,消息白白进 DLQ。
+- 想要"**延迟重试 / 指数退避**"(第 1 次失败等 1s、第 2 次等 5s、第 3 次等 30s 再重试),Quorum 原生不支持,得自己搭。
+
+**怎么补?** 正好用上第六节的延迟队列——搭一条"重试队列"链路:
+
+```
+消费失败(requeue=false) → DLX → 重试Queue(挂 TTL，如 5s + 再挂 DLX 指回业务队列)
+                                └─ TTL 到期成死信 → 转回业务队列(实现"延迟 N 秒后重试")
+```
+
+多级重试就多挂几条不同 TTL 的重试队列(1s / 5s / 30s),靠 `x-death` 里的重试次数决定走哪一级。这套"**TTL + DLX 做延迟重试**"是 RabbitMQ 实现退避的常见模式,本质就是第六节延迟队列的复用——**延迟队列不止能做定时任务,还能做"慢一点的重试"**。
+
+> 对比一下其他 MQ:RocketMQ 的消费重试**内置指数退避**(默认 1s/5s/10s/30s/…/2h,共 16 次),Kafka 没有内置重试但常配 retry topic 实现。RabbitMQ 这块需要自己用 TTL+DLX 拼,是它消息处理上相对"原始"的地方——也是为什么第六节把延迟队列讲得那么细。
+
+---
+
+## 八、多级死信与死信链
+
+第七节 7.6 留了个引子:RabbitMQ 的退避重试要用"TTL + DLX 自己拼"。但拼着拼着自然会冒出一个问题——**死信进了 DLQ 之后,DLQ 里的消息要是又"处理不了",还能不能再死信一次?DLQ 能不能再挂 DLX,往下再套一层?**
+
+答案是:**能**。这一节就把"多级死信"讲透——它怎么搭、怎么用,以及一个会让队列原地爆炸的致命陷阱。
+
+### 8.1 为什么能套娃:DLQ 就是普通队列
+
+回到第一节的那个关键认知:**DLX 和 DLQ 都是普通的 exchange / queue,没有任何"死信专用"的特殊性**。普通队列能挂 `x-dead-letter-exchange`,DLQ 自然也能挂。于是死信可以一级一级往下传:
+
+```
+  Q1 ──(DLX1)──▶ DLQ1 ──(DLX2)──▶ DLQ2 ──(DLX3)──▶ DLQ3（终点，不再挂 DLX）
+ 业务队列        一级死信队列       二级死信队列        终坑（停车场）
+```
+
+每死信一次,消息就在 `x-death` Header 数组里**追加一条记录**(第五节讲过的"案底"),所以一条消息的"死亡履历"会越来越长——你随时能从 Header 里读出它"死过几次、分别死在哪些队列"。
+
+> 🔑 **一句话:多级死信不是什么高级特性,就是"普通队列反复挂 DLX"的自然结果。** 能套几层没有硬限制,但——套错了会出大事(见 8.5)。
+
+### 8.2 两个典型场景
+
+**场景 A:分层延迟重试(逐级加大延迟)**
+
+承接 7.6——消费者失败后,不要立刻重试,而是按"第几次失败"投到不同 TTL 的重试队列,到期再投回业务队列:
+
+```
+                    ┌─ retry.queue.5s  （TTL=5s，  DLX=back→业务队列）
+业务 pay.queue ───▶ retry.exchange（topic）
+                    └─ retry.queue.30s （TTL=30s， DLX=back→业务队列）
+                                                          │
+                        TTL 到期死信 ◀── 无消费者，干等到点 ─┘
+                                          │
+                                          ▼
+                                     业务队列（带着更长的 x-death 履历重新投递）
+                                          │
+                                 失败次数超上限 ──▶ 终坑 dlq（不再挂 DLX）
+```
+
+第 1 次失败 → 进 `retry.queue.5s`(等 5 秒重试);第 2 次失败 → 进 `retry.queue.30s`(等 30 秒重试);超过上限 → 进终坑。这就是 RabbitMQ 版的"指数退避"。
+
+**场景 B:按死因分流(一个 DLX 接多个 DLQ)**
+
+一个业务队列的 DLX 用 `topic`/`headers` 类型,把**不同死因**的死信路由到不同 DLQ,各自走不同处理:
+
+```
+业务队列（挂 DLX=pay.dlx，类型=topic）
+   ├─ key=order.expired   ──▶ DLQ-expired  （TTL 过期 → 执行关单，预期路径）
+   ├─ key=order.rejected  ──▶ DLQ-rejected （消费拒绝 → 排查 bug）
+   └─ key=order.overflow  ──▶ DLQ-overflow （超长挤掉 → 告警扩容）
+```
+
+> ⚠️ **一个硬限制:死信那一刻的 routing-key 是固定的**(由原消息 key 或 `x-dead-letter-routing-key` 决定),**不能动态按"死过几次"改路由**。所以"按死因分流"可行(死因能反映到 key 上),但"按次数分流"做不到——想做按次数分流,得靠**消费者主动 publish**(见 8.4),而不是靠 nack 触发的自动死信。
+
+### 8.3 怎么知道"死过几次":读 `x-death` 数组(注意 count 去重)
+
+第五节讲过 `x-first-death-*` 三个 Header(只记首次死信,不可变)。多级死信场景下,真正有用的是 **`x-death` 数组**——它记录**每一次**死信事件,是完整的死亡履历。但这里有个 RabbitMQ 的去重机制,踩坑率极高:
+
+> **`x-death` 数组的去重规则**:消息每死信一次,Broker 先看"这次死信的 `(队列, 原因)` 组合,数组里有没有记过":
+> - **没记过** → **新增一条**记录 `{queue, reason, time, count: 1, ...}`;
+> - **记过** → **不新增**,只把那条记录的 `count` 字段 **+1**。
+>
+> 也就是说:**数组长度 = 经过的不同"(队列,原因)"组合数,不等于总死信次数**。一条消息在同一个队列因同一种原因被死信 100 次,`x-death` 数组里仍然只有 **1 条**记录,只是它的 `count=100`。
+
+所以判断"这条消息总共死过几次",**不能数数组长度**,要**累加每条记录的 `count`**:
+
+```java
+/** 累加 x-death 数组里所有 count，得到"总死信次数"。 */
+@SuppressWarnings("unchecked")
+private static int totalDeaths(Map<String, Object> headers) {
+    if (headers == null) return 0;
+    Object xDeath = headers.get("x-death");
+    if (!(xDeath instanceof List)) return 0;          // 没死过信
+    int sum = 0;
+    for (Object entry : (List<?>) xDeath) {
+        if (entry instanceof Map) {
+            Object count = ((Map<String, Object>) entry).get("count");
+            if (count instanceof Number) {
+                sum += ((Number) count).intValue();   // 各条记录的 count 累加
+            }
+        }
+    }
+    return sum;
+}
+```
+
+> **什么时候数组长度刚好等于死信次数?** 只有"链式多级死信、且每级队列只死一次"的场景——比如场景 A 里消息依次经过 `pay.queue → retry.5s → pay.queue → retry.30s → ...`,每级是不同队列,不会触发去重。但**只要某个队列上消息被反复死信**(比如业务队列连续失败),`count` 就会 >1,这时数组长度的算法就失灵了。**永远累加 `count`,最稳。**
+
+### 8.4 完整代码:分层延迟重试链
+
+下面是场景 A 的完整实现。注意核心技巧:**消费者失败后不靠 `nack` 触发死信,而是主动 `basicPublish` 到对应 TTL 的重试队列,再 `ack` 掉当前消息**——这样 routing-key 完全由代码控制,能按次数动态分流(绕开 8.2 那个 routing-key 固定的限制)。
+
+```java
+// === 分层延迟重试：失败 → 按"第几次"投到不同 TTL 队列 → 到期投回业务队列 → 超上限进终坑 ===
+// 拓扑：
+//   pay.queue（业务）──失败──▶ 消费者按次数 publish ──▶ retry.exchange（topic）
+//                                                          ├─ retry.5s  (TTL=5s,  DLX=back→pay.queue)
+//                                                          └─ retry.30s (TTL=30s, DLX=back→pay.queue)
+//   retry 队列无消费者，TTL 到期死信 → back.exchange → pay.queue（带着更长的 x-death 回来）
+//   次数超上限 → publish 到 dlx → dlq（终坑）
+
+// 1) 业务队列及其 DLX（终坑用）
+channel.exchangeDeclare("pay.dlx",  BuiltinExchangeType.DIRECT, true);
+channel.queueDeclare("pay.dlq", true, false, false, null);        // 终坑，不挂 DLX
+channel.queueBind("pay.dlq", "pay.dlx", "dead");
+
+// 2) 两条重试队列：各自 TTL + 都把 DLX 指向 back.exchange（到期投回业务队列）
+channel.exchangeDeclare("back.exchange", BuiltinExchangeType.DIRECT, true);
+channel.queueBind("pay.queue", "back.exchange", "pay");           // 业务队列绑到 back.exchange
+
+channel.exchangeDeclare("retry.exchange", BuiltinExchangeType.TOPIC, true);
+
+Map<String, Object> r5 = new HashMap<>();
+r5.put("x-message-ttl", 5_000);                                   // 第 1 级：等 5 秒
+r5.put("x-dead-letter-exchange", "back.exchange");
+r5.put("x-dead-letter-routing-key", "pay");
+channel.queueDeclare("retry.5s", true, false, false, r5);
+channel.queueBind("retry.5s", "retry.exchange", "retry.1");
+
+Map<String, Object> r30 = new HashMap<>();
+r30.put("x-message-ttl", 30_000);                                 // 第 2 级：等 30 秒
+r30.put("x-dead-letter-exchange", "back.exchange");
+r30.put("x-dead-letter-routing-key", "pay");
+channel.queueDeclare("retry.30s", true, false, false, r30);
+channel.queueBind("retry.30s", "retry.exchange", "retry.2");
+
+// 3) 业务消费者：失败后按"已死次数"决定去哪一级，或进终坑
+channel.basicQos(1);
+channel.basicConsume("pay.queue", false, new DefaultConsumer(channel) {
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties p, byte[] body)
+            throws IOException {
+        try {
+            doBusiness(body);                                     // 业务逻辑
+            channel.basicAck(env.getDeliveryTag(), false);
+        } catch (Exception e) {
+            int deaths = totalDeaths(p.getHeaders());             // 累计死过几次（含本次之前的）
+            if (deaths >= 2) {
+                // 已经重试过 2 级还失败 → 进终坑
+                channel.basicPublish("pay.dlx", "dead",
+                        MessageProperties.PERSISTENT_TEXT_PLAIN, body);
+                log.warn("[终坑] 已死 {} 次，丢弃到 dlq", deaths);
+            } else {
+                // 第 1 次失败 → retry.1(5s)；第 2 次 → retry.2(30s)
+                String level = (deaths == 0) ? "retry.1" : "retry.2";
+                channel.basicPublish("retry.exchange", level,
+                        MessageProperties.PERSISTENT_TEXT_PLAIN, body);
+                log.info("[重试] 第 {} 次失败，投到 {}", deaths + 1, level);
+            }
+            channel.basicAck(env.getDeliveryTag(), false);        // 当前消息处理完毕（已转走），ack 掉
+        }
+    }
+});
+```
+
+流转示意(一条永远失败的消息):
+
+```
+发到 pay.queue → 消费失败(deaths=0) → publish 到 retry.1 → ack
+  retry.5s 干等 5s → TTL 到期死信 → back.exchange → pay.queue（x-death 多一条）
+    → 消费失败(deaths=1) → publish 到 retry.2 → ack
+      retry.30s 干等 30s → TTL 到期死信 → back.exchange → pay.queue（x-death 再多一条）
+        → 消费失败(deaths=2 ≥ 上限) → publish 到 pay.dlx → pay.dlq（终坑，停止）
+```
+
+> 这个"消费者主动 publish 转投"的模式,就是 Spring AMQP `RepublishMessageRecoverer` 的底层原理——框架帮你封装了"读次数 + 选目标 + 转发 + ack"这套动作。理解了上面这段裸 Java 代码,再用框架就知其所以然。
+
+### 8.5 致命陷阱:Broker 不防死信环路
+
+这是多级死信最容易翻车的地方,务必记住:**RabbitMQ 没有任何死信循环检测**。
+
+如果你让 `pay.queue` 的 DLX 指向 `q.a`、又让 `q.a` 的 DLX 指回 `pay.queue`(或经过一串队列绕回起点),Broker **不会报错、不会拦截**,消息会**无限循环死信**:
+
+```
+  pay.queue ──(DLX)──▶ q.a ──(DLX)──▶ q.b ──(DLX)──▶ pay.queue   ← 环路！
+                                                                     Broker 全程静默
+```
+
+后果是连锁的、且**没有任何告警**:
+
+| 后果 | 怎么发生 |
+|------|----------|
+| **CPU / IO 飙满** | 消息被无限 republish,Broker 一直在写 Raft 日志(Quorum)或刷盘 |
+| **磁盘打爆** | 每次死信都往 `x-death` 追加(或 count+1),**消息体只增不减**,越循环越胖 |
+| **监控无感** | Broker 觉得自己"正常工作",队列流量看起来就是"一直在闪",不报错 |
+
+防环路,两条铁律:
+
+1. **链式拓扑必须有明确的终点**——最后一级 DLQ(终坑)**不要挂 DLX**,作为停车场,消息到了就永久停留等人工处理。像 8.4 的 `pay.dlq`、两级链里的末级队列。
+2. **应用层用 `x-death` 的 count 累加值做断路**——消费者读到总死信次数 ≥ 上限时,走"转终坑 / 归档 / 丢弃"分支,**绝不再触发新的死信**(8.4 代码里 `deaths >= 2` 那个分支就是断路器)。
+
+> 🔑 **一句话:Broker 只管"你让我转我就转",转去哪、会不会绕回起点,它一概不管。** 防环路的全部责任在应用层——给链路设终点 + 按 `x-death` 次数断路,缺一不可。
+
+### 8.6 多级死信 vs Quorum 毒消息:别混了
+
+初学者容易把"多级死信"和第七节的"Quorum 毒消息处理"搞混,这里点清区别:
+
+| | Quorum 毒消息(第七节) | 多级死信(本节) |
+|---|---|---|
+| **解决什么** | 同一队列内"反复投递失败"的次数限制 | 跨队列"逐级处理失败"的分层兜底 |
+| **谁数次数** | Broker(`x-delivery-count`) | 应用层(读 `x-death` 累加 count) |
+| **重试有延迟吗** | ❌ 没有(立刻 requeue) | ✅ 有(TTL 队列做延迟) |
+| **典型用法** | 兜底防毒消息拖垮队列 | 分层退避重试 / 按死因分流 |
+| **触发动作** | Broker 自动死信 | 消费者主动 publish 转投 |
+
+两者**配合**而非互斥:Quorum 队列挂 `x-delivery-limit` 做"同一队列内的次数兜底",消费者再用多级死信链做"跨队列的延迟重试"——双保险。第七节 7.6 留的"退避怎么补"问题,答案就是本节这套分层重试链。
+
+### 8.7 应用场景:多级死信/死信链都用在哪
+
+上面几节偏原理,这一节落到**真实业务**——多级死信和死信链到底解决什么问题。按"分层重试"和"按死因分流"两条主线,各举几个典型场景。
+
+#### 场景一:分层退避重试——下游抖动时的"慢重试"
+
+这是 8.4 代码实现的那套,核心是**逐级加大延迟**,给下游恢复时间。典型业务:
+
+| 业务 | 第 1 次失败 | 第 2 次 | 第 3 次 | 终坑 |
+|------|------------|---------|---------|------|
+| **支付回调** → 调银行接口 | 等 5s 重试 | 等 30s | 等 2min | 人工对账 |
+| **发短信/邮件** → 调第三方 | 等 10s | 等 1min | 等 5min | 记录后放弃(非核心) |
+| **同步数据到 ES** → 写索引失败 | 等 5s | 等 30s | 等 5min | 转离线补偿任务 |
+
+为什么非要"慢重试"而不是立刻重投?因为**下游故障通常是瞬时的**(数据库抖动 3 秒、第三方限流 1 分钟)。立刻重试 N 次大概率全失败,消息白进 DLQ;而延迟重试能给下游恢复窗口,**大量消息在第 2、3 次重试时成功**,真正进终坑的极少。RabbitMQ 没有原生退避,所以这套链路是高频面试题也是高频生产实践。
+
+#### 场景二:按死因分流——一个队列的多种"善后"
+
+业务队列的 DLX 用 topic/headers,**按死信原因路由到不同 DLQ,各自走不同处理路径**:
+
+```
+订单业务队列（挂 DLX，topic）
+   ├─ expired  → DLQ-执行关单    （TTL 过期 = 30 分钟未支付 → 这是预期，自动关单）
+   ├─ rejected → DLQ-排查 bug    （消费者拒绝 = 代码/数据问题 → 告警人工介入）
+   └─ overflow → DLQ-告警扩容    （队列超长 = 消费跟不上 → 触发扩容/限流）
+```
+
+关键洞察:**同样是死信,"正常"和"异常"要分开处理**。`expired` 是业务设计好的(订单超时关单、验证码过期),进 DLQ 是**预期路径**,消费者该主动干活(关单、清理);而 `rejected`/`overflow` 是**异常路径**,进 DLQ 是为了排查告警。混在一个 DLQ 里,要么漏处理、要么误处理——分流后各司其职。
+
+#### 场景三:多级兜底——金融/支付的高可靠链路
+
+金融场景对"消息绝对不能丢"要求极高,常搭**多级 DLQ** 做"逐级降级",每丢一级、可靠性手段就更重:
+
+```
+支付队列 → DLQ1(5s 后重试)
+              ├─ 仍失败 → DLQ2(30s 后重试 + 通知值班)
+              ├─ 仍失败 → DLQ3(转人工对账队列 + 电话告警)
+              └─ DLQ3 也处理不了 → 冷备归档(DB 落库，永久留存)
+```
+
+每一级的语义:**先尝试自动恢复(重试)→ 再升级通知(告警)→ 最后人工兜底(对账)→ 终极归档(不丢数据)**。`x-death` 履历让任何一级的消费者都能知道"这条消息已经挣扎过几级",决定是继续转还是彻底归档。银行、支付、对账系统常见这种拓扑。
+
+#### 场景四:延迟任务的"多档定时"——复用死信链做定时器
+
+第六节讲过 TTL+DLX 做延迟队列(订单 30 分钟关单)。多级死信能把**不同时长的定时任务**塞进同一套链路,按 routing-key 分流:
+
+```
+定时 DLX（topic）
+   ├─ delay.5min   → queue(挂 TTL=5min,  DLX→执行队列)   ← 验证码 5 分钟过期
+   ├─ delay.30min  → queue(挂 TTL=30min, DLX→执行队列)   ← 订单 30 分钟关单
+   └─ delay.24h    → queue(挂 TTL=24h,  DLX→执行队列)   ← 会员到期 24 小时提醒
+```
+
+发消息时带不同 routing-key(`delay.5min` / `delay.30min`),各自进对应 TTL 队列,到期后都汇到同一个执行队列。**一套死信链搞定多个定时时长**,比每个时长单独搭一套清爽。本质是第六节延迟队列的"多档版",用的还是同一个 DLX 机制。
+
+#### 场景五:跨系统补偿——死信链对接异构系统
+
+微服务架构里,消息最终消费失败往往要**回退到另一个系统做补偿**,死信链正好当"跨系统转接器":
+
+```
+订单服务队列 → 消费失败 → DLQ
+                              ├─ 死因=库存不足  → 转发到「库存服务」的补偿队列（释放预占库存）
+                              ├─ 死因=优惠券失效 → 转发到「营销服务」的通知队列（通知用户重选）
+                              └─ 死因=系统异常  → 转发到「工单系统」（生成排查工单）
+```
+
+DLQ 的消费者读 `x-first-death-reason` 或业务错误码,**主动 publish 到对应系统的队列**,完成跨服务补偿。这里 DLQ 已经不只是"垃圾桶",而是**补偿路由中枢**——不同失败原因路由到不同下游系统善后。
+
+> **一句话总结这五个场景**:多级死信/死信链的本质是**给"失败"分级处理**——
+> - **分层重试**(场景一):按"第几次失败"给延迟,应对下游抖动;
+> - **按死因分流**(场景二、五):按"为什么失败"走不同善后路径;
+> - **多级兜底**(场景三):按"可靠性等级"逐级升级,确保不丢数据;
+> - **多档定时**(场景四):复用 TTL 队列,一套链路支持多个定时时长。
+>
+> 逃不出"**给失败分类、分级、分流**"这几个维度。想清楚你的业务属于哪一类,就知道该搭几级、每级配什么 TTL、终坑放哪。
 
 ---
 
@@ -522,13 +1130,15 @@ Quorum 队列用 `x-delivery-count` + **Delivery limit** 自动处理反复投�
 
 | 要点 | 内容 |
 |------|------|
-| 死信是什么 | 消息在队列里"没法正常消费"了：拒绝(requeue=false) / TTL 过期 / 队列超长 |
+| 死信是什么 | 消息在队列里"没法正常消费"了：拒绝(requeue=false) / TTL 过期 / 队列超长（Quorum 还有第四种：投递超限） |
 | DLX / DLQ | **都是普通的 exchange / queue**，靠业务队列上的 `x-dead-letter-exchange` 参数串起来 |
 | 流转 | 业务队列 →（成死信，Broker 自动 republish）→ DLX → 死信队列 → 消费者 |
 | 配置 | 业务队列挂 `x-dead-letter-exchange`（可选 routing-key）；可用策略批量 |
 | 延迟队列 | TTL 暂存（无消费者）+ DLX 转发；用队列级 `x-message-ttl`（非单消息 `expiration`） |
 | 延迟 vs 普通 DLQ | 同一套 DLX 机制——延迟是"故意等到点"（预期），DLQ 是"出错了接住"（异常） |
 | TTL 过期原理 | 打戳（入队时算过期时刻）+ 懒检查（只查队头）；秒级精度 |
+| Quorum 毒消息 | `x-delivery-limit`(投递上限=limit+1 次)+ 必配 `x-dead-letter-exchange`,超限 reason=`delivery_limit_exceeded`;仅 Quorum,无退避延迟(靠 TTL+DLX 自拼) |
+| 多级死信 | DLQ 是普通队列,可再挂 DLX 套娃;按 `x-death` 累加 count 判次数(同队同因会去重);**Broker 不防环路**——需设终坑 + 应用层断路 |
 | 限制 | Stream 不支持 DLX |
 
 下一篇：Sharding 插件——单队列吞吐不够时如何分片存储。

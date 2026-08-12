@@ -305,8 +305,6 @@ channel.basicConsume(QUEUE_NAME, false, consumeParam, myconsumer);
 | Timestamp | 按消息到达时间定位（POSIX 秒），钳到最近的 chunk 边界 |
 | Interval 字符串 | 相对当前时间，如 `"1h"`、`"7D"`（与 `x-max-age` 同格式） |
 
-![Stream 消费 offset 配置示意](/中间件/rabbitmq/14/p08-01.png)
-
 **Spring Boot 限制**：Spring AMQP 可以声明 Stream、可以发送，但用 `@RabbitListener` 消费 Stream 时，对 offset 的传递支持取决于 Spring AMQP 版本（较老版本无法直接传 offset）。变通方案：
 
 - 注入原生 `Channel` 用 AMQP 0.9.1 API（如上）
