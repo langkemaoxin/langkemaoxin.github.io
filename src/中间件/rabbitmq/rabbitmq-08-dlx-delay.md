@@ -167,6 +167,16 @@ channel.basicConsume("biz.dlq", false, new DefaultConsumer(channel) {
 channel.basicPublish("", "biz.queue", null, "test message".getBytes());
 ```
 
+消息流转示意图：
+```
+配置：
+biz.queue 配置 死信（x-dead-letter-exchange = biz.dlx）
+
+流转：
+消息 -> biz.queue -> 进行处理报错 -> 转发死信到 biz.dlx  -> 消息转发到 biz.dlq
+
+```
+
 运行后日志：
 
 ```
@@ -183,7 +193,7 @@ channel.basicPublish("", "biz.queue", null, "test message".getBytes());
 
 ## 五、如何识别死信：它带了"案底"
 
-消息成为死信进 DLQ 时，Broker 给它打上诊断 Header：
+消息成为死信进 DLQ 时，Broker **自动给它打上诊断 Header**——你不用自己记"这条是从哪来的、为什么死的"，Broker 全给你写在消息头里了：
 
 | Header | 含义 |
 |--------|------|
@@ -192,6 +202,49 @@ channel.basicPublish("", "biz.queue", null, "test message".getBytes());
 | `x-first-death-exchange` | 首次死信的来源交换机 |
 
 这三个是**首次成死信时写入、之后不可变**的；另有 `x-death` 数组记录每次死信的完整历史（一条消息可能被死信多次）。业务可据此做审计、告警、差异化补偿。
+
+**代码里怎么读到这些 Header？** 在 DLQ 的 Consumer 里，从 `AMQP.BasicProperties.getHeaders()` 取出来即可：
+
+```java
+// 死信消费者：接住死信后，读出 Broker 打上的诊断 Header
+channel.basicConsume("biz.dlq", false, new DefaultConsumer(channel) {
+    @Override
+    public void handleDelivery(String consumerTag, Envelope envelope,
+                               AMQP.BasicProperties properties, byte[] body)
+            throws IOException {
+        Map<String, Object> headers = properties.getHeaders();
+
+        // —— 三个不可变的"首次死信"属性 ——
+        String reason = headerStr(headers, "x-first-death-reason");    // rejected / expired / maxlen
+        String fromQ  = headerStr(headers, "x-first-death-queue");     // 来源队列（如 biz.queue）
+        String fromEx = headerStr(headers, "x-first-death-exchange");  // 来源交换机
+
+        // —— x-death 数组：完整的死信历史（一条消息可能被多次死信）——
+        // 每条记录含：queue、exchange、reason、time、routing-keys 等
+        // 用法：((List<?>) headers.get("x-death")).forEach(...)
+
+        log.info("[死信排查] body={} | reason={} | from queue={} exchange={}",
+                new String(body, StandardCharsets.UTF_8), reason, fromQ, fromEx);
+
+        // 按 reason 做差异化处理
+        switch (reason) {
+            case "rejected": /* 消费者拒绝 → 记录告警 */ break;
+            case "expired":  /* TTL 过期 → 执行延迟任务（关单/提醒） */ break;
+            case "maxlen":   /* 队列超长被挤掉 → 告警扩容 */ break;
+        }
+
+        channel.basicAck(envelope.getDeliveryTag(), false);
+    }
+});
+
+/** 安全读取 Header（LongString → toString），缺失返回 "(无)"。 */
+private static String headerStr(Map<String, Object> headers, String key) {
+    Object v = headers == null ? null : headers.get(key);
+    return v == null ? "(无)" : v.toString();
+}
+```
+
+> **注意**：Header 里的值类型是 RabbitMQ 的 `LongString`（不是 Java `String`），直接 `"" + value` 或 `.toString()` 能拿到文本；但如果想强转 `(String) headers.get(key)` 会 `ClassCastException`——用 `.toString()` 或上面的 `headerStr` 工具方法最安全。
 
 ---
 
