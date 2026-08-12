@@ -119,6 +119,66 @@ rabbitmqctl set_policy TTL ".*" '{"message-ttl":60000}' --apply-to queues
 
 > ⚠️ **Classic 与 Quorum 支持死信；Stream 不支持。**
 
+### 4.5 普通死信队列：完整代码
+
+上面四.二只有半截声明代码。这里给出**完整的"业务消费失败 → 死信 → DLQ 排查"链路**，和第六节的延迟队列代码区分开：
+
+```java
+// === 普通死信队列：业务消费失败(reject requeue=false) → 死信 → DLQ 排查 ===
+
+// 1) 先建好 DLX（普通交换机）和死信队列（普通队列），并绑定
+channel.exchangeDeclare("biz.dlx", "direct");
+channel.queueDeclare("biz.dlq", true, false, false, null);
+channel.queueBind("biz.dlq", "biz.dlx", "dead");
+
+// 2) 业务队列：挂 x-dead-letter-exchange → 消息被拒绝(requeue=false)时自动转发到 biz.dlx
+Map<String, Object> args = new HashMap<>();
+args.put("x-dead-letter-exchange", "biz.dlx");
+args.put("x-dead-letter-routing-key", "dead");  // 死信时用固定 key（否则保留原 key）
+channel.queueDeclare("biz.queue", true, false, false, args);
+
+// 3) 业务消费者：处理失败 → basicNack(requeue=false) → 触发死信
+channel.basicConsume("biz.queue", false, new DefaultConsumer(channel) {
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties p, byte[] body)
+            throws IOException {
+        try {
+            throw new RuntimeException("模拟处理失败");   // 业务逻辑出错
+        } catch (Exception e) {
+            // requeue=false → 不重投回原队列，而是触发死信 → 进 biz.dlx → biz.dlq
+            channel.basicNack(env.getDeliveryTag(), false, false);
+        }
+    }
+});
+
+// 4) 死信消费者：接住死信，打印"案底"（见第五节）
+channel.basicConsume("biz.dlq", false, new DefaultConsumer(channel) {
+    @Override
+    public void handleDelivery(String c, Envelope env, AMQP.BasicProperties p, byte[] body)
+            throws IOException {
+        String reason = "" + p.getHeaders().get("x-first-death-reason");   // rejected
+        String fromQ  = "" + p.getHeaders().get("x-first-death-queue");    // biz.queue
+        log.info("[死信排查] body={}, reason={}, from={}", new String(body), reason, fromQ);
+        channel.basicAck(env.getDeliveryTag(), false);
+    }
+});
+
+// 5) 发一条消息 → 业务消费者处理失败 → nack(requeue=false) → 死信 → DLQ 消费者接住
+channel.basicPublish("", "biz.queue", null, "test message".getBytes());
+```
+
+运行后日志：
+
+```
+[死信排查] body=test message, reason=rejected, from=biz.queue
+```
+
+> **注意和延迟队列（第六节）的区别**：
+> - **这里**：业务队列**挂了 Consumer**，正常消费；处理**失败时** `basicNack(requeue=false)` 才触发死信 → DLQ 做**排查/补偿**。消息进 DLQ 是**异常**路径。
+> - **延迟队列**：延迟队列**不挂 Consumer**，消息的唯一出路就是等 TTL **过期** → 死信 → DLQ 做**定时任务**。消息进 DLQ 是**预期**路径。
+>
+> 两种用法的**拓扑参数不同**（普通 DLQ 不配 TTL；延迟队列必须配），但底层都是同一个 `x-dead-letter-exchange`。
+
 ---
 
 ## 五、如何识别死信：它带了"案底"
@@ -137,13 +197,48 @@ rabbitmqctl set_policy TTL ".*" '{"message-ttl":60000}' --apply-to queues
 
 ## 六、TTL + DLX = 延迟队列
 
-RabbitMQ **没有原生延迟队列**，但 TTL + DLX 是经典做法：消息进一个**没有消费者**的延迟队列，干等到 TTL 过期成死信 → 经 DLX → 进真正消费队列。
+上面讲的死信队列是"出了问题接住消息"——但同一套 DLX 机制还能做一件完全不同的事：**让消息故意等一段时间再被处理**。这就是延迟队列。
+
+RabbitMQ **没有原生延迟队列**，但可以用 **TTL（让消息在队列里干等到过期）+ DLX（过期成死信后自动转发到消费队列）** 实现：
 
 ```
 Producer → 延迟 Queue(设 TTL + DLX，无 Consumer) → TTL 到期成死信 → DLX → 消费 Queue → Consumer
 ```
 
-**订单 30 分钟关单**示例：
+### 6.1 先分清：延迟队列 vs 普通死信队列
+
+延迟队列和普通死信队列**用的是同一套 DLX 机制**（都是 `x-dead-letter-exchange`），很多人搞混。区别在于**怎么用**：
+
+| | 普通死信队列（DLQ） | 延迟队列 |
+|---|---|---|
+| **目的** | 接住"处理不了"的消息（**补救/兜底**） | 让消息"等一段时间"再被处理（**定时投递**） |
+| **业务队列挂 Consumer 吗** | ✅ **挂**（正常消费，死信是**异常路径**） | ❌ **不挂**（消息的唯一出路就是等 TTL 过期） |
+| **消息成死信的原因** | `rejected`（拒绝 requeue=false）/ `maxlen`（超长） | `expired`（TTL 过期） |
+| **业务队列配 `x-message-ttl`？** | 不一定（通常不配） | ✅ **必须配**（这是延迟的核心） |
+| **Consumer 干什么** | 排查、补偿、告警（**善后失败的**） | 执行定时任务：关单、提醒（**该干活了**） |
+| **消息进 DLQ 是正常的还是异常的** | **异常**（出问题了才走到这一步） | **正常**（延迟到了，该执行了） |
+
+拓扑对比：
+
+```
+普通死信队列（兜底补救）：
+  Producer → 业务Queue(挂DLX + 有Consumer)
+               ├─ 正常：Consumer 消费 ✓
+               └─ 异常：reject/maxlen → 死信 → DLX → DLQ → 排查/补偿
+
+延迟队列（定时投递）：
+  Producer → 延迟Queue(挂TTL+DLX + 无Consumer)
+               └─ TTL 到期 → 死信 → DLX → 消费Queue → Consumer 执行任务(关单/提醒)
+               （延迟队列里消息的唯一出路就是等 TTL 过期——没有 Consumer 消费它）
+```
+
+> 一句话：**同一个 DLX 机制，普通 DLQ 是"出错了走岔路"（异常路径），延迟队列是"故意等到点再走"（预期路径）。** 核心区别就是那个"业务队列"挂不挂 Consumer——挂了 = 正常消费 + 异常兜底；不挂 + 配 TTL = 延迟投递。
+
+下面用一个经典场景（订单关单）把延迟队列做出来，再深入原理。
+
+### 6.2 怎么做：订单 30 分钟关单
+
+**架构**：两个交换机、两个队列，串成一条延迟链路。
 
 1. 建好 `delay.exchange`、`process.exchange`（都 direct）。
 2. `delay.queue`：绑 `delay.exchange`，设 `x-message-ttl=1800000`（30 分钟）、`x-dead-letter-exchange=process.exchange`，**不挂消费者**。
@@ -214,9 +309,9 @@ for (int i = 1; i <= 3; i++) {
 
 这个"延迟队列"的 Consumer 通常做**业务补偿**：关单、释放库存、发提醒。
 
-### 6.1 RabbitMQ 怎么知道消息到期了
+### 6.3 底层原理：Broker 怎么知道消息到期了
 
-**没有定时器盯着每条消息倒计时。** 百万消息就要百万个定时器，Broker 早就被拖垮了。实际的机制是**打戳 + 懒检查**——用一个具体例子走一遍：
+看完代码，你可能会问：**消息在 delay.queue 里干等，Broker 怎么知道它什么时候该过期？是不是有条线程一直在倒计时？** 不是。Broker 用的是**打戳 + 懒检查**。
 
 > **什么是"队头"？**
 > RabbitMQ 队列是 **FIFO（先进先出）**：先入队的排前面、先被消费/检查。"队头" = 队列里**最老的那条消息**（最先入队的）。后面的消息排成一列，新来的排队尾。
@@ -262,25 +357,7 @@ Broker 不给每条消息倒计时，而是在**入队的那一刻**算好"它�
 
 理论过期是 `t=10s`，但 Broker 可能 `t=10.2s` 才扫到（周期扫描的间隔）→ 消息**晚 0.2s** 才被死信。所以 **TTL + DLX 延迟是秒级精度**（通常误差在 1s 以内），不是毫秒精确。
 
-**需要毫秒级精确延迟怎么办？** TTL + DLX 这套方案做不到（扫描间隔 + 网络 + Broker 调度都有抖动）。几种替代方案：
-
-| 方案 | 精度 | 原理 | 适用 |
-|------|------|------|------|
-| **Redis ZSet + 轮询** | 毫秒级（取决于轮询间隔） | 用 score 存过期时间戳，后台线程按间隔轮询取出 score ≤ now 的 | 短延迟、高精度、分布式 |
-| **RocketMQ 延迟消息** | 秒级（固定级别）/ 毫秒级（5.x 任意延迟） | Broker 内置延迟级别（1s/5s/10s/…），5.x 支持任意毫秒 | 已用 RocketMQ 的项目 |
-| **Java DelayQueue** | 毫秒级（单机） | `java.util.concurrent.DelayQueue`——每条元素自带到期时间，`take()` 阻塞到最近一条到期 | 进程内延迟、单机 |
-| **ScheduledExecutorService** | 毫秒级（单机） | `schedule(task, delay, TimeUnit)` 精确调度一次性任务 | 进程内、不需要 MQ |
-| **定时任务扫表** | 分钟级 | 数据库存 `expire_at` 字段，定时任务扫到期记录执行 | 量不大、精度要求低 |
-| **时间轮（Netty HashedWheelTimer）** | 毫秒级 | 把时间分成 tick 格，每个 tick 对应一批到期任务，一轮 O(1) 添加 | 大量短延迟任务、进程内 |
-
-> **怎么选？**
-> - **已经用了 RabbitMQ、精度秒级够**（订单关单、提醒推送）→ **TTL + DLX**，不用引入新中间件。
-> - **已经用了 RocketMQ** → 直接用它内置的延迟消息，精度更好。
-> - **分布式 + 毫秒级** → **Redis ZSet**（score=过期时间戳 + 后台轮询）。
-> - **单机进程内**（限流、超时控制、重试间隔）→ **DelayQueue / ScheduledExecutor / 时间轮**，不走 MQ。
-> - **数据库里已有到期字段、量不大** → **定时任务扫表**，最简单。
-
-### 6.2 队列级 TTL vs 单消息 TTL：延迟队列必须用前者
+### 6.4 队列级 TTL vs 单消息 TTL：延迟队列必须用前者
 
 TTL 有两种设法，做延迟队列**只有一种能用**：
 
@@ -305,36 +382,33 @@ TTL 有两种设法，做延迟队列**只有一种能用**：
 
 > 一句话：**懒检查只查队头；队头是"最长 TTL"的消息时，后面短 TTL 的全被它挡住，这叫"队头阻塞"（head-of-line blocking）。** 用队列级 TTL（所有消息同一个 TTL）就没有这个问题——入队顺序 = 过期顺序，队头永远是最先过期的。
 
-### 6.3 延迟队列 vs 普通死信队列：同一个机制，两种用法
+> **那单消息 `expiration` 到底有什么用？** 它不适合做延迟队列，但有两个正当用途：
+> 1. **给个别消息设独立的"保质期"**——比如同一个队列里，普通订单消息不需要过期、但限时优惠的订单设 `expiration=300000`（5 分钟过期）。这种场景消息 TTL 各不同但**不在乎过期顺序精确性**，只需要"过期了别留着"。
+> 2. **配合队列级 TTL 做"双上限"**——队列设 `x-message-ttl=60000`（所有消息最多 60 秒），某条临时消息再叠加 `expiration=5000`（这条只活 5 秒）。两者取**较小值**，即 `min(队列 TTL, 消息 TTL)` = 5 秒。队列级 TTL 兜底，消息级 TTL 更细。
+>
+> 一句话：**单消息 TTL 不是用来做延迟队列的（会队头阻塞），而是给单条消息设"个别保质期"或"双上限"用的。**
 
-很多人搞混——延迟队列和普通死信队列**用的是同一套 DLX 机制**（都是 `x-dead-letter-exchange`），区别在于**怎么用**：
+### 6.5 需要毫秒级精确延迟怎么办
 
-| | 普通死信队列（DLQ） | 延迟队列 |
-|---|---|---|
-| **目的** | 接住"处理不了"的消息（**补救/兜底**） | 让消息"等一段时间"再被处理（**定时投递**） |
-| **业务队列挂 Consumer 吗** | ✅ **挂**（正常消费，死信是**异常路径**） | ❌ **不挂**（消息的唯一出路就是等 TTL 过期） |
-| **消息成死信的原因** | `rejected`（拒绝 requeue=false）/ `maxlen`（超长） | `expired`（TTL 过期） |
-| **业务队列配 `x-message-ttl`？** | 不一定（通常不配） | ✅ **必须配**（这是延迟的核心） |
-| **DLQ 里的 Consumer 干什么** | 排查、补偿、告警（**善后失败的**） | 执行定时任务：关单、提醒（**该干活了**） |
-| **消息进 DLQ 是正常的还是异常的** | **异常**（出问题了才走到这一步） | **正常**（延迟到了，该执行了） |
+TTL + DLX 这套方案做不到毫秒精确（扫描间隔 + 网络 + Broker 调度都有抖动）。如果业务**真的要求毫秒级**，几种替代方案：
 
-拓扑对比：
+| 方案 | 精度 | 原理 | 适用 |
+|------|------|------|------|
+| **Redis ZSet + 轮询** | 毫秒级（取决于轮询间隔） | 用 score 存过期时间戳，后台线程按间隔轮询取出 score ≤ now 的 | 短延迟、高精度、分布式 |
+| **RocketMQ 延迟消息** | 秒级（固定级别）/ 毫秒级（5.x 任意延迟） | Broker 内置延迟级别（1s/5s/10s/…），5.x 支持任意毫秒 | 已用 RocketMQ 的项目 |
+| **Java DelayQueue** | 毫秒级（单机） | `java.util.concurrent.DelayQueue`——每条元素自带到期时间，`take()` 阻塞到最近一条到期 | 进程内延迟、单机 |
+| **ScheduledExecutorService** | 毫秒级（单机） | `schedule(task, delay, TimeUnit)` 精确调度一次性任务 | 进程内、不需要 MQ |
+| **定时任务扫表** | 分钟级 | 数据库存 `expire_at` 字段，定时任务扫到期记录执行 | 量不大、精度要求低 |
+| **时间轮（Netty HashedWheelTimer）** | 毫秒级 | 把时间分成 tick 格，每个 tick 对应一批到期任务，一轮 O(1) 添加 | 大量短延迟任务、进程内 |
 
-```
-普通死信队列（兜底补救）：
-  Producer → 业务Queue(挂DLX + 有Consumer)
-               ├─ 正常：Consumer 消费 ✓
-               └─ 异常：reject/maxlen → 死信 → DLX → DLQ → 排查/补偿
+> **怎么选？**
+> - **已经用了 RabbitMQ、精度秒级够**（订单关单、提醒推送）→ **TTL + DLX**，不用引入新中间件。
+> - **已经用了 RocketMQ** → 直接用它内置的延迟消息，精度更好。
+> - **分布式 + 毫秒级** → **Redis ZSet**（score=过期时间戳 + 后台轮询）。
+> - **单机进程内**（限流、超时控制、重试间隔）→ **DelayQueue / ScheduledExecutor / 时间轮**，不走 MQ。
+> - **数据库里已有到期字段、量不大** → **定时任务扫表**，最简单。
 
-延迟队列（定时投递）：
-  Producer → 延迟Queue(挂TTL+DLX + 无Consumer)
-               └─ TTL 到期 → 死信 → DLX → 消费Queue → Consumer 执行任务(关单/提醒)
-               （延迟队列里消息的唯一出路就是等 TTL 过期——没有 Consumer 消费它）
-```
-
-> 一句话：**同一个 DLX 机制，普通 DLQ 是"出错了走岔路"（异常路径），延迟队列是"故意等到点再走"（预期路径）。** 核心区别就是那个"业务队列"挂不挂 Consumer——挂了 = 正常消费 + 异常兜底；不挂 + 配 TTL = 延迟投递。
-
-### 6.4 插件方案（了解）
+### 6.6 插件方案（了解）
 
 `rabbitmq_delayed_message_exchange` 插件在 Exchange 层实现延迟，但**已停止维护**（它依赖的 Mnesia 在 4.3 被移除）。生产慎用，可评估改用 RocketMQ 等原生支持延迟的产品。
 
@@ -354,7 +428,9 @@ Quorum 队列用 `x-delivery-count` + **Delivery limit** 自动处理反复投�
 | DLX / DLQ | **都是普通的 exchange / queue**，靠业务队列上的 `x-dead-letter-exchange` 参数串起来 |
 | 流转 | 业务队列 →（成死信，Broker 自动 republish）→ DLX → 死信队列 → 消费者 |
 | 配置 | 业务队列挂 `x-dead-letter-exchange`（可选 routing-key）；可用策略批量 |
-| 延迟队列 | TTL 暂存（无消费者）+ DLX 转发；RabbitMQ 无原生 delay queue |
+| 延迟队列 | TTL 暂存（无消费者）+ DLX 转发；用队列级 `x-message-ttl`（非单消息 `expiration`） |
+| 延迟 vs 普通 DLQ | 同一套 DLX 机制——延迟是"故意等到点"（预期），DLQ 是"出错了接住"（异常） |
+| TTL 过期原理 | 打戳（入队时算过期时刻）+ 懒检查（只查队头）；秒级精度 |
 | 限制 | Stream 不支持 DLX |
 
 下一篇：Sharding 插件——单队列吞吐不够时如何分片存储。
