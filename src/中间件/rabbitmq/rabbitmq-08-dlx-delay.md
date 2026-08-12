@@ -105,13 +105,35 @@ channel.queueDeclare("myqueue", true, false, false, args);
 
 ### 4.3 策略批量配置（运维侧，不改代码）
 
-```bash
-# 给一批队列挂 DLX
-rabbitmqctl set_policy DLX ".*" '{"dead-letter-exchange":"my-dlx"}' --apply-to queues
+4.2 是在**Java 代码里**写 `args.put("x-dead-letter-exchange", ...)`，改 DLX 要改代码 + 重新发版。RabbitMQ 还提供了另一种方式——**策略（Policy）**：不写代码，用命令行或管理台直接给队列挂 DLX，**立即生效**：
 
-# TTL 也能用策略
-rabbitmqctl set_policy TTL ".*" '{"message-ttl":60000}' --apply-to queues
+```bash
+rabbitmqctl set_policy DLX "^order\." '{"dead-letter-exchange":"my-dlx"}' --apply-to queues
+#                        ↑    ↑           ↑                                    ↑
+#                     策略名  正则匹配   设什么参数                           作用于谁
 ```
+
+- `DLX` = 策略名（随便起，管理台 Policies 页面能看到）
+- `"^order\."` = 正则 → 匹配**队列名以 `order.` 开头**的所有队列
+- `'{"dead-letter-exchange":"my-dlx"}'` = 给匹配的队列设 DLX
+- `--apply-to queues` = 只作用于队列
+
+效果：**所有 `order.` 开头的队列自动挂上 DLX**——不管 Java 代码里写没写。
+
+TTL 也能用策略设（同理）：
+
+```bash
+rabbitmqctl set_policy TTL "^order\." '{"message-ttl":60000}' --apply-to queues
+```
+
+| | 4.2 代码侧 | 4.3 策略侧 |
+|---|---|---|
+| 怎么设 | Java `queueDeclare(..., args)` | `rabbitmqctl set_policy` 或管理台 |
+| 改 DLX | 改代码 + 重新发版 | 改策略，**零代码、立即生效** |
+| 谁来做 | 开发 | 运维 |
+| 批量 | ❌ 每个队列声明都要写 | ✅ 一条策略匹配一批队列 |
+
+> 两者都设了 DLX 时谁优先？**客户端 x-args > policy**（见 [04 队列核心概念](/中间件/rabbitmq/rabbitmq-04-queue-concepts) 的 policy 优先级详解）。所以策略是"兜底默认"，代码里的参数能覆盖它。
 
 ### 4.4 `x-dead-letter-routing-key`
 
