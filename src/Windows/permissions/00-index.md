@@ -43,7 +43,7 @@ tag:
 | [第 4 讲](./vol1-invent/05-logon-lsa.md) | 已有 | 登录与 LSA |
 | [第 5 讲](./vol1-invent/06-access-token.md) | 已有 | Access Token |
 | [第 6 讲](./vol1-invent/07-owner.md) | 已有 | Owner |
-| [第 7 讲](./vol1-invent/08-permission-bits.md) | 已有·待加厚 | 权限位 |
+| [第 7 讲](./vol1-invent/08-permission-bits.md) | 已有 | 权限位 |
 | [第 8 讲](./vol1-invent/09-groups.md) | 已有·待加厚 | 组 |
 | [第 9 讲](./vol1-invent/10-ace-dacl.md) | 已有 | ACE / DACL |
 | [第 10 讲](./vol1-invent/11-access-check.md) | 已有 | 访问检查与共享两道门 |
