@@ -1,0 +1,1386 @@
+﻿[
+    {
+        "series":  "backup",
+        "prefix":  "backup",
+        "order":  1,
+        "file":  "云原生/backup/backup-01-kubernetes集群备份与恢复管理利器velero.md",
+        "source":  "k8s集群备份与恢复方案\\kubernetes集群备份与恢复利器Velero\\01-笔记\\kubernetes集群备份与恢复管理利器Velero.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "bigdata",
+        "prefix":  "bigdata",
+        "order":  1,
+        "file":  "云原生/bigdata/bigdata-01-笔记-大数据hdfs分布式文件系统搭建.md",
+        "source":  "基于Kubernetes构建大数据\\【笔记】大数据HDFS分布式文件系统搭建.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "bigdata",
+        "prefix":  "bigdata",
+        "order":  2,
+        "file":  "云原生/bigdata/bigdata-02-笔记-flink基于kubernetes部署.md",
+        "source":  "基于Kubernetes构建大数据\\笔记-Flink基于Kubernetes部署.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "bigdata",
+        "prefix":  "bigdata",
+        "order":  3,
+        "file":  "云原生/bigdata/bigdata-03-笔记-spark与kubernetes整合.md",
+        "source":  "基于Kubernetes构建大数据\\笔记-Spark与Kubernetes整合.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "bigdata",
+        "prefix":  "bigdata",
+        "order":  4,
+        "file":  "云原生/bigdata/bigdata-04-基于k8s构建机器学习平台kubeflow.md",
+        "source":  "基于Kubernetes构建大数据\\基于K8S构建机器学习平台KubeFlow\\01-笔记\\基于K8S构建机器学习平台KubeFlow.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "containerd",
+        "prefix":  "containerd",
+        "order":  1,
+        "file":  "云原生/containerd/containerd-01-轻量级容器管理工具-containerd.md",
+        "source":  "7-轻量或工业级容器管理工具 Containerd\\1-容器管理工具 Containerd\\05_容器管理工具 Containerd\\01_笔记\\轻量级容器管理工具 Containerd.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "containerd",
+        "prefix":  "containerd",
+        "order":  2,
+        "file":  "云原生/containerd/containerd-02-kubernetes高可用集群二进制部署-runtime-containerd.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes高可用集群二进制部署\\02_二进制部署Kubernetes高可用集群（Runtime Containerd）\\01_笔记\\Kubernetes高可用集群二进制部署（Runtime Containerd）.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "containerd",
+        "prefix":  "containerd",
+        "order":  3,
+        "file":  "云原生/containerd/containerd-03-k8s-1-26集群部署-容器运行时为containerd.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\k8s1.26版本集群（containerd）\\01-笔记\\k8s 1.26集群部署 容器运行时为containerd.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "containerd",
+        "prefix":  "containerd",
+        "order":  4,
+        "file":  "云原生/containerd/containerd-04-基于containerd实现k8s-1-28二进制高可用集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\k8s1.28二进制高可用集群部署\\k8s 1.28二进制高可用集群部署\\基于Containerd实现k8s 1.28二进制高可用集群\\01-笔记\\基于Containerd实现K8S 1.28二进制高可用集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "containerd",
+        "prefix":  "containerd",
+        "order":  5,
+        "file":  "云原生/containerd/containerd-05-如何基于ubuntu-24-04部署原生k8s-1-32-0集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\ubuntu24.04部署k8s1.32集群-Containerd\\ubuntu 24.04部署k8s 1.32集群-Containerd\\01-笔记\\如何基于Ubuntu 24.04部署原生K8S 1.32.0集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "containerd",
+        "prefix":  "containerd",
+        "order":  6,
+        "file":  "云原生/containerd/containerd-06-基于containerd容器运行时部署k8s-1-28集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\基于Containerd部署K8S1.28版本集群\\01-笔记\\基于Containerd容器运行时部署K8S 1.28集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "data-service",
+        "prefix":  "data-service",
+        "order":  1,
+        "file":  "云原生/data-service/data-service-01-基于k8s构建云原生基础设施平台-kubeblocks.md",
+        "source":  "云原生数据服务\\基于K8S构建云原生数据服务基础设施平台KubeBlocks\\01-笔记\\基于K8S构建云原生基础设施平台 KubeBlocks.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "devops",
+        "prefix":  "devops",
+        "order":  1,
+        "file":  "云原生/devops/devops-01-devops.md",
+        "source":  "21-DevOps项目发布一体化平台构建及应用实践\\1-基于Kubernetes集群构建大中型企业CICD应用平台\\42_基于kubernetes集群构建大中型企业CICD应用平台\\42_基于kubernetes集群构建大中型企业CICD应用平台\\DevOps笔记-MarkDown原版\\DevOps\\DevOps.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "devops",
+        "prefix":  "devops",
+        "order":  2,
+        "file":  "云原生/devops/devops-02-gitops.md",
+        "source":  "21-DevOps项目发布一体化平台构建及应用实践\\44_云原生多云持续交付GitOps\\44_云原生多云持续交付GitOps\\44_云原生多云持续交付 GitOps\\01_笔记\\gitops.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "devops",
+        "prefix":  "devops",
+        "order":  3,
+        "file":  "云原生/devops/devops-03-argocd部署指南.md",
+        "source":  "21-DevOps项目发布一体化平台构建及应用实践\\ArgoCD部署指南（2.9.1）\\01-笔记\\argocd部署指南.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "devops",
+        "prefix":  "devops",
+        "order":  4,
+        "file":  "云原生/devops/devops-04-使用argo-cd实现流水线发布项目.md",
+        "source":  "21-DevOps项目发布一体化平台构建及应用实践\\如何通过Gitlab及ArgoCD实现项目发布\\01-笔记\\使用Argo CD实现流水线发布项目.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "devops",
+        "prefix":  "devops",
+        "order":  5,
+        "file":  "云原生/devops/devops-05-使用argo-cd实施项目发布.md",
+        "source":  "21-DevOps项目发布一体化平台构建及应用实践\\通过ArgoCD实现多Kubernetes集群项目发布\\01-笔记\\使用Argo CD实施项目发布.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "docker-extra",
+        "prefix":  "docker-extra",
+        "order":  1,
+        "file":  "云原生/docker-extra/docker-extra-01-如何通过docker部署https访问的nginx应用.md",
+        "source":  "6-容器管理工具 Docker\\1-容器管理工具 Docker\\如何使用docker部署https访问的nginx应用\\01-笔记\\如何通过docker部署https访问的nginx应用？.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "edge",
+        "prefix":  "edge",
+        "order":  1,
+        "file":  "云原生/edge/edge-01-k8s-1-22-版本集群部署.md",
+        "source":  "云原生边缘计算\\云原生边缘计算kubeedge\\01-笔记\\01-K8S 1.22版本集群部署\\01-笔记\\K8S 1.22 版本集群部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "edge",
+        "prefix":  "edge",
+        "order":  2,
+        "file":  "云原生/edge/edge-02-云原生边缘计算-kubeedge-部署.md",
+        "source":  "云原生边缘计算\\云原生边缘计算kubeedge\\01-笔记\\02_云原生边缘计算_kubeedge_部署\\01_笔记\\云原生边缘计算 kubeedge 部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "foundation",
+        "prefix":  "foundation",
+        "order":  1,
+        "file":  "云原生/foundation/foundation-01-云原生.md",
+        "source":  "4-云原生生态介绍\\1-云原生介绍\\01_云原生介绍\\01_云原生介绍\\01_笔记\\云原生.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "foundation",
+        "prefix":  "foundation",
+        "order":  2,
+        "file":  "云原生/foundation/foundation-02-虚拟化技术.md",
+        "source":  "5-虚拟化与云计算\\1-虚拟化技术\\02_虚拟化技术\\02_虚拟化技术\\01_笔记\\虚拟化技术.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "foundation",
+        "prefix":  "foundation",
+        "order":  3,
+        "file":  "云原生/foundation/foundation-03-云计算.md",
+        "source":  "5-虚拟化与云计算\\2-云计算\\03_云计算\\03_云计算\\01_笔记\\云计算.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "interview",
+        "prefix":  "interview",
+        "order":  1,
+        "file":  "云原生/interview/interview-01-kubernetes-2024-03-更新-kubernetes面试题.md",
+        "source":  "容器云云原生架构师面试\\大厂Kubernetes面试夺命九连问第二季\\大厂Kubernetes面试夺命九连问第二季\\kubernetes 2024-03 更新 Kubernetes面试题.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  1,
+        "file":  "云原生/k8s-course/k8s-course-01-kubernetes配置与密钥管理-configmap-secret.md",
+        "source":  "10-Kubernetes配置与密钥管理\\2-配置和密钥管理 Secret\\17_Kubernetes密钥与配置管理Configmap\u0026Secret\\17_Kubernetes密钥与配置管理 Configmap\u0026Secret\\01_笔记\\Kubernetes配置与密钥管理 ConfigMap\u0026Secret.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  2,
+        "file":  "云原生/k8s-course/k8s-course-02-kubernetes集群使用容器镜像仓库harbor.md",
+        "source":  "11-Kubernetes容器镜像仓库管理方案\\1-容器镜像仓库管理方案 Harbor\\18_kubernetes集群Harbor应用\\18_kubernetes集群Harbor应用\\01_笔记\\kubernetes集群使用容器镜像仓库Harbor.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  3,
+        "file":  "云原生/k8s-course/k8s-course-03-kubernetes集群公共服务.md",
+        "source":  "14-Kubernetes项目上云部署\\1-kubernetes集群公共服务\\23_kubernetes集群公共服务\\23_kubernetes集群公共服务\\01_笔记\\Kubernetes集群公共服务.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  4,
+        "file":  "云原生/k8s-course/k8s-course-04-kubernetes集群java项目上云部署.md",
+        "source":  "14-Kubernetes项目上云部署\\2-项目部署 JAVA项目\\24_kubernetes集群java项目上云部署\\24_kubernetes集群java项目上云部署\\01_笔记\\kubernetes集群java项目上云部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  5,
+        "file":  "云原生/k8s-course/k8s-course-05-kubernetes集群python项目上云部署.md",
+        "source":  "14-Kubernetes项目上云部署\\3-项目部署 Python项目\\25_kubernetes集群python项目上云部署\\25_kubernetes集群python项目上云部署\\01_笔记\\kubernetes集群python项目上云部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  6,
+        "file":  "云原生/k8s-course/k8s-course-06-kubernetes集群golang项目上云部署.md",
+        "source":  "14-Kubernetes项目上云部署\\4-项目部署 GoLang项目\\26_kubernetes集群golang项目上云部署\\26_kubernetes集群golang项目上云部署\\01_笔记\\Kubernetes集群golang项目上云部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  7,
+        "file":  "云原生/k8s-course/k8s-course-07-kubernetes日志收集方案-elk.md",
+        "source":  "16-Kubernetes云原生中间件\\1-集群及Pod日志收集 ELK\\32_kubernetes集群节点及pod日志收集ELK\\32_kubernetes集群节点及pod日志收集 ELK\\01_笔记\\kubernetes日志收集方案 ELK.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  8,
+        "file":  "云原生/k8s-course/k8s-course-08-kubernetes日志收集方案-efk.md",
+        "source":  "16-Kubernetes云原生中间件\\2-集群及Pod日志收集 EFK\\33_kubernetes集群节点及Pod日志收集EFK\\33_kubernetes集群节点及Pod日志收集 EFK\\01_笔记\\kubernetes日志收集方案 EFK.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  9,
+        "file":  "云原生/k8s-course/k8s-course-09-rocketmq部署.md",
+        "source":  "16-Kubernetes云原生中间件\\rocketmq笔记\\01_笔记\\rocketmq部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  10,
+        "file":  "云原生/k8s-course/k8s-course-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps.md",
+        "source":  "18-Kubernetes云原生包管理方案\\1-包管理方案 Helm应用商店\\kubernetes集群包管理解决方案及应用商店Helm\u0026Kubeapps\\kubernetes集群包管理解决方案及应用商店 Helm\u0026Kubeapps\\01_笔记\\Kubernetes集群包管理解决方案及应用商店 Helm\u0026kubeapps.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  11,
+        "file":  "云原生/k8s-course/k8s-course-11-安全容器运行时-kata.md",
+        "source":  "8-Kubernetes应用基础\\10-安全容器运行时 Kata Containers\\安全容器运行时KataContainers\\01-笔记\\安全容器运行时  Kata.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  12,
+        "file":  "云原生/k8s-course/k8s-course-12-新型沙箱安全容器运行时-gvisor.md",
+        "source":  "8-Kubernetes应用基础\\11-安全容器运行时 gVisor\\新型沙箱安全容器运行时\\01-笔记\\新型沙箱安全容器运行时 gVisor.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  13,
+        "file":  "云原生/k8s-course/k8s-course-13-如何使用kubernetes实现服务自动伸缩-hpa-vpa.md",
+        "source":  "8-Kubernetes应用基础\\12-k8s集群应用自动伸缩实践\\01-如何通过Kubernetes实现服务自动伸缩？\\01-笔记\\如何使用kubernetes实现服务自动伸缩？HPA、VPA.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  14,
+        "file":  "云原生/k8s-course/k8s-course-14-如何基于事件驱动扩展k8s应用的深度实践.md",
+        "source":  "8-Kubernetes应用基础\\12-k8s集群应用自动伸缩实践\\02-如何使用KEDA基于事件驱动扩展K8S应用的深度实践？\\01-笔记\\如何基于事件驱动扩展K8S应用的深度实践？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  15,
+        "file":  "云原生/k8s-course/k8s-course-15-如何通过prometheus及hpa实现kubernetes应用自动水平伸缩.md",
+        "source":  "8-Kubernetes应用基础\\12-k8s集群应用自动伸缩实践\\03-如何通过Prometheus自定义指标及HPA实现K8S应用水平自动伸缩？\\01-笔记\\如何通过Prometheus及HPA实现Kubernetes应用自动水平伸缩？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  16,
+        "file":  "云原生/k8s-course/k8s-course-16-如何使用argo-rollouts实现金丝雀发布.md",
+        "source":  "8-Kubernetes应用基础\\13-全链路灰度发布解决方案\\使用Argo-Rollouts实现金丝雀发布\\01-笔记\\如何使用argo-rollouts实现金丝雀发布？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  17,
+        "file":  "云原生/k8s-course/k8s-course-17-原地升级及全链路灰度发布解决方案-openkruise.md",
+        "source":  "8-Kubernetes应用基础\\13-全链路灰度发布解决方案\\原地升级及全链路灰度发布解决方案OpenKruise\\01-笔记\\原地升级及全链路灰度发布解决方案 OpenKruise.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  18,
+        "file":  "云原生/k8s-course/k8s-course-18-kubeadm极速部署kubernetes-1-24版本集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\06_kubernetes1.24版本集群部署\\06_kubernetes 1.24版本集群部署\\01_笔记\\kubeadm极速部署Kubernetes 1.24版本集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  19,
+        "file":  "云原生/k8s-course/k8s-course-19-kubeadm部署高可用kubernetes集群-1-21-0.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes集群部署\\04_kubeadm_k8s高可用集群\\01_笔记\\kubeadm部署高可用kubernetes集群 1.21.0.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  20,
+        "file":  "云原生/k8s-course/k8s-course-20-使用rke构建企业生产kubernetes集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes集群部署\\05_使用RKE构建企业生产Kubernetes集群\\01_笔记\\使用RKE构建企业生产Kubernetes集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  21,
+        "file":  "云原生/k8s-course/k8s-course-21-kubernetes高可用集群二进制部署-runtime-docker.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes高可用集群二进制部署\\01_二进制部署Kubernetes高可用集群（Runtime Docker）\\01_笔记\\Kubernetes高可用集群二进制部署（Runtime Docker）.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  22,
+        "file":  "云原生/k8s-course/k8s-course-22-kubernetes集群ui及主机资源监控.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes集群部署\\07_kubernetes集群UI及主机资源监控\\01_笔记\\Kubernetes集群UI及主机资源监控.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  23,
+        "file":  "云原生/k8s-course/k8s-course-23-使用sealos部署kubernetes集群并实现集群管理.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\06_kubernetes集群部署\\06_kubernetes集群部署\\08_使用sealos部署kubernetes集群及集群管理\\01_笔记\\使用sealos部署kubernetes集群并实现集群管理.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  24,
+        "file":  "云原生/k8s-course/k8s-course-24-debian-12部署k8s-1-28版集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\Debain12部署K8S集群最佳实践\\01-笔记\\Debian 12部署K8S 1.28版集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  25,
+        "file":  "云原生/k8s-course/k8s-course-25-kubeadm极速部署kubernetes-1-27-1版本集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\k8s1.27版本集群部署\u0026容器运行时docker\\01-笔记\\kubeadm极速部署Kubernetes 1.27.1版本集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  26,
+        "file":  "云原生/k8s-course/k8s-course-26-基于cri-o实现k8s-1-28二进制高可用集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\k8s1.28二进制高可用集群部署\\k8s 1.28二进制高可用集群部署\\基于cri-o实现k8s 1.28二进制高可用集群\\01-笔记\\基于cri-o实现K8S 1.28二进制高可用集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  27,
+        "file":  "云原生/k8s-course/k8s-course-27-基于docker实现k8s-1-28二进制高可用集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\k8s1.28二进制高可用集群部署\\k8s 1.28二进制高可用集群部署\\基于Docker实现k8s 1.28二进制高可用集群\\01-笔记\\基于Docker实现K8S 1.28二进制高可用集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  28,
+        "file":  "云原生/k8s-course/k8s-course-28-kubespray部署k8s-1-26集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\k8s集群部署利器kubespray\\01-笔记\\kubespray部署k8s 1.26集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  29,
+        "file":  "云原生/k8s-course/k8s-course-29-kubernetes集群部署口袋工具-minikube.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\kubernetes集群部署口袋工具minikube\\01-笔记\\Kubernetes集群部署口袋工具 minikube.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  30,
+        "file":  "云原生/k8s-course/k8s-course-30-kubernetes介绍与集群架构.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\kubernetes集群介绍及k8s1.21版本\\01_Kubernetes介绍及集群架构\\01_笔记\\kubernetes介绍与集群架构.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  31,
+        "file":  "云原生/k8s-course/k8s-course-31-kubernetes集群部署方式说明.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\kubernetes集群介绍及k8s1.21版本\\02_kubernetes集群部署方式介绍\\01_笔记\\Kubernetes集群部署方式说明.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  32,
+        "file":  "云原生/k8s-course/k8s-course-32-kubeadm部署单master节点kubernetes集群-1-21-0.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\kubernetes集群介绍及k8s1.21版本\\03_kubeadm_单master节点k8s集群\\01_笔记\\kubeadm部署单Master节点kubernetes集群 1.21.0.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  33,
+        "file":  "云原生/k8s-course/k8s-course-33-kubeadm极速部署kubernetes-1-28版本集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\rockylinux部署K8S集群\\01_笔记\\kubeadm极速部署Kubernetes 1.28版本集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  34,
+        "file":  "云原生/k8s-course/k8s-course-34-如何基于ubuntu-24-04部署原生k8s-1-30-0集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\ubuntu24.04部署k8s1.30集群\\01-笔记\\如何基于Ubuntu 24.04部署原生K8S 1.30.0集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  35,
+        "file":  "云原生/k8s-course/k8s-course-35-如何基于ubuntu-24-04部署原生k8s-1-31-0集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\Ubuntu24.04部署k8s1.31版本集群\\02-笔记-markdown版本\\如何基于Ubuntu 24.04部署原生K8S 1.31.0集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  36,
+        "file":  "云原生/k8s-course/k8s-course-36-如何基于ubuntu-24-04部署原生k8s-1-32-0集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\ubuntu24.04部署k8s1.32集群-Docker\\ubuntu 24.04部署k8s 1.32集群-Docker\\01-笔记\\如何基于Ubuntu 24.04部署原生K8S 1.32.0集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  37,
+        "file":  "云原生/k8s-course/k8s-course-37-k8s集群网络插件cilium-网络加速器-部署及使用验证.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\构建网络高性能（Cilium）K8S集群\\01-笔记\\K8S集群网络插件Cilium（网络加速器）部署及使用验证.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  38,
+        "file":  "云原生/k8s-course/k8s-course-38-国产化openeuler-欧拉-操作系统部署k8s集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\国产操作系统openEuler部署K8S集群笔记\\01_笔记\\国产化OpenEuler（欧拉）操作系统部署K8S集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  39,
+        "file":  "云原生/k8s-course/k8s-course-39-国产化麒麟操作系统部署k8s.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\国产麒麟操作系统部署K8S集群笔记\\01_笔记\\国产化麒麟操作系统部署K8S.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  40,
+        "file":  "云原生/k8s-course/k8s-course-40-基于cri-o容器运行时部署k8s集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\基于cri-o部署K8S1.27版本集群\\01-笔记\\基于CRI-O容器运行时部署K8S集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  41,
+        "file":  "云原生/k8s-course/k8s-course-41-基于docker部署k8s-1-28集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\基于Docker部署K8S1.28版本集群\\01-笔记\\基于Docker部署K8S 1.28集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  42,
+        "file":  "云原生/k8s-course/k8s-course-42-基于openeuler操作系统使用isula容器运行时部署k8s集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\基于OpenEuler22.03使用iSulad部署K8S集群\\01-笔记\\基于OpenEuler操作系统使用isula容器运行时部署K8S集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  43,
+        "file":  "云原生/k8s-course/k8s-course-43-ubuntu-22-04部署k8s集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\基于Ubuntu22.04操作系统部署K8S集群\\01-笔记\\Ubuntu 22.04部署K8S集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  44,
+        "file":  "云原生/k8s-course/k8s-course-44-ubuntu-23-04部署k8s集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\基于Ubuntu23.04操作系统部署K8S集群\\01-笔记\\Ubuntu 23.04部署K8S集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  45,
+        "file":  "云原生/k8s-course/k8s-course-45-如何基于ubuntu-22-04部署原生k8s-1-29-0集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\如何基于Ubuntu22.04部署原生K8S1.29.0集群\\01-笔记\\如何基于Ubuntu 22.04部署原生K8S 1.29.0集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  46,
+        "file":  "云原生/k8s-course/k8s-course-46-如何通过kube-vip实现k8s集群高可用.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\如何通过kube-vip实现K8S集群高可用及ServiceLB\\01-笔记\\如何通过kube-vip实现K8S集群高可用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  47,
+        "file":  "云原生/k8s-course/k8s-course-47-kubeadm快速部署kubernetes-1-29-0版本集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\使用kubeadm快速部署Kubernetes1.29.0版本集群\\01-笔记\\kubeadm快速部署Kubernetes 1.29.0版本集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  48,
+        "file":  "云原生/k8s-course/k8s-course-48-如何基于ubuntu-24-04部署原生k8s-1-30-0集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\使用kube-vip基于Ubuntu24.04部署k8s1.30版本高可用集群\\01-笔记\\如何基于Ubuntu 24.04部署原生K8S 1.30.0集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  49,
+        "file":  "云原生/k8s-course/k8s-course-49-如何通过k0s部署k8s二进制集群.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\通过k0s部署K8S二进制集群\\01-笔记\\如何通过K0S部署K8S二进制集群？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  50,
+        "file":  "云原生/k8s-course/k8s-course-50-rke2方式部署k8s集群-高可用.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\注重K8S安全RKE2方式部署K8S高可用集群\\01-笔记\\RKE2方式部署K8S集群（高可用）.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  51,
+        "file":  "云原生/k8s-course/k8s-course-51-kubernetes集群客户端命令-kubectl.md",
+        "source":  "8-Kubernetes应用基础\\2-Kubernetes集群客户端命令kubectl\\07_kubernetes集群客户端命令kubectl\\07_kubernetes集群客户端命令 kubectl\\01_笔记\\kubernetes集群客户端命令 kubectl.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  52,
+        "file":  "云原生/k8s-course/k8s-course-52-kubernetes集群node管理.md",
+        "source":  "8-Kubernetes应用基础\\3-Kubernetes集群Node管理\\08_kubernetes集群Node管理\\08_kubernetes集群Node管理\\01_笔记\\Kubernetes集群Node管理.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  53,
+        "file":  "云原生/k8s-course/k8s-course-53-kubernetes集群声明式文件yaml.md",
+        "source":  "8-Kubernetes应用基础\\4-Kubernetes集群声明式文件YAML\\09_Kubernetes集群声明式文件YAML\\09_Kubernetes集群声明式文件YAML\\01_笔记\\Kubernetes集群声明式文件YAML.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  54,
+        "file":  "云原生/k8s-course/k8s-course-54-kubernetes集群命名空间-namespace.md",
+        "source":  "8-Kubernetes应用基础\\5-kubernetes集群Namespace\\10_Kubernetes集群Namespace\\10_Kubernetes集群Namespace\\01_笔记\\Kubernetes集群命名空间（Namespace）.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  55,
+        "file":  "云原生/k8s-course/k8s-course-55-kubernetes集群核心概念.md",
+        "source":  "8-Kubernetes应用基础\\6-kubernetes核心概念概述\\11_kubernetes集群核心概念概述\\11_kubernetes集群核心概念概述\\01_笔记\\Kubernetes集群核心概念.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  56,
+        "file":  "云原生/k8s-course/k8s-course-56-kubernetes核心概念-pod.md",
+        "source":  "8-Kubernetes应用基础\\7-Kubernetes集群核心概念 Pod\\12_kubernetes核心概念Pod\\12_kubernetes核心概念 Pod\\01_笔记\\kubernetes核心概念 Pod.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  57,
+        "file":  "云原生/k8s-course/k8s-course-57-kubernetes核心概念-controller.md",
+        "source":  "8-Kubernetes应用基础\\8-Kubernetes集群核心概念 Controller\\13_kubernetes核心概念Controller\\13_kubernetes核心概念 Controller\\01_笔记\\kubernetes核心概念 controller.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  58,
+        "file":  "云原生/k8s-course/k8s-course-58-kubernetes核心概念-controller控制器之statefulset.md",
+        "source":  "8-Kubernetes应用基础\\8-Kubernetes集群核心概念 Controller\\statefulset笔记\\01_笔记\\kubernetes核心概念 Controller控制器之StatefulSet.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  59,
+        "file":  "云原生/k8s-course/k8s-course-59-kubernetes核心概念-service.md",
+        "source":  "8-Kubernetes应用基础\\9-Kubernetes集群核心概念 Service\\14_kubernetes核心概念Service\\14_kubernetes核心概念 Service\\01_笔记\\kubernetes核心概念 service.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  60,
+        "file":  "云原生/k8s-course/k8s-course-60-kubernetes集群-服务暴露-nginx-ingress-controller.md",
+        "source":  "9-Kubernetes服务暴露\\1- Ingress  Nginx Controller\\15_kubernetes集群服务暴露NginxIngressController\\15_kubernetes集群 服务暴露 Nginx Ingress Controller\\01_笔记\\kubernetes集群 服务暴露 Nginx Ingress Controller.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  61,
+        "file":  "云原生/k8s-course/k8s-course-61-ingress-nginx-controller-1-4-0-最新版本部署方法.md",
+        "source":  "9-Kubernetes服务暴露\\1- Ingress  Nginx Controller\\ingressnginxcontroller1.4.0版本笔记\\01_笔记\\ingress nginx controller 1.4.0 最新版本部署方法.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  62,
+        "file":  "云原生/k8s-course/k8s-course-62-基于ingress-nginx实现灰度发布系统.md",
+        "source":  "9-Kubernetes服务暴露\\1- Ingress  Nginx Controller\\基于Ingressnginx实现灰度发布系统\\01-笔记\\基于Ingress Nginx实现灰度发布系统.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "k8s-course",
+        "prefix":  "k8s-course",
+        "order":  63,
+        "file":  "云原生/k8s-course/k8s-course-63-kubernetes集群服务暴露-traefik.md",
+        "source":  "9-Kubernetes服务暴露\\2-Ingress 服务发现 traefik\\16_kubernetes集群服务暴露traefik\\16_kubernetes集群 服务暴露 traefik\\01_笔记\\kubernetes集群服务暴露 traefik.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "kubevirt",
+        "prefix":  "kubevirt",
+        "order":  1,
+        "file":  "云原生/kubevirt/kubevirt-01-kubernetes管理虚拟机利器kubevirt.md",
+        "source":  "kubernetes管理虚拟机\\kubernetes管理虚拟机利器KubeVirt\\kubernetes管理虚拟机利器KubeVirt\\01-笔记\\kubernetes管理虚拟机利器KubeVirt.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  1,
+        "file":  "云原生/microservices/microservices-01-kubernetes集群公共服务-dns.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\01_k8s集群公共服务准备-DNS笔记\\01_笔记\\kubernetes集群公共服务 DNS.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  2,
+        "file":  "云原生/microservices/microservices-02-kubernetes集群公共服务-harbor.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\02_k8s集群公共服务准备-Harbor笔记\\01_笔记\\kubernetes集群公共服务 Harbor.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  3,
+        "file":  "云原生/microservices/microservices-03-openeelb部署及应用.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\03_openelb笔记\\01_笔记\\OpeneELB部署及应用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  4,
+        "file":  "云原生/microservices/microservices-04-微服务部署前中间件部署.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\02_微服务部署前中间件部署\\01_笔记\\微服务部署前中间件部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  5,
+        "file":  "云原生/microservices/microservices-05-kubernetes集群中部署服务思路.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\03_k8s集群中部署服务思路\\01_笔记\\Kubernetes集群中部署服务思路.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  6,
+        "file":  "云原生/microservices/microservices-06-k8s集群中部署服务之应用环境配置.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\04_k8s集群中部署服务之应用环境配置\\01_笔记\\K8S集群中部署服务之应用环境配置.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  7,
+        "file":  "云原生/microservices/microservices-07-k8s集群中部署服务之dockerfile文件准备.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\05_k8s集群中部署服务之Dockerfile文件准备\\01_笔记\\k8s集群中部署服务之Dockerfile文件准备.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  8,
+        "file":  "云原生/microservices/microservices-08-k8s集群中部署服务之部署描述文件准备.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\06_k8s集群中部署服务之部署描述文件准备\\01_笔记\\k8s集群中部署服务之部署描述文件准备.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  9,
+        "file":  "云原生/microservices/microservices-09-k8s集群中部署项目之流水线.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\07_k8s集群中部署服务之流水线\\01_笔记\\k8s集群中部署项目之流水线.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  10,
+        "file":  "云原生/microservices/microservices-10-k8s集群中部署项目之数据库准备.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\08_k8s集群中部署服务之数据库准备\\01_笔记\\k8s集群中部署项目之数据库准备.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  11,
+        "file":  "云原生/microservices/microservices-11-k8s集群中流水线部署微服务.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\09_k8s集群中使用流水线部署微服务\\01_笔记\\k8s集群中流水线部署微服务.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  12,
+        "file":  "云原生/microservices/microservices-12-k8s集群中部署微服务项目前端代理服务-nginx.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\10_k8s集群中部署微服务项目前端代理服务\\01_笔记\\k8s集群中部署微服务项目前端代理服务 Nginx.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  13,
+        "file":  "云原生/microservices/microservices-13-k8s集群中部署微服务vue.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\11_k8s集群中部署微服务Vue\\01_笔记\\k8s集群中部署微服务Vue.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  14,
+        "file":  "云原生/microservices/microservices-14-kubeadm极速部署kubernetes-1-24版本集群.md",
+        "source":  "微服务项目部署\\严选微服务项目\\01-k8s1.24版本集群部署\\01-k8s 1.24版本集群部署\\01_笔记\\kubeadm极速部署Kubernetes 1.24版本集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  15,
+        "file":  "云原生/microservices/microservices-15-kubernetes集群公共服务-dns.md",
+        "source":  "微服务项目部署\\严选微服务项目\\02_kubernetes集群公共服务准备-DNS服务\\02_kubernetes集群公共服务准备-DNS服务\\01_笔记\\kubernetes集群公共服务 DNS.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  16,
+        "file":  "云原生/microservices/microservices-16-coredns级联本地dns服务器.md",
+        "source":  "微服务项目部署\\严选微服务项目\\03_CoreDNS级联本地DNS域名解析服务\\03_CoreDNS级联本地DNS域名解析服务\\01_笔记\\CoreDNS级联本地DNS服务器.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  17,
+        "file":  "云原生/microservices/microservices-17-kubernetes集群公共服务-harbor.md",
+        "source":  "微服务项目部署\\严选微服务项目\\04_kubernetes集群公共服务准备-Harbor\\04_kubernetes集群公共服务准备-Harbor\\01_笔记\\kubernetes集群公共服务 Harbor.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  18,
+        "file":  "云原生/microservices/microservices-18-openeelb部署及应用.md",
+        "source":  "微服务项目部署\\严选微服务项目\\08_负载均衡器openelb\\08_负载均衡器 openelb\\01_笔记\\OpeneELB部署及应用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  19,
+        "file":  "云原生/microservices/microservices-19-微服务部署前中间件部署.md",
+        "source":  "微服务项目部署\\严选微服务项目\\10_严选商城项目中间件部署\\01_笔记\\微服务部署前中间件部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  20,
+        "file":  "云原生/microservices/microservices-20-严选项目代码获取.md",
+        "source":  "微服务项目部署\\严选微服务项目\\11_严选商城项目部署前代码获取\\11_严选商城项目部署前代码获取\\01_笔记\\严选项目代码获取.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  21,
+        "file":  "云原生/microservices/microservices-21-严选商城项目部署前配置说明.md",
+        "source":  "微服务项目部署\\严选微服务项目\\12_严选商城项目部署前配置说明\\12_严选商城项目部署前配置说明\\01-笔记\\严选商城项目部署前配置说明.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  22,
+        "file":  "云原生/microservices/microservices-22-严选商城项目部署前配置及数据库导入说明.md",
+        "source":  "微服务项目部署\\严选微服务项目\\13_严选商城项目部署前配置及数据库导入说明\\13_严选商城项目部署前配置及数据库导入说明\\01-笔记\\严选商城项目部署前配置及数据库导入说明.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  23,
+        "file":  "云原生/microservices/microservices-23-严选项目流水线基础环境准备.md",
+        "source":  "微服务项目部署\\严选微服务项目\\14_严选商城项目部署前流水线编写及项目部署\\14_严选商城项目部署前流水线编写及项目部署\\01-项目流水线基础环境准备\\01-笔记\\严选项目流水线基础环境准备.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "microservices",
+        "prefix":  "microservices",
+        "order":  24,
+        "file":  "云原生/microservices/microservices-24-严选商城项目部署前流水线编写.md",
+        "source":  "微服务项目部署\\严选微服务项目\\14_严选商城项目部署前流水线编写及项目部署\\14_严选商城项目部署前流水线编写及项目部署\\02-项目流水线准备\\01-笔记\\严选商城项目部署前流水线编写.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "multicluster",
+        "prefix":  "multicluster",
+        "order":  1,
+        "file":  "云原生/multicluster/multicluster-01-如何使用terraform实现对kubernetes集群中资源对象进行管理.md",
+        "source":  "k8s多集群管理方案\\01-使用terraform实现对k8s集群中资源对象进行管理\\01-笔记\\如何使用terraform实现对kubernetes集群中资源对象进行管理？.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "multicluster",
+        "prefix":  "multicluster",
+        "order":  2,
+        "file":  "云原生/multicluster/multicluster-02-如何通过cilium-cluster-mesh实现kubernetes多集群方案.md",
+        "source":  "k8s多集群管理方案\\Cilium多集群方案ClusterMesh\\01-笔记\\如何通过Cilium Cluster Mesh实现Kubernetes多集群方案？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "multicluster",
+        "prefix":  "multicluster",
+        "order":  3,
+        "file":  "云原生/multicluster/multicluster-03-kubernetes集群舰队管理-kurator.md",
+        "source":  "k8s多集群管理方案\\kubernetes集群舰队管理Kurator-20230621版\\kubernetes集群舰队管理  Kurator\\01-笔记\\kubernetes集群舰队管理 Kurator.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "multicluster",
+        "prefix":  "multicluster",
+        "order":  4,
+        "file":  "云原生/multicluster/multicluster-04-karmada部署及应用.md",
+        "source":  "云原生（K8S核心）架构师VIP直播\\karmada\\karmada\\01_笔记\\karmada部署及应用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "network",
+        "prefix":  "network",
+        "order":  1,
+        "file":  "云原生/network/network-01-k8s-1-26-underlay网络方案-hybridnet.md",
+        "source":  "19-kubernetes网络解决方案\\K8S集群underlay网络方案HybridNet\\01-笔记\\k8s 1.26 underlay网络方案 hybridnet.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "network",
+        "prefix":  "network",
+        "order":  2,
+        "file":  "云原生/network/network-02-k8s-1-22-版本双栈协议-ipv4-ipv6-集群部署.md",
+        "source":  "19-kubernetes网络解决方案\\k8s集群双栈协议方案antrea(IPv4\u0026IPv6)\\01-笔记\\K8S 1.22 版本双栈协议（IPv4\u0026IPv6）集群部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  1,
+        "file":  "云原生/observability/observability-01-如何通过opentelemetry实现云原生应用全链路状态跟踪.md",
+        "source":  "云原生监控系统\\OpenTelemetry 全链路状态跟踪\\如何通过OpenTelemetry实现云原生应用全链路状态跟踪？\\01-笔记\\如何通过OpenTelemetry实现云原生应用全链路状态跟踪？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  2,
+        "file":  "云原生/observability/observability-02-prometheus安装.md",
+        "source":  "云原生监控系统\\Prometheus监控\\01-Prometheus-Prometheus安装篇\\01-Prometheus-Prometheus安装篇\\01-笔记\\Prometheus安装.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  3,
+        "file":  "云原生/observability/observability-03-grafana对接prometheus数据源.md",
+        "source":  "云原生监控系统\\Prometheus监控\\02-Grafana对接Prometheus数据源\\02-Grafana对接Prometheus数据源\\01-笔记\\Grafana对接Prometheus数据源.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  4,
+        "file":  "云原生/observability/observability-04-prometheus告警alertmanager组件.md",
+        "source":  "云原生监控系统\\Prometheus监控\\03-Prometheus告警AlertManager组件\\03-Prometheus告警AlertManager组件\\01-笔记\\Prometheus告警Alertmanager组件.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  5,
+        "file":  "云原生/observability/observability-05-prometheus告警媒介-企业微信.md",
+        "source":  "云原生监控系统\\Prometheus监控\\04-Prometheus告警媒介-企业微信\\04-Prometheus告警媒介-企业微信\\01-笔记\\Prometheus告警媒介 企业微信.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  6,
+        "file":  "云原生/observability/observability-06-prometheus告警媒介-钉钉.md",
+        "source":  "云原生监控系统\\Prometheus监控\\05-Prometheus告警媒介-钉钉\\05-Prometheus告警媒介-钉钉\\01-笔记\\Prometheus告警媒介 钉钉.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  7,
+        "file":  "云原生/observability/observability-07-容器化构建prometheus监控系统.md",
+        "source":  "云原生监控系统\\Prometheus监控\\06-容器化构建Prometheus监控系统\\06-容器化构建Prometheus监控系统\\01-笔记\\容器化构建Prometheus监控系统.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  8,
+        "file":  "云原生/observability/observability-08-容器监控方案-cadvisor.md",
+        "source":  "云原生监控系统\\Prometheus监控\\07-容器监控方案CAdvisor\\01-笔记\\容器监控方案 CAdvisor.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  9,
+        "file":  "云原生/observability/observability-09-k8s监控方案-ksm-kube-state-metrics.md",
+        "source":  "云原生监控系统\\Prometheus监控\\08-K8S监控方案KSM\\01-笔记\\k8s监控方案 KSM （kube-state-metrics）.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  10,
+        "file":  "云原生/observability/observability-10-helm部署prometheus及应用.md",
+        "source":  "云原生监控系统\\Prometheus监控\\31_kubernetes集群节点及pod监控\\31_kubernetes集群节点及pod监控\\01_笔记\\helm部署prometheus及应用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  11,
+        "file":  "云原生/observability/observability-11-helm部署prometheus及应用.md",
+        "source":  "云原生监控系统\\Prometheus监控\\helm部署prometheus监控系统及应用\\helm部署prometheus监控系统及应用\\01_笔记\\helm部署prometheus及应用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "observability",
+        "prefix":  "observability",
+        "order":  12,
+        "file":  "云原生/observability/observability-12-如何通过pixie实现kubernetes云原生应用可观测.md",
+        "source":  "云原生监控系统\\云原生应用可观测方案 Pixie\\如何通过Pixie实现Kubernetes云原生应用可观测？\\01-笔记\\如何通过Pixie实现Kubernetes云原生应用可观测？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "operator",
+        "prefix":  "operator",
+        "order":  1,
+        "file":  "云原生/operator/operator-01-windows主机中构建适用于k8s-operator开发环境.md",
+        "source":  "kubernetes应用二次开发\\基于win10打造k8s应用开发环境\\01-笔记\\Windows主机中构建适用于K8S Operator开发环境.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "operator",
+        "prefix":  "operator",
+        "order":  2,
+        "file":  "云原生/operator/operator-02-windows主机中构建适用于k8s-operator开发环境.md",
+        "source":  "云原生（K8S核心）架构师VIP直播\\基于windows部署K8S应用开发环境\\01_笔记\\Windows主机中构建适用于K8S Operator开发环境.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  1,
+        "file":  "云原生/paas/paas-01-在linux上以all-in-one模式安装kubernetes-kubesphere.md",
+        "source":  "20-基于Kubernetes PaaS云平台\\2-PaaS云平台 kubesphere\\41_kubernetesPaaS平台_kubesphere(持续更新)\\41_kubernetes PaaS平台_kubesphere(持续更新)\\01_在Linux上以all in one模式安装\\01_笔记\\在Linux上以all in one模式安装kubernetes \u0026 kubesphere.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  2,
+        "file":  "云原生/paas/paas-02-在kubernetes集群上最小化安装kubesphere.md",
+        "source":  "20-基于Kubernetes PaaS云平台\\2-PaaS云平台 kubesphere\\41_kubernetesPaaS平台_kubesphere(持续更新)\\41_kubernetes PaaS平台_kubesphere(持续更新)\\02_在kubernetes集群上最小化安装Kubesphere\\01_笔记\\在kubernetes集群上最小化安装kubesphere.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  3,
+        "file":  "云原生/paas/paas-03-kubesphere-3-4-0-抢鲜版.md",
+        "source":  "8-Kubernetes应用基础\\1-Kubernetes集群部署\\kubekey部署k8s高可用集群及kubesphere\\01-笔记\\kubesphere 3.4.0 抢鲜版.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  4,
+        "file":  "云原生/paas/paas-04-kubesphere中集成apisix.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\04_apisix笔记\\01_笔记\\KubeSphere中集成ApiSix.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  5,
+        "file":  "云原生/paas/paas-05-kubesphere集成本地容器镜像仓库-harbor.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\05_kubesphere集成本地容器镜像仓库Harbor笔记\\01_笔记\\KubeSphere集成本地容器镜像仓库 Harbor.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  6,
+        "file":  "云原生/paas/paas-06-kubesphere部署三高商城组织架构说明.md",
+        "source":  "微服务项目部署\\sangomall微服务项目\\06-sangomall微服务项目部署笔记（全）\\06-sangomall微服务项目部署笔记（全）\\01_企业空间、项目创建及三高商城项目架构部署说明\\01_笔记\\Kubesphere部署三高商城组织架构说明.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  7,
+        "file":  "云原生/paas/paas-07-微服务项目-基于kubernetes集群paas云平台-kubesphere部署.md",
+        "source":  "微服务项目部署\\严选微服务项目\\05_kubesphere部署\\05_kubesphere部署\\01_笔记\\微服务项目 基于Kubernetes集群PaaS云平台 Kubesphere部署.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  8,
+        "file":  "云原生/paas/paas-08-kubesphere多租户系统应用.md",
+        "source":  "微服务项目部署\\严选微服务项目\\06_kubesphere多租户系统应用\\06_kubesphere多租户系统应用\\01_笔记\\kubesphere多租户系统应用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  9,
+        "file":  "云原生/paas/paas-09-kubesphere集成本地容器镜像仓库-harbor.md",
+        "source":  "微服务项目部署\\严选微服务项目\\07_KubeSphere集成本地容器镜像仓库Harbor\\07_KubeSphere集成本地容器镜像仓库 Harbor\\01_笔记\\KubeSphere集成本地容器镜像仓库 Harbor.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "paas",
+        "prefix":  "paas",
+        "order":  10,
+        "file":  "云原生/paas/paas-10-kubesphere中集成apisix.md",
+        "source":  "微服务项目部署\\严选微服务项目\\09_元原生微服务网关apisix\\09_元原生微服务网关 apisix\\01_笔记\\KubeSphere中集成ApiSix.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "public-cloud",
+        "prefix":  "public-cloud",
+        "order":  1,
+        "file":  "云原生/public-cloud/public-cloud-01-阿里云容器服务-ack.md",
+        "source":  "主流共有云服务器\\阿里云容器服务ACK\\01_笔记\\阿里云容器服务 ACK.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  1,
+        "file":  "云原生/serverless/serverless-01-使用knative平台环境说明.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\00_使用Knative平台环境说明\\01_笔记\\使用Knative平台环境说明.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  2,
+        "file":  "云原生/serverless/serverless-02-现阶段云原生应用领域介绍.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\01_现阶段云原生应用领域介绍\\01_笔记\\现阶段云原生应用领域介绍.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  3,
+        "file":  "云原生/serverless/serverless-03-为什么要引入serverless.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\02_为什么要引入Serverless\\01_笔记\\为什么要引入Serverless.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  4,
+        "file":  "云原生/serverless/serverless-04-serverless应用场景.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\03_Serverless应用场景\\01_笔记\\Serverless应用场景.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  5,
+        "file":  "云原生/serverless/serverless-05-sererless架构优缺点.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\04_Serverless架构优缺点\\01_笔记\\Sererless架构优缺点.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  6,
+        "file":  "云原生/serverless/serverless-06-knative介绍.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\05_Knative介绍\\01_笔记\\Knative介绍.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  7,
+        "file":  "云原生/serverless/serverless-07-knative在云原生应用领域的定位.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\06_Knative在云原生应用领域的定位\\01_笔记\\Knative在云原生应用领域的定位.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  8,
+        "file":  "云原生/serverless/serverless-08-knative与云原生平台的三个最佳实践.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\07_Knative与云原生平台的三个最佳实践方式\\01_笔记\\Knative与云原生平台的三个最佳实践.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  9,
+        "file":  "云原生/serverless/serverless-09-knative-serving.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\08_Knative部署及应用案例\\01_Knative_Serving\\01_笔记\\knative serving.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  10,
+        "file":  "云原生/serverless/serverless-10-knative-eventing.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\08_Knative部署及应用案例\\02_Knative_Eventing\\01_笔记\\Knative Eventing.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  11,
+        "file":  "云原生/serverless/serverless-11-kn工具安装及应用.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\08_Knative部署及应用案例\\03_kn工具安装\\01_笔记\\kn工具安装及应用.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  12,
+        "file":  "云原生/serverless/serverless-12-knative-eventing组件及应用案例.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\08_Knative部署及应用案例\\04_Knative_Eventing应用案例\\01_笔记\\Knative Eventing组件及应用案例.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  13,
+        "file":  "云原生/serverless/serverless-13-tekton安装.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\01_tekton部署\\01_笔记\\Tekton安装.md",
+        "hasImages":  false
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  14,
+        "file":  "云原生/serverless/serverless-14-tekton初体验.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\02_tekton应用案例（从入门到熟练）\\01_Tekton应用_初体验\\01_笔记\\Tekton初体验.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  15,
+        "file":  "云原生/serverless/serverless-15-构建自定义tag镜像应用案例.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\02_tekton应用案例（从入门到熟练）\\02_Tekton应用_构建自定义Tag镜像应用案例\\01_笔记\\构建自定义Tag镜像应用案例.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  16,
+        "file":  "云原生/serverless/serverless-16-tekton流水线中使用workspace应用案例.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\02_tekton应用案例（从入门到熟练）\\03_Tekton应用_流水线中使用WorkSpace应用案例\\01_笔记\\Tekton流水线中使用WorkSpace应用案例.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  17,
+        "file":  "云原生/serverless/serverless-17-使用-tekton-sidecar-实现-docker-in-docker-构建.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\02_tekton应用案例（从入门到熟练）\\04_Tekton应用_使用DIND实现容器镜像构建应用案例\\01_笔记\\使用 Tekton Sidecar 实现 Docker IN Docker 构建.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  18,
+        "file":  "云原生/serverless/serverless-18-gitlab-触发-tekton-任务构建.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\02_tekton应用案例（从入门到熟练）\\05_Tekton应用_使用GitLab WebHook触发Tekton自动构建应用案例\\01_笔记\\GitLab 触发 Tekton 任务构建.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  19,
+        "file":  "云原生/serverless/serverless-19-使用-tekton-实现自动化流水线.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\02_tekton应用案例（从入门到熟练）\\06_tekton应用_使用Tekton实现自动流水线应用案例\\01_笔记\\使用 Tekton 实现自动化流水线.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  20,
+        "file":  "云原生/serverless/serverless-20-tekton-与-argo-cd-结合实现-gitops.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\09_Tekton全自动发布Knative平台应用案例\\02_tekton应用案例（从入门到熟练）\\07_tekton应用_Tekton与Argo CD结合实现 GitOps\\01_笔记\\Tekton 与 Argo CD 结合实现 GitOps.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  21,
+        "file":  "云原生/serverless/serverless-21-knative-可观测性-使用prometheus与grafana监控.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\10_Knative平台应用可观测性\\01_笔记\\Knative 可观测性 使用prometheus与grafana监控.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  22,
+        "file":  "云原生/serverless/serverless-22-efk.md",
+        "source":  "23-云计算下一个十年技术Serverless\\1-Serverless深度实战之Knative\\49_serverless深度实战之Knative\\49_serverless深度实战之Knative\\11_Knative平台应用日志收集分析\\01_笔记\\EFK.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  23,
+        "file":  "云原生/serverless/serverless-23-openfaas-函数即服务.md",
+        "source":  "23-云计算下一个十年技术Serverless\\OpenFaaS课程笔记\\OpenFaaS课程笔记\\OpenFaaS 函数即服务.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "serverless",
+        "prefix":  "serverless",
+        "order":  24,
+        "file":  "云原生/serverless/serverless-24-容器运行时-docker.md",
+        "source":  "6-容器管理工具 Docker\\1-容器管理工具 Docker\\2023-容器管理工具Docker\\01-笔记\\容器运行时 Docker.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "storage",
+        "prefix":  "storage",
+        "order":  1,
+        "file":  "云原生/storage/storage-01-kubernetes持久化存储卷及存储动态供给.md",
+        "source":  "13-Kubernetes存储解决方案\\20_kubernetes集群持久化存储卷及存储动态供给\\20_kubernetes集群持久化存储卷及存储动态供给\\01_笔记\\kubernetes持久化存储卷及存储动态供给.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "storage",
+        "prefix":  "storage",
+        "order":  2,
+        "file":  "云原生/storage/storage-02-k8s集群存储解决方案-glusterfs.md",
+        "source":  "13-Kubernetes存储解决方案\\21_kubernetes集群存储解决方案GlusterFS\\21_kubernetes集群存储解决方案 GlusterFS\\01_笔记\\k8s集群存储解决方案 GlusterFS.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "storage",
+        "prefix":  "storage",
+        "order":  3,
+        "file":  "云原生/storage/storage-03-如何基于kubernetes使用分布式块存储longhorn.md",
+        "source":  "13-Kubernetes存储解决方案\\如何基于Kubernetes使用分布式块存储Longhorn\\如何基于Kubernetes使用分布式块存储Longhorn\\01-笔记\\如何基于Kubernetes使用分布式块存储Longhorn？.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "vip",
+        "prefix":  "vip",
+        "order":  1,
+        "file":  "云原生/vip/vip-01-almalinux-9操作系统.md",
+        "source":  "云原生（K8S核心）架构师VIP直播\\AlmaLinux9操作系统如何使用及部署K8S集群\\01-AlmaLinux操作系统安装及配置\\01-笔记\\AlmaLinux 9操作系统.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "vip",
+        "prefix":  "vip",
+        "order":  2,
+        "file":  "云原生/vip/vip-02-kubeadm极速部署kubernetes-1-29版本集群.md",
+        "source":  "云原生（K8S核心）架构师VIP直播\\AlmaLinux9操作系统如何使用及部署K8S集群\\02-AlmaLinux操作系统部署K8S集群\\01_笔记\\kubeadm极速部署Kubernetes 1.29版本集群.md",
+        "hasImages":  true
+    },
+    {
+        "series":  "vip",
+        "prefix":  "vip",
+        "order":  3,
+        "file":  "云原生/vip/vip-03-基于ingress-nginx实现灰度发布系统.md",
+        "source":  "云原生（K8S核心）架构师VIP直播\\基于IngressNginx实现灰度发布系统\\01-笔记\\基于Ingress Nginx实现灰度发布系统.md",
+        "hasImages":  true
+    }
+]

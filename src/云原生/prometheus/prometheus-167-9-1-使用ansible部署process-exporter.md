@@ -1,0 +1,81 @@
+---
+title: "9.1 使用ansible部署process-exporter"
+sidebarGroup: "Prometheus"
+shortTitle: "167 9.1 使用ansible部署process..."
+order: 167
+date: 2026-08-13
+category: "云原生"
+tag:
+  - "Prometheus"
+  - "云原生"
+  - "课程笔记"
+description: "本节重点介绍 : - ansible 部署二进制 process-exporter 项目地址 - 项目地址 https://github.com/ncabatoff/process-exporter ..."
+---
+
+> **Prometheus · 第 167 篇**
+>
+> 来源课程笔记整理优化；插图已迁入博客静态目录。
+
+---
+
+# 本节重点介绍 : 
+- ansible 部署二进制 process-exporter
+
+## 项目地址 
+- 项目地址 https://github.com/ncabatoff/process-exporter
+## 下载地址 
+```shell script
+wget -O  /opt/tgzs/process-exporter-0.7.5.linux-amd64.tar.gz https://github.com/ncabatoff/process-exporter/releases/download/v0.7.5/process-exporter-0.7.5.linux-amd64.tar.gz
+
+```
+
+## 准备配置文件 process-exporter.yaml
+- 指定采集进程的方式，下面的例子代表所有cmdline
+```shell script
+mkdir /opt/app/process-exporter
+cat <<EOF >/opt/app/process-exporter/process-exporter.yaml
+process_names:
+  - name: "{{.Comm}}"
+    cmdline:
+    - '.+'
+EOF
+
+```
+
+##  使用ansible部署 process-exporter
+- 准备 service文件
+```shell script
+cat <<EOF> process-exporter.service
+[Unit]
+Description=process-exporter Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/opt/app/process-exporter/process-exporter -config.path=/opt/app/process-exporter/process-exporter.yaml
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=process-exporter
+[Install]
+WantedBy=default.target
+EOF
+```
+- 执行ansible-playbook
+
+```shell script
+ansible-playbook -i host_file  service_deploy.yaml  -e "tgz=process-exporter-0.7.5.linux-amd64.tar.gz" -e "app=process-exporter"
+```
+
+## 检查部署情况
+
+```shell script
+
+# 查看端口 进程 日志
+ss -ntlp |grep 9256
+ps -ef |grep process-exporter |grep -v grep 
+
+```
+
+# 本节重点总结 : 
+- ansible 部署二进制 process-exporter
+
