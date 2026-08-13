@@ -1,15 +1,15 @@
 ---
-title: "使用Argo CD实施项目发布"
-sidebarGroup: "DevOps / GitOps"
-shortTitle: "05 使用Argo CD实施项目发布"
+title: 使用Argo CD实施项目发布
+sidebarGroup: DevOps / GitOps
+shortTitle: 05 使用Argo CD实施项目发布
 order: 5
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "DevOps / GitOps"
-  - "云原生"
-  - "课程笔记"
-description: "使用Argo CD实施项目发布 由于 Argo CD 支持部署应用到多集群，所以如果你要将应用部署到外部集群的时候，需要先将外部集群的认证信息注册到 Argo CD 中，如果是在内部部署（运行 Arg..."
+  - DevOps / GitOps
+  - 云原生
+  - 课程笔记
+description: 使用Argo CD实施项目发布 由于 Argo CD 支持部署应用到多集群，所以如果你要将应用部署到外部集群的时候，需要先将外部集群的认证信息注册到 Argo CD 中，如果是在内部部署（运行 Arg...
 ---
 
 > **DevOps / GitOps · 第 5 篇**

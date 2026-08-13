@@ -1,15 +1,15 @@
 ---
-title: "37.2 prometheus分析接口源码讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "120 37.2 prometheus分析接口源码讲..."
+title: 37.2 prometheus分析接口源码讲解
+sidebarGroup: Prometheus
+shortTitle: 120 37.2 prometheus分析接口源码讲...
 order: 120
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 获取配置文件 config - 获取运行信息 runtimeinfo - 编译的信息 buildinfo - tsdb统计信息 tsdb - walreplay的信息 - tar..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 获取配置文件 config - 获取运行信息 runtimeinfo - 编译的信息 buildinfo - tsdb统计信息 tsdb - walreplay的信息 - tar...'
 ---
 
 > **Prometheus · 第 120 篇**

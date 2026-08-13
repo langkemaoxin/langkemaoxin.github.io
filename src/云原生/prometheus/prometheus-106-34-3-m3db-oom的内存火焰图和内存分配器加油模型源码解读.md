@@ -1,15 +1,15 @@
 ---
-title: "34.3 m3db-oom的内存火焰图和内存分配器加油模型源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "106 34.3 m3db-oom的内存火焰图和内存..."
+title: 34.3 m3db-oom的内存火焰图和内存分配器加油模型源码解读
+sidebarGroup: Prometheus
+shortTitle: 106 34.3 m3db-oom的内存火焰图和内存...
 order: 106
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - m3dbnode oom时内存火焰图追查源码调用 - 内存分配器加油模型源码解读 - 高基数查询导致m3db oom m3dbnode oom oom时排查监控曲线 - 内存火焰..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - m3dbnode oom时内存火焰图追查源码调用 - 内存分配器加油模型源码解读 - 高基数查询导致m3db oom m3dbnode oom oom时排查监控曲线 - 内存火焰...'
 ---
 
 > **Prometheus · 第 106 篇**

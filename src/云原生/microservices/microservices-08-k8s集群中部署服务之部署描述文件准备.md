@@ -1,15 +1,15 @@
 ---
-title: "k8s集群中部署服务之部署描述文件准备"
-sidebarGroup: "微服务实战"
-shortTitle: "08 k8s集群中部署服务之部署描述文件准备"
+title: k8s集群中部署服务之部署描述文件准备
+sidebarGroup: 微服务实战
+shortTitle: 08 k8s集群中部署服务之部署描述文件准备
 order: 8
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "微服务部署描述文件Deploy.yaml 一、各微服务创建部署描述文件 1.1 mall-auth-server ~~~powershell --- apiVersion: apps/v1 kind:..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: '微服务部署描述文件Deploy.yaml 一、各微服务创建部署描述文件 1.1 mall-auth-server ~~~powershell --- apiVersion: apps/v1 kind:...'
 ---
 
 > **微服务实战 · 第 8 篇**

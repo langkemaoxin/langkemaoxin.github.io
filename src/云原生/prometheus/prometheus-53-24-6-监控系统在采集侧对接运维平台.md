@@ -1,15 +1,15 @@
 ---
-title: "24.6 监控系统在采集侧对接运维平台"
-sidebarGroup: "Prometheus"
-shortTitle: "53 24.6 监控系统在采集侧对接运维平台"
+title: 24.6 监控系统在采集侧对接运维平台
+sidebarGroup: Prometheus
+shortTitle: 53 24.6 监控系统在采集侧对接运维平台
 order: 53
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 监控系统在采集侧对接运维平台 - 服务树充当监控系统的上游数据提供者 - 在运维平台上 可以配置采集任务 - exporter改造成探针型 - 将给exporter传参和修改pr..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 监控系统在采集侧对接运维平台 - 服务树充当监控系统的上游数据提供者 - 在运维平台上 可以配置采集任务 - exporter改造成探针型 - 将给exporter传参和修改pr...'
 ---
 
 > **Prometheus · 第 53 篇**

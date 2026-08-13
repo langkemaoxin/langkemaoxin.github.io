@@ -1,15 +1,15 @@
 ---
-title: "karmada部署及应用"
-sidebarGroup: "多集群"
-shortTitle: "04 karmada部署及应用"
+title: karmada部署及应用
+sidebarGroup: 多集群
+shortTitle: 04 karmada部署及应用
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "多集群"
-  - "云原生"
-  - "课程笔记"
-description: "使用kubeconfig管理多集群方法 一、k8s集群准备 1.1 持久化存储准备 提前准备好NFS服务 ~~~powershell for file in class.yaml deployment..."
+  - 多集群
+  - 云原生
+  - 课程笔记
+description: 使用kubeconfig管理多集群方法 一、k8s集群准备 1.1 持久化存储准备 提前准备好NFS服务 ~~~powershell for file in class.yaml deployment...
 ---
 
 > **多集群 · 第 4 篇**

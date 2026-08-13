@@ -1,15 +1,15 @@
 ---
-title: "kubeadm极速部署Kubernetes 1.24版本集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "18 kubeadm极速部署Kubernetes ..."
+title: kubeadm极速部署Kubernetes 1.24版本集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 18 kubeadm极速部署Kubernetes ...
 order: 18
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubeadm极速部署Kubernetes 1.24版本集群 一、Kubernetes 1.24版本发布及重磅改动 1.1 Kubernetes 1.24 发布 2022 年 5 月 3 日，Kube..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: kubeadm极速部署Kubernetes 1.24版本集群 一、Kubernetes 1.24版本发布及重磅改动 1.1 Kubernetes 1.24 发布 2022 年 5 月 3 日，Kube...
 ---
 
 > **K8s 课程笔记 · 第 18 篇**

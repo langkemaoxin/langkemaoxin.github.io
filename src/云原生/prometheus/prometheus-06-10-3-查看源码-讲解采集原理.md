@@ -1,15 +1,15 @@
 ---
-title: "10.3 查看源码，讲解采集原理"
-sidebarGroup: "Prometheus"
-shortTitle: "06 10.3 查看源码，讲解采集原理"
+title: 10.3 查看源码，讲解采集原理
+sidebarGroup: Prometheus
+shortTitle: 06 10.3 查看源码，讲解采集原理
 order: 6
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - redis-exporter源码解读 源码解读 初始化redis-exporter对象 - 代码位置 D:\go_path\pkg\mod\github.com\oliver00..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - redis-exporter源码解读 源码解读 初始化redis-exporter对象 - 代码位置 [path]'
 ---
 
 > **Prometheus · 第 6 篇**

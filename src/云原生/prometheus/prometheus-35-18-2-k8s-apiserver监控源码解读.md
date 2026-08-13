@@ -1,15 +1,15 @@
 ---
-title: "18.2 k8s-apiserver监控源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "35 18.2 k8s-apiserver监控源码..."
+title: 18.2 k8s-apiserver监控源码解读
+sidebarGroup: Prometheus
+shortTitle: 35 18.2 k8s-apiserver监控源码...
 order: 35
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s代码库和模块地址 - 下载 apiserver源码 - apiserver中监控源码阅读 k8s源码地址分布 k8s代码库 - 访问github上k8s仓库，readme中..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s代码库和模块地址 - 下载 apiserver源码 - apiserver中监控源码阅读 k8s源码地址分布 k8s代码库 - 访问github上k8s仓库，readme中...'
 ---
 
 > **Prometheus · 第 35 篇**

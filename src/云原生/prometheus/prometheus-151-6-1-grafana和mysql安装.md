@@ -1,15 +1,15 @@
 ---
-title: "6.1 grafana和mysql安装"
-sidebarGroup: "Prometheus"
-shortTitle: "151 6.1 grafana和mysql安装"
+title: 6.1 grafana和mysql安装
+sidebarGroup: Prometheus
+shortTitle: 151 6.1 grafana和mysql安装
 order: 151
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - yum 安装mysql 5.7 (为后续mysqld_exporter做准备) - rpm安装grafana，并把grafana db由sqlite 改为mysql 安装mysq..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - yum 安装mysql 5.7 (为后续mysqld_exporter做准备) - rpm安装grafana，并把grafana db由sqlite 改为mysql 安装mysq...'
 ---
 
 > **Prometheus · 第 151 篇**

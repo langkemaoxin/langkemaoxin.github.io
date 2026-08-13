@@ -1,15 +1,15 @@
 ---
-title: "如何基于Kubernetes使用分布式块存储Longhorn？"
-sidebarGroup: "K8s 存储"
-shortTitle: "03 如何基于Kubernetes使用分布式块存储..."
+title: 如何基于Kubernetes使用分布式块存储Longhorn？
+sidebarGroup: K8s 存储
+shortTitle: 03 如何基于Kubernetes使用分布式块存储...
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 存储"
-  - "云原生"
-  - "课程笔记"
-description: "如何基于Kubernetes使用分布式块存储Longhorn？ 一、分布式块存储Longhorn介绍 Longhorn是一个轻量级、可靠且易于使用的Kubernetes分布式块存储系统。 Longho..."
+  - K8s 存储
+  - 云原生
+  - 课程笔记
+description: 如何基于Kubernetes使用分布式块存储Longhorn？ 一、分布式块存储Longhorn介绍 Longhorn是一个轻量级、可靠且易于使用的Kubernetes分布式块存储系统。 Longho...
 ---
 
 > **K8s 存储 · 第 3 篇**

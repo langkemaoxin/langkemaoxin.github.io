@@ -1,15 +1,15 @@
 ---
-title: "Go 基础练习 unit4"
-sidebarGroup: "Golang"
-shortTitle: "25 unit4"
+title: Go 基础练习 unit4
+sidebarGroup: Golang
+shortTitle: 25 unit4
 order: 25
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Golang"
-  - "云原生"
-  - "课程笔记"
-description: "goproject unit4 练习整理"
+  - Golang
+  - 云原生
+  - 课程笔记
+description: goproject unit4 练习整理
 ---
 
 > **Golang · 第 25 篇**

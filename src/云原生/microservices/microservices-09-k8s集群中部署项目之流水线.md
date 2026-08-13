@@ -1,15 +1,15 @@
 ---
-title: "k8s集群中部署项目之流水线"
-sidebarGroup: "微服务实战"
-shortTitle: "09 k8s集群中部署项目之流水线"
+title: k8s集群中部署项目之流水线
+sidebarGroup: 微服务实战
+shortTitle: 09 k8s集群中部署项目之流水线
 order: 9
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "微服务项目部署之流水线编写 一、部署微服务项目环境说明 1.1 代码托管到gitee 1.2 镜像托管到dockerhub ~~~powershell 用户名：nextgomsb 密码：abc .co..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 微服务项目部署之流水线编写 一、部署微服务项目环境说明 1.1 代码托管到gitee 1.2 镜像托管到dockerhub ~~~powershell 用户名：nextgomsb 密码：abc .co...
 ---
 
 > **微服务实战 · 第 9 篇**

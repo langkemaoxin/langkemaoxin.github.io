@@ -1,15 +1,15 @@
 ---
-title: "34.1 uber开源的m3db简介"
-sidebarGroup: "Prometheus"
-shortTitle: "104 34.1 uber开源的m3db简介"
+title: 34.1 uber开源的m3db简介
+sidebarGroup: Prometheus
+shortTitle: 104 34.1 uber开源的m3db简介
 order: 104
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - m3db自己的定位 - m3db自己的架构 - m3db自己的组件 两句话简介 - M3最初是在优步开发的，目的是提供对优步业务运营，微服务和基础架构的可视性 - 由于M3具有轻..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - m3db自己的定位 - m3db自己的架构 - m3db自己的组件 两句话简介 - M3最初是在优步开发的，目的是提供对优步业务运营，微服务和基础架构的可视性 - 由于M3具有轻...'
 ---
 
 > **Prometheus · 第 104 篇**

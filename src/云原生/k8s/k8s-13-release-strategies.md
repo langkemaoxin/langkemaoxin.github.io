@@ -1,19 +1,19 @@
 ---
-title: "发布策略实战——蓝绿、金丝雀、滚动与 A/B 测试"
-sidebarGroup: "Kubernetes 系列"
-shortTitle: "13 发布策略"
+title: 发布策略实战——蓝绿、金丝雀、滚动与 A/B 测试
+sidebarGroup: Kubernetes 系列
+shortTitle: 13 发布策略
 order: 13
-date: 2026-08-30
-category: "云原生"
+date: 2026-08-30T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "Kubernetes系列"
-  - "灰度发布"
-  - "蓝绿发布"
-  - "金丝雀"
-  - "滚动更新"
-description: "蓝绿、金丝雀、滚动与 A/B 发布的原理与实操对比。"
+  - Kubernetes
+  - 云原生
+  - Kubernetes系列
+  - 灰度发布
+  - 蓝绿发布
+  - 金丝雀
+  - 滚动更新
+description: 蓝绿、金丝雀、滚动与 A/B 发布的原理与实操对比。
 ---
 
 > **Kubernetes 系列 · 第 13/20 篇**  

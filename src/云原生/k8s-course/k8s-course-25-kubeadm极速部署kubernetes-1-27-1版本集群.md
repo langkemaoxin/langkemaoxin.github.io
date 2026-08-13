@@ -1,15 +1,15 @@
 ---
-title: "kubeadm极速部署Kubernetes 1.27.1版本集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "25 kubeadm极速部署Kubernetes ..."
+title: kubeadm极速部署Kubernetes 1.27.1版本集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 25 kubeadm极速部署Kubernetes ...
 order: 25
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubeadm极速部署Kubernetes 1.27.1版本集群 一、集群节点准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :------------:..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'kubeadm极速部署Kubernetes 1.27.1版本集群 一、集群节点准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :------------:...'
 ---
 
 > **K8s 课程笔记 · 第 25 篇**

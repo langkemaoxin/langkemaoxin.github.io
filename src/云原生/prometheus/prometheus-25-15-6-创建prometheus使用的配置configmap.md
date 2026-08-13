@@ -1,15 +1,15 @@
 ---
-title: "15.6 创建prometheus使用的配置configmap"
-sidebarGroup: "Prometheus"
-shortTitle: "25 15.6 创建prometheus使用的配置..."
+title: 15.6 创建prometheus使用的配置configmap
+sidebarGroup: Prometheus
+shortTitle: 25 15.6 创建prometheus使用的配置...
 order: 25
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - config简介 - prometheus configmap编写 configmap 作用 - ConfigMap 是一种 API 对象，用来将非机密性的数据保存到键值对中 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - config简介 - prometheus configmap编写 configmap 作用 - ConfigMap 是一种 API 对象，用来将非机密性的数据保存到键值对中 -...'
 ---
 
 > **Prometheus · 第 25 篇**

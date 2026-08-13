@@ -1,15 +1,15 @@
 ---
-title: "在kubernetes集群上最小化安装kubesphere"
-sidebarGroup: "PaaS 平台"
-shortTitle: "02 在kubernetes集群上最小化安装kub..."
+title: 在kubernetes集群上最小化安装kubesphere
+sidebarGroup: PaaS 平台
+shortTitle: 02 在kubernetes集群上最小化安装kub...
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "在kubernetes集群上最小化安装kubesphere 除了在 Linux 机器上安装 KubeSphere 之外，您还可以将其直接部署在现有的 Kubernetes 集群上。 一、准备工作 1...."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: 在kubernetes集群上最小化安装kubesphere 除了在 Linux 机器上安装 KubeSphere 之外，您还可以将其直接部署在现有的 Kubernetes 集群上。 一、准备工作 1....
 ---
 
 > **PaaS 平台 · 第 2 篇**

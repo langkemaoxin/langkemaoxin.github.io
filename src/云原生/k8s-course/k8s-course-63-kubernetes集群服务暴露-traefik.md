@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群服务暴露 traefik"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "63 kubernetes集群服务暴露 traef..."
+title: kubernetes集群服务暴露 traefik
+sidebarGroup: K8s 课程笔记
+shortTitle: 63 kubernetes集群服务暴露 traef...
 order: 63
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群 服务暴露 Traefik 一、认识traefik 1.1 traefik简介 - 参考链接: https://traefik.cn/ - 是一个为了让部署微服务更加便捷而诞生..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'Kubernetes集群 服务暴露 Traefik 一、认识traefik 1.1 traefik简介 - 参考链接: http[path] - 是一个为了让部署微服务更加便捷而诞生...'
 ---
 
 > **K8s 课程笔记 · 第 63 篇**

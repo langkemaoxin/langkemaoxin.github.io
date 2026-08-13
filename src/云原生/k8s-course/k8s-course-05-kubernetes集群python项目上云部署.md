@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群python项目上云部署"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "05 kubernetes集群python项目上云..."
+title: kubernetes集群python项目上云部署
+sidebarGroup: K8s 课程笔记
+shortTitle: 05 kubernetes集群python项目上云...
 order: 5
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes集群Python项目上云部署 一、项目资源及项目代码 ~~~powershell [root@localhost cmdb] pwd /root/cmdb [root@localh..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'kubernetes集群Python项目上云部署 一、项目资源及项目代码 ~~~powershell [root@localhost cmdb] pwd /root/cmdb [root@localh...'
 ---
 
 > **K8s 课程笔记 · 第 5 篇**

@@ -1,15 +1,15 @@
 ---
-title: "13.3 alertmanager分组功能"
-sidebarGroup: "Prometheus"
-shortTitle: "13 13.3 alertmanager分组功能"
+title: 13.3 alertmanager分组功能
+sidebarGroup: Prometheus
+shortTitle: 13 13.3 alertmanager分组功能
 order: 13
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 启动3个alert_receive接收端 - 在alertmanager配置文件中编写相关路由 - prometheus编写rule文件触发告警 - 观察3个接收端 - 5001..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 启动3个alert_receive接收端 - 在alertmanager配置文件中编写相关路由 - prometheus编写rule文件触发告警 - 观察3个接收端 - 5001...'
 ---
 
 > **Prometheus · 第 13 篇**

@@ -1,15 +1,15 @@
 ---
-title: "40.2 预聚合和prometheus-record使用"
-sidebarGroup: "Prometheus"
-shortTitle: "131 40.2 预聚合和prometheus-re..."
+title: 40.2 预聚合和prometheus-record使用
+sidebarGroup: Prometheus
+shortTitle: 131 40.2 预聚合和prometheus-re...
 order: 131
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - downsample降采样可以降低查询数据量 - prometheus原生不支持downsample - 实时查询/聚合 VS 预查询/聚合的优缺点 - 实时查询/聚合条件随意组..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - downsample降采样可以降低查询数据量 - prometheus原生不支持downsample - 实时查询/聚合 VS 预查询/聚合的优缺点 - 实时查询/聚合条件随意组...'
 ---
 
 > **Prometheus · 第 131 篇**

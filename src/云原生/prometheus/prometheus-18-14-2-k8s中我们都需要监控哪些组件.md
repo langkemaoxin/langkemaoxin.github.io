@@ -1,15 +1,15 @@
 ---
-title: "14.2 k8s中我们都需要监控哪些组件"
-sidebarGroup: "Prometheus"
-shortTitle: "18 14.2 k8s中我们都需要监控哪些组件"
+title: 14.2 k8s中我们都需要监控哪些组件
+sidebarGroup: Prometheus
+shortTitle: 18 14.2 k8s中我们都需要监控哪些组件
 order: 18
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s中关注四大块指标总结 - 容器基础资源指标 - k8s资源指标 - k8s服务组件指标 - 部署在pod中业务埋点指标 k8s关注指标分析 k8s中组件复杂，我们主要专注的..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s中关注四大块指标总结 - 容器基础资源指标 - k8s资源指标 - k8s服务组件指标 - 部署在pod中业务埋点指标 k8s关注指标分析 k8s中组件复杂，我们主要专注的...'
 ---
 
 > **Prometheus · 第 18 篇**

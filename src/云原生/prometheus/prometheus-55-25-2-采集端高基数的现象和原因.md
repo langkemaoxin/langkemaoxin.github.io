@@ -1,15 +1,15 @@
 ---
-title: "25.2 采集端高基数的现象和原因"
-sidebarGroup: "Prometheus"
-shortTitle: "55 25.2 采集端高基数的现象和原因"
+title: 25.2 采集端高基数的现象和原因
+sidebarGroup: Prometheus
+shortTitle: 55 25.2 采集端高基数的现象和原因
 order: 55
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 什么是高基数 - 采集端高基数的原因 - 标签的值过多 - 获取采集端的高基数metrics - tsdb-status页面介绍 - 统计原理讲解：是基于内存中的倒排索引 算最大..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 什么是高基数 - 采集端高基数的原因 - 标签的值过多 - 获取采集端的高基数metrics - tsdb-status页面介绍 - 统计原理讲解：是基于内存中的倒排索引 算最大...'
 ---
 
 > **Prometheus · 第 55 篇**

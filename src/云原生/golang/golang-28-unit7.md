@@ -1,15 +1,15 @@
 ---
-title: "Go 基础练习 unit7"
-sidebarGroup: "Golang"
-shortTitle: "28 unit7"
+title: Go 基础练习 unit7
+sidebarGroup: Golang
+shortTitle: 28 unit7
 order: 28
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Golang"
-  - "云原生"
-  - "课程笔记"
-description: "goproject unit7 练习整理"
+  - Golang
+  - 云原生
+  - 课程笔记
+description: goproject unit7 练习整理
 ---
 
 > **Golang · 第 28 篇**

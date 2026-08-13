@@ -1,16 +1,17 @@
 ---
-title: "Dockerfile 自制镜像——从语法到发布"
-sidebarGroup: "Docker 系列"
-shortTitle: "10 Dockerfile 自制镜像"
+title: Dockerfile 自制镜像——从语法到发布
+sidebarGroup: Docker 系列
+shortTitle: 10 Dockerfile 自制镜像
 order: 10
-date: 2026-08-17
-category: "云原生"
+date: 2026-08-17T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
-  - "Dockerfile"
-  - "镜像"
+  - Docker
+  - 云原生
+  - Docker系列
+  - Dockerfile
+  - 镜像
+description: Dockerfile 自制镜像——从语法到发布
 ---
 
 > **Docker 系列 · 第 10/18 篇**  

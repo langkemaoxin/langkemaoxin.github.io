@@ -1,15 +1,15 @@
 ---
-title: "2.1达到大厂要求的学习目标"
-sidebarGroup: "Prometheus"
-shortTitle: "39 2.1达到大厂要求的学习目标"
+title: 2.1达到大厂要求的学习目标
+sidebarGroup: Prometheus
+shortTitle: 39 2.1达到大厂要求的学习目标
 order: 39
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : 学习目标 - 熟悉prometheus 及其生态圈内组件的使用，配置调优 - 能够发现单点问题并有高可用解决方案 - 对时序监控底层原理的理解有较深理解 - 可以进行二次开发or使用..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : 学习目标 - 熟悉prometheus 及其生态圈内组件的使用，配置调优 - 能够发现单点问题并有高可用解决方案 - 对时序监控底层原理的理解有较深理解 - 可以进行二次开发or使用...'
 ---
 
 > **Prometheus · 第 39 篇**

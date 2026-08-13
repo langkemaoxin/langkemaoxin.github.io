@@ -1,15 +1,15 @@
 ---
-title: "41.4 修改confd源码增加静态分片功能"
-sidebarGroup: "Prometheus"
-shortTitle: "136 41.4 修改confd源码增加静态分片功能"
+title: 41.4 修改confd源码增加静态分片功能
+sidebarGroup: Prometheus
+shortTitle: 136 41.4 修改confd源码增加静态分片功能
 order: 136
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - confd简介 - 修改confd源码增加静态分片功能 - 配置prometheus record的confd confd简介 简介 - confd，它提供了一种新的集成思路 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - confd简介 - 修改confd源码增加静态分片功能 - 配置prometheus record的confd confd简介 简介 - confd，它提供了一种新的集成思路 -...'
 ---
 
 > **Prometheus · 第 136 篇**

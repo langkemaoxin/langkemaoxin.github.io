@@ -1,15 +1,15 @@
 ---
-title: "14.1 为什么说k8s中监控更复杂了"
-sidebarGroup: "Prometheus"
-shortTitle: "17 14.1 为什么说k8s中监控更复杂了"
+title: 14.1 为什么说k8s中监控更复杂了
+sidebarGroup: Prometheus
+shortTitle: 17 14.1 为什么说k8s中监控更复杂了
 order: 17
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s中监控变得复杂了，挑战如下 - 挑战1: 监控的目标种类多 - 挑战2: 监控的目标数量多 - 挑战3: 对象的变更和扩缩特别频繁 - 挑战4: 监控对象访问权限问题 k8..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s中监控变得复杂了，挑战如下 - 挑战1: 监控的目标种类多 - 挑战2: 监控的目标数量多 - 挑战3: 对象的变更和扩缩特别频繁 - 挑战4: 监控对象访问权限问题 k8...'
 ---
 
 > **Prometheus · 第 17 篇**

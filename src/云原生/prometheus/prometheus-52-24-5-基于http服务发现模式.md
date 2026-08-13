@@ -1,15 +1,15 @@
 ---
-title: "24.5 基于http服务发现模式"
-sidebarGroup: "Prometheus"
-shortTitle: "52 24.5 基于http服务发现模式"
+title: 24.5 基于http服务发现模式
+sidebarGroup: Prometheus
+shortTitle: 52 24.5 基于http服务发现模式
 order: 52
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - http型的服务发现的优点 - 使用go语言编写 http服务发现源 - 将blackbox-http job改造为 http服务发现类型 说明 对比file_sd的优点 - 不..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - http型的服务发现的优点 - 使用go语言编写 http服务发现源 - 将blackbox-http job改造为 http服务发现类型 说明 对比file_sd的优点 - 不...'
 ---
 
 > **Prometheus · 第 52 篇**

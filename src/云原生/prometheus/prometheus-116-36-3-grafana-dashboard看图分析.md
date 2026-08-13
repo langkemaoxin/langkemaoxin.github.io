@@ -1,15 +1,15 @@
 ---
-title: "36.3 grafana-dashboard看图分析"
-sidebarGroup: "Prometheus"
-shortTitle: "116 36.3 grafana-dashboard..."
+title: 36.3 grafana-dashboard看图分析
+sidebarGroup: Prometheus
+shortTitle: 116 36.3 grafana-dashboard...
 order: 116
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "kube-prometheus中的grafana总结 - db使用 sqlit，volume类型为emptydir 无法持久化，pod扩缩就重新创建 - 通过configMap设置的prometheu..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: kube-prometheus中的grafana总结 - db使用 sqlit，volume类型为emptydir 无法持久化，pod扩缩就重新创建 - 通过configMap设置的prometheu...
 ---
 
 > **Prometheus · 第 116 篇**

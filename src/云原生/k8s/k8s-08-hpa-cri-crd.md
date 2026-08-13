@@ -1,18 +1,18 @@
 ---
-title: "HPA 自动伸缩与 CRI/CNI/CSI/CRD 扩展点"
-sidebarGroup: "Kubernetes"
-shortTitle: "08 HPA 与扩展点"
+title: HPA 自动伸缩与 CRI/CNI/CSI/CRD 扩展点
+sidebarGroup: Kubernetes
+shortTitle: 08 HPA 与扩展点
 order: 8
-date: 2026-08-29
-category: "云原生"
+date: 2026-08-29T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "K8s系列"
-  - "HPA"
-  - "CRI"
-  - "CRD"
-description: "HPA 与 Metrics API，以及 OCI/CRI/CNI/CSI/CRD 扩展点与创建流程。"
+  - Kubernetes
+  - 云原生
+  - K8s系列
+  - HPA
+  - CRI
+  - CRD
+description: HPA 与 Metrics API，以及 OCI/CRI/CNI/CSI/CRD 扩展点与创建流程。
 ---
 
 > **Kubernetes 系列 · 第 8/20 篇**  

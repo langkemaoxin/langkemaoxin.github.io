@@ -1,19 +1,19 @@
 ---
-title: "Service Mesh 与 Istio——Sidecar 架构与 Bookinfo"
-sidebarGroup: "Kubernetes 系列"
-shortTitle: "14 Service Mesh"
+title: Service Mesh 与 Istio——Sidecar 架构与 Bookinfo
+sidebarGroup: Kubernetes 系列
+shortTitle: 14 Service Mesh
 order: 14
-date: 2026-08-31
-category: "云原生"
+date: 2026-08-31T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "Kubernetes系列"
-  - "Service Mesh"
-  - "Istio"
-  - "Envoy"
-  - "Sidecar"
-description: "Sidecar 模式、Istio 控制面/数据面，以及 Bookinfo 入门实验。"
+  - Kubernetes
+  - 云原生
+  - Kubernetes系列
+  - Service Mesh
+  - Istio
+  - Envoy
+  - Sidecar
+description: Sidecar 模式、Istio 控制面/数据面，以及 Bookinfo 入门实验。
 ---
 
 > **Kubernetes 系列 · 第 14/20 篇**  

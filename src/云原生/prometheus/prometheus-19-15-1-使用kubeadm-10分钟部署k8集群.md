@@ -1,15 +1,15 @@
 ---
-title: "15.1 使用kubeadm 10分钟部署k8集群"
-sidebarGroup: "Prometheus"
-shortTitle: "19 15.1 使用kubeadm 10分钟部署k..."
+title: 15.1 使用kubeadm 10分钟部署k8集群
+sidebarGroup: Prometheus
+shortTitle: 19 15.1 使用kubeadm 10分钟部署k...
 order: 19
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 使用kubeadm安装kubernetes_v1.21.x 地址 - https://kuboard.cn/install/install-k8s.html 准备工作 shell..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 使用kubeadm安装kubernetes_v1.21.x 地址 - http[path] 准备工作 shell...'
 ---
 
 > **Prometheus · 第 19 篇**

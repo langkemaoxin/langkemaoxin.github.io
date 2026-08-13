@@ -1,15 +1,15 @@
 ---
-title: "12.2 使用prometheus-sdk向pushgateway打点"
-sidebarGroup: "Prometheus"
-shortTitle: "10 12.2 使用prometheus-sdk向..."
+title: 12.2 使用prometheus-sdk向pushgateway打点
+sidebarGroup: Prometheus
+shortTitle: 10 12.2 使用prometheus-sdk向...
 order: 10
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 使用golang sdk打prometheus4种指标，推送到pushgateway - gauge、counter、histogram、summary的初始化 - 4种类似的设..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 使用golang sdk打prometheus4种指标，推送到pushgateway - gauge、counter、histogram、summary的初始化 - 4种类似的设...'
 ---
 
 > **Prometheus · 第 10 篇**

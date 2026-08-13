@@ -1,15 +1,15 @@
 ---
-title: "29.1 时序监控和日志监控的对比，分析日志监控的核心诉求"
-sidebarGroup: "Prometheus"
-shortTitle: "73 29.1 时序监控和日志监控的对比，分析日志..."
+title: 29.1 时序监控和日志监控的对比，分析日志监控的核心诉求
+sidebarGroup: Prometheus
+shortTitle: 73 29.1 时序监控和日志监控的对比，分析日志...
 order: 73
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 监控系统分类 - 时序监控和日志监控的对比 - 轻量日志监控系统的诉求 监控系统分类 监控系统按照原理和作用大致可以分为三类 - 日志类（Log） - 调用链类（Tracing）..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 监控系统分类 - 时序监控和日志监控的对比 - 轻量日志监控系统的诉求 监控系统分类 监控系统按照原理和作用大致可以分为三类 - 日志类（Log） - 调用链类（Tracing）...'
 ---
 
 > **Prometheus · 第 73 篇**

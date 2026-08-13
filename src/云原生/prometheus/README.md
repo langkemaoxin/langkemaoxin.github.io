@@ -3,6 +3,7 @@ title: Prometheus
 index: false
 icon: chart-line
 article: false
+description: Prometheus
 ---
 
 # Prometheus

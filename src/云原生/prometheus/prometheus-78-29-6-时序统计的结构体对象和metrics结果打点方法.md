@@ -1,15 +1,15 @@
 ---
-title: "29.6 时序统计的结构体对象和metrics结果打点方法"
-sidebarGroup: "Prometheus"
-shortTitle: "78 29.6 时序统计的结构体对象和metric..."
+title: 29.6 时序统计的结构体对象和metrics结果打点方法
+sidebarGroup: Prometheus
+shortTitle: 78 29.6 时序统计的结构体对象和metric...
 order: 78
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 时序统计的结构体对象 - 时序统计结构体的管理者 - metrics结果打点方法 时序统计的结构体对象 - 位置 counter\counter.go go //统计的实体 ty..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 时序统计的结构体对象 - 时序统计结构体的管理者 - metrics结果打点方法 时序统计的结构体对象 - 位置 counter/counter.go go //统计的实体 ty...'
 ---
 
 > **Prometheus · 第 78 篇**

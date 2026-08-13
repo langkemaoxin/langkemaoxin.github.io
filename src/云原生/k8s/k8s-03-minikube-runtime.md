@@ -1,15 +1,15 @@
 ---
-title: "K8s 运行时实操——Minikube 安装、排障与 Helm"
-sidebarGroup: "Kubernetes"
-shortTitle: "03 Minikube 实操"
+title: K8s 运行时实操——Minikube 安装、排障与 Helm
+sidebarGroup: Kubernetes
+shortTitle: 03 Minikube 实操
 order: 3
-date: 2026-08-27
-category: "云原生"
+date: 2026-08-27T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "K8s系列"
-description: "Minikube 安装、镜像加速、Harbor/VirtualBox 排障、Dashboard 与 Helm 实操清单。"
+  - Kubernetes
+  - 云原生
+  - K8s系列
+description: Minikube 安装、镜像加速、Harbor/VirtualBox 排障、Dashboard 与 Helm 实操清单。
 ---
 
 > **Kubernetes 系列 · 第 3/20 篇**  

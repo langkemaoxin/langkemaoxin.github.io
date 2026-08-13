@@ -1,15 +1,15 @@
 ---
-title: "Golang 专栏说明——课程资料形态与阅读路径"
-sidebarGroup: "Golang"
-shortTitle: "01 专栏说明"
+title: Golang 专栏说明——课程资料形态与阅读路径
+sidebarGroup: Golang
+shortTitle: 01 专栏说明
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Golang"
-  - "云原生"
-  - "课程笔记"
-description: "说明 Golang 课程资料形态（代码、nyf 笔记）与本专栏阅读路径。"
+  - Golang
+  - 云原生
+  - 课程笔记
+description: 说明 Golang 课程资料形态（代码、nyf 笔记）与本专栏阅读路径。
 ---
 
 > **Golang · 第 1 篇**

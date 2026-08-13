@@ -1,17 +1,17 @@
 ---
-title: "工作负载核心：Pod 生命周期、Pause、Init 与探针"
-sidebarGroup: "Kubernetes"
-shortTitle: "05 Pod 工作负载"
+title: 工作负载核心：Pod 生命周期、Pause、Init 与探针
+sidebarGroup: Kubernetes
+shortTitle: 05 Pod 工作负载
 order: 5
-date: 2026-08-28
-category: "云原生"
+date: 2026-08-28T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "K8s系列"
-  - "Pod"
-  - "探针"
-description: "Pod 生命周期、Pause/Init/临时容器、探针与静态 Pod，打好工作负载基础。"
+  - Kubernetes
+  - 云原生
+  - K8s系列
+  - Pod
+  - 探针
+description: Pod 生命周期、Pause/Init/临时容器、探针与静态 Pod，打好工作负载基础。
 ---
 
 > **Kubernetes 系列 · 第 5/20 篇**  

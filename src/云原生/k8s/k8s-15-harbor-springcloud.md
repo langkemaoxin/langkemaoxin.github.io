@@ -1,19 +1,19 @@
 ---
-title: "Harbor + K8s 手动部署 SpringCloud——镜像构建与推送"
-sidebarGroup: "Kubernetes 系列"
-shortTitle: "15 Harbor 部署"
+title: Harbor + K8s 手动部署 SpringCloud——镜像构建与推送
+sidebarGroup: Kubernetes 系列
+shortTitle: 15 Harbor 部署
 order: 15
-date: 2026-08-31
-category: "云原生"
+date: 2026-08-31T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "Kubernetes系列"
-  - "Harbor"
-  - "Minikube"
-  - "SpringCloud"
-  - "镜像构建"
-description: "Minikube 对接 Harbor，Docker 构建推送与 SpringCloud 上 K8s 部署。"
+  - Kubernetes
+  - 云原生
+  - Kubernetes系列
+  - Harbor
+  - Minikube
+  - SpringCloud
+  - 镜像构建
+description: Minikube 对接 Harbor，Docker 构建推送与 SpringCloud 上 K8s 部署。
 ---
 
 > **Kubernetes 系列 · 第 15/20 篇**  

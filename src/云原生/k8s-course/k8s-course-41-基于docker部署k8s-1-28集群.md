@@ -1,15 +1,15 @@
 ---
-title: "基于Docker部署K8S 1.28集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "41 基于Docker部署K8S 1.28集群"
+title: 基于Docker部署K8S 1.28集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 41 基于Docker部署K8S 1.28集群
 order: 41
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "基于Docker部署K8S 1.28集群 一、主机准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :------------: | :--: | | 1 ..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: '基于Docker部署K8S 1.28集群 一、主机准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :------------: | :--: | | 1 ...'
 ---
 
 > **K8s 课程笔记 · 第 41 篇**

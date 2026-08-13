@@ -1,15 +1,15 @@
 ---
-title: "如何基于Ubuntu 24.04部署原生K8S 1.31.0集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "35 如何基于Ubuntu 24.04部署原生K8..."
+title: 如何基于Ubuntu 24.04部署原生K8S 1.31.0集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 35 如何基于Ubuntu 24.04部署原生K8...
 order: 35
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "如何基于Ubuntu 24.04部署原生K8S 1.31.0集群？ 基于containerd容器运行时部署k8s 1.31.0集群 一、K8S集群主机准备 1.1 主机操作系统说明 | 序号 | 操作..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 如何基于Ubuntu 24.04部署原生K8S 1.31.0集群？ 基于containerd容器运行时部署k8s 1.31.0集群 一、K8S集群主机准备 1.1 主机操作系统说明 | 序号 | 操作...
 ---
 
 > **K8s 课程笔记 · 第 35 篇**

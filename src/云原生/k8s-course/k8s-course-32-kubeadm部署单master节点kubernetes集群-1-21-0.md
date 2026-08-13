@@ -1,15 +1,15 @@
 ---
-title: "kubeadm部署单Master节点kubernetes集群 1.21.0"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "32 kubeadm部署单Master节点kube..."
+title: kubeadm部署单Master节点kubernetes集群 1.21.0
+sidebarGroup: K8s 课程笔记
+shortTitle: 32 kubeadm部署单Master节点kube...
 order: 32
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubeadm部署单Master节点kubernetes集群 1.21 一、kubernetes 1.21发布 1.1 介绍 2021年04月，Kubernetes 1.21正式与大家见面，这是我们 ..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: kubeadm部署单Master节点kubernetes集群 1.21 一、kubernetes 1.21发布 1.1 介绍 2021年04月，Kubernetes 1.21正式与大家见面，这是我们 ...
 ---
 
 > **K8s 课程笔记 · 第 32 篇**

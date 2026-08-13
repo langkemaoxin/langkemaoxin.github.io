@@ -1,15 +1,15 @@
 ---
-title: "kubernetes日志收集方案 ELK"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "07 kubernetes日志收集方案 ELK"
+title: kubernetes日志收集方案 ELK
+sidebarGroup: K8s 课程笔记
+shortTitle: 07 kubernetes日志收集方案 ELK
 order: 7
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes日志收集方案 ELK 一、为什么收集日志 收集日志可以用于： - 分析用户行为 - 监控服务器状态 - 增强系统或应用安全性等。 二、收集哪些日志 - kubernetes集群节点..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: kubernetes日志收集方案 ELK 一、为什么收集日志 收集日志可以用于： - 分析用户行为 - 监控服务器状态 - 增强系统或应用安全性等。 二、收集哪些日志 - kubernetes集群节点...
 ---
 
 > **K8s 课程笔记 · 第 7 篇**

@@ -1,15 +1,15 @@
 ---
-title: "27.6 consul注册服务、抽象获取target的方法"
-sidebarGroup: "Prometheus"
-shortTitle: "65 27.6 consul注册服务、抽象获取ta..."
+title: 27.6 consul注册服务、抽象获取target的方法
+sidebarGroup: Prometheus
+shortTitle: 65 27.6 consul注册服务、抽象获取ta...
 order: 65
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - consul注册服务 - 先获取服务，不存在再注册 - 使用存活的节点初始化哈希环，避免因为配置文件中可能有节点已经down了，但是还没来得及从配置中去掉 - 抽象获取targe..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - consul注册服务 - 先获取服务，不存在再注册 - 使用存活的节点初始化哈希环，避免因为配置文件中可能有节点已经down了，但是还没来得及从配置中去掉 - 抽象获取targe...'
 ---
 
 > **Prometheus · 第 65 篇**

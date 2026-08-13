@@ -1,15 +1,15 @@
 ---
-title: "使用RKE构建企业生产Kubernetes集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "20 使用RKE构建企业生产Kubernetes集..."
+title: 使用RKE构建企业生产Kubernetes集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 20 使用RKE构建企业生产Kubernetes集...
 order: 20
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "使用RKE构建企业生产级Kubernetes集群 一、RKE工具介绍 - RKE是一款经过CNCF认证的开源Kubernetes发行版，可以在Docker容器内运行。 - 它通过删除大部分主机依赖项，..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 使用RKE构建企业生产级Kubernetes集群 一、RKE工具介绍 - RKE是一款经过CNCF认证的开源Kubernetes发行版，可以在Docker容器内运行。 - 它通过删除大部分主机依赖项，...
 ---
 
 > **K8s 课程笔记 · 第 20 篇**

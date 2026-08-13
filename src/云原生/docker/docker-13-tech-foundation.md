@@ -1,14 +1,15 @@
 ---
-title: "Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器"
-sidebarGroup: "Docker 系列"
-shortTitle: "13 技术底座总览"
+title: Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器
+sidebarGroup: Docker 系列
+shortTitle: 13 技术底座总览
 order: 13
-date: 2026-08-20
-category: "云原生"
+date: 2026-08-20T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器
 ---
 
 > **Docker 系列 · 第 13/18 篇**  

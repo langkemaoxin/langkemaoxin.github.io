@@ -1,15 +1,15 @@
 ---
-title: "为什么要引入Serverless"
-sidebarGroup: "Serverless"
-shortTitle: "03 为什么要引入Serverless"
+title: 为什么要引入Serverless
+sidebarGroup: Serverless
+shortTitle: 03 为什么要引入Serverless
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "为什么要引入Serverless? 一、IT系统资源应用及软件后端架构演进过程 1.1 资源应用演进过程 1.1.1 物理机 物理机，就是我们能够看得见摸得着的物理设备，对于开发者来说，如果想使用物理..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 为什么要引入Serverless? 一、IT系统资源应用及软件后端架构演进过程 1.1 资源应用演进过程 1.1.1 物理机 物理机，就是我们能够看得见摸得着的物理设备，对于开发者来说，如果想使用物理...
 ---
 
 > **Serverless · 第 3 篇**

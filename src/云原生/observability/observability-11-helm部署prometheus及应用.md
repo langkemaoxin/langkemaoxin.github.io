@@ -1,15 +1,15 @@
 ---
-title: "helm部署prometheus及应用"
-sidebarGroup: "可观测性"
-shortTitle: "11 helm部署prometheus及应用"
+title: helm部署prometheus及应用
+sidebarGroup: 可观测性
+shortTitle: 11 helm部署prometheus及应用
 order: 11
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "helm部署prometheus监控系统及应用 一、helm安装 ~~~powershell wget https://get.helm.sh/helm-v3.8.2-linux-amd64.tar...."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: 'helm部署prometheus监控系统及应用 一、helm安装 ~~~powershell wget http[path]'
 ---
 
 > **可观测性 · 第 11 篇**

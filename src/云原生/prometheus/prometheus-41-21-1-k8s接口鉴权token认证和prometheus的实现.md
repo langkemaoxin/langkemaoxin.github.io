@@ -1,15 +1,15 @@
 ---
-title: "21.1 k8s接口鉴权token认证和prometheus的实现"
-sidebarGroup: "Prometheus"
-shortTitle: "41 21.1 k8s接口鉴权token认证和pr..."
+title: 21.1 k8s接口鉴权token认证和prometheus的实现
+sidebarGroup: Prometheus
+shortTitle: 41 21.1 k8s接口鉴权token认证和pr...
 order: 41
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s接口鉴权方式 - serviceaccount和token的关系 - 手动curl访问metrics接口 k8s对象接口鉴权 以容器基础资源指标为例 - 对应就是访问nod..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s接口鉴权方式 - serviceaccount和token的关系 - 手动curl访问metrics接口 k8s对象接口鉴权 以容器基础资源指标为例 - 对应就是访问nod...'
 ---
 
 > **Prometheus · 第 41 篇**

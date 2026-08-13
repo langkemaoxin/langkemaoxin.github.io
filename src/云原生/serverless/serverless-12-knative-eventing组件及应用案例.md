@@ -1,15 +1,15 @@
 ---
-title: "Knative Eventing组件及应用案例"
-sidebarGroup: "Serverless"
-shortTitle: "12 Knative Eventing组件及应用案..."
+title: Knative Eventing组件及应用案例
+sidebarGroup: Serverless
+shortTitle: 12 Knative Eventing组件及应用案...
 order: 12
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Knative Eventing组件及应用案例 一、总览及组件介绍 1.0 概述 Knative Eventing提供了事件路由的工具，可以将生产者（Producer）生成的事件（event）路由到指..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Knative Eventing组件及应用案例 一、总览及组件介绍 1.0 概述 Knative Eventing提供了事件路由的工具，可以将生产者（Producer）生成的事件（event）路由到指...
 ---
 
 > **Serverless · 第 12 篇**

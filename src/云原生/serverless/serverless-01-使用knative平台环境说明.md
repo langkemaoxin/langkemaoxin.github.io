@@ -1,15 +1,15 @@
 ---
-title: "使用Knative平台环境说明"
-sidebarGroup: "Serverless"
-shortTitle: "01 使用Knative平台环境说明"
+title: 使用Knative平台环境说明
+sidebarGroup: Serverless
+shortTitle: 01 使用Knative平台环境说明
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "使用Knative平台环境说明 整套环境需要VPN支持，请自行解决。 一、Kubernetes集群说明 kubernetes集群中所有节点计算资源配置为:CPU 8核，内存8G。网络资源及存储资源越大..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: '使用Knative平台环境说明 整套环境需要VPN支持，请自行解决。 一、Kubernetes集群说明 kubernetes集群中所有节点计算资源配置为:CPU 8核，内存8G。网络资源及存储资源越大...'
 ---
 
 > **Serverless · 第 1 篇**

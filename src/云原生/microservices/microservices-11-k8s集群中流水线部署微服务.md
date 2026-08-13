@@ -1,15 +1,15 @@
 ---
-title: "k8s集群中流水线部署微服务"
-sidebarGroup: "微服务实战"
-shortTitle: "11 k8s集群中流水线部署微服务"
+title: k8s集群中流水线部署微服务
+sidebarGroup: 微服务实战
+shortTitle: 11 k8s集群中流水线部署微服务
 order: 11
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "k8s集群中流水线发布微服务 一、流水线部署微服务部署流程 二、微服务发布流程 要注意jenkinsfile大小写，与代码仓库中的jenkinsfile文件名命名一致即可。 ~~~powershell..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: k8s集群中流水线发布微服务 一、流水线部署微服务部署流程 二、微服务发布流程 要注意jenkinsfile大小写，与代码仓库中的jenkinsfile文件名命名一致即可。 ~~~powershell...
 ---
 
 > **微服务实战 · 第 11 篇**

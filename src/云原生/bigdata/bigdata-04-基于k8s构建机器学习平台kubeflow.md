@@ -1,15 +1,15 @@
 ---
-title: "基于K8S构建机器学习平台KubeFlow"
-sidebarGroup: "大数据与 ML"
-shortTitle: "04 基于K8S构建机器学习平台KubeFlow"
+title: 基于K8S构建机器学习平台KubeFlow
+sidebarGroup: 大数据与 ML
+shortTitle: 04 基于K8S构建机器学习平台KubeFlow
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "大数据与 ML"
-  - "云原生"
-  - "课程笔记"
-description: "基于K8S构建机器学习平台KubeFlow 一、KubeFlow介绍 KubeFlow 是一个开源的项目，旨在为 Kubernetes 提供可组合、便携式、可扩展的机器学习技术栈。它最初是为了解决在 ..."
+  - 大数据与 ML
+  - 云原生
+  - 课程笔记
+description: 基于K8S构建机器学习平台KubeFlow 一、KubeFlow介绍 KubeFlow 是一个开源的项目，旨在为 Kubernetes 提供可组合、便携式、可扩展的机器学习技术栈。它最初是为了解决在 ...
 ---
 
 > **大数据与 ML · 第 4 篇**

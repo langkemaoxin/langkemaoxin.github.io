@@ -1,15 +1,15 @@
 ---
-title: "32.2 prometheus倒排索引统计功能"
-sidebarGroup: "Prometheus"
-shortTitle: "93 32.2 prometheus倒排索引统计功..."
+title: 32.2 prometheus倒排索引统计功能
+sidebarGroup: Prometheus
+shortTitle: 93 32.2 prometheus倒排索引统计功...
 order: 93
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 获取采集端的高基数metrics的tsdb页面解析 - tsdb统计函数Stats源码解读 - 依赖倒排索引统计 获取采集端的高基数metrics tsdb页面解析 - Top ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 获取采集端的高基数metrics的tsdb页面解析 - tsdb统计函数Stats源码解读 - 依赖倒排索引统计 获取采集端的高基数metrics tsdb页面解析 - Top ...'
 ---
 
 > **Prometheus · 第 93 篇**

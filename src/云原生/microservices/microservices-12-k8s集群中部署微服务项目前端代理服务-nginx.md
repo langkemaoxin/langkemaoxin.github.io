@@ -1,15 +1,15 @@
 ---
-title: "k8s集群中部署微服务项目前端代理服务 Nginx"
-sidebarGroup: "微服务实战"
-shortTitle: "12 k8s集群中部署微服务项目前端代理服务 Ng..."
+title: k8s集群中部署微服务项目前端代理服务 Nginx
+sidebarGroup: 微服务实战
+shortTitle: 12 k8s集群中部署微服务项目前端代理服务 Ng...
 order: 12
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "k8s集群中部署微服务项目前端代理服务 Nginx 一、微服务项目静态资源准备 ~~~powershell mkdir sangomall-proxy cd sangomall-proxy/ ~~~ ..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: k8s集群中部署微服务项目前端代理服务 Nginx 一、微服务项目静态资源准备 ~~~powershell mkdir sangomall-proxy cd sangomall-proxy/ ~~~ ...
 ---
 
 > **微服务实战 · 第 12 篇**

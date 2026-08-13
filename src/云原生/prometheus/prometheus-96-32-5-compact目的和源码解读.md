@@ -1,15 +1,15 @@
 ---
-title: "32.5 compact目的和源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "96 32.5 compact目的和源码解读"
+title: 32.5 compact目的和源码解读
+sidebarGroup: Prometheus
+shortTitle: 96 32.5 compact目的和源码解读
 order: 96
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 每一分钟重载reloadBlocks解读 - deleteBlocks删除过期的block - 第一层判断 ：如果block中meta.Compaction.Deletable为..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 每一分钟重载reloadBlocks解读 - deleteBlocks删除过期的block - 第一层判断 ：如果block中meta.Compaction.Deletable为...'
 ---
 
 > **Prometheus · 第 96 篇**

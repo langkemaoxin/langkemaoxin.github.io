@@ -1,15 +1,15 @@
 ---
-title: "7.6 blackbox框架源码和http探测源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "162 7.6 blackbox框架源码和http探..."
+title: 7.6 blackbox框架源码和http探测源码解读
+sidebarGroup: Prometheus
+shortTitle: 162 7.6 blackbox框架源码和http探...
 order: 162
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - blackbox框架源码解读 - 根据模块找到探针 - 对目标执行探针方法 - http 探测代码 - 使用net/http/httptrace库进行trace - 钩子函数设置..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - blackbox框架源码解读 - 根据模块找到探针 - 对目标执行探针方法 - http 探测代码 - 使用net/http/httptrace库进行trace - 钩子函数设置...'
 ---
 
 > **Prometheus · 第 162 篇**

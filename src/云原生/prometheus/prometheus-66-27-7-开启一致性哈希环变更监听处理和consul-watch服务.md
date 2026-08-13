@@ -1,15 +1,15 @@
 ---
-title: "27.7 开启一致性哈希环变更监听处理和consul-watch服务"
-sidebarGroup: "Prometheus"
-shortTitle: "66 27.7 开启一致性哈希环变更监听处理和co..."
+title: 27.7 开启一致性哈希环变更监听处理和consul-watch服务
+sidebarGroup: Prometheus
+shortTitle: 66 27.7 开启一致性哈希环变更监听处理和co...
 order: 66
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 开启一致性哈希环变更监听处理 - 这个服务的节点变更了(节点宕机、扩容)就对哈希环进行重置 - consul中watch 服务中节点变化 - 遍历所有的service和变更cha..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 开启一致性哈希环变更监听处理 - 这个服务的节点变更了(节点宕机、扩容)就对哈希环进行重置 - consul中watch 服务中节点变化 - 遍历所有的service和变更cha...'
 ---
 
 > **Prometheus · 第 66 篇**

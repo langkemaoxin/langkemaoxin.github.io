@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群公共服务"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "03 Kubernetes集群公共服务"
+title: Kubernetes集群公共服务
+sidebarGroup: K8s 课程笔记
+shortTitle: 03 Kubernetes集群公共服务
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群公共服务 一、Kubernetes集群核心服务 二、Kubernetes公共服务 三、Kubernetes集群公共服务 域名解析 DNS 3.1 主机IP地址及域名规划 | 序..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes集群公共服务 一、Kubernetes集群核心服务 二、Kubernetes公共服务 三、Kubernetes集群公共服务 域名解析 DNS 3.1 主机IP地址及域名规划 | 序...
 ---
 
 > **K8s 课程笔记 · 第 3 篇**

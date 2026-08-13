@@ -1,15 +1,15 @@
 ---
-title: "29.2 golang实战项目log2metrics架构说明"
-sidebarGroup: "Prometheus"
-shortTitle: "74 29.2 golang实战项目log2met..."
+title: 29.2 golang实战项目log2metrics架构说明
+sidebarGroup: Prometheus
+shortTitle: 74 29.2 golang实战项目log2met...
 order: 74
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 需求分析 - 流程说明 - log2metrics架构设计 架构图 需求分析 算qps - 比如统计 nginx日志中code=200的qps - 对应就是 每隔10秒grep一..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 需求分析 - 流程说明 - log2metrics架构设计 架构图 需求分析 算qps - 比如统计 nginx日志中code=200的qps - 对应就是 每隔10秒grep一...'
 ---
 
 > **Prometheus · 第 74 篇**

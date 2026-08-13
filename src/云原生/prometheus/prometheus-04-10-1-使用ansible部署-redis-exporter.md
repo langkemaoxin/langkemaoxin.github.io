@@ -1,15 +1,15 @@
 ---
-title: "10.1 使用ansible部署 redis-exporter"
-sidebarGroup: "Prometheus"
-shortTitle: "04 10.1 使用ansible部署 redis..."
+title: 10.1 使用ansible部署 redis-exporter
+sidebarGroup: Prometheus
+shortTitle: 04 10.1 使用ansible部署 redis...
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - ansible 部署二进制 redis_exporter 项目地址 - 项目地址 https://github.com/oliver006/redis_exporter 下载地址..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - ansible 部署二进制 redis_exporter 项目地址 - 项目地址 http[path] 下载地址...'
 ---
 
 > **Prometheus · 第 4 篇**

@@ -1,15 +1,15 @@
 ---
-title: "29.4 日志任务增量更新管理器和具体的日志job对象"
-sidebarGroup: "Prometheus"
-shortTitle: "76 29.4 日志任务增量更新管理器和具体的日志..."
+title: 29.4 日志任务增量更新管理器和具体的日志job对象
+sidebarGroup: Prometheus
+shortTitle: 76 29.4 日志任务增量更新管理器和具体的日志...
 order: 76
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 日志任务增量更新管理器 - 具体的日志job对象 - 读取日志的reader对象 日志任务增量更新管理器和具体的日志job对象 日志任务增量更新管理器 - 位置 logjob/m..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 日志任务增量更新管理器 - 具体的日志job对象 - 读取日志的reader对象 日志任务增量更新管理器和具体的日志job对象 日志任务增量更新管理器 - 位置 logjob/m...'
 ---
 
 > **Prometheus · 第 76 篇**

@@ -1,15 +1,15 @@
 ---
-title: "32.3 mmap的在io提速上的应用和prometheus的应用"
-sidebarGroup: "Prometheus"
-shortTitle: "94 32.3 mmap的在io提速上的应用和pr..."
+title: 32.3 mmap的在io提速上的应用和prometheus的应用
+sidebarGroup: Prometheus
+shortTitle: 94 32.3 mmap的在io提速上的应用和pr...
 order: 94
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点总结 : - mmap的在io提速上的应用 - prometheus 中mmap的应用 mmap = 减少copy次数 传统IO - 在开始谈零拷贝之前，首先要对传统的IO方式有一个概念。 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点总结 : - mmap的在io提速上的应用 - prometheus 中mmap的应用 mmap = 减少copy次数 传统IO - 在开始谈零拷贝之前，首先要对传统的IO方式有一个概念。 -...'
 ---
 
 > **Prometheus · 第 94 篇**

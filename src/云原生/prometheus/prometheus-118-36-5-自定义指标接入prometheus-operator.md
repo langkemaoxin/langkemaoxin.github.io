@@ -1,15 +1,15 @@
 ---
-title: "36.5 自定义指标接入prometheus-operator"
-sidebarGroup: "Prometheus"
-shortTitle: "118 36.5 自定义指标接入prometheus..."
+title: 36.5 自定义指标接入prometheus-operator
+sidebarGroup: Prometheus
+shortTitle: 118 36.5 自定义指标接入prometheus...
 order: 118
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "prometheus-operator优势总结 - 自定义的采集配置接入更方便，只要定义serviceMonitor即可 - 采集的参数修改也很方便，对比之前只能由prometheus管理员修改job..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: prometheus-operator优势总结 - 自定义的采集配置接入更方便，只要定义serviceMonitor即可 - 采集的参数修改也很方便，对比之前只能由prometheus管理员修改job...
 ---
 
 > **Prometheus · 第 118 篇**

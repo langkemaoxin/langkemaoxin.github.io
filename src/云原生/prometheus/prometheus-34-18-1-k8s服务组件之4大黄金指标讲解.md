@@ -1,15 +1,15 @@
 ---
-title: "18.1 k8s服务组件之4大黄金指标讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "34 18.1 k8s服务组件之4大黄金指标讲解"
+title: 18.1 k8s服务组件之4大黄金指标讲解
+sidebarGroup: Prometheus
+shortTitle: 34 18.1 k8s服务组件之4大黄金指标讲解
 order: 34
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 监控4大黄金指标 - Latency：延时 - Utilization：使用率 - Saturation：饱和度 - Errors：错误数或错误率 - apiserver指标 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 监控4大黄金指标 - Latency：延时 - Utilization：使用率 - Saturation：饱和度 - Errors：错误数或错误率 - apiserver指标 -...'
 ---
 
 > **Prometheus · 第 34 篇**

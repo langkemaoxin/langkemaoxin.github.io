@@ -1,14 +1,15 @@
 ---
-title: "UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的"
-sidebarGroup: "Docker 系列"
-shortTitle: "14 UnionFS 与分层"
+title: UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的
+sidebarGroup: Docker 系列
+shortTitle: 14 UnionFS 与分层
 order: 14
-date: 2026-08-21
-category: "云原生"
+date: 2026-08-21T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的
 ---
 
 > **Docker 系列 · 第 14/18 篇**  

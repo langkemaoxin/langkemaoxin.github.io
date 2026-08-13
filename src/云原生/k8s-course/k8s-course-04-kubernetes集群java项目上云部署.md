@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群java项目上云部署"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "04 kubernetes集群java项目上云部署"
+title: kubernetes集群java项目上云部署
+sidebarGroup: K8s 课程笔记
+shortTitle: 04 kubernetes集群java项目上云部署
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes集群java项目上云部署 一、部署前准备工作 1.1 部署项目情况 1.1.1 业务部署架构 - 单体服务架构 - 分布式服务架构 - 微服务架构 - 超微服务架构 1.1.2 项..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: kubernetes集群java项目上云部署 一、部署前准备工作 1.1 部署项目情况 1.1.1 业务部署架构 - 单体服务架构 - 分布式服务架构 - 微服务架构 - 超微服务架构 1.1.2 项...
 ---
 
 > **K8s 课程笔记 · 第 4 篇**

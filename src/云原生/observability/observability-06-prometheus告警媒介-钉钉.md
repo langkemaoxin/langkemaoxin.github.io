@@ -1,15 +1,15 @@
 ---
-title: "Prometheus告警媒介 钉钉"
-sidebarGroup: "可观测性"
-shortTitle: "06 Prometheus告警媒介 钉钉"
+title: Prometheus告警媒介 钉钉
+sidebarGroup: 可观测性
+shortTitle: 06 Prometheus告警媒介 钉钉
 order: 6
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "Prometheus告警媒介 钉钉 一、创建钉钉群 二、添加钉钉群机器人 ~~~powershell secret: SECc95134129e043e4be06df4d5aa2afdef066a6d..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: 'Prometheus告警媒介 钉钉 一、创建钉钉群 二、添加钉钉群机器人 ~~~powershell secret: SECc95134129e043e4be06df4d5aa2afdef066a6d...'
 ---
 
 > **可观测性 · 第 6 篇**

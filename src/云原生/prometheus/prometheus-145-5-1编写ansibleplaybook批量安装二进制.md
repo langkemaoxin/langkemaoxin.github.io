@@ -1,15 +1,15 @@
 ---
-title: "5.1编写ansibleplaybook批量安装二进制"
-sidebarGroup: "Prometheus"
-shortTitle: "145 5.1编写ansibleplaybook批量..."
+title: 5.1编写ansibleplaybook批量安装二进制
+sidebarGroup: Prometheus
+shortTitle: 145 5.1编写ansibleplaybook批量...
 order: 145
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : ansible playbook编写 - rsyslog 和 logrotate - service_deploy yaml的编写 配置机器直接的ssh免密码登录 节点主机名host..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : ansible playbook编写 - rsyslog 和 logrotate - service_deploy yaml的编写 配置机器直接的ssh免密码登录 节点主机名host...'
 ---
 
 > **Prometheus · 第 145 篇**

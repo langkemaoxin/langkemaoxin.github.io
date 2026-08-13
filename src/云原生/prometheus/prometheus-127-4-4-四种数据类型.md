@@ -1,15 +1,15 @@
 ---
-title: "4.4 四种数据类型"
-sidebarGroup: "Prometheus"
-shortTitle: "127 4.4 四种数据类型"
+title: 4.4 四种数据类型
+sidebarGroup: Prometheus
+shortTitle: 127 4.4 四种数据类型
 order: 127
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : prometheus 四种数据类型 - 四种数据类型 - gauge 当前值 - counter 计数器 - histogram 直方图样本观测 - summary 摘要 四种数据类..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : prometheus 四种数据类型 - 四种数据类型 - gauge 当前值 - counter 计数器 - histogram 直方图样本观测 - summary 摘要 四种数据类...'
 ---
 
 > **Prometheus · 第 127 篇**

@@ -1,15 +1,15 @@
 ---
-title: "8.1 使用ansible部署mysql_exporter，注入dsn环境变量"
-sidebarGroup: "Prometheus"
-shortTitle: "164 8.1 使用ansible部署mysql_e..."
+title: 8.1 使用ansible部署mysql_exporter，注入dsn环境变量
+sidebarGroup: Prometheus
+shortTitle: 164 8.1 使用ansible部署mysql_e...
 order: 164
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - ansible 部署二进制 mysqld_exporter - 通过环境变量传入mysql的连接地址，让 mysqld_exporter采集到 部署 项目地址 - 项目地址 ht..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - ansible 部署二进制 mysqld_exporter - 通过环境变量传入mysql的连接地址，让 mysqld_exporter采集到 部署 项目地址 - 项目地址 ht...'
 ---
 
 > **Prometheus · 第 164 篇**

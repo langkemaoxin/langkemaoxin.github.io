@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群声明式文件YAML"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "53 Kubernetes集群声明式文件YAML"
+title: Kubernetes集群声明式文件YAML
+sidebarGroup: K8s 课程笔记
+shortTitle: 53 Kubernetes集群声明式文件YAML
 order: 53
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群声明式文件YAML 一、YAML介绍 YAML 的意思是：仍是一种标记语言，但为了强调这种语言以数据做为中心，而不是以标记语言为重点。是一个可读性高，用来表达数据序列的格式。 ..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes集群声明式文件YAML 一、YAML介绍 YAML 的意思是：仍是一种标记语言，但为了强调这种语言以数据做为中心，而不是以标记语言为重点。是一个可读性高，用来表达数据序列的格式。 ...
 ---
 
 > **K8s 课程笔记 · 第 53 篇**

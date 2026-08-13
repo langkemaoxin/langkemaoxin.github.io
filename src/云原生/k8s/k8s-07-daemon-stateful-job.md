@@ -1,18 +1,18 @@
 ---
-title: "DaemonSet、StatefulSet、Job 与 CronJob"
-sidebarGroup: "Kubernetes"
-shortTitle: "07 守护集与有状态"
+title: DaemonSet、StatefulSet、Job 与 CronJob
+sidebarGroup: Kubernetes
+shortTitle: 07 守护集与有状态
 order: 7
-date: 2026-08-28
-category: "云原生"
+date: 2026-08-28T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "K8s系列"
-  - "DaemonSet"
-  - "StatefulSet"
-  - "Job"
-description: "DaemonSet、StatefulSet、Job/CronJob 的适用场景、DNS 与调度容忍配置。"
+  - Kubernetes
+  - 云原生
+  - K8s系列
+  - DaemonSet
+  - StatefulSet
+  - Job
+description: DaemonSet、StatefulSet、Job/CronJob 的适用场景、DNS 与调度容忍配置。
 ---
 
 > **Kubernetes 系列 · 第 7/20 篇**  

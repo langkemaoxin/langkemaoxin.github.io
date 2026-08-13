@@ -1,15 +1,15 @@
 ---
-title: "35.1 thanos项目介绍和二进制部署"
-sidebarGroup: "Prometheus"
-shortTitle: "108 35.1 thanos项目介绍和二进制部署"
+title: 35.1 thanos项目介绍和二进制部署
+sidebarGroup: Prometheus
+shortTitle: 108 35.1 thanos项目介绍和二进制部署
 order: 108
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 核心优点 - 无需维护存储，存储高可用： 利用廉价的公有云对象存储，高可用 - 长时间存储，数据降采样：利用Compactor降采样 - 完全适配原生prometheus查询接口..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 核心优点 - 无需维护存储，存储高可用： 利用廉价的公有云对象存储，高可用 - 长时间存储，数据降采样：利用Compactor降采样 - 完全适配原生prometheus查询接口...'
 ---
 
 > **Prometheus · 第 108 篇**

@@ -1,15 +1,15 @@
 ---
-title: "11.2 导入grafana大盘和指标讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "08 11.2 导入grafana大盘和指标讲解"
+title: 11.2 导入grafana大盘和指标讲解
+sidebarGroup: Prometheus
+shortTitle: 08 11.2 导入grafana大盘和指标讲解
 order: 8
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - grafana 上导入jmx_exporter dashboard - 核心指标讲解 将采集配置到prometheus中 - 通过labels打静态的标签，java_app指明这..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - grafana 上导入jmx_exporter dashboard - 核心指标讲解 将采集配置到prometheus中 - 通过labels打静态的标签，java_app指明这...'
 ---
 
 > **Prometheus · 第 8 篇**

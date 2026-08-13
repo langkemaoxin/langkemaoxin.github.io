@@ -1,15 +1,15 @@
 ---
-title: "微服务部署前中间件部署"
-sidebarGroup: "微服务实战"
-shortTitle: "04 微服务部署前中间件部署"
+title: 微服务部署前中间件部署
+sidebarGroup: 微服务实战
+shortTitle: 04 微服务部署前中间件部署
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "微服务部署前中间件部署 一、MySQL部署 1.1 使用Docker实现MySQL主从复制 ~~~powershell docker run -p 3307:3306 --name mysql-mas..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: '微服务部署前中间件部署 一、MySQL部署 1.1 使用Docker实现MySQL主从复制 ~~~powershell docker run -p 3307:3306 --name mysql-mas...'
 ---
 
 > **微服务实战 · 第 4 篇**

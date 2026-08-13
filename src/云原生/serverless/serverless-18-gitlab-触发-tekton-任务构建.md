@@ -1,15 +1,15 @@
 ---
-title: "GitLab 触发 Tekton 任务构建"
-sidebarGroup: "Serverless"
-shortTitle: "18 GitLab 触发 Tekton 任务构建"
+title: GitLab 触发 Tekton 任务构建
+sidebarGroup: Serverless
+shortTitle: 18 GitLab 触发 Tekton 任务构建
 order: 18
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "基于GitLab 触发 Tekton 实现任务构建 一、Tekton Triggers介绍 前面我们都是通过创建一个 TaskRun 或者一个 PipelineRun 对象来触发构建任务，但是在实际的..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 基于GitLab 触发 Tekton 实现任务构建 一、Tekton Triggers介绍 前面我们都是通过创建一个 TaskRun 或者一个 PipelineRun 对象来触发构建任务，但是在实际的...
 ---
 
 > **Serverless · 第 18 篇**

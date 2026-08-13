@@ -1,15 +1,15 @@
 ---
-title: "4.3 四种标签匹配模式"
-sidebarGroup: "Prometheus"
-shortTitle: "126 4.3 四种标签匹配模式"
+title: 4.3 四种标签匹配模式
+sidebarGroup: Prometheus
+shortTitle: 126 4.3 四种标签匹配模式
 order: 126
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : prometheus 四种标签匹配模式 - 4种查询类型 - = 等于 - != 不等于 - =~ 正则匹配 - !~ 正则非匹配 四种标签匹配模式 1. = 等于 - 查询举例: ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : prometheus 四种标签匹配模式 - 4种查询类型 - = 等于 - != 不等于 - =~ 正则匹配 - !~ 正则非匹配 四种标签匹配模式 1. = 等于 - 查询举例: ...'
 ---
 
 > **Prometheus · 第 126 篇**

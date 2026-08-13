@@ -1,15 +1,15 @@
 ---
-title: "rocketmq部署"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "09 rocketmq部署"
+title: rocketmq部署
+sidebarGroup: K8s 课程笔记
+shortTitle: 09 rocketmq部署
 order: 9
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "rocketmq部署 一、rokectmq介绍 Apache RocketMQ是一个分布式消息传递和流媒体平台，具有低延迟、高性能和可靠性、万亿级别的容量和灵活的可伸缩性。 二、rokectmq特性 ..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: rocketmq部署 一、rokectmq介绍 Apache RocketMQ是一个分布式消息传递和流媒体平台，具有低延迟、高性能和可靠性、万亿级别的容量和灵活的可伸缩性。 二、rokectmq特性 ...
 ---
 
 > **K8s 课程笔记 · 第 9 篇**

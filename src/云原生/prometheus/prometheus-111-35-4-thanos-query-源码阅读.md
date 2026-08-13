@@ -1,15 +1,15 @@
 ---
-title: "35.4 thanos-query 源码阅读"
-sidebarGroup: "Prometheus"
-shortTitle: "111 35.4 thanos-query 源码阅读"
+title: 35.4 thanos-query 源码阅读
+sidebarGroup: Prometheus
+shortTitle: 111 35.4 thanos-query 源码阅读
 order: 111
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 根据配置的后端存储grpc地址初始化 proxyStore - 用proxyStore初始化api - api完全实现了prometheus的v1查询接口 - 根据http查询，..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 根据配置的后端存储grpc地址初始化 proxyStore - 用proxyStore初始化api - api完全实现了prometheus的v1查询接口 - 根据http查询，...'
 ---
 
 > **Prometheus · 第 111 篇**

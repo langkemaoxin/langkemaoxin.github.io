@@ -3,6 +3,7 @@ title: KubeVirt
 index: false
 icon: note
 article: false
+description: KubeVirt
 ---
 
 # KubeVirt

@@ -1,15 +1,15 @@
 ---
-title: "Gin 示例 part15 要点"
-sidebarGroup: "Golang"
-shortTitle: "16 part15"
+title: Gin 示例 part15 要点
+sidebarGroup: Golang
+shortTitle: 16 part15
 order: 16
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Golang"
-  - "云原生"
-  - "课程笔记"
-description: "TestGin/part15 源码整理"
+  - Golang
+  - 云原生
+  - 课程笔记
+description: TestGin/part15 源码整理
 ---
 
 > **Golang · 第 16 篇**

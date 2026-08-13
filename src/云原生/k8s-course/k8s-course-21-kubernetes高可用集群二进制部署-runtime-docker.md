@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes高可用集群二进制部署（Runtime Docker）"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "21 Kubernetes高可用集群二进制部署（R..."
+title: Kubernetes高可用集群二进制部署（Runtime Docker）
+sidebarGroup: K8s 课程笔记
+shortTitle: 21 Kubernetes高可用集群二进制部署（R...
 order: 21
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes高可用集群二进制部署（Runtime Docker） Kubernetes（简称为：k8s）是Google在2014年6月开源的一个容器集群管理系统，使用Go语言开发，用于管理云平..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes高可用集群二进制部署（Runtime Docker） Kubernetes（简称为：k8s）是Google在2014年6月开源的一个容器集群管理系统，使用Go语言开发，用于管理云平...
 ---
 
 > **K8s 课程笔记 · 第 21 篇**

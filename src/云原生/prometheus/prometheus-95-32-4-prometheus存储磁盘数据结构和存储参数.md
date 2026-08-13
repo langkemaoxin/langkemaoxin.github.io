@@ -1,15 +1,15 @@
 ---
-title: "32.4 prometheus存储磁盘数据结构和存储参数"
-sidebarGroup: "Prometheus"
-shortTitle: "95 32.4 prometheus存储磁盘数据结..."
+title: 32.4 prometheus存储磁盘数据结构和存储参数
+sidebarGroup: Prometheus
+shortTitle: 95 32.4 prometheus存储磁盘数据结...
 order: 95
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus存储磁盘数据结构介绍 - index - chunks - head chunks - Tombstones - wal - prometheus对block..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus存储磁盘数据结构介绍 - index - chunks - head chunks - Tombstones - wal - prometheus对block...'
 ---
 
 > **Prometheus · 第 95 篇**

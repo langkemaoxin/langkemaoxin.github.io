@@ -1,15 +1,15 @@
 ---
-title: "5.4 配置prometheus采集通过http请求参数过滤采集器"
-sidebarGroup: "Prometheus"
-shortTitle: "148 5.4 配置prometheus采集通过ht..."
+title: 5.4 配置prometheus采集通过http请求参数过滤采集器
+sidebarGroup: Prometheus
+shortTitle: 148 5.4 配置prometheus采集通过ht...
 order: 148
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 将node_exporter 作为采集job配置在prometheus - node_exporter 通过http参数 过滤相关模块的指标 - prometheus如何配置 采..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 将node_exporter 作为采集job配置在prometheus - node_exporter 通过http参数 过滤相关模块的指标 - prometheus如何配置 采...'
 ---
 
 > **Prometheus · 第 148 篇**

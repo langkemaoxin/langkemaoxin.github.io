@@ -1,15 +1,15 @@
 ---
-title: "24.3 基于文件的服务发现模式"
-sidebarGroup: "Prometheus"
-shortTitle: "50 24.3 基于文件的服务发现模式"
+title: 24.3 基于文件的服务发现模式
+sidebarGroup: Prometheus
+shortTitle: 50 24.3 基于文件的服务发现模式
 order: 50
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 基于文件的服务发现提供了一种配置静态目标的更通用的方法 - 可以摆脱对特定服务发现源的依赖 - 通常的做法是调用内部CMDB的接口获取target数据，打上标签，生成json文件..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 基于文件的服务发现提供了一种配置静态目标的更通用的方法 - 可以摆脱对特定服务发现源的依赖 - 通常的做法是调用内部CMDB的接口获取target数据，打上标签，生成json文件...'
 ---
 
 > **Prometheus · 第 50 篇**

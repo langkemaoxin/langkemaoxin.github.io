@@ -1,15 +1,15 @@
 ---
-title: "33.2 prometheus联邦功能源码解读和它的问题"
-sidebarGroup: "Prometheus"
-shortTitle: "98 33.2 prometheus联邦功能源码解..."
+title: 33.2 prometheus联邦功能源码解读和它的问题
+sidebarGroup: Prometheus
+shortTitle: 98 33.2 prometheus联邦功能源码解...
 order: 98
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus 联邦使用的误解 - federate源码分析 prometheus 联邦使用的误解 - 我看到很多人会这样使用联邦：联邦prometheus 收集多个采集器..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus 联邦使用的误解 - federate源码分析 prometheus 联邦使用的误解 - 我看到很多人会这样使用联邦：联邦prometheus 收集多个采集器...'
 ---
 
 > **Prometheus · 第 98 篇**

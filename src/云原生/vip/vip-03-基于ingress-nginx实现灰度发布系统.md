@@ -1,15 +1,15 @@
 ---
-title: "基于Ingress Nginx实现灰度发布系统"
-sidebarGroup: "VIP 专题"
-shortTitle: "03 基于Ingress Nginx实现灰度发布系..."
+title: 基于Ingress Nginx实现灰度发布系统
+sidebarGroup: VIP 专题
+shortTitle: 03 基于Ingress Nginx实现灰度发布系...
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "VIP 专题"
-  - "云原生"
-  - "课程笔记"
-description: "基于Ingress Nginx实现灰度发布系统 工作中，我们会经常对应用进行升级发版，在互联网公司尤为频繁，主要是为了满足快速的业务发展。我们经常用到的发布方式有滚动更新、蓝绿发布、灰度发布。 - 滚..."
+  - VIP 专题
+  - 云原生
+  - 课程笔记
+description: 基于Ingress Nginx实现灰度发布系统 工作中，我们会经常对应用进行升级发版，在互联网公司尤为频繁，主要是为了满足快速的业务发展。我们经常用到的发布方式有滚动更新、蓝绿发布、灰度发布。 - 滚...
 ---
 
 > **VIP 专题 · 第 3 篇**

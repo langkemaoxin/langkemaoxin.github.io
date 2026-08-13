@@ -1,15 +1,15 @@
 ---
-title: "15.9 grafana-deployment-yaml讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "28 15.9 grafana-deploymen..."
+title: 15.9 grafana-deployment-yaml讲解
+sidebarGroup: Prometheus
+shortTitle: 28 15.9 grafana-deploymen...
 order: 28
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - grafana yaml讲解 grafana 需要的pv - 对应的路径为 /var/lib/grafana，主要存放的内容有 - 本地sqlit db存放 grafana.db..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - grafana yaml讲解 grafana 需要的pv - 对应的路径为 /var/lib/grafana，主要存放的内容有 - 本地sqlit db存放 grafana.db...'
 ---
 
 > **Prometheus · 第 28 篇**

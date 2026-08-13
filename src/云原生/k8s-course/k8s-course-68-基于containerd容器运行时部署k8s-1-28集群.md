@@ -1,15 +1,15 @@
 ---
-title: "基于Containerd容器运行时部署K8S 1.28集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "06 基于Containerd容器运行时部署K8S..."
+title: 基于Containerd容器运行时部署K8S 1.28集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 06 基于Containerd容器运行时部署K8S...
 order: 68
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Containerd"
-  - "云原生"
-  - "课程笔记"
-description: "基于containerd容器运行时部署k8s 1.28集群 一、主机准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :------------: | :-..."
+  - Containerd
+  - 云原生
+  - 课程笔记
+description: '基于containerd容器运行时部署k8s 1.28集群 一、主机准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :------------: | :-...'
 ---
 
 > **K8s 课程笔记 · 第 68 篇**

@@ -1,15 +1,15 @@
 ---
-title: "kubernetes日志收集方案 EFK"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "08 kubernetes日志收集方案 EFK"
+title: kubernetes日志收集方案 EFK
+sidebarGroup: K8s 课程笔记
+shortTitle: 08 kubernetes日志收集方案 EFK
 order: 8
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes 日志收集方案 EFK 一、EFK 1.1 EFK介绍 EFK为elasticsearch、fluentd、kibana的简称，本案例主要对kubernetes集群日志收集。 1...."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: kubernetes 日志收集方案 EFK 一、EFK 1.1 EFK介绍 EFK为elasticsearch、fluentd、kibana的简称，本案例主要对kubernetes集群日志收集。 1....
 ---
 
 > **K8s 课程笔记 · 第 8 篇**

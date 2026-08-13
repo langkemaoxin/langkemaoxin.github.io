@@ -1,14 +1,15 @@
 ---
-title: "Docker Compose 编排——用 YAML 定义一整栈微服务"
-sidebarGroup: "Docker 系列"
-shortTitle: "18 Compose 编排"
+title: Docker Compose 编排——用 YAML 定义一整栈微服务
+sidebarGroup: Docker 系列
+shortTitle: 18 Compose 编排
 order: 18
-date: 2026-08-25
-category: "云原生"
+date: 2026-08-25T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: Docker Compose 编排——用 YAML 定义一整栈微服务
 ---
 
 > **Docker 系列 · 第 18/18 篇**  

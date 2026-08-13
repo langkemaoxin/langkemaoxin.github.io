@@ -1,15 +1,16 @@
 ---
-title: "Docker 本地镜像载入与载出——离线环境的镜像搬运术"
-sidebarGroup: "Docker 系列"
-shortTitle: "08 镜像搬运"
+title: Docker 本地镜像载入与载出——离线环境的镜像搬运术
+sidebarGroup: Docker 系列
+shortTitle: 08 镜像搬运
 order: 8
-date: 2026-08-15
-category: "云原生"
+date: 2026-08-15T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
-  - "镜像"
+  - Docker
+  - 云原生
+  - Docker系列
+  - 镜像
+description: Docker 本地镜像载入与载出——离线环境的镜像搬运术
 ---
 
 > **Docker 系列 · 第 8/18 篇**  

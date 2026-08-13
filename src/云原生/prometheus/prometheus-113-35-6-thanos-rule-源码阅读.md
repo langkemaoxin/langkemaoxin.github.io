@@ -1,15 +1,15 @@
 ---
-title: "35.6 thanos-rule 源码阅读"
-sidebarGroup: "Prometheus"
-shortTitle: "113 35.6 thanos-rule 源码阅读"
+title: 35.6 thanos-rule 源码阅读
+sidebarGroup: Prometheus
+shortTitle: 113 35.6 thanos-rule 源码阅读
 order: 113
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点总结 : rule做了什么 - 根据配置的查询地址 创建查询prometheus数据的clients，给后面的报警和预聚合使用 - 新建本地tsdb，为了写入用户配置的预聚合指标结果 - 根据..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点总结 : rule做了什么 - 根据配置的查询地址 创建查询prometheus数据的clients，给后面的报警和预聚合使用 - 新建本地tsdb，为了写入用户配置的预聚合指标结果 - 根据...'
 ---
 
 > **Prometheus · 第 113 篇**

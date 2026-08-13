@@ -1,15 +1,15 @@
 ---
-title: "4.2 prometheus四种查询类型"
-sidebarGroup: "Prometheus"
-shortTitle: "125 4.2 prometheus四种查询类型"
+title: 4.2 prometheus四种查询类型
+sidebarGroup: Prometheus
+shortTitle: 125 4.2 prometheus四种查询类型
 order: 125
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : prometheus 四种查询类型 - 4种查询类型 - vector - matrix - scalar - string - instant query 对应vector - r..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : prometheus 四种查询类型 - 4种查询类型 - vector - matrix - scalar - string - instant query 对应vector - r...'
 ---
 
 > **Prometheus · 第 125 篇**

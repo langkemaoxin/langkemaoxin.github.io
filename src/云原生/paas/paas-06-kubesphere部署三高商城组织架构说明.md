@@ -1,15 +1,15 @@
 ---
-title: "Kubesphere部署三高商城组织架构说明"
-sidebarGroup: "PaaS 平台"
-shortTitle: "06 Kubesphere部署三高商城组织架构说明"
+title: Kubesphere部署三高商城组织架构说明
+sidebarGroup: PaaS 平台
+shortTitle: 06 Kubesphere部署三高商城组织架构说明
 order: 6
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "KubeSphere部署三高商城组织架构说明 一、 创建企业空间 1.使用ws-manager用户登录KubeSphere web控制器，创建企业空间。 2.登出控制台，然后以 ws-admin 身份..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: KubeSphere部署三高商城组织架构说明 一、 创建企业空间 1.使用ws-manager用户登录KubeSphere web控制器，创建企业空间。 2.登出控制台，然后以 ws-admin 身份...
 ---
 
 > **PaaS 平台 · 第 6 篇**

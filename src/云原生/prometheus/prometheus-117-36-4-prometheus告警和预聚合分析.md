@@ -1,15 +1,15 @@
 ---
-title: "36.4 prometheus告警和预聚合分析"
-sidebarGroup: "Prometheus"
-shortTitle: "117 36.4 prometheus告警和预聚合分..."
+title: 36.4 prometheus告警和预聚合分析
+sidebarGroup: Prometheus
+shortTitle: 117 36.4 prometheus告警和预聚合分...
 order: 117
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "总结 - 内置了很多alert和record rule - 专业的promql，不用我们自己写了 - 多级嵌套的record计算如apiserver的slo prometheus ui查看配置看到配置..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: 总结 - 内置了很多alert和record rule - 专业的promql，不用我们自己写了 - 多级嵌套的record计算如apiserver的slo prometheus ui查看配置看到配置...
 ---
 
 > **Prometheus · 第 117 篇**

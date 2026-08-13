@@ -1,15 +1,15 @@
 ---
-title: "k8s集群中部署项目之数据库准备"
-sidebarGroup: "微服务实战"
-shortTitle: "10 k8s集群中部署项目之数据库准备"
+title: k8s集群中部署项目之数据库准备
+sidebarGroup: 微服务实战
+shortTitle: 10 k8s集群中部署项目之数据库准备
 order: 10
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "k8s集群中部署微服务项目之数据库准备 一、navicat准备 二、 MySQL数据库连接 ~~~powershell lb.kubesphere.io/v1alpha1: openelb proto..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 'k8s集群中部署微服务项目之数据库准备 一、navicat准备 二、 MySQL数据库连接 ~~~powershell lb.kubesphere.io/v1alpha1: openelb proto...'
 ---
 
 > **微服务实战 · 第 10 篇**

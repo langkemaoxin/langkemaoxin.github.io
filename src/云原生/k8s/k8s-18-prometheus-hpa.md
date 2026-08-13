@@ -1,17 +1,17 @@
 ---
-title: "基于 QPS 的动态扩缩容——Prometheus Operator 与 Adapter"
-sidebarGroup: "Kubernetes 系列"
-shortTitle: "18 Prometheus HPA"
+title: 基于 QPS 的动态扩缩容——Prometheus Operator 与 Adapter
+sidebarGroup: Kubernetes 系列
+shortTitle: 18 Prometheus HPA
 order: 18
-date: 2026-09-01
-category: "云原生"
+date: 2026-09-01T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "Prometheus"
-  - "HPA"
-  - "云原生"
-  - "Kubernetes系列"
-description: "SpringBoot 指标到 Prometheus Operator，再到 adapter 驱动 HPA。"
+  - Kubernetes
+  - Prometheus
+  - HPA
+  - 云原生
+  - Kubernetes系列
+description: SpringBoot 指标到 Prometheus Operator，再到 adapter 驱动 HPA。
 ---
 
 > **Kubernetes 系列 · 第 18/20 篇**  

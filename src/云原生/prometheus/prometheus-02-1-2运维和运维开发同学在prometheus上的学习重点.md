@@ -1,15 +1,15 @@
 ---
-title: "1.2运维和运维开发同学在prometheus上的学习重点"
-sidebarGroup: "Prometheus"
-shortTitle: "02 1.2运维和运维开发同学在prometheu..."
+title: 1.2运维和运维开发同学在prometheus上的学习重点
+sidebarGroup: Prometheus
+shortTitle: 02 1.2运维和运维开发同学在prometheu...
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : 运维和运维开发同学在prometheus的侧重点 - 运维：调参优化 - 运维开发/开发 : 二次开发or开发周边组件 运维同学学习一线大厂监控调优实战 - 简单说运维重调参，高可用..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : 运维和运维开发同学在prometheus的侧重点 - 运维：调参优化 - 运维开发/开发 : 二次开发or开发周边组件 运维同学学习一线大厂监控调优实战 - 简单说运维重调参，高可用...'
 ---
 
 > **Prometheus · 第 2 篇**

@@ -1,15 +1,15 @@
 ---
-title: "26.1 分位值summary和histogram对比"
-sidebarGroup: "Prometheus"
-shortTitle: "57 26.1 分位值summary和histog..."
+title: 26.1 分位值summary和histogram对比
+sidebarGroup: Prometheus
+shortTitle: 57 26.1 分位值summary和histog...
 order: 57
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 分位值的作用 - histogram数据说明 - summary数据说明 - 两者对比 - histogram 服务端计算分位值 - summary 客户端计算分位值 分位值的作..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 分位值的作用 - histogram数据说明 - summary数据说明 - 两者对比 - histogram 服务端计算分位值 - summary 客户端计算分位值 分位值的作...'
 ---
 
 > **Prometheus · 第 57 篇**

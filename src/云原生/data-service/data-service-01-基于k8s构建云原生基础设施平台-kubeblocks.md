@@ -1,15 +1,15 @@
 ---
-title: "基于K8S构建云原生基础设施平台 KubeBlocks"
-sidebarGroup: "数据服务"
-shortTitle: "01 基于K8S构建云原生基础设施平台 KubeB..."
+title: 基于K8S构建云原生基础设施平台 KubeBlocks
+sidebarGroup: 数据服务
+shortTitle: 01 基于K8S构建云原生基础设施平台 KubeB...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "数据服务"
-  - "云原生"
-  - "课程笔记"
-description: "基于K8S构建云原生数据基础设施平台 KubeBlocks 一、基于Kubekey快速部署K8S集群 如果需要使用playgroup功能，容器运行时必须要使用Docker。 1.1 主机准备 | 主机..."
+  - 数据服务
+  - 云原生
+  - 课程笔记
+description: 基于K8S构建云原生数据基础设施平台 KubeBlocks 一、基于Kubekey快速部署K8S集群 如果需要使用playgroup功能，容器运行时必须要使用Docker。 1.1 主机准备 | 主机...
 ---
 
 > **数据服务 · 第 1 篇**

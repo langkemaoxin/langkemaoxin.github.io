@@ -1,15 +1,15 @@
 ---
-title: "kn工具安装及应用"
-sidebarGroup: "Serverless"
-shortTitle: "11 kn工具安装及应用"
+title: kn工具安装及应用
+sidebarGroup: Serverless
+shortTitle: 11 kn工具安装及应用
 order: 11
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "kn工具安装及应用 一、kn工具介绍 kn工具是Knative命令行管理工具。 二、kn工具下载并安装 ~~~powershell 访问网址： https://knative.dev/docs/ins..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 'kn工具安装及应用 一、kn工具介绍 kn工具是Knative命令行管理工具。 二、kn工具下载并安装 ~~~powershell 访问网址： http[path]'
 ---
 
 > **Serverless · 第 11 篇**

@@ -1,15 +1,15 @@
 ---
-title: "43.1 配置alertmanager高可用并测试"
-sidebarGroup: "Prometheus"
-shortTitle: "141 43.1 配置alertmanager高可用..."
+title: 43.1 配置alertmanager高可用并测试
+sidebarGroup: Prometheus
+shortTitle: 141 43.1 配置alertmanager高可用...
 order: 141
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - alertmanager 单点问题 - alertmanager 引入gossip协议来同步节点间的信息 - 配置alertmanager 高可用并测试 简介 项目地址 - ht..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - alertmanager 单点问题 - alertmanager 引入gossip协议来同步节点间的信息 - 配置alertmanager 高可用并测试 简介 项目地址 - ht...'
 ---
 
 > **Prometheus · 第 141 篇**

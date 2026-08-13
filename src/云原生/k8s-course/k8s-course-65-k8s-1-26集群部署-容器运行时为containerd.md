@@ -1,15 +1,15 @@
 ---
-title: "k8s 1.26集群部署 容器运行时为containerd"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "03 k8s 1.26集群部署 容器运行时为con..."
+title: k8s 1.26集群部署 容器运行时为containerd
+sidebarGroup: K8s 课程笔记
+shortTitle: 03 k8s 1.26集群部署 容器运行时为con...
 order: 65
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Containerd"
-  - "云原生"
-  - "课程笔记"
-description: "k8s 1.26集群部署 容器运行时为containerd 一、主机准备 1.1 Kubernetes 1.26版本集群部署环境准备 1.1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备..."
+  - Containerd
+  - 云原生
+  - 课程笔记
+description: k8s 1.26集群部署 容器运行时为containerd 一、主机准备 1.1 Kubernetes 1.26版本集群部署环境准备 1.1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备...
 ---
 
 > **K8s 课程笔记 · 第 65 篇**

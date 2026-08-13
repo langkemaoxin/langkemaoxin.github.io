@@ -1,15 +1,15 @@
 ---
-title: "15.3 StorageClass和volumeClaimTemplates"
-sidebarGroup: "Prometheus"
-shortTitle: "22 15.3 StorageClass和volu..."
+title: 15.3 StorageClass和volumeClaimTemplates
+sidebarGroup: Prometheus
+shortTitle: 22 15.3 StorageClass和volu...
 order: 22
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 了解pvc和pv的关系 - 动态创建pvc的模板volumeClaimTemplates - 动态的资源供应StorageClass - WaitForFirstConsumer..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 了解pvc和pv的关系 - 动态创建pvc的模板volumeClaimTemplates - 动态的资源供应StorageClass - WaitForFirstConsumer...'
 ---
 
 > **Prometheus · 第 22 篇**

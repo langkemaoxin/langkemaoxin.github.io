@@ -1,15 +1,15 @@
 ---
-title: "Gin 示例 part06 要点"
-sidebarGroup: "Golang"
-shortTitle: "07 part06"
+title: Gin 示例 part06 要点
+sidebarGroup: Golang
+shortTitle: 07 part06
 order: 7
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Golang"
-  - "云原生"
-  - "课程笔记"
-description: "TestGin/part06 源码整理"
+  - Golang
+  - 云原生
+  - 课程笔记
+description: TestGin/part06 源码整理
 ---
 
 > **Golang · 第 7 篇**

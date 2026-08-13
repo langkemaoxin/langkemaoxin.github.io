@@ -1,15 +1,15 @@
 ---
-title: "1.1为什么学透prometheus可以进大厂"
-sidebarGroup: "Prometheus"
-shortTitle: "01 1.1为什么学透prometheus可以进大..."
+title: 1.1为什么学透prometheus可以进大厂
+sidebarGroup: Prometheus
+shortTitle: 01 1.1为什么学透prometheus可以进大...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 :为什么学透prometheus可以进大厂 - 监控系统在基础架构中的重要位置，如何为其他系统提供决策数据 - 互联网有大厂专门的监控开发团队，2-10人 - prometheus的火热..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 :为什么学透prometheus可以进大厂 - 监控系统在基础架构中的重要位置，如何为其他系统提供决策数据 - 互联网有大厂专门的监控开发团队，2-10人 - prometheus的火热...'
 ---
 
 > **Prometheus · 第 1 篇**

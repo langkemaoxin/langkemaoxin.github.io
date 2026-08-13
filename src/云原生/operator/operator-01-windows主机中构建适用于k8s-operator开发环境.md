@@ -1,15 +1,15 @@
 ---
-title: "Windows主机中构建适用于K8S Operator开发环境"
-sidebarGroup: "Operator 开发"
-shortTitle: "01 Windows主机中构建适用于K8S Ope..."
+title: Windows主机中构建适用于K8S Operator开发环境
+sidebarGroup: Operator 开发
+shortTitle: 01 Windows主机中构建适用于K8S Ope...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Operator 开发"
-  - "云原生"
-  - "课程笔记"
-description: "基于 win 10 打造K8S应用开发环境 一、wsl子系统安装 在cmd命令行终端或powershell中操作 1.1 确认windows操作系统版本 1.2 开启wsl功能 1.3 wsl配置 ~..."
+  - Operator 开发
+  - 云原生
+  - 课程笔记
+description: 基于 win 10 打造K8S应用开发环境 一、wsl子系统安装 在cmd命令行终端或powershell中操作 1.1 确认windows操作系统版本 1.2 开启wsl功能 1.3 wsl配置 ~...
 ---
 
 > **Operator 开发 · 第 1 篇**

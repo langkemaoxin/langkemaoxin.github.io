@@ -1,15 +1,15 @@
 ---
-title: "3.3prometheus命令行参数讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "82 3.3prometheus命令行参数讲解"
+title: 3.3prometheus命令行参数讲解
+sidebarGroup: Prometheus
+shortTitle: 82 3.3prometheus命令行参数讲解
 order: 82
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - target页面 - flags页面 - status页面 - tsdb-status页面 访问地址 $ip:9090 target页面 flags页面 - 展示命令行参数的，没..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - target页面 - flags页面 - status页面 - tsdb-status页面 访问地址 $ip:9090 target页面 flags页面 - 展示命令行参数的，没...'
 ---
 
 > **Prometheus · 第 82 篇**

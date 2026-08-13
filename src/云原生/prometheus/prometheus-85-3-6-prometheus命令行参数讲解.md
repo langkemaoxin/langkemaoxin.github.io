@@ -1,15 +1,15 @@
 ---
-title: "3.6 prometheus命令行参数讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "85 3.6 prometheus命令行参数讲解"
+title: 3.6 prometheus命令行参数讲解
+sidebarGroup: Prometheus
+shortTitle: 85 3.6 prometheus命令行参数讲解
 order: 85
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus 高频修改的命令行参数解读 命令行参数 - 在页面的/flags 页面上能看到所有的命令行参数 二进制 --help shell [root@k8s-node..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus 高频修改的命令行参数解读 命令行参数 - 在页面的/flags 页面上能看到所有的命令行参数 二进制 --help shell [root@k8s-node...'
 ---
 
 > **Prometheus · 第 85 篇**

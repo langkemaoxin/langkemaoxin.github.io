@@ -1,15 +1,15 @@
 ---
-title: "现阶段云原生应用领域介绍"
-sidebarGroup: "Serverless"
-shortTitle: "02 现阶段云原生应用领域介绍"
+title: 现阶段云原生应用领域介绍
+sidebarGroup: Serverless
+shortTitle: 02 现阶段云原生应用领域介绍
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "现阶段云原生应用领域介绍 一、现阶段云原生应用领域 可参考CNCF相关链接：https://landscape.cncf.io/ 1.1 云原生应用 云原生应用生态已覆盖到:大数据、人工智能、边缘计算..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: '现阶段云原生应用领域介绍 一、现阶段云原生应用领域 可参考CNCF相关链接：http[path] 1.1 云原生应用 云原生应用生态已覆盖到:大数据、人工智能、边缘计算...'
 ---
 
 > **Serverless · 第 2 篇**

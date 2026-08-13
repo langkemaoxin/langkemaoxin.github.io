@@ -1,15 +1,15 @@
 ---
-title: "k8s监控方案 KSM （kube-state-metrics）"
-sidebarGroup: "可观测性"
-shortTitle: "09 k8s监控方案 KSM （kube-stat..."
+title: k8s监控方案 KSM （kube-state-metrics）
+sidebarGroup: 可观测性
+shortTitle: 09 k8s监控方案 KSM （kube-stat...
 order: 9
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "k8s监控方案 KSM （kube-state-metrics） 一、kube-state-metrics（KSM）是什么？ 如需监控k8s比较全面的资源指标，需要在集群内安装相应的exports，例..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: k8s监控方案 KSM （kube-state-metrics） 一、kube-state-metrics（KSM）是什么？ 如需监控k8s比较全面的资源指标，需要在集群内安装相应的exports，例...
 ---
 
 > **可观测性 · 第 9 篇**

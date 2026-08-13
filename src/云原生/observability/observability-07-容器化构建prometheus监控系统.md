@@ -1,15 +1,15 @@
 ---
-title: "容器化构建Prometheus监控系统"
-sidebarGroup: "可观测性"
-shortTitle: "07 容器化构建Prometheus监控系统"
+title: 容器化构建Prometheus监控系统
+sidebarGroup: 可观测性
+shortTitle: 07 容器化构建Prometheus监控系统
 order: 7
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "容器化构建Prometheus监控系统 一、使用容器化构建Prometheus监控系统优势 - 简化部署：使用容器可以快速部署Prometheus，减少了部署和配置的复杂度。 - 灵活性：容器可以在任..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: 容器化构建Prometheus监控系统 一、使用容器化构建Prometheus监控系统优势 - 简化部署：使用容器可以快速部署Prometheus，减少了部署和配置的复杂度。 - 灵活性：容器可以在任...
 ---
 
 > **可观测性 · 第 7 篇**

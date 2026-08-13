@@ -1,15 +1,15 @@
 ---
-title: "33.5 remote实战项目之设计prometheus数据源的结构"
-sidebarGroup: "Prometheus"
-shortTitle: "101 33.5 remote实战项目之设计prom..."
+title: 33.5 remote实战项目之设计prometheus数据源的结构
+sidebarGroup: Prometheus
+shortTitle: 101 33.5 remote实战项目之设计prom...
 order: 101
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 项目要求 - 通过remote read读取prometheus中的数据 - 通过remote write向prometheus中写入数据 - 准备工作 - 新建项目 prome..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 项目要求 - 通过remote read读取prometheus中的数据 - 通过remote write向prometheus中写入数据 - 准备工作 - 新建项目 prome...'
 ---
 
 > **Prometheus · 第 101 篇**

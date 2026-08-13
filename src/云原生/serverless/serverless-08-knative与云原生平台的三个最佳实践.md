@@ -1,15 +1,15 @@
 ---
-title: "Knative与云原生平台的三个最佳实践"
-sidebarGroup: "Serverless"
-shortTitle: "08 Knative与云原生平台的三个最佳实践"
+title: Knative与云原生平台的三个最佳实践
+sidebarGroup: Serverless
+shortTitle: 08 Knative与云原生平台的三个最佳实践
 order: 8
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Knative与云原生平台的三个最佳实践 一、最佳实践三个层面 1）服务编排要实现计算资源弹性化 2） 服务构建和部署要实现高度自动化 3）事件驱动基础设施标准化 二、Knative组件 Knativ..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Knative与云原生平台的三个最佳实践 一、最佳实践三个层面 1）服务编排要实现计算资源弹性化 2） 服务构建和部署要实现高度自动化 3）事件驱动基础设施标准化 二、Knative组件 Knativ...
 ---
 
 > **Serverless · 第 8 篇**

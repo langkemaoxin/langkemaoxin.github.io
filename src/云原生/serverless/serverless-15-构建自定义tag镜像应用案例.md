@@ -1,15 +1,15 @@
 ---
-title: "构建自定义Tag镜像应用案例"
-sidebarGroup: "Serverless"
-shortTitle: "15 构建自定义Tag镜像应用案例"
+title: 构建自定义Tag镜像应用案例
+sidebarGroup: Serverless
+shortTitle: 15 构建自定义Tag镜像应用案例
 order: 15
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "构建自定义Tag镜像应用案例 使用 Results 传递数据 一、应用场景说明 前面我们在构建镜像的时候可以看到镜像的 TAG 固定的，或者需要在每次执行的时候通过参数传递进去，这样就会比较麻烦，那么..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 构建自定义Tag镜像应用案例 使用 Results 传递数据 一、应用场景说明 前面我们在构建镜像的时候可以看到镜像的 TAG 固定的，或者需要在每次执行的时候通过参数传递进去，这样就会比较麻烦，那么...
 ---
 
 > **Serverless · 第 15 篇**

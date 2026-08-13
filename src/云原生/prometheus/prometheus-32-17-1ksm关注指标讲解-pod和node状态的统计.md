@@ -1,15 +1,15 @@
 ---
-title: "17.1ksm关注指标讲解 pod和node状态的统计"
-sidebarGroup: "Prometheus"
-shortTitle: "32 17.1ksm关注指标讲解 pod和node..."
+title: 17.1ksm关注指标讲解 pod和node状态的统计
+sidebarGroup: Prometheus
+shortTitle: 32 17.1ksm关注指标讲解 pod和node...
 order: 32
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 主要的应用 - 看状态 - 数个数 - 根据13105大盘模板看ksm指标 - 节点指标 - pod和容器指标 - 资源对象按namespace分布指标 - 其他资源指标 主要的..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 主要的应用 - 看状态 - 数个数 - 根据13105大盘模板看ksm指标 - 节点指标 - pod和容器指标 - 资源对象按namespace分布指标 - 其他资源指标 主要的...'
 ---
 
 > **Prometheus · 第 32 篇**

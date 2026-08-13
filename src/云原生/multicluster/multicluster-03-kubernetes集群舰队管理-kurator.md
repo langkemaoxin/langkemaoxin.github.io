@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群舰队管理 Kurator"
-sidebarGroup: "多集群"
-shortTitle: "03 kubernetes集群舰队管理 Kurat..."
+title: kubernetes集群舰队管理 Kurator
+sidebarGroup: 多集群
+shortTitle: 03 kubernetes集群舰队管理 Kurat...
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "多集群"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes集群舰队管理 Kurator 一、Kurator介绍 1.1 Kurator是什么？ 2023年4月8日，Kurator正式发布v0.3.0版本。 Kurator 是华为云推出的分..."
+  - 多集群
+  - 云原生
+  - 课程笔记
+description: kubernetes集群舰队管理 Kurator 一、Kurator介绍 1.1 Kurator是什么？ 2023年4月8日，Kurator正式发布v0.3.0版本。 Kurator 是华为云推出的分...
 ---
 
 > **多集群 · 第 3 篇**

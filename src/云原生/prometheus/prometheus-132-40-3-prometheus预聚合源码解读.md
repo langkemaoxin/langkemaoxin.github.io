@@ -1,15 +1,15 @@
 ---
-title: "40.3 prometheus预聚合源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "132 40.3 prometheus预聚合源码解读"
+title: 40.3 prometheus预聚合源码解读
+sidebarGroup: Prometheus
+shortTitle: 132 40.3 prometheus预聚合源码解读
 order: 132
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 预聚合原理总结 - 源码解读 预聚合原理总结 - prometheus把record记录当做和alert一样处理 - 进行instant_query查询当前点，如果是alert则..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 预聚合原理总结 - 源码解读 预聚合原理总结 - prometheus把record记录当做和alert一样处理 - 进行instant_query查询当前点，如果是alert则...'
 ---
 
 > **Prometheus · 第 132 篇**

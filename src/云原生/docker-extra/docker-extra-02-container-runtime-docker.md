@@ -1,15 +1,15 @@
 ---
-title: "容器运行时 Docker"
-sidebarGroup: "Docker 进阶"
-shortTitle: "02 容器运行时 Docker"
+title: 容器运行时 Docker
+sidebarGroup: Docker 进阶
+shortTitle: 02 容器运行时 Docker
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "容器运行时 Docker 一、容器运行时（Container Runtime） 是什么 容器的运行时（runtime）就是运行和管理容器进程、镜像的工具。 二、 容器运行时分类 Docker属于容器技..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 容器运行时 Docker 一、容器运行时（Container Runtime） 是什么 容器的运行时（runtime）就是运行和管理容器进程、镜像的工具。 二、 容器运行时分类 Docker属于容器技...
 ---
 
 > **Docker 进阶 · 第 2 篇**

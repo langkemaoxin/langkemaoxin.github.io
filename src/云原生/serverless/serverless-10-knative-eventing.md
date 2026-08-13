@@ -1,15 +1,15 @@
 ---
-title: "Knative Eventing"
-sidebarGroup: "Serverless"
-shortTitle: "10 Knative Eventing"
+title: Knative Eventing
+sidebarGroup: Serverless
+shortTitle: 10 Knative Eventing
 order: 10
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Knative Eventing 一、Eventing介绍 Knative Eventing充当架构不同部分之间的 glue（粘合剂） ，使得你应用架构不同部分之间可以轻松进行通信，并具备较好的容错（..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Knative Eventing 一、Eventing介绍 Knative Eventing充当架构不同部分之间的 glue（粘合剂） ，使得你应用架构不同部分之间可以轻松进行通信，并具备较好的容错（...
 ---
 
 > **Serverless · 第 10 篇**

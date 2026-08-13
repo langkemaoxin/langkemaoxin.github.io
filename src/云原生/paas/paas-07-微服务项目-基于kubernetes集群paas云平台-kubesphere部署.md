@@ -1,15 +1,15 @@
 ---
-title: "微服务项目 基于Kubernetes集群PaaS云平台 Kubesphere部署"
-sidebarGroup: "PaaS 平台"
-shortTitle: "07 微服务项目 基于Kubernetes集群Pa..."
+title: 微服务项目 基于Kubernetes集群PaaS云平台 Kubesphere部署
+sidebarGroup: PaaS 平台
+shortTitle: 07 微服务项目 基于Kubernetes集群Pa...
 order: 7
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "PaaS云管工具 Kubesphere部署 一、Kubernetes集群持久存储准备 NFS 在安装之前，需要配置kubernetes的默认存储类型。 1.1 准备硬盘 ~~~powershell 查..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: PaaS云管工具 Kubesphere部署 一、Kubernetes集群持久存储准备 NFS 在安装之前，需要配置kubernetes的默认存储类型。 1.1 准备硬盘 ~~~powershell 查...
 ---
 
 > **PaaS 平台 · 第 7 篇**

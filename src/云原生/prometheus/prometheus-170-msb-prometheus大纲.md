@@ -1,15 +1,15 @@
 ---
-title: "msb_prometheus大纲"
-sidebarGroup: "Prometheus"
-shortTitle: "170 msb_prometheus大纲"
+title: msb_prometheus大纲
+sidebarGroup: Prometheus
+shortTitle: 170 msb_prometheus大纲
 order: 170
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "学习本课程的收益和目标 - 第1章 收益分析：学习优秀的go项目进大厂 or 实战调优进大厂 ： 40 min - 1.1 为什么学透prometheus可以进大厂 - 监控系统在基础架构中的重要位置..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: 学习本课程的收益和目标 - 第1章 收益分析：学习优秀的go项目进大厂 or 实战调优进大厂 ： 40 min - 1.1 为什么学透prometheus可以进大厂 - 监控系统在基础架构中的重要位置...
 ---
 
 > **Prometheus · 第 170 篇**

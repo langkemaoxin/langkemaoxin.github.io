@@ -1,17 +1,18 @@
 ---
-title: "进程视角看容器——PID 命名空间与宿主机对照"
-sidebarGroup: "Docker 系列"
-shortTitle: "11 进程视角看容器"
+title: 进程视角看容器——PID 命名空间与宿主机对照
+sidebarGroup: Docker 系列
+shortTitle: 11 进程视角看容器
 order: 11
-date: 2026-08-18
-category: "云原生"
+date: 2026-08-18T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
-  - "PID Namespace"
-  - "cgroup"
-  - "proc"
+  - Docker
+  - 云原生
+  - Docker系列
+  - PID Namespace
+  - cgroup
+  - proc
+description: 进程视角看容器——PID 命名空间与宿主机对照
 ---
 
 > **Docker 系列 · 第 11/18 篇**  

@@ -1,15 +1,15 @@
 ---
-title: "阿里云容器服务 ACK"
-sidebarGroup: "公有云"
-shortTitle: "01 阿里云容器服务 ACK"
+title: 阿里云容器服务 ACK
+sidebarGroup: 公有云
+shortTitle: 01 阿里云容器服务 ACK
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "公有云"
-  - "云原生"
-  - "课程笔记"
-description: "阿里云容器服务ACK 一、配置专有网络 1.1进入阿里云VPC控制台 1.2开通阿里云VPC服务 1.3创建vpc 二、配置Kubernetes集群 2.1进入阿里云ACK控制台 2.2创建集群 2...."
+  - 公有云
+  - 云原生
+  - 课程笔记
+description: 阿里云容器服务ACK 一、配置专有网络 1.1进入阿里云VPC控制台 1.2开通阿里云VPC服务 1.3创建vpc 二、配置Kubernetes集群 2.1进入阿里云ACK控制台 2.2创建集群 2....
 ---
 
 > **公有云 · 第 1 篇**

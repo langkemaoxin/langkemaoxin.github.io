@@ -1,15 +1,15 @@
 ---
-title: "4.5 时间范围选择器"
-sidebarGroup: "Prometheus"
-shortTitle: "128 4.5 时间范围选择器"
+title: 4.5 时间范围选择器
+sidebarGroup: Prometheus
+shortTitle: 128 4.5 时间范围选择器
 order: 128
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 时间范围选择器的正确用法 - prometheus查询返回13位毫秒时间戳 范围向量选择器 Range Vector Selectors - 范围矢量的工作方式与即时矢量一样，不..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 时间范围选择器的正确用法 - prometheus查询返回13位毫秒时间戳 范围向量选择器 Range Vector Selectors - 范围矢量的工作方式与即时矢量一样，不...'
 ---
 
 > **Prometheus · 第 128 篇**

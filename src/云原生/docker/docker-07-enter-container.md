@@ -1,16 +1,17 @@
 ---
-title: "进入 Docker 容器的四种方式——以及六大命名空间"
-sidebarGroup: "Docker 系列"
-shortTitle: "07 进入容器四法"
+title: 进入 Docker 容器的四种方式——以及六大命名空间
+sidebarGroup: Docker 系列
+shortTitle: 07 进入容器四法
 order: 7
-date: 2026-08-14
-category: "云原生"
+date: 2026-08-14T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
-  - "Namespace"
-  - "nsenter"
+  - Docker
+  - 云原生
+  - Docker系列
+  - Namespace
+  - nsenter
+description: 进入 Docker 容器的四种方式——以及六大命名空间
 ---
 
 > **Docker 系列 · 第 7/18 篇**  

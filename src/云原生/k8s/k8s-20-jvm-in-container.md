@@ -1,17 +1,17 @@
 ---
-title: "容器内 JVM 参数解析与生产优化"
-sidebarGroup: "Kubernetes 系列"
-shortTitle: "20 容器内 JVM"
+title: 容器内 JVM 参数解析与生产优化
+sidebarGroup: Kubernetes 系列
+shortTitle: 20 容器内 JVM
 order: 20
-date: 2026-09-02
-category: "云原生"
+date: 2026-09-02T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "JVM"
-  - "Java"
-  - "云原生"
-  - "Kubernetes系列"
-description: "容器内 JVM 堆参数、UseContainerSupport、OOM Dump 与生产优化清单。"
+  - Kubernetes
+  - JVM
+  - Java
+  - 云原生
+  - Kubernetes系列
+description: 容器内 JVM 堆参数、UseContainerSupport、OOM Dump 与生产优化清单。
 ---
 
 > **Kubernetes 系列 · 第 20/20 篇（完结）**  

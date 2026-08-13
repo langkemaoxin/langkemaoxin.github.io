@@ -1,15 +1,15 @@
 ---
-title: "RKE2方式部署K8S集群（高可用）"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "50 RKE2方式部署K8S集群（高可用）"
+title: RKE2方式部署K8S集群（高可用）
+sidebarGroup: K8s 课程笔记
+shortTitle: 50 RKE2方式部署K8S集群（高可用）
 order: 50
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "注重K8S安全 RKE2方式部署K8S高可用集群（含IPVS） 一、RKE2部署方式介绍 k8s官方部署安装集群的是使用kubeadm方式，但是该方式比较复杂繁琐，所以产生了一些新的部署安装集群方式，..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 注重K8S安全 RKE2方式部署K8S高可用集群（含IPVS） 一、RKE2部署方式介绍 k8s官方部署安装集群的是使用kubeadm方式，但是该方式比较复杂繁琐，所以产生了一些新的部署安装集群方式，...
 ---
 
 > **K8s 课程笔记 · 第 50 篇**

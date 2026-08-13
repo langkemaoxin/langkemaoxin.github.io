@@ -1,15 +1,15 @@
 ---
-title: "7.4 ssh探测和ping探测使用"
-sidebarGroup: "Prometheus"
-shortTitle: "160 7.4 ssh探测和ping探测使用"
+title: 7.4 ssh探测和ping探测使用
+sidebarGroup: Prometheus
+shortTitle: 160 7.4 ssh探测和ping探测使用
 order: 160
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - ssh探测和icmp探测的配置方法 - 探测模块中可以使用query_response，过滤响应中的字符串，来决定探测是否成功 ssh探测 配置方法 yaml - job_nam..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - ssh探测和icmp探测的配置方法 - 探测模块中可以使用query_response，过滤响应中的字符串，来决定探测是否成功 ssh探测 配置方法 yaml - job_nam...'
 ---
 
 > **Prometheus · 第 160 篇**

@@ -1,15 +1,15 @@
 ---
-title: "22.3 解读k8s服务发现源码"
-sidebarGroup: "Prometheus"
-shortTitle: "45 22.3 解读k8s服务发现源码"
+title: 22.3 解读k8s服务发现源码
+sidebarGroup: Prometheus
+shortTitle: 45 22.3 解读k8s服务发现源码
 order: 45
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - discovery.Manager服务发现管理员 - 注册各个服务发现源 - 启动各个服务发现源 - 处理服务发现的结果 - k8s服务发现 - k8s-client infor..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - discovery.Manager服务发现管理员 - 注册各个服务发现源 - 启动各个服务发现源 - 处理服务发现的结果 - k8s服务发现 - k8s-client infor...'
 ---
 
 > **Prometheus · 第 45 篇**

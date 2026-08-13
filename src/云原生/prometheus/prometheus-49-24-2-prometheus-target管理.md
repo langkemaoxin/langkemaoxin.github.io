@@ -1,15 +1,15 @@
 ---
-title: "24.2 prometheus target管理"
-sidebarGroup: "Prometheus"
-shortTitle: "49 24.2 prometheus target..."
+title: 24.2 prometheus target管理
+sidebarGroup: Prometheus
+shortTitle: 49 24.2 prometheus target...
 order: 49
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - target 状态页面字段解析 - target 采集失败常见原因分析 - target 状态接口源码分析 - 脚本获取target存活情况和失败原因 target 状态页面字段..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - target 状态页面字段解析 - target 采集失败常见原因分析 - target 状态接口源码分析 - 脚本获取target存活情况和失败原因 target 状态页面字段...'
 ---
 
 > **Prometheus · 第 49 篇**

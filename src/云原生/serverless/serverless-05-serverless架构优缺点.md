@@ -1,15 +1,15 @@
 ---
-title: "Serverless架构优缺点"
-sidebarGroup: "Serverless"
-shortTitle: "05 Serverless架构优缺点"
+title: Serverless架构优缺点
+sidebarGroup: Serverless
+shortTitle: 05 Serverless架构优缺点
 order: 5
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Serverless架构优缺点 一 、优点 1.1 低运营成本 Serverless是非常简单的外包解决方案。服务提供者可以是外部厂商（云平台）也可以是内部运维团队，规模效应可以降低基础设施和人员的成..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Serverless架构优缺点 一 、优点 1.1 低运营成本 Serverless是非常简单的外包解决方案。服务提供者可以是外部厂商（云平台）也可以是内部运维团队，规模效应可以降低基础设施和人员的成...
 ---
 
 > **Serverless · 第 5 篇**

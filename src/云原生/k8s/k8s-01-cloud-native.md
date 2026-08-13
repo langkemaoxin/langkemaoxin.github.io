@@ -1,15 +1,15 @@
 ---
-title: "云原生原理与演进——从 CNCF 到 Service Mesh"
-sidebarGroup: "Kubernetes"
-shortTitle: "01 云原生演进"
+title: 云原生原理与演进——从 CNCF 到 Service Mesh
+sidebarGroup: Kubernetes
+shortTitle: 01 云原生演进
 order: 1
-date: 2026-08-26
-category: "云原生"
+date: 2026-08-26T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "K8s系列"
-description: "从 CNCF 定义、四要素与时间轴讲清云原生，并引出 Service Mesh 与 Istio 的背景。"
+  - Kubernetes
+  - 云原生
+  - K8s系列
+description: 从 CNCF 定义、四要素与时间轴讲清云原生，并引出 Service Mesh 与 Istio 的背景。
 ---
 
 > **Kubernetes 系列 · 第 1/20 篇**  

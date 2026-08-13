@@ -1,14 +1,15 @@
 ---
-title: "Docker 是什么？——从 jar 包部署到镜像一键上线"
-sidebarGroup: "Docker 系列"
-shortTitle: "01 Docker 是什么"
+title: Docker 是什么？——从 jar 包部署到镜像一键上线
+sidebarGroup: Docker 系列
+shortTitle: 01 Docker 是什么
 order: 1
-date: 2026-08-08
-category: "云原生"
+date: 2026-08-08T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: Docker 是什么？——从 jar 包部署到镜像一键上线
 ---
 
 > **Docker 系列 · 第 1/18 篇**  

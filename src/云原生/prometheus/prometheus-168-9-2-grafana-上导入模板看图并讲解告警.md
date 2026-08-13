@@ -1,15 +1,15 @@
 ---
-title: "9.2 grafana 上导入模板看图并讲解告警"
-sidebarGroup: "Prometheus"
-shortTitle: "168 9.2 grafana 上导入模板看图并讲解..."
+title: 9.2 grafana 上导入模板看图并讲解告警
+sidebarGroup: Prometheus
+shortTitle: 168 9.2 grafana 上导入模板看图并讲解...
 order: 168
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 添加到prometheus采集配置中 - grafana 上导入process-exporter dashboard - 重点指标讲解 添加到prometheus采集配置中 ya..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 添加到prometheus采集配置中 - grafana 上导入process-exporter dashboard - 重点指标讲解 添加到prometheus采集配置中 ya...'
 ---
 
 > **Prometheus · 第 168 篇**

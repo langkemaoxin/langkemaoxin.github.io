@@ -1,15 +1,15 @@
 ---
-title: "k8s集群中部署微服务Vue"
-sidebarGroup: "微服务实战"
-shortTitle: "13 k8s集群中部署微服务Vue"
+title: k8s集群中部署微服务Vue
+sidebarGroup: 微服务实战
+shortTitle: 13 k8s集群中部署微服务Vue
 order: 13
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "k8s集群中部署微服务后台管理项目 admin 一、项目创建 修改依据 npm版本为12.2.0,可以使用 nvm进行安装及切换使用。 ~~~powershell npm install node-s..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 'k8s集群中部署微服务后台管理项目 admin 一、项目创建 修改依据 npm版本为12.2.0,可以使用 nvm进行安装及切换使用。 ~~~powershell npm install node-s...'
 ---
 
 > **微服务实战 · 第 13 篇**

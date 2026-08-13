@@ -1,15 +1,15 @@
 ---
-title: "17.2 ksm源码讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "33 17.2 ksm源码讲解"
+title: 17.2 ksm源码讲解
+sidebarGroup: Prometheus
+shortTitle: 33 17.2 ksm源码讲解
 order: 33
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s资源对象的 buildStores构造函数注入MetricFamilies - k8s client-go 之 Reflector - listAndWatch 方法 - ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s资源对象的 buildStores构造函数注入MetricFamilies - k8s client-go 之 Reflector - listAndWatch 方法 - ...'
 ---
 
 > **Prometheus · 第 33 篇**

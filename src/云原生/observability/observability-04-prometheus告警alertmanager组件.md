@@ -1,15 +1,15 @@
 ---
-title: "Prometheus告警Alertmanager组件"
-sidebarGroup: "可观测性"
-shortTitle: "04 Prometheus告警Alertmanag..."
+title: Prometheus告警Alertmanager组件
+sidebarGroup: 可观测性
+shortTitle: 04 Prometheus告警Alertmanag...
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "Prometheus告警Alertmanager组件 一、Alertmanager介绍 实现Prometheus的告警，需Alertmanager这个组件。Alertmanager与Prometheu..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: Prometheus告警Alertmanager组件 一、Alertmanager介绍 实现Prometheus的告警，需Alertmanager这个组件。Alertmanager与Prometheu...
 ---
 
 > **可观测性 · 第 4 篇**

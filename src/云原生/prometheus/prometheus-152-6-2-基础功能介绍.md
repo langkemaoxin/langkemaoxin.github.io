@@ -1,15 +1,15 @@
 ---
-title: "6.2 基础功能介绍"
-sidebarGroup: "Prometheus"
-shortTitle: "152 6.2 基础功能介绍"
+title: 6.2 基础功能介绍
+sidebarGroup: Prometheus
+shortTitle: 152 6.2 基础功能介绍
 order: 152
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 数据源操作 - 新增一个数据源 - - - dashboard操作 - folder操作 - - alerting操作 - 用户和组操作 - 本节重点总结 : - 数据源操作 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 数据源操作 - 新增一个数据源 - - - dashboard操作 - folder操作 - - alerting操作 - 用户和组操作 - 本节重点总结 : - 数据源操作 -...'
 ---
 
 > **Prometheus · 第 152 篇**

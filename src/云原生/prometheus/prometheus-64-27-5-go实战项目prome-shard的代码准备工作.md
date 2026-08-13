@@ -1,15 +1,15 @@
 ---
-title: "27.5 go实战项目prome-shard的代码准备工作"
-sidebarGroup: "Prometheus"
-shortTitle: "64 27.5 go实战项目prome-shard..."
+title: 27.5 go实战项目prome-shard的代码准备工作
+sidebarGroup: Prometheus
+shortTitle: 64 27.5 go实战项目prome-shard...
 order: 64
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 定义每个分片的服务 - 编写配置文件 - 配置文件解析的工作 - 命令行参数解析、读取配置文件、设置logger - 初始化consul client 设计配置文件 定义每个分片..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 定义每个分片的服务 - 编写配置文件 - 配置文件解析的工作 - 命令行参数解析、读取配置文件、设置logger - 初始化consul client 设计配置文件 定义每个分片...'
 ---
 
 > **Prometheus · 第 64 篇**

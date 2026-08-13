@@ -1,15 +1,15 @@
 ---
-title: "如何通过K0S部署K8S二进制集群？"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "49 如何通过K0S部署K8S二进制集群？"
+title: 如何通过K0S部署K8S二进制集群？
+sidebarGroup: K8s 课程笔记
+shortTitle: 49 如何通过K0S部署K8S二进制集群？
 order: 49
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "如何通过K0S部署K8S二进制集群？ 一、K0S是什么？ k0s 是一个下游的 Kubernetes 发行版，与原生 Kubernetes 相比，k0s 并未阉割大量 Kubernetes 功能；k0..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 如何通过K0S部署K8S二进制集群？ 一、K0S是什么？ k0s 是一个下游的 Kubernetes 发行版，与原生 Kubernetes 相比，k0s 并未阉割大量 Kubernetes 功能；k0...
 ---
 
 > **K8s 课程笔记 · 第 49 篇**

@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群Node管理"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "52 Kubernetes集群Node管理"
+title: Kubernetes集群Node管理
+sidebarGroup: K8s 课程笔记
+shortTitle: 52 Kubernetes集群Node管理
 order: 52
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群Node管理 一、查看集群信息 ~~~powershell [root@k8s-master1 ~] kubectl cluster-info Kubernetes contr..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'Kubernetes集群Node管理 一、查看集群信息 ~~~powershell [root@k8s-master1 ~] kubectl cluster-info Kubernetes contr...'
 ---
 
 > **K8s 课程笔记 · 第 52 篇**

@@ -1,15 +1,15 @@
 ---
-title: "Prometheus告警媒介 企业微信"
-sidebarGroup: "可观测性"
-shortTitle: "05 Prometheus告警媒介 企业微信"
+title: Prometheus告警媒介 企业微信
+sidebarGroup: 可观测性
+shortTitle: 05 Prometheus告警媒介 企业微信
 order: 5
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "Prometheus告警媒介 企业微信 一、创建用于接收告警的部门 创建部门 获取部分ID，告警配置用。 添加成员至部门 二、企业微信创建应用 三、为创建的应用配置可信IP 如果不配置可信IP，则无法..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: Prometheus告警媒介 企业微信 一、创建用于接收告警的部门 创建部门 获取部分ID，告警配置用。 添加成员至部门 二、企业微信创建应用 三、为创建的应用配置可信IP 如果不配置可信IP，则无法...
 ---
 
 > **可观测性 · 第 5 篇**

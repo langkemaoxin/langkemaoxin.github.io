@@ -1,15 +1,15 @@
 ---
-title: "kubernetes核心概念 Controller控制器之StatefulSet"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "58 kubernetes核心概念 Control..."
+title: kubernetes核心概念 Controller控制器之StatefulSet
+sidebarGroup: K8s 课程笔记
+shortTitle: 58 kubernetes核心概念 Control...
 order: 58
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes核心概念 Controller之StatefulSet控制器 一、StatefulSet控制器作用 - StatefulSet 是用来管理有状态应用的控制器。 - Stateful..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes核心概念 Controller之StatefulSet控制器 一、StatefulSet控制器作用 - StatefulSet 是用来管理有状态应用的控制器。 - Stateful...
 ---
 
 > **K8s 课程笔记 · 第 58 篇**

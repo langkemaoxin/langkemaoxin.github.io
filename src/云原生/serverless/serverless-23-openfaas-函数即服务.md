@@ -1,15 +1,15 @@
 ---
-title: "OpenFaaS 函数即服务"
-sidebarGroup: "Serverless"
-shortTitle: "23 OpenFaaS 函数即服务"
+title: OpenFaaS 函数即服务
+sidebarGroup: Serverless
+shortTitle: 23 OpenFaaS 函数即服务
 order: 23
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Serverless之OpenFaaS 函数即服务 一、OpenFaaS介绍 Openfaas是一种serverless提供方式，可以使开发人员轻松地将事件驱动的功能和微服务部署到Kubernetes..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Serverless之OpenFaaS 函数即服务 一、OpenFaaS介绍 Openfaas是一种serverless提供方式，可以使开发人员轻松地将事件驱动的功能和微服务部署到Kubernetes...
 ---
 
 > **Serverless · 第 23 篇**

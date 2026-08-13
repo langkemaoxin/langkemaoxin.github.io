@@ -1,15 +1,15 @@
 ---
-title: "1.3 为什么本节课的老师最专业"
-sidebarGroup: "Prometheus"
-shortTitle: "03 1.3 为什么本节课的老师最专业"
+title: 1.3 为什么本节课的老师最专业
+sidebarGroup: Prometheus
+shortTitle: 03 1.3 为什么本节课的老师最专业
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : 为什么本节课的老师最专业 - 多年一线互联公司监控系统架构经验，原字节跳动基础监控核心开发人员 - 对OpenFalcon有深度二次开发经验，滴滴夜莺核心开发人员之一 - 熟读Pro..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : 为什么本节课的老师最专业 - 多年一线互联公司监控系统架构经验，原字节跳动基础监控核心开发人员 - 对OpenFalcon有深度二次开发经验，滴滴夜莺核心开发人员之一 - 熟读Pro...'
 ---
 
 > **Prometheus · 第 3 篇**

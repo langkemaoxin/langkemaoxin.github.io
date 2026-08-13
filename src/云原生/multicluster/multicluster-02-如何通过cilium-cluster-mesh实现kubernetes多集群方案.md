@@ -1,15 +1,15 @@
 ---
-title: "如何通过Cilium Cluster Mesh实现Kubernetes多集群方案？"
-sidebarGroup: "多集群"
-shortTitle: "02 如何通过Cilium Cluster Mes..."
+title: 如何通过Cilium Cluster Mesh实现Kubernetes多集群方案？
+sidebarGroup: 多集群
+shortTitle: 02 如何通过Cilium Cluster Mes...
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "多集群"
-  - "云原生"
-  - "课程笔记"
-description: "如何通过Cilium Cluster Mesh实现Kubernetes多集群方案？ 一、Cilium Cluster Mesh 1.1 Cilium Cluster Mesh功能 Cluster Me..."
+  - 多集群
+  - 云原生
+  - 课程笔记
+description: 如何通过Cilium Cluster Mesh实现Kubernetes多集群方案？ 一、Cilium Cluster Mesh 1.1 Cilium Cluster Mesh功能 Cluster Me...
 ---
 
 > **多集群 · 第 2 篇**

@@ -1,15 +1,15 @@
 ---
-title: "37.1 prometheus管理接口源码讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "119 37.1 prometheus管理接口源码讲..."
+title: 37.1 prometheus管理接口源码讲解
+sidebarGroup: Prometheus
+shortTitle: 119 37.1 prometheus管理接口源码讲...
 order: 119
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 生命周期控制相关 - reload 热更新配置 - pprof相关 - prometheus pprof 查看火焰图 - 存储操作相关 生命周期控制相关 - 代码位置位置 D:\..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 生命周期控制相关 - reload 热更新配置 - pprof相关 - prometheus pprof 查看火焰图 - 存储操作相关 生命周期控制相关 - 代码位置位置 [path]'
 ---
 
 > **Prometheus · 第 119 篇**

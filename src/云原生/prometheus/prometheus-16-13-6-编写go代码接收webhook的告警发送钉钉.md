@@ -1,15 +1,15 @@
 ---
-title: "13.6 编写go代码接收webhook的告警发送钉钉"
-sidebarGroup: "Prometheus"
-shortTitle: "16 13.6 编写go代码接收webhook的告..."
+title: 13.6 编写go代码接收webhook的告警发送钉钉
+sidebarGroup: Prometheus
+shortTitle: 16 13.6 编写go代码接收webhook的告...
 order: 16
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 使用钉钉机器人发送到钉钉群 - 通过alertmanager webhook发送我们自定义的go程序中 - 解析alert对象并拼接钉钉信息发送 需求分析 使用钉钉机器人发送到钉..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 使用钉钉机器人发送到钉钉群 - 通过alertmanager webhook发送我们自定义的go程序中 - 解析alert对象并拼接钉钉信息发送 需求分析 使用钉钉机器人发送到钉...'
 ---
 
 > **Prometheus · 第 16 篇**

@@ -1,15 +1,15 @@
 ---
-title: "28.4 编译运行测试效果"
-sidebarGroup: "Prometheus"
-shortTitle: "72 28.4 编译运行测试效果"
+title: 28.4 编译运行测试效果
+sidebarGroup: Prometheus
+shortTitle: 72 28.4 编译运行测试效果
 order: 72
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "使用指南 安装 shell 自行编译 build go build -o dynamic-sharding main.go 修改配置文件 - 补充dynamic-sharding.yml中的信息: y..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '使用指南 安装 shell 自行编译 build go build -o dynamic-sharding main.go 修改配置文件 - 补充dynamic-sharding.yml中的信息: y...'
 ---
 
 > **Prometheus · 第 72 篇**

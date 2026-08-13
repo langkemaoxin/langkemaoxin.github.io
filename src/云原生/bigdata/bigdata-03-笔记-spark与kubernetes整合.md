@@ -1,15 +1,15 @@
 ---
-title: "笔记-Spark与Kubernetes整合"
-sidebarGroup: "大数据与 ML"
-shortTitle: "03 笔记-Spark与Kubernetes整合"
+title: 笔记-Spark与Kubernetes整合
+sidebarGroup: 大数据与 ML
+shortTitle: 03 笔记-Spark与Kubernetes整合
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "大数据与 ML"
-  - "云原生"
-  - "课程笔记"
-description: "1.1 Kubernetes 介绍 Kubernetes是Google公司在2014年6月开源的一个容器集群管理系统，使用Go语言开发，也叫K8S（k8s 这个缩写是因为k和s之间有八个字符的关系）。..."
+  - 大数据与 ML
+  - 云原生
+  - 课程笔记
+description: 1.1 Kubernetes 介绍 Kubernetes是Google公司在2014年6月开源的一个容器集群管理系统，使用Go语言开发，也叫K8S（k8s 这个缩写是因为k和s之间有八个字符的关系）。...
 ---
 
 > **大数据与 ML · 第 3 篇**

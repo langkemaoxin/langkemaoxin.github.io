@@ -1,15 +1,15 @@
 ---
-title: "28.3 一致性哈希和推送数据的redirect流程"
-sidebarGroup: "Prometheus"
-shortTitle: "71 28.3 一致性哈希和推送数据的redire..."
+title: 28.3 一致性哈希和推送数据的redirect流程
+sidebarGroup: Prometheus
+shortTitle: 71 28.3 一致性哈希和推送数据的redire...
 order: 71
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 开启一致性哈希环变更监听处理 - 这个服务的节点变更了(节点宕机、扩容)就对哈希环进行重置 - 开启结果监听和watch服务 - 编写pgw的http接收端 - 推送数据的red..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 开启一致性哈希环变更监听处理 - 这个服务的节点变更了(节点宕机、扩容)就对哈希环进行重置 - 开启结果监听和watch服务 - 编写pgw的http接收端 - 推送数据的red...'
 ---
 
 > **Prometheus · 第 71 篇**

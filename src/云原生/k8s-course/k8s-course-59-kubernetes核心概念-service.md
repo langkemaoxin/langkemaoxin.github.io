@@ -1,15 +1,15 @@
 ---
-title: "kubernetes核心概念 service"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "59 kubernetes核心概念 service"
+title: kubernetes核心概念 service
+sidebarGroup: K8s 课程笔记
+shortTitle: 59 kubernetes核心概念 service
 order: 59
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes核心概念 Service 一、 service作用 使用kubernetes集群运行工作负载时，由于Pod经常处于用后即焚状态，Pod经常被重新生成，因此Pod对应的IP地址也会经..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: kubernetes核心概念 Service 一、 service作用 使用kubernetes集群运行工作负载时，由于Pod经常处于用后即焚状态，Pod经常被重新生成，因此Pod对应的IP地址也会经...
 ---
 
 > **K8s 课程笔记 · 第 59 篇**

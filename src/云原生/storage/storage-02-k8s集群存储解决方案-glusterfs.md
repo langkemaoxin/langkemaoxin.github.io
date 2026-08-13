@@ -1,15 +1,15 @@
 ---
-title: "k8s集群存储解决方案 GlusterFS"
-sidebarGroup: "K8s 存储"
-shortTitle: "02 k8s集群存储解决方案 GlusterFS"
+title: k8s集群存储解决方案 GlusterFS
+sidebarGroup: K8s 存储
+shortTitle: 02 k8s集群存储解决方案 GlusterFS
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 存储"
-  - "云原生"
-  - "课程笔记"
-description: "k8s集群存储解决方案 GlusterFS 一、存储解决方案介绍 1.1 GlusterFS - GlusterFS是一个开源的分布式文件系统 - 具有强大的横向扩展能力 - 通过扩展能够支持数PB存..."
+  - K8s 存储
+  - 云原生
+  - 课程笔记
+description: k8s集群存储解决方案 GlusterFS 一、存储解决方案介绍 1.1 GlusterFS - GlusterFS是一个开源的分布式文件系统 - 具有强大的横向扩展能力 - 通过扩展能够支持数PB存...
 ---
 
 > **K8s 存储 · 第 2 篇**

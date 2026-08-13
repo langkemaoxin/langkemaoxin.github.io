@@ -1,15 +1,15 @@
 ---
-title: "3.5 static_configs采集配置源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "84 3.5 static_configs采集配置..."
+title: 3.5 static_configs采集配置源码解读
+sidebarGroup: Prometheus
+shortTitle: 84 3.5 static_configs采集配置...
 order: 84
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 采集段静态配置的解释 - static_configs解析相关源码解读 采集段的解释 - 采集段是以job为单位配置的 yaml 采集配置段 scrape_configs: Th..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 采集段静态配置的解释 - static_configs解析相关源码解读 采集段的解释 - 采集段是以job为单位配置的 yaml 采集配置段 scrape_configs: Th...'
 ---
 
 > **Prometheus · 第 84 篇**

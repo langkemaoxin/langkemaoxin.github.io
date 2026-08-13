@@ -1,15 +1,15 @@
 ---
-title: "在Linux上以all in one模式安装kubernetes & kubesphere"
-sidebarGroup: "PaaS 平台"
-shortTitle: "01 在Linux上以all in one模式安装..."
+title: 在Linux上以all in one模式安装kubernetes & kubesphere
+sidebarGroup: PaaS 平台
+shortTitle: 01 在Linux上以all in one模式安装...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "在Linux上以all in one模式安装kubernetes & kubesphere 于刚接触 KubeSphere 并想快速上手该容器平台的用户，All-in-One 安装模式是最佳的选择，它..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: 在Linux上以all in one模式安装kubernetes & kubesphere 于刚接触 KubeSphere 并想快速上手该容器平台的用户，All-in-One 安装模式是最佳的选择，它...
 ---
 
 > **PaaS 平台 · 第 1 篇**

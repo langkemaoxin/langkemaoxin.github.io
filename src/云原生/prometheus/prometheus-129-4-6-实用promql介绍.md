@@ -1,15 +1,15 @@
 ---
-title: "4.6 实用promql介绍"
-sidebarGroup: "Prometheus"
-shortTitle: "129 4.6 实用promql介绍"
+title: 4.6 实用promql介绍
+sidebarGroup: Prometheus
+shortTitle: 129 4.6 实用promql介绍
 order: 129
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : prometheus promql简单的总结 - topk 最值 - absent nodata报警 - offset 同环比 - 分位值histogram_quantile - 成..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : prometheus promql简单的总结 - topk 最值 - absent nodata报警 - offset 同环比 - 分位值histogram_quantile - 成...'
 ---
 
 > **Prometheus · 第 129 篇**

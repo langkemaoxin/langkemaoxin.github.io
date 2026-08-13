@@ -1,15 +1,15 @@
 ---
-title: "4.1 prometheus基本概念-sample数据点"
-sidebarGroup: "Prometheus"
-shortTitle: "124 4.1 prometheus基本概念-sam..."
+title: 4.1 prometheus基本概念-sample数据点
+sidebarGroup: Prometheus
+shortTitle: 124 4.1 prometheus基本概念-sam...
 order: 124
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : prometheus 基本概念 - point 时序中单一数据点的数据结构，大小 - 标签和标签组 - sample 时序曲线中的一个点 prometheus 基本概念 Point ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : prometheus 基本概念 - point 时序中单一数据点的数据结构，大小 - 标签和标签组 - sample 时序曲线中的一个点 prometheus 基本概念 Point ...'
 ---
 
 > **Prometheus · 第 124 篇**

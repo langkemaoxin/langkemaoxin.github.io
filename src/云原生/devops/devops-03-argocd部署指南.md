@@ -1,15 +1,15 @@
 ---
-title: "argocd部署指南"
-sidebarGroup: "DevOps / GitOps"
-shortTitle: "03 argocd部署指南"
+title: argocd部署指南
+sidebarGroup: DevOps / GitOps
+shortTitle: 03 argocd部署指南
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "DevOps / GitOps"
-  - "云原生"
-  - "课程笔记"
-description: "Argo CD部署指南 一、负载均衡器Metallb部署 1.1 修改kube-proxy代理模式 ~~~powershell [root@k8s-master01 ~] kubectl get co..."
+  - DevOps / GitOps
+  - 云原生
+  - 课程笔记
+description: 'Argo CD部署指南 一、负载均衡器Metallb部署 1.1 修改kube-proxy代理模式 ~~~powershell [root@k8s-master01 ~] kubectl get co...'
 ---
 
 > **DevOps / GitOps · 第 3 篇**

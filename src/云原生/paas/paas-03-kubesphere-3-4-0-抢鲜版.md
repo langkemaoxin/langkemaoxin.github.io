@@ -1,15 +1,15 @@
 ---
-title: "kubesphere 3.4.0 抢鲜版"
-sidebarGroup: "PaaS 平台"
-shortTitle: "03 kubesphere 3.4.0 抢鲜版"
+title: kubesphere 3.4.0 抢鲜版
+sidebarGroup: PaaS 平台
+shortTitle: 03 kubesphere 3.4.0 抢鲜版
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "kubesphere 3.4.0 抢鲜版部署 一、使用kubekey 3.0.10 部署K8S 1.26.5高可用集群 1.1 主机准备 | 主机名 | IP地址 | 备注 | | ---------..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: kubesphere 3.4.0 抢鲜版部署 一、使用kubekey 3.0.10 部署K8S 1.26.5高可用集群 1.1 主机准备 | 主机名 | IP地址 | 备注 | | ---------...
 ---
 
 > **PaaS 平台 · 第 3 篇**

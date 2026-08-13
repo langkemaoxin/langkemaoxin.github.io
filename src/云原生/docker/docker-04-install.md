@@ -1,14 +1,15 @@
 ---
-title: "Docker 安装三种方式——离线、在线与现成虚拟机"
-sidebarGroup: "Docker 系列"
-shortTitle: "04 安装三种方式"
+title: Docker 安装三种方式——离线、在线与现成虚拟机
+sidebarGroup: Docker 系列
+shortTitle: 04 安装三种方式
 order: 4
-date: 2026-08-11
-category: "云原生"
+date: 2026-08-11T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: Docker 安装三种方式——离线、在线与现成虚拟机
 ---
 
 > **Docker 系列 · 第 4/18 篇**  

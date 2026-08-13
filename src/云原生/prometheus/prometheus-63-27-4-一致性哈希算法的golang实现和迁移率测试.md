@@ -1,15 +1,15 @@
 ---
-title: "27.4 一致性哈希算法的golang实现和迁移率测试"
-sidebarGroup: "Prometheus"
-shortTitle: "63 27.4 一致性哈希算法的golang实现和..."
+title: 27.4 一致性哈希算法的golang实现和迁移率测试
+sidebarGroup: Prometheus
+shortTitle: 63 27.4 一致性哈希算法的golang实现和...
 order: 63
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 一致性哈希算法的golang实现 - 使用uint32封装索引排序的结构 - 定义一致性哈希环数据结构 - 选择哈希函数 - 完成Add、Remove、Get方法 一致性哈希算法..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 一致性哈希算法的golang实现 - 使用uint32封装索引排序的结构 - 定义一致性哈希环数据结构 - 选择哈希函数 - 完成Add、Remove、Get方法 一致性哈希算法...'
 ---
 
 > **Prometheus · 第 63 篇**

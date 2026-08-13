@@ -1,15 +1,15 @@
 ---
-title: "27.8 把target做一致性哈希进行分发"
-sidebarGroup: "Prometheus"
-shortTitle: "67 27.8 把target做一致性哈希进行分发"
+title: 27.8 把target做一致性哈希进行分发
+sidebarGroup: Prometheus
+shortTitle: 67 27.8 把target做一致性哈希进行分发
 order: 67
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 编写分发任务 - 执行这个对应的获取target函数 - 对target的地址 在哈希环中寻找节点 - 然后根据node塞入map中 - 然后写json文件 编写分发任务 - 位..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 编写分发任务 - 执行这个对应的获取target函数 - 对target的地址 在哈希环中寻找节点 - 然后根据node塞入map中 - 然后写json文件 编写分发任务 - 位...'
 ---
 
 > **Prometheus · 第 67 篇**

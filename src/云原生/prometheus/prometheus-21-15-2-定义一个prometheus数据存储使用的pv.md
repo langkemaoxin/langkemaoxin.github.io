@@ -1,15 +1,15 @@
 ---
-title: "15.2 定义一个prometheus数据存储使用的pv"
-sidebarGroup: "Prometheus"
-shortTitle: "21 15.2 定义一个prometheus数据存..."
+title: 15.2 定义一个prometheus数据存储使用的pv
+sidebarGroup: Prometheus
+shortTitle: 21 15.2 定义一个prometheus数据存...
 order: 21
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - pv的介绍和存在的意义 - pv中的核心参数讲解 - 定义一个prometheus数据存储使用的pv pv 存在的意义 - PV全称叫做Persistent Volume，持久化..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - pv的介绍和存在的意义 - pv中的核心参数讲解 - 定义一个prometheus数据存储使用的pv pv 存在的意义 - PV全称叫做Persistent Volume，持久化...'
 ---
 
 > **Prometheus · 第 21 篇**

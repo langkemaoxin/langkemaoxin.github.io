@@ -1,15 +1,15 @@
 ---
-title: "41.1 预聚合提速实战项目之需求分析和架构设计"
-sidebarGroup: "Prometheus"
-shortTitle: "133 41.1 预聚合提速实战项目之需求分析和架构..."
+title: 41.1 预聚合提速实战项目之需求分析和架构设计
+sidebarGroup: Prometheus
+shortTitle: 133 41.1 预聚合提速实战项目之需求分析和架构...
 order: 133
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 需求分析 - 架构设计 需求分析 - 使用预聚合提速查询 - 并且降低高基数查询对后端的压力 - 用户无需变更grafana上的查询语句，后端自动替换 - 效果图 架构设计 - ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 需求分析 - 架构设计 需求分析 - 使用预聚合提速查询 - 并且降低高基数查询对后端的压力 - 用户无需变更grafana上的查询语句，后端自动替换 - 效果图 架构设计 - ...'
 ---
 
 > **Prometheus · 第 133 篇**

@@ -1,15 +1,15 @@
 ---
-title: "37.3 prometheus5大数据查询接口"
-sidebarGroup: "Prometheus"
-shortTitle: "121 37.3 prometheus5大数据查询接..."
+title: 37.3 prometheus5大数据查询接口
+sidebarGroup: Prometheus
+shortTitle: 121 37.3 prometheus5大数据查询接...
 order: 121
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 5大数据查询接口 - instant_query查询一个点 - range_query查询一段时间数据 - series查询 全量标签数据 - labels查询 标签key集合 ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 5大数据查询接口 - instant_query查询一个点 - range_query查询一段时间数据 - series查询 全量标签数据 - labels查询 标签key集合 ...'
 ---
 
 > **Prometheus · 第 121 篇**

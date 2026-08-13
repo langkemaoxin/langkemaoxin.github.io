@@ -1,15 +1,15 @@
 ---
-title: "Grafana对接Prometheus数据源"
-sidebarGroup: "可观测性"
-shortTitle: "03 Grafana对接Prometheus数据源"
+title: Grafana对接Prometheus数据源
+sidebarGroup: 可观测性
+shortTitle: 03 Grafana对接Prometheus数据源
 order: 3
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "Grafana对接Prometheus数据源 一、Grafana介绍 二、Grafana安装 2.1 Grafana安装 本次方案使用二进制文件方式安装 ~~~powershell [root@gra..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: 'Grafana对接Prometheus数据源 一、Grafana介绍 二、Grafana安装 2.1 Grafana安装 本次方案使用二进制文件方式安装 ~~~powershell [root@gra...'
 ---
 
 > **可观测性 · 第 3 篇**

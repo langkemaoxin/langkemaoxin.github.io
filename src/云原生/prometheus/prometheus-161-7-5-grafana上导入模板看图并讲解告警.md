@@ -1,15 +1,15 @@
 ---
-title: "7.5 grafana上导入模板看图并讲解告警"
-sidebarGroup: "Prometheus"
-shortTitle: "161 7.5 grafana上导入模板看图并讲解告..."
+title: 7.5 grafana上导入模板看图并讲解告警
+sidebarGroup: Prometheus
+shortTitle: 161 7.5 grafana上导入模板看图并讲解告...
 order: 161
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - blackbox_exporter grafana大盘导入和查看 - 告警配置讲解 grafana大盘 grafana 上导入 blackbox_exporter dashboa..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - blackbox_exporter grafana大盘导入和查看 - 告警配置讲解 grafana大盘 grafana 上导入 blackbox_exporter dashboa...'
 ---
 
 > **Prometheus · 第 161 篇**

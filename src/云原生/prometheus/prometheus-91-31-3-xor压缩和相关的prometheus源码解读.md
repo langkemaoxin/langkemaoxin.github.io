@@ -1,15 +1,15 @@
 ---
-title: "31.3 XOR压缩和相关的prometheus源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "91 31.3 XOR压缩和相关的promethe..."
+title: 31.3 XOR压缩和相关的prometheus源码解读
+sidebarGroup: Prometheus
+shortTitle: 91 31.3 XOR压缩和相关的promethe...
 order: 91
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - xor 压缩value原理 - xor压缩过程讲解 - xor压缩prometheus源码解读 - xor 压缩效果 xor 压缩value原理 - 原理:时序数据库相邻点变化不..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - xor 压缩value原理 - xor压缩过程讲解 - xor压缩prometheus源码解读 - xor 压缩效果 xor 压缩value原理 - 原理:时序数据库相邻点变化不...'
 ---
 
 > **Prometheus · 第 91 篇**

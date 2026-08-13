@@ -1,15 +1,15 @@
 ---
-title: "如何基于Ubuntu 24.04部署原生K8S 1.30.0集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "48 如何基于Ubuntu 24.04部署原生K8..."
+title: 如何基于Ubuntu 24.04部署原生K8S 1.30.0集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 48 如何基于Ubuntu 24.04部署原生K8...
 order: 48
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "如何使用kube-vip基于Ubuntu 24.04部署原生K8S 1.30.0高可用集群？ 一、K8S集群主机准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--:..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: '如何使用kube-vip基于Ubuntu 24.04部署原生K8S 1.30.0高可用集群？ 一、K8S集群主机准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--:...'
 ---
 
 > **K8s 课程笔记 · 第 48 篇**

@@ -1,15 +1,15 @@
 ---
-title: "knative serving"
-sidebarGroup: "Serverless"
-shortTitle: "09 knative serving"
+title: knative serving
+sidebarGroup: Serverless
+shortTitle: 09 knative serving
 order: 9
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "knative serving 一、环境说明 1.1 Kubernetes集群 Master节点及Worker节点配置均为：CPU为8核，内存为8G。 ~~~powershell 查看kubernet..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: knative serving 一、环境说明 1.1 Kubernetes集群 Master节点及Worker节点配置均为：CPU为8核，内存为8G。 ~~~powershell 查看kubernet...
 ---
 
 > **Serverless · 第 9 篇**

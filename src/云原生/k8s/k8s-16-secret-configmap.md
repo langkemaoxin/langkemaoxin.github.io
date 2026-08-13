@@ -1,20 +1,20 @@
 ---
-title: "Secret、ConfigMap 与常见部署排障"
-sidebarGroup: "Kubernetes 系列"
-shortTitle: "16 Secret/ConfigMap"
+title: Secret、ConfigMap 与常见部署排障
+sidebarGroup: Kubernetes 系列
+shortTitle: 16 Secret/ConfigMap
 order: 16
-date: 2026-08-31
-category: "云原生"
+date: 2026-08-31T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "Kubernetes系列"
-  - "Secret"
-  - "ConfigMap"
-  - "ImagePullBackOff"
-  - "CrashLoopBackOff"
-  - "hostPath"
-description: "Secret/ConfigMap/imagePullSecrets，以及 ImagePullBackOff 等常见故障排查。"
+  - Kubernetes
+  - 云原生
+  - Kubernetes系列
+  - Secret
+  - ConfigMap
+  - ImagePullBackOff
+  - CrashLoopBackOff
+  - hostPath
+description: Secret/ConfigMap/imagePullSecrets，以及 ImagePullBackOff 等常见故障排查。
 ---
 
 > **Kubernetes 系列 · 第 16/20 篇**  

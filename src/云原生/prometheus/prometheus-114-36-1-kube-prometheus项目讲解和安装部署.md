@@ -1,15 +1,15 @@
 ---
-title: "36.1 kube-prometheus项目讲解和安装部署"
-sidebarGroup: "Prometheus"
-shortTitle: "114 36.1 kube-prometheus项目..."
+title: 36.1 kube-prometheus项目讲解和安装部署
+sidebarGroup: Prometheus
+shortTitle: 114 36.1 kube-prometheus项目...
 order: 114
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点总结 : kube-prometheus 优点 - 与手动添加指标目标和服务提供者相比，使用 Prometheus Operator 框架及其自定义资源定义具有显着优势 - 手动添加指标目标和..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点总结 : kube-prometheus 优点 - 与手动添加指标目标和服务提供者相比，使用 Prometheus Operator 框架及其自定义资源定义具有显着优势 - 手动添加指标目标和...'
 ---
 
 > **Prometheus · 第 114 篇**

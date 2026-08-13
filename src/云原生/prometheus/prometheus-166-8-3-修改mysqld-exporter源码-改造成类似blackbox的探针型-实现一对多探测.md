@@ -1,15 +1,15 @@
 ---
-title: "8.3 修改mysqld_exporter源码 ，改造成类似blackbox的探针型，实现一对多探测"
-sidebarGroup: "Prometheus"
-shortTitle: "166 8.3 修改mysqld_exporter源..."
+title: 8.3 修改mysqld_exporter源码 ，改造成类似blackbox的探针型，实现一对多探测
+sidebarGroup: Prometheus
+shortTitle: 166 8.3 修改mysqld_exporter源...
 order: 166
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 官方的mysqld_exporter问题 - 只能一对一 - 不能像探针一样采集多个实例 - dsn需要配置环境变量或者配置文件解析 - 需求说明 改造成类似blackbox的探..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 官方的mysqld_exporter问题 - 只能一对一 - 不能像探针一样采集多个实例 - dsn需要配置环境变量或者配置文件解析 - 需求说明 改造成类似blackbox的探...'
 ---
 
 > **Prometheus · 第 166 篇**

@@ -1,15 +1,15 @@
 ---
-title: "42.2 告警触发trigger模块单点问题和高可用解决方案"
-sidebarGroup: "Prometheus"
-shortTitle: "140 42.2 告警触发trigger模块单点问题..."
+title: 42.2 告警触发trigger模块单点问题和高可用解决方案
+sidebarGroup: Prometheus
+shortTitle: 140 42.2 告警触发trigger模块单点问题...
 order: 140
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus告警trigger单点问题 - trigger模型简化 海量的job交给有限的work执行 - 动态分片方案 - 改造之前的prome-shard代码 tri..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus告警trigger单点问题 - trigger模型简化 海量的job交给有限的work执行 - 动态分片方案 - 改造之前的prome-shard代码 tri...'
 ---
 
 > **Prometheus · 第 140 篇**

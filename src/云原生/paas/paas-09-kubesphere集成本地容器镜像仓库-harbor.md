@@ -1,15 +1,15 @@
 ---
-title: "KubeSphere集成本地容器镜像仓库 Harbor"
-sidebarGroup: "PaaS 平台"
-shortTitle: "09 KubeSphere集成本地容器镜像仓库 H..."
+title: KubeSphere集成本地容器镜像仓库 Harbor
+sidebarGroup: PaaS 平台
+shortTitle: 09 KubeSphere集成本地容器镜像仓库 H...
 order: 9
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "KubeSphere集成本地容器镜像仓库 Harbor 一、添加本地非安全容器镜像仓库至Docker配置 在k8s集群节点上配置 ~~~powershell cat /etc/docker/daemo..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: KubeSphere集成本地容器镜像仓库 Harbor 一、添加本地非安全容器镜像仓库至Docker配置 在k8s集群节点上配置 ~~~powershell cat /etc/docker/daemo...
 ---
 
 > **PaaS 平台 · 第 9 篇**

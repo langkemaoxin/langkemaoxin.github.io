@@ -1,15 +1,15 @@
 ---
-title: "30.1 时序数据库TSDB的典型特点"
-sidebarGroup: "Prometheus"
-shortTitle: "87 30.1 时序数据库TSDB的典型特点"
+title: 30.1 时序数据库TSDB的典型特点
+sidebarGroup: Prometheus
+shortTitle: 87 30.1 时序数据库TSDB的典型特点
 order: 87
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - db-ranking网站对db进行排名 - 时序数据特点 - 时序数据库特点 - 时序数据库遇到的挑战 - 开源时间序列数据库 db-ranking 一个神奇的网站 https:..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - db-ranking网站对db进行排名 - 时序数据特点 - 时序数据库特点 - 时序数据库遇到的挑战 - 开源时间序列数据库 db-ranking 一个神奇的网站 https:...'
 ---
 
 > **Prometheus · 第 87 篇**

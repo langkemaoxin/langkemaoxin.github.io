@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群使用容器镜像仓库Harbor"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "02 kubernetes集群使用容器镜像仓库Ha..."
+title: kubernetes集群使用容器镜像仓库Harbor
+sidebarGroup: K8s 课程笔记
+shortTitle: 02 kubernetes集群使用容器镜像仓库Ha...
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群使用容器镜像仓库Harbor 一、容器镜像仓库Harbor部署 1.1 在docker主机部署harbor 1.1.1 docker-ce安装 1.1.1.1 获取YUM源 使..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes集群使用容器镜像仓库Harbor 一、容器镜像仓库Harbor部署 1.1 在docker主机部署harbor 1.1.1 docker-ce安装 1.1.1.1 获取YUM源 使...
 ---
 
 > **K8s 课程笔记 · 第 2 篇**

@@ -1,15 +1,15 @@
 ---
-title: "Prometheus安装"
-sidebarGroup: "可观测性"
-shortTitle: "02 Prometheus安装"
+title: Prometheus安装
+sidebarGroup: 可观测性
+shortTitle: 02 Prometheus安装
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "Prometheus安装及使用 一、Prometheus简介 1.1 Prometheus是什么 Prometheus是一个开源系统监控和警报工具，最初由 SoundCloud创建。自 2012 年以..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: Prometheus安装及使用 一、Prometheus简介 1.1 Prometheus是什么 Prometheus是一个开源系统监控和警报工具，最初由 SoundCloud创建。自 2012 年以...
 ---
 
 > **可观测性 · 第 2 篇**

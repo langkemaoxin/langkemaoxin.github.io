@@ -1,15 +1,15 @@
 ---
-title: "28.2 go实战项目dynamic-sharding的代码准备工作"
-sidebarGroup: "Prometheus"
-shortTitle: "70 28.2 go实战项目dynamic-sha..."
+title: 28.2 go实战项目dynamic-sharding的代码准备工作
+sidebarGroup: Prometheus
+shortTitle: 70 28.2 go实战项目dynamic-sha...
 order: 70
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 编写配置文件 - 配置文件解析的工作 - 命令行参数解析、读取配置文件、设置logger - 初始化consul client - 注册服务 - 初始化哈希环 编写配置文件 ya..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 编写配置文件 - 配置文件解析的工作 - 命令行参数解析、读取配置文件、设置logger - 初始化consul client - 注册服务 - 初始化哈希环 编写配置文件 ya...'
 ---
 
 > **Prometheus · 第 70 篇**

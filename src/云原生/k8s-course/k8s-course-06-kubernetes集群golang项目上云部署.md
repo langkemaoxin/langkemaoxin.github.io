@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群golang项目上云部署"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "06 Kubernetes集群golang项目上云..."
+title: Kubernetes集群golang项目上云部署
+sidebarGroup: K8s 课程笔记
+shortTitle: 06 Kubernetes集群golang项目上云...
 order: 6
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群golang项目上云部署 一、项目情况 本次上线部署的是一个基于Golang开发的百万并发的IM系统，提供平台用户基本聊天及群聊功能等。 二、项目源码 ~~~powershel..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes集群golang项目上云部署 一、项目情况 本次上线部署的是一个基于Golang开发的百万并发的IM系统，提供平台用户基本聊天及群聊功能等。 二、项目源码 ~~~powershel...
 ---
 
 > **K8s 课程笔记 · 第 6 篇**

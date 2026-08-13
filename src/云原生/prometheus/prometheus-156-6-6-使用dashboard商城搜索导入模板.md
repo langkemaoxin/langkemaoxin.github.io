@@ -1,15 +1,15 @@
 ---
-title: "6.6 使用dashboard商城搜索导入模板"
-sidebarGroup: "Prometheus"
-shortTitle: "156 6.6 使用dashboard商城搜索导入模..."
+title: 6.6 使用dashboard商城搜索导入模板
+sidebarGroup: Prometheus
+shortTitle: 156 6.6 使用dashboard商城搜索导入模...
 order: 156
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 模板商城中搜索模板 - 导入模板 - 修改模板 大盘模板商城地址 免费的 - 地址 https://grafana.com/grafana/dashboards 搜索模板技巧 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 模板商城中搜索模板 - 导入模板 - 修改模板 大盘模板商城地址 免费的 - 地址 http[path] 搜索模板技巧 -...'
 ---
 
 > **Prometheus · 第 156 篇**

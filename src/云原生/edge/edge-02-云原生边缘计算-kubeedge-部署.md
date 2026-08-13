@@ -1,15 +1,15 @@
 ---
-title: "云原生边缘计算 kubeedge 部署"
-sidebarGroup: "边缘计算"
-shortTitle: "02 云原生边缘计算 kubeedge 部署"
+title: 云原生边缘计算 kubeedge 部署
+sidebarGroup: 边缘计算
+shortTitle: 02 云原生边缘计算 kubeedge 部署
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "边缘计算"
-  - "云原生"
-  - "课程笔记"
-description: "云原生边缘计算 kubeedge 部署 一、k8s集群部署及基础服务提供 1.1 k8s集群部署 由于kubeedge支持k8s版本版本较低，不建议使用k8s 1.24、1.25、1.26集群版本。可..."
+  - 边缘计算
+  - 云原生
+  - 课程笔记
+description: 云原生边缘计算 kubeedge 部署 一、k8s集群部署及基础服务提供 1.1 k8s集群部署 由于kubeedge支持k8s版本版本较低，不建议使用k8s 1.24、1.25、1.26集群版本。可...
 ---
 
 > **边缘计算 · 第 2 篇**

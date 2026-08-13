@@ -1,15 +1,15 @@
 ---
-title: "如何通过docker部署https访问的nginx应用？"
-sidebarGroup: "Docker 进阶"
-shortTitle: "01 如何通过docker部署https访问的ng..."
+title: 如何通过docker部署https访问的nginx应用？
+sidebarGroup: Docker 进阶
+shortTitle: 01 如何通过docker部署https访问的ng...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker 进阶"
-  - "云原生"
-  - "课程笔记"
-description: "如何通过docker容器部署https访问的nginx应用？ 一、应用目录准备 ~~~powershell 存储配置文件 mkdir -p nginxdir/nginx/conf.d ~~~ ~~~p..."
+  - Docker 进阶
+  - 云原生
+  - 课程笔记
+description: 如何通过docker容器部署https访问的nginx应用？ 一、应用目录准备 ~~~powershell 存储配置文件 mkdir -p nginxdir/nginx/conf.d ~~~ ~~~p...
 ---
 
 > **Docker 进阶 · 第 1 篇**

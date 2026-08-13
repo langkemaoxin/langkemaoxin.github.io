@@ -1,15 +1,15 @@
 ---
-title: "使用 Tekton 实现自动化流水线"
-sidebarGroup: "Serverless"
-shortTitle: "19 使用 Tekton 实现自动化流水线"
+title: 使用 Tekton 实现自动化流水线
+sidebarGroup: Serverless
+shortTitle: 19 使用 Tekton 实现自动化流水线
 order: 19
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "使用 Tekton 实现自动化流水线 一、思路介绍及资源准备 1.1 实现思路 使用tekton pipelines发布项目，需要把要整个工作流划分成不同的任务来执行，工作流的阶段可划分为以下几个阶段..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 使用 Tekton 实现自动化流水线 一、思路介绍及资源准备 1.1 实现思路 使用tekton pipelines发布项目，需要把要整个工作流划分成不同的任务来执行，工作流的阶段可划分为以下几个阶段...
 ---
 
 > **Serverless · 第 19 篇**

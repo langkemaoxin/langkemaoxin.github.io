@@ -1,15 +1,15 @@
 ---
-title: "如何使用argo-rollouts实现金丝雀发布？"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "16 如何使用argo-rollouts实现金丝雀..."
+title: 如何使用argo-rollouts实现金丝雀发布？
+sidebarGroup: K8s 课程笔记
+shortTitle: 16 如何使用argo-rollouts实现金丝雀...
 order: 16
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "如何使用argo-rollouts实现金丝雀发布？ 一、什么是Argo rollouts？ 1.1 什么是Argo Rollouts? Argo-Rollout是一个Kubernetes Contro..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 如何使用argo-rollouts实现金丝雀发布？ 一、什么是Argo rollouts？ 1.1 什么是Argo Rollouts? Argo-Rollout是一个Kubernetes Contro...
 ---
 
 > **K8s 课程笔记 · 第 16 篇**

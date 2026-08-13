@@ -1,15 +1,15 @@
 ---
-title: "27.9 调用go-ansible执行playbook拷贝json文件重载采集器"
-sidebarGroup: "Prometheus"
-shortTitle: "68 27.9 调用go-ansible执行pla..."
+title: 27.9 调用go-ansible执行playbook拷贝json文件重载采集器
+sidebarGroup: Prometheus
+shortTitle: 68 27.9 调用go-ansible执行pla...
 order: 68
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - go-ansible执行playbook - 编写分发重载的playbook - 编译执行 - 测试停掉一个节点 - 测试停掉的节点再回来 go-ansible执行playboo..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - go-ansible执行playbook - 编写分发重载的playbook - 编译执行 - 测试停掉一个节点 - 测试停掉的节点再回来 go-ansible执行playboo...'
 ---
 
 > **Prometheus · 第 68 篇**

@@ -1,15 +1,15 @@
 ---
-title: "kubespray部署k8s 1.26集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "28 kubespray部署k8s 1.26集群"
+title: kubespray部署k8s 1.26集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 28 kubespray部署k8s 1.26集群
 order: 28
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubespray部署k8s 1.26集群指南 前言 Kubespray 是一个自由开源的工具，它提供了 Ansible 剧本(playbook) 来部署和管理 Kubernetes 集群。它旨在简化..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: kubespray部署k8s 1.26集群指南 前言 Kubespray 是一个自由开源的工具，它提供了 Ansible 剧本(playbook) 来部署和管理 Kubernetes 集群。它旨在简化...
 ---
 
 > **K8s 课程笔记 · 第 28 篇**

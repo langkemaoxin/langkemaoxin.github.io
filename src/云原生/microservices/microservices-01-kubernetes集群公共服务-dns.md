@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群公共服务 DNS"
-sidebarGroup: "微服务实战"
-shortTitle: "01 kubernetes集群公共服务 DNS"
+title: kubernetes集群公共服务 DNS
+sidebarGroup: 微服务实战
+shortTitle: 01 kubernetes集群公共服务 DNS
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes集群公共服务 DNS 一、软件安装 ~~~powershell yum -y install bind ~~~ 二、软件配置 ~~~powershell vim /etc/name..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: kubernetes集群公共服务 DNS 一、软件安装 ~~~powershell yum -y install bind ~~~ 二、软件配置 ~~~powershell vim /etc/name...
 ---
 
 > **微服务实战 · 第 1 篇**

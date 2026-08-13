@@ -3,6 +3,7 @@ title: Kubernetes
 index: false
 icon: dharmachakra
 article: false
+description: Kubernetes
 ---
 
 # Kubernetes

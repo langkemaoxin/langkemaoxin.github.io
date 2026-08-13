@@ -1,15 +1,15 @@
 ---
-title: "15.8 在k8s部署prometheus statefulset"
-sidebarGroup: "Prometheus"
-shortTitle: "27 15.8 在k8s部署prometheus ..."
+title: 15.8 在k8s部署prometheus statefulset
+sidebarGroup: Prometheus
+shortTitle: 27 15.8 在k8s部署prometheus ...
 order: 27
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 准备好这些yaml文件 - 部署ksm - 部署prometheus 准备好这些yaml文件 | yaml文件名 | 作用 | | -----------------------..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 准备好这些yaml文件 - 部署ksm - 部署prometheus 准备好这些yaml文件 | yaml文件名 | 作用 | | -----------------------...'
 ---
 
 > **Prometheus · 第 27 篇**

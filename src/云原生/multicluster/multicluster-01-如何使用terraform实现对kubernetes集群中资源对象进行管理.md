@@ -1,15 +1,15 @@
 ---
-title: "如何使用terraform实现对kubernetes集群中资源对象进行管理？"
-sidebarGroup: "多集群"
-shortTitle: "01 如何使用terraform实现对kubern..."
+title: 如何使用terraform实现对kubernetes集群中资源对象进行管理？
+sidebarGroup: 多集群
+shortTitle: 01 如何使用terraform实现对kubern...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "多集群"
-  - "云原生"
-  - "课程笔记"
-description: "如何使用terraform实现对kubernetes集群中资源对象进行管理？ 一、terraform是什么 Terraform 是一个开源的基础设施即代码（Infrastructure as Code..."
+  - 多集群
+  - 云原生
+  - 课程笔记
+description: 如何使用terraform实现对kubernetes集群中资源对象进行管理？ 一、terraform是什么 Terraform 是一个开源的基础设施即代码（Infrastructure as Code...
 ---
 
 > **多集群 · 第 1 篇**

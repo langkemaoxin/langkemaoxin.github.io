@@ -3,6 +3,7 @@ title: Golang
 index: false
 icon: golang
 article: false
+description: Golang
 ---
 
 # Golang

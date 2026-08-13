@@ -1,15 +1,15 @@
 ---
-title: "国产化OpenEuler（欧拉）操作系统部署K8S集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "38 国产化OpenEuler（欧拉）操作系统部署..."
+title: 国产化OpenEuler（欧拉）操作系统部署K8S集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 38 国产化OpenEuler（欧拉）操作系统部署...
 order: 38
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "国产化OpenEuler（欧拉）操作系统部署K8S集群 需要提前准备好OpenEuler操作系统虚拟机3台，本文使用模板机创建。 一、主机硬件要求 1.1 主机操作系统说明 | 序号 | 操作系统及版..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 国产化OpenEuler（欧拉）操作系统部署K8S集群 需要提前准备好OpenEuler操作系统虚拟机3台，本文使用模板机创建。 一、主机硬件要求 1.1 主机操作系统说明 | 序号 | 操作系统及版...
 ---
 
 > **K8s 课程笔记 · 第 38 篇**

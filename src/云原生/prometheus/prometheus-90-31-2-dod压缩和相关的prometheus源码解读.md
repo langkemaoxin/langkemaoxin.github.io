@@ -1,15 +1,15 @@
 ---
-title: "31.2 DOD压缩和相关的prometheus源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "90 31.2 DOD压缩和相关的promethe..."
+title: 31.2 DOD压缩和相关的prometheus源码解读
+sidebarGroup: Prometheus
+shortTitle: 90 31.2 DOD压缩和相关的promethe...
 order: 90
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 时序数据时间的特点 - DOD压缩原理讲解 - dod压缩过程讲解 - dod压缩 prometheus源码解读 时序数据时间的特点 - 持续采集 - 采集间隔固定，如prome..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 时序数据时间的特点 - DOD压缩原理讲解 - dod压缩过程讲解 - dod压缩 prometheus源码解读 时序数据时间的特点 - 持续采集 - 采集间隔固定，如prome...'
 ---
 
 > **Prometheus · 第 90 篇**

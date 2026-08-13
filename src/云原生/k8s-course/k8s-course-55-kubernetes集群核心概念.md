@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群核心概念"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "55 Kubernetes集群核心概念"
+title: Kubernetes集群核心概念
+sidebarGroup: K8s 课程笔记
+shortTitle: 55 Kubernetes集群核心概念
 order: 55
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes核心概念 一、kubernetes核心概念 1.1 Pod Pod是可以在 Kubernetes 中创建和管理的、最小的可部署的计算单元。 Pod就像豌豆荚一样，其中包含着一组（一..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes核心概念 一、kubernetes核心概念 1.1 Pod Pod是可以在 Kubernetes 中创建和管理的、最小的可部署的计算单元。 Pod就像豌豆荚一样，其中包含着一组（一...
 ---
 
 > **K8s 课程笔记 · 第 55 篇**

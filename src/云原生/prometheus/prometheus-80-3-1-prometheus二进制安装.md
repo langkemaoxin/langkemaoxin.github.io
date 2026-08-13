@@ -1,15 +1,15 @@
 ---
-title: "3.1 prometheus二进制安装"
-sidebarGroup: "Prometheus"
-shortTitle: "80 3.1 prometheus二进制安装"
+title: 3.1 prometheus二进制安装
+sidebarGroup: Prometheus
+shortTitle: 80 3.1 prometheus二进制安装
 order: 80
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 二进制安装prometheus，使用systemd托管服务 二进制安装prometheus 下载prometheus - https://github.com/prometheu..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 二进制安装prometheus，使用systemd托管服务 二进制安装prometheus 下载prometheus - http[path]'
 ---
 
 > **Prometheus · 第 80 篇**

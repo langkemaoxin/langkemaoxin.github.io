@@ -1,15 +1,15 @@
 ---
-title: "kubernetes持久化存储卷及存储动态供给"
-sidebarGroup: "K8s 存储"
-shortTitle: "01 kubernetes持久化存储卷及存储动态供..."
+title: kubernetes持久化存储卷及存储动态供给
+sidebarGroup: K8s 存储
+shortTitle: 01 kubernetes持久化存储卷及存储动态供...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 存储"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes持久化存储卷 一、存储卷介绍 pod有生命周期，生命周期结束后pod里的数据会消失(如配置文件,业务数据等)。 解决: 我们需要将数据与pod分离,将数据放在专门的存储卷上 pod..."
+  - K8s 存储
+  - 云原生
+  - 课程笔记
+description: 'kubernetes持久化存储卷 一、存储卷介绍 pod有生命周期，生命周期结束后pod里的数据会消失(如配置文件,业务数据等)。 解决: 我们需要将数据与pod分离,将数据放在专门的存储卷上 pod...'
 ---
 
 > **K8s 存储 · 第 1 篇**

@@ -1,15 +1,15 @@
 ---
-title: "KubeSphere中集成ApiSix"
-sidebarGroup: "PaaS 平台"
-shortTitle: "04 KubeSphere中集成ApiSix"
+title: KubeSphere中集成ApiSix
+sidebarGroup: PaaS 平台
+shortTitle: 04 KubeSphere中集成ApiSix
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "KubeSphere中集成ApiSix 一、Apache APISIX 介绍 Apache APISIX 是一款开源的高性能、动态云原生网关，由深圳支流科技有限公司于 2019 年捐赠给 Apache..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: KubeSphere中集成ApiSix 一、Apache APISIX 介绍 Apache APISIX 是一款开源的高性能、动态云原生网关，由深圳支流科技有限公司于 2019 年捐赠给 Apache...
 ---
 
 > **PaaS 平台 · 第 4 篇**

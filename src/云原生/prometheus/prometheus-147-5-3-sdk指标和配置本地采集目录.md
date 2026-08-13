@@ -1,15 +1,15 @@
 ---
-title: "5.3 sdk指标和配置本地采集目录"
-sidebarGroup: "Prometheus"
-shortTitle: "147 5.3 sdk指标和配置本地采集目录"
+title: 5.3 sdk指标和配置本地采集目录
+sidebarGroup: Prometheus
+shortTitle: 147 5.3 sdk指标和配置本地采集目录
 order: 147
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus sdk指标简介和如何在node_exporter中禁用 - 节点上自打点数据上报 prometheus sdk指标 promhttp_ 代表访问 /metr..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus sdk指标简介和如何在node_exporter中禁用 - 节点上自打点数据上报 prometheus sdk指标 promhttp_ 代表访问 /metr...'
 ---
 
 > **Prometheus · 第 147 篇**

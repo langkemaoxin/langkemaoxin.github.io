@@ -1,18 +1,19 @@
 ---
-title: "Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链"
-sidebarGroup: "Docker 系列"
-shortTitle: "12 Daemon 与 runtime"
+title: Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链
+sidebarGroup: Docker 系列
+shortTitle: 12 Daemon 与 runtime
 order: 12
-date: 2026-08-19
-category: "云原生"
+date: 2026-08-19T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
-  - "OCI"
-  - "containerd"
-  - "runc"
-  - "CRI"
+  - Docker
+  - 云原生
+  - Docker系列
+  - OCI
+  - containerd
+  - runc
+  - CRI
+description: Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链
 ---
 
 > **Docker 系列 · 第 12/18 篇**  

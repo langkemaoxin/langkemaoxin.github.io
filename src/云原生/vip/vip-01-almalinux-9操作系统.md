@@ -1,15 +1,15 @@
 ---
-title: "AlmaLinux 9操作系统"
-sidebarGroup: "VIP 专题"
-shortTitle: "01 AlmaLinux 9操作系统"
+title: AlmaLinux 9操作系统
+sidebarGroup: VIP 专题
+shortTitle: 01 AlmaLinux 9操作系统
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "VIP 专题"
-  - "云原生"
-  - "课程笔记"
-description: "AlmaLinux 9操作系统 一、AlmaLinux 9 操作系统安装 安装过程与RHEL 9/CentOS7 一致。 二、AlmaLinux 9 操作系统配置 2.1 关闭防火墙 ~~~power..."
+  - VIP 专题
+  - 云原生
+  - 课程笔记
+description: AlmaLinux 9操作系统 一、AlmaLinux 9 操作系统安装 安装过程与RHEL 9/CentOS7 一致。 二、AlmaLinux 9 操作系统配置 2.1 关闭防火墙 ~~~power...
 ---
 
 > **VIP 专题 · 第 1 篇**

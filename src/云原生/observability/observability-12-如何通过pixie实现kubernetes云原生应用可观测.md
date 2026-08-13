@@ -1,15 +1,15 @@
 ---
-title: "如何通过Pixie实现Kubernetes云原生应用可观测？"
-sidebarGroup: "可观测性"
-shortTitle: "12 如何通过Pixie实现Kubernetes云..."
+title: 如何通过Pixie实现Kubernetes云原生应用可观测？
+sidebarGroup: 可观测性
+shortTitle: 12 如何通过Pixie实现Kubernetes云...
 order: 12
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "如何通过Pixie实现Kubernetes云原生应用可观测？ 一、Pixie介绍 参考网址为：https://docs.px.dev/ 1.1 Pixie是什么？ Pixie is an open s..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: '如何通过Pixie实现Kubernetes云原生应用可观测？ 一、Pixie介绍 参考网址为：http[path] 1.1 Pixie是什么？ Pixie is an open s...'
 ---
 
 > **可观测性 · 第 12 篇**

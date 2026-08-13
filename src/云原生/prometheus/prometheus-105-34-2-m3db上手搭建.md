@@ -1,15 +1,15 @@
 ---
-title: "34.2 m3db上手搭建"
-sidebarGroup: "Prometheus"
-shortTitle: "105 34.2 m3db上手搭建"
+title: 34.2 m3db上手搭建
+sidebarGroup: Prometheus
+shortTitle: 105 34.2 m3db上手搭建
 order: 105
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 单机版m3db安装 - 安装 - 和prometheus 通过remote_read整合 - 配置文件解读 单机版安装 下载二进制 shell wget https://gith..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 单机版m3db安装 - 安装 - 和prometheus 通过remote_read整合 - 配置文件解读 单机版安装 下载二进制 shell wget http[path]'
 ---
 
 > **Prometheus · 第 105 篇**

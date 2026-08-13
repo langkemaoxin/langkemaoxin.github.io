@@ -1,15 +1,15 @@
 ---
-title: "K8S集群网络插件Cilium（网络加速器）部署及使用验证"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "37 K8S集群网络插件Cilium（网络加速器）..."
+title: K8S集群网络插件Cilium（网络加速器）部署及使用验证
+sidebarGroup: K8s 课程笔记
+shortTitle: 37 K8S集群网络插件Cilium（网络加速器）...
 order: 37
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "K8S集群网络插件Cilium（网络加速器）部署及使用验证 K8S集群网络插件Cilium（网络加速器）部署及使用验证使用Cilium网络插件加速K8S集群网络 一、K8S集群主机准备 1.1 主机操..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: K8S集群网络插件Cilium（网络加速器）部署及使用验证 K8S集群网络插件Cilium（网络加速器）部署及使用验证使用Cilium网络插件加速K8S集群网络 一、K8S集群主机准备 1.1 主机操...
 ---
 
 > **K8s 课程笔记 · 第 37 篇**

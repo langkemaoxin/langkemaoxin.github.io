@@ -1,15 +1,15 @@
 ---
-title: "5.5 node_exporter采集原理简介"
-sidebarGroup: "Prometheus"
-shortTitle: "149 5.5 node_exporter采集原理简..."
+title: 5.5 node_exporter采集原理简介
+sidebarGroup: Prometheus
+shortTitle: 149 5.5 node_exporter采集原理简...
 order: 149
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - node_exporter主流程源码追踪 - mem模块采集的流程 node_exporter主流程源码追踪 采集器的初始化 - 初始化handler - 源码位置 D:\nyy..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - node_exporter主流程源码追踪 - mem模块采集的流程 node_exporter主流程源码追踪 采集器的初始化 - 初始化handler - 源码位置 [path]'
 ---
 
 > **Prometheus · 第 149 篇**

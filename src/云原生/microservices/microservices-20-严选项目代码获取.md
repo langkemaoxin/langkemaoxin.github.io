@@ -1,15 +1,15 @@
 ---
-title: "严选项目代码获取"
-sidebarGroup: "微服务实战"
-shortTitle: "20 严选项目代码获取"
+title: 严选项目代码获取
+sidebarGroup: 微服务实战
+shortTitle: 20 严选项目代码获取
 order: 20
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "严选项目代码获取 一、代码仓库访问 项目代码仓库：git.mashibing.com 二、代码输入IDE开发工具"
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 严选项目代码获取 一、代码仓库访问 项目代码仓库：git.mashibing.com 二、代码输入IDE开发工具
 ---
 
 > **微服务实战 · 第 20 篇**

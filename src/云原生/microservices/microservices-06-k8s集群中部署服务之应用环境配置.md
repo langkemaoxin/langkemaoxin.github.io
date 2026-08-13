@@ -1,15 +1,15 @@
 ---
-title: "K8S集群中部署服务之应用环境配置"
-sidebarGroup: "微服务实战"
-shortTitle: "06 K8S集群中部署服务之应用环境配置"
+title: K8S集群中部署服务之应用环境配置
+sidebarGroup: 微服务实战
+shortTitle: 06 K8S集群中部署服务之应用环境配置
 order: 6
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "微服务项目sangomall应用环境配置说明 一、应用环境配置文件创建 可以创建多个application.properties或application.yml文件,通过关键配置进行激活使用，例如测试..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: '微服务项目sangomall应用环境配置说明 一、应用环境配置文件创建 可以创建多个application.properties或application.yml文件,通过关键配置进行激活使用，例如测试...'
 ---
 
 > **微服务实战 · 第 6 篇**

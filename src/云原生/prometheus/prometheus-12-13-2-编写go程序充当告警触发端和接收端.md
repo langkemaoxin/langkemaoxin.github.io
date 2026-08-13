@@ -1,15 +1,15 @@
 ---
-title: "13.2 编写go程序充当告警触发端和接收端"
-sidebarGroup: "Prometheus"
-shortTitle: "12 13.2 编写go程序充当告警触发端和接收端"
+title: 13.2 编写go程序充当告警触发端和接收端
+sidebarGroup: Prometheus
+shortTitle: 12 13.2 编写go程序充当告警触发端和接收端
 order: 12
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 编写go程序充当告警触发端，向alertmanager发送告警 - 编写go程序充当告警接收端，从alertmanager 接收webhook的告警信息 发送告警的接口 - 接口..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 编写go程序充当告警触发端，向alertmanager发送告警 - 编写go程序充当告警接收端，从alertmanager 接收webhook的告警信息 发送告警的接口 - 接口...'
 ---
 
 > **Prometheus · 第 12 篇**

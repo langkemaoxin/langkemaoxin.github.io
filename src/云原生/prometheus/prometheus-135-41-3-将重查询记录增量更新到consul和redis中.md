@@ -1,15 +1,15 @@
 ---
-title: "41.3 将重查询记录增量更新到consul和redis中"
-sidebarGroup: "Prometheus"
-shortTitle: "135 41.3 将重查询记录增量更新到consul..."
+title: 41.3 将重查询记录增量更新到consul和redis中
+sidebarGroup: Prometheus
+shortTitle: 135 41.3 将重查询记录增量更新到consul...
 order: 135
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 将重查询记录增量更新到consul中 - 同时将record记录更新到本地 - 更新到redis中 将重查询记录增量更新到consul中 封装consul-client pyth..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 将重查询记录增量更新到consul中 - 同时将record记录更新到本地 - 更新到redis中 将重查询记录增量更新到consul中 封装consul-client pyth...'
 ---
 
 > **Prometheus · 第 135 篇**

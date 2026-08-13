@@ -1,15 +1,15 @@
 ---
-title: "7.3 多实例采集的说明relabel配置"
-sidebarGroup: "Prometheus"
-shortTitle: "159 7.3 多实例采集的说明relabel配置"
+title: 7.3 多实例采集的说明relabel配置
+sidebarGroup: Prometheus
+shortTitle: 159 7.3 多实例采集的说明relabel配置
 order: 159
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 使用 relabel_configs配置blackbox采集 - http探测指标讲解 使用参数将采集任务配置到prometheus blackbox_exporter 需要传入..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 使用 relabel_configs配置blackbox采集 - http探测指标讲解 使用参数将采集任务配置到prometheus blackbox_exporter 需要传入...'
 ---
 
 > **Prometheus · 第 159 篇**

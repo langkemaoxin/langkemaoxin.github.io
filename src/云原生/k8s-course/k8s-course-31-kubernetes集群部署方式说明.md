@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群部署方式说明"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "31 Kubernetes集群部署方式说明"
+title: Kubernetes集群部署方式说明
+sidebarGroup: K8s 课程笔记
+shortTitle: 31 Kubernetes集群部署方式说明
 order: 31
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群部署方式说明 一、本地化部署 1.1 kubeadm - Kubeadm 是一个工具，旨在提供创建 Kubernetes 集群 kubeadm init 的 kubeadm j..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes集群部署方式说明 一、本地化部署 1.1 kubeadm - Kubeadm 是一个工具，旨在提供创建 Kubernetes 集群 kubeadm init 的 kubeadm j...
 ---
 
 > **K8s 课程笔记 · 第 31 篇**

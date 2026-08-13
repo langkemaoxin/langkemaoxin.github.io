@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群UI及主机资源监控"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "22 Kubernetes集群UI及主机资源监控"
+title: Kubernetes集群UI及主机资源监控
+sidebarGroup: K8s 课程笔记
+shortTitle: 22 Kubernetes集群UI及主机资源监控
 order: 22
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群UI及主机资源监控 一、Kubernetes dashboard作用 - 通过dashboard能够直观了解Kubernetes集群中运行的资源对象 - 通过dashboard..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes集群UI及主机资源监控 一、Kubernetes dashboard作用 - 通过dashboard能够直观了解Kubernetes集群中运行的资源对象 - 通过dashboard...
 ---
 
 > **K8s 课程笔记 · 第 22 篇**

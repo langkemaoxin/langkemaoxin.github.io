@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群备份与恢复管理利器Velero"
-sidebarGroup: "备份恢复"
-shortTitle: "01 kubernetes集群备份与恢复管理利器V..."
+title: kubernetes集群备份与恢复管理利器Velero
+sidebarGroup: 备份恢复
+shortTitle: 01 kubernetes集群备份与恢复管理利器V...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "备份恢复"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes集群备份与恢复管理利器Velero 一、Velero简介 Velero 是一款可以安全的备份、恢复和迁移 Kubernetes 集群资源和持久卷等资源的备份恢复软件。 Velero..."
+  - 备份恢复
+  - 云原生
+  - 课程笔记
+description: kubernetes集群备份与恢复管理利器Velero 一、Velero简介 Velero 是一款可以安全的备份、恢复和迁移 Kubernetes 集群资源和持久卷等资源的备份恢复软件。 Velero...
 ---
 
 > **备份恢复 · 第 1 篇**

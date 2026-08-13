@@ -1,15 +1,15 @@
 ---
-title: "20.1 分析pull模型在k8s中的应用，对比push模型"
-sidebarGroup: "Prometheus"
-shortTitle: "40 20.1 分析pull模型在k8s中的应用，..."
+title: 20.1 分析pull模型在k8s中的应用，对比push模型
+sidebarGroup: Prometheus
+shortTitle: 40 20.1 分析pull模型在k8s中的应用，...
 order: 40
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - push模型和pull模型监控系统对比 - 为什么在k8s中只能用pull模型的 - k8s中主要组件的暴露地址说明 push模型和pull模型监控系统 - 对比下两种系统采用的..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - push模型和pull模型监控系统对比 - 为什么在k8s中只能用pull模型的 - k8s中主要组件的暴露地址说明 push模型和pull模型监控系统 - 对比下两种系统采用的...'
 ---
 
 > **Prometheus · 第 40 篇**

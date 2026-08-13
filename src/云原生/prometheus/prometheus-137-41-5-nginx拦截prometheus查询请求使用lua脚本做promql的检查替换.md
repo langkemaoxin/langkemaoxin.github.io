@@ -1,15 +1,15 @@
 ---
-title: "41.5 nginx拦截prometheus查询请求使用lua脚本做promql的检查替换"
-sidebarGroup: "Prometheus"
-shortTitle: "137 41.5 nginx拦截prometheus..."
+title: 41.5 nginx拦截prometheus查询请求使用lua脚本做promql的检查替换
+sidebarGroup: Prometheus
+shortTitle: 137 41.5 nginx拦截prometheus...
 order: 137
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 编写lua脚本做promql的检查替换 - nginx拦截prometheus查询请求使用lua处理 编写lua脚本做promql的检查替换 获取请求参数 shell scrip..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 编写lua脚本做promql的检查替换 - nginx拦截prometheus查询请求使用lua处理 编写lua脚本做promql的检查替换 获取请求参数 shell scrip...'
 ---
 
 > **Prometheus · 第 137 篇**

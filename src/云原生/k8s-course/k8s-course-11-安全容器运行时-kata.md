@@ -1,15 +1,15 @@
 ---
-title: "安全容器运行时  Kata"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "11 安全容器运行时  Kata"
+title: 安全容器运行时  Kata
+sidebarGroup: K8s 课程笔记
+shortTitle: 11 安全容器运行时  Kata
 order: 11
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "安全容器运行时 Kata Container 一、安全容器运行时 Kata Container出现的原因 Kubernetes目前作为企业级容器平台，企业生产最重要的是安全。众所周知，Docker 容..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 安全容器运行时 Kata Container 一、安全容器运行时 Kata Container出现的原因 Kubernetes目前作为企业级容器平台，企业生产最重要的是安全。众所周知，Docker 容...
 ---
 
 > **K8s 课程笔记 · 第 11 篇**

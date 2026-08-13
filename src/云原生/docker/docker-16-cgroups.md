@@ -1,14 +1,15 @@
 ---
-title: "CGroups 限资源——防止一个容器吃光整台机器"
-sidebarGroup: "Docker 系列"
-shortTitle: "16 CGroups 限资源"
+title: CGroups 限资源——防止一个容器吃光整台机器
+sidebarGroup: Docker 系列
+shortTitle: 16 CGroups 限资源
 order: 16
-date: 2026-08-23
-category: "云原生"
+date: 2026-08-23T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: CGroups 限资源——防止一个容器吃光整台机器
 ---
 
 > **Docker 系列 · 第 16/18 篇**  

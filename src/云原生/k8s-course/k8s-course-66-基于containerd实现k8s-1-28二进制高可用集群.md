@@ -1,15 +1,15 @@
 ---
-title: "基于Containerd实现K8S 1.28二进制高可用集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "04 基于Containerd实现K8S 1.28..."
+title: 基于Containerd实现K8S 1.28二进制高可用集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 04 基于Containerd实现K8S 1.28...
 order: 66
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Containerd"
-  - "云原生"
-  - "课程笔记"
-description: "基于Containerd实现K8S 1.28二进制高可用集群 一、K8S集群架构说明 二、K8S集群主机配置 2.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :..."
+  - Containerd
+  - 云原生
+  - 课程笔记
+description: '基于Containerd实现K8S 1.28二进制高可用集群 一、K8S集群架构说明 二、K8S集群主机配置 2.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :...'
 ---
 
 > **K8s 课程笔记 · 第 66 篇**

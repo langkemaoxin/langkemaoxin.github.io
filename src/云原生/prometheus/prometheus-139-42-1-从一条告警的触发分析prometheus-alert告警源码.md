@@ -1,15 +1,15 @@
 ---
-title: "42.1 从一条告警的触发分析prometheus alert告警源码"
-sidebarGroup: "Prometheus"
-shortTitle: "139 42.1 从一条告警的触发分析prometh..."
+title: 42.1 从一条告警的触发分析prometheus alert告警源码
+sidebarGroup: Prometheus
+shortTitle: 139 42.1 从一条告警的触发分析prometh...
 order: 139
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 源码解读 源码解读 - 主流程在40.3讲解过，回顾一下 rule manager管理器 初始化ruleManager - main中初始化 go ruleManager = r..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 源码解读 源码解读 - 主流程在40.3讲解过，回顾一下 rule manager管理器 初始化ruleManager - main中初始化 go ruleManager = r...'
 ---
 
 > **Prometheus · 第 139 篇**

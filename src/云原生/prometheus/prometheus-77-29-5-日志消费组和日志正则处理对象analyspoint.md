@@ -1,15 +1,15 @@
 ---
-title: "29.5 日志消费组和日志正则处理对象AnalysPoint"
-sidebarGroup: "Prometheus"
-shortTitle: "77 29.5 日志消费组和日志正则处理对象Ana..."
+title: 29.5 日志消费组和日志正则处理对象AnalysPoint
+sidebarGroup: Prometheus
+shortTitle: 77 29.5 日志消费组和日志正则处理对象Ana...
 order: 77
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 日志正则消费分析对象 - 日志消费者组存在的意义和对应的方法 - 定义正则分析结果对象AnalysPoint - 编写正则处理方法 日志消费组和日志正则处理对象AnalysPoi..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 日志正则消费分析对象 - 日志消费者组存在的意义和对应的方法 - 定义正则分析结果对象AnalysPoint - 编写正则处理方法 日志消费组和日志正则处理对象AnalysPoi...'
 ---
 
 > **Prometheus · 第 77 篇**

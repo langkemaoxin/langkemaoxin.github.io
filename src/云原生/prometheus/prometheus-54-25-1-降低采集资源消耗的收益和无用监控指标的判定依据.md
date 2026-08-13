@@ -1,15 +1,15 @@
 ---
-title: "25.1 降低采集资源消耗的收益和无用监控指标的判定依据"
-sidebarGroup: "Prometheus"
-shortTitle: "54 25.1 降低采集资源消耗的收益和无用监控指..."
+title: 25.1 降低采集资源消耗的收益和无用监控指标的判定依据
+sidebarGroup: Prometheus
+shortTitle: 54 25.1 降低采集资源消耗的收益和无用监控指...
 order: 54
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 降低采集资源消耗的收益 - 哪些是无用指标，什么判定依据 - 通过 grafana的 mysql 表获取所有的 查询表达式expr - 通过 获取所有的prometheus ru..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 降低采集资源消耗的收益 - 哪些是无用指标，什么判定依据 - 通过 grafana的 mysql 表获取所有的 查询表达式expr - 通过 获取所有的prometheus ru...'
 ---
 
 > **Prometheus · 第 54 篇**

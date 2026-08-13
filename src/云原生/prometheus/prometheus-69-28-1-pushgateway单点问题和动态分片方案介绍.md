@@ -1,15 +1,15 @@
 ---
-title: "28.1 pushgateway单点问题和动态分片方案介绍"
-sidebarGroup: "Prometheus"
-shortTitle: "69 28.1 pushgateway单点问题和动..."
+title: 28.1 pushgateway单点问题和动态分片方案介绍
+sidebarGroup: Prometheus
+shortTitle: 69 28.1 pushgateway单点问题和动...
 order: 69
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - pushgateway单点问题现象和原因 - 静态分片的弊端 - 动态分片方案介绍 pgw单点问题 pgw是什么 - [项目介绍](https://github.com/prom..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - pushgateway单点问题现象和原因 - 静态分片的弊端 - 动态分片方案介绍 pgw单点问题 pgw是什么 - [项目介绍](http[path]'
 ---
 
 > **Prometheus · 第 69 篇**

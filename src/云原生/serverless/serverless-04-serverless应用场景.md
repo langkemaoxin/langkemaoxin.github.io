@@ -1,15 +1,15 @@
 ---
-title: "Serverless应用场景"
-sidebarGroup: "Serverless"
-shortTitle: "04 Serverless应用场景"
+title: Serverless应用场景
+sidebarGroup: Serverless
+shortTitle: 04 Serverless应用场景
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Serverless应用场景 一、异步及高并发 对于异步的、高并发的，并易于并行化成独立工作单元的工作负载 二、低频或零星请求 对于应用系统访问低频或有零星访问请求，但具有较大不可预测扩容变化需求的工..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Serverless应用场景 一、异步及高并发 对于异步的、高并发的，并易于并行化成独立工作单元的工作负载 二、低频或零星请求 对于应用系统访问低频或有零星访问请求，但具有较大不可预测扩容变化需求的工...
 ---
 
 > **Serverless · 第 4 篇**

@@ -1,15 +1,15 @@
 ---
-title: "3.2ui功能讲解之graph页面"
-sidebarGroup: "Prometheus"
-shortTitle: "81 3.2ui功能讲解之graph页面"
+title: 3.2ui功能讲解之graph页面
+sidebarGroup: Prometheus
+shortTitle: 81 3.2ui功能讲解之graph页面
 order: 81
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "文档链接 - http://fynote.com/detail/MjU0Nw== 本节重点介绍 : - graph页面 - target页面 - flags页面 - status页面 - tsdb-s..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '文档链接 - htt[path] 本节重点介绍 : - graph页面 - target页面 - flags页面 - status页面 - tsdb-s...'
 ---
 
 > **Prometheus · 第 81 篇**

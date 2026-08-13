@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes配置与密钥管理 ConfigMap&Secret"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "01 Kubernetes配置与密钥管理 Conf..."
+title: Kubernetes配置与密钥管理 ConfigMap&Secret
+sidebarGroup: K8s 课程笔记
+shortTitle: 01 Kubernetes配置与密钥管理 Conf...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes配置与密钥管理 ConfigMap&Secret 一、ConfigMap 1.1 什么是configmap - kubernetes集群可以使用ConfigMap来实现对容器中应用..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes配置与密钥管理 ConfigMap&Secret 一、ConfigMap 1.1 什么是configmap - kubernetes集群可以使用ConfigMap来实现对容器中应用...
 ---
 
 > **K8s 课程笔记 · 第 1 篇**

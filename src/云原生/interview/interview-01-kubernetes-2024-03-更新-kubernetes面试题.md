@@ -1,15 +1,15 @@
 ---
-title: "kubernetes 2024-03 更新 Kubernetes面试题"
-sidebarGroup: "面试"
-shortTitle: "01 kubernetes 2024-03 更新 ..."
+title: kubernetes 2024-03 更新 Kubernetes面试题
+sidebarGroup: 面试
+shortTitle: 01 kubernetes 2024-03 更新 ...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "面试"
-  - "云原生"
-  - "课程笔记"
-description: "2024-03 更新 Kubernetes面试题 1、在一台 Ubuntu 服务器上安装并设置一个基本的单节点 Kubernetes 集群(使用minikube 或kubeadm)。 a.更新系统包:..."
+  - 面试
+  - 云原生
+  - 课程笔记
+description: '2024-03 更新 Kubernetes面试题 1、在一台 Ubuntu 服务器上安装并设置一个基本的单节点 Kubernetes 集群(使用minikube 或kubeadm)。 a.更新系统包:...'
 ---
 
 > **面试 · 第 1 篇**

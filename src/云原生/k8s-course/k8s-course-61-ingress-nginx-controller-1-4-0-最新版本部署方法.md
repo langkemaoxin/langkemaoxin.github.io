@@ -1,15 +1,15 @@
 ---
-title: "ingress nginx controller 1.4.0 最新版本部署方法"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "61 ingress nginx controll..."
+title: ingress nginx controller 1.4.0 最新版本部署方法
+sidebarGroup: K8s 课程笔记
+shortTitle: 61 ingress nginx controll...
 order: 61
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "ingress nginx controller 1.4.0 最新版本部署方法 一、获取ingress nginx controller ~~~powershell wget https://raw...."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'ingress nginx controller 1.4.0 最新版本部署方法 一、获取ingress nginx controller ~~~powershell wget http[path]'
 ---
 
 > **K8s 课程笔记 · 第 61 篇**

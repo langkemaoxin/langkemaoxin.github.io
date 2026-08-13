@@ -1,15 +1,15 @@
 ---
-title: "Knative 可观测性 使用prometheus与grafana监控"
-sidebarGroup: "Serverless"
-shortTitle: "21 Knative 可观测性 使用prometh..."
+title: Knative 可观测性 使用prometheus与grafana监控
+sidebarGroup: Serverless
+shortTitle: 21 Knative 可观测性 使用prometh...
 order: 21
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Knative 可观测性 使用prometheus与grafana监控 本案例中有负载均衡器：metallb 一、安装helm ~~~powershell 本案例通过复制链接下载： wget http..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Knative 可观测性 使用prometheus与grafana监控 本案例中有负载均衡器：metallb 一、安装helm ~~~powershell 本案例通过复制链接下载： wget http...
 ---
 
 > **Serverless · 第 21 篇**

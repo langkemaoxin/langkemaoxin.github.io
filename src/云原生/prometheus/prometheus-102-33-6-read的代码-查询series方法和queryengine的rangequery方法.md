@@ -1,15 +1,15 @@
 ---
-title: "33.6 read的代码，查询series方法和QueryEngine的RangeQuery方法"
-sidebarGroup: "Prometheus"
-shortTitle: "102 33.6 read的代码，查询series方..."
+title: 33.6 read的代码，查询series方法和QueryEngine的RangeQuery方法
+sidebarGroup: Prometheus
+shortTitle: 102 33.6 read的代码，查询series方...
 order: 102
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - remote_read代码需求 - 查询一个标签的值列表 - 查询一段时间的数据 - 通用的查询series方法 - 查询一个标签的值列表 - 查询一段时间的数据 remote_..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - remote_read代码需求 - 查询一个标签的值列表 - 查询一段时间的数据 - 通用的查询series方法 - 查询一个标签的值列表 - 查询一段时间的数据 remote_...'
 ---
 
 > **Prometheus · 第 102 篇**

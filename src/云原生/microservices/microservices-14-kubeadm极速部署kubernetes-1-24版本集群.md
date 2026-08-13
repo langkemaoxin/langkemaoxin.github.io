@@ -1,15 +1,15 @@
 ---
-title: "kubeadm极速部署Kubernetes 1.24版本集群"
-sidebarGroup: "微服务实战"
-shortTitle: "14 kubeadm极速部署Kubernetes ..."
+title: kubeadm极速部署Kubernetes 1.24版本集群
+sidebarGroup: 微服务实战
+shortTitle: 14 kubeadm极速部署Kubernetes ...
 order: 14
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "kubeadm极速部署Kubernetes 1.24版本集群 一、Kubernetes 1.24版本集群部署 1.1 Kubernetes 1.24版本集群部署环境准备 1.1.1 主机操作系统说明 ..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: kubeadm极速部署Kubernetes 1.24版本集群 一、Kubernetes 1.24版本集群部署 1.1 Kubernetes 1.24版本集群部署环境准备 1.1.1 主机操作系统说明 ...
 ---
 
 > **微服务实战 · 第 14 篇**

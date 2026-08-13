@@ -1,15 +1,15 @@
 ---
-title: "微服务部署前中间件部署"
-sidebarGroup: "微服务实战"
-shortTitle: "19 微服务部署前中间件部署"
+title: 微服务部署前中间件部署
+sidebarGroup: 微服务实战
+shortTitle: 19 微服务部署前中间件部署
 order: 19
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "严选商城项目中间件部署 一、MySQL部署 1.1 部署MySQL注意事项 可以使用kubesphere快速完成MySQL部署 - 有状态服务抽取配置为ConfigMap - 有状态服务必须使用PVC..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 严选商城项目中间件部署 一、MySQL部署 1.1 部署MySQL注意事项 可以使用kubesphere快速完成MySQL部署 - 有状态服务抽取配置为ConfigMap - 有状态服务必须使用PVC...
 ---
 
 > **微服务实战 · 第 19 篇**

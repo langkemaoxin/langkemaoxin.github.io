@@ -1,15 +1,15 @@
 ---
-title: "7.2 页面访问http探测，模块和探针介绍"
-sidebarGroup: "Prometheus"
-shortTitle: "158 7.2 页面访问http探测，模块和探针介绍"
+title: 7.2 页面访问http探测，模块和探针介绍
+sidebarGroup: Prometheus
+shortTitle: 158 7.2 页面访问http探测，模块和探针介绍
 order: 158
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 访问的是/probe path 而非 /metrics - 需要传入target参数 作为探测的目标地址 - module参数代表使用哪个探测的模块 - debug=true参数..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 访问的是/probe path 而非 /metrics - 需要传入target参数 作为探测的目标地址 - module参数代表使用哪个探测的模块 - debug=true参数...'
 ---
 
 > **Prometheus · 第 158 篇**

@@ -1,15 +1,15 @@
 ---
-title: "云原生"
-sidebarGroup: "云原生基础"
-shortTitle: "01 云原生"
+title: 云原生
+sidebarGroup: 云原生基础
+shortTitle: 01 云原生
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "云原生基础"
-  - "云原生"
-  - "课程笔记"
-description: "云原生（CloudNative） 一、云原生定义 1.1 理解云原生 1.1.1 从字面理解 云原生从字面意思上来看可以分成： - 云(Cloud) - 原生(Native) - 云原生（CloudN..."
+  - 云原生基础
+  - 云原生
+  - 课程笔记
+description: 云原生（CloudNative） 一、云原生定义 1.1 理解云原生 1.1.1 从字面理解 云原生从字面意思上来看可以分成： - 云(Cloud) - 原生(Native) - 云原生（CloudN...
 ---
 
 > **云原生基础 · 第 1 篇**

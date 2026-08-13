@@ -1,15 +1,15 @@
 ---
-title: "26.3 summary源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "59 26.3 summary源码解读"
+title: 26.3 summary源码解读
+sidebarGroup: Prometheus
+shortTitle: 59 26.3 summary源码解读
 order: 59
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - summary数据结构 - 分位值库 https://github.com/beorn7/perks 源码解读 summary数据结构 - 源码位置 D:\go_path\pkg..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - summary数据结构 - 分位值库 http[path] 源码解读 summary数据结构 - 源码位置 [path]'
 ---
 
 > **Prometheus · 第 59 篇**

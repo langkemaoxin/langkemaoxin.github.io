@@ -1,15 +1,15 @@
 ---
-title: "Go 基础练习 unit2"
-sidebarGroup: "Golang"
-shortTitle: "23 unit2"
+title: Go 基础练习 unit2
+sidebarGroup: Golang
+shortTitle: 23 unit2
 order: 23
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Golang"
-  - "云原生"
-  - "课程笔记"
-description: "goproject unit2 练习整理"
+  - Golang
+  - 云原生
+  - 课程笔记
+description: goproject unit2 练习整理
 ---
 
 > **Golang · 第 23 篇**

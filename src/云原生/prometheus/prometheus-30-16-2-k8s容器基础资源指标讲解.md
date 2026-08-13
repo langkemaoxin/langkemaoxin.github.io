@@ -1,15 +1,15 @@
 ---
-title: "16.2 k8s容器基础资源指标讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "30 16.2 k8s容器基础资源指标讲解"
+title: 16.2 k8s容器基础资源指标讲解
+sidebarGroup: Prometheus
+shortTitle: 30 16.2 k8s容器基础资源指标讲解
 order: 30
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 指标分析 - cpu指标 - mem指标 - filesystem && disk.io指标 - network指标 - system指标 - container_network..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 指标分析 - cpu指标 - mem指标 - filesystem && disk.io指标 - network指标 - system指标 - container_network...'
 ---
 
 > **Prometheus · 第 30 篇**

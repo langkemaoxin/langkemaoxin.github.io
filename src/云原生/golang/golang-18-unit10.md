@@ -1,15 +1,15 @@
 ---
-title: "Go 基础练习 unit10"
-sidebarGroup: "Golang"
-shortTitle: "18 unit10"
+title: Go 基础练习 unit10
+sidebarGroup: Golang
+shortTitle: 18 unit10
 order: 18
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Golang"
-  - "云原生"
-  - "课程笔记"
-description: "goproject unit10 练习整理"
+  - Golang
+  - 云原生
+  - 课程笔记
+description: goproject unit10 练习整理
 ---
 
 > **Golang · 第 18 篇**

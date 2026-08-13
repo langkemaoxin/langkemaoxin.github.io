@@ -1,15 +1,15 @@
 ---
-title: "使用Argo CD实现流水线发布项目"
-sidebarGroup: "DevOps / GitOps"
-shortTitle: "04 使用Argo CD实现流水线发布项目"
+title: 使用Argo CD实现流水线发布项目
+sidebarGroup: DevOps / GitOps
+shortTitle: 04 使用Argo CD实现流水线发布项目
 order: 4
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "DevOps / GitOps"
-  - "云原生"
-  - "课程笔记"
-description: "使用Argo CD实现流水线发布项目 一、项目代码及项目部署工具准备 1.1 项目代码准备 1.1.1 argocd demo ~~~powershell [root@gitlab-server ar..."
+  - DevOps / GitOps
+  - 云原生
+  - 课程笔记
+description: '使用Argo CD实现流水线发布项目 一、项目代码及项目部署工具准备 1.1 项目代码准备 1.1.1 argocd demo ~~~powershell [root@gitlab-server ar...'
 ---
 
 > **DevOps / GitOps · 第 4 篇**

@@ -1,15 +1,15 @@
 ---
-title: "41.2 ansible拷贝日志文件，解析日志并判断重查询"
-sidebarGroup: "Prometheus"
-shortTitle: "134 41.2 ansible拷贝日志文件，解析日..."
+title: 41.2 ansible拷贝日志文件，解析日志并判断重查询
+sidebarGroup: Prometheus
+shortTitle: 134 41.2 ansible拷贝日志文件，解析日...
 order: 134
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - pre_query项目配置文件设计 - ansible-copy拷贝日志文件 - 解析日志文件并判断重查询 新建python项目 pre_query 设计配置文件 - confi..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - pre_query项目配置文件设计 - ansible-copy拷贝日志文件 - 解析日志文件并判断重查询 新建python项目 pre_query 设计配置文件 - confi...'
 ---
 
 > **Prometheus · 第 134 篇**

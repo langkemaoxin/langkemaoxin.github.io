@@ -1,15 +1,15 @@
 ---
-title: "33.3 prometheus 低成本存储multi_remote_read方案说明"
-sidebarGroup: "Prometheus"
-shortTitle: "99 33.3 prometheus 低成本存储m..."
+title: 33.3 prometheus 低成本存储multi_remote_read方案说明
+sidebarGroup: Prometheus
+shortTitle: 99 33.3 prometheus 低成本存储m...
 order: 99
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus 低成本存储multi_remote_read方案说明 - 数据重复怎么办 - 配置prometheus remote_read prometheus 架构图..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus 低成本存储multi_remote_read方案说明 - 数据重复怎么办 - 配置prometheus remote_read prometheus 架构图...'
 ---
 
 > **Prometheus · 第 99 篇**

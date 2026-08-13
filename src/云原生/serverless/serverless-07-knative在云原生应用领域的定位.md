@@ -1,15 +1,15 @@
 ---
-title: "Knative在云原生应用领域的定位"
-sidebarGroup: "Serverless"
-shortTitle: "07 Knative在云原生应用领域的定位"
+title: Knative在云原生应用领域的定位
+sidebarGroup: Serverless
+shortTitle: 07 Knative在云原生应用领域的定位
 order: 7
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Knative在云原生应用领域的定位 一、Knative在Kubernetes生态中的定位 - Kubernetes作为基础设施，解决应用编排和运行环境； - Isito作为通信基础设施层，保证服务的..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Knative在云原生应用领域的定位 一、Knative在Kubernetes生态中的定位 - Kubernetes作为基础设施，解决应用编排和运行环境； - Isito作为通信基础设施层，保证服务的...
 ---
 
 > **Serverless · 第 7 篇**

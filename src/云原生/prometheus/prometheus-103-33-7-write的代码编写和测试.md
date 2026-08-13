@@ -1,15 +1,15 @@
 ---
-title: "33.7 write的代码编写和测试"
-sidebarGroup: "Prometheus"
-shortTitle: "103 33.7 write的代码编写和测试"
+title: 33.7 write的代码编写和测试
+sidebarGroup: Prometheus
+shortTitle: 103 33.7 write的代码编写和测试
 order: 103
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus的proto编码 和压缩 - 带retry的写入管理器 - 写入的post函数判断是否是可恢复的错误决定是否重试 开启prometheus 队列消费协程 - ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus的proto编码 和压缩 - 带retry的写入管理器 - 写入的post函数判断是否是可恢复的错误决定是否重试 开启prometheus 队列消费协程 - ...'
 ---
 
 > **Prometheus · 第 103 篇**

@@ -1,15 +1,15 @@
 ---
-title: "27.1 采集端单点问题原因和危害，静态分片方案的弊端"
-sidebarGroup: "Prometheus"
-shortTitle: "60 27.1 采集端单点问题原因和危害，静态分片..."
+title: 27.1 采集端单点问题原因和危害，静态分片方案的弊端
+sidebarGroup: Prometheus
+shortTitle: 60 27.1 采集端单点问题原因和危害，静态分片...
 order: 60
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 采集器单点问题和危害 - 采集器挂掉的场景原因 - 静态分片的手段和弊端 采集器单点问题 - 采集器由于prometheus进程挂了，导致数据断点 - 数据断点时间取决于 进程挂..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 采集器单点问题和危害 - 采集器挂掉的场景原因 - 静态分片的手段和弊端 采集器单点问题 - 采集器由于prometheus进程挂了，导致数据断点 - 数据断点时间取决于 进程挂...'
 ---
 
 > **Prometheus · 第 60 篇**

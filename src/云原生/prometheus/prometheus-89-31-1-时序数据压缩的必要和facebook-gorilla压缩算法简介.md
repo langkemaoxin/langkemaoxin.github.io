@@ -1,15 +1,15 @@
 ---
-title: "31.1 时序数据压缩的必要和facebook-gorilla压缩算法简介"
-sidebarGroup: "Prometheus"
-shortTitle: "89 31.1 时序数据压缩的必要和faceboo..."
+title: 31.1 时序数据压缩的必要和facebook-gorilla压缩算法简介
+sidebarGroup: Prometheus
+shortTitle: 89 31.1 时序数据压缩的必要和faceboo...
 order: 89
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 海量时序数据存储空间问题 - 为什么要做数据点压缩 - facebook_gorilla压缩算法 - 压缩比例高达11.6 海量时序数据存储空间问题 以城市气温为例 - 以城市气..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 海量时序数据存储空间问题 - 为什么要做数据点压缩 - facebook_gorilla压缩算法 - 压缩比例高达11.6 海量时序数据存储空间问题 以城市气温为例 - 以城市气...'
 ---
 
 > **Prometheus · 第 89 篇**

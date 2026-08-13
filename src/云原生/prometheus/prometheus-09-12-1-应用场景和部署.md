@@ -1,15 +1,15 @@
 ---
-title: "12.1 应用场景和部署"
-sidebarGroup: "Prometheus"
-shortTitle: "09 12.1 应用场景和部署"
+title: 12.1 应用场景和部署
+sidebarGroup: Prometheus
+shortTitle: 09 12.1 应用场景和部署
 order: 9
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - pushgateway简介 - pushgateway使用场景 - 说白了就是不能使用pull模型的场景 - 安装部署 项目地址 - https://github.com/pro..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - pushgateway简介 - pushgateway使用场景 - 说白了就是不能使用pull模型的场景 - 安装部署 项目地址 - http[path]'
 ---
 
 > **Prometheus · 第 9 篇**

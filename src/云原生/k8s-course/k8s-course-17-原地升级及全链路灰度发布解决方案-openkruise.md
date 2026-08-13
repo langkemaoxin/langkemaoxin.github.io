@@ -1,15 +1,15 @@
 ---
-title: "原地升级及全链路灰度发布解决方案 OpenKruise"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "17 原地升级及全链路灰度发布解决方案 OpenK..."
+title: 原地升级及全链路灰度发布解决方案 OpenKruise
+sidebarGroup: K8s 课程笔记
+shortTitle: 17 原地升级及全链路灰度发布解决方案 OpenK...
 order: 17
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "原地升级及全链路灰度发布方案 OpenKruise 一、OpenKruise是什么？ OpenKruise 是一个基于 Kubernetes 的扩展套件，主要聚焦于云原生应用的自动化，比如 部署、发布..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 原地升级及全链路灰度发布方案 OpenKruise 一、OpenKruise是什么？ OpenKruise 是一个基于 Kubernetes 的扩展套件，主要聚焦于云原生应用的自动化，比如 部署、发布...
 ---
 
 > **K8s 课程笔记 · 第 17 篇**

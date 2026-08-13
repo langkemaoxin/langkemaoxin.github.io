@@ -1,15 +1,15 @@
 ---
-title: "Tekton流水线中使用WorkSpace应用案例"
-sidebarGroup: "Serverless"
-shortTitle: "16 Tekton流水线中使用WorkSpace应..."
+title: Tekton流水线中使用WorkSpace应用案例
+sidebarGroup: Serverless
+shortTitle: 16 Tekton流水线中使用WorkSpace应...
 order: 16
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Tekton流水线中使用WorkSpace应用案例 一、应用场景介绍 在实际工作中，我们经常需要的一个功能是能够在任务之间共享制品，以便缓存构建工具（比如 Maven 和 NPM）的依赖项，在 Tek..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Tekton流水线中使用WorkSpace应用案例 一、应用场景介绍 在实际工作中，我们经常需要的一个功能是能够在任务之间共享制品，以便缓存构建工具（比如 Maven 和 NPM）的依赖项，在 Tek...
 ---
 
 > **Serverless · 第 16 篇**

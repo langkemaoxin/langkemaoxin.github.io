@@ -1,15 +1,15 @@
 ---
-title: "严选项目流水线基础环境准备"
-sidebarGroup: "微服务实战"
-shortTitle: "23 严选项目流水线基础环境准备"
+title: 严选项目流水线基础环境准备
+sidebarGroup: 微服务实战
+shortTitle: 23 严选项目流水线基础环境准备
 order: 23
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "严选项目流水线基础环境准备 一、项目代码仓库及项目代码准备 1.1 项目代码仓库准备 本次使用gitee Git 全局设置 ~~~powershell git config --global user..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 严选项目流水线基础环境准备 一、项目代码仓库及项目代码准备 1.1 项目代码仓库准备 本次使用gitee Git 全局设置 ~~~powershell git config --global user...
 ---
 
 > **微服务实战 · 第 23 篇**

@@ -1,15 +1,15 @@
 ---
-title: "35.3 thanos-store 源码阅读"
-sidebarGroup: "Prometheus"
-shortTitle: "110 35.3 thanos-store 源码阅读"
+title: 35.3 thanos-store 源码阅读
+sidebarGroup: Prometheus
+shortTitle: 110 35.3 thanos-store 源码阅读
 order: 110
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 启动时同步对象存储的各个block元信息到本地，并且将索引数据也同步过来 - 启动定时同步的任务 - 封装prometheus查询的grpc服务，对外提供服务，底层调用配置的对象..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 启动时同步对象存储的各个block元信息到本地，并且将索引数据也同步过来 - 启动定时同步的任务 - 封装prometheus查询的grpc服务，对外提供服务，底层调用配置的对象...'
 ---
 
 > **Prometheus · 第 110 篇**

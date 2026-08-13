@@ -1,14 +1,15 @@
 ---
-title: "容器日常命令——run、ps、stop、exec 与常用运维"
-sidebarGroup: "Docker 系列"
-shortTitle: "06 容器日常命令"
+title: 容器日常命令——run、ps、stop、exec 与常用运维
+sidebarGroup: Docker 系列
+shortTitle: 06 容器日常命令
 order: 6
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: 容器日常命令——run、ps、stop、exec 与常用运维
 ---
 
 > **Docker 系列 · 第 6/18 篇**  

@@ -1,15 +1,15 @@
 ---
-title: "kubernetes核心概念 controller"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "57 kubernetes核心概念 control..."
+title: kubernetes核心概念 controller
+sidebarGroup: K8s 课程笔记
+shortTitle: 57 kubernetes核心概念 control...
 order: 57
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes核心概念 Controller 一、pod控制器controller 1.1 Controller作用及分类 controller用于控制pod 参考: https://kuber..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'kubernetes核心概念 Controller 一、pod控制器controller 1.1 Controller作用及分类 controller用于控制pod 参考: http[path]'
 ---
 
 > **K8s 课程笔记 · 第 57 篇**

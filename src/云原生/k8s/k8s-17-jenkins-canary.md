@@ -1,17 +1,17 @@
 ---
-title: "Jenkins + Ingress 自动化灰度发布流水线"
-sidebarGroup: "Kubernetes 系列"
-shortTitle: "17 Jenkins 灰度"
+title: Jenkins + Ingress 自动化灰度发布流水线
+sidebarGroup: Kubernetes 系列
+shortTitle: 17 Jenkins 灰度
 order: 17
-date: 2026-09-01
-category: "云原生"
+date: 2026-09-01T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "Jenkins"
-  - "Ingress"
-  - "云原生"
-  - "Kubernetes系列"
-description: "Jenkins Pipeline 驱动 Ingress 灰度：按 Header/权重的自动化发布流水线。"
+  - Kubernetes
+  - Jenkins
+  - Ingress
+  - 云原生
+  - Kubernetes系列
+description: Jenkins Pipeline 驱动 Ingress 灰度：按 Header/权重的自动化发布流水线。
 ---
 
 > **Kubernetes 系列 · 第 17/20 篇**  

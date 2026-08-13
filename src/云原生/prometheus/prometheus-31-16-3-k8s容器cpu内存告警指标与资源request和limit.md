@@ -1,15 +1,15 @@
 ---
-title: "16.3 k8s容器cpu内存告警指标与资源request和limit"
-sidebarGroup: "Prometheus"
-shortTitle: "31 16.3 k8s容器cpu内存告警指标与资源..."
+title: 16.3 k8s容器cpu内存告警指标与资源request和limit
+sidebarGroup: Prometheus
+shortTitle: 31 16.3 k8s容器cpu内存告警指标与资源...
 order: 31
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - Guaranteed的pod Qos最高 - 在生产环境中，如何设置 Kubernetes 的 Limit 和 Request 对于优化应用程序和集群性能至关重要。 - 对于 C..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - Guaranteed的pod Qos最高 - 在生产环境中，如何设置 Kubernetes 的 Limit 和 Request 对于优化应用程序和集群性能至关重要。 - 对于 C...'
 ---
 
 > **Prometheus · 第 31 篇**

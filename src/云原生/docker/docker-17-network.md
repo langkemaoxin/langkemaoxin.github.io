@@ -1,14 +1,15 @@
 ---
-title: "Docker 网络模式与实操——从 docker0 到 overlay"
-sidebarGroup: "Docker 系列"
-shortTitle: "17 网络模式与实操"
+title: Docker 网络模式与实操——从 docker0 到 overlay
+sidebarGroup: Docker 系列
+shortTitle: 17 网络模式与实操
 order: 17
-date: 2026-08-24
-category: "云原生"
+date: 2026-08-24T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: Docker 网络模式与实操——从 docker0 到 overlay
 ---
 
 > **Docker 系列 · 第 17/18 篇**  

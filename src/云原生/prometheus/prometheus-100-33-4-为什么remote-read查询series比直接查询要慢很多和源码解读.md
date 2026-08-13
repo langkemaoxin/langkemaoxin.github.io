@@ -1,15 +1,15 @@
 ---
-title: "33.4 为什么remote_read查询series比直接查询要慢很多和源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "100 33.4 为什么remote_read查询s..."
+title: 33.4 为什么remote_read查询series比直接查询要慢很多和源码解读
+sidebarGroup: Prometheus
+shortTitle: 100 33.4 为什么remote_read查询s...
 order: 100
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 为什么remote_read查询series比直接查询要慢很多 - remote_read源码解析 为什么remote_read 比 直接查询要慢很多 现象描述 - 查询脚本 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 为什么remote_read查询series比直接查询要慢很多 - remote_read源码解析 为什么remote_read 比 直接查询要慢很多 现象描述 - 查询脚本 -...'
 ---
 
 > **Prometheus · 第 100 篇**

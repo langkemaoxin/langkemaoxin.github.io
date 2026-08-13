@@ -1,15 +1,15 @@
 ---
-title: "10.2 grafana上导入模板看图并讲解告警"
-sidebarGroup: "Prometheus"
-shortTitle: "05 10.2 grafana上导入模板看图并讲解..."
+title: 10.2 grafana上导入模板看图并讲解告警
+sidebarGroup: Prometheus
+shortTitle: 05 10.2 grafana上导入模板看图并讲解...
 order: 5
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 添加到prometheus采集配置中 - grafana 上导入dashboard - 重点指标讲解 添加到prometheus采集配置中 采用和blackbox-exporte..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 添加到prometheus采集配置中 - grafana 上导入dashboard - 重点指标讲解 添加到prometheus采集配置中 采用和blackbox-exporte...'
 ---
 
 > **Prometheus · 第 5 篇**

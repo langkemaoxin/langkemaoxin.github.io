@@ -1,15 +1,15 @@
 ---
-title: "33.1 prometheus本地存储单点问题和remote解决方案"
-sidebarGroup: "Prometheus"
-shortTitle: "97 33.1 prometheus本地存储单点问..."
+title: 33.1 prometheus本地存储单点问题和remote解决方案
+sidebarGroup: Prometheus
+shortTitle: 97 33.1 prometheus本地存储单点问...
 order: 97
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus本地存储单点问题 - 官方提供的remote集成方法 - 现有支持的远程端点和存储 prometheus本地存储问题 - 参考文档 https://prome..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus本地存储单点问题 - 官方提供的remote集成方法 - 现有支持的远程端点和存储 prometheus本地存储问题 - 参考文档 http[path]'
 ---
 
 > **Prometheus · 第 97 篇**

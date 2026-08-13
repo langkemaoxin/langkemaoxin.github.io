@@ -1,15 +1,15 @@
 ---
-title: "轻量级容器管理工具 Containerd"
-sidebarGroup: "Containerd"
-shortTitle: "01 轻量级容器管理工具 Containerd"
+title: 轻量级容器管理工具 Containerd
+sidebarGroup: Containerd
+shortTitle: 01 轻量级容器管理工具 Containerd
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Containerd"
-  - "云原生"
-  - "课程笔记"
-description: "轻量级或工业级容器管理工具 Containerd 一、Containerd介绍 1.0 前言 - 早在2016年3月，Docker 1.11的Docker Engine里就包含了containerd，..."
+  - Containerd
+  - 云原生
+  - 课程笔记
+description: 轻量级或工业级容器管理工具 Containerd 一、Containerd介绍 1.0 前言 - 早在2016年3月，Docker 1.11的Docker Engine里就包含了containerd，...
 ---
 
 > **Containerd · 第 1 篇**

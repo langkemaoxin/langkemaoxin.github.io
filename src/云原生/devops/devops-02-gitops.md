@@ -1,15 +1,15 @@
 ---
-title: "gitops"
-sidebarGroup: "DevOps / GitOps"
-shortTitle: "02 gitops"
+title: gitops
+sidebarGroup: DevOps / GitOps
+shortTitle: 02 gitops
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "DevOps / GitOps"
-  - "云原生"
-  - "课程笔记"
-description: "GitOps 一、什么是GitOps 说起GitOps，可能马上会联想到我们前面讲的DevOps，那么GitOps和DevOps之间有什么关系、又有什么区别呢？ DevOps是一种文化 DevOps包..."
+  - DevOps / GitOps
+  - 云原生
+  - 课程笔记
+description: GitOps 一、什么是GitOps 说起GitOps，可能马上会联想到我们前面讲的DevOps，那么GitOps和DevOps之间有什么关系、又有什么区别呢？ DevOps是一种文化 DevOps包...
 ---
 
 > **DevOps / GitOps · 第 2 篇**

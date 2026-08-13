@@ -1,15 +1,15 @@
 ---
-title: "41.6 安装部署，效果测试，架构回顾"
-sidebarGroup: "Prometheus"
-shortTitle: "138 41.6 安装部署，效果测试，架构回顾"
+title: 41.6 安装部署，效果测试，架构回顾
+sidebarGroup: Prometheus
+shortTitle: 138 41.6 安装部署，效果测试，架构回顾
 order: 138
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "01 在prometheus record机器上 安装confd - 下载 带分片功能的confd二进制 shell script wget https://github.com/ning1875/c..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '01 在prometheus record机器上 安装confd - 下载 带分片功能的confd二进制 shell script wget http[path]'
 ---
 
 > **Prometheus · 第 138 篇**

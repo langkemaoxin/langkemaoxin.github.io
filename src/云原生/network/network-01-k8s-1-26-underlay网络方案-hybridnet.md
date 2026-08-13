@@ -1,15 +1,15 @@
 ---
-title: "k8s 1.26 underlay网络方案 hybridnet"
-sidebarGroup: "K8s 网络"
-shortTitle: "01 k8s 1.26 underlay网络方案 ..."
+title: k8s 1.26 underlay网络方案 hybridnet
+sidebarGroup: K8s 网络
+shortTitle: 01 k8s 1.26 underlay网络方案 ...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 网络"
-  - "云原生"
-  - "课程笔记"
-description: "k8s集群 underlay 网络方案 hybridnet 零、容器网络方案介绍 0.1 overlay 网络方案 基于VXLAN、 NVGRE等封装技术实现overlay叠加网络： 1、叠加网络/覆..."
+  - K8s 网络
+  - 云原生
+  - 课程笔记
+description: k8s集群 underlay 网络方案 hybridnet 零、容器网络方案介绍 0.1 overlay 网络方案 基于VXLAN、 NVGRE等封装技术实现overlay叠加网络： 1、叠加网络/覆...
 ---
 
 > **K8s 网络 · 第 1 篇**

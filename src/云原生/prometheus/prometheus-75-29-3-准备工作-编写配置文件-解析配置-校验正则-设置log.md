@@ -1,15 +1,15 @@
 ---
-title: "29.3 准备工作，编写配置文件，解析配置，校验正则，设置log"
-sidebarGroup: "Prometheus"
-shortTitle: "75 29.3 准备工作，编写配置文件，解析配置，..."
+title: 29.3 准备工作，编写配置文件，解析配置，校验正则，设置log
+sidebarGroup: Prometheus
+shortTitle: 75 29.3 准备工作，编写配置文件，解析配置，...
 order: 75
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 新建项目 log2metrics - 编写配置文件yaml - main 解析配置，校验正则，设置log - 根据配置文件设置metrics 新建项目 log2metrics g..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 新建项目 log2metrics - 编写配置文件yaml - main 解析配置，校验正则，设置log - 根据配置文件设置metrics 新建项目 log2metrics g...'
 ---
 
 > **Prometheus · 第 75 篇**

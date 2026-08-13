@@ -1,15 +1,15 @@
 ---
-title: "如何通过kube-vip实现K8S集群高可用"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "46 如何通过kube-vip实现K8S集群高可用"
+title: 如何通过kube-vip实现K8S集群高可用
+sidebarGroup: K8s 课程笔记
+shortTitle: 46 如何通过kube-vip实现K8S集群高可用
 order: 46
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "如何通过kube-vip实现K8S集群高可用及Service LB 软件列表及软件版本：CentOS7U9, Linux kernel 5.4,docker-ce 24.0.7,cri-dockerd..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: '如何通过kube-vip实现K8S集群高可用及Service LB 软件列表及软件版本：CentOS7U9, Linux kernel 5.4,docker-ce 24.0.7,cri-dockerd...'
 ---
 
 > **K8s 课程笔记 · 第 46 篇**

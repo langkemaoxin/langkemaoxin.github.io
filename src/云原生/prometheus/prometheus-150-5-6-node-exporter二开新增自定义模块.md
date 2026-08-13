@@ -1,15 +1,15 @@
 ---
-title: "5.6 node_exporter二开新增自定义模块"
-sidebarGroup: "Prometheus"
-shortTitle: "150 5.6 node_exporter二开新增自..."
+title: 5.6 node_exporter二开新增自定义模块
+sidebarGroup: Prometheus
+shortTitle: 150 5.6 node_exporter二开新增自...
 order: 150
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 自定义一个模块的二开方法 - 自定义一个errLog模块，统计/var/log/message 中的错误日志 自定义一个模块的二开方法 - collect/目录下新建一个 err..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 自定义一个模块的二开方法 - 自定义一个errLog模块，统计/var/log/message 中的错误日志 自定义一个模块的二开方法 - collect/目录下新建一个 err...'
 ---
 
 > **Prometheus · 第 150 篇**

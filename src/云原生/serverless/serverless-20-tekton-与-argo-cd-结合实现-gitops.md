@@ -1,15 +1,15 @@
 ---
-title: "Tekton 与 Argo CD 结合实现 GitOps"
-sidebarGroup: "Serverless"
-shortTitle: "20 Tekton 与 Argo CD 结合实现 ..."
+title: Tekton 与 Argo CD 结合实现 GitOps
+sidebarGroup: Serverless
+shortTitle: 20 Tekton 与 Argo CD 结合实现 ...
 order: 20
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Tekton自动化流水线 与 Argo CD 结合实现 GitOps 一、实现方式介绍 前面我们使用 Tekton 完成了应用的 CI/CD 流程，但是 CD 是在 Tekton 的任务中去完成的,可..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 'Tekton自动化流水线 与 Argo CD 结合实现 GitOps 一、实现方式介绍 前面我们使用 Tekton 完成了应用的 CI/CD 流程，但是 CD 是在 Tekton 的任务中去完成的,可...'
 ---
 
 > **Serverless · 第 20 篇**

@@ -1,15 +1,15 @@
 ---
-title: "Knative介绍"
-sidebarGroup: "Serverless"
-shortTitle: "06 Knative介绍"
+title: Knative介绍
+sidebarGroup: Serverless
+shortTitle: 06 Knative介绍
 order: 6
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Knative介绍 一、Knative相关网址 1.1 官方网址 网址为: knative.dev 1.2 开源网址 https://github.com/knative 二、Knative产品愿景 ..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 'Knative介绍 一、Knative相关网址 1.1 官方网址 网址为: knative.dev 1.2 开源网址 http[path] 二、Knative产品愿景 ...'
 ---
 
 > **Serverless · 第 6 篇**

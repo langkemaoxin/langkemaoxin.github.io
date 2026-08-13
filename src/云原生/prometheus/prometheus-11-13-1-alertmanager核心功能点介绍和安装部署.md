@@ -1,15 +1,15 @@
 ---
-title: "13.1 alertmanager核心功能点介绍和安装部署"
-sidebarGroup: "Prometheus"
-shortTitle: "11 13.1 alertmanager核心功能点..."
+title: 13.1 alertmanager核心功能点介绍和安装部署
+sidebarGroup: Prometheus
+shortTitle: 11 13.1 alertmanager核心功能点...
 order: 11
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - alertmanager项目介绍 - 架构介绍 - 核心功能点 - 安装部署 - ui功能介绍 - 配置文件讲解 项目介绍 文档地址 - https://prometheus.i..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - alertmanager项目介绍 - 架构介绍 - 核心功能点 - 安装部署 - ui功能介绍 - 配置文件讲解 项目介绍 文档地址 - http[path]'
 ---
 
 > **Prometheus · 第 11 篇**

@@ -1,15 +1,15 @@
 ---
-title: "16.1 k8s容器基础资源指标采集原理讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "29 16.1 k8s容器基础资源指标采集原理讲解"
+title: 16.1 k8s容器基础资源指标采集原理讲解
+sidebarGroup: Prometheus
+shortTitle: 29 16.1 k8s容器基础资源指标采集原理讲解
 order: 29
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 容器采集流程追查 - 通过容器的内存指标追踪job得知是kubelet进程 - kubelet进程内置了 cadvisor的代码 - 底层采集来自cadvisor - cadvi..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 容器采集流程追查 - 通过容器的内存指标追踪job得知是kubelet进程 - kubelet进程内置了 cadvisor的代码 - 底层采集来自cadvisor - cadvi...'
 ---
 
 > **Prometheus · 第 29 篇**

@@ -1,15 +1,15 @@
 ---
-title: "K8S 1.22 版本双栈协议（IPv4&IPv6）集群部署"
-sidebarGroup: "K8s 网络"
-shortTitle: "02 K8S 1.22 版本双栈协议（IPv4&I..."
+title: K8S 1.22 版本双栈协议（IPv4&IPv6）集群部署
+sidebarGroup: K8s 网络
+shortTitle: 02 K8S 1.22 版本双栈协议（IPv4&I...
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 网络"
-  - "云原生"
-  - "课程笔记"
-description: "K8S 1.22版本双栈协议（IPv4&IPv6）集群部署 一、部署说明 此笔记主要针对 k8s 1.22，其它版本请自行测试使用。 必须使用Open vSwitch功能。 二、主机准备 2.1 主机..."
+  - K8s 网络
+  - 云原生
+  - 课程笔记
+description: K8S 1.22版本双栈协议（IPv4&IPv6）集群部署 一、部署说明 此笔记主要针对 k8s 1.22，其它版本请自行测试使用。 必须使用Open vSwitch功能。 二、主机准备 2.1 主机...
 ---
 
 > **K8s 网络 · 第 2 篇**

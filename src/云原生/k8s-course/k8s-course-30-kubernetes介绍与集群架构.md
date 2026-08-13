@@ -1,15 +1,15 @@
 ---
-title: "kubernetes介绍与集群架构"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "30 kubernetes介绍与集群架构"
+title: kubernetes介绍与集群架构
+sidebarGroup: K8s 课程笔记
+shortTitle: 30 kubernetes介绍与集群架构
 order: 30
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes介绍与集群架构 一、认识容器编排工具 - docker machine - 主要用于准备docker host - 现已弃用 - 建议使用docker desktop - dock..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes介绍与集群架构 一、认识容器编排工具 - docker machine - 主要用于准备docker host - 现已弃用 - 建议使用docker desktop - dock...
 ---
 
 > **K8s 课程笔记 · 第 30 篇**

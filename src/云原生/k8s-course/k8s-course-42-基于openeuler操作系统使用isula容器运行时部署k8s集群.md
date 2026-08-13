@@ -1,15 +1,15 @@
 ---
-title: "基于OpenEuler操作系统使用isula容器运行时部署K8S集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "42 基于OpenEuler操作系统使用isula..."
+title: 基于OpenEuler操作系统使用isula容器运行时部署K8S集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 42 基于OpenEuler操作系统使用isula...
 order: 42
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "基于OpenEuler 22.03操作系统使用isula容器运行时部署K8S集群 一、OpenEuler操作系统安装 1.1 OpenEuler操作系统安装ISO文件获取 1.2 创建虚拟机 1.3 ..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 基于OpenEuler 22.03操作系统使用isula容器运行时部署K8S集群 一、OpenEuler操作系统安装 1.1 OpenEuler操作系统安装ISO文件获取 1.2 创建虚拟机 1.3 ...
 ---
 
 > **K8s 课程笔记 · 第 42 篇**

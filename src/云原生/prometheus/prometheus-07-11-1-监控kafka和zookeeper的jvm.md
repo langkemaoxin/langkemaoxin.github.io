@@ -1,15 +1,15 @@
 ---
-title: "11.1 监控kafka和zookeeper的jvm"
-sidebarGroup: "Prometheus"
-shortTitle: "07 11.1 监控kafka和zookeeper..."
+title: 11.1 监控kafka和zookeeper的jvm
+sidebarGroup: Prometheus
+shortTitle: 07 11.1 监控kafka和zookeeper...
 order: 7
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - jmx_exporter简介 - 监控kafka和zookeeper 的jmx jmx github地址 - prometheus官方维护的jmx_exporter，通过jmx监..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - jmx_exporter简介 - 监控kafka和zookeeper 的jmx jmx github地址 - prometheus官方维护的jmx_exporter，通过jmx监...'
 ---
 
 > **Prometheus · 第 7 篇**

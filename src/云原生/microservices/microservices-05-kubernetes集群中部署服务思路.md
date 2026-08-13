@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群中部署服务思路"
-sidebarGroup: "微服务实战"
-shortTitle: "05 Kubernetes集群中部署服务思路"
+title: Kubernetes集群中部署服务思路
+sidebarGroup: 微服务实战
+shortTitle: 05 Kubernetes集群中部署服务思路
 order: 5
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "微服务部署思路 一、部署服务思路 1.1 传统部署方式 - 配置微服务之间调用链接地址 - 把服务打包 - 基于打包后的文件生成容器镜像(Dockerfile) - 把容器镜像上传到容器镜像仓库Har..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 微服务部署思路 一、部署服务思路 1.1 传统部署方式 - 配置微服务之间调用链接地址 - 把服务打包 - 基于打包后的文件生成容器镜像(Dockerfile) - 把容器镜像上传到容器镜像仓库Har...
 ---
 
 > **微服务实战 · 第 5 篇**

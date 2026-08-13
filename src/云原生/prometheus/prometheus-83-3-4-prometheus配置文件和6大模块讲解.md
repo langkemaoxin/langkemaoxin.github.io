@@ -1,15 +1,15 @@
 ---
-title: "3.4 prometheus配置文件和6大模块讲解"
-sidebarGroup: "Prometheus"
-shortTitle: "83 3.4 prometheus配置文件和6大模..."
+title: 3.4 prometheus配置文件和6大模块讲解
+sidebarGroup: Prometheus
+shortTitle: 83 3.4 prometheus配置文件和6大模...
 order: 83
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus配置文件6个大配置段的含义 - 了解prometheus 根据不同配置可以充当不同的角色/模块 prometheus配置文件 解析 各个大配置段的含义 yam..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus配置文件6个大配置段的含义 - 了解prometheus 根据不同配置可以充当不同的角色/模块 prometheus配置文件 解析 各个大配置段的含义 yam...'
 ---
 
 > **Prometheus · 第 83 篇**

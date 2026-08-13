@@ -1,14 +1,15 @@
 ---
-title: "Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作"
-sidebarGroup: "Docker 系列"
-shortTitle: "02 Engine 与平台"
+title: Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作
+sidebarGroup: Docker 系列
+shortTitle: 02 Engine 与平台
 order: 2
-date: 2026-08-09
-category: "云原生"
+date: 2026-08-09T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作
 ---
 
 > **Docker 系列 · 第 2/18 篇**  

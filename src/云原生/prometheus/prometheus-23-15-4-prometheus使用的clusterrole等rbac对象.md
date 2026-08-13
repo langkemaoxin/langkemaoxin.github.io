@@ -1,15 +1,15 @@
 ---
-title: "15.4 prometheus使用的ClusterRole等RBAC对象"
-sidebarGroup: "Prometheus"
-shortTitle: "23 15.4 prometheus使用的Clus..."
+title: 15.4 prometheus使用的ClusterRole等RBAC对象
+sidebarGroup: Prometheus
+shortTitle: 23 15.4 prometheus使用的Clus...
 order: 23
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s的rbac权限模型 - prometheus使用的ClusterRole - prometheus使用的ClusterRoleBinding - prometheus使用的..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s的rbac权限模型 - prometheus使用的ClusterRole - prometheus使用的ClusterRoleBinding - prometheus使用的...'
 ---
 
 > **Prometheus · 第 23 篇**

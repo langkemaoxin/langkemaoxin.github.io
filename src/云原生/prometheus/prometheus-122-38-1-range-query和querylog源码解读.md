@@ -1,15 +1,15 @@
 ---
-title: "38.1 range_query和querylog源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "122 38.1 range_query和query..."
+title: 38.1 range_query和querylog源码解读
+sidebarGroup: Prometheus
+shortTitle: 122 38.1 range_query和query...
 order: 122
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - range_query_log解析 - range_query源码解读 - querylog各个字段设置 配置开启queryLog yaml global段开启log即可 glo..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - range_query_log解析 - range_query源码解读 - querylog各个字段设置 配置开启queryLog yaml global段开启log即可 glo...'
 ---
 
 > **Prometheus · 第 122 篇**

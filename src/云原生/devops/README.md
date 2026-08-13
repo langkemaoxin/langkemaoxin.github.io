@@ -3,6 +3,7 @@ title: DevOps / GitOps
 index: false
 icon: note
 article: false
+description: DevOps / GitOps
 ---
 
 # DevOps / GitOps

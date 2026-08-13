@@ -1,15 +1,15 @@
 ---
-title: "9.3 查看源码，讲解采集原理"
-sidebarGroup: "Prometheus"
-shortTitle: "169 9.3 查看源码，讲解采集原理"
+title: 9.3 查看源码，讲解采集原理
+sidebarGroup: Prometheus
+shortTitle: 169 9.3 查看源码，讲解采集原理
 order: 169
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 分析主流程源码 - cpu使用时间采集源码查看 - cpu使用时间和cpu利用率的关系 分析源码流程 创建ProcessCollector对象 - 代码位置 D:\go_path..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 分析主流程源码 - cpu使用时间采集源码查看 - cpu使用时间和cpu利用率的关系 分析源码流程 创建ProcessCollector对象 - 代码位置 [path]'
 ---
 
 > **Prometheus · 第 169 篇**

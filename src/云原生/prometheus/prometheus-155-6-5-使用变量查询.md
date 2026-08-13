@@ -1,15 +1,15 @@
 ---
-title: "6.5 使用变量查询"
-sidebarGroup: "Prometheus"
-shortTitle: "155 6.5 使用变量查询"
+title: 6.5 使用变量查询
+sidebarGroup: Prometheus
+shortTitle: 155 6.5 使用变量查询
 order: 155
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - grafana设置变量 - 变量类型 - label_values函数 - prometheus查询语句 - 变量嵌套 - 变量应用于图表 变量 - 变量类型 - 查询语句中切换..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - grafana设置变量 - 变量类型 - label_values函数 - prometheus查询语句 - 变量嵌套 - 变量应用于图表 变量 - 变量类型 - 查询语句中切换...'
 ---
 
 > **Prometheus · 第 155 篇**

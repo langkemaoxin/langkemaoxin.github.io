@@ -1,15 +1,15 @@
 ---
-title: "26.2 histogram线性插值法源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "58 26.2 histogram线性插值法源码解..."
+title: 26.2 histogram线性插值法源码解读
+sidebarGroup: Prometheus
+shortTitle: 58 26.2 histogram线性插值法源码解...
 order: 58
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - histogram 线性插值法源码解读 histogram 线性插值法 histogram_quantile为何需要先算 rate - 因为每个bucket都是 counter ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - histogram 线性插值法源码解读 histogram 线性插值法 histogram_quantile为何需要先算 rate - 因为每个bucket都是 counter ...'
 ---
 
 > **Prometheus · 第 58 篇**

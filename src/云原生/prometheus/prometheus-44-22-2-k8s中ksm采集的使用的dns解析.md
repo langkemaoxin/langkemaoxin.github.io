@@ -1,15 +1,15 @@
 ---
-title: "22.2 k8s中ksm采集的使用的dns解析"
-sidebarGroup: "Prometheus"
-shortTitle: "44 22.2 k8s中ksm采集的使用的dns解..."
+title: 22.2 k8s中ksm采集的使用的dns解析
+sidebarGroup: Prometheus
+shortTitle: 44 22.2 k8s中ksm采集的使用的dns解...
 order: 44
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s 会为service创建cordns解析 - pod中dns的搜索域 - 模拟prometheus进行dns解析后访问数据 k8s对象资源指标 [kube-stats-me..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s 会为service创建cordns解析 - pod中dns的搜索域 - 模拟prometheus进行dns解析后访问数据 k8s对象资源指标 [kube-stats-me...'
 ---
 
 > **Prometheus · 第 44 篇**

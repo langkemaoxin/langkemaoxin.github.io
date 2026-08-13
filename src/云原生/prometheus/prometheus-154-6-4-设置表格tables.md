@@ -1,15 +1,15 @@
 ---
-title: "6.4 设置表格tables"
-sidebarGroup: "Prometheus"
-shortTitle: "154 6.4 设置表格tables"
+title: 6.4 设置表格tables
+sidebarGroup: Prometheus
+shortTitle: 154 6.4 设置表格tables
 order: 154
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - table查询和instant查询 - table中的 transform 操作 - merge 将多行合并成一行 - filter 不要time - overrides操作 -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - table查询和instant查询 - table中的 transform 操作 - merge 将多行合并成一行 - filter 不要time - overrides操作 -...'
 ---
 
 > **Prometheus · 第 154 篇**

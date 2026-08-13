@@ -1,15 +1,15 @@
 ---
-title: "DevOps"
-sidebarGroup: "DevOps / GitOps"
-shortTitle: "01 DevOps"
+title: DevOps
+sidebarGroup: DevOps / GitOps
+shortTitle: 01 DevOps
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "DevOps / GitOps"
-  - "云原生"
-  - "课程笔记"
-description: "DevOps 一、DevOps介绍 软件开发最开始是由两个团队组成： - 开发计划由[开发团队]()从头开始设计和整体系统的构建。需要系统不停的迭代更新。 - [运维团队]()将开发团队的Code进行..."
+  - DevOps / GitOps
+  - 云原生
+  - 课程笔记
+description: 'DevOps 一、DevOps介绍 软件开发最开始是由两个团队组成： - 开发计划由[开发团队]()从头开始设计和整体系统的构建。需要系统不停的迭代更新。 - [运维团队]()将开发团队的Code进行...'
 ---
 
 > **DevOps / GitOps · 第 1 篇**

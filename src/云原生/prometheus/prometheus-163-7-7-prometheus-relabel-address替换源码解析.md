@@ -1,15 +1,15 @@
 ---
-title: "7.7 prometheus relabel address替换源码解析"
-sidebarGroup: "Prometheus"
-shortTitle: "163 7.7 prometheus relabel..."
+title: 7.7 prometheus relabel address替换源码解析
+sidebarGroup: Prometheus
+shortTitle: 163 7.7 prometheus relabel...
 order: 163
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 多实例探针型采集配置解读 - relabel源码阅读 - __address__标签和target的关系 - 采集http请求时获取target最终参数 多实例探针型采集配置 y..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 多实例探针型采集配置解读 - relabel源码阅读 - __address__标签和target的关系 - 采集http请求时获取target最终参数 多实例探针型采集配置 y...'
 ---
 
 > **Prometheus · 第 163 篇**

@@ -1,15 +1,15 @@
 ---
-title: "25.3 使用relabel中的drop将对应的无用指标丢弃"
-sidebarGroup: "Prometheus"
-shortTitle: "56 25.3 使用relabel中的drop将对..."
+title: 25.3 使用relabel中的drop将对应的无用指标丢弃
+sidebarGroup: Prometheus
+shortTitle: 56 25.3 使用relabel中的drop将对...
 order: 56
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 无用指标计算方式变更 - 真实案例分析 - 华为云CCE服务，container_fs_usage_bytes 容器的都为0 - drop之后利用率提升25% 无用指标计算方式变..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 无用指标计算方式变更 - 真实案例分析 - 华为云CCE服务，container_fs_usage_bytes 容器的都为0 - drop之后利用率提升25% 无用指标计算方式变...'
 ---
 
 > **Prometheus · 第 56 篇**

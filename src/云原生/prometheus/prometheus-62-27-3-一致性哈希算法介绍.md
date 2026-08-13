@@ -1,15 +1,15 @@
 ---
-title: "27.3 一致性哈希算法介绍"
-sidebarGroup: "Prometheus"
-shortTitle: "62 27.3 一致性哈希算法介绍"
+title: 27.3 一致性哈希算法介绍
+sidebarGroup: Prometheus
+shortTitle: 62 27.3 一致性哈希算法介绍
 order: 62
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 哈希算法 - 一致性哈希算法 - 优点 - 特性 - 迁移过程 - 底层算法导致的不均衡性 什么是哈希 hash（散列、杂凑）函数，是将任意长度的数据映射到有限长度的域上。直观解..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 哈希算法 - 一致性哈希算法 - 优点 - 特性 - 迁移过程 - 底层算法导致的不均衡性 什么是哈希 hash（散列、杂凑）函数，是将任意长度的数据映射到有限长度的域上。直观解...'
 ---
 
 > **Prometheus · 第 62 篇**

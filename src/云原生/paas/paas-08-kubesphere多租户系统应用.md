@@ -1,15 +1,15 @@
 ---
-title: "kubesphere多租户系统应用"
-sidebarGroup: "PaaS 平台"
-shortTitle: "08 kubesphere多租户系统应用"
+title: kubesphere多租户系统应用
+sidebarGroup: PaaS 平台
+shortTitle: 08 kubesphere多租户系统应用
 order: 8
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "kubesphere多租户管理系统应用 一、kubesphere平台登录 二、Kubesphere应用架构 2.1 架构介绍 - KubeSphere 的多租户系统分 三个 层级，即集群、企业空间和项..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: kubesphere多租户管理系统应用 一、kubesphere平台登录 二、Kubesphere应用架构 2.1 架构介绍 - KubeSphere 的多租户系统分 三个 层级，即集群、企业空间和项...
 ---
 
 > **PaaS 平台 · 第 8 篇**

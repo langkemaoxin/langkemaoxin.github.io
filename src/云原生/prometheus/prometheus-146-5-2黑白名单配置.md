@@ -1,15 +1,15 @@
 ---
-title: "5.2黑白名单配置"
-sidebarGroup: "Prometheus"
-shortTitle: "146 5.2黑白名单配置"
+title: 5.2黑白名单配置
+sidebarGroup: Prometheus
+shortTitle: 146 5.2黑白名单配置
 order: 146
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 黑白名单的配置方法 - 为何会有默认开始的默认关闭的采集模块 项目地址 - [node_exporter](https://github.com/prometheus/node_..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 黑白名单的配置方法 - 为何会有默认开始的默认关闭的采集模块 项目地址 - [node_exporter](http[path]'
 ---
 
 > **Prometheus · 第 146 篇**

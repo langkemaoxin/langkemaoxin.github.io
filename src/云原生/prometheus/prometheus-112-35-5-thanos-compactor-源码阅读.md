@@ -1,15 +1,15 @@
 ---
-title: "35.5 thanos-compactor 源码阅读"
-sidebarGroup: "Prometheus"
-shortTitle: "112 35.5 thanos-compactor ..."
+title: 35.5 thanos-compactor 源码阅读
+sidebarGroup: Prometheus
+shortTitle: 112 35.5 thanos-compactor ...
 order: 112
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : compact做什么 - 定时扫描对象存储的block，干2件事 - 压实 - 通过plan拿到所有要压实的block - 通过对象存储下载block - 底层调用prometheu..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : compact做什么 - 定时扫描对象存储的block，干2件事 - 压实 - 通过plan拿到所有要压实的block - 通过对象存储下载block - 底层调用prometheu...'
 ---
 
 > **Prometheus · 第 112 篇**

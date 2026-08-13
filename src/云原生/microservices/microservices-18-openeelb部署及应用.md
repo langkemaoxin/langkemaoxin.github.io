@@ -1,15 +1,15 @@
 ---
-title: "OpeneELB部署及应用"
-sidebarGroup: "微服务实战"
-shortTitle: "18 OpeneELB部署及应用"
+title: OpeneELB部署及应用
+sidebarGroup: 微服务实战
+shortTitle: 18 OpeneELB部署及应用
 order: 18
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "负载均衡器 OpenELB 部署及应用 一、OpenELB介绍 网址： openelb.io OpenELB 是一个开源的云原生负载均衡器实现，可以在基于裸金属服务器、边缘以及虚拟化的 Kuberne..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 负载均衡器 OpenELB 部署及应用 一、OpenELB介绍 网址： openelb.io OpenELB 是一个开源的云原生负载均衡器实现，可以在基于裸金属服务器、边缘以及虚拟化的 Kuberne...
 ---
 
 > **微服务实战 · 第 18 篇**

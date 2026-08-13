@@ -1,15 +1,15 @@
 ---
-title: "23.2 prometheus为k8s做的4大适配工作"
-sidebarGroup: "Prometheus"
-shortTitle: "47 23.2 prometheus为k8s做的4..."
+title: 23.2 prometheus为k8s做的4大适配工作
+sidebarGroup: Prometheus
+shortTitle: 47 23.2 prometheus为k8s做的4...
 order: 47
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s监控中的4大采集类型总结 - prometheus为k8s监控做的4大适配工作 k8s关注指标分析 在监控每个细分的领域时，我们都要先思考下到底需要关注哪些方面的指标。k8..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s监控中的4大采集类型总结 - prometheus为k8s监控做的4大适配工作 k8s关注指标分析 在监控每个细分的领域时，我们都要先思考下到底需要关注哪些方面的指标。k8...'
 ---
 
 > **Prometheus · 第 47 篇**

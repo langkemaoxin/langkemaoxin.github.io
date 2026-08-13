@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes 基本概念与 kubectl——对象模型与常用命令"
-sidebarGroup: "Kubernetes"
-shortTitle: "04 对象与 kubectl"
+title: Kubernetes 基本概念与 kubectl——对象模型与常用命令
+sidebarGroup: Kubernetes
+shortTitle: 04 对象与 kubectl
 order: 4
-date: 2026-08-27
-category: "云原生"
+date: 2026-08-27T00:00:00.000Z
+category: 云原生
 tag:
-  - "Kubernetes"
-  - "云原生"
-  - "K8s系列"
-description: "Kubernetes 对象模型、YAML 结构、Namespace/Label，以及 kubectl 常用命令速查。"
+  - Kubernetes
+  - 云原生
+  - K8s系列
+description: Kubernetes 对象模型、YAML 结构、Namespace/Label，以及 kubectl 常用命令速查。
 ---
 
 > **Kubernetes 系列 · 第 4/20 篇**  

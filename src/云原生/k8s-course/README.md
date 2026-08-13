@@ -3,6 +3,7 @@ title: K8s 课程笔记
 index: false
 icon: note
 article: false
+description: K8s 课程笔记
 ---
 
 # K8s 课程笔记

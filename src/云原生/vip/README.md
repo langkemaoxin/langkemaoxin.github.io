@@ -3,6 +3,7 @@ title: VIP 专题
 index: false
 icon: note
 article: false
+description: VIP 专题
 ---
 
 # VIP 专题

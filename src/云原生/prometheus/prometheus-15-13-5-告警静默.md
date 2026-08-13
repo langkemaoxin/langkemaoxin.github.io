@@ -1,15 +1,15 @@
 ---
-title: "13.5 告警静默"
-sidebarGroup: "Prometheus"
-shortTitle: "15 13.5 告警静默"
+title: 13.5 告警静默
+sidebarGroup: Prometheus
+shortTitle: 15 13.5 告警静默
 order: 15
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 静默应用场景 - 页面创建 - api接口创建 - 查看 静默 作用 - 先告警后静默：持续发送的告警停止发送 - 先配置静默：上线或者运维操作会导致触发一大波告警，提前创建静默..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 静默应用场景 - 页面创建 - api接口创建 - 查看 静默 作用 - 先告警后静默：持续发送的告警停止发送 - 先配置静默：上线或者运维操作会导致触发一大波告警，提前创建静默...'
 ---
 
 > **Prometheus · 第 15 篇**

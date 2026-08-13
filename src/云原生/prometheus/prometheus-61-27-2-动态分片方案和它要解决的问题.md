@@ -1,15 +1,15 @@
 ---
-title: "27.2 动态分片方案和它要解决的问题"
-sidebarGroup: "Prometheus"
-shortTitle: "61 27.2 动态分片方案和它要解决的问题"
+title: 27.2 动态分片方案和它要解决的问题
+sidebarGroup: Prometheus
+shortTitle: 61 27.2 动态分片方案和它要解决的问题
 order: 61
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 动态分片方案要解决的几个问题 - 如何解决静态分片中分片挂掉的问题 - 如何统一采集器配置 - 如何将采集的target分发给采集器 - 如何降低分片变化时target的迁移 动..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 动态分片方案要解决的几个问题 - 如何解决静态分片中分片挂掉的问题 - 如何统一采集器配置 - 如何将采集的target分发给采集器 - 如何降低分片变化时target的迁移 动...'
 ---
 
 > **Prometheus · 第 61 篇**

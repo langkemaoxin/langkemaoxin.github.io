@@ -1,15 +1,15 @@
 ---
-title: "如何通过Prometheus及HPA实现Kubernetes应用自动水平伸缩？"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "15 如何通过Prometheus及HPA实现Ku..."
+title: 如何通过Prometheus及HPA实现Kubernetes应用自动水平伸缩？
+sidebarGroup: K8s 课程笔记
+shortTitle: 15 如何通过Prometheus及HPA实现Ku...
 order: 15
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "如何通过Prometheus及HPA实现Kubernetes应用水平自动伸缩？ 一、metircs-server部署 ~~~powershell [root@k8s-master01 ~] wget ..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: '如何通过Prometheus及HPA实现Kubernetes应用水平自动伸缩？ 一、metircs-server部署 ~~~powershell [root@k8s-master01 ~] wget ...'
 ---
 
 > **K8s 课程笔记 · 第 15 篇**

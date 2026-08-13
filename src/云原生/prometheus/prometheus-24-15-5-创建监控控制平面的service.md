@@ -1,15 +1,15 @@
 ---
-title: "15.5 创建监控控制平面的service"
-sidebarGroup: "Prometheus"
-shortTitle: "24 15.5 创建监控控制平面的service"
+title: 15.5 创建监控控制平面的service
+sidebarGroup: Prometheus
+shortTitle: 24 15.5 创建监控控制平面的service
 order: 24
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - k8s中service的作用和类型 - 创建k8s控制平面的service 给prometheus采集用， 类型clusterIp - kube-scheduler - kube..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - k8s中service的作用和类型 - 创建k8s控制平面的service 给prometheus采集用， 类型clusterIp - kube-scheduler - kube...'
 ---
 
 > **Prometheus · 第 24 篇**

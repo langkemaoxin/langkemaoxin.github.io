@@ -1,15 +1,15 @@
 ---
-title: "8.2 grafana上导入模板看图并讲解告警"
-sidebarGroup: "Prometheus"
-shortTitle: "165 8.2 grafana上导入模板看图并讲解告..."
+title: 8.2 grafana上导入模板看图并讲解告警
+sidebarGroup: Prometheus
+shortTitle: 165 8.2 grafana上导入模板看图并讲解告...
 order: 165
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - grafana 上导入mysqld-dashboard - global status 相关源码解读 - 重要指标讲解 - 连接数 - 内存 - TPS、QPS 将采集任务添加到..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - grafana 上导入mysqld-dashboard - global status 相关源码解读 - 重要指标讲解 - 连接数 - 内存 - TPS、QPS 将采集任务添加到...'
 ---
 
 > **Prometheus · 第 165 篇**

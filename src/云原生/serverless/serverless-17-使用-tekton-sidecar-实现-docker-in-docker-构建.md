@@ -1,15 +1,15 @@
 ---
-title: "使用 Tekton Sidecar 实现 Docker IN Docker 构建"
-sidebarGroup: "Serverless"
-shortTitle: "17 使用 Tekton Sidecar 实现 D..."
+title: 使用 Tekton Sidecar 实现 Docker IN Docker 构建
+sidebarGroup: Serverless
+shortTitle: 17 使用 Tekton Sidecar 实现 D...
 order: 17
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "使用 Tekton SideCar 实现 Docker IN Docker 构建容器镜像 一、Tekton SideCar介绍 在 Tekton 中有一项 Sidecar 功能，和 Pod 中的 Si..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 使用 Tekton SideCar 实现 Docker IN Docker 构建容器镜像 一、Tekton SideCar介绍 在 Tekton 中有一项 Sidecar 功能，和 Pod 中的 Si...
 ---
 
 > **Serverless · 第 17 篇**

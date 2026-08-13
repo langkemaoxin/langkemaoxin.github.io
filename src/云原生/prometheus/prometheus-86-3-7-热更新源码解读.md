@@ -1,15 +1,15 @@
 ---
-title: "3.7 热更新源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "86 3.7 热更新源码解读"
+title: 3.7 热更新源码解读
+sidebarGroup: Prometheus
+shortTitle: 86 3.7 热更新源码解读
 order: 86
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - prometheus 热更新源码解读 --web.enable-lifecycle代表开启热更新配置 - 修改配置文件 - 发http 请求 shell [root@k8s-no..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - prometheus 热更新源码解读 --web.enable-lifecycle代表开启热更新配置 - 修改配置文件 - 发http 请求 shell [root@k8s-no...'
 ---
 
 > **Prometheus · 第 86 篇**

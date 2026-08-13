@@ -1,15 +1,15 @@
 ---
-title: "30.2 不得不谈的lsm：分层结构和lsm数据结构"
-sidebarGroup: "Prometheus"
-shortTitle: "88 30.2 不得不谈的lsm：分层结构和lsm..."
+title: 30.2 不得不谈的lsm：分层结构和lsm数据结构
+sidebarGroup: Prometheus
+shortTitle: 88 30.2 不得不谈的lsm：分层结构和lsm...
 order: 88
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - LSM树核心特点 - LSM树的核心结构 - MemTable - Immutable MemTable - SSTable - LSM树的Compact策略 - size-ti..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - LSM树核心特点 - LSM树的核心结构 - MemTable - Immutable MemTable - SSTable - LSM树的Compact策略 - size-ti...'
 ---
 
 > **Prometheus · 第 88 篇**

@@ -1,15 +1,15 @@
 ---
-title: "36.2 内置的k8s采集任务分析"
-sidebarGroup: "Prometheus"
-shortTitle: "115 36.2 内置的k8s采集任务分析"
+title: 36.2 内置的k8s采集任务分析
+sidebarGroup: Prometheus
+shortTitle: 115 36.2 内置的k8s采集任务分析
 order: 115
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点总结 : - prometheus 采集分析 prometheus 采集分析 serviceMonitor/monitoring/kube-state-metrics/0 代表采集ksm 资源..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点总结 : - prometheus 采集分析 prometheus 采集分析 serviceMonitor/monitoring/kube-state-metrics/0 代表采集ksm 资源...'
 ---
 
 > **Prometheus · 第 115 篇**

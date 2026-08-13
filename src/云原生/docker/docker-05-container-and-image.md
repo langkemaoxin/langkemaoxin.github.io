@@ -1,14 +1,15 @@
 ---
-title: "容器与镜像——类与实例、读写层与生命周期"
-sidebarGroup: "Docker 系列"
-shortTitle: "05 容器与镜像"
+title: 容器与镜像——类与实例、读写层与生命周期
+sidebarGroup: Docker 系列
+shortTitle: 05 容器与镜像
 order: 5
-date: 2026-08-12
-category: "云原生"
+date: 2026-08-12T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: 容器与镜像——类与实例、读写层与生命周期
 ---
 
 > **Docker 系列 · 第 5/18 篇**  

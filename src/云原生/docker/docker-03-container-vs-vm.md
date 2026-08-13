@@ -1,14 +1,15 @@
 ---
-title: "容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」"
-sidebarGroup: "Docker 系列"
-shortTitle: "03 容器 vs 虚拟机"
+title: 容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」
+sidebarGroup: Docker 系列
+shortTitle: 03 容器 vs 虚拟机
 order: 3
-date: 2026-08-10
-category: "云原生"
+date: 2026-08-10T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: 容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」
 ---
 
 > **Docker 系列 · 第 3/18 篇**  

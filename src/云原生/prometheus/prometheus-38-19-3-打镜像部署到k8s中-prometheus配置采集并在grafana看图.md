@@ -1,15 +1,15 @@
 ---
-title: "19.3 打镜像部署到k8s中，prometheus配置采集并在grafana看图"
-sidebarGroup: "Prometheus"
-shortTitle: "38 19.3 打镜像部署到k8s中，promet..."
+title: 19.3 打镜像部署到k8s中，prometheus配置采集并在grafana看图
+sidebarGroup: Prometheus
+shortTitle: 38 19.3 打镜像部署到k8s中，promet...
 order: 38
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 打镜像，导出镜像，传输到各个节点并导入 - 运行该项目 - 配置prometheus和grafana 打镜像 本地build shell docker build -t ink8..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 打镜像，导出镜像，传输到各个节点并导入 - 运行该项目 - 配置prometheus和grafana 打镜像 本地build shell docker build -t ink8...'
 ---
 
 > **Prometheus · 第 38 篇**

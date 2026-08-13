@@ -1,14 +1,15 @@
 ---
-title: "Namespace 隔离——容器如何「假装」自己是一台独立机器"
-sidebarGroup: "Docker 系列"
-shortTitle: "15 Namespace 隔离"
+title: Namespace 隔离——容器如何「假装」自己是一台独立机器
+sidebarGroup: Docker 系列
+shortTitle: 15 Namespace 隔离
 order: 15
-date: 2026-08-22
-category: "云原生"
+date: 2026-08-22T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
+  - Docker
+  - 云原生
+  - Docker系列
+description: Namespace 隔离——容器如何「假装」自己是一台独立机器
 ---
 
 > **Docker 系列 · 第 15/18 篇**  

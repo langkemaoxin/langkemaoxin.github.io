@@ -1,15 +1,15 @@
 ---
-title: "35.2 thanos-sidecar源码阅读"
-sidebarGroup: "Prometheus"
-shortTitle: "109 35.2 thanos-sidecar源码阅..."
+title: 35.2 thanos-sidecar源码阅读
+sidebarGroup: Prometheus
+shortTitle: 109 35.2 thanos-sidecar源码阅...
 order: 109
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - sidercar 都干了什么 - 执行prometheus的探活 - 继承所有prometheus v1的查询方法，封装成http-client - 用上面的http-clien..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - sidercar 都干了什么 - 执行prometheus的探活 - 继承所有prometheus v1的查询方法，封装成http-client - 用上面的http-clien...'
 ---
 
 > **Prometheus · 第 109 篇**

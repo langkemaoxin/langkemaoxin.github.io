@@ -1,15 +1,15 @@
 ---
-title: "43.3 alertmanager流水线处理源码解读"
-sidebarGroup: "Prometheus"
-shortTitle: "143 43.3 alertmanager流水线处理..."
+title: 43.3 alertmanager流水线处理源码解读
+sidebarGroup: Prometheus
+shortTitle: 143 43.3 alertmanager流水线处理...
 order: 143
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - alertmanager代码解析 - gossip集群通信 - pipline流水线处理 alertmanager代码解析 开启gossip集群通信 - 底层库使用 [https..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - alertmanager代码解析 - gossip集群通信 - pipline流水线处理 alertmanager代码解析 开启gossip集群通信 - 底层库使用 [https...'
 ---
 
 > **Prometheus · 第 143 篇**

@@ -1,17 +1,18 @@
 ---
-title: "Harbor 私有镜像仓库——从安装到 SAN 证书与 push 排障"
-sidebarGroup: "Docker 系列"
-shortTitle: "09 Harbor 私有仓库"
+title: Harbor 私有镜像仓库——从安装到 SAN 证书与 push 排障
+sidebarGroup: Docker 系列
+shortTitle: 09 Harbor 私有仓库
 order: 9
-date: 2026-08-16
-category: "云原生"
+date: 2026-08-16T00:00:00.000Z
+category: 云原生
 tag:
-  - "Docker"
-  - "云原生"
-  - "Docker系列"
-  - "Harbor"
-  - "HTTPS"
-  - "SAN证书"
+  - Docker
+  - 云原生
+  - Docker系列
+  - Harbor
+  - HTTPS
+  - SAN证书
+description: Harbor 私有镜像仓库——从安装到 SAN 证书与 push 排障
 ---
 
 > **Docker 系列 · 第 9/18 篇**  

@@ -1,15 +1,15 @@
 ---
-title: "使用sealos部署kubernetes集群并实现集群管理"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "23 使用sealos部署kubernetes集群..."
+title: 使用sealos部署kubernetes集群并实现集群管理
+sidebarGroup: K8s 课程笔记
+shortTitle: 23 使用sealos部署kubernetes集群...
 order: 23
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "使用sealos部署kubernetes集群并实现集群管理 本次使用4台主机完成，其中3台主机为master节点，1台主机为worker节点。 一、主机准备 1.1 配置主机名 ~~~powershe..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 使用sealos部署kubernetes集群并实现集群管理 本次使用4台主机完成，其中3台主机为master节点，1台主机为worker节点。 一、主机准备 1.1 配置主机名 ~~~powershe...
 ---
 
 > **K8s 课程笔记 · 第 23 篇**

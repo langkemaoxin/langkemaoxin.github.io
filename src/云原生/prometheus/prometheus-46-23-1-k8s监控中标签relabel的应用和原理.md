@@ -1,15 +1,15 @@
 ---
-title: "23.1 k8s监控中标签relabel的应用和原理"
-sidebarGroup: "Prometheus"
-shortTitle: "46 23.1 k8s监控中标签relabel的应..."
+title: 23.1 k8s监控中标签relabel的应用和原理
+sidebarGroup: Prometheus
+shortTitle: 46 23.1 k8s监控中标签relabel的应...
 order: 46
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - relabel的源码在 7.7节做过详细的解读 - 强大的relabel能力 在k8s中的应用 - 应用1： labelmap 在采集cadvisor指标时 对服务发现标签key..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - relabel的源码在 7.7节做过详细的解读 - 强大的relabel能力 在k8s中的应用 - 应用1： labelmap 在采集cadvisor指标时 对服务发现标签key...'
 ---
 
 > **Prometheus · 第 46 篇**

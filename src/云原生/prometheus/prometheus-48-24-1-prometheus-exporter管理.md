@@ -1,15 +1,15 @@
 ---
-title: "24.1 prometheus-exporter管理"
-sidebarGroup: "Prometheus"
-shortTitle: "48 24.1 prometheus-export..."
+title: 24.1 prometheus-exporter管理
+sidebarGroup: Prometheus
+shortTitle: 48 24.1 prometheus-export...
 order: 48
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - exporter 流派 - 必须和探测对象部署在一起的 - 1对多的远端探针模式 - exporter管控的难点 - 1对1 的exporter 需要依托诸如 ansible等节..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - exporter 流派 - 必须和探测对象部署在一起的 - 1对多的远端探针模式 - exporter管控的难点 - 1对1 的exporter 需要依托诸如 ansible等节...'
 ---
 
 > **Prometheus · 第 48 篇**

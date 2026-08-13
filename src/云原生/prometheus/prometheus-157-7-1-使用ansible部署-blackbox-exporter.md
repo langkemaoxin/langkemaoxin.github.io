@@ -1,15 +1,15 @@
 ---
-title: "7.1 使用ansible部署 blackbox_exporter"
-sidebarGroup: "Prometheus"
-shortTitle: "157 7.1 使用ansible部署 blackb..."
+title: 7.1 使用ansible部署 blackbox_exporter
+sidebarGroup: Prometheus
+shortTitle: 157 7.1 使用ansible部署 blackb...
 order: 157
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - ansible 部署二进制 blackbox_exporter 项目地址 - 项目地址 https://github.com/prometheus/blackbox_export..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - ansible 部署二进制 blackbox_exporter 项目地址 - 项目地址 http[path]'
 ---
 
 > **Prometheus · 第 157 篇**

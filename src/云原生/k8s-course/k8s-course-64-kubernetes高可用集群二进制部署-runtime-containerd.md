@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes高可用集群二进制部署（Runtime Containerd）"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "02 Kubernetes高可用集群二进制部署（R..."
+title: Kubernetes高可用集群二进制部署（Runtime Containerd）
+sidebarGroup: K8s 课程笔记
+shortTitle: 02 Kubernetes高可用集群二进制部署（R...
 order: 64
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Containerd"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes高可用集群二进制部署（Runtime Containerd） Kubernetes（简称为：k8s）是Google在2014年6月开源的一个容器集群管理系统，使用Go语言开发，用于..."
+  - Containerd
+  - 云原生
+  - 课程笔记
+description: Kubernetes高可用集群二进制部署（Runtime Containerd） Kubernetes（简称为：k8s）是Google在2014年6月开源的一个容器集群管理系统，使用Go语言开发，用于...
 ---
 
 > **K8s 课程笔记 · 第 64 篇**

@@ -1,15 +1,15 @@
 ---
-title: "Tekton安装"
-sidebarGroup: "Serverless"
-shortTitle: "13 Tekton安装"
+title: Tekton安装
+sidebarGroup: Serverless
+shortTitle: 13 Tekton安装
 order: 13
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Tekton安装 一、Tekton简介 1.1 Tekton是什么？ Tekton 是用于构建 CI/CD 管道的云原生解决方案。 Tekton 在 Kubernetes 集群上作为扩展安装和运行，并..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Tekton安装 一、Tekton简介 1.1 Tekton是什么？ Tekton 是用于构建 CI/CD 管道的云原生解决方案。 Tekton 在 Kubernetes 集群上作为扩展安装和运行，并...
 ---
 
 > **Serverless · 第 13 篇**

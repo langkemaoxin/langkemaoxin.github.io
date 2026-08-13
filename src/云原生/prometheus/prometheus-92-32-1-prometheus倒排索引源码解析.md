@@ -1,15 +1,15 @@
 ---
-title: "32.1 prometheus倒排索引源码解析"
-sidebarGroup: "Prometheus"
-shortTitle: "92 32.1 prometheus倒排索引源码解..."
+title: 32.1 prometheus倒排索引源码解析
+sidebarGroup: Prometheus
+shortTitle: 92 32.1 prometheus倒排索引源码解...
 order: 92
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 倒排索引源码解析 - 创建索引的过程 - 查找索引的过程 - 优化工作 - seriesId求交集的优化 - 锁的粒度的优化 从promql查询看匹配过程 - 如下面的promq..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 倒排索引源码解析 - 创建索引的过程 - 查找索引的过程 - 优化工作 - seriesId求交集的优化 - 锁的粒度的优化 从promql查询看匹配过程 - 如下面的promq...'
 ---
 
 > **Prometheus · 第 92 篇**

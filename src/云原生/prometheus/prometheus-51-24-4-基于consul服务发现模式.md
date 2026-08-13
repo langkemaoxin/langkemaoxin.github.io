@@ -1,15 +1,15 @@
 ---
-title: "24.4 基于consul服务发现模式"
-sidebarGroup: "Prometheus"
-shortTitle: "51 24.4 基于consul服务发现模式"
+title: 24.4 基于consul服务发现模式
+sidebarGroup: Prometheus
+shortTitle: 51 24.4 基于consul服务发现模式
 order: 51
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - consul 安装 - consul go代码注册服务，注销服务，获取服务 - node_exporter改造为consul服务发现 - 在数量比较大时，在注册服务的时候，关闭c..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - consul 安装 - consul go代码注册服务，注销服务，获取服务 - node_exporter改造为consul服务发现 - 在数量比较大时，在注册服务的时候，关闭c...'
 ---
 
 > **Prometheus · 第 51 篇**

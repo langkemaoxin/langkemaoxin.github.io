@@ -1,15 +1,15 @@
 ---
-title: "34.4 m3db调优踩坑问题总结"
-sidebarGroup: "Prometheus"
-shortTitle: "107 34.4 m3db调优踩坑问题总结"
+title: 34.4 m3db调优踩坑问题总结
+sidebarGroup: Prometheus
+shortTitle: 107 34.4 m3db调优踩坑问题总结
 order: 107
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - m3db资源开销 - 无需ssd - 读写峰对cpu和内存的开销 - 聚合选择 - 不要直接在m3coordinator 中开启聚合 - 利用m3aggregator 做down..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - m3db资源开销 - 无需ssd - 读写峰对cpu和内存的开销 - 聚合选择 - 不要直接在m3coordinator 中开启聚合 - 利用m3aggregator 做down...'
 ---
 
 > **Prometheus · 第 107 篇**

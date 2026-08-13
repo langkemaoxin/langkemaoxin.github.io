@@ -1,15 +1,15 @@
 ---
-title: "新型沙箱安全容器运行时 gVisor"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "12 新型沙箱安全容器运行时 gVisor"
+title: 新型沙箱安全容器运行时 gVisor
+sidebarGroup: K8s 课程笔记
+shortTitle: 12 新型沙箱安全容器运行时 gVisor
 order: 12
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "新型沙箱安全容器运行时 gVisor 一、新型沙箱安全容器运行时 gVisor介绍 1.1 What is gVisor? gVisor is an application kernel, writt..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: '新型沙箱安全容器运行时 gVisor 一、新型沙箱安全容器运行时 gVisor介绍 1.1 What is gVisor? gVisor is an application kernel, writt...'
 ---
 
 > **K8s 课程笔记 · 第 12 篇**

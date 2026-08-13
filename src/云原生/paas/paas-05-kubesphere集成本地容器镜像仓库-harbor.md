@@ -1,15 +1,15 @@
 ---
-title: "KubeSphere集成本地容器镜像仓库 Harbor"
-sidebarGroup: "PaaS 平台"
-shortTitle: "05 KubeSphere集成本地容器镜像仓库 H..."
+title: KubeSphere集成本地容器镜像仓库 Harbor
+sidebarGroup: PaaS 平台
+shortTitle: 05 KubeSphere集成本地容器镜像仓库 H...
 order: 5
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "PaaS 平台"
-  - "云原生"
-  - "课程笔记"
-description: "KubeSphere集成本地容器镜像仓库 Harbor 一、CoreDNS级别本地DNS服务器 ~~~powershell kubectl edit configmap coredns -n kube..."
+  - PaaS 平台
+  - 云原生
+  - 课程笔记
+description: KubeSphere集成本地容器镜像仓库 Harbor 一、CoreDNS级别本地DNS服务器 ~~~powershell kubectl edit configmap coredns -n kube...
 ---
 
 > **PaaS 平台 · 第 5 篇**

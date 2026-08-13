@@ -1,15 +1,15 @@
 ---
-title: "k8s集群中部署服务之Dockerfile文件准备"
-sidebarGroup: "微服务实战"
-shortTitle: "07 k8s集群中部署服务之Dockerfile文..."
+title: k8s集群中部署服务之Dockerfile文件准备
+sidebarGroup: 微服务实战
+shortTitle: 07 k8s集群中部署服务之Dockerfile文...
 order: 7
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "微服务项目各微服务Dockerfile文件准备 一、获取jar的方法 二、各微服务Dockerfile文件准备 2.1 mall-auth ~~~powershell FROM openjdk:8 E..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: '微服务项目各微服务Dockerfile文件准备 一、获取jar的方法 二、各微服务Dockerfile文件准备 2.1 mall-auth ~~~powershell FROM openjdk:8 E...'
 ---
 
 > **微服务实战 · 第 7 篇**

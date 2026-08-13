@@ -1,15 +1,15 @@
 ---
-title: "Kubernetes集群部署口袋工具 minikube"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "29 Kubernetes集群部署口袋工具 min..."
+title: Kubernetes集群部署口袋工具 minikube
+sidebarGroup: K8s 课程笔记
+shortTitle: 29 Kubernetes集群部署口袋工具 min...
 order: 29
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群部署口袋工具 minikube 一、minikube介绍 minikube is local Kubernetes, focusing on making it easy to..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'Kubernetes集群部署口袋工具 minikube 一、minikube介绍 minikube is local Kubernetes, focusing on making it easy to...'
 ---
 
 > **K8s 课程笔记 · 第 29 篇**

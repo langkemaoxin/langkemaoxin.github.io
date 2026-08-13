@@ -1,15 +1,15 @@
 ---
-title: "13.4告警抑制实例"
-sidebarGroup: "Prometheus"
-shortTitle: "14 13.4告警抑制实例"
+title: 13.4告警抑制实例
+sidebarGroup: Prometheus
+shortTitle: 14 13.4告警抑制实例
 order: 14
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 告警抑制 - 应用场景 - 配置方法：一定要有equal标签 - 配置演示：critical告警触发了就抑制warning的 告警抑制 应用场景 - 如果某些其他警报已经触发，则..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 告警抑制 - 应用场景 - 配置方法：一定要有equal标签 - 配置演示：critical告警触发了就抑制warning的 告警抑制 应用场景 - 如果某些其他警报已经触发，则...'
 ---
 
 > **Prometheus · 第 14 篇**

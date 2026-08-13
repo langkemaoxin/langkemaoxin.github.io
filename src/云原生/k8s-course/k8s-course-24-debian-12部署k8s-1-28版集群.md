@@ -1,15 +1,15 @@
 ---
-title: "Debian 12部署K8S 1.28版集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "24 Debian 12部署K8S 1.28版集群"
+title: Debian 12部署K8S 1.28版集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 24 Debian 12部署K8S 1.28版集群
 order: 24
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Debian 12部署K8S 1.28版集群 一、K8S集群主机准备 1.1 主机名 ~~~powershell root@debian:~ cat /etc/os-release PRETTY_NA..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'Debian 12部署K8S 1.28版集群 一、K8S集群主机准备 1.1 主机名 ~~~powershell root@debian:~ cat /etc/os-release PRETTY_NA...'
 ---
 
 > **K8s 课程笔记 · 第 24 篇**

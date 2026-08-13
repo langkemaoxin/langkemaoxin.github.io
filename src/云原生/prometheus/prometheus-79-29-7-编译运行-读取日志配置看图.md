@@ -1,15 +1,15 @@
 ---
-title: "29.7 编译运行，读取日志配置看图"
-sidebarGroup: "Prometheus"
-shortTitle: "79 29.7 编译运行，读取日志配置看图"
+title: 29.7 编译运行，读取日志配置看图
+sidebarGroup: Prometheus
+shortTitle: 79 29.7 编译运行，读取日志配置看图
 order: 79
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 编译运行，配置采集和大盘 编译二进制 - 打包后编译 shell go build -o log2metrics main.go 修改配置文件 yaml http_addr: 0..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 编译运行，配置采集和大盘 编译二进制 - 打包后编译 shell go build -o log2metrics main.go 修改配置文件 yaml http_addr: 0...'
 ---
 
 > **Prometheus · 第 79 篇**

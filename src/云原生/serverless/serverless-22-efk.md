@@ -1,15 +1,15 @@
 ---
-title: "EFK"
-sidebarGroup: "Serverless"
-shortTitle: "22 EFK"
+title: EFK
+sidebarGroup: Serverless
+shortTitle: 22 EFK
 order: 22
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Knative 日志收集方案 EFK 一、后端存储动态供给 1.1 准备硬盘 ~~~powershell 查看准备的磁盘 [root@nfsserver ~] lsblk NAME MAJ:MIN R..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: 'Knative 日志收集方案 EFK 一、后端存储动态供给 1.1 准备硬盘 ~~~powershell 查看准备的磁盘 [root@nfsserver ~] lsblk NAME MAJ:MIN R...'
 ---
 
 > **Serverless · 第 22 篇**

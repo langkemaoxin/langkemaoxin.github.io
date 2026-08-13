@@ -1,15 +1,15 @@
 ---
-title: "19.1 使用k8s的sdk编写一个项目获取pod和node信息"
-sidebarGroup: "Prometheus"
-shortTitle: "36 19.1 使用k8s的sdk编写一个项目获取..."
+title: 19.1 使用k8s的sdk编写一个项目获取pod和node信息
+sidebarGroup: Prometheus
+shortTitle: 36 19.1 使用k8s的sdk编写一个项目获取...
 order: 36
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 引入k8s sdk获取k8s 的node和pod信息 - 定义相关metrics - 初始化k8s-client - 使用k8s-client get node - 使用k8s-..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 引入k8s sdk获取k8s 的node和pod信息 - 定义相关metrics - 初始化k8s-client - 使用k8s-client get node - 使用k8s-...'
 ---
 
 > **Prometheus · 第 36 篇**

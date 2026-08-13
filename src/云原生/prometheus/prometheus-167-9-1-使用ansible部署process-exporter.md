@@ -1,15 +1,15 @@
 ---
-title: "9.1 使用ansible部署process-exporter"
-sidebarGroup: "Prometheus"
-shortTitle: "167 9.1 使用ansible部署process..."
+title: 9.1 使用ansible部署process-exporter
+sidebarGroup: Prometheus
+shortTitle: 167 9.1 使用ansible部署process...
 order: 167
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - ansible 部署二进制 process-exporter 项目地址 - 项目地址 https://github.com/ncabatoff/process-exporter ..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - ansible 部署二进制 process-exporter 项目地址 - 项目地址 http[path] ...'
 ---
 
 > **Prometheus · 第 167 篇**

@@ -1,15 +1,15 @@
 ---
-title: "6.3 panel中操作"
-sidebarGroup: "Prometheus"
-shortTitle: "153 6.3 panel中操作"
+title: 6.3 panel中操作
+sidebarGroup: Prometheus
+shortTitle: 153 6.3 panel中操作
 order: 153
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 设置单位 - - panel改名 - - 曲线别名 - - 曲线sort - - 曲线复制 - - 曲线静默 - - panel复制 - 设置告警线 - - row - 本节重点..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 设置单位 - - panel改名 - - 曲线别名 - - 曲线sort - - 曲线复制 - - 曲线静默 - - panel复制 - 设置告警线 - - row - 本节重点...'
 ---
 
 > **Prometheus · 第 153 篇**

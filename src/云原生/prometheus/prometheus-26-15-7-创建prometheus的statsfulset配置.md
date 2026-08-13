@@ -1,15 +1,15 @@
 ---
-title: "15.7 创建prometheus的statsfulset配置"
-sidebarGroup: "Prometheus"
-shortTitle: "26 15.7 创建prometheus的stat..."
+title: 15.7 创建prometheus的statsfulset配置
+sidebarGroup: Prometheus
+shortTitle: 26 15.7 创建prometheus的stat...
 order: 26
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : prometheus statsfulset yaml配置 - 设置statsfulset副本反亲和性 - 设置pod运行优先级 - 设置volumeClaimTemplates -..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : prometheus statsfulset yaml配置 - 设置statsfulset副本反亲和性 - 设置pod运行优先级 - 设置volumeClaimTemplates -...'
 ---
 
 > **Prometheus · 第 26 篇**

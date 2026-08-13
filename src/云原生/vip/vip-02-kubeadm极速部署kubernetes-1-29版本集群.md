@@ -1,15 +1,15 @@
 ---
-title: "kubeadm极速部署Kubernetes 1.29版本集群"
-sidebarGroup: "VIP 专题"
-shortTitle: "02 kubeadm极速部署Kubernetes ..."
+title: kubeadm极速部署Kubernetes 1.29版本集群
+sidebarGroup: VIP 专题
+shortTitle: 02 kubeadm极速部署Kubernetes ...
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "VIP 专题"
-  - "云原生"
-  - "课程笔记"
-description: "基于AlmaLinux使用kubeadm极速部署Kubernetes 1.29.X版本集群 一、集群节点准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :..."
+  - VIP 专题
+  - 云原生
+  - 课程笔记
+description: '基于AlmaLinux使用kubeadm极速部署Kubernetes 1.29.X版本集群 一、集群节点准备 1.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | :...'
 ---
 
 > **VIP 专题 · 第 2 篇**

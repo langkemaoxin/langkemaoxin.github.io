@@ -1,15 +1,15 @@
 ---
-title: "如何使用kubernetes实现服务自动伸缩？HPA、VPA"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "13 如何使用kubernetes实现服务自动伸缩..."
+title: 如何使用kubernetes实现服务自动伸缩？HPA、VPA
+sidebarGroup: K8s 课程笔记
+shortTitle: 13 如何使用kubernetes实现服务自动伸缩...
 order: 13
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "如何使用kubernetes实现服务自动伸缩？HPA、VPA 一、Kubernetes Pod水平自动伸缩 HPA 官方网址：https://kubernetes.io/zh/docs/tasks/r..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: '如何使用kubernetes实现服务自动伸缩？HPA、VPA 一、Kubernetes Pod水平自动伸缩 HPA 官方网址：http[path]'
 ---
 
 > **K8s 课程笔记 · 第 13 篇**

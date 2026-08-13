@@ -1,15 +1,15 @@
 ---
-title: "基于Docker实现K8S 1.28二进制高可用集群"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "27 基于Docker实现K8S 1.28二进制高..."
+title: 基于Docker实现K8S 1.28二进制高可用集群
+sidebarGroup: K8s 课程笔记
+shortTitle: 27 基于Docker实现K8S 1.28二进制高...
 order: 27
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "基于Docker容器运行时实现K8S 1.28二进制高可用集群 一、K8S集群架构说明 二、K8S集群主机配置 2.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | ..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: '基于Docker容器运行时实现K8S 1.28二进制高可用集群 一、K8S集群架构说明 二、K8S集群主机配置 2.1 主机操作系统说明 | 序号 | 操作系统及版本 | 备注 | | :--: | ...'
 ---
 
 > **K8s 课程笔记 · 第 27 篇**

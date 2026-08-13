@@ -1,15 +1,15 @@
 ---
-title: "15.10 在k8s部署grafana-deployment并导入k8s大盘"
-sidebarGroup: "Prometheus"
-shortTitle: "20 15.10 在k8s部署grafana-de..."
+title: 15.10 在k8s部署grafana-deployment并导入k8s大盘
+sidebarGroup: Prometheus
+shortTitle: 20 15.10 在k8s部署grafana-de...
 order: 20
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - grafana deployment部署 - k8s大盘导入 准备yaml 部署工作 1. 修改yaml中的节点选择器标签 k8s-node01改为你自己的节点 2. 在节点上创..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - grafana deployment部署 - k8s大盘导入 准备yaml 部署工作 1. 修改yaml中的节点选择器标签 k8s-node01改为你自己的节点 2. 在节点上创...'
 ---
 
 > **Prometheus · 第 20 篇**

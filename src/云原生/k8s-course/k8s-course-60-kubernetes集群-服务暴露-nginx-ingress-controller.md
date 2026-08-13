@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群 服务暴露 Nginx Ingress Controller"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "60 kubernetes集群 服务暴露 Ngin..."
+title: kubernetes集群 服务暴露 Nginx Ingress Controller
+sidebarGroup: K8s 课程笔记
+shortTitle: 60 kubernetes集群 服务暴露 Ngin...
 order: 60
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群 服务暴露 Nginx Ingress Controller 一、ingress控制器 1.1 ingress控制器作用 ingress controller可以为kubern..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: Kubernetes集群 服务暴露 Nginx Ingress Controller 一、ingress控制器 1.1 ingress控制器作用 ingress controller可以为kubern...
 ---
 
 > **K8s 课程笔记 · 第 60 篇**

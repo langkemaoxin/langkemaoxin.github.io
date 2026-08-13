@@ -1,15 +1,15 @@
 ---
-title: "kubernetes管理虚拟机利器KubeVirt"
-sidebarGroup: "KubeVirt"
-shortTitle: "01 kubernetes管理虚拟机利器KubeV..."
+title: kubernetes管理虚拟机利器KubeVirt
+sidebarGroup: KubeVirt
+shortTitle: 01 kubernetes管理虚拟机利器KubeV...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "KubeVirt"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes管理虚拟机利器KubeVirt 前言 虚拟化分类： - Paravirtualization（半虚拟化）: 不对硬件设备进行模拟，虚拟机拥有独立的运行环境，通过虚拟机管理程序共享底..."
+  - KubeVirt
+  - 云原生
+  - 课程笔记
+description: 'kubernetes管理虚拟机利器KubeVirt 前言 虚拟化分类： - Paravirtualization（半虚拟化）: 不对硬件设备进行模拟，虚拟机拥有独立的运行环境，通过虚拟机管理程序共享底...'
 ---
 
 > **KubeVirt · 第 1 篇**

@@ -1,15 +1,15 @@
 ---
-title: "kubernetes核心概念 Pod"
-sidebarGroup: "K8s 课程笔记"
-shortTitle: "56 kubernetes核心概念 Pod"
+title: kubernetes核心概念 Pod
+sidebarGroup: K8s 课程笔记
+shortTitle: 56 kubernetes核心概念 Pod
 order: 56
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "K8s 课程笔记"
-  - "云原生"
-  - "课程笔记"
-description: "Kubernetes集群核心概念 Pod 一、工作负载(workloads) 参考链接：https://kubernetes.io/zh/docs/concepts/workloads/ 工作负载（w..."
+  - K8s 课程笔记
+  - 云原生
+  - 课程笔记
+description: 'Kubernetes集群核心概念 Pod 一、工作负载(workloads) 参考链接：http[path] 工作负载（w...'
 ---
 
 > **K8s 课程笔记 · 第 56 篇**

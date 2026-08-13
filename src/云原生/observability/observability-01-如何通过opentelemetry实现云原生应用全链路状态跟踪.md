@@ -1,15 +1,15 @@
 ---
-title: "如何通过OpenTelemetry实现云原生应用全链路状态跟踪？"
-sidebarGroup: "可观测性"
-shortTitle: "01 如何通过OpenTelemetry实现云原生..."
+title: 如何通过OpenTelemetry实现云原生应用全链路状态跟踪？
+sidebarGroup: 可观测性
+shortTitle: 01 如何通过OpenTelemetry实现云原生...
 order: 1
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "如何通过OpenTelemetry实现云原生应用全链路状态跟踪？ 一、为什么需要分布式跟踪？ 1.1 为什么需要分布式跟踪？ 随着SOA，微服务架构及PaaS，Devops等技术的兴起，线上问题的追踪..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: 如何通过OpenTelemetry实现云原生应用全链路状态跟踪？ 一、为什么需要分布式跟踪？ 1.1 为什么需要分布式跟踪？ 随着SOA，微服务架构及PaaS，Devops等技术的兴起，线上问题的追踪...
 ---
 
 > **可观测性 · 第 1 篇**

@@ -1,15 +1,15 @@
 ---
-title: "43.2 gossip协议解读"
-sidebarGroup: "Prometheus"
-shortTitle: "142 43.2 gossip协议解读"
+title: 43.2 gossip协议解读
+sidebarGroup: Prometheus
+shortTitle: 142 43.2 gossip协议解读
 order: 142
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - gossip流言算法 - 信息同步过程演示 - Gossip 的特点（优势） - Gossip 的特点（的缺陷） gossip流言算法 作用 - 这个协议的作用就像其名字表示的意..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - gossip流言算法 - 信息同步过程演示 - Gossip 的特点（优势） - Gossip 的特点（的缺陷） gossip流言算法 作用 - 这个协议的作用就像其名字表示的意...'
 ---
 
 > **Prometheus · 第 142 篇**

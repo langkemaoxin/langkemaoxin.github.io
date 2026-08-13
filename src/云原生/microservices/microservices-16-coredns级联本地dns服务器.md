@@ -1,15 +1,15 @@
 ---
-title: "CoreDNS级联本地DNS服务器"
-sidebarGroup: "微服务实战"
-shortTitle: "16 CoreDNS级联本地DNS服务器"
+title: CoreDNS级联本地DNS服务器
+sidebarGroup: 微服务实战
+shortTitle: 16 CoreDNS级联本地DNS服务器
 order: 16
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "CoreDNS级联本地DNS服务器 ~~~powershell kubectl edit configmap coredns -n kube-system apiVersion: v1 data: C..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 'CoreDNS级联本地DNS服务器 ~~~powershell kubectl edit configmap coredns -n kube-system apiVersion: v1 data: C...'
 ---
 
 > **微服务实战 · 第 16 篇**

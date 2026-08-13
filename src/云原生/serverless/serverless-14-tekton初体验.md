@@ -1,15 +1,15 @@
 ---
-title: "Tekton初体验"
-sidebarGroup: "Serverless"
-shortTitle: "14 Tekton初体验"
+title: Tekton初体验
+sidebarGroup: Serverless
+shortTitle: 14 Tekton初体验
 order: 14
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Serverless"
-  - "云原生"
-  - "课程笔记"
-description: "Tekton应用初体验 一、Tekton介绍 1.1 Tekton由来 - Tekton 是一款功能非常强大而灵活的 CI/CD 开源的云原生框架。 - Tekton 的前身是 Knative 项目的..."
+  - Serverless
+  - 云原生
+  - 课程笔记
+description: Tekton应用初体验 一、Tekton介绍 1.1 Tekton由来 - Tekton 是一款功能非常强大而灵活的 CI/CD 开源的云原生框架。 - Tekton 的前身是 Knative 项目的...
 ---
 
 > **Serverless · 第 14 篇**

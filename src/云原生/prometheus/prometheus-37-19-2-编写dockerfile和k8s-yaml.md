@@ -1,15 +1,15 @@
 ---
-title: "19.2 编写dockerfile和k8s yaml"
-sidebarGroup: "Prometheus"
-shortTitle: "37 19.2 编写dockerfile和k8s ..."
+title: 19.2 编写dockerfile和k8s yaml
+sidebarGroup: Prometheus
+shortTitle: 37 19.2 编写dockerfile和k8s ...
 order: 37
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - 编写Dockerfile - 编写k8s需要的yaml 编写Dockerfile 1. FROM 指定基础镜像 - 必须有的指令，并且必须是第一条指令 - Alpine 操作系统..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - 编写Dockerfile - 编写k8s需要的yaml 编写Dockerfile 1. FROM 指定基础镜像 - 必须有的指令，并且必须是第一条指令 - Alpine 操作系统...'
 ---
 
 > **Prometheus · 第 37 篇**

@@ -1,15 +1,15 @@
 ---
-title: "21.2 k8s中etcd的tls双向认证原理解析"
-sidebarGroup: "Prometheus"
-shortTitle: "42 21.2 k8s中etcd的tls双向认证原..."
+title: 21.2 k8s中etcd的tls双向认证原理解析
+sidebarGroup: Prometheus
+shortTitle: 42 21.2 k8s中etcd的tls双向认证原...
 order: 42
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "Prometheus"
-  - "云原生"
-  - "课程笔记"
-description: "本节重点介绍 : - tls单向认证原理 - tls双向认证原理 - 在k8s中etcd监控的应用 - 以ca.crt client.crt client.key创建的secret并挂载到promet..."
+  - Prometheus
+  - 云原生
+  - 课程笔记
+description: '本节重点介绍 : - tls单向认证原理 - tls双向认证原理 - 在k8s中etcd监控的应用 - 以ca.crt client.crt client.key创建的secret并挂载到promet...'
 ---
 
 > **Prometheus · 第 42 篇**

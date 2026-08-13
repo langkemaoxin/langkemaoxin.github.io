@@ -1,15 +1,15 @@
 ---
-title: "容器监控方案 CAdvisor"
-sidebarGroup: "可观测性"
-shortTitle: "08 容器监控方案 CAdvisor"
+title: 容器监控方案 CAdvisor
+sidebarGroup: 可观测性
+shortTitle: 08 容器监控方案 CAdvisor
 order: 8
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "可观测性"
-  - "云原生"
-  - "课程笔记"
-description: "容器监控方案 CAdvisor 一、CAdvisor介绍 cAdvisor (Container Advisor) 是 Google 开源的一个容器监控工具，可用于对容器资源的使用情况和性能进行监控。..."
+  - 可观测性
+  - 云原生
+  - 课程笔记
+description: 容器监控方案 CAdvisor 一、CAdvisor介绍 cAdvisor (Container Advisor) 是 Google 开源的一个容器监控工具，可用于对容器资源的使用情况和性能进行监控。...
 ---
 
 > **可观测性 · 第 8 篇**

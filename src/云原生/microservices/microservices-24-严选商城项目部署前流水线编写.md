@@ -1,15 +1,15 @@
 ---
-title: "严选商城项目部署前流水线编写"
-sidebarGroup: "微服务实战"
-shortTitle: "24 严选商城项目部署前流水线编写"
+title: 严选商城项目部署前流水线编写
+sidebarGroup: 微服务实战
+shortTitle: 24 严选商城项目部署前流水线编写
 order: 24
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "严选商城项目部署前流水线编写 一、中台服务 1.1 horse-gateway 网关 演示如何借助kubesphere生成流水线过程。 1.1.1 代码拉取 1.1.2 项目打包 ~~~powersh..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 严选商城项目部署前流水线编写 一、中台服务 1.1 horse-gateway 网关 演示如何借助kubesphere生成流水线过程。 1.1.1 代码拉取 1.1.2 项目打包 ~~~powersh...
 ---
 
 > **微服务实战 · 第 24 篇**

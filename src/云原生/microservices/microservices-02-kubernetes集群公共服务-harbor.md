@@ -1,15 +1,15 @@
 ---
-title: "kubernetes集群公共服务 Harbor"
-sidebarGroup: "微服务实战"
-shortTitle: "02 kubernetes集群公共服务 Harbo..."
+title: kubernetes集群公共服务 Harbor
+sidebarGroup: 微服务实战
+shortTitle: 02 kubernetes集群公共服务 Harbo...
 order: 2
-date: 2026-08-13
-category: "云原生"
+date: 2026-08-13T00:00:00.000Z
+category: 云原生
 tag:
-  - "微服务实战"
-  - "云原生"
-  - "课程笔记"
-description: "kubernetes集群公共服务 Harbor 一、 docker-ce安装 1.1 获取YUM源 使用阿里云开源软件镜像站。 ~~~powershell wget https://mirrors.a..."
+  - 微服务实战
+  - 云原生
+  - 课程笔记
+description: 'kubernetes集群公共服务 Harbor 一、 docker-ce安装 1.1 获取YUM源 使用阿里云开源软件镜像站。 ~~~powershell wget http[path]'
 ---
 
 > **微服务实战 · 第 2 篇**
