@@ -3,33 +3,34 @@ title: 云原生
 index: false
 icon: cloud
 article: false
-description: 云原生
+description: Docker → Kubernetes → Serverless 主线，辅以运维笔记、可观测与平台实战
 ---
 
 # 云原生
 
-本专栏以 **Docker → Kubernetes → Serverless** 为主线，并基于《容器云-云原生架构师》课程笔记扩充：运行时、网络/存储、DevOps、可观测、Prometheus、PaaS、微服务实战、Golang 等。
+本专栏以 **Docker → Kubernetes → Serverless** 为主线；课程侧笔记经去重、合并与目录收敛后，作为补充阅读。
 
-课程笔记已尽量保留原文与插图，并做了结构整理与笔误修正。
+## 怎么读
 
-## 栏目一览
+1. **Docker / Kubernetes**：精写主线，建议按序阅读  
+2. **K8s 运维笔记**：部署、网络、存储等课堂笔记（已去重）  
+3. **DevOps / Serverless / 可观测性 / 平台与实战**：按需深入  
+4. **Golang / 扩展专题**：工具链与周边专题
+
+## 栏目
 
 | 栏目 | 说明 |
 |------|------|
-| 云原生基础 | 云原生 / 虚拟化 / 云计算导论 |
-| Docker / Docker 进阶 / Containerd | 容器引擎与运行时 |
-| Kubernetes / K8s 课程笔记 | 编排主线 + 课程部署与组件笔记 |
-| K8s 网络 / 存储 | 网络方案与持久化 |
-| DevOps / GitOps | CI/CD、Argo CD 等 |
-| Serverless | Knative、Tekton、OpenFaaS |
-| 可观测性 / Prometheus | 监控、链路、Prometheus 实战文档 |
-| PaaS / 微服务实战 | KubeSphere 等与项目部署 |
-| 多集群 / 备份 / 公有云 / 边缘 | 进阶专题 |
-| 大数据与 ML / 数据服务 / KubeVirt / Operator | 扩展能力 |
-| Golang | 课程示例工程整理（原笔记多为代码与 nyf） |
-| VIP / 面试 | 补充专题 |
-
-建议按侧栏顺序阅读；`<Catalog />` 亦可浏览全部子页。
+| 云原生基础 | 导论 |
+| Docker | 容器引擎（含 Containerd / HTTPS 进阶） |
+| Kubernetes | 编排精写主线（20 篇） |
+| K8s 运维笔记 | 部署与组件课堂笔记 |
+| DevOps / GitOps | CI/CD、Argo CD |
+| Serverless | Knative / Tekton / OpenFaaS |
+| 可观测性 | 监控链路 + Prometheus 按章合并 |
+| 平台与实战 | PaaS、微服务、多集群等 |
+| 扩展专题 | 大数据、Operator、面试等 |
+| Golang | 示例工程合集 |
 
 ## 文章目录
 
