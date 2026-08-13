@@ -1,0 +1,5 @@
+node_modules/
+*.log
+tools/*.zip
+compress-images.log
+compress-images-console.log
