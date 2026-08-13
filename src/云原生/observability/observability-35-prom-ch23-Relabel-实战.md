@@ -53,7 +53,7 @@ description: Prometheus 第23章（Relabel 实战）合并笔记
 
 - 在采集cadvisor时可以看到服务发现源给添加了很多`__meta_kubernetes_node_label_`开头的标签
 - ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1630111303000/475c276fa7684cdfa868e48085644796.png)
-- /service-discovery页面查看 kubernetes-nodes-cadvisor的结果![](/img/bVcSC9K)
+- /service-discovery页面查看 kubernetes-nodes-cadvisor的结果（配图链接已失效，已省略）
 - 但是这些标签名字太长了，需要精简。我们使用如下的relabel配置
 
 ```yaml

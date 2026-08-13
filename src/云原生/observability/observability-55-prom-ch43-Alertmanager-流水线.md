@@ -31,7 +31,7 @@ description: Prometheus 第43章（Alertmanager 流水线）合并笔记
 - https://prometheus.io/docs/alerting/latest/alertmanager/
 
 ## alertmanager 架构图
-![image](pic/alertm_arch.png)
+> （配图缺失：image）
 
 ## 文档地址
 - https://prometheus.io/docs/alerting/latest/alertmanager/
@@ -52,15 +52,15 @@ description: Prometheus 第43章（Alertmanager 流水线）合并笔记
 
 # alertmanager 单点问题
 - 部署一个肯定是单点
-![image](pic/s01.png)
+> （配图缺失：image）
 > 尝试部署多个独立的alertmanager
 -  prometheus产生的报警并行发往多个alm
-![image](pic/s02.png) 
+> （配图缺失：image） 
 - 此方案能保证告警信息不会因为单个alm挂掉儿接收不到
 - 但是会造成同一条告警信息发送多次，告警重复
 
 ## alertmanager 引入gossip协议来同步节点间的信息
-![image](pic/s03.png) 
+> （配图缺失：image） 
 **信息种类如下**
 - 新接收到的告警信息
     - 通知发送状态同步：告警通知发送完成后，基于Push-based同步告警发送状态。Wait阶段可以确保集群状态一致
@@ -68,10 +68,10 @@ description: Prometheus 第43章（Alertmanager 流水线）合并笔记
 - 查看代码可以知道共有两个地方被`SetBroadcast`
     - 即动态接受数据的地方可以gossip，配置如inhibit、route则不可以
 - 调用gossip的地方
-![image](pic/alertm_gossip.png)
+> （配图缺失：image）
  
 # 回味alertmanager 架构图
-![image](pic/alertm_arch.png)
+> （配图缺失：image）
 
 # 高可用部署
 - 其余节点启动参数加上对端ip即可

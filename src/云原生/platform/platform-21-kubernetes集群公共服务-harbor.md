@@ -78,17 +78,17 @@ OpenSSL version: OpenSSL 1.1.0l  10 Sep 2019
 
 ## 3.1 harbor下载
 
-![image-20220125232445910](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220125232445910.png)
+> （配图缺失：image-20220125232445910）
 
-![image-20220125232519365](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220125232519365.png)
+> （配图缺失：image-20220125232519365）
 
-![image-20220614112423090](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220614112423090.png)
+> （配图缺失：image-20220614112423090）
 
-![image-20220614112444701](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220614112444701.png)
+> （配图缺失：image-20220614112444701）
 
-![image-20220614112508085](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220614112508085.png)
+> （配图缺失：image-20220614112508085）
 
-![image-20220614112527380](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220614112527380.png)
+> （配图缺失：image-20220614112527380）
 
 ~~~powershell
 下载harbor离线安装包
@@ -256,7 +256,7 @@ dcb4b57c7542   goharbor/harbor-log:v2.5.1           "/bin/sh -c /usr/loc…"   A
 
 ## 3.6 访问harbor UI界面
 
-![image-20220614121150040](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220614121150040.png)
+> （配图缺失：image-20220614121150040）
 
-![image-20220614121218531](/云原生/platform/platform-21-kubernetes集群公共服务-harbor/image-20220614121218531.png)
+> （配图缺失：image-20220614121218531）
 

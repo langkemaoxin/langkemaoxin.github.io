@@ -549,9 +549,9 @@ config
 >
 > 安装参考网址：https://projectcalico.docs.tigera.io/about/about-calico
 
-![image-20230220180313085](kubeadm极速部署Kubernetes 1.27.1版本集群.assets\image-20230220180313085.png)
+> （配图缺失：image-20230220180313085）
 
-![image-20230220180556878](kubeadm极速部署Kubernetes 1.27.1版本集群.assets\image-20230220180556878.png)
+> （配图缺失：image-20230220180556878）
 
 ~~~powershell
 应用operator资源清单文件

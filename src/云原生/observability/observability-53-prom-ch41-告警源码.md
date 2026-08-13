@@ -29,12 +29,12 @@ description: Prometheus 第41章（告警源码）合并笔记
 - 并且降低高基数查询对后端的压力
 - 用户无需变更grafana上的查询语句，后端自动替换 
 - 效果图
-![image](pic/pre_query效果.png)
-![image](pic/pre_query效果2.png)
+> （配图缺失：image）
+> （配图缺失：image）
 
 # 架构设计
 - 架构图
-![image](pic/pre_query_arch.png)
+> （配图缺失：image）
 
 ## 解决方案说明  
 - heavy_query对用户侧表现为查询速度慢  
@@ -584,10 +584,10 @@ def mset_record_to_redis(res_dic):
 - confd的存在有点类似于快递员，买了东西不需要自己到店去取货了
 - confd这个快递员回把货取过来，然后送到家里，并且通知你货已经送到了
 - 加入confd之后的架构大致是这样的：
-![image](pic/confd_01.png)
+> （配图缺失：image）
 
 ## confd代码流程
-![image](pic/confd_02.png)
+> （配图缺失：image）
 
 ## confd使用
 ### Template Resources
@@ -606,7 +606,7 @@ def mset_record_to_redis(res_dic):
     - mode (string) - The permission mode of the file.
     - uid (int) - The uid that should own the file. Defaults to the effective uid.
     - reload_cmd (string) - The command to reload config.
-    - check_cmd (string) - The command to check config. Use {{.src}} to reference the rendered source template.
+    - check_cmd (string) - The command to check config. Use {​{​.src}} to reference the rendered source template.
     - prefix (string) - The string to prefix to keys.
 > 举例
 - 下面的例子代表 

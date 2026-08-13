@@ -729,7 +729,7 @@ spec:
 ## serviceMonitor/monitoring/kube-state-metrics/0 代表采集ksm 资源指标
 
 - ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1631407729000/040f5a69cb19465ab8bb3b34bc086ad0.png)
-- 带上target显示的标签过来 查询 {job="kube-state-metrics",container="kube-rbac-proxy-main"}
+- 带上target显示的标签过来 查询 {​job="kube-state-metrics",container="kube-rbac-proxy-main"}
 - ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1631407729000/325a69b7f177442b94586df524230ab9.png)
 - 全量yaml如下
 
@@ -1054,7 +1054,7 @@ Subsets:
 - 位置 manifests\kube-state-metrics-deployment.yaml
 - ksm的 telemetry-port=8082代表将自身指标暴露在 8082端口上
 - target页面![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1631407729000/db024813b00b4be9850b7bf4fda03f75.png)
-- 查询 {job="kube-state-metrics",container="kube-rbac-proxy-self"}
+- 查询 {​job="kube-state-metrics",container="kube-rbac-proxy-self"}
 - ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1631407729000/bb15d3b479294e95979548b67897bdbb.png)
 
 ```yaml
@@ -1980,12 +1980,12 @@ apiserver_request:availability30d{verb="all", cluster=""}
 
 ```yaml
     - expr: |
-        sum by (code) (code_verb:apiserver_request_total:increase30d{verb=~"LIST|GET"})
+        sum by (code) (code_verb:apiserver_request_total:increase30d{​verb=~"LIST|GET"})
       labels:
         verb: read
       record: code:apiserver_request_total:increase30d
     - expr: |
-        sum by (code) (code_verb:apiserver_request_total:increase30d{verb=~"POST|PUT|PATCH|DELETE"})
+        sum by (code) (code_verb:apiserver_request_total:increase30d{​verb=~"POST|PUT|PATCH|DELETE"})
       labels:
         verb: write
       record: code:apiserver_request_total:increase30d
@@ -2003,7 +2003,7 @@ apiserver_request:availability30d{verb="all", cluster=""}
 
 ```yaml
     - expr: |
-        sum by (code, verb) (increase(apiserver_request_total{job="apiserver",verb="LIST",code=~"2.."}[1h]))
+        sum by (code, verb) (increase(apiserver_request_total{​job="apiserver",verb="LIST",code=~"2.."}[1h]))
       record: code_verb:apiserver_request_total:increase1h
 ```
 
@@ -2013,7 +2013,7 @@ apiserver_request:availability30d{verb="all", cluster=""}
 
 ```shell
     - expr: |
-        sum by (code, verb) (increase(apiserver_request_total{job="apiserver",verb="LIST",code=~"2.."}[1h]))
+        sum by (code, verb) (increase(apiserver_request_total{​job="apiserver",verb="LIST",code=~"2.."}[1h]))
       record: code_verb:apiserver_request_total:increase1h
 ```
 
@@ -2029,7 +2029,7 @@ apiserver_request:availability30d{verb="all", cluster=""}
 
 ```shell
     - expr: |
-        sum by (code) (code_verb:apiserver_request_total:increase30d{verb=~"LIST|GET"})
+        sum by (code) (code_verb:apiserver_request_total:increase30d{​verb=~"LIST|GET"})
       labels:
         verb: read
       record: code:apiserver_request_total:increase30d
@@ -2039,7 +2039,7 @@ apiserver_request:availability30d{verb="all", cluster=""}
 
 ```shell
     - expr: |
-        sum by (code) (code_verb:apiserver_request_total:increase30d{verb=~"POST|PUT|PATCH|DELETE"})
+        sum by (code) (code_verb:apiserver_request_total:increase30d{​verb=~"POST|PUT|PATCH|DELETE"})
       labels:
         verb: write
       record: code:apiserver_request_total:increase30d
@@ -2233,7 +2233,7 @@ spec:
       rules:
         - alert: pod_control_plane_pod_detail01
           annotations:
-            description: Prometheus {{$labels.namespace}}/{{$labels.pod}} has failed to reload its configuration.
+            description: Prometheus {​{$labels.namespace}}/{​{$labels.pod}} has failed to reload its configuration.
             runbook_url: https://github.com/prometheus-operator/kube-prometheus/wiki/prometheusbadconfig
             summary: test
           expr: |

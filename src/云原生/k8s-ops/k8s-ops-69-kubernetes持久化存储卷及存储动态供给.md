@@ -374,7 +374,7 @@ PersistentVolumeClaim(**PVC**)是用户pod使用PV的申请请求。
 
   
 
-![](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/6)
+![](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/6.png)
 
 ## 7.3 实现nfs类型pv与pvc
 
@@ -640,13 +640,13 @@ PV对存储系统的支持可通过其插件来实现，目前，Kubernetes支�
 
 第三方插件地址: https://github.com/kubernetes-retired/external-storage
 
-![1604838285045](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/1)
+![1604838285045](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/1.png)
 
-![1604838445318](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/2)
+![1604838445318](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/2.png)
 
-![1604838485281](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/3)
+![1604838485281](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/3.png)
 
-![1604838524969](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/4)
+![1604838524969](/云原生/k8s-ops/k8s-ops-69-kubernetes持久化存储卷及存储动态供给/4.png)
 
 1.下载并创建storageclass
 

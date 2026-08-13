@@ -162,13 +162,13 @@ spec:
 >
 > hosts:
 >
->   - {name: master, address: 192.168.10.140, internalAddress: 192.168.10.140, password: centos}
+>   - &#123;​name: master, address: 192.168.10.140, internalAddress: 192.168.10.140, password: centos&#125;
 >
 > 使用ssh密钥实现免密登录
 >
 > hosts:
 >
->   - {name: master, address: 192.168.10.140, internalAddress: 192.168.10.140, privateKeyPath: "~/.ssh/id_rsa"}
+>   - &#123;​name: master, address: 192.168.10.140, internalAddress: 192.168.10.140, privateKeyPath: "~/.ssh/id_rsa"&#125;
 
 #### 1.3.2.2 执行kk创建k8s集群
 

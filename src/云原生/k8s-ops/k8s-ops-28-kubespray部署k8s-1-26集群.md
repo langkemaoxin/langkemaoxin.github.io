@@ -469,7 +469,7 @@ NAME                   TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
 demo-nginx-kubespray   NodePort   10.233.7.87   <none>        80:30532/TCP   17s
 ~~~
 
-![image-20230427123639273](C:\Users\tangf\Desktop\kubespray部署k8s 1.26集群\01-笔记\kubespray部署k8s 1.26集群.assets\image-20230427123639273.png)
+![image-20230427123639273](/云原生/k8s-ops/k8s-ops-28-kubespray部署k8s-1-26集群/image-20230427123639273.png)
 
 # 
 

@@ -531,7 +531,7 @@ config
 >
 > 安装参考网址：https://projectcalico.docs.tigera.io/about/about-calico
 
-![image-20230220180313085](kubeadm快速部署Kubernetes 1.29.0版本集群.assets\image-20230220180313085.png)
+> （配图缺失：image-20230220180313085）
 
 ![image-20231218122240570](/云原生/k8s-ops/k8s-ops-45-kubeadm快速部署kubernetes-1-29-0版本集群/image-20231218122240570.png)
 

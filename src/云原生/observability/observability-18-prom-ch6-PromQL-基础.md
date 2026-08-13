@@ -205,8 +205,8 @@ http://$Ip:3000/?orgId=1
   - 主机名   nodename
   - 内核版本   release
 - 5分钟内存负载 node_load5-0
-- cpu核数 count(node_cpu_seconds_total{mode='system'}) by (instance)
-- cpu 使用率 (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[1m])) by (instance)) * 100
+- cpu核数 count(node_cpu_seconds_total{​mode='system'}) by (instance)
+- cpu 使用率 (1 - avg(rate(node_cpu_seconds_total{​mode="idle"}[1m])) by (instance)) * 100
   - 设置阈值和背景色
   - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1629021400000/aad0c0d34db946489e63d5f7bc8cccc8.png)
 - 总内存 node_memory_MemTotal_bytes-0
@@ -268,7 +268,7 @@ http://$Ip:3000/?orgId=1
   - 变量类型 custom  query
   - label_values函数 查询 目标标签的集合
   - prometheus查询语句 /api/v1/series接口
-- 变量嵌套   label_values(node_network_info{instance="$ins"},device)
+- 变量嵌套   label_values(node_network_info{​instance="$ins"},device)
 - 变量应用于图表
 
 ## 6.6 使用dashboard商城搜索导入模板

@@ -30,9 +30,9 @@ export default hopeTheme({
 
   markdown: {
     align: true,
-    attrs: true,
+    attrs: false,
     codeTabs: true,
-    figure: true,
+    figure: false,
     gfm: true,
     imgLazyload: true,
     imgSize: true,

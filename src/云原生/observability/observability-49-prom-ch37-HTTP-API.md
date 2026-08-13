@@ -1095,7 +1095,7 @@ if __name__ == '__main__':
 ]]
 ```
 
-> /api/v1/series 和 /api/v1/label/<label_name>/values 区别
+> /api/v1/series 和 /api/v1/label/&lt;label_name&gt;/values 区别
 
 - series使用`Querier.Select` 然后grafana自身遍历
 - 后者使用`LableQuerier.LabelValues` 提供标签查询

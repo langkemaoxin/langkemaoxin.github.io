@@ -416,9 +416,9 @@ SystemdCgroup = true 由false修改为true
 
 ## 2.4 Containerd客户端nerdctl安装
 
-![image-20240428192520980](/云原生/k8s-ops/k8s-ops-46-如何基于ubuntu-24-04部署原生k8s-1-30-0集群/image-20240428192520980.png)
+> （配图缺失：image-20240428192520980）
 
-![image-20240428192603749](/云原生/k8s-ops/k8s-ops-46-如何基于ubuntu-24-04部署原生k8s-1-30-0集群/image-20240428192603749.png)
+> （配图缺失：image-20240428192603749）
 
 ~~~powershell
 # wget https://github.com/containerd/nerdctl/releases/download/v1.7.5/nerdctl-1.7.5-linux-amd64.tar.gz
@@ -578,7 +578,7 @@ KUBELET_EXTRA_ARGS="--cgroup-driver=systemd"
 
 # 四、kube-vip准备
 
-![image-20231207141350306](/云原生/k8s-ops/k8s-ops-46-如何基于ubuntu-24-04部署原生k8s-1-30-0集群/image-20231207141350306.png)
+> （配图缺失：image-20231207141350306）
 
 ~~~powershell
 export  VIP=192.168.10.200

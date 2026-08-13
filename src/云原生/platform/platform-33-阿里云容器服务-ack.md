@@ -24,107 +24,107 @@ description: 阿里云容器服务ACK 一、配置专有网络 1.1进入阿里�
 
 ## 1.1进入阿里云VPC控制台
 
-![进入VPC控制台](/云原生/platform/platform-33-阿里云容器服务-ack/进入VPC控制台.png)
+> （配图缺失：进入VPC控制台）
 
 ## 1.2开通阿里云VPC服务
 
-![vpc控制台](/云原生/platform/platform-33-阿里云容器服务-ack/vpc控制台.png)
+> （配图缺失：vpc控制台）
 
-![vpc开通成功](/云原生/platform/platform-33-阿里云容器服务-ack/vpc开通成功.png)
+> （配图缺失：vpc开通成功）
 
 ## 1.3创建vpc
 
-![创建vpc](/云原生/platform/platform-33-阿里云容器服务-ack/创建vpc.png)
+> （配图缺失：创建vpc）
 
-![配置vpc01](/云原生/platform/platform-33-阿里云容器服务-ack/配置vpc01.png)
+> （配图缺失：配置vpc01）
 
-![配置vpc02](/云原生/platform/platform-33-阿里云容器服务-ack/配置vpc02.png)
+> （配图缺失：配置vpc02）
 
-![image-20221012160149721](/云原生/platform/platform-33-阿里云容器服务-ack/image-20221012160149721.png)
+> （配图缺失：image-20221012160149721）
 
 # 二、配置Kubernetes集群
 
 ## 2.1进入阿里云ACK控制台
 
-![容器服务ack](/云原生/platform/platform-33-阿里云容器服务-ack/容器服务ack.png)
+> （配图缺失：容器服务ack）
 
-![进入ack控制台](/云原生/platform/platform-33-阿里云容器服务-ack/进入ack控制台.png)
+> （配图缺失：进入ack控制台）
 
 ## 2.2创建集群
 
 ### 2.2.1进入集群配置界面
 
-![创建集群](/云原生/platform/platform-33-阿里云容器服务-ack/创建集群.png)
+> （配图缺失：创建集群）
 
 ### 2.2.2选择集群配置
 
-![配置k8s01](/云原生/platform/platform-33-阿里云容器服务-ack/配置k8s01.png)
+> （配图缺失：配置k8s01）
 
-![配置k8s02](/云原生/platform/platform-33-阿里云容器服务-ack/配置k8s02.png)
+> （配图缺失：配置k8s02）
 
-![配置k8s03](/云原生/platform/platform-33-阿里云容器服务-ack/配置k8s03.png)
+> （配图缺失：配置k8s03）
 
 ### 2.2.3选择节点池配置
 
-![配置nodepool01](/云原生/platform/platform-33-阿里云容器服务-ack/配置nodepool01.png)
+> （配图缺失：配置nodepool01）
 
-![配置nodepool02](/云原生/platform/platform-33-阿里云容器服务-ack/配置nodepool02.png)
+> （配图缺失：配置nodepool02）
 
 ### 2.2.4选择组件配置
 
-![配置组件01](/云原生/platform/platform-33-阿里云容器服务-ack/配置组件01.png)
+> （配图缺失：配置组件01）
 
 ### 2.2.5确认配置
 
-![创建集群02](/云原生/platform/platform-33-阿里云容器服务-ack/创建集群02-16655626080871.png)
+> （配图缺失：创建集群02）
 
 ### 2.2.6创建集群
 
-![集群创建中](/云原生/platform/platform-33-阿里云容器服务-ack/集群创建中.png)
+> （配图缺失：集群创建中）
 
-![集群列表](/云原生/platform/platform-33-阿里云容器服务-ack/集群列表.png)
+> （配图缺失：集群列表）
 
 # 三、阿里云控制台测试集群可用性
 
 ## 3.1创建Deployment
 
-![demo01](/云原生/platform/platform-33-阿里云容器服务-ack/demo01.png)
+> （配图缺失：demo01）
 
-![demo02](/云原生/platform/platform-33-阿里云容器服务-ack/demo02.png)
+> （配图缺失：demo02）
 
-![demo03](/云原生/platform/platform-33-阿里云容器服务-ack/demo03.png)
+> （配图缺失：demo03）
 
 ## 3.2创建Service
 
-![svcDemo01](/云原生/platform/platform-33-阿里云容器服务-ack/svcDemo01.png)
+> （配图缺失：svcDemo01）
 
-![svcDemo02](/云原生/platform/platform-33-阿里云容器服务-ack/svcDemo02-16655630626753.png)
+> （配图缺失：svcDemo02）
 
-![svcDemo03](/云原生/platform/platform-33-阿里云容器服务-ack/svcDemo03.png)
+> （配图缺失：svcDemo03）
 
 ## 3.3创建Ingress
 
-![ingressDemo01](/云原生/platform/platform-33-阿里云容器服务-ack/ingressDemo01.png)
+> （配图缺失：ingressDemo01）
 
-![ingressDemo02](/云原生/platform/platform-33-阿里云容器服务-ack/ingressDemo02.png)
+> （配图缺失：ingressDemo02）
 
-![访问01](/云原生/platform/platform-33-阿里云容器服务-ack/访问01.png)
+> （配图缺失：访问01）
 
 ## 3.4本地pc添加hosts(ingress域名未做备案)
 
 同时按住win键+R键进入运行
 
-![修改hosts01](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts01.png)
+> （配图缺失：修改hosts01）
 
-![修改hosts02](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts02.png)
+> （配图缺失：修改hosts02）
 
-![修改hosts03](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts03.png)
+> （配图缺失：修改hosts03）
 
-![修改hosts04](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts04.png)
+> （配图缺失：修改hosts04）
 
 ## 3.5访问应用
 
-![访问02](/云原生/platform/platform-33-阿里云容器服务-ack/访问02.png)
+> （配图缺失：访问02）
 
 # 四、通过api连接集群，并使用阿里云容器镜像仓库服务进行应用发布
 
@@ -146,9 +146,9 @@ Server Version: version.Info{Major:"1", Minor:"24+", GitVersion:"v1.24.6-aliyun.
 
 ## 4.2 下载kubeConfig文件
 
-![连接k8s01](/云原生/platform/platform-33-阿里云容器服务-ack/连接k8s01.png)
+> （配图缺失：连接k8s01）
 
-![连接k8s02](/云原生/platform/platform-33-阿里云容器服务-ack/连接k8s02.png)
+> （配图缺失：连接k8s02）
 
 ~~~powershell
 [root@kubemsb ~]# mkdir /root/.kube
@@ -186,19 +186,19 @@ cn-chengdu.192.168.10.45   Ready    <none>   3h37m   v1.24.6-aliyun.1
 
 ## 4.4 创建阿里云容器镜像服务
 
-![镜像服务](/云原生/platform/platform-33-阿里云容器服务-ack/镜像服务.png)
+> （配图缺失：镜像服务）
 
-![镜像服务02](/云原生/platform/platform-33-阿里云容器服务-ack/镜像服务02.png)
+> （配图缺失：镜像服务02）
 
-![镜像服务03](/云原生/platform/platform-33-阿里云容器服务-ack/镜像服务03.png)
+> （配图缺失：镜像服务03）
 
-![创建仓库01](/云原生/platform/platform-33-阿里云容器服务-ack/创建仓库01.png)
+> （配图缺失：创建仓库01）
 
-![创建仓库05](/云原生/platform/platform-33-阿里云容器服务-ack/创建仓库05.png)
+> （配图缺失：创建仓库05）
 
-![创建仓库03](/云原生/platform/platform-33-阿里云容器服务-ack/创建仓库03.png)
+> （配图缺失：创建仓库03）
 
-![创建仓库04](/云原生/platform/platform-33-阿里云容器服务-ack/创建仓库04.png)
+> （配图缺失：创建仓库04）
 
 ## 4.5 安装docker
 
@@ -235,59 +235,59 @@ apidemo                                            v1        cae07723a2c3   7 mi
 [root@kubemsb ~]# docker push registry.cn-chengdu.aliyuncs.com/kubemsb/apidemo:v1
 ~~~
 
-![image-20221012170435435](/云原生/platform/platform-33-阿里云容器服务-ack/image-20221012170435435.png)
+> （配图缺失：image-20221012170435435）
 
 ## 4.10在阿里云控制台部署项目
 
 ### 4.10.1 部署apidemo_Deployment
 
-![apidemo01](/云原生/platform/platform-33-阿里云容器服务-ack/apidemo01.png)
+> （配图缺失：apidemo01）
 
-![apidemo02](/云原生/platform/platform-33-阿里云容器服务-ack/apidemo02.png)
+> （配图缺失：apidemo02）
 
-![apidemo03](/云原生/platform/platform-33-阿里云容器服务-ack/apidemo03.png)
+> （配图缺失：apidemo03）
 
-![apidemo04](/云原生/platform/platform-33-阿里云容器服务-ack/apidemo04.png)
+> （配图缺失：apidemo04）
 
-![apidemo05](/云原生/platform/platform-33-阿里云容器服务-ack/apidemo05.png)
+> （配图缺失：apidemo05）
 
-![image-20221012170947145](/云原生/platform/platform-33-阿里云容器服务-ack/image-20221012170947145.png)
+> （配图缺失：image-20221012170947145）
 
-![image-20221012171112503](/云原生/platform/platform-33-阿里云容器服务-ack/image-20221012171112503.png)
+> （配图缺失：image-20221012171112503）
 
-![apidemo08](/云原生/platform/platform-33-阿里云容器服务-ack/apidemo08.png)
+> （配图缺失：apidemo08）
 
-![apidemo09](/云原生/platform/platform-33-阿里云容器服务-ack/apidemo09.png)
+> （配图缺失：apidemo09）
 
 ### 4.10.2 部署apidemo_SVC
 
-![apidemosvc01](/云原生/platform/platform-33-阿里云容器服务-ack/apidemosvc01.png)
+> （配图缺失：apidemosvc01）
 
-![apidemosvc02](/云原生/platform/platform-33-阿里云容器服务-ack/apidemosvc02.png)
+> （配图缺失：apidemosvc02）
 
 ### 4.10.3 部署apidemo_ingress
 
-![apidemoingress01](/云原生/platform/platform-33-阿里云容器服务-ack/apidemoingress01.png)
+> （配图缺失：apidemoingress01）
 
-![apidemoingress02](/云原生/platform/platform-33-阿里云容器服务-ack/apidemoingress02.png)
+> （配图缺失：apidemoingress02）
 
-![apidemoingress03](/云原生/platform/platform-33-阿里云容器服务-ack/apidemoingress03.png)
+> （配图缺失：apidemoingress03）
 
-![apidemoingress04](/云原生/platform/platform-33-阿里云容器服务-ack/apidemoingress04.png)
+> （配图缺失：apidemoingress04）
 
-![apidemoingress05](/云原生/platform/platform-33-阿里云容器服务-ack/apidemoingress05.png)
+> （配图缺失：apidemoingress05）
 
 ## 4.11 访问apidemo服务
 
 ### 4.11.1 pc添加hosts
 
-![修改hosts01](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts01-16655662413204.png)
+> （配图缺失：修改hosts01）
 
-![修改hosts02](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts02-16655662470795.png)
+> （配图缺失：修改hosts02）
 
-![修改hosts03](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts03-16655662512246.png)
+> （配图缺失：修改hosts03）
 
-![修改hosts05](/云原生/platform/platform-33-阿里云容器服务-ack/修改hosts05.png)
+> （配图缺失：修改hosts05）
 
 ### 4.11.2 访问apidemo服务
 
@@ -295,5 +295,5 @@ apidemo                                            v1        cae07723a2c3   7 mi
 
 返回如下信息则证明服务部署成功
 
-![image-20221012171836782](/云原生/platform/platform-33-阿里云容器服务-ack/image-20221012171836782.png)
+> （配图缺失：image-20221012171836782）
 

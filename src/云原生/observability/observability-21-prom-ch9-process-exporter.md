@@ -111,19 +111,19 @@ ps -ef |grep process-exporter |grep -v grep
 
   - 变量替换
   - label_values(namedprocess_namegroup_num_procs, instance)
-  - label_values(namedprocess_namegroup_cpu_seconds_total{instance=~"$host"},groupname)
+  - label_values(namedprocess_namegroup_cpu_seconds_total{​instance=~"$host"},groupname)
 - 举例图片
 
 # 重点指标讲解
 
 - 进程个数 namedprocess_namegroup_num_procs
 - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1629511262000/2eebf7a289e2406aa6ac79f29d4ec0dc.png)
-- 进程cpu用户态使用秒数 sum by( groupname)  rate(namedprocess_namegroup_cpu_seconds_total{groupname=~".+"}[10m])
+- 进程cpu用户态使用秒数 sum by( groupname)  rate(namedprocess_namegroup_cpu_seconds_total{​groupname=~".+"}[10m])
 - 疑似结论是 100毫秒对应1个核？
-- 常驻内存 namedprocess_namegroup_memory_bytes{groupname=~".+", memtype="resident"}
+- 常驻内存 namedprocess_namegroup_memory_bytes{​groupname=~".+", memtype="resident"}
 - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1629511262000/5ad03670a35c4739b5a0ac3c2d3bd952.png)
-- 读io rate(namedprocess_namegroup_read_bytes_total{groupname=~".+"}[5m])
-- 写io rate(namedprocess_namegroup_write_bytes_total{groupname=~".+"}[5m])
+- 读io rate(namedprocess_namegroup_read_bytes_total{​groupname=~".+"}[5m])
+- 写io rate(namedprocess_namegroup_write_bytes_total{​groupname=~".+"}[5m])
 
 # 本节重点总结 :
 

@@ -206,7 +206,7 @@ func ProbeHandler(w http.ResponseWriter, r *http.Request) {
 
 # 通过接口获取target存活情况和失败原因
 
-- 接口地址 http://${prometheus_ip}/api/v1/targets
+- 接口地址 http://${​prometheus_ip}/api/v1/targets
 
 ## 源码解析
 

@@ -117,7 +117,7 @@ Kubernetes允许你存储和管理敏感信息，例如密码、OAuth令牌和ss
 
 一个Kubernetes集群至少有一个主控制平面节点（Control Plane）和一台或者多台工作节点（Node）组成，控制面板和工作节点实例可以是物理设备或云中的实例。Kubernetes 架构如下：
 
-![](file:///C:\Temp\ksohtml16136\wps9.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a574f87c70034ec1b0abb158368cc765.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a574f87c70034ec1b0abb158368cc765.png)
 
 ### 1.2.1 **Kubernetes 控制平面（Contorl Plane）**
 
@@ -178,11 +178,11 @@ Kubernetes中有非常多的核心概念，下面主要介绍Kubernetes集群中
 
 Pod是可以在 Kubernetes 中创建和管理的、最小的可部署的计算单元，是Kubernetes调度的基本单位，Pod设计的理念是每个Pod都有一个唯一的IP。Pod就像豌豆荚一样，其中包含着一组（一个或多个）容器，这些容器共享存储、网络、文件系统以及怎样运行这些容器的声明。
 
-![](file:///C:\Temp\ksohtml16136\wps10.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a50dae4997a14440ac578cd042c9a4cc.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a50dae4997a14440ac578cd042c9a4cc.png)
 
 **Node&Pod&Container&应用程序关系如下图所示：**
 
-![](file:///C:\Temp\ksohtml16136\wps11.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/56789990f8a04f7a9d0cc2b75d727654.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/56789990f8a04f7a9d0cc2b75d727654.png)
 
 ### 1.3.2 **Label**
 
@@ -960,7 +960,7 @@ export PATH
 [root@node1 kube-dashboard]# wget  https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
-![](file:///C:\Temp\ksohtml16136\wps26.jpg)对应yaml文件下载完成后，为了方便后续在容器主机上访问，在yaml文件中添加对应的NodePort类型、端口以及修改登录kubernetes dashboard的用户。
+对应yaml文件下载完成后，为了方便后续在容器主机上访问，在yaml文件中添加对应的NodePort类型、端口以及修改登录kubernetes dashboard的用户。
 
 ```
 #vi recommended.yaml 【只需要添加或修改以下加粗部分】
@@ -1126,7 +1126,7 @@ replicaset.apps/nginx-test-74845c57fb   2         2         2       45s
 
 访问任意kubernetes集群的节点30080端口查看nginx服务是正常，例如：浏览器输入node1:30080
 
-![](file:///C:\Temp\ksohtml10300\wps1.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ce75b5426f07418d8cd0015726d6ac9e.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ce75b5426f07418d8cd0015726d6ac9e.png)
 
 5) **删除nginix服务**
 
@@ -1497,7 +1497,7 @@ public class WordCount {
 
 ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/3e4ea4d12e334ef28963f7ae67e70665.png)
 
-![](file:///C:\Temp\ksohtml16136\wps27.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/fb329bc208d247b1adbc815f869c74bf.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/fb329bc208d247b1adbc815f869c74bf.png)
 
 在node5 socket 9999端口输入数据：
 
@@ -1512,7 +1512,7 @@ hello wangwu
 
 首先在WebUI页面中查看对应sink运行所在的TaskManager IP。
 
-![](file:///C:\Temp\ksohtml16136\wps29.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/6c4c01f62b5b4694ae561771377cc13d.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/6c4c01f62b5b4694ae561771377cc13d.png)
 
 通过TaskManager ip 确定输出结果的TaskManager Pod ：
 
@@ -2708,7 +2708,7 @@ job.batch/flink-jobmanager   0/1 of 2      60s        60s
 
 在浏览器输入：[http://192.168.179.4:30081/即可访问Flink](http://node1:30081/即可访问Flink)   Application集群WebUI，可以看到对应主类的Flink job已经处于运行状态。
 
-![](file:///C:\Temp\ksohtml16136\wps30.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/e267196b4441451fb926460c2e92806c.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/e267196b4441451fb926460c2e92806c.png)
 
 ###### 1.8.1.2.2.4 **HA高可用验证**
 
@@ -2718,7 +2718,7 @@ HA验证方式与HA Session Cluster 部署方式验证方式一样。可以参�
 
 Flink的Native Kubernetes集成允许我们直接将Flink部署到正在运行的Kubernetes集群上，Flink能够根据所需的资源通过与Kubernetes 集群通信动态分配和取消分配taskmanager，其部署原理图如下：
 
-![](file:///C:\Temp\ksohtml21784\wps12.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/25b891e0e9d244aabc8dc144b145e393.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/25b891e0e9d244aabc8dc144b145e393.png)
 
 Flink Native kubernetes集成需要一个Kubernetes集群，并且Kubernetes版本需要大于等于1.9 版本，Flink Native kubernetes支持Flink Client 创建Session Cluster和Application Cluster集群部署并进行任务提交，也支持对应HA的任务执行，但是需要自定义pod的yaml资源清单文件实现，这与基于Kubernetes中Session Cluster和Application Cluster类似，这里不再两种模式的HA方式，具体HA方式参考Kubernetes部署。
 
@@ -2822,7 +2822,7 @@ flink        1.16.0-scala_2.12-java8   584a51fe68ac   10 days ago   759MB
 
 启动Kubernetes Session Cluster 集群后，可以看到打印出外网访问的IP及端口，可以登录检查启动的Session集群是否正常。
 
-![](file:///C:\Temp\ksohtml21784\wps17.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/11abf7c8ad4c43f7a8f1fc21aa6b8846.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/11abf7c8ad4c43f7a8f1fc21aa6b8846.png)
 
 ##### 1.8.2.1.2 **停止Session Cluster集群**
 
@@ -2888,7 +2888,7 @@ FlinkJavaCode-1.0-SNAPSHOT-jar-with-dependencies.jar
  /software/flinkjar/FlinkJavaCode-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
 
-![](file:///C:\Temp\ksohtml21784\wps18.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/34515d8092824fa98889e3c2cb442357.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/34515d8092824fa98889e3c2cb442357.png)
 
 session集群中提交任务需要指定--target为kubernetes-session即可，另外可以在提交任务时指定参数-d ，在向Kubernetes中Flink Session Cluster集群提交任务后退出客户端。
 
@@ -2926,7 +2926,7 @@ hello c
 
 默认创建Flink Session Cluster集群指定了每个TaskManager 具备1core和4个slot,当向Flink Session Cluster 集群中提交一个任务时（默认1个并行度）会使用1个slot，当提交多次Flink任务时可以看到FlinkSession Cluster集群可以动态申请TaskManager
 
-![](file:///C:\Temp\ksohtml21784\wps19.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/10030137efbf418489fae3fb3db29b61.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/10030137efbf418489fae3fb3db29b61.png)
 
 通过以上测试会发现，当提交多个Flink 任务时，这些任务共用一个Flink Session Cluster集群，每提交一个Flink任务会分配1个slot，当Session Cluster Slot不够时Kubernetes集群会动态启动新的TaskManager。查看集群中提交的任务：
 
@@ -2947,7 +2947,7 @@ hello c
 
 当把集群任务一个个取消后，集群TaskManager会经过“resourcemanager.taskmanager-timeout”参数指定的时间后动态释放以便节省资源，在创建Flink Session Cluster集群时该参数指定60000ms ,即1分钟，Kubernetes集群会在1分钟后自动删除空闲的TaskManager。
 
-![](file:///C:\Temp\ksohtml21784\wps20.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/4c170c0c0a7f4dea9a6d4e410a5b4d19.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/4c170c0c0a7f4dea9a6d4e410a5b4d19.png)
 
 #### 1.8.2.2 **Application Cluster模式**
 
@@ -3222,7 +3222,7 @@ www.kubemsb.com/library/nginx             v1                        dd025cdfe837
 
 将本地镜像推送到harbor镜像仓库后，可以通过WebUI查看对应内容：
 
-![](file:///C:\Temp\ksohtml21784\wps21.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ed61cd24eb7a4b8aa9c55545d6310941.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ed61cd24eb7a4b8aa9c55545d6310941.png)
 
 可以在本地任何一台节点上从Harbor镜像仓库中下载镜像到本地：
 
@@ -3290,7 +3290,7 @@ myflink                                   v1
 
 通过Harbor WebUI检查对应的镜像：
 
-![](file:///C:\Temp\ksohtml21784\wps22.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/d3f088c0cee14494bb29bce911af0119.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/d3f088c0cee14494bb29bce911af0119.png)
 
 ##### 1.8.2.2.3 **提交Flink 任务及测试**
 
@@ -3315,7 +3315,7 @@ Flink Application Cluster模式提交任务后当前任务独自使用集群，A
 
 提交任务之后，可以看到对应的WebUI 的IP及端口，通过浏览器查看WebUI，可以看到一个Flink任务独立使用单独集群：
 
-![](file:///C:\Temp\ksohtml21784\wps23.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/94763877583041f6a7a98440bef5196f.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/94763877583041f6a7a98440bef5196f.png)
 
 当再次提交Flink任务时，新提交Flink任务同样也会创建新的Flink集群，需要指定的“kubernetes.cluster-id”名称与其他任务不同，例如提交新的Flink任务：
 
@@ -3335,7 +3335,7 @@ Flink Application Cluster模式提交任务后当前任务独自使用集群，A
 
 提交新的任务后，同时通过Kubernetes 客户端可以看到不同名称的deployment。
 
-![](file:///C:\Temp\ksohtml21784\wps24.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/dcb56b49efbe481b99049e7bcc8ce7ce.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/dcb56b49efbe481b99049e7bcc8ce7ce.png)
 
 ##### 1.8.2.2.4 **停止Flink集群**
 

@@ -43,7 +43,7 @@ Openfaas是一种serverless提供方式，可以使开发人员轻松地将事�
 
 ![image-20221125102936359](/云原生/serverless/serverless-23-openfaas-函数即服务/image-20221125102936359.png)
 
-![img](/云原生/serverless/serverless-23-openfaas-函数即服务/image1.bubuko.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto)
+> （配图链接无效，已省略）
 
 API网关为你的函数提供了一个外部路由，并通过Prometheus收集云原生指标。网关还有一个内置的UI界面，使得你可以从OpenFaaS的函数商店部署并调用自己的函数。
 

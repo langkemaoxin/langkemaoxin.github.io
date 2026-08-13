@@ -64,7 +64,7 @@ description: Kubernetes集群包管理解决方案及应用商店 Helm&Kubeapps 
 
 7、访问nginx服务
 
-![image-20220728133433498](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728133433498.png)
+> （配图缺失：image-20220728133433498）
 
 实际生产中，微服务项目可能有十几个模块，若还需要进行安全访问和控制，那么需要创建诸如Role、ServiceAccount等资源。部署和版本升级时也往往需要修改或添加配置文件中的一些参数（例如：服务占用的CPU、内存、副本数、端口等），维护大量的yaml文件极为不便，所以，我们需要将这些YAML文件作为一个**整体**管理，并高效复用。
 
@@ -80,7 +80,7 @@ description: Kubernetes集群包管理解决方案及应用商店 Helm&Kubeapps 
 
 - 作为CNCF的毕业项目。它的官方的定义是：Helm是一个为K8s进行包管理的工具。Helm将yaml作为一个整体管理并实现了这些yaml的高效复用，就像Linux中的yum或apt-get，它使我们能够在K8s中方便快捷的安装、管理、卸载K8s应用。
 
-![image-20220728134805687](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728134805687.png)
+> （配图缺失：image-20220728134805687）
 
 * Helm(舵柄; 舵轮)是一个Kubernetes的包管理工具，就像Linux下的包管理器，如yum/apt等。
 * helm一个命令行客户端工具，主要用于Kubernetes应用chart的创建、打包、发布和管理。
@@ -109,23 +109,23 @@ Helm作为K8s的包管理软件，每次安装Charts 到K8s集群时，都会创
 
 # 三、helm架构
 
-![image-20220728135524226](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728135524226.png)
+> （配图缺失：image-20220728135524226）
 
-![image-20220728140109073](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728140109073.png)
+> （配图缺失：image-20220728140109073）
 
 Helm客户端使用REST+JSON的方式与K8s中的apiserver进行交互，进而管理deployment、service等资源，并且客户端本身并不需要数据库，它会把相关的信息储存在K8s集群内的Secrets中。
 
 # 四、helm部署
 
-![image-20220728140501620](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728140501620.png)
+> （配图缺失：image-20220728140501620）
 
-![image-20220728140538044](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728140538044.png)
+> （配图缺失：image-20220728140538044）
 
-![image-20220728140644543](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728140644543.png)
+> （配图缺失：image-20220728140644543）
 
-![image-20220728141000714](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728141000714.png)
+> （配图缺失：image-20220728141000714）
 
-![image-20220728141101419](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220728141101419.png)
+> （配图缺失：image-20220728141101419）
 
 ~~~powershell
 [root@k8s-master01 ~]# wget https://get.helm.sh/helm-v3.9.2-linux-amd64.tar.gz
@@ -792,7 +792,7 @@ mysql-1.6.9.tgz
 
 ## 6.1 Chart 目录结构   
 
-![1605264781567](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/2)
+> （配图缺失：1605264781567）
 
 ~~~powershell
 [root@k8s-master01 helmdir]# helm create foo
@@ -982,8 +982,8 @@ release "nginx-1659144826" uninstalled
 - Release.IsInstall：如果当前操作是安装，则设置为true。
 - Release.Revision：修订号。它从1开始，每个都递增helm upgrade。
 - Chart：内容Chart.yaml。因此，chart版本可以Chart.Version和维护者一样获得 Chart.Maintainers。
-- Files：类似于chart的对象，包含chart中的所有非特殊文件。这不会授予您访问模板的权限，但可以访问存在的其他文件（除非使用它们除外.helmignore）。可以使用{{index .Files "file.name"}}或使用{{.Files.Get name}}或 {{.Files.GetStringname}}函数访问文件。您也可以访问该文件的内容，[]byte使用{{.Files.GetBytes}}
-- Capabilities：类似于地图的对象，包含有关Kubernetes（{{.Capabilities.KubeVersion}}，Tiller（{{.Capabilities.TillerVersion}}和支持的Kubernetes API）版本（{{.Capabilities.APIVersions.Has "batch/v1"）的版本的信息
+- Files：类似于chart的对象，包含chart中的所有非特殊文件。这不会授予您访问模板的权限，但可以访问存在的其他文件（除非使用它们除外.helmignore）。可以使用{​{​index .Files "file.name"}}或使用{​{​.Files.Get name}}或 {​{​.Files.GetStringname}}函数访问文件。您也可以访问该文件的内容，[]byte使用{​{​.Files.GetBytes}}
+- Capabilities：类似于地图的对象，包含有关Kubernetes（{​{​.Capabilities.KubeVersion}}，Tiller（{​{​.Capabilities.TillerVersion}}和支持的Kubernetes API）版本（{​{​.Capabilities.APIVersions.Has "batch/v1"）的版本的信息
 
 ### 6.3.2 新增values.yaml文件
 
@@ -1258,23 +1258,23 @@ Please set --with-chartmuseum if needs enable Chartmuseum in Harbor
 
 > 在主机上解决域名 192.168.10.146 www.kubemsb.com
 
-![image-20220730112415250](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730112415250.png)
+> （配图缺失：image-20220730112415250）
 
-![image-20220730112450460](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730112450460.png)
+> （配图缺失：image-20220730112450460）
 
-![image-20220730112550547](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730112550547.png)
+> （配图缺失：image-20220730112550547）
 
-![image-20220730112628591](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730112628591.png)
+> （配图缺失：image-20220730112628591）
 
-![image-20220730112729226](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730112729226.png)
+> （配图缺失：image-20220730112729226）
 
-![image-20220730113015244](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730113015244.png)
+> （配图缺失：image-20220730113015244）
 
-![image-20220730113039787](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730113039787.png)
+> （配图缺失：image-20220730113039787）
 
-![image-20220730113133287](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730113133287.png)
+> （配图缺失：image-20220730113133287）
 
-![image-20220730113158610](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730113158610.png)
+> （配图缺失：image-20220730113158610）
 
 ~~~powershell
 [root@k8s-master01 ~]# helm repo add harborhelm https://www.kubemsb.com/chartrepo/nginx --username admin --password 12345
@@ -1368,7 +1368,7 @@ Pushing helm-nginx-1.1.0.tgz to harborhelm...
 Done.
 ~~~
 
-![image-20220730232227146](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730232227146.png)
+> （配图缺失：image-20220730232227146）
 
 # 八、Helm Chart包可视化管理 Kubeapps应用商店
 
@@ -1380,7 +1380,7 @@ Kubeapps提供了一个开源的Helm UI界面，方便以图形界面的形式�
 - 管理应用。升级、管理和删除部署在kubernetes集群中的应用程序；
 - 搜索功能。Kubeapps提供chart搜索页面；
 
-![image-20220730235006506](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220730235006506.png)
+> （配图缺失：image-20220730235006506）
 
 ## 8.2 使用helm部署kubeapps
 
@@ -1513,9 +1513,9 @@ spec:
 ingress.networking.k8s.io/ingress-kubeapps created
 ~~~
 
-![image-20220731003858917](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731003858917.png)
+> （配图缺失：image-20220731003858917）
 
-![image-20220731003937933](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731003937933.png)
+> （配图缺失：image-20220731003937933）
 
 参考链接：https://kubeapps.dev/docs/latest/tutorials/getting-started/
 
@@ -1553,25 +1553,25 @@ secret/kubeapps-operator-token created
 eyJhbGciOiJSUzI1NiIsImtpZCI6ImRneWtqS2s2OWFsZU94UklERWh5SlhMSk56SUZZQzZOYlhHbUZIaDZpcTQifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Imt1YmVhcHBzLW9wZXJhdG9yLXRva2VuIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6Imt1YmVhcHBzLW9wZXJhdG9yIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYjgzMjM3MDAtODI3MC00ODI5LWFmNmUtODg3N2FlNGM4OWQ3Iiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmRlZmF1bHQ6a3ViZWFwcHMtb3BlcmF0b3IifQ.NF4A7N394MwcRDQbHOTkahg_ODqi7OCV9CzP7zcb5kXwHo-DeQ20cf7CTYmyQCw1aKaYae-Vdi_ncJ9araSdapshoBX9zfQ4dl6rP6Z_g_rtHZBIe4rCopOPUqncY-OjonQL1R0MY8ODqE2BVPF3kHwcBnamT9c1nmib42fB_cIBqwu72c71LURvQifwiluriQZRJQWh20pM7p8aUkNXqvFId03iMdgmPXdOd5W2Kl1Rys2DUfPmRV1tmqXHuZOcMnHmSU7DzcaXcnoGesZUnB7sqtL2HhTn7iLnk323MaXzhNY5pWt2nZC-6U2ZFkPSkV2LZ1K6D2IxaImkZxRPVQ
 ~~~
 
-![image-20220731005426854](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731005426854.png)
+> （配图缺失：image-20220731005426854）
 
-![image-20220731005445694](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731005445694.png)
+> （配图缺失：image-20220731005445694）
 
-![image-20220731005818965](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731005818965.png)
+> （配图缺失：image-20220731005818965）
 
-![image-20220731005916797](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731005916797.png)
+> （配图缺失：image-20220731005916797）
 
 ## 8.4 通过kubeapps部署应用案例
 
 ### 8.4.1 通过kubeapps部署nginx
 
-![image-20220731122417628](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731122417628.png)
+> （配图缺失：image-20220731122417628）
 
-![image-20220731122509569](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731122509569.png)
+> （配图缺失：image-20220731122509569）
 
-![image-20220731122923839](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731122923839.png)
+> （配图缺失：image-20220731122923839）
 
-![image-20220731123010719](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731123010719.png)
+> （配图缺失：image-20220731123010719）
 
 ~~~powershell
 [root@k8s-master01 nginx]# kubectl get pods -n kubeapps
@@ -1584,19 +1584,19 @@ kubemsb-web-nginx-55fdb5bfd6-4cfpg                           1/1     Running    
 
 snv
 
-![image-20220731123232615](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731123232615.png)
+> （配图缺失：image-20220731123232615）
 
-![image-20220731123317237](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731123317237.png)
+> （配图缺失：image-20220731123317237）
 
-![image-20220731123435198](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731123435198.png)
+> （配图缺失：image-20220731123435198）
 
-![image-20220731123604413](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731123604413.png)
+> （配图缺失：image-20220731123604413）
 
-![image-20220731123706442](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731123706442.png)
+> （配图缺失：image-20220731123706442）
 
-![image-20220731123928124](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731123928124.png)
+> （配图缺失：image-20220731123928124）
 
-![image-20220731124059841](/云原生/k8s-ops/k8s-ops-10-kubernetes集群包管理解决方案及应用商店-helm-kubeapps/image-20220731124059841.png)
+> （配图缺失：image-20220731124059841）
 
 ~~~powershell
 [root@k8s-master01 ~]# kubectl get pods

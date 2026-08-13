@@ -31,7 +31,7 @@ description: Prometheus 第40章（配置与 confd）合并笔记
 # 什么是高基数查询
 
 - 来个 最直观的对比
-  - {__name__=~".*a.*"}
+  - {​__name__=~".*a.*"}
   - node_arp_entries
   - ![h_zhi.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1630755324000/08af1ed356fa41198b24d5e5f66c7845.png)
   - ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1630755324000/60fb0b26f06f472d9d613c7a691ac05f.png)

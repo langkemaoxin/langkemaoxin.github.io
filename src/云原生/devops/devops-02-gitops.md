@@ -46,7 +46,7 @@ GitOps核心思想是将应用系统的声明性基础架构和应用程序存�
 
 通过gitlab实现CI流程，将 CD 部分使用 Argo CD 来完成，以实现应用部署及应用部署回滚的可控性。
 
-![git_argo](images/git_argo.png)
+> （配图缺失：git_argo）
 
 ## 3.2 环境准备
 
@@ -183,7 +183,7 @@ gpgcheck=0
 
 浏览器输入gitlab-ce的服务器地址：http://192.168.10.11
 
-![登录gitlab-01](images/登录gitlab-01.png)
+> （配图缺失：登录gitlab-01）
 
 ~~~powershell
 [root@gitlab ~]# cat /etc/gitlab/initial_root_password  #获取gitlab-ce登录初始密码，登录账户名为：root
@@ -195,27 +195,27 @@ Password: znS4Bqlp0cfYUKg2dHzFiNCAN0GnhtnD4ENjEtEXMVE=
 
 通过命令行获取初始化密码后登录gitlab-ce
 
-![登录gitlab-02](images/登录gitlab-02.png)
+> （配图缺失：登录gitlab-02）
 
 gitlab-ce的UI界面
 
-![gitlab-ui](images/gitlab-ui.png)
+> （配图缺失：gitlab-ui）
 
 #### 3.3.1.6 修改gitlab-ce root用户的密码
 
 方便后续操作，修改root用户的登录密码
 
-![修改gitlab-ce,root用户密码-01](images/修改gitlab-ce,root用户密码-01.png)
+> （配图缺失：修改gitlab-ce,root用户密码-01）
 
-![修改gitlab-ce,root用户密码-02](images/修改gitlab-ce,root用户密码-02.png)
+> （配图缺失：修改gitlab-ce,root用户密码-02）
 
-![修改gitlab-ce,root用户密码-03](images/修改gitlab-ce,root用户密码-03.png)
+> （配图缺失：修改gitlab-ce,root用户密码-03）
 
-![修改gitlab-ce,root用户密码-04](images/修改gitlab-ce,root用户密码-04.png)
+> （配图缺失：修改gitlab-ce,root用户密码-04）
 
 重新登录gitlab-ce
 
-![重新登录gitlab](images/重新登录gitlab.png)
+> （配图缺失：重新登录gitlab）
 
 #### 3.3.1.7 git安装
 
@@ -424,11 +424,11 @@ c95cb337f764   goharbor/registry-photon:v2.4.1      "/home/harbor/entryp…"   5
 
 浏览器输入安装harbor配置文件里的hostname，http://192.168.10.21,用户名为admin,密码为配置文件里设置的Harbor12345
 
-![登录harbor](images/登录harbor.png)
+> （配图缺失：登录harbor）
 
 harborUI界面
 
-![harborUI](images/harborUI.png)
+> （配图缺失：harborUI）
 
 ### 3.3.3 k8s安装
 
@@ -855,19 +855,19 @@ ingress   <none>   argocd.alan.com   192.168.10.32   80      14s
 
 PC按住win+R键，输入drivers,点击确定
 
-![配置hosts-01](images/配置hosts-01.png)
+> （配图缺失：配置hosts-01）
 
-![配置hosts-02](images/配置hosts-02.png)
+> （配图缺失：配置hosts-02）
 
-![配置hosts-03](images/配置hosts-03.png)
+> （配图缺失：配置hosts-03）
 
-![配置hosts-04](images/配置hosts-04.png)
+> （配图缺失：配置hosts-04）
 
 #### 3.3.4.5 访问Argo UI界面
 
 浏览器输入argocd域名：http://argocd.kubemsb.com
 
-![登录argocd-01](images/登录argocd-01.png)
+> （配图缺失：登录argocd-01）
 
 #### 3.3.4.6 获取登录密码
 
@@ -898,11 +898,11 @@ g50ElRK4jlYElORK
 
 重新登录argo cd:http://argocd.kubemsb.com
 
-![登录argocd-02](images/登录argocd-02.png)
+> （配图缺失：登录argocd-02）
 
 ArgoCd web界面
 
-![argocd-ui](images/argocd-ui.png)
+> （配图缺失：argocd-ui）
 
 #### 3.3.4.7 客户端安装
 
@@ -967,7 +967,7 @@ Logged out from 'argocd.alan.com'
 
 重新登录argocd:http://argocd.kubemsb.com
 
-![重新登录argocd](images/重新登录argocd.png)
+> （配图缺失：重新登录argocd）
 
 ## 3.4 工具集成配置
 
@@ -1070,23 +1070,23 @@ GitLab Runner是一个开源项目，用于运行您的作业并将结果发送�
 
 #### 3.4.3.2 runner安装
 
-![安装runner-01](images/安装runner-01.png)
+> （配图缺失：安装runner-01）
 
-![安装runner-02](images/安装runner-02.png)
+> （配图缺失：安装runner-02）
 
-![安装runner-03](images/安装runner-03.png)
+> （配图缺失：安装runner-03）
 
-![安装runner-04](images/安装runner-04.png)
+> （配图缺失：安装runner-04）
 
-![安装runner-05](images/安装runner-05.png)
+> （配图缺失：安装runner-05）
 
-![安装runner-06](images/安装runner-06.png)
+> （配图缺失：安装runner-06）
 
-![安装runner-07](images/安装runner-07.png)
+> （配图缺失：安装runner-07）
 
-![安装runner-08](images/安装runner-08.png)
+> （配图缺失：安装runner-08）
 
-![安装runner-09](images/安装runner-09.png)
+> （配图缺失：安装runner-09）
 
 ```powershell
 [root@gitlab ~]# curl -L --output /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
@@ -1158,9 +1158,9 @@ Configuration loaded                                builds=0
 
 ![image-20220907132058971](/云原生/devops/devops-02-gitops/image-20220907132058971.png)
 
-![runner配置01](images/runner配置01.png)
+> （配图缺失：runner配置01）
 
-![runner配置02](images/runner配置02.png)
+> （配图缺失：runner配置02）
 
 ## 3.5 项目代码发布
 
@@ -1180,11 +1180,11 @@ go安装完成后，配置环境变量
 
 ![image-20220907134513508](/云原生/devops/devops-02-gitops/image-20220907134513508.png)
 
-![配置go环境变量-01](images/配置go环境变量-01.png)
+> （配图缺失：配置go环境变量-01）
 
-![配置go环境变量-02](images/配置go环境变量-02.png)
+> （配图缺失：配置go环境变量-02）
 
-![配置go环境变量-03](images/配置go环境变量-03.png)
+> （配图缺失：配置go环境变量-03）
 
 ### 3.5.3 安装goIDE(goland)
 
@@ -1194,13 +1194,13 @@ go安装完成后，配置环境变量
 
 #### 3.5.4.1 打开goland，选择项目
 
-![打开go项目-01](images/打开go项目-01.png)
+> （配图缺失：打开go项目-01）
 
-![打开go项目-02](images/打开go项目-02.png)
+> （配图缺失：打开go项目-02）
 
 #### 3.5.4.2 项目结构
 
-![项目结构](images/项目结构.png)
+> （配图缺失：项目结构）
 
 ### 3.5.5 编写Dockerfile文件
 
@@ -1374,45 +1374,45 @@ deploy dev:
     - docker push
 ```
 
-### 3.5.8 gitlab全局变量配置![gitlab配置环境变量-01](images/gitlab配置环境变量-01.png)
+### 3.5.8 gitlab全局变量配置> （配图缺失：gitlab配置环境变量-01）
 
-![gitlab配置环境变量-02](images/gitlab配置环境变量-02.png)
+> （配图缺失：gitlab配置环境变量-02）
 
-![gitlab配置环境变量-03](images/gitlab配置环境变量-03.png)
+> （配图缺失：gitlab配置环境变量-03）
 
-![gitlab配置环境变量-04](images/gitlab配置环境变量-04.png)
+> （配图缺失：gitlab配置环境变量-04）
 
-![gitlab配置环境变量-05](images/gitlab配置环境变量-05.png)
+> （配图缺失：gitlab配置环境变量-05）
 
-![gitlab配置环境变量-06](images/gitlab配置环境变量-06.png)
+> （配图缺失：gitlab配置环境变量-06）
 
-![gitlab配置环境变量-07](images/gitlab配置环境变量-07.png)
+> （配图缺失：gitlab配置环境变量-07）
 
 ### 3.5.9 开发者环境添加远程地址仓库
 
-![本地添加远程仓库](images/本地添加远程仓库.png)
+> （配图缺失：本地添加远程仓库）
 
-![本地添加远程仓库-02](images/本地添加远程仓库-02.png)
+> （配图缺失：本地添加远程仓库-02）
 
 ### 3.5.10 在ArgoCd中创建项目
 
-![argo添加项目-01](images/argo添加项目-01.png)
+> （配图缺失：argo添加项目-01）
 
-![argo添加项目-02](images/argo添加项目-02.png)
+> （配图缺失：argo添加项目-02）
 
-![argo添加代码仓库-01](images/argo添加代码仓库-01.png)
+> （配图缺失：argo添加代码仓库-01）
 
-![argo添加代码仓库-02](images/argo添加代码仓库-02.png)
+> （配图缺失：argo添加代码仓库-02）
 
 ### 3.5.11 ArgoCd中项目配置
 
-![argo项目配置01](images/argo项目配置01.png)
+> （配图缺失：argo项目配置01）
 
-![argo项目配置02](images/argo项目配置02.png)
+> （配图缺失：argo项目配置02）
 
-![argo项目配置03](images/argo项目配置03.png)
+> （配图缺失：argo项目配置03）
 
-![argo项目配置04](images/argo项目配置04.png)
+> （配图缺失：argo项目配置04）
 
 ### 3.5.12 ArgoCd中应用配置
 
@@ -1428,15 +1428,15 @@ deploy dev:
 
 ### 3.5.13 本地提交代码
 
-![本地提交代码](images/本地提交代码.png)
+> （配图缺失：本地提交代码）
 
 ### 3.5.14 查看pipeline执行情况
 
-![查看ci](images/查看ci.png)
+> （配图缺失：查看ci）
 
 ### 3.5.15 查看ArgoCd执行情况
 
-![查看cd](images/查看cd.png)
+> （配图缺失：查看cd）
 
 ### 3.5.16 查看应用部署情况
 

@@ -1820,17 +1820,17 @@ www.kubemsb.com/library/centos   v1        5d0da3dc9764   4 months ago   231MB
 
 ## 10.2 使用Docker容器化部署企业级应用参考资料
 
-![image-20220211145757283](/云原生/docker/docker-20-container-runtime-docker/image-20220211145757283.png?lastModify=1689308130)
+> （配图缺失：image-20220211145757283）
 
 ## 10.3 使用Docker容器实现Nginx部署
 
 ### 10.3.1 获取参考资料
 
-![image-20220211145839441](/云原生/docker/docker-20-container-runtime-docker/image-20220211145839441.png?lastModify=1689308130)
+> （配图缺失：image-20220211145839441）
 
-![image-20220211145905117](/云原生/docker/docker-20-container-runtime-docker/image-20220211145905117.png?lastModify=1689308130)
+> （配图缺失：image-20220211145905117）
 
-![image-20220211145956450](/云原生/docker/docker-20-container-runtime-docker/image-20220211145956450.png?lastModify=1689308130)
+> （配图缺失：image-20220211145956450）
 
 ### 10.3.2 运行Nginx应用容器
 
@@ -1901,7 +1901,7 @@ www.kubemsb.com/library/centos   v1        5d0da3dc9764   4 months ago   231MB
 
 **在宿主机上访问**
 
-![image-20220211151131609](/云原生/docker/docker-20-container-runtime-docker/image-20220211151131609.png?lastModify=1689308130)
+> （配图缺失：image-20220211151131609）
 
 ```powershell
  # docker top nginx-server-port
@@ -1946,11 +1946,11 @@ www.kubemsb.com/library/centos   v1        5d0da3dc9764   4 months ago   231MB
 
 ### 10.4.1 获取参考资料
 
-![image-20220211154602595](/云原生/docker/docker-20-container-runtime-docker/image-20220211154602595.png?lastModify=1689308130)
+> （配图缺失：image-20220211154602595）
 
-![image-20220211154639682](/云原生/docker/docker-20-container-runtime-docker/image-20220211154639682.png?lastModify=1689308130)
+> （配图缺失：image-20220211154639682）
 
-![image-20220211154747062](/云原生/docker/docker-20-container-runtime-docker/image-20220211154747062.png?lastModify=1689308130)
+> （配图缺失：image-20220211154747062）
 
 ### 10.4.2 运行tomcat应用容器
 
@@ -1981,7 +1981,7 @@ CONTAINER ID   IMAGE        COMMAND                  CREATED             STATUS 
 
 **在宿主机访问**
 
-![image-20220211160925125](/云原生/docker/docker-20-container-runtime-docker/image-20220211160925125.png?lastModify=1689308130)
+> （配图缺失：image-20220211160925125）
 
 ```powershell
 # docker exec 2fc ls /usr/local/tomcat/webapps
@@ -2007,17 +2007,17 @@ f456e705d48f   tomcat:9.0   "catalina.sh run"   3 seconds ago   Up 2 seconds   0
 
 **在宿主机访问**
 
-![image-20220211162127222](/云原生/docker/docker-20-container-runtime-docker/image-20220211162127222.png?lastModify=1689308130)
+> （配图缺失：image-20220211162127222）
 
 ## 10.5 使用Docker容器实现MySQL部署
 
 ### 10.5.1 单节点MySQL部署
 
-![image-20220211162728055](/云原生/docker/docker-20-container-runtime-docker/image-20220211162728055.png?lastModify=1689308130)
+> （配图缺失：image-20220211162728055）
 
-![image-20220211162817731](/云原生/docker/docker-20-container-runtime-docker/image-20220211162817731.png?lastModify=1689308130)
+> （配图缺失：image-20220211162817731）
 
-![image-20220211162911952](/云原生/docker/docker-20-container-runtime-docker/image-20220211162911952.png?lastModify=1689308130)
+> （配图缺失：image-20220211162911952）
 
 ```powershell
 # docker run -p 3306:3306 \
@@ -2357,23 +2357,23 @@ MySQL [(none)]> show databases;
 
 #### 10.6.1.1 ES部署参考资料
 
-![image-20220212211742909](/云原生/docker/docker-20-container-runtime-docker/image-20220212211742909.png?lastModify=1689308130)
+> （配图缺失：image-20220212211742909）
 
-![image-20220212211840530](/云原生/docker/docker-20-container-runtime-docker/image-20220212211840530.png?lastModify=1689308130)
+> （配图缺失：image-20220212211840530）
 
-![image-20220212211857732](/云原生/docker/docker-20-container-runtime-docker/image-20220212211857732.png?lastModify=1689308130)
+> （配图缺失：image-20220212211857732）
 
-![image-20220212211950202](/云原生/docker/docker-20-container-runtime-docker/image-20220212211950202.png?lastModify=1689308130)
+> （配图缺失：image-20220212211950202）
 
 #### 10.6.1.2 Kibana部署参考资料
 
-![image-20220212212223735](/云原生/docker/docker-20-container-runtime-docker/image-20220212212223735.png?lastModify=1689308130)
+> （配图缺失：image-20220212212223735）
 
-![image-20220212212245791](/云原生/docker/docker-20-container-runtime-docker/image-20220212212245791.png?lastModify=1689308130)
+> （配图缺失：image-20220212212245791）
 
-![image-20220212212305429](/云原生/docker/docker-20-container-runtime-docker/image-20220212212305429.png?lastModify=1689308130)
+> （配图缺失：image-20220212212305429）
 
-![image-20220212212341841](/云原生/docker/docker-20-container-runtime-docker/image-20220212212341841.png?lastModify=1689308130)
+> （配图缺失：image-20220212212341841）
 
 ### 10.6.2 ES部署
 
@@ -2410,7 +2410,7 @@ CONTAINER ID   IMAGE                 COMMAND                  CREATED          S
 e1c306e6e5a3   elasticsearch:7.17.0   "/bin/tini -- /usr/l…"   22 seconds ago   Up 20 seconds   0.0.0.0:9200->9200/tcp, :::9200->9200/tcp, 0.0.0.0:9300->9300/tcp, :::9300->9300/tcp   elasticsearch
 ```
 
-![image-20220212224446838](/云原生/docker/docker-20-container-runtime-docker/image-20220212224446838.png?lastModify=1689308130)
+> （配图缺失：image-20220212224446838）
 
 ### 10.6.3 Kibana部署
 
@@ -2429,19 +2429,19 @@ CONTAINER ID   IMAGE                  COMMAND                  CREATED         S
 fb60e73f9cd5   kibana:7.17.0          "/bin/tini -- /usr/l…"   2 minutes ago   Up 2 minutes   0.0.0.0:5601->5601/tcp, :::5601->5601/tcp                                              kibana
 ```
 
-![image-20220212224524598](/云原生/docker/docker-20-container-runtime-docker/image-20220212224524598.png?lastModify=1689308130)
+> （配图缺失：image-20220212224524598）
 
 ## 10.7 使用Docker容器实现Redis部署
 
 ### 10.7.1 获取参考资料
 
-![image-20220212225251173](/云原生/docker/docker-20-container-runtime-docker/image-20220212225251173.png?lastModify=1689308130)
+> （配图缺失：image-20220212225251173）
 
-![image-20220212225313006](/云原生/docker/docker-20-container-runtime-docker/image-20220212225313006.png?lastModify=1689308130)
+> （配图缺失：image-20220212225313006）
 
-![image-20220212225336437](/云原生/docker/docker-20-container-runtime-docker/image-20220212225336437.png?lastModify=1689308130)
+> （配图缺失：image-20220212225336437）
 
-![image-20220212225412367](/云原生/docker/docker-20-container-runtime-docker/image-20220212225412367.png?lastModify=1689308130)
+> （配图缺失：image-20220212225412367）
 
 ### 10.7.2 运行Redis容器
 
@@ -2599,13 +2599,13 @@ S: 3a8dd5343c0b8f5580bc44f6b3bb5b4371d4dde5 192.168.255.157:8006
 
 ### 10.8.1 获取参考资料
 
-![image-20220213123228483](/云原生/docker/docker-20-container-runtime-docker/image-20220213123228483.png?lastModify=1689308130)
+> （配图缺失：image-20220213123228483）
 
-![image-20220213123307806](/云原生/docker/docker-20-container-runtime-docker/image-20220213123307806.png?lastModify=1689308130)
+> （配图缺失：image-20220213123307806）
 
-![image-20220213123355531](/云原生/docker/docker-20-container-runtime-docker/image-20220213123355531.png?lastModify=1689308130)
+> （配图缺失：image-20220213123355531）
 
-![image-20220213123503083](/云原生/docker/docker-20-container-runtime-docker/image-20220213123503083.png?lastModify=1689308130)
+> （配图缺失：image-20220213123503083）
 
 ### 10.8.2 部署RabbitMQ
 
@@ -2631,9 +2631,9 @@ CONTAINER ID   IMAGE                 COMMAND                  CREATED          S
 15671(管理监听端口)
 ```
 
-![image-20220213124157710](/云原生/docker/docker-20-container-runtime-docker/image-20220213124157710.png?lastModify=1689308130)
+> （配图缺失：image-20220213124157710）
 
-![image-20220213124232819](/云原生/docker/docker-20-container-runtime-docker/image-20220213124232819.png?lastModify=1689308130)
+> （配图缺失：image-20220213124232819）
 
-![image-20220213124302137](/云原生/docker/docker-20-container-runtime-docker/image-20220213124302137.png?lastModify=1689308130)
+> （配图缺失：image-20220213124302137）
 

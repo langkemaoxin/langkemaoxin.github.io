@@ -98,7 +98,7 @@ description: Kubernetes介绍与集群架构 一、认识容器编排工具 - do
 - 2015年7月1.0版本正式发布
 - 现在稳定版本为1.23
 - 主要贡献者：Google,Redhat,Microsoft,IBM,Intel
-- 代码托管github:<https://github.com/kubernetes/>
+- 代码托管github:&lt;https://github.com/kubernetes/&gt;
 
 ![1557046658333](/云原生/k8s-ops/k8s-ops-30-kubernetes介绍与集群架构/1557046658333.png)
 
@@ -152,7 +152,7 @@ https://kubernetes.io/zh/
 
 ![1557048978763](/云原生/k8s-ops/k8s-ops-30-kubernetes介绍与集群架构/1557048978763.png)
 
-![1604748712024](/云原生/k8s-ops/k8s-ops-30-kubernetes介绍与集群架构/2)
+![1604748712024](/云原生/k8s-ops/k8s-ops-30-kubernetes介绍与集群架构/2.png)
 
 # 四、Kubernetes集群节点组件
 

@@ -186,7 +186,7 @@ ingress controller可以为kubernetes 集群外用户访问Kubernetes集群内�
 
 ![image-20220412213345991](/云原生/k8s-ops/k8s-ops-58-kubernetes集群-服务暴露-nginx-ingress-controller/image-20220412213345991.png)
 
-- 参考链接：<https://www.nginx.com/products/nginx/kubernetes-ingress-controller>
+- 参考链接：&lt;https://www.nginx.com/products/nginx/kubernetes-ingress-controller&gt;
 
 ## 2.2  nginx ingress controller部署
 

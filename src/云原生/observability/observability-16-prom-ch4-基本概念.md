@@ -200,27 +200,27 @@ type Series struct {
 
 1. `=` 等于
 
-   - 查询举例: cpu第一个核并且是用户态的数据  node_cpu_seconds_total{mode="user",cpu="0"}
-   - 查询举例: go_gc_duration_seconds{quantile="0.75"}
+   - 查询举例: cpu第一个核并且是用户态的数据  node_cpu_seconds_total{​mode="user",cpu="0"}
+   - 查询举例: go_gc_duration_seconds{​quantile="0.75"}
    - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1628935633000/64e02a6e53fd4c8b8a1f22fb75ca1e04.png)
 2. `!=` 不等于
 
-   - 查询举例: 非lo网卡的接收字节数  node_network_receive_bytes_total{device!="lo"}
+   - 查询举例: 非lo网卡的接收字节数  node_network_receive_bytes_total{​device!="lo"}
    - 查询举例:
    - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1628935633000/7ee1829761b8439e9eb8735b3d9208a9.png)
 3. `=~` 正则匹配
 
-   - 查询: 挂载点以/run开头的文件系统剩余字节数  node_filesystem_avail_bytes{mountpoint=~"^/run.*"}
-   - 查询:  prometheus_http_requests_total{handler=~"/api.*"}
+   - 查询: 挂载点以/run开头的文件系统剩余字节数  node_filesystem_avail_bytes{​mountpoint=~"^/run.*"}
+   - 查询:  prometheus_http_requests_total{​handler=~"/api.*"}
    - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1628935633000/60836f9ba2144d2ab6088ca598594647.png)
 4. `!~` 正则非匹配
 
-   - 查询: 块设备名字不包含vda的读字节数  node_disk_read_bytes_total{device!~".*vda.*"}
-   - 查询: prometheus_http_requests_total{code!~".*00"}
+   - 查询: 块设备名字不包含vda的读字节数  node_disk_read_bytes_total{​device!~".*vda.*"}
+   - 查询: prometheus_http_requests_total{​code!~".*00"}
    - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1628935633000/511926903f334a78beecf55381f39f3a.png)
 5. `__name__` 也是个标签，可以匹配metrics
 
-   - 查询  {__name__=~"go.*",quantile=~".*0.*"} 等价于 go_gc_duration_seconds{quantile=~".*0.*"}
+   - 查询  {​__name__=~"go.*",quantile=~".*0.*"} 等价于 go_gc_duration_seconds{​quantile=~".*0.*"}
    - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1628935633000/013716bf8cd84b128505f1ac85668dfa.png)
 
 # 本节重点介绍 : prometheus 四种标签匹配模式
@@ -251,7 +251,7 @@ type Series struct {
 
 ## `gauge` 当前值
 
-- 举例 go_info{instance="localhost:9090", job="prometheus", version="go1.16.7"}
+- 举例 go_info{​instance="localhost:9090", job="prometheus", version="go1.16.7"}
 - 类似的info信息，看时序的结果值=1 意义不大
 - 主要是看标签的key和value   go.1.16.7 ,关注一下
 - 举例 go_memstats_heap_alloc_bytes
@@ -421,7 +421,7 @@ Error executing query: invalid expression type "range vector" for range query, m
 
 ### 两组series关联  成功率百分比
 
-- 举例：apiserver 请求成功率`` 100* ( sum(prometheus_http_requests_total{code=~"2.*|3.*"})/  sum(prometheus_http_requests_total) )``
+- 举例：apiserver 请求成功率`` 100* ( sum(prometheus_http_requests_total{​code=~"2.*|3.*"})/  sum(prometheus_http_requests_total) )``
 - ![image.png](http://jutibolg.oss-cn-shenzhen.aliyuncs.com/908/1628937782000/5c72528935a84595a8340cafc1a95b15.png)
 
 ### agg_over_time 给所有ts的value做agg 横向agg

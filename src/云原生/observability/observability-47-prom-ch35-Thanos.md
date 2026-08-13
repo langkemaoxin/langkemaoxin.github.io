@@ -43,9 +43,9 @@ description: Prometheus 第35章（Thanos）合并笔记
 
 ## 架构图
 - sidecar形式部署
-![image](pic/sidecar形式部署.png)
+> （配图缺失：image）
 - receiver形式部署
-![image](pic/receiver形式部署.png)
+> （配图缺失：image）
 
 ## 核心优点
 - 无需维护存储，存储高可用： 利用廉价的公有云对象存储，高可用
@@ -690,7 +690,7 @@ var _Store_serviceDesc = grpc.ServiceDesc{
     - Info 获取prometheus信息的 
     - LabelNames  通过 prometheus 的/api/v1/labels接口获取标签的名称列表
     - LabelValues 
-        - 没有 Matchers就用 /api/v1/label/<label_name>/values
+        - 没有 Matchers就用 /api/v1/label/&lt;label_name&gt;/values
         - 有 Matchers就用series 
 - 有1个流
     - Series

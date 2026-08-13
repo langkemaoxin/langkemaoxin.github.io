@@ -73,8 +73,8 @@ prometheus_tsdb_compaction_duration_seconds_count 231
 - xxx_sum 代表记录的和，比如这个指标就是tsdb_compaction延迟秒数的和 78秒
 - xxx_count 代表记录的数量和，就是 一共231次上报
 - xxx_bucket 代表延迟描述小于这个le的记录数为多少个
-  - prometheus_tsdb_compaction_duration_seconds_bucket{le="4"} 226 的意思就是 小于4秒的一共226个
-  - prometheus_tsdb_compaction_duration_seconds_bucket{le="8192"} 231 的意思就是 小于8192秒的一共231个
+  - prometheus_tsdb_compaction_duration_seconds_bucket{​le="4"} 226 的意思就是 小于4秒的一共226个
+  - prometheus_tsdb_compaction_duration_seconds_bucket{​le="8192"} 231 的意思就是 小于8192秒的一共231个
   - bucket的最后一定是个+inf的记录，因为算分位值的时候要用到+inf
   - 一个新的数据上报时，会把大于这个value的 bucket全部+1
 
@@ -103,14 +103,14 @@ go_gc_duration_seconds_count 13959
 
 - xxx_sum 代表记录的和，比如这个指标就是go_gc消耗秒数的和位16秒
 - xxx_count 代表记录的数量和，就是 一共13959次上报
-- xxx{quantile} 代表分位值=quantile的值
-  - go_gc_duration_seconds{quantile="0.75"} 0.00123169 代表就是75分位值为0.00123169秒
-  - go_gc_duration_seconds{quantile="0"} 0.000734711 代表就是最小的耗时为0.000734711秒
-  - go_gc_duration_seconds{quantile="1"} 0.006106601 代表就是最小的耗时为0.006106601秒
+- xxx{​quantile} 代表分位值=quantile的值
+  - go_gc_duration_seconds{​quantile="0.75"} 0.00123169 代表就是75分位值为0.00123169秒
+  - go_gc_duration_seconds{​quantile="0"} 0.000734711 代表就是最小的耗时为0.000734711秒
+  - go_gc_duration_seconds{​quantile="1"} 0.006106601 代表就是最小的耗时为0.006106601秒
 
 ## 分位值计算方法
 
-- xxx{quantile} 代表分位值=quantile的值
+- xxx{​quantile} 代表分位值=quantile的值
 - 无需再计算，这个值就是结果值
 
 # histogram和summary的对比

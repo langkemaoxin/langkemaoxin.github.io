@@ -95,7 +95,7 @@ https://172.20.70.205:10250/metrics/cadvisor
   - filesystem && disk.io指标
   - network指标
   - system指标
-- container_network_{tcp,udp}_usage_total 默认不采集是因为 --disable_metrics=tcp, udp ,因为开启cpu压力大[看这里](https://github.com/google/cadvisor/blob/master/docs/runtime_options.md#metrics)
+- container_network_{​tcp,udp}_usage_total 默认不采集是因为 --disable_metrics=tcp, udp ,因为开启cpu压力大[看这里](https://github.com/google/cadvisor/blob/master/docs/runtime_options.md#metrics)
 
 # 指标分析
 
@@ -111,7 +111,7 @@ https://172.20.70.205:10250/metrics/cadvisor
 | cpu.sys               | 容器cpu内核态使用占其申请的百分比     | sum (rate (container_cpu_sys_seconds_total[1m])) by( container) /( sum (container_spec_cpu_quota) by(container) /100000) * 100                                                                                                       | 0-100的范围                          |
 | cpu.cores.occupy      | 容器cpu使用占用机器几个核             | rate(container_cpu_usage_seconds_total[1m])                                                                                                                                                                                          | 0到机器核数上限,结果为1就是占用1个核 |
 | cpu.spec.quota        | 容器的CPU配额                         | container_spec_cpu_quota                                                                                                                                                                                                             | 为容器指定的CPU个数*100000           |
-| cpu.throttled.util    | 容器CPU执行周期受到限制的百分比       | sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_throttled_periods_total{container_name!=""}[5m])) /`<br>`sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_periods_total[5m])) * 100 | 0-100的范围                          |
+| cpu.throttled.util    | 容器CPU执行周期受到限制的百分比       | sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_throttled_periods_total{​container_name!=""}[5m])) /`<br>`sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_periods_total[5m])) * 100 | 0-100的范围                          |
 | cpu.periods           | 容器生命周期中度过的cpu周期总数       | counter型无需计算                                                                                                                                                                                                                    | 使用rate/increase 查看               |
 | cpu.throttled.periods | 容器生命周期中度过的受限的cpu周期总数 | counter型无需计算                                                                                                                                                                                                                    | 使用rate/increase 查看               |
 | cpu.throttled.time    | 容器被节流的总时间 )                  | counter型无需计算                                                                                                                                                                                                                    | 单位(纳秒                            |
@@ -153,7 +153,7 @@ https://172.20.70.205:10250/metrics/cadvisor
 | net.out.errs                                                                                           | 容器网络发送数据错误数                                                                | rate(container_network_transmit_errors_total)[1m]          | (单位：bytes/s) |
 | net.in.dropped                                                                                         | 容器网络接收数据包drop pps                                                            | rate(container_network_receive_packets_dropped_total)[1m]  | (单位：p/s)     |
 | net.out.dropped                                                                                        | 容器网络发送数据包drop pps                                                            | rate(container_network_transmit_packets_dropped_total)[1m] | (单位：p/s)     |
-| container_network_{tcp,udp}_usage_total 默认不采集是因为 --disable_metrics=tcp, udp ,因为开启cpu压力大 | [看这里](https://github.com/google/cadvisor/blob/master/docs/runtime_options.md#metrics) |                                                            |                 |
+| container_network_{​tcp,udp}_usage_total 默认不采集是因为 --disable_metrics=tcp, udp ,因为开启cpu压力大 | [看这里](https://github.com/google/cadvisor/blob/master/docs/runtime_options.md#metrics) |                                                            |                 |
 
 ### system指标
 
@@ -174,7 +174,7 @@ https://172.20.70.205:10250/metrics/cadvisor
   - filesystem && disk.io指标
   - network指标
   - system指标
-- container_network_{tcp,udp}_usage_total 默认不采集是因为 --disable_metrics=tcp, udp ,因为开启cpu压力大[看这里](https://github.com/google/cadvisor/blob/master/docs/runtime_options.md#metrics)
+- container_network_{​tcp,udp}_usage_total 默认不采集是因为 --disable_metrics=tcp, udp ,因为开启cpu压力大[看这里](https://github.com/google/cadvisor/blob/master/docs/runtime_options.md#metrics)
 
 ## 16.3 k8s容器cpu内存告警指标与资源request和limit
 
@@ -296,5 +296,5 @@ sum(rate(container_cpu_usage_seconds_total{image!=""}[1m])) by (container, pod) 
   - mem属于不可压缩资源
   - oom判定的时候是 比较 container_memory_working_set_bytes 而不是 usage
   - usage含有很久未用的缓存，比workingset偏大
-- Qos 的目的是为了合理分配node上的有限资源 {cpu和mem上}
+- Qos 的目的是为了合理分配node上的有限资源 {​cpu和mem上}
 

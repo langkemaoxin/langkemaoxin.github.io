@@ -28,7 +28,7 @@ controller用于控制pod
 
 参考: https://kubernetes.io/zh/docs/concepts/workloads/controllers/
 
-![1564844640416](/云原生/k8s-ops/k8s-ops-55-kubernetes核心概念-controller/work load.png)
+> （配图缺失：1564844640416）
 
 控制器主要分为:
 

@@ -1151,7 +1151,7 @@ rollouts-demo-rollouts-demo-stable-canary   nginx   www.kubemsb.com             
 rollouts-demo-stable                        nginx   www.kubemsb.com             80      2m18s
 ~~~
 
-我们可以注意到新增了一个名为 rollouts-demo-rollouts-demo-stable-canary 的 Ingress 对象。这个对象是 canary ingress，它是 nginx.stableIngress 下引用的用户管理 Ingress 的克隆。 nginx ingress 控制器使用它来实现金丝雀流量分割。生成的入口的名称是使用 <ROLLOUT-NAME>-<INGRESS-NAME>-canary 制定的。
+我们可以注意到新增了一个名为 rollouts-demo-rollouts-demo-stable-canary 的 Ingress 对象。这个对象是 canary ingress，它是 nginx.stableIngress 下引用的用户管理 Ingress 的克隆。 nginx ingress 控制器使用它来实现金丝雀流量分割。生成的入口的名称是使用 `<ROLLOUT-NAME>`-`<INGRESS-NAME>`-canary 制定的。
 
 观察rollouts-demo-rollouts-demo-stable-canary的内容如下：
 

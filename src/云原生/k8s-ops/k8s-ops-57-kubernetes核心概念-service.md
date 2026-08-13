@@ -455,7 +455,7 @@ DNS服务监视Kubernetes API,为每一个Service创建DNS记录用于域名解�
 
 headless service需要DNS来解决访问问题
 
-DNS记录格式为: <service-name>.<namespace-name>.svc.cluster.local.
+DNS记录格式为: &lt;service-name&gt;.&lt;namespace-name&gt;.svc.cluster.local.
 
 ##### 4.1.2.5.1 查看kube-dns服务的IP
 

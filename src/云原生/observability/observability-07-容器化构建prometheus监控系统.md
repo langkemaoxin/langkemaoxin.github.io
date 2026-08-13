@@ -440,7 +440,7 @@ scrape_configs:
 
 ![image-20230706112600864](/云原生/observability/observability-07-容器化构建prometheus监控系统/image-20230706112600864.png)
 
-> 使用PromQL查询：100- node_filesystem_avail_bytes{mountpoint="/rootfs",fstype=~"ext4|xfs"} /node_filesystem_size_bytes{mountpoint="/rootfs",fstype=~"ext4|xfs"}* 100
+> 使用PromQL查询：100- node_filesystem_avail_bytes{​mountpoint="/rootfs",fstype=~"ext4|xfs"} /node_filesystem_size_bytes{​mountpoint="/rootfs",fstype=~"ext4|xfs"}* 100
 
 ~~~powershell
 [root@monitorhost ~]# vim /opt/prometheus/rules/node_alerts.yml

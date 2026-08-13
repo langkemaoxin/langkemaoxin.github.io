@@ -389,7 +389,7 @@ redis-exporter                                      46s
 
 ![image-20220715003335285](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220715003335285.png)
 
-![image-20220720144636315](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720144636315.png)
+> （配图缺失：image-20220720144636315）
 
 ## 5.3 监控方案二：使用helm部署prometheus redis exporter监控redis
 
@@ -472,7 +472,7 @@ helm search repo redis
 helm install redis-monitor-old ./ -f values.yaml -n monitoring
 ~~~
 
-![image-20220720132959064](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720132959064.png)
+> （配图缺失：image-20220720132959064）
 
 ## 5.4 使用helm部署prometheus redis exporter监控手动部署的redis
 
@@ -621,7 +621,7 @@ replicaset.apps/redis-75f489d8f4   1         1         1       82m
 helm install redis-monitor ./ -f values.yaml -n monitoring
 ~~~
 
-![image-20220720134242565](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720134242565.png)
+> （配图缺失：image-20220720134242565）
 
 ## 5.5 实现helm部署prometheus redis exporter监控helm部署的redis集群
 
@@ -695,7 +695,7 @@ cd prometheus-redis-exporter/
 # helm install redisnew-exporter ./ -f values.yaml -n monitoring
 ~~~
 
-![image-20220722002908512](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722002908512.png)
+> （配图缺失：image-20220722002908512）
 
 # 六、使用prometheus监控mysql
 
@@ -803,21 +803,21 @@ passwd: root@mysql
 # helm install prometheus-mysql-exporter ./ -f values.yaml -n monitoring
 ~~~
 
-![image-20220720143121566](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720143121566.png)
+> （配图缺失：image-20220720143121566）
 
 ## 6.3 在prometheus web页面中Graph中查看
 
-![image-20220720143923630](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720143923630.png)
+> （配图缺失：image-20220720143923630）
 
 ## 6.4 在grafana中添加dashboard
 
-![image-20220720144246814](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720144246814.png)
+> （配图缺失：image-20220720144246814）
 
-![image-20220720144319367](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720144319367.png)
+> （配图缺失：image-20220720144319367）
 
-![image-20220720144357335](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720144357335.png)
+> （配图缺失：image-20220720144357335）
 
-![image-20220720144419911](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220720144419911.png)
+> （配图缺失：image-20220720144419911）
 
 # 七、使用prometheus监控kafka
 
@@ -1308,11 +1308,11 @@ kafka.kafka.svc.cluster.local:9092
 # helm install kafka-exporter ./ -f values.yaml -n monitoring
 ~~~
 
-![image-20220722085015022](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722085015022.png)
+> （配图缺失：image-20220722085015022）
 
 ## 7.3 在prometheus web中Graph查看
 
-![image-20220722085210137](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722085210137.png)
+> （配图缺失：image-20220722085210137）
 
 > 如果想采集更多的数据，需要对消费者进行配置(--consumer-property)，以便获取更多的数据
 
@@ -1342,21 +1342,21 @@ hello
 abc
 ~~~
 
-![image-20220722090203802](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722090203802.png)
+> （配图缺失：image-20220722090203802）
 
 ## 7.4 在grafana中添加kafka监控dashboard
 
 > 7589
 
-![image-20220722090350722](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722090350722.png)
+> （配图缺失：image-20220722090350722）
 
-![image-20220722090424326](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722090424326.png)
+> （配图缺失：image-20220722090424326）
 
-![image-20220722090446732](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722090446732.png)
+> （配图缺失：image-20220722090446732）
 
-![image-20220722090518507](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722090518507.png)
+> （配图缺失：image-20220722090518507）
 
-![image-20220722090540207](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220722090540207.png)
+> （配图缺失：image-20220722090540207）
 
 # 八、使用prometheus监控rabbitmq
 
@@ -1718,15 +1718,15 @@ NAME             CLASS    HOSTS                        ADDRESS          PORTS   
 rabbitmq-15672   <none>   rabbitmq-15672.kubemsb.com   192.168.10.147   80      54s
 ~~~
 
-![image-20220725110542672](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725110542672.png)
+> （配图缺失：image-20220725110542672）
 
-![image-20220725110703112](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725110703112.png)
+> （配图缺失：image-20220725110703112）
 
-![image-20220725110744799](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725110744799.png)
+> （配图缺失：image-20220725110744799）
 
-![image-20220725110921083](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725110921083.png)
+> （配图缺失：image-20220725110921083）
 
-![image-20220725110831623](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725110831623.png)
+> （配图缺失：image-20220725110831623）
 
 ### 8.1.5 配置镜像模式实现集群高可用
 
@@ -1753,7 +1753,7 @@ vhost   name    pattern apply-to        definition      priority
 /       ha-all  ^       all     {"ha-mode":"all","ha-sync-mode":"automatic"}    0
 ~~~
 
-![image-20220725113259819](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725113259819.png)
+> （配图缺失：image-20220725113259819）
 
 ### 8.1.6 卸载rabbitmq
 
@@ -1882,9 +1882,9 @@ rabbitmq-exporter       monitoring      1               2022-07-25 12:03:31.7698
 
 ### 8.2.4 在prometheus web界面中查看
 
-![image-20220725120633719](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725120633719.png)
+> （配图缺失：image-20220725120633719）
 
-![image-20220725122156046](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725122156046.png)
+> （配图缺失：image-20220725122156046）
 
 ### 8.2.5 在grafana添加dashboard
 
@@ -1892,15 +1892,15 @@ rabbitmq-exporter       monitoring      1               2022-07-25 12:03:31.7698
 >
 > [RabbitMQ Metrics](https://grafana.com/grafana/dashboards/4371)4371
 
-![image-20220725122440946](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725122440946.png)
+> （配图缺失：image-20220725122440946）
 
-![image-20220725122527360](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725122527360.png)
+> （配图缺失：image-20220725122527360）
 
-![image-20220725122605609](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725122605609.png)
+> （配图缺失：image-20220725122605609）
 
-![image-20220725122648479](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725122648479.png)
+> （配图缺失：image-20220725122648479）
 
-![image-20220725122722659](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725122722659.png)
+> （配图缺失：image-20220725122722659）
 
-![image-20220725122753561](/云原生/observability/observability-11-helm部署prometheus及应用/image-20220725122753561.png)
+> （配图缺失：image-20220725122753561）
 

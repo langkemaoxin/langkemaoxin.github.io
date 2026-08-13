@@ -117,7 +117,7 @@ Kubernetes允许你存储和管理敏感信息，例如密码、OAuth令牌和ss
 
 一个Kubernetes集群至少有一个主控制平面节点（Control Plane）和一台或者多台工作节点（Node）组成，控制面板和工作节点实例可以是物理设备或云中的实例。Kubernetes 架构如下：
 
-![](file:///C:\Temp\ksohtml16136\wps9.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a574f87c70034ec1b0abb158368cc765.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a574f87c70034ec1b0abb158368cc765.png)
 
 ### 1.2.1 **Kubernetes 控制平面（Contorl Plane）**
 
@@ -178,11 +178,11 @@ Kubernetes中有非常多的核心概念，下面主要介绍Kubernetes集群中
 
 Pod是可以在 Kubernetes 中创建和管理的、最小的可部署的计算单元，是Kubernetes调度的基本单位，Pod设计的理念是每个Pod都有一个唯一的IP。Pod就像豌豆荚一样，其中包含着一组（一个或多个）容器，这些容器共享存储、网络、文件系统以及怎样运行这些容器的声明。
 
-![](file:///C:\Temp\ksohtml16136\wps10.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a50dae4997a14440ac578cd042c9a4cc.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/a50dae4997a14440ac578cd042c9a4cc.png)
 
 **Node&Pod&Container&应用程序关系如下图所示：**
 
-![](file:///C:\Temp\ksohtml16136\wps11.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/56789990f8a04f7a9d0cc2b75d727654.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/56789990f8a04f7a9d0cc2b75d727654.png)
 
 ### 1.3.2 **Label**
 
@@ -1057,7 +1057,7 @@ systemctl start kubelet
 [root@node1 kube-dashboard]# wget  https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
-![](file:///C:\Temp\ksohtml16136\wps26.jpg)对应yaml文件下载完成后，为了方便后续在容器主机上访问，在yaml文件中添加对应的NodePort类型、端口以及修改登录kubernetes dashboard的用户。
+对应yaml文件下载完成后，为了方便后续在容器主机上访问，在yaml文件中添加对应的NodePort类型、端口以及修改登录kubernetes dashboard的用户。
 
 ```
 #vi recommended.yaml 【只需要添加或修改以下加粗部分】
@@ -1223,7 +1223,7 @@ replicaset.apps/nginx-test-74845c57fb   2         2         2       45s
 
 访问任意kubernetes集群的节点30080端口查看nginx服务是正常，例如：浏览器输入node1:30080
 
-![](file:///C:\Temp\ksohtml10300\wps1.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ce75b5426f07418d8cd0015726d6ac9e.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ce75b5426f07418d8cd0015726d6ac9e.png)
 
 5) **删除nginix服务**
 
@@ -1535,7 +1535,7 @@ www.kubemsb.com/library/nginx             v1                        dd025cdfe837
 
 将本地镜像推送到harbor镜像仓库后，可以通过WebUI查看对应内容：
 
-![](file:///C:\Temp\ksohtml21784\wps21.jpg)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ed61cd24eb7a4b8aa9c55545d6310941.png)
+![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1667826904074/ed61cd24eb7a4b8aa9c55545d6310941.png)
 
 可以在本地任何一台节点上从Harbor镜像仓库中下载镜像到本地：
 
@@ -1558,7 +1558,7 @@ Spark是新一代分布式内存计算框架，Apache开源的顶级项目。相
 
 下图是Spark框架中对应的角色，每个角色作用如下:
 
-![](RackMultipart20230217-1-cc67zi_html_178ab66d6716895f.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/8457fc89c24741a3a22e4f90796bbb50.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/8457fc89c24741a3a22e4f90796bbb50.png)
 
 - Client ：客户端进程，负责提交作业到Master。
 - Master ：Standalone模式中主节点，负责接收Client提交的作业，管理Worker，并命令Worker启动Driver和Executor。
@@ -1643,7 +1643,7 @@ node3
 5. **访问**webui
 
 Spark集群启动完成之后，可以在浏览器中输入"http://node1:8080"来查看Spark WebUI：
-![](RackMultipart20230217-1-cc67zi_html_978544d7d75c9fae.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/7bfb13b30d5e4efbb09487fb1c22dbfc.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/7bfb13b30d5e4efbb09487fb1c22dbfc.png)
 
 在浏览器中输入地址出现以上页面，并且对应的worker状态为Alive，说明Spark Standalone集群搭建成功。
 
@@ -1668,7 +1668,7 @@ Pi is roughly 3.1410557052785264
 
 Spark基于Standalone模式提交任务流程如下：
 
-![](RackMultipart20230217-1-cc67zi_html_ad8253af709aea76.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/b0c38807aa9f411098af69ba48b81072.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/b0c38807aa9f411098af69ba48b81072.png)
 
 1. client模式提交任务后，会在客户端启动Driver进程。
 2. Driver会向Master申请启动Application启动的资源。
@@ -1690,7 +1690,7 @@ spark-submit --master spark://spark_master_ip:7077 --deploy-mode client --class 
 
 Spark基于Standalone cluster模式提交任务流程如下:
 
-![](RackMultipart20230217-1-cc67zi_html_6321aae2ba75e80.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/638b6c046c5b4ae9b782e60cf95e7038.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/638b6c046c5b4ae9b782e60cf95e7038.png)
 
 1. cluster模式提交应用程序后，会向Master请求启动Driver.
 2. Master接受请求，随机在集群一台节点启动Driver进程。
@@ -1861,7 +1861,7 @@ openjdk                         8u151     a30a1e547e6d ... ...
 
 登录harbor观察对应的镜像是否上传成功，通过webui观察，上传已经成功。
 
-![](RackMultipart20230217-1-cc67zi_html_c15c30ac660082d4.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/ad532b75beec49a283ff6489bc24e83c.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/ad532b75beec49a283ff6489bc24e83c.png)
 
 资料中"myspark\_v1.tar"为打包好自定义spark镜像，可以通过以下命令加载到docker中：
 
@@ -1998,7 +1998,7 @@ pod/spark-worker-controller-lrprt   1/1     Running   0          13s
 ```
 
 部署完成之后，我们可以登录webui查看对应的Spark Standalone集群启动情况，node1:8080:
-![](RackMultipart20230217-1-cc67zi_html_246dd0c1ab1575b.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/d73ae86fdde049f3ab8cfcc81bfe10d7.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/d73ae86fdde049f3ab8cfcc81bfe10d7.png)
 
 #### 1.13.1.4 **任务提交及日志查看**
 
@@ -2048,7 +2048,7 @@ root@spark-master-hostname:/opt/spark/bin# ./spark-submit --master spark://spark
 
 以上命令执行完成之后结果如下：
 
-![](RackMultipart20230217-1-cc67zi_html_238d575eb517f74c.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/eee6425d23a5459ab4631528746f63e3.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/eee6425d23a5459ab4631528746f63e3.png)
 
 注意：执行过程中如果delete对应的yaml资源清单后，pod状态一直为Terminating，可以通过强制删除pod命令删除,命令如下：
 
@@ -2061,7 +2061,7 @@ kubectl delete pod xxx -n xxx --force --grace-period=0
 
 Spark Native Kubernetes 部署类似于Spark 基于Yarn部署，Kubernetes看成是资源调度中心负责资源调度，运行executor。这种方式部署提交Spark任务可以是client模式提交任务也可以cluster模式提交任务，Spark Native Kuberntes提交任务原理图如下：
 
-![](RackMultipart20230217-1-cc67zi_html_b36f8568ddf71dd1.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/7d3a575ba7d747a194261aa257d7412c.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/7d3a575ba7d747a194261aa257d7412c.png)
 
 ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/80392b13372c457b861c8bdb39168890.png)
 
@@ -2101,7 +2101,7 @@ REPOSITORY                                TAG           IMAGE ID    192.168.179.
 
 检查上传镜像：
 
-![](RackMultipart20230217-1-cc67zi_html_1dd296a47a985683.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/bf834dfc56d34c55aede4f37ffb29801.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/bf834dfc56d34c55aede4f37ffb29801.png)
 
 #### 1.13.2.2 **配置用户权限**
 
@@ -2142,7 +2142,7 @@ client模式提交任务需要在节点上有Spark安装包，使用spark-submit
 
 以上提交任务命令参数解释如下：
 
-- --master：指定Kubernetes集群，格式为k8s://https://\<k8s-apiserver-host\>:\<k8s-apiserver-port\>，可以在k8s集群中执行"kubectl cluster-info"来获取k8s-apiserver-host和k8s-apiserver-port。
+- --master：指定Kubernetes集群，格式为k8s://https://\&lt;k8s-apiserver-host\&gt;:\&lt;k8s-apiserver-port\&gt;，可以在k8s集群中执行"kubectl cluster-info"来获取k8s-apiserver-host和k8s-apiserver-port。
 - --deploy-ment:指定部署模式
 - --name:指定应用程序名称
 - --class:指定运行主类
@@ -2215,7 +2215,7 @@ pod/spark-pi-d3e33d8659fe3a9b-driver   0/1     Completed   0          2m40s
 
 Spark Application执行的结果在客户端看不到，需要通过Kubernetes集群pod日志来查看，WebUI访问Kubernetes dashboard：[https://192.168.179.4:3000](http://192.168.179.4:3000/)0：
 
-![](RackMultipart20230217-1-cc67zi_html_98741c5d053c7504.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/29ec6a81c8cf42e58a02c42e75751aca.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/29ec6a81c8cf42e58a02c42e75751aca.png)
 
 需要提供token，在Kubernetes集群中任意一台节点执行如下命令查询临时token:
 
@@ -2227,9 +2227,9 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IktKSkJla1plMTJ6VHpNTmgxVG42OC1jaktuR1dOSzNqeHpWajRB
 
 登录webui后查看对应pod日志：
 
-![](RackMultipart20230217-1-cc67zi_html_f9b9bf17caf6ae89.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/f416db97747047b1b2a715efeeff599a.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/f416db97747047b1b2a715efeeff599a.png)
 
-![](RackMultipart20230217-1-cc67zi_html_6b9675730f08729b.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/a37255eda96142ae8c0a7e4220733665.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/a37255eda96142ae8c0a7e4220733665.png)
 
 ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/e9a10f64114249c3b2f3561678dfb4fb.png)
 
@@ -2304,7 +2304,7 @@ pod/spark-pi-eee459865a2a8a5e-driver   0/1     Completed      0          52s
 
 查看对应运行结果，也需要登录Kubernetes webui中找到对应的pod查看日志。登录Kubernetes Webui https://node1:30000查看日志:
 
-![](RackMultipart20230217-1-cc67zi_html_60c0c4d056822a51.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/ce20c6f171eb4ef58c6f073d6c331b1d.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/ce20c6f171eb4ef58c6f073d6c331b1d.png)
 
 执行如下命令获取token:
 
@@ -2316,5 +2316,5 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IktKSkJla1plMTJ6VHpNTmgxVG42OC1jaktuR1dOSzNqeHpWajRB
 
 登录之后，找打对应spark命名空间，查看对应pod日志如下：
 
-![](RackMultipart20230217-1-cc67zi_html_8d45567ad274bf37.png)![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/0bf82f31aa7643b4941996f47b304b9b.png)
+> （配图缺失：image）![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/fyfile/20/1676618640055/0bf82f31aa7643b4941996f47b304b9b.png)
 

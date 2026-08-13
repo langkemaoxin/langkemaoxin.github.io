@@ -431,7 +431,7 @@ metrics_f  80w
 
 - 是因为华为存储为devicemapper
 - id="/" 代表宿主机而不是容器
-  container_fs_usage_bytes{cluster=~"ugc-cce-prod",id!="/",container_name!="POD"}
+  container_fs_usage_bytes{​cluster=~"ugc-cce-prod",id!="/",container_name!="POD"}
 - cadvisor 在统计container_fs_usage_bytes指标时不支持 devicemapper ，所以相关指标的结果都为0
 - [issue地址](https://github.com/google/cadvisor/issues/2040)
 - 代码分析 位置 E:\go_path\src\github.com\google\cadvisor\container\docker\factory.go

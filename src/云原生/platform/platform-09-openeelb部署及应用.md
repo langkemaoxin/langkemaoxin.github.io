@@ -33,7 +33,7 @@ OpenELB 是一个开源的云原生负载均衡器实现，可以在基于裸金
 
 > Layer2 模式需要我们的 k8s 集群基础环境支持发送 anonymous ARP/NDP packets。因为 OpenELB 是针对裸金属服务器设计的，因此如果是在云环境中部署，需要注意是否满足条件。
 
-![img](/云原生/platform/platform-09-openeelb部署及应用/f470585d7e64b7cc161e72bb673f7d7a.png)
+> （配图缺失：img）
 
 - 图中有一个类型为 LoadBalancer 的 Service，其 VIP 为 192.168.0.91（**和 k8s 的节点相同网段**），后端有两个 pod（分别为 pod1 和 pod2）
 - 安装在 Kubernetes 集群中的 OpenELB 随机选择一个节点（图中为 worker 1）来处理 Service  请求。当局域网中出现 arp request 数据包来查询 192.168.0.91 的 mac 地址的时候，OpenELB 会进行回应（使用 worker 1 的 MAC 地址），此时路由器（也可能是交换机）将 Service 的 VIP 192.168.0.91 和 worker 1 的 MAC  地址绑定，之后所有请求到 192.168.0.91 的数据包都会被转发到 worker1 上
@@ -49,7 +49,7 @@ OpenELB 是一个开源的云原生负载均衡器实现，可以在基于裸金
 
 OpenELB 的 BGP 模式使用的是gobgp实现的 BGP 协议，通过使用 BGP 协议和路由器建立 BGP 连接并实现 ECMP 负载均衡，从而实现高可用的 LoadBalancer。
 
-![img](/云原生/platform/platform-09-openeelb部署及应用/74d64a4fe619faba0e3a4392368f4936.png)
+> （配图缺失：img）
 
 - 图中有一个类型为 LoadBalancer 的 Service，其 VIP 为 172.22.0.2（**和 k8s 的节点不同网段**），后端有两个 pod（分别为 pod1 和 pod2）
 - 安装在 Kubernetes 集群中的 OpenELB 与 BGP 路由器建立 BGP 连接，并将去往 172.22.0.2  的路由发布到 BGP 路由器，在配置得当的情况下，路由器上面的路由表可以看到 172.22.0.2  这个 VIP 的下一条有多个节点（均为 k8s 的宿主机节点）
@@ -266,37 +266,37 @@ In the Kubernetes cluster, run the following command to obtain the external IP a
 
 ### 3.2.1创建项目
 
-![image-20221107181632958](/云原生/platform/platform-09-openeelb部署及应用/image-20221107181632958.png)
+> （配图缺失：image-20221107181632958）
 
-![image-20221107181656176](/云原生/platform/platform-09-openeelb部署及应用/image-20221107181656176.png)
+> （配图缺失：image-20221107181656176）
 
-![image-20221107181726990](/云原生/platform/platform-09-openeelb部署及应用/image-20221107181726990.png)
+> （配图缺失：image-20221107181726990）
 
-![image-20221107181806462](/云原生/platform/platform-09-openeelb部署及应用/image-20221107181806462.png)
+> （配图缺失：image-20221107181806462）
 
 ### 3.2.2 创建应用
 
-![image-20221107181842827](/云原生/platform/platform-09-openeelb部署及应用/image-20221107181842827.png)
+> （配图缺失：image-20221107181842827）
 
-![image-20221107181922274](/云原生/platform/platform-09-openeelb部署及应用/image-20221107181922274.png)
+> （配图缺失：image-20221107181922274）
 
-![image-20221107182015337](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182015337.png)
+> （配图缺失：image-20221107182015337）
 
-![image-20221107182047262](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182047262.png)
+> （配图缺失：image-20221107182047262）
 
-![image-20221107182117096](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182117096.png)
+> （配图缺失：image-20221107182117096）
 
 ### 3.2.3 创建服务
 
-![image-20221107182312751](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182312751.png)
+> （配图缺失：image-20221107182312751）
 
-![image-20221107182407645](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182407645.png)
+> （配图缺失：image-20221107182407645）
 
-![image-20221107182446682](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182446682.png)
+> （配图缺失：image-20221107182446682）
 
-![image-20221107182504842](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182504842.png)
+> （配图缺失：image-20221107182504842）
 
-![image-20221107182536284](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182536284.png)
+> （配图缺失：image-20221107182536284）
 
 ~~~powershell
 lb.kubesphere.io/v1alpha1:openelb
@@ -304,33 +304,33 @@ protocol.openelb.kubesphere.io/v1alpha1:layer2
 eip.openelb.kubesphere.io/v1alpha2:layer2-eip
 ~~~
 
-![image-20221107182940183](/云原生/platform/platform-09-openeelb部署及应用/image-20221107182940183.png)
+> （配图缺失：image-20221107182940183）
 
-![image-20221107183152674](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183152674.png)
+> （配图缺失：image-20221107183152674）
 
-![image-20221107183226180](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183226180.png)
+> （配图缺失：image-20221107183226180）
 
 ### 3.2.4   创建应用路由
 
-![image-20221107183318513](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183318513.png)
+> （配图缺失：image-20221107183318513）
 
-![image-20221107183401421](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183401421.png)
+> （配图缺失：image-20221107183401421）
 
-![image-20221107183424561](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183424561.png)
+> （配图缺失：image-20221107183424561）
 
-![image-20221107183512154](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183512154.png)
+> （配图缺失：image-20221107183512154）
 
-![image-20221107183528828](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183528828.png)
+> （配图缺失：image-20221107183528828）
 
-![image-20221107183551485](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183551485.png)
+> （配图缺失：image-20221107183551485）
 
 ### 3.2.5 通过域名访问
 
 #### 3.2.5.1 通过 hosts文件添加域名解析
 
-![image-20221107183813559](/云原生/platform/platform-09-openeelb部署及应用/image-20221107183813559.png)
+> （配图缺失：image-20221107183813559）
 
-![image-20221107184129370](/云原生/platform/platform-09-openeelb部署及应用/image-20221107184129370.png)
+> （配图缺失：image-20221107184129370）
 
 #### 3.2.5.2 通过域名服务器实现域名解析
 

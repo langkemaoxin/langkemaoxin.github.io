@@ -26,7 +26,7 @@ description: 'Kubernetes集群核心概念 Pod 一、工作负载(workloads) 参
 
 工作负载（workload）是在kubernetes集群中运行的应用程序。无论你的工作负载是单一服务还是多个一同工作的服务构成，在kubernetes中都可以使用pod来运行它。
 
-![1604285743110](/云原生/k8s-ops/k8s-ops-54-kubernetes核心概念-pod/1)
+![1604285743110](/云原生/k8s-ops/k8s-ops-54-kubernetes核心概念-pod/1.png)
 
 workloads分为pod与controllers
 
@@ -34,7 +34,7 @@ workloads分为pod与controllers
 - controllers 在集群中管理pod
 - pod与控制器之间通过label-selector相关联，是唯一的关联方式
 
-![1564844640416](/云原生/k8s-ops/k8s-ops-54-kubernetes核心概念-pod/work load.png)
+> （配图缺失：1564844640416）
 
 在pod的YAML里指定pod标签
 

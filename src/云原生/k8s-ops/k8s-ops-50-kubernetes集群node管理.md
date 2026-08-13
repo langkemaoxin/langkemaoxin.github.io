@@ -286,7 +286,7 @@ node/k8s-worker1 labeled
 标签选择器主要有2类:
 
 * 等值关系: =, !=
-* 集合关系: KEY in {VALUE1, VALUE2......}
+* 集合关系: KEY in {​VALUE1, VALUE2......}
 
 ~~~powershell
 [root@k8s-master1 ~]# kubectl label node k8s-master2 env=test1

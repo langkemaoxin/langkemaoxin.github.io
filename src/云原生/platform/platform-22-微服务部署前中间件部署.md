@@ -38,17 +38,17 @@ description: 严选商城项目中间件部署 一、MySQL部署 1.1 部署MySQL
 
 ### 1.2.2 存储准备
 
-![image-20230302122045131](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122045131.png)
+> （配图缺失：image-20230302122045131）
 
-![image-20230302122105702](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122105702.png)
+> （配图缺失：image-20230302122105702）
 
-![image-20230302122138933](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122138933.png)
+> （配图缺失：image-20230302122138933）
 
-![image-20230302122246907](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122246907.png)
+> （配图缺失：image-20230302122246907）
 
-![image-20230302122315127](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122315127.png)
+> （配图缺失：image-20230302122315127）
 
-![image-20230302122336650](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122336650.png)
+> （配图缺失：image-20230302122336650）
 
 ### 1.2.3 配置文件准备
 
@@ -69,81 +69,81 @@ skip-name-resolve
 skip-ssl
 ~~~
 
-![image-20230302122444073](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122444073.png)
+> （配图缺失：image-20230302122444073）
 
-![image-20230302122506840](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122506840.png)
+> （配图缺失：image-20230302122506840）
 
-![image-20230302122533732](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122533732.png)
+> （配图缺失：image-20230302122533732）
 
-![image-20230302122551364](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122551364.png)
+> （配图缺失：image-20230302122551364）
 
-![image-20230302122724919](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122724919.png)
+> （配图缺失：image-20230302122724919）
 
-![image-20230302122749192](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122749192.png)
+> （配图缺失：image-20230302122749192）
 
-![image-20230302122807661](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122807661.png)
+> （配图缺失：image-20230302122807661）
 
 ### 1.2.4 mysql管理员root密码准备
 
-![image-20230302122854554](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122854554.png)
+> （配图缺失：image-20230302122854554）
 
-![image-20230302122920502](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122920502.png)
+> （配图缺失：image-20230302122920502）
 
-![image-20230302122958853](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302122958853.png)
+> （配图缺失：image-20230302122958853）
 
-![image-20230302123029190](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123029190.png)
+> （配图缺失：image-20230302123029190）
 
-![image-20230302123140190](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123140190.png)
+> （配图缺失：image-20230302123140190）
 
-![image-20230302123206261](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123206261.png)
+> （配图缺失：image-20230302123206261）
 
-![image-20230302123225863](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123225863.png)
+> （配图缺失：image-20230302123225863）
 
 ### 1.2.5 MySQL部署
 
-![image-20230302123604664](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123604664.png)
+> （配图缺失：image-20230302123604664）
 
-![image-20230302123630151](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123630151.png)
+> （配图缺失：image-20230302123630151）
 
-![image-20230302123722874](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123722874.png)
+> （配图缺失：image-20230302123722874）
 
-![image-20230302123754158](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123754158.png)
+> （配图缺失：image-20230302123754158）
 
-![image-20230302123914955](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302123914955.png)
+> （配图缺失：image-20230302123914955）
 
-![image-20230302124030037](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124030037.png)
+> （配图缺失：image-20230302124030037）
 
-![image-20230302124055125](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124055125.png)
+> （配图缺失：image-20230302124055125）
 
-![image-20230302124137179](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124137179.png)
+> （配图缺失：image-20230302124137179）
 
-![image-20230302124213317](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124213317.png)
+> （配图缺失：image-20230302124213317）
 
-![image-20230302124232868](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124232868.png)
+> （配图缺失：image-20230302124232868）
 
-![image-20230302124249359](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124249359.png)
+> （配图缺失：image-20230302124249359）
 
-![image-20230302124355013](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124355013.png)
+> （配图缺失：image-20230302124355013）
 
-![image-20230302124420472](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124420472.png)
+> （配图缺失：image-20230302124420472）
 
-![image-20230302124529831](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124529831.png)
+> （配图缺失：image-20230302124529831）
 
-![image-20230302124546918](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124546918.png)
+> （配图缺失：image-20230302124546918）
 
-![image-20230302124608572](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124608572.png)
+> （配图缺失：image-20230302124608572）
 
-![image-20230302124753860](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124753860.png)
+> （配图缺失：image-20230302124753860）
 
-![image-20230302124900908](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124900908.png)
+> （配图缺失：image-20230302124900908）
 
-![image-20230302124919834](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124919834.png)
+> （配图缺失：image-20230302124919834）
 
-![image-20230302124947244](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302124947244.png)
+> （配图缺失：image-20230302124947244）
 
-![image-20230302125019766](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302125019766.png)
+> （配图缺失：image-20230302125019766）
 
-![image-20230302125255992](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302125255992.png)
+> （配图缺失：image-20230302125255992）
 
 ~~~powershell
 [root@k8s-master01 ~]# dig -t a mysql-db.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -175,19 +175,19 @@ mysql-db.yanxuan-project.svc.cluster.local. 30 IN A 10.244.69.194 解析出地�
 
 > 由于kubesphere3.3.2存在普通用户（例如project-regular）无法找到OpenELB的情况，需切换为admin用户操作
 
-![image-20230302125539769](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302125539769.png)
+> （配图缺失：image-20230302125539769）
 
-![image-20230302125911020](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302125911020.png)
+> （配图缺失：image-20230302125911020）
 
-![image-20230302130019114](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302130019114.png)
+> （配图缺失：image-20230302130019114）
 
-![image-20230302130048661](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302130048661.png)
+> （配图缺失：image-20230302130048661）
 
-![image-20230302130110579](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302130110579.png)
+> （配图缺失：image-20230302130110579）
 
-![image-20230302130150979](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302130150979.png)
+> （配图缺失：image-20230302130150979）
 
-![image-20230302130213592](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302130213592.png)
+> （配图缺失：image-20230302130213592）
 
 在此使用admin用户
 
@@ -197,7 +197,7 @@ protocol.openelb.kubesphere.io/v1alpha1: layer2
 eip.openelb.kubesphere.io/v1alpha2: layer2-eip
 ~~~
 
-![image-20230302150959625](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302150959625.png)
+> （配图缺失：image-20230302150959625）
 
 ~~~powershell
 [root@k8s-master01 ~]# ping -c 4 192.168.10.72
@@ -214,41 +214,41 @@ rtt min/avg/max/mdev = 0.050/0.057/0.065/0.010 ms
 
 ## 1.3 使用DataGrip实现数据库连接
 
-![image-20230302154221772](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154221772.png)
+> （配图缺失：image-20230302154221772）
 
-![image-20230302154328284](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154328284.png)
+> （配图缺失：image-20230302154328284）
 
-![image-20230302154402612](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154402612.png)
+> （配图缺失：image-20230302154402612）
 
-![image-20230302154451750](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154451750.png)
+> （配图缺失：image-20230302154451750）
 
-![image-20230302154530494](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154530494.png)
+> （配图缺失：image-20230302154530494）
 
-![image-20230302154610811](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154610811.png)
+> （配图缺失：image-20230302154610811）
 
-![image-20230302154641506](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154641506.png)
+> （配图缺失：image-20230302154641506）
 
-![image-20230302154818714](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302154818714.png)
+> （配图缺失：image-20230302154818714）
 
-![image-20230302165151304](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302165151304.png)
+> （配图缺失：image-20230302165151304）
 
-![image-20230302165211425](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302165211425.png)
+> （配图缺失：image-20230302165211425）
 
-![image-20230302165449890](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302165449890.png)
+> （配图缺失：image-20230302165449890）
 
-![image-20230302165534713](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302165534713.png)
+> （配图缺失：image-20230302165534713）
 
-![image-20230302165828068](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302165828068.png)
+> （配图缺失：image-20230302165828068）
 
-![image-20230302165912746](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302165912746.png)
+> （配图缺失：image-20230302165912746）
 
-![image-20230302170011173](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230302170011173.png)
+> （配图缺失：image-20230302170011173）
 
 # 二、Redis部署
 
 ## 2.1 准备配置PVC
 
-![image-20230303141431673](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303141431673.png)
+> （配图缺失：image-20230303141431673）
 
 ![image-20221117100556510](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117100556510.png)
 
@@ -260,7 +260,7 @@ rtt min/avg/max/mdev = 0.050/0.057/0.065/0.010 ms
 
 ## 2.2 准备配置文件
 
-![image-20230303141612460](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303141612460.png)
+> （配图缺失：image-20230303141612460）
 
 ![image-20221117101008447](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117101008447.png)
 
@@ -276,7 +276,7 @@ rtt min/avg/max/mdev = 0.050/0.057/0.065/0.010 ms
 
 ## 2.3 部署Redis
 
-![image-20230303141813121](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303141813121.png)
+> （配图缺失：image-20230303141813121）
 
 ![image-20221117101422218](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117101422218.png)
 
@@ -286,7 +286,7 @@ rtt min/avg/max/mdev = 0.050/0.057/0.065/0.010 ms
 
 ![image-20221117101542587](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117101542587.png)
 
-![image-20230303142301780](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303142301780.png)
+> （配图缺失：image-20230303142301780）
 
 ![image-20221117102225292](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117102225292.png)
 
@@ -300,19 +300,19 @@ rtt min/avg/max/mdev = 0.050/0.057/0.065/0.010 ms
 
 ![image-20221117102643463](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117102643463.png)
 
-![image-20230303142612190](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303142612190.png)
+> （配图缺失：image-20230303142612190）
 
-![image-20230303142716799](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303142716799.png)
+> （配图缺失：image-20230303142716799）
 
-![image-20230303142756979](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303142756979.png)
+> （配图缺失：image-20230303142756979）
 
-![image-20230303143051853](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303143051853.png)
+> （配图缺失：image-20230303143051853）
 
-![image-20230303143142455](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303143142455.png)
+> （配图缺失：image-20230303143142455）
 
-![image-20230303143211888](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303143211888.png)
+> （配图缺失：image-20230303143211888）
 
-![image-20230303143238906](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303143238906.png)
+> （配图缺失：image-20230303143238906）
 
 ~~~powershell
 [root@k8s-master01 ~]# dig -t a redis.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -340,91 +340,91 @@ redis.yanxuan-project.svc.cluster.local. 30 IN A 10.244.69.199 已解析出IP地
 ;; MSG SIZE  rcvd: 123
 ~~~
 
-![image-20230303143437662](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303143437662.png)
+> （配图缺失：image-20230303143437662）
 
 ## 2.4 Another Redis Desktop Manager使用
 
 > github链接：https://github.com/qishibo/AnotherRedisDesktopManager
 
-![image-20230303144444960](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144444960.png)
+> （配图缺失：image-20230303144444960）
 
-![image-20230303144519825](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144519825.png)
+> （配图缺失：image-20230303144519825）
 
-![image-20230303144549898](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144549898.png)
+> （配图缺失：image-20230303144549898）
 
-![image-20230303144627996](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144627996.png)
+> （配图缺失：image-20230303144627996）
 
-![image-20230303144712400](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144712400.png)
+> （配图缺失：image-20230303144712400）
 
-![image-20230303144734037](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144734037.png)
+> （配图缺失：image-20230303144734037）
 
-![image-20230303144807303](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144807303.png)
+> （配图缺失：image-20230303144807303）
 
-![image-20230303144926225](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303144926225.png)
+> （配图缺失：image-20230303144926225）
 
-![image-20230303145125569](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145125569.png)
+> （配图缺失：image-20230303145125569）
 
-![image-20230303145158228](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145158228.png)
+> （配图缺失：image-20230303145158228）
 
-![image-20230303145226462](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145226462.png)
+> （配图缺失：image-20230303145226462）
 
-![image-20230303145253550](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145253550.png)
+> （配图缺失：image-20230303145253550）
 
-![image-20230303145321802](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145321802.png)
+> （配图缺失：image-20230303145321802）
 
-![image-20230303145359896](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145359896.png)
+> （配图缺失：image-20230303145359896）
 
-![image-20230303145428488](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145428488.png)
+> （配图缺失：image-20230303145428488）
 
-![image-20230303145459314](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145459314.png)
+> （配图缺失：image-20230303145459314）
 
-![image-20230303145536052](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145536052.png)
+> （配图缺失：image-20230303145536052）
 
-![image-20230303145557726](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145557726.png)
+> （配图缺失：image-20230303145557726）
 
-![image-20230303145626279](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145626279.png)
+> （配图缺失：image-20230303145626279）
 
-![image-20230303145734161](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145734161.png)
+> （配图缺失：image-20230303145734161）
 
-![image-20230303145754336](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145754336.png)
+> （配图缺失：image-20230303145754336）
 
-![image-20230303145845058](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145845058.png)
+> （配图缺失：image-20230303145845058）
 
-![image-20230303145935988](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303145935988.png)
+> （配图缺失：image-20230303145935988）
 
 ## 2.5 为redis设置密码
 
-![image-20230523130927120](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523130927120.png)
+> （配图缺失：image-20230523130927120）
 
-![image-20230523131025425](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131025425.png)
+> （配图缺失：image-20230523131025425）
 
-![image-20230523131105358](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131105358.png)
+> （配图缺失：image-20230523131105358）
 
-![image-20230523131149636](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131149636.png)
+> （配图缺失：image-20230523131149636）
 
-![image-20230523131209168](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131209168.png)
+> （配图缺失：image-20230523131209168）
 
-![image-20230523131344029](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131344029.png)
+> （配图缺失：image-20230523131344029）
 
-![image-20230523131415372](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131415372.png)
+> （配图缺失：image-20230523131415372）
 
-![image-20230523131444236](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131444236.png)
+> （配图缺失：image-20230523131444236）
 
-![image-20230523131521193](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131521193.png)
+> （配图缺失：image-20230523131521193）
 
-![image-20230523131639064](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230523131639064.png)
+> （配图缺失：image-20230523131639064）
 
 # 三、ES&Kibana部署
 
 ## 3.1 elasticsearch pvc准备
 
-![image-20230303161620155](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303161620155.png)
+> （配图缺失：image-20230303161620155）
 
 ![image-20221117114942349](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117114942349.png)
 
-![image-20230303161732387](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303161732387.png)
+> （配图缺失：image-20230303161732387）
 
-![image-20230303161837200](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303161837200.png)
+> （配图缺失：image-20230303161837200）
 
 ![image-20221117115107736](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117115107736.png)
 
@@ -438,7 +438,7 @@ discovery.type: single-node
 ES_JAVA_OPTS: -Xms64m -Xmx512m
 ~~~
 
-![image-20230303161945029](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303161945029.png)
+> （配图缺失：image-20230303161945029）
 
 ![image-20221117115222391](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117115222391.png)
 
@@ -462,39 +462,39 @@ ES_JAVA_OPTS: -Xms64m -Xmx512m
 
 ## 3.3 elasticsearch 部署
 
-![image-20230303162309803](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303162309803.png)
+> （配图缺失：image-20230303162309803）
 
-![image-20230303162342858](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303162342858.png)
+> （配图缺失：image-20230303162342858）
 
-![image-20230303162422433](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303162422433.png)
+> （配图缺失：image-20230303162422433）
 
 ![image-20221117120729395](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221117120729395.png)
 
-![image-20230303162652867](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303162652867.png)
+> （配图缺失：image-20230303162652867）
 
-![image-20230303162807389](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303162807389.png)
+> （配图缺失：image-20230303162807389）
 
-![image-20230303162906752](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303162906752.png)
+> （配图缺失：image-20230303162906752）
 
-![image-20230303163312893](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163312893.png)
+> （配图缺失：image-20230303163312893）
 
-![image-20230303163243537](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163243537.png)
+> （配图缺失：image-20230303163243537）
 
-![image-20230303163414171](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163414171.png)
+> （配图缺失：image-20230303163414171）
 
-![image-20230303163508847](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163508847.png)
+> （配图缺失：image-20230303163508847）
 
-![image-20230303163535886](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163535886.png)
+> （配图缺失：image-20230303163535886）
 
-![image-20230303163623259](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163623259.png)
+> （配图缺失：image-20230303163623259）
 
-![image-20230303163658296](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163658296.png)
+> （配图缺失：image-20230303163658296）
 
-![image-20230303163722386](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163722386.png)
+> （配图缺失：image-20230303163722386）
 
-![image-20230303163748435](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303163748435.png)
+> （配图缺失：image-20230303163748435）
 
-![image-20230303164246155](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164246155.png)
+> （配图缺失：image-20230303164246155）
 
 ~~~powershell
 [root@k8s-master01 ~]# dig -t a elasticsearch.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -522,11 +522,11 @@ elasticsearch.yanxuan-project.svc.cluster.local. 30 IN A 10.244.69.232
 ;; MSG SIZE  rcvd: 139
 ~~~
 
-![image-20230303164611916](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164611916.png)
+> （配图缺失：image-20230303164611916）
 
-![image-20230303164638189](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164638189.png)
+> （配图缺失：image-20230303164638189）
 
-![image-20230303164544164](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164544164.png)
+> （配图缺失：image-20230303164544164）
 
 ## 3.4 kibana部署
 
@@ -534,49 +534,49 @@ elasticsearch.yanxuan-project.svc.cluster.local. 30 IN A 10.244.69.232
 ELASTICSEARCH_HOSTS=http://elasticsearch.yanxuan-project.svc.cluster.local.:9200
 ~~~
 
-![image-20230303164751858](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164751858.png)
+> （配图缺失：image-20230303164751858）
 
-![image-20230303164823198](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164823198.png)
+> （配图缺失：image-20230303164823198）
 
-![image-20230303164911077](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164911077.png)
+> （配图缺失：image-20230303164911077）
 
-![image-20230303164936704](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303164936704.png)
+> （配图缺失：image-20230303164936704）
 
-![image-20230303165057315](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303165057315.png)
+> （配图缺失：image-20230303165057315）
 
-![image-20230303165231044](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303165231044.png)
+> （配图缺失：image-20230303165231044）
 
-![image-20230303172822469](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303172822469.png)
+> （配图缺失：image-20230303172822469）
 
-![image-20230303165702728](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303165702728.png)
+> （配图缺失：image-20230303165702728）
 
-![image-20230303165730989](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303165730989.png)
+> （配图缺失：image-20230303165730989）
 
-![image-20230303165756159](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303165756159.png)
+> （配图缺失：image-20230303165756159）
 
-![image-20230303165821917](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303165821917.png)
+> （配图缺失：image-20230303165821917）
 
-![image-20230303170305791](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170305791.png)
+> （配图缺失：image-20230303170305791）
 
 ## 3.5 kibana访问
 
-![image-20230303170530652](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170530652.png)
+> （配图缺失：image-20230303170530652）
 
-![image-20230303170605796](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170605796.png)
+> （配图缺失：image-20230303170605796）
 
-![image-20230303170631046](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170631046.png)
+> （配图缺失：image-20230303170631046）
 
-![image-20230303170739827](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170739827.png)
+> （配图缺失：image-20230303170739827）
 
-![image-20230303170803210](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170803210.png)
+> （配图缺失：image-20230303170803210）
 
-![image-20230303170828754](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170828754.png)
+> （配图缺失：image-20230303170828754）
 
-![image-20230303170928807](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170928807.png)
+> （配图缺失：image-20230303170928807）
 
-![image-20230303170949663](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303170949663.png)
+> （配图缺失：image-20230303170949663）
 
-![image-20230303171105140](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303171105140.png)
+> （配图缺失：image-20230303171105140）
 
 ~~~powershell
 [root@dns-server ~]# vim /var/named/mashibing.com.zone
@@ -601,19 +601,19 @@ kibana  A       192.168.10.71 添加此行内容
 [root@dns-server ~]# systemctl restart named
 ~~~
 
-![image-20230303173311744](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230303173311744.png)
+> （配图缺失：image-20230303173311744）
 
 # 四、XXL-Job部署
 
 ## 4.1 确认MySQL数据库访问
 
-![image-20230308193632614](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308193632614.png)
+> （配图缺失：image-20230308193632614）
 
-![image-20230308204042111](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308204042111.png)
+> （配图缺失：image-20230308204042111）
 
-![image-20230308204118076](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308204118076.png)
+> （配图缺失：image-20230308204118076）
 
-![image-20230308204148723](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308204148723.png)
+> （配图缺失：image-20230308204148723）
 
 ## 4.2 创建xxl_job数据库并导入xxl_job数据库
 
@@ -741,27 +741,27 @@ INSERT INTO `xxl_job_lock` ( `lock_name`) VALUES ( 'schedule_lock');
 commit;
 ~~~
 
-![image-20230308204251939](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308204251939.png)
+> （配图缺失：image-20230308204251939）
 
-![image-20230308204320256](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308204320256.png)
+> （配图缺失：image-20230308204320256）
 
-![image-20230308204458496](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308204458496.png)
+> （配图缺失：image-20230308204458496）
 
-![image-20230308204534968](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308204534968.png)
+> （配图缺失：image-20230308204534968）
 
 ## 4.3 xxl_job部署
 
-![image-20230308205057086](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308205057086.png)
+> （配图缺失：image-20230308205057086）
 
-![image-20230308205131119](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308205131119.png)
+> （配图缺失：image-20230308205131119）
 
-![image-20230308205546035](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308205546035.png)
+> （配图缺失：image-20230308205546035）
 
-![image-20230308205616219](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308205616219.png)
+> （配图缺失：image-20230308205616219）
 
-![image-20230308205842679](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308205842679.png)
+> （配图缺失：image-20230308205842679）
 
-![image-20230308205909356](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308205909356.png)
+> （配图缺失：image-20230308205909356）
 
 ~~~powershell
 无邮箱告警
@@ -774,15 +774,15 @@ PARAMS  --spring.datasource.url=jdbc:mysql://mysql-db.yanxuan-project.svc.cluste
 PARAMS --spring.datasource.url=jdbc:mysql://mysql-db.yanxuan-project.svc.cluster.local.:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC --spring.datasource.username=root --spring.datasource.password=123456  --spring.datasource.driver-class-name=com.mysql.jdbc.Driver --spring.mail.host=smtp.126.com --spring.mail.username=邮箱名 --spring.mail.password=邮箱密码 --xxl.job.login.password=登录密码"
 ~~~
 
-![image-20230308213332439](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308213332439.png)
+> （配图缺失：image-20230308213332439）
 
-![image-20230308210536856](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308210536856.png)
+> （配图缺失：image-20230308210536856）
 
-![image-20230308210741425](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308210741425.png)
+> （配图缺失：image-20230308210741425）
 
-![image-20230308210831293](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308210831293.png)
+> （配图缺失：image-20230308210831293）
 
-![image-20230308211108945](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308211108945.png)
+> （配图缺失：image-20230308211108945）
 
 ~~~powershell
 dig -t a xxl-job-admin.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -790,23 +790,23 @@ dig -t a xxl-job-admin.yanxuan-project.svc.cluster.local. @10.96.0.10
 
 ## 4.4 xxl_job访问
 
-![image-20230308213625086](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308213625086.png)
+> （配图缺失：image-20230308213625086）
 
-![image-20230308213710597](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308213710597.png)
+> （配图缺失：image-20230308213710597）
 
-![image-20230308213812253](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308213812253.png)
+> （配图缺失：image-20230308213812253）
 
-![image-20230308213832581](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308213832581.png)
+> （配图缺失：image-20230308213832581）
 
-![image-20230308213923925](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308213923925.png)
+> （配图缺失：image-20230308213923925）
 
-![image-20230308213947390](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308213947390.png)
+> （配图缺失：image-20230308213947390）
 
-![image-20230308214030657](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308214030657.png)
+> （配图缺失：image-20230308214030657）
 
-![image-20230308214056183](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308214056183.png)
+> （配图缺失：image-20230308214056183）
 
-![image-20230308214139004](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308214139004.png)
+> （配图缺失：image-20230308214139004）
 
 ~~~powershell
 [root@dns-server ~]# vim /var/named/mashibing.com.zone
@@ -836,67 +836,67 @@ xxl-job-admin   A       192.168.10.71
 [root@dns-server ~]# systemctl restart named
 ~~~
 
-![image-20230308214604743](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308214604743.png)
+> （配图缺失：image-20230308214604743）
 
-![image-20230308214649919](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308214649919.png)
+> （配图缺失：image-20230308214649919）
 
 # 五、Nacos部署
 
 ## 5.1 Nacos Server数据持久存储 PVC
 
-![image-20230307162403996](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307162403996.png)
+> （配图缺失：image-20230307162403996）
 
 ![image-20221118111454614](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118111454614.png)
 
-![image-20230307162508493](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307162508493.png)
+> （配图缺失：image-20230307162508493）
 
 ![image-20221118111603511](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118111603511.png)
 
 ![image-20221118111634271](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118111634271.png)
 
-![image-20230307162547662](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307162547662.png)
+> （配图缺失：image-20230307162547662）
 
 ## 5.2 Nacos Server部署
 
-![image-20230307162716164](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307162716164.png)
+> （配图缺失：image-20230307162716164）
 
-![image-20230307162809320](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307162809320.png)
+> （配图缺失：image-20230307162809320）
 
-![image-20230307162858570](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307162858570.png)
+> （配图缺失：image-20230307162858570）
 
-![image-20230307162945675](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307162945675.png)
+> （配图缺失：image-20230307162945675）
 
-![image-20230307163306585](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307163306585.png)
+> （配图缺失：image-20230307163306585）
 
-![image-20230307163401343](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307163401343.png)
+> （配图缺失：image-20230307163401343）
 
-![image-20230307163456815](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307163456815.png)
+> （配图缺失：image-20230307163456815）
 
-![image-20230307163802215](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307163802215.png)
+> （配图缺失：image-20230307163802215）
 
-![image-20230307163910495](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307163910495.png)
+> （配图缺失：image-20230307163910495）
 
 ~~~powershell
 MODE: standalone
 ~~~
 
-![image-20230307164034536](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164034536.png)
+> （配图缺失：image-20230307164034536）
 
-![image-20230307164110279](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164110279.png)
+> （配图缺失：image-20230307164110279）
 
-![image-20230307164153823](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164153823.png)
+> （配图缺失：image-20230307164153823）
 
-![image-20230307164218845](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164218845.png)
+> （配图缺失：image-20230307164218845）
 
-![image-20230307164239284](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164239284.png)
+> （配图缺失：image-20230307164239284）
 
-![image-20230307164337241](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164337241.png)
+> （配图缺失：image-20230307164337241）
 
-![image-20230307164418430](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164418430.png)
+> （配图缺失：image-20230307164418430）
 
-![image-20230307164518587](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164518587.png)
+> （配图缺失：image-20230307164518587）
 
-![image-20230307164921596](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307164921596.png)
+> （配图缺失：image-20230307164921596）
 
 ~~~powershell
 # dig -t a nacos-server.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -904,27 +904,27 @@ MODE: standalone
 
 ## 5.3 Nacos Server访问
 
-![image-20230307165122375](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165122375.png)
+> （配图缺失：image-20230307165122375）
 
-![image-20230307165143950](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165143950.png)
+> （配图缺失：image-20230307165143950）
 
-![image-20230307165226215](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165226215.png)
+> （配图缺失：image-20230307165226215）
 
-![image-20230307165253976](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165253976.png)
+> （配图缺失：image-20230307165253976）
 
-![image-20230307165353413](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165353413.png)
+> （配图缺失：image-20230307165353413）
 
-![image-20230307165501601](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165501601.png)
+> （配图缺失：image-20230307165501601）
 
-![image-20230307165523058](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165523058.png)
+> （配图缺失：image-20230307165523058）
 
-![image-20230307165542830](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165542830.png)
+> （配图缺失：image-20230307165542830）
 
-![image-20230307165628061](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165628061.png)
+> （配图缺失：image-20230307165628061）
 
-![image-20230307165641992](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165641992.png)
+> （配图缺失：image-20230307165641992）
 
-![image-20230307165736674](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307165736674.png)
+> （配图缺失：image-20230307165736674）
 
 ~~~powershell
 [root@dns-server ~]# vim /var/named/mashibing.com.zone
@@ -950,31 +950,31 @@ nacos-server   A       192.168.10.71
 [root@dns-server ~]# systemctl restart named
 ~~~
 
-![image-20230307170449476](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307170449476.png)
+> （配图缺失：image-20230307170449476）
 
-![image-20230307170614522](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307170614522.png)
+> （配图缺失：image-20230307170614522）
 
-![image-20230307170652524](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230307170652524.png)
+> （配图缺失：image-20230307170652524）
 
 # 六、seata部署
 
-![image-20230308234902946](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308234902946.png)
+> （配图缺失：image-20230308234902946）
 
-![image-20230308234941559](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308234941559.png)
+> （配图缺失：image-20230308234941559）
 
-![image-20230308235026660](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308235026660.png)
+> （配图缺失：image-20230308235026660）
 
-![image-20230308235050012](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308235050012.png)
+> （配图缺失：image-20230308235050012）
 
-![image-20230308235405321](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308235405321.png)
+> （配图缺失：image-20230308235405321）
 
-![image-20230308235442188](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308235442188.png)
+> （配图缺失：image-20230308235442188）
 
-![image-20230308235513385](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308235513385.png)
+> （配图缺失：image-20230308235513385）
 
-![image-20230308235540561](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308235540561.png)
+> （配图缺失：image-20230308235540561）
 
-![image-20230308235713897](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308235713897.png)
+> （配图缺失：image-20230308235713897）
 
 ~~~powershell
 # dig -t a seata-server.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -1000,19 +1000,19 @@ nacos-server   A       192.168.10.71
 bladex/sentinel-dashboard:latest
 ~~~
 
-![image-20230308084222381](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084222381.png)
+> （配图缺失：image-20230308084222381）
 
-![image-20230308084304174](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084304174.png)
+> （配图缺失：image-20230308084304174）
 
-![image-20230308084338394](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084338394.png)
+> （配图缺失：image-20230308084338394）
 
-![image-20230308084402876](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084402876.png)
+> （配图缺失：image-20230308084402876）
 
-![image-20230308084425409](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084425409.png)
+> （配图缺失：image-20230308084425409）
 
-![image-20230308084454620](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084454620.png)
+> （配图缺失：image-20230308084454620）
 
-![image-20230308084522967](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084522967.png)
+> （配图缺失：image-20230308084522967）
 
 ~~~powershell
 #  dig -t a sentinel-server.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -1020,17 +1020,17 @@ bladex/sentinel-dashboard:latest
 
 ## 7.3 sentinel访问
 
-![image-20230308084648089](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084648089.png)
+> （配图缺失：image-20230308084648089）
 
-![image-20230308084710105](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084710105.png)
+> （配图缺失：image-20230308084710105）
 
-![image-20230308084817167](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084817167.png)
+> （配图缺失：image-20230308084817167）
 
-![image-20230308084907365](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084907365.png)
+> （配图缺失：image-20230308084907365）
 
-![image-20230308084921065](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308084921065.png)
+> （配图缺失：image-20230308084921065）
 
-![image-20230308085007326](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308085007326.png)
+> （配图缺失：image-20230308085007326）
 
 ~~~powershell
 [root@dns-server ~]# vim /var/named/mashibing.com.zone
@@ -1056,9 +1056,9 @@ sentinel-server A       192.168.10.71
 [root@dns-server ~]# systemctl restart named
 ~~~
 
-![image-20230308085234362](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308085234362.png)
+> （配图缺失：image-20230308085234362）
 
-![image-20230308085323130](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308085323130.png)
+> （配图缺失：image-20230308085323130）
 
 # 八、Skywalking部署
 
@@ -1070,7 +1070,7 @@ sentinel-server A       192.168.10.71
 
 ### 8.1.2 elasticsearch服务确认
 
-![image-20230308091246215](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308091246215.png)
+> （配图缺失：image-20230308091246215）
 
 ~~~powershell
 elasticsearch.yanxuan-project.svc.cluster.local.
@@ -1078,13 +1078,13 @@ elasticsearch.yanxuan-project.svc.cluster.local.
 
 ## 8.2 Skywalking oap server部署
 
-![image-20230308091640009](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308091640009.png)
+> （配图缺失：image-20230308091640009）
 
-![image-20230308091710821](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308091710821.png)
+> （配图缺失：image-20230308091710821）
 
 ![image-20221118211236729](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118211236729.png)
 
-![image-20230308091757770](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308091757770.png)
+> （配图缺失：image-20230308091757770）
 
 ![image-20221118211337572](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118211337572.png)
 
@@ -1092,13 +1092,13 @@ elasticsearch.yanxuan-project.svc.cluster.local.
 
 **CPU及内存限制要注意：CPU 500m至1000m，内存 100M至2000M**
 
-![image-20230308092221729](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308092221729.png)
+> （配图缺失：image-20230308092221729）
 
 ![image-20221118211609548](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118211609548.png)
 
 ![image-20221118211629620](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118211629620.png)
 
-![image-20230308092450802](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308092450802.png)
+> （配图缺失：image-20230308092450802）
 
 ~~~powershell
 SW_STORAGE  elasticsearch
@@ -1112,9 +1112,9 @@ SW_STORAGE_ES_CLUSTER_NODES    elasticsearch.yanxuan-project.svc.cluster.local.:
 
 ![image-20221118211913504](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118211913504.png)
 
-![image-20230308092532117](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308092532117.png)
+> （配图缺失：image-20230308092532117）
 
-![image-20230308093015756](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093015756.png)
+> （配图缺失：image-20230308093015756）
 
 ~~~powershell
 # dig -t a skywalking-oap-server.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -1126,7 +1126,7 @@ SW_STORAGE_ES_CLUSTER_NODES    elasticsearch.yanxuan-project.svc.cluster.local.:
 
 ![image-20221118212202627](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118212202627.png)
 
-![image-20230308093107060](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093107060.png)
+> （配图缺失：image-20230308093107060）
 
 ![image-20221118212301376](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118212301376.png)
 
@@ -1134,13 +1134,13 @@ SW_STORAGE_ES_CLUSTER_NODES    elasticsearch.yanxuan-project.svc.cluster.local.:
 
 ![image-20221118212345656](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118212345656.png)
 
-![image-20230308093341456](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093341456.png)
+> （配图缺失：image-20230308093341456）
 
 ![image-20221118212510914](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118212510914.png)
 
 ![image-20221118212709275](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118212709275.png)
 
-![image-20230308093606296](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093606296.png)
+> （配图缺失：image-20230308093606296）
 
 ~~~powershell
 SW_OAP_ADDRESS: http://skywalking-oap-server.yanxuan-project.svc.cluster.local.:12800
@@ -1150,11 +1150,11 @@ SW_OAP_ADDRESS: http://skywalking-oap-server.yanxuan-project.svc.cluster.local.:
 
 ![image-20221118212944881](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221118212944881.png)
 
-![image-20230308093700604](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093700604.png)
+> （配图缺失：image-20230308093700604）
 
-![image-20230308093757871](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093757871.png)
+> （配图缺失：image-20230308093757871）
 
-![image-20230308093834031](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093834031.png)
+> （配图缺失：image-20230308093834031）
 
 ~~~powershell
 # dig -t a skywalking-ui.yanxuan-project.svc.cluster.local. @10.96.0.10
@@ -1162,21 +1162,21 @@ SW_OAP_ADDRESS: http://skywalking-oap-server.yanxuan-project.svc.cluster.local.:
 
 ## 8.4 Skywalking ui访问
 
-![image-20230308093920136](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308093920136.png)
+> （配图缺失：image-20230308093920136）
 
-![image-20230308094019328](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094019328.png)
+> （配图缺失：image-20230308094019328）
 
-![image-20230308094201016](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094201016.png)
+> （配图缺失：image-20230308094201016）
 
-![image-20230308094229808](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094229808.png)
+> （配图缺失：image-20230308094229808）
 
-![image-20230308094251160](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094251160.png)
+> （配图缺失：image-20230308094251160）
 
-![image-20230308094332186](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094332186.png)
+> （配图缺失：image-20230308094332186）
 
-![image-20230308094356009](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094356009.png)
+> （配图缺失：image-20230308094356009）
 
-![image-20230308094441418](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094441418.png)
+> （配图缺失：image-20230308094441418）
 
 ~~~powershell
 [root@dns-server ~]# vim /var/named/mashibing.com.zone
@@ -1203,13 +1203,13 @@ skywalking-ui   A       192.168.10.71
 [root@dns-server ~]# systemctl restart named
 ~~~
 
-![image-20230308094726156](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308094726156.png)
+> （配图缺失：image-20230308094726156）
 
 # 九、RocketMQ部署
 
 ## 9.1 rocketmq namesrv存储准备
 
-![image-20230308102733984](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308102733984.png)
+> （配图缺失：image-20230308102733984）
 
 ![image-20221122012143042](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122012143042.png)
 
@@ -1261,9 +1261,9 @@ JAVA_OPT_EXT: -Xms512M -Xmx512M -Xmn128m
 
 ## 9.3 rocketmq broker存储准备
 
-![image-20230308102451199](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308102451199.png)
+> （配图缺失：image-20230308102451199）
 
-![image-20230308102821916](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308102821916.png)
+> （配图缺失：image-20230308102821916）
 
 ![image-20221122013128094](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122013128094.png)
 
@@ -1271,9 +1271,9 @@ JAVA_OPT_EXT: -Xms512M -Xmx512M -Xmn128m
 
 ![image-20221122013218521](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122013218521.png)
 
-![image-20230308102520078](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308102520078.png)
+> （配图缺失：image-20230308102520078）
 
-![image-20230308102553336](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308102553336.png)
+> （配图缺失：image-20230308102553336）
 
 ![image-20221122013350824](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122013350824.png)
 
@@ -1281,11 +1281,11 @@ JAVA_OPT_EXT: -Xms512M -Xmx512M -Xmn128m
 
 ![image-20221122013435806](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122013435806.png)
 
-![image-20230308102610932](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308102610932.png)
+> （配图缺失：image-20230308102610932）
 
 ## 9.4 rocketmq broker部署
 
-![image-20230308102656387](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308102656387.png)
+> （配图缺失：image-20230308102656387）
 
 ![image-20221122013617926](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122013617926.png)
 
@@ -1303,14 +1303,14 @@ JAVA_OPT_EXT: -Xms512M -Xmx512M -Xmn128m
 mqbroker,-n,rocketmq-namesrv.yanxuan-project.svc.cluster.local.:9876
 ~~~
 
-![image-20230308105152331](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308105152331.png)
+> （配图缺失：image-20230308105152331）
 
 ~~~powershell
 JAVA_OPT_EXT: -server -Xms128m -Xmx128m -Xmn128m
 NAMESRV_ADDR: rocketmq-namesrv.yanxuan-project.svc.cluster.local.:9876
 ~~~
 
-![image-20230308105331656](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308105331656.png)
+> （配图缺失：image-20230308105331656）
 
 ![image-20221122014043978](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122014043978.png)
 
@@ -1320,13 +1320,13 @@ NAMESRV_ADDR: rocketmq-namesrv.yanxuan-project.svc.cluster.local.:9876
 
 ![image-20221122014225375](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122014225375.png)
 
-![image-20230308105501972](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308105501972.png)
+> （配图缺失：image-20230308105501972）
 
-![image-20230308105536583](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308105536583.png)
+> （配图缺失：image-20230308105536583）
 
 ## 9.5 rocketmq dashboard部署
 
-![image-20230308103008643](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308103008643.png)
+> （配图缺失：image-20230308103008643）
 
 ![image-20221122014412889](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122014412889.png)
 
@@ -1340,31 +1340,31 @@ NAMESRV_ADDR: rocketmq-namesrv.yanxuan-project.svc.cluster.local.:9876
 JAVA_OPTS: -Drocketmq.namesrv.addr=rocketmq-namesrv.yanxuan-project.svc.cluster.local.:9876
 ~~~
 
-![image-20230308105905004](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308105905004.png)
+> （配图缺失：image-20230308105905004）
 
 ![image-20221122014802165](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122014802165.png)
 
 ![image-20221122014820149](/云原生/platform/platform-22-微服务部署前中间件部署/image-20221122014820149.png)
 
-![image-20230308103101602](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308103101602.png)
+> （配图缺失：image-20230308103101602）
 
 ## 9.6 rocketmq dashboard创建应用路由
 
-![image-20230308110037509](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110037509.png)
+> （配图缺失：image-20230308110037509）
 
-![image-20230308110119221](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110119221.png)
+> （配图缺失：image-20230308110119221）
 
-![image-20230308110139680](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110139680.png)
+> （配图缺失：image-20230308110139680）
 
-![image-20230308110232647](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110232647.png)
+> （配图缺失：image-20230308110232647）
 
-![image-20230308110254028](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110254028.png)
+> （配图缺失：image-20230308110254028）
 
-![image-20230308110334248](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110334248.png)
+> （配图缺失：image-20230308110334248）
 
-![image-20230308110402468](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110402468.png)
+> （配图缺失：image-20230308110402468）
 
-![image-20230308110503890](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110503890.png)
+> （配图缺失：image-20230308110503890）
 
 ## 9.7 rocketmq dashboard访问
 
@@ -1395,5 +1395,5 @@ rocketmq-dashboard      A       192.168.10.71
 [root@dns-server ~]# systemctl restart named
 ~~~
 
-![image-20230308110746860](/云原生/platform/platform-22-微服务部署前中间件部署/image-20230308110746860.png)
+> （配图缺失：image-20230308110746860）
 

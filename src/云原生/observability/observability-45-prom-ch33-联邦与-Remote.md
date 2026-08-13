@@ -1035,7 +1035,7 @@ func timeParse(ts int64) time.Time {
 
 - 相当于查询prometheus的原始接口
 - ![image.png](https://fynotefile.oss-cn-zhangjiakou.aliyuncs.com/fynote/908/1630743105000/75dbc58092804d53888c9767a58a28c0.png)
-- 对应prometheus 中的 /api/v1/label/<label_name>/values
+- 对应prometheus 中的 /api/v1/label/&lt;label_name&gt;/values
 
 ```go
 // 查询一个标签的值列表
@@ -1239,7 +1239,7 @@ res := q.Exec(ctx)
 
 - main.go
 - 查询标签名为__name__的结果列表，也就是所有metrics的name
-- 查询任意一个promeql的数据  avg(rate(node_cpu_seconds_total{mode="system"}[1m])) by (instance) *100
+- 查询任意一个promeql的数据  avg(rate(node_cpu_seconds_total{​mode="system"}[1m])) by (instance) *100
 
 ```go
 package main
