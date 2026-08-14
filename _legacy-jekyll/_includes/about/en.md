@@ -1,0 +1,1 @@
+Hi there! I’m Corey, and I’m currently based in Chengdu. Feel free to reach out to me anytime at 2363613998@qq.com—I’d be happy to hear from you!  

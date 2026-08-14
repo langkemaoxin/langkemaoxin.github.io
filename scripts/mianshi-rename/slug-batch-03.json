@@ -1,0 +1,602 @@
+{
+  "924": {
+    "order": 924,
+    "title": "什么？工作三年了，还不知道什么是 Spring 责任链？",
+    "en": "What is Spring Chain of Responsibility?",
+    "slug": "what-is-spring-chain-of-responsibility"
+  },
+  "926": {
+    "order": 926,
+    "title": "为什么MySQL用B+树，MongoDB用B树",
+    "en": "Why MySQL Uses B+ Tree and MongoDB Uses B Tree",
+    "slug": "why-mysql-b-plus-tree-mongodb-b-tree"
+  },
+  "928": {
+    "order": 928,
+    "title": "JVM 垃圾回收的范式转移：从 CMS 到 G1 的底层进化",
+    "en": "JVM GC Paradigm Shift: CMS to G1 Evolution",
+    "slug": "jvm-gc-paradigm-shift-cms-to-g1"
+  },
+  "930": {
+    "order": 930,
+    "title": "让你设计一个“迷你滴滴”，你会怎么做？",
+    "en": "How to Design a Mini Ride-Hailing System",
+    "slug": "how-to-design-mini-ride-hailing-system"
+  },
+  "932": {
+    "order": 932,
+    "title": "面试必问：如何介绍你的项目？",
+    "en": "How to Introduce Your Project in an Interview",
+    "slug": "how-to-introduce-your-project-in-interview"
+  },
+  "934": {
+    "order": 934,
+    "title": "缓存穿透：除了布隆过滤器，我们还能怎么“优雅”地防御？",
+    "en": "Cache Penetration: Defense Beyond Bloom Filter",
+    "slug": "cache-penetration-defense-beyond-bloom-filter"
+  },
+  "936": {
+    "order": 936,
+    "title": "Redis 底层存储演进与分布式幂等性架构",
+    "en": "Redis Storage Evolution and Distributed Idempotency",
+    "slug": "redis-storage-evolution-distributed-idempotency"
+  },
+  "938": {
+    "order": 938,
+    "title": "MySQL 日志架构深度解析：原子性与数据一致性的基石",
+    "en": "MySQL Log Architecture: Atomicity and Consistency",
+    "slug": "mysql-log-architecture-atomicity-consistency"
+  },
+  "940": {
+    "order": 940,
+    "title": "HashMap 源码深度解析：为何“8”是链表转树的临界点？",
+    "en": "HashMap: Why 8 Is the Linked List to Tree Threshold",
+    "slug": "hashmap-why-8-is-linked-list-to-tree-threshold"
+  },
+  "942": {
+    "order": 942,
+    "title": "Redis 极限调优：如何在不扩容的情况下实现 QPS 翻倍？",
+    "en": "Redis Tuning: Double QPS Without Scaling",
+    "slug": "redis-tuning-double-qps-without-scaling"
+  },
+  "944": {
+    "order": 944,
+    "title": "PBAC：从“静态管人”到“动态管事”的架构进化",
+    "en": "PBAC: Architecture Evolution from Static to Dynamic",
+    "slug": "pbac-architecture-evolution-static-to-dynamic"
+  },
+  "946": {
+    "order": 946,
+    "title": "如果需要部署上万服务实例，现有的服务注册中心能否抗住？如何优化？",
+    "en": "Service Registry Optimization for 10K Instances",
+    "slug": "service-registry-optimization-for-10k-instances"
+  },
+  "948": {
+    "order": 948,
+    "title": "亿级任务调度：时间轮算法的革命性重构",
+    "en": "Billion-Scale Task Scheduling with Timing Wheel",
+    "slug": "billion-scale-task-scheduling-timing-wheel"
+  },
+  "950": {
+    "order": 950,
+    "title": "分布式锁在高并发场景下应该如何优化？",
+    "en": "How to Optimize Distributed Lock in High Concurrency",
+    "slug": "how-to-optimize-distributed-lock-high-concurrency"
+  },
+  "952": {
+    "order": 952,
+    "title": "面试官：怎么手搓一个线程池？",
+    "en": "How to Implement a Thread Pool from Scratch",
+    "slug": "how-to-implement-thread-pool-from-scratch"
+  },
+  "954": {
+    "order": 954,
+    "title": "如果公司没有消息中间件，如何实现最终一致性事务？",
+    "en": "Eventual Consistency Without Message Queue",
+    "slug": "eventual-consistency-without-message-queue"
+  },
+  "956": {
+    "order": 956,
+    "title": "面试官：说一下 Nginx 反向代理的作用？",
+    "en": "What Is Nginx Reverse Proxy?",
+    "slug": "what-is-nginx-reverse-proxy"
+  },
+  "958": {
+    "order": 958,
+    "title": "设计一个 Redis分布式锁需要考虑哪些关键问题？",
+    "en": "Redis Distributed Lock Design: Key Issues",
+    "slug": "redis-distributed-lock-design-key-issues"
+  },
+  "960": {
+    "order": 960,
+    "title": "为何 MySQL RR 级别仍会幻读？",
+    "en": "Why MySQL RR Level Still Has Phantom Read",
+    "slug": "why-mysql-rr-still-has-phantom-read"
+  },
+  "962": {
+    "order": 962,
+    "title": "大白话讲解RBAC：从入门到实践的四级模型解析",
+    "en": "RBAC Four-Level Model Explained",
+    "slug": "rbac-four-level-model-explained"
+  },
+  "964": {
+    "order": 964,
+    "title": "什么是SQL注入？怎么处理？",
+    "en": "What Is SQL Injection and How to Prevent It",
+    "slug": "what-is-sql-injection-and-how-to-prevent"
+  },
+  "966": {
+    "order": 966,
+    "title": "【高频面试】：MyBatis是如何进行分页的？",
+    "en": "How Does MyBatis Pagination Work?",
+    "slug": "how-does-mybatis-pagination-work"
+  },
+  "968": {
+    "order": 968,
+    "title": "【GIT】你还不知道Merge和Rebase的区别吗？",
+    "en": "Diff: Git Merge and Rebase",
+    "slug": "diff-git-merge-and-rebase"
+  },
+  "970": {
+    "order": 970,
+    "title": "在工作中，如何优化接口性能？如何提升接口的响应速度？",
+    "en": "How to Optimize API Performance and Response Time",
+    "slug": "how-to-optimize-api-performance-and-response-time"
+  },
+  "972": {
+    "order": 972,
+    "title": "分布式高频面试题：为什么深度分页是ES性能杀手？",
+    "en": "Why Deep Pagination Kills ES Performance",
+    "slug": "why-deep-pagination-kills-es-performance"
+  },
+  "974": {
+    "order": 974,
+    "title": "大白话SSO：从概念到OAuth 2.0实战，一次搞定！",
+    "en": "SSO to OAuth 2.0 Practical Guide",
+    "slug": "sso-to-oauth2-practical-guide"
+  },
+  "976": {
+    "order": 976,
+    "title": "ES 亿级数据查询优化：从 10 秒到 100 毫秒的实战指南",
+    "en": "ES Billion-Data Query Optimization: 10s to 100ms",
+    "slug": "es-billion-data-query-optimization-10s-to-100ms"
+  },
+  "978": {
+    "order": 978,
+    "title": "告别冗长，拥抱优雅——用 Lambda 重构你的 Java 应用",
+    "en": "Refactor Java App with Lambda",
+    "slug": "refactor-java-app-with-lambda"
+  },
+  "980": {
+    "order": 980,
+    "title": "解密JWT：现代Web的无状态通行证",
+    "en": "JWT: Stateless Auth for Modern Web",
+    "slug": "jwt-stateless-auth-for-modern-web"
+  },
+  "982": {
+    "order": 982,
+    "title": "为什么有了HTTP，还需要WebSocket？从“请求-响应”到“双向奔赴”的协议演进",
+    "en": "Why WebSocket When We Have HTTP",
+    "slug": "why-websocket-when-we-have-http"
+  },
+  "984": {
+    "order": 984,
+    "title": "XXL-Job 分布式锁疑云：为何主键约束在高并发下“失效”？",
+    "en": "XXL-Job: Primary Key Constraint Under High Concurrency",
+    "slug": "xxl-job-primary-key-constraint-high-concurrency"
+  },
+  "986": {
+    "order": 986,
+    "title": "【上线避坑】新版本 5 分钟崩服？灰度 + 蓝绿 + 滚动发布实战",
+    "en": "Canary, Blue-Green, and Rolling Deployment Practice",
+    "slug": "canary-blue-green-rolling-deployment-practice"
+  },
+  "988": {
+    "order": 988,
+    "title": "分库分表后如何进行跨库 Join？从青铜到王者的五大解决方案",
+    "en": "Cross-Shard Join After Sharding: Five Solutions",
+    "slug": "cross-shard-join-after-sharding-five-solutions"
+  },
+  "990": {
+    "order": 990,
+    "title": "618 改表喜提 3 页报告？千万级订单表加字段这么干！",
+    "en": "Add Column to Billion-Row Order Table",
+    "slug": "add-column-to-billion-row-order-table"
+  },
+  "992": {
+    "order": 992,
+    "title": "阿里面试：全国14亿人，统计出重名最多的前100个姓名",
+    "en": "Find Top 100 Duplicate Names Among 1.4 Billion People",
+    "slug": "find-top-100-duplicate-names-1-4-billion-people"
+  },
+  "994": {
+    "order": 994,
+    "title": "秋招热点：如何保证MySQL与Redis数据一致性",
+    "en": "How to Ensure MySQL and Redis Data Consistency",
+    "slug": "how-to-ensure-mysql-redis-data-consistency"
+  },
+  "996": {
+    "order": 996,
+    "title": "2000万数据，Redis只存20万：如何精准抓取热点？",
+    "en": "Hot Key Detection: 20M Data, 200K in Redis",
+    "slug": "hot-key-detection-20m-data-200k-redis"
+  },
+  "998": {
+    "order": 998,
+    "title": "百万用户同时抢券，Redis热点key性能瓶颈怎么突破？",
+    "en": "Redis Hot Key Bottleneck in Coupon Rush",
+    "slug": "redis-hot-key-bottleneck-coupon-rush"
+  },
+  "1000": {
+    "order": 1000,
+    "title": "图解：40亿个QQ号，1G内存限制下实现去重（相同QQ号保留1个）",
+    "en": "Dedupe 4 Billion QQ Numbers in 1GB Memory",
+    "slug": "dedupe-4-billion-qq-numbers-in-1gb-memory"
+  },
+  "1002": {
+    "order": 1002,
+    "title": "订单服务调用时间从200ms飙升至1.5s，如何排查？",
+    "en": "How to Troubleshoot Order Service Latency Spike",
+    "slug": "how-to-troubleshoot-order-service-latency-spike"
+  },
+  "1004": {
+    "order": 1004,
+    "title": "阿里二面：如何保证消息队列的顺序性？工作3年了还不会，有点扎心！",
+    "en": "How to Ensure Message Queue Ordering",
+    "slug": "how-to-ensure-message-queue-ordering"
+  },
+  "1006": {
+    "order": 1006,
+    "title": "扎心！线上服务宕机时，如何保证数据100%不丢失？—— RabbitMQ高可靠性终极指南",
+    "en": "RabbitMQ High Reliability: Zero Data Loss",
+    "slug": "rabbitmq-high-reliability-zero-data-loss"
+  },
+  "1008": {
+    "order": 1008,
+    "title": "电商大促如何落地 TCC 事务，避免“钱扣了，货没发”？",
+    "en": "E-Commerce TCC: Avoid Payment Without Shipment",
+    "slug": "e-commerce-tcc-transaction-avoid-payment-without-shipment"
+  },
+  "1010": {
+    "order": 1010,
+    "title": "双十一 秒杀重复支付多扣钱，怎么避免才不被用户骂？",
+    "en": "Prevent Duplicate Payment in Flash Sale",
+    "slug": "prevent-duplicate-payment-in-flash-sale"
+  },
+  "1012": {
+    "order": 1012,
+    "title": "双十一10万用户订单消息卡爆！查不到物流，怎么快速处理不引发退单？",
+    "en": "Handle Order Message Backlog Without Refunds",
+    "slug": "handle-order-message-backlog-without-refunds"
+  },
+  "1014": {
+    "order": 1014,
+    "title": "为什么大麦10W人抢同一场演唱会门票，系统还能秒响应不崩？",
+    "en": "Why Ticket Rush System Stays Responsive",
+    "slug": "why-ticket-rush-system-stays-responsive"
+  },
+  "1016": {
+    "order": 1016,
+    "title": "为什么12306总显示“有票”，点进去却“已售罄”？",
+    "en": "Why 12306 Shows Tickets But Sold Out",
+    "slug": "why-12306-shows-tickets-but-sold-out"
+  },
+  "1018": {
+    "order": 1018,
+    "title": "一个3人团，剩1个名额，100人同时抢…我把从崩溃到高可用的架构演进讲透了",
+    "en": "Group Buy High Availability Architecture Evolution",
+    "slug": "group-buy-high-availability-architecture-evolution"
+  },
+  "1020": {
+    "order": 1020,
+    "title": "这就是你的精通Redis？结果连 “Redis架构演进都不知道！”",
+    "en": "Redis Architecture Evolution Overview",
+    "slug": "redis-architecture-evolution-overview"
+  },
+  "1022": {
+    "order": 1022,
+    "title": "从“面试雷区”到“架构之选”：彻底搞懂订单超时自动关闭",
+    "en": "Order Auto-Close on Timeout Design",
+    "slug": "order-auto-close-on-timeout-design"
+  },
+  "1024": {
+    "order": 1024,
+    "title": "消息幂等（去重）如何解决？来看看这个方案！",
+    "en": "Message Idempotency Deduplication Solution",
+    "slug": "message-idempotency-deduplication-solution"
+  },
+  "1026": {
+    "order": 1026,
+    "title": "高并发系统设计：分库分表后的非分片键查询",
+    "en": "Non-Shard Key Query After Sharding",
+    "slug": "non-shard-key-query-after-sharding"
+  },
+  "1027": {
+    "order": 1027,
+    "title": "项目中为什么用Redis?",
+    "en": "Why Use Redis in Project?",
+    "slug": "why-use-redis-in-project"
+  },
+  "1028": {
+    "order": 1028,
+    "title": "Nacos技术面试系列",
+    "en": "Nacos Interview Series",
+    "slug": "nacos-interview-series"
+  },
+  "1029": {
+    "order": 1029,
+    "title": "Redis 如何同时执行多条命令？",
+    "en": "How Redis Executes Multiple Commands",
+    "slug": "how-redis-executes-multiple-commands"
+  },
+  "1030": {
+    "order": 1030,
+    "title": "阿里二面挂了！被问 “抢红包原理”，我只答 “随机算法”，面试官：高并发不用管吗？",
+    "en": "Red Packet Grab Principles Under High Concurrency",
+    "slug": "red-packet-grab-principles-high-concurrency"
+  },
+  "1031": {
+    "order": 1031,
+    "title": "史上最全MySQL各种锁详解（含实战案例+排查优化）",
+    "en": "MySQL Locks Complete Guide",
+    "slug": "mysql-locks-complete-guide"
+  },
+  "1032": {
+    "order": 1032,
+    "title": "你们项目为啥用消息队列",
+    "en": "Why Use Message Queue in Project?",
+    "slug": "why-use-message-queue-in-project"
+  },
+  "1034": {
+    "order": 1034,
+    "title": "假设堆内存配置为 8GB，在 G1 垃圾收集器中，多大的对象会被判定为大对象？",
+    "en": "G1 Huge Object Threshold with 8GB Heap",
+    "slug": "g1-huge-object-threshold-with-8gb-heap"
+  },
+  "1036": {
+    "order": 1036,
+    "title": "AOP 面试别再只说 “面向切面”！实战案例 + 动态代理原理避坑指南",
+    "en": "AOP Dynamic Proxy Principles and Pitfalls",
+    "slug": "aop-dynamic-proxy-principles-and-pitfalls"
+  },
+  "1038": {
+    "order": 1038,
+    "title": "平台每天有 1000 万张优惠券过期，怎么设计处理系统",
+    "en": "Design Coupon Expiration Processing System",
+    "slug": "design-coupon-expiration-processing-system"
+  },
+  "1040": {
+    "order": 1040,
+    "title": "线程的sleep和wait有什么区别？sleep和wait的操作过程中可以打断吗？",
+    "en": "Diff: Thread sleep and wait — Interruptible?",
+    "slug": "diff-thread-sleep-and-wait-interruptible"
+  },
+  "1042": {
+    "order": 1042,
+    "title": "\"说说String s = new String (\\\"abc\\\") 创建了几个对象？\"",
+    "en": "How Many Objects Does new String(\"abc\") Create?",
+    "slug": "how-many-objects-string-new-string-abc"
+  },
+  "1044": {
+    "order": 1044,
+    "title": "全国 14 亿人，怎么统计重名最多的前 100 个姓名",
+    "en": "Count Top 100 Duplicate Names Among 1.4 Billion",
+    "slug": "count-top-100-duplicate-names-1-4-billion"
+  },
+  "1046": {
+    "order": 1046,
+    "title": "Redis 有哪些集群方案？主从、哨兵、Cluster 有啥区别？实际该咋选？",
+    "en": "Diff: Redis Master-Slave, Sentinel, and Cluster",
+    "slug": "diff-redis-master-slave-sentinel-cluster"
+  },
+  "1048": {
+    "order": 1048,
+    "title": "两个100亿URL的文件怎么找交集？",
+    "en": "Find Intersection of Two 10-Billion URL Files",
+    "slug": "find-intersection-of-two-10-billion-url-files"
+  },
+  "1050": {
+    "order": 1050,
+    "title": "如何设计一个注册中心？",
+    "en": "How to Design a Service Registry",
+    "slug": "how-to-design-service-registry"
+  },
+  "1052": {
+    "order": 1052,
+    "title": "为什么要用线程池？如何合理配置线程池？",
+    "en": "Why Use Thread Pool and How to Configure It",
+    "slug": "why-use-thread-pool-and-how-to-configure"
+  },
+  "1054": {
+    "order": 1054,
+    "title": "Mysql表有1000个列，列的值非0即1，求每一行值加起来大于300的数据行，全部select出来",
+    "en": "MySQL: Select Rows Sum Over 300 from 1000 Binary Columns",
+    "slug": "mysql-select-rows-sum-over-300-from-1000-binary-columns"
+  },
+  "1056": {
+    "order": 1056,
+    "title": "1000个多并发线程，10台机器，每台机器4核的，如何设计线程池大小。",
+    "en": "Thread Pool Sizing: 1000 Threads, 10 Machines, 4 Cores",
+    "slug": "thread-pool-sizing-1000-threads-10-machines-4-cores"
+  },
+  "1058": {
+    "order": 1058,
+    "title": "为啥你们项目用 Kafka，不用 RocketMQ？",
+    "en": "Why Kafka Instead of RocketMQ?",
+    "slug": "why-kafka-instead-of-rocketmq"
+  },
+  "1060": {
+    "order": 1060,
+    "title": "并发数多少才算高并发",
+    "en": "What Counts as High Concurrency?",
+    "slug": "what-counts-as-high-concurrency"
+  },
+  "1062": {
+    "order": 1062,
+    "title": "字节一面：Nginx 能替 Spring Cloud Gateway 吗？为什么？",
+    "en": "Can Nginx Replace Spring Cloud Gateway?",
+    "slug": "can-nginx-replace-spring-cloud-gateway"
+  },
+  "1064": {
+    "order": 1064,
+    "title": "字节一面：库存超卖怎么办？",
+    "en": "How to Prevent Inventory Overselling",
+    "slug": "how-to-prevent-inventory-overselling"
+  },
+  "1066": {
+    "order": 1066,
+    "title": "Redis分布式锁：从踩坑到落地，构建10万QPS工业级方案",
+    "en": "Redis Distributed Lock: 100K QPS Production Solution",
+    "slug": "redis-distributed-lock-100k-qps-production"
+  },
+  "1068": {
+    "order": 1068,
+    "title": "快慢接口占用同一线程池导致资源竞争，怎么解决？",
+    "en": "Separate Thread Pools for Fast and Slow APIs",
+    "slug": "separate-thread-pools-for-fast-slow-apis"
+  },
+  "1070": {
+    "order": 1070,
+    "title": "为何 QQ 忘记密码只能重置？从密码安全架构看腾讯的防御逻辑",
+    "en": "Why QQ Password Reset Only: Security Architecture",
+    "slug": "why-qq-password-reset-only-security-architecture"
+  },
+  "1072": {
+    "order": 1072,
+    "title": "MySQL 容器化生产落地实践",
+    "en": "MySQL Containerization Production Practice",
+    "slug": "mysql-containerization-production-practice"
+  },
+  "1074": {
+    "order": 1074,
+    "title": "订单过亿，怎么分库分表？",
+    "en": "Sharding for 100 Million Orders",
+    "slug": "sharding-for-100-million-orders"
+  },
+  "1076": {
+    "order": 1076,
+    "title": "时间语义与程序员的思维颗粒度",
+    "en": "Time Semantics and Programmer Thinking Granularity",
+    "slug": "time-semantics-and-programmer-thinking-granularity"
+  },
+  "1077": {
+    "order": 1077,
+    "title": "通用三层缓存架构背后的架构思维",
+    "en": "Three-Tier Cache Architecture Design Thinking",
+    "slug": "three-tier-cache-architecture-design-thinking"
+  },
+  "1078": {
+    "order": 1078,
+    "title": "如果服务器非正常断电，如何保证数据安全？",
+    "en": "How to Ensure Data Safety on Power Failure",
+    "slug": "how-to-ensure-data-safety-on-power-failure"
+  },
+  "1079": {
+    "order": 1079,
+    "title": "百万并发下的ID生成架构演进",
+    "en": "ID Generation Architecture Under Million Concurrency",
+    "slug": "id-generation-architecture-under-million-concurrency"
+  },
+  "1081": {
+    "order": 1081,
+    "title": "一文读懂OLTP和OLAP",
+    "en": "What Is OLTP and OLAP?",
+    "slug": "what-is-oltp-and-olap"
+  },
+  "1082": {
+    "order": 1082,
+    "title": "从ClickHouse底层原理，看透数据查询性能的本质",
+    "en": "ClickHouse Query Performance Principles",
+    "slug": "clickhouse-query-performance-principles"
+  },
+  "1083": {
+    "order": 1083,
+    "title": "8分钟带你从 LangChain 和 LangGraph 看透智能体真相",
+    "en": "LangChain and LangGraph Agent Principles",
+    "slug": "langchain-langgraph-agent-principles"
+  },
+  "1084": {
+    "order": 1084,
+    "title": "别再死记硬背了！8分钟带你从零构建高并发微服务体系",
+    "en": "Build High-Concurrency Microservices from Scratch",
+    "slug": "build-high-concurrency-microservices-from-scratch"
+  },
+  "1086": {
+    "order": 1086,
+    "title": "布隆过滤器，你真的懂吗？",
+    "en": "Do You Really Understand Bloom Filter?",
+    "slug": "do-you-really-understand-bloom-filter"
+  },
+  "1088": {
+    "order": 1088,
+    "title": "什么是大模型的Epoch和学习率？项目中如何设置？",
+    "en": "What Is LLM Epoch and Learning Rate?",
+    "slug": "what-is-llm-epoch-and-learning-rate"
+  },
+  "1089": {
+    "order": 1089,
+    "title": "大模型面试必杀技：如何保证实时性和多轮对话一致性？",
+    "en": "LLM Realtime and Multi-Turn Consistency",
+    "slug": "llm-realtime-and-multi-turn-consistency"
+  },
+  "1091": {
+    "order": 1091,
+    "title": "DDD教你破解数据库表设计难题",
+    "en": "DDD for Database Table Design",
+    "slug": "ddd-database-table-design"
+  },
+  "1093": {
+    "order": 1093,
+    "title": "性能优化必修课-如何统计接口耗时",
+    "en": "How to Measure API Latency",
+    "slug": "how-to-measure-api-latency"
+  },
+  "1095": {
+    "order": 1095,
+    "title": "【思想比实现更重要】高并发场景下如何保证接口幂等性",
+    "en": "How to Ensure API Idempotency in High Concurrency",
+    "slug": "how-to-ensure-api-idempotency-high-concurrency"
+  },
+  "1097": {
+    "order": 1097,
+    "title": "Kafka为什么这么快？",
+    "en": "Why Is Kafka So Fast?",
+    "slug": "why-is-kafka-so-fast"
+  },
+  "1099": {
+    "order": 1099,
+    "title": "如何设计微服务熔断方案",
+    "en": "How to Design Microservice Circuit Breaker",
+    "slug": "how-to-design-microservice-circuit-breaker"
+  },
+  "1101": {
+    "order": 1101,
+    "title": "AI大模型的参数到底是啥？即专业又通俗的大模型之旅",
+    "en": "What Are LLM Parameters? Explained",
+    "slug": "what-are-llm-parameters-explained"
+  },
+  "1103": {
+    "order": 1103,
+    "title": "一网打尽MySQL各种锁",
+    "en": "MySQL Locks Complete Overview",
+    "slug": "mysql-locks-complete-overview"
+  },
+  "1105": {
+    "order": 1105,
+    "title": "面试官：讲讲 Raft？我笑了。一次彻底搞懂 Raft 核心机制",
+    "en": "Raft Consensus Core Mechanisms",
+    "slug": "raft-consensus-core-mechanisms"
+  },
+  "1107": {
+    "order": 1107,
+    "title": "如何提高系统稳定性？AI时代的工程师护城河",
+    "en": "How to Improve System Stability",
+    "slug": "how-to-improve-system-stability"
+  },
+  "1109": {
+    "order": 1109,
+    "title": "【终极解答】如何保证数据库和缓存双写一致性",
+    "en": "How to Ensure DB and Cache Dual-Write Consistency",
+    "slug": "how-to-ensure-db-cache-dual-write-consistency"
+  }
+}

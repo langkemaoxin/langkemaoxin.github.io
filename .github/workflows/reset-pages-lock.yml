@@ -1,0 +1,181 @@
+name: Reset GitHub Pages Lock
+
+# 清掉卡住的 Pages 部署锁，并重建为 Deploy from a branch（gh-pages / root）
+on:
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  deployments: write
+  contents: write
+  actions: write
+
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel stuck Pages deployments
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set +e
+          curl -sS \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/deployments?environment=github-pages&per_page=30" \
+            > deps.json
+
+          python3 - <<'PY'
+          import json, os, urllib.error, urllib.request
+
+          token = os.environ["GH_TOKEN"]
+          repo = os.environ["REPO"]
+          deps = json.load(open("deps.json", encoding="utf-8"))
+          headers = {
+              "Authorization": f"Bearer {token}",
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+          }
+
+          def get_json(url):
+              req = urllib.request.Request(url, headers=headers)
+              with urllib.request.urlopen(req) as r:
+                  return json.load(r)
+
+          cancelled = 0
+          for d in deps:
+              did = d["id"]
+              sha = d.get("sha", "")
+              try:
+                  statuses = get_json(
+                      f"https://api.github.com/repos/{repo}/deployments/{did}/statuses?per_page=5"
+                  )
+              except Exception as e:
+                  print(did, sha, "status-fetch-ERR", e)
+                  continue
+
+              latest = statuses[0]["state"] if statuses else "unknown"
+              # 卡住/未完成的部署：pending / in_progress / queued
+              if latest not in ("pending", "in_progress", "queued"):
+                  print(did, sha, "skip", latest)
+                  continue
+
+              print(f"=== cancel pages deployment sha={sha} deployment_id={did} state={latest} ===")
+              # Pages 专用 cancel（按 commit sha）
+              if sha:
+                  req = urllib.request.Request(
+                      f"https://api.github.com/repos/{repo}/pages/deployments/{sha}/cancel",
+                      data=b"",
+                      headers=headers,
+                      method="POST",
+                  )
+                  try:
+                      with urllib.request.urlopen(req) as r:
+                          print("pages-cancel", sha, r.status)
+                          cancelled += 1
+                  except urllib.error.HTTPError as e:
+                      print("pages-cancel", sha, "HTTP", e.code, e.read().decode(errors="replace")[:200])
+                  except Exception as e:
+                      print("pages-cancel", sha, "ERR", e)
+
+          print(f"cancelled_count={cancelled}")
+          PY
+
+      - name: Mark environment deployments inactive
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set +e
+          curl -sS \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/deployments?environment=github-pages&per_page=30" \
+            > deps.json
+
+          python3 - <<'PY'
+          import json, os, urllib.request
+
+          token = os.environ["GH_TOKEN"]
+          repo = os.environ["REPO"]
+          deps = json.load(open("deps.json", encoding="utf-8"))
+          for d in deps:
+              did = d["id"]
+              req = urllib.request.Request(
+                  f"https://api.github.com/repos/{repo}/deployments/{did}/statuses",
+                  data=json.dumps(
+                      {"state": "inactive", "description": "clear stuck lock"}
+                  ).encode(),
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Accept": "application/vnd.github+json",
+                      "Content-Type": "application/json",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                  },
+                  method="POST",
+              )
+              try:
+                  with urllib.request.urlopen(req) as r:
+                      print(did, r.status)
+              except Exception as e:
+                  print(did, "ERR", e)
+          PY
+
+      - name: Unpublish then recreate Pages (branch mode)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          echo "=== DELETE pages (unpublish) ==="
+          curl -sS -X DELETE \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages" \
+            -w "\nHTTP %{http_code}\n" || true
+
+          sleep 5
+
+          echo "=== CREATE pages build_type=legacy source=gh-pages/ ==="
+          curl -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages" \
+            -d '{"build_type":"legacy","source":{"branch":"gh-pages","path":"/"}}' \
+            -w "\nHTTP %{http_code}\n"
+
+          echo "=== restore CNAME www.code-corey.com ==="
+          curl -sS -X PUT \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages" \
+            -d '{"cname":"www.code-corey.com","build_type":"legacy","source":{"branch":"gh-pages","path":"/"}}' \
+            -w "\nHTTP %{http_code}\n" || true
+
+      - name: Trigger a Pages rebuild from gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set +e
+          echo "=== request pages build ==="
+          curl -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages/builds" \
+            -w "\nHTTP %{http_code}\n" || true
+
+          echo "=== current pages config ==="
+          curl -sS \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages"
+          echo

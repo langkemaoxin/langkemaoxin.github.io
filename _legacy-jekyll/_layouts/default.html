@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include head.html %}
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="layout-{{ page.layout | default: 'default' }}{% if page.post_style %} post-style-{{ page.post_style | slugify }}{% endif %}">
+
+    {% include nav.html %}
+    {% include search.html %}
+
+    {{ content }}
+
+    {% include footer.html %}
+
+    {% if site.mathjax or site.page-mathjax or page.mathjax %}
+    {% include mathjax_support.html %}
+    {% endif %}
+
+    {% if site.mermaid or page.mermaid %}
+    {% include mermaid_support.html %}
+    {% endif %}
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

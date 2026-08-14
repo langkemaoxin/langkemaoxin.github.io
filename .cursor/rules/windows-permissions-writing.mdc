@@ -1,0 +1,17 @@
+---
+description: Windows 权限系列文章必须用案例引入的西蒙讲述
+globs: src/Windows/permissions/**/*.md
+alwaysApply: false
+---
+
+# 权限系列写作规范
+
+撰写或加厚 `src/Windows/permissions/` 下章节时：
+
+1. **案例引入**：先用小王（或同类角色）碰到的具体麻烦开场，再推导概念。
+2. **西蒙/费曼**：一次只发明一个概念；只用已有讲解释；专有名词后置（先人话，再贴学名）。
+3. **固定节奏**：一条故事弧讲完一件事；避免公式化小标题堆砌与案例平铺。
+4. **物理分卷**：新章放入对应卷目录（`vol1-invent/` … `appendix/`）；`sidebarGroup` 与卷中文名一致；根目录仅保留 `00-index.md`；**不要**再写各卷 `00-overview` 导读。
+5. **不写**：提权漏洞、绕过 UAC/Deny 的攻击步骤；关 UAC 不作推荐做法。
+6. **出处**：关键论断旁标注 Microsoft Learn；讲间用相对链接（跨卷用 `../volX/...`）。
+7. **章末**：保留 `<!-- chapter-nav -->`；改完同步 `00-index.md`；运行 `pnpm sidebar:gen`。

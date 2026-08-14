@@ -1,0 +1,24 @@
+{
+  "name": "code-corey-github-io",
+  "description": "Corey 的知识库（VuePress Theme Hope）",
+  "version": "2.0.0",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "sidebar:gen": "node scripts/gen-sidebar.mjs",
+    "docs:build": "pnpm sidebar:gen && vuepress-vite build src",
+    "docs:clean-dev": "pnpm sidebar:gen && vuepress-vite dev src --clean-cache",
+    "docs:dev": "pnpm sidebar:gen && vuepress-vite dev src",
+    "docs:update-package": "pnpm dlx vp-update"
+  },
+  "devDependencies": {
+    "@vuepress/bundler-vite": "2.0.0-rc.30",
+    "@vuepress/plugin-umami-analytics": "2.0.0-rc.131",
+    "mermaid": "^11.6.0",
+    "sass-embedded": "^1.99.0",
+    "vue": "^3.5.34",
+    "vuepress": "2.0.0-rc.30",
+    "vuepress-theme-hope": "2.0.0-rc.107"
+  }
+}

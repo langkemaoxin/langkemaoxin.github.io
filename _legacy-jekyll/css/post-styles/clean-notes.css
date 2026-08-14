@@ -1,0 +1,83 @@
+body.post-style-clean-notes article {
+    background:
+        radial-gradient(circle at top left, rgba(229, 239, 255, 0.85), transparent 30%),
+        linear-gradient(180deg, #f5f8fc 0%, #edf3f9 100%);
+}
+
+body.post-style-clean-notes .post-container {
+    max-width: 860px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 48px 56px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(35, 55, 80, 0.08);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(39, 61, 89, 0.12);
+}
+
+body.post-style-clean-notes .post-container p,
+body.post-style-clean-notes .post-container li {
+    font-size: 18px;
+    line-height: 1.95;
+    color: #23374f;
+}
+
+body.post-style-clean-notes .post-container h1,
+body.post-style-clean-notes .post-container h2,
+body.post-style-clean-notes .post-container h3,
+body.post-style-clean-notes .post-container h4 {
+    color: #10233d;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+body.post-style-clean-notes .post-container h2,
+body.post-style-clean-notes .post-container h3 {
+    margin-top: 1.8em;
+}
+
+body.post-style-clean-notes .post-container h2 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(54, 99, 168, 0.14);
+}
+
+body.post-style-clean-notes .post-container a {
+    color: #1b5fc9;
+}
+
+body.post-style-clean-notes .post-container blockquote {
+    margin: 24px 0;
+    padding: 18px 24px;
+    border-left: 4px solid #5d87c7;
+    background: #f3f7fd;
+    color: #37506d;
+}
+
+body.post-style-clean-notes .post-container code {
+    background: #eef3fb;
+    color: #1a426c;
+    border-radius: 6px;
+}
+
+body.post-style-clean-notes .post-container pre {
+    background: #0f1723;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+body.post-style-clean-notes .post-container pre code {
+    background: transparent;
+    color: #e6edf7;
+}
+
+@media (max-width: 767px) {
+    body.post-style-clean-notes .post-container {
+        padding: 32px 22px;
+        border-radius: 18px;
+    }
+
+    body.post-style-clean-notes .post-container p,
+    body.post-style-clean-notes .post-container li {
+        font-size: 17px;
+    }
+}

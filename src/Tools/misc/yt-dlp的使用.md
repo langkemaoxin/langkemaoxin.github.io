@@ -1,0 +1,241 @@
+---
+title: "yt-dlp的使用记录"
+sidebarGroup: "其他工具"
+shortTitle: "yt-dlp 使用"
+order: 20
+date: 2026-04-10
+category: "工具"
+tag:
+  - "yt-dlp"
+---
+
+
+# Windows 环境安装 `yt-dlp` 实战记录：替代 `you-get` 下载 YouTube 的一次排障
+
+最近在 Windows 上尝试用 `you-get` 下载 YouTube 视频，结果命令可以执行，但实际解析视频时直接报错。最后我没有继续死磕 `you-get`，而是切换到了维护更积极的 `yt-dlp`。这篇文章把整个安装过程、踩坑点和注意事项整理一下，后面自己复用也更方便。
+
+## 一、为什么没有继续用 `you-get`
+
+最开始执行的是：
+
+```powershell
+python -m pip install you-get
+```
+
+安装本身是成功的，但实际下载 YouTube 链接时报错。进一步加上 `--debug` 后，能看到它卡在 YouTube 当前页面的 `signatureCipher` 解析阶段，最终在 `you_get\extractors\youtube.py` 抛出异常。
+
+核心问题不是命令写错，而是：
+
+1. `you-get` 当前版本对 YouTube 的兼容性已经比较脆弱。
+2. YouTube 播放器脚本经常变更，老项目很容易失效。
+3. 就算临时修一次，后续也可能继续坏。
+
+所以这次的处理思路不是“修补 `you-get`”，而是直接换成对 YouTube 支持更稳定的 `yt-dlp`。
+
+## 二、我实际是怎么安装 `yt-dlp` 的
+
+### 1. 用 `pip` 安装
+
+我实际执行的是：
+
+```powershell
+python -m pip install "yt-dlp[default]"
+```
+
+这里用的是 `yt-dlp[default]`，不是最基础的 `yt-dlp`，原因很简单：它会把常见依赖一并装上，少很多后续补包动作。
+
+安装后可以先确认版本：
+
+```powershell
+python -m yt_dlp --version
+```
+
+如果你的 Python 用户脚本目录没有加到 `PATH`，那就不要急着直接敲 `yt-dlp`，先确认以下目录是否在环境变量里：
+
+```text
+C:\Users\你的用户名\AppData\Roaming\Python\Python313\Scripts
+```
+
+如果没加，可以把这个目录加入用户级 `PATH`。重新打开终端后，再执行：
+
+```powershell
+yt-dlp --version
+```
+
+### 2. 验证是否能解析 YouTube
+
+安装完成后，我没有直接下载，而是先做“只解析不下载”的验证：
+
+```powershell
+yt-dlp --skip-download --print title "https://www.youtube.com/watch?v=WxpigSIxEFI"
+```
+
+这样做的好处是能快速判断：
+
+1. 命令是否可用。
+2. YouTube 解析是否正常。
+3. 问题是在“提取信息”阶段，还是在“下载/合并”阶段。
+
+## 三、安装后遇到的两个关键注意点
+
+### 1. JavaScript runtime 问题
+
+第一次运行 `yt-dlp` 时，虽然已经能解析标题，但它提示缺少受支持的 JavaScript runtime。这个问题和 YouTube 本身有关，因为新版本提取逻辑对 JS 运行时依赖更明显。
+
+我机器上已经装了 Node.js，所以不需要额外装 Deno，直接让 `yt-dlp` 使用 Node 即可：
+
+```powershell
+yt-dlp --js-runtimes node --skip-download --print title "https://www.youtube.com/watch?v=WxpigSIxEFI"
+```
+
+为了避免每次手工带参数，我额外写了一个用户级配置文件：
+
+```text
+C:\Users\CGY\AppData\Roaming\yt-dlp\config
+```
+
+里面至少可以放这一行：
+
+```text
+--js-runtimes node
+```
+
+这样后面再执行 `yt-dlp`，就会默认使用 Node。
+
+### 2. `ffmpeg` / `ffprobe` 问题
+
+`yt-dlp` 只负责下载；如果你要拿到更好的音视频格式，通常还需要：
+
+1. `ffmpeg.exe`
+2. `ffprobe.exe`
+
+我的机器上原本只有：
+
+```text
+D:\develop\ffmpeg.exe
+```
+
+后来又补上了：
+
+```text
+D:\develop\ffprobe.exe
+```
+
+这是必要的，因为很多最佳格式其实是“视频流”和“音频流”分开的，最后需要 `ffmpeg` 合并；而 `ffprobe` 用于媒体探测，很多场景也会被调用。
+
+为了让 `yt-dlp` 自动识别这两个文件，我把配置写成了目录，而不是单个文件路径：
+
+```text
+--ffmpeg-location D:/develop
+```
+
+这里有一个 Windows 上很容易忽略的细节：
+
+1. 配置文件里尽量用正斜杠 `/`。
+2. 不要直接写成未转义的反斜杠路径。
+
+我一开始写的是：
+
+```text
+--ffmpeg-location D:\develop\ffmpeg.exe
+```
+
+结果 `yt-dlp` 读配置时把反斜杠吞掉了，路径识别失败。改成：
+
+```text
+--ffmpeg-location D:/develop
+```
+
+之后就正常了。
+
+## 四、`ffprobe.exe` 是怎么补上的
+
+本机原来没有现成的 `ffprobe.exe`，所以最后通过 `winget` 安装了 FFmpeg Essentials 包，再把其中的 `ffprobe.exe` 复制到 `D:\develop`。
+
+查询包：
+
+```powershell
+winget search ffmpeg
+```
+
+安装命令：
+
+```powershell
+winget install -e --id Gyan.FFmpeg.Essentials --scope user --accept-package-agreements --accept-source-agreements
+```
+
+安装完成后，`ffprobe.exe` 会出现在 WinGet 安装目录里。把它复制到你自己的工具目录即可，例如：
+
+```text
+D:\develop\ffprobe.exe
+```
+
+然后再验证：
+
+```powershell
+D:\develop\ffprobe.exe -version
+```
+
+## 五、最终建议的配置方式
+
+如果你已经有：
+
+1. Python
+2. Node.js
+3. `D:\develop\ffmpeg.exe`
+4. `D:\develop\ffprobe.exe`
+
+那么用户级配置文件可以直接写成：
+
+```text
+--js-runtimes node
+--ffmpeg-location D:/develop
+```
+
+配置文件路径：
+
+```text
+C:\Users\CGY\AppData\Roaming\yt-dlp\config
+```
+
+之后最常用的命令就很简单了：
+
+```powershell
+yt-dlp "https://www.youtube.com/watch?v=WxpigSIxEFI"
+```
+
+## 六、安装 `yt-dlp` 时需要特别注意什么
+
+这里把最容易踩坑的点单独列出来：
+
+1. 不要默认认为 `pip install` 成功就代表命令能直接用，Windows 上经常是脚本目录没进 `PATH`。
+2. 对 YouTube 来说，光装 `yt-dlp` 还不够，最好确认 JS runtime 可用，Node.js 是最省事的选择。
+3. 想拿到更完整的下载和合并能力，`ffmpeg` 和 `ffprobe` 最好成套准备。
+4. `yt-dlp` 配置文件里的 Windows 路径优先写成正斜杠形式，兼容性更稳。
+5. 遇到问题时，先用 `--skip-download`、`--print title` 这种轻量命令定位问题，不要一上来就直接下载大文件。
+6. 如果目标站点是 YouTube，优先使用 `yt-dlp`，不要把时间花在兼容性明显落后的工具上。
+
+## 七、本文涉及的关键命令汇总
+
+```powershell
+python -m pip install "yt-dlp[default]"
+yt-dlp --version
+yt-dlp --skip-download --print title "https://www.youtube.com/watch?v=WxpigSIxEFI"
+yt-dlp --js-runtimes node --skip-download --print title "https://www.youtube.com/watch?v=WxpigSIxEFI"
+winget search ffmpeg
+winget install -e --id Gyan.FFmpeg.Essentials --scope user --accept-package-agreements --accept-source-agreements
+D:\develop\ffprobe.exe -version
+yt-dlp "https://www.youtube.com/watch?v=WxpigSIxEFI"
+```
+
+## 八、结论
+
+这次安装 `yt-dlp` 的关键，不是“把包装上”这么简单，而是把整条链路补全：
+
+1. `pip` 安装 `yt-dlp`
+2. 让命令可执行
+3. 配置 Node.js 作为 JS runtime
+4. 准备 `ffmpeg` 和 `ffprobe`
+5. 用配置文件把这些工具串起来
+
+只要这几个点处理到位，Windows 下的 YouTube 下载体验会比继续折腾 `you-get` 稳定得多。

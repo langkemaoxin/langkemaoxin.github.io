@@ -1,0 +1,602 @@
+{
+  "1111": {
+    "order": 1111,
+    "title": "一网打尽MySQL各种锁",
+    "en": "Comprehensive Guide to MySQL Locks",
+    "slug": "mysql-locks-comprehensive-guide"
+  },
+  "1113": {
+    "order": 1113,
+    "title": "如何保证消息不丢不重？一次打通三大MQ",
+    "en": "How to Ensure MQ Messages Are Not Lost or Duplicated",
+    "slug": "how-to-ensure-mq-no-loss-no-duplicate"
+  },
+  "1115": {
+    "order": 1115,
+    "title": "【面试核武器】一个视频彻底搞懂分布式一致性",
+    "en": "Distributed Consistency Deep Dive",
+    "slug": "distributed-consistency-deep-dive"
+  },
+  "1117": {
+    "order": 1117,
+    "title": "字节二面：RocketMQ顺序消息如何提升吞吐量",
+    "en": "How to Boost RocketMQ Ordered Message Throughput",
+    "slug": "rocketmq-ordered-messages-throughput-tuning"
+  },
+  "1119": {
+    "order": 1119,
+    "title": "RocektMQ文件存储，普通程序员VS架构师",
+    "en": "RocketMQ File Storage: Developer vs Architect",
+    "slug": "rocketmq-file-storage-dev-vs-architect"
+  },
+  "1121": {
+    "order": 1121,
+    "title": "5亿用户数据，面试官的‘死亡追问’你敢接吗？",
+    "en": "500M User Data: Can You Handle Tough Interview Questions",
+    "slug": "500m-user-data-interview-hard-questions"
+  },
+  "1123": {
+    "order": 1123,
+    "title": "用户密码，连系统都不能知道",
+    "en": "User Passwords the System Must Not Know",
+    "slug": "user-password-system-cannot-know"
+  },
+  "1125": {
+    "order": 1125,
+    "title": "Java面试：备战金九银十，快问快答第一期",
+    "en": "Java Interview Rapid-Fire Q&A Part 1",
+    "slug": "java-interview-rapid-fire-qa-part-1"
+  },
+  "1126": {
+    "order": 1126,
+    "title": "RocketMQ核心面试题一次全给讲通透",
+    "en": "RocketMQ Core Interview Questions Explained",
+    "slug": "rocketmq-core-interview-questions-explained"
+  },
+  "1128": {
+    "order": 1128,
+    "title": "别再骂AI智障！是你没动这",
+    "en": "Stop Blaming AI — You Are Using It Wrong",
+    "slug": "stop-blaming-ai-you-are-using-it-wrong"
+  },
+  "1130": {
+    "order": 1130,
+    "title": "MySQL 全架构面试：别让 “简历熟悉” 变成面试 “张口就懵”！-ll",
+    "en": "MySQL Full Architecture Interview Guide",
+    "slug": "mysql-full-architecture-interview-guide"
+  },
+  "1132": {
+    "order": 1132,
+    "title": "AI 提示词六步法：从 “无效提问” 到 “精准输出” 的实战指南",
+    "en": "AI Prompt Six-Step Method Hands-On Guide",
+    "slug": "ai-prompt-six-step-method-guide"
+  },
+  "1134": {
+    "order": 1134,
+    "title": "AgentScope Java 与 Spring AI Alibaba 深度对比分析",
+    "en": "AgentScope Java vs Spring AI Alibaba Comparison",
+    "slug": "agentscope-java-vs-spring-ai-alibaba-compare"
+  },
+  "1136": {
+    "order": 1136,
+    "title": "大模型核心技术全景：从基础架构到产业落地的四大层深度解析",
+    "en": "LLM Core Tech Four Layers Deep Dive",
+    "slug": "llm-core-tech-four-layers-deep-dive"
+  },
+  "1138": {
+    "order": 1138,
+    "title": "Java 实战：手机验证码登录从原理到安全落地（含风险防护全方案）",
+    "en": "Java SMS Verification Login: Principles to Secure Production",
+    "slug": "java-sms-verification-login-principles-security"
+  },
+  "1140": {
+    "order": 1140,
+    "title": "Spring AI Alibaba：Java生态的AI原生开发框架深度解析（附从0开始新建一个项目）",
+    "en": "Spring AI Alibaba Java AI-Native Framework Deep Dive",
+    "slug": "spring-ai-alibaba-java-ai-native-framework"
+  },
+  "1142": {
+    "order": 1142,
+    "title": "LangChain 深度解析：大模型应用开发的 “操作系统” 与工程化实践",
+    "en": "LangChain Deep Dive: LLM App Dev OS and Engineering",
+    "slug": "langchain-llm-app-dev-engineering-practices"
+  },
+  "1144": {
+    "order": 1144,
+    "title": "大模型核心技术全景解析：从基础架构到落地应用",
+    "en": "LLM Core Tech: Architecture to Production",
+    "slug": "llm-core-tech-architecture-to-production"
+  },
+  "1146": {
+    "order": 1146,
+    "title": "MCP、RAG、Agent协同工作——AI落地的核心范式",
+    "en": "MCP, RAG, Agent Collaboration: AI Production Paradigm",
+    "slug": "mcp-rag-agent-ai-production-paradigm"
+  },
+  "1148": {
+    "order": 1148,
+    "title": "MCP、RAG、Agent的核心区别——从定位到落地的全面解析",
+    "en": "MCP, RAG, Agent Core Diff: Positioning to Production",
+    "slug": "mcp-rag-agent-core-diff-production"
+  },
+  "1150": {
+    "order": 1150,
+    "title": "对话式 AI 全流程深度解析：从输入到回复的核心技术架构",
+    "en": "Conversational AI Full Flow Architecture",
+    "slug": "conversational-ai-full-flow-architecture"
+  },
+  "1152": {
+    "order": 1152,
+    "title": "Java 程序员秒懂 AI 核心：LLM 推理全流程与 Java 技术栈深度类比技术文档",
+    "en": "Java Dev Guide: LLM Inference Flow vs Java Stack Analogy",
+    "slug": "java-dev-llm-inference-java-stack-analogy"
+  },
+  "1154": {
+    "order": 1154,
+    "title": "面试官问：Sentinel 的工作原理是怎样的？（深度解析 + 实战代码）",
+    "en": "Sentinel Working Principles with Hands-On Code",
+    "slug": "sentinel-working-principles-hands-on"
+  },
+  "1156": {
+    "order": 1156,
+    "title": "面试官问：Web 实时消息推送核心方案有哪些？6 大方案全解析（含代码 + 架构图）",
+    "en": "Web Real-Time Push: 6 Core Solutions Explained",
+    "slug": "web-realtime-push-6-solutions"
+  },
+  "1158": {
+    "order": 1158,
+    "title": "面试官问：Redis 阻塞的核心原因和优化方案，一文吃透！",
+    "en": "Redis Blocking: Core Causes and Optimization",
+    "slug": "redis-blocking-causes-and-optimization"
+  },
+  "1160": {
+    "order": 1160,
+    "title": "面试官问：你是怎么统计接口耗时的？",
+    "en": "How Do You Track API Latency",
+    "slug": "how-to-track-api-latency"
+  },
+  "1162": {
+    "order": 1162,
+    "title": "面试官问：如何系统性解决 MySQL 性能问题？（从入门到实战全指南）",
+    "en": "How to Systematically Solve MySQL Performance Issues",
+    "slug": "how-to-solve-mysql-performance-systematically"
+  },
+  "1164": {
+    "order": 1164,
+    "title": "吃透性能核心指标：QPS/TPS/RT/并发量/吞吐量深度解析",
+    "en": "QPS, TPS, RT, Concurrency, Throughput Explained",
+    "slug": "qps-tps-rt-concurrency-throughput-explained"
+  },
+  "1166": {
+    "order": 1166,
+    "title": "分布式架构核心理论：CAP 与 BASE 深度解析",
+    "en": "Distributed CAP and BASE Theory Deep Dive",
+    "slug": "distributed-cap-base-theory-explained"
+  },
+  "1168": {
+    "order": 1168,
+    "title": "分布式锁深度解析：原理、实现与选型指南（附完整代码示例）",
+    "en": "Distributed Lock: Principles, Implementation, Selection",
+    "slug": "distributed-lock-principles-impl-selection"
+  },
+  "1170": {
+    "order": 1170,
+    "title": "Redis 除了缓存还能做什么？10 大核心非缓存场景全解析",
+    "en": "Redis Beyond Cache: 10 Non-Cache Use Cases",
+    "slug": "redis-10-non-cache-use-cases"
+  },
+  "1172": {
+    "order": 1172,
+    "title": "深度解析：RocketMQ 如何保证顺序消费？从原理到落地的完整指南",
+    "en": "RocketMQ Ordered Consumption: Principles to Production",
+    "slug": "rocketmq-ordered-consumption-principles-guide"
+  },
+  "1174": {
+    "order": 1174,
+    "title": "Java 面试精讲：价格同步与下单冲突的优雅处理方案",
+    "en": "Java Interview: Price Sync and Order Conflict Handling",
+    "slug": "java-price-sync-order-conflict-solution"
+  },
+  "1176": {
+    "order": 1176,
+    "title": "面试官问：数据库三大范式和反范式该怎么权衡？（附实战代码与设计思路）",
+    "en": "Database Normalization vs Denormalization Tradeoff",
+    "slug": "database-normalization-denormalization-tradeoff"
+  },
+  "1178": {
+    "order": 1178,
+    "title": "高并发系统 “安全阀门”：限流算法深度指南（含 Java 代码 + Redis 方案 + 生产工具）",
+    "en": "High-Concurrency Rate Limiting Algorithms Guide",
+    "slug": "high-concurrency-rate-limiting-algorithms-guide"
+  },
+  "1180": {
+    "order": 1180,
+    "title": "数据越存越慢、成本越涨越高？「数据冷热分离」落地手册：面试加分 + 项目救命（含大厂案例 + 代码）",
+    "en": "Hot-Cold Data Separation Implementation Guide",
+    "slug": "hot-cold-data-separation-implementation-guide"
+  },
+  "1182": {
+    "order": 1182,
+    "title": "搞定 Java 电商面试：购物车设计全解析（3 种存储方案 + 数据合并逻辑 + 异常处理）",
+    "en": "Java E-Commerce Shopping Cart Design Explained",
+    "slug": "java-ecommerce-shopping-cart-design"
+  },
+  "1184": {
+    "order": 1184,
+    "title": "Java 面试高频题｜吃透 MySQL InnoDB 与 MyISAM 差异：从原理到落地（附 SQL/Java 实例 + PPT 图文）",
+    "en": "MySQL InnoDB vs MyISAM Diff: Principles to Production",
+    "slug": "mysql-innodb-vs-myisam-diff-principles"
+  },
+  "1186": {
+    "order": 1186,
+    "title": "单体服务拆微服务：从 0 到 1 落地实战指南（附面试高频考点）",
+    "en": "Monolith to Microservice Implementation Guide",
+    "slug": "monolith-to-microservice-implementation-guide"
+  },
+  "1188": {
+    "order": 1188,
+    "title": "RocketMQ 消息积压不用慌！Java 工程师实战指南：从应急止损到架构根治（含代码 + 面试考点）",
+    "en": "RocketMQ Message Backlog Java Engineer Guide",
+    "slug": "rocketmq-message-backlog-java-guide"
+  },
+  "1190": {
+    "order": 1190,
+    "title": "别再用数据库统计访问量了！Java+Redis 3 大方案（Hash/Bitmap/HLL）实战：12KB 扛住亿级用户",
+    "en": "Java Redis Page View Count: Hash Bitmap HLL Schemes",
+    "slug": "java-redis-page-view-count-3-schemes"
+  },
+  "1192": {
+    "order": 1192,
+    "title": "MySQL 三大日志全景解析：从基础概念到 MVCC 协同，覆盖 ACID 与集群一致性",
+    "en": "MySQL Three Logs, MVCC, ACID, and Cluster Consistency",
+    "slug": "mysql-three-logs-mvcc-acid-cluster"
+  },
+  "1194": {
+    "order": 1194,
+    "title": "吃透多端登录强制下线：Java 后端 3 大核心方案（附完整代码 / 伪代码）+ 面试高频避坑点",
+    "en": "Multi-Device Login Force Logout Java Backend Solutions",
+    "slug": "multi-device-login-force-logout-java"
+  },
+  "1196": {
+    "order": 1196,
+    "title": "面试官问 Redis Key 怎么拆？Javaer 吃透这篇稳了：大 Key / 热点 Key 破解 + 4 大策略 + 集群实战（附代码）",
+    "en": "Redis Big Key and Hot Key Solutions for Java Devs",
+    "slug": "redis-big-key-hot-key-solutions-java"
+  },
+  "1198": {
+    "order": 1198,
+    "title": "MySQL 单表数据量 2000 万行阈值原理深度解析",
+    "en": "MySQL 20M Rows Per Table Threshold Principles",
+    "slug": "mysql-20m-rows-per-table-threshold-principles"
+  },
+  "1200": {
+    "order": 1200,
+    "title": "接口防重复提交：从原理到落地的 5 大实战方案（附完整代码）",
+    "en": "API Idempotent Submit: 5 Production Solutions",
+    "slug": "api-idempotent-submit-5-solutions"
+  },
+  "1202": {
+    "order": 1202,
+    "title": "Java IO 模型 BIO、NIO、AIO 的底层区别？一篇讲透",
+    "en": "Java BIO NIO AIO Internals Diff Explained",
+    "slug": "java-bio-nio-aio-internals-diff"
+  },
+  "1204": {
+    "order": 1204,
+    "title": "Elasticsearch 核心概念深度解析：从基础到分布式架构",
+    "en": "Elasticsearch Core Concepts to Distributed Architecture",
+    "slug": "elasticsearch-core-concepts-distributed-arch"
+  },
+  "1206": {
+    "order": 1206,
+    "title": "如何优雅实现用户自动登录？从原理到落地的完整方案",
+    "en": "How to Implement User Auto Login Elegantly",
+    "slug": "how-to-implement-user-auto-login"
+  },
+  "1208": {
+    "order": 1208,
+    "title": "从业务崩掉到高可用：分库分表技术全景解析",
+    "en": "From Outage to High Availability: Sharding Panorama",
+    "slug": "high-availability-sharding-panorama"
+  },
+  "1210": {
+    "order": 1210,
+    "title": "Redis 持久化机制有哪些",
+    "en": "What Are Redis Persistence Mechanisms",
+    "slug": "what-are-redis-persistence-mechanisms"
+  },
+  "1212": {
+    "order": 1212,
+    "title": "MySQL 执行一条 SQL 语句的完整流程：从底层架构到核心步骤",
+    "en": "MySQL SQL Execution Full Flow from Architecture to Steps",
+    "slug": "mysql-sql-execution-full-flow"
+  },
+  "1214": {
+    "order": 1214,
+    "title": "从安全到体验：Java Token 续期 4 种方案全攻略，覆盖面试与生产落地需求",
+    "en": "Java Token Renewal: 4 Schemes for Interview and Production",
+    "slug": "java-token-renewal-4-schemes"
+  },
+  "1216": {
+    "order": 1216,
+    "title": "技术文案讲解",
+    "en": "Technical Content Explanation",
+    "slug": "tech-content-explanation"
+  },
+  "1217": {
+    "order": 1217,
+    "title": "有没有优化过 Spring Boot 启动速度",
+    "en": "Have You Optimized Spring Boot Startup Speed",
+    "slug": "spring-boot-startup-speed-optimization"
+  },
+  "1219": {
+    "order": 1219,
+    "title": "秒杀防超卖文案（修订版）",
+    "en": "Flash Sale Oversell Prevention Copy Revised",
+    "slug": "flash-sale-oversell-prevention-copy"
+  },
+  "1220": {
+    "order": 1220,
+    "title": "简历项目优化提示词",
+    "en": "Resume Project Optimization Prompts",
+    "slug": "resume-project-optimization-prompts"
+  },
+  "1221": {
+    "order": 1221,
+    "title": "synchronized锁升级是怎么回事？",
+    "en": "How Does synchronized Lock Upgrade Work",
+    "slug": "synchronized-lock-upgrade-explained"
+  },
+  "1223": {
+    "order": 1223,
+    "title": "面试官：百万人同时点赞怎么设计",
+    "en": "How to Design Million Concurrent Likes",
+    "slug": "design-million-concurrent-likes"
+  },
+  "1225": {
+    "order": 1225,
+    "title": "布隆过滤器面试4问",
+    "en": "Bloom Filter Interview 4 Questions",
+    "slug": "bloom-filter-interview-4-questions"
+  },
+  "1227": {
+    "order": 1227,
+    "title": "Mysql慢SQL优化—索引8大原则",
+    "en": "MySQL Slow SQL Optimization: 8 Index Principles",
+    "slug": "mysql-slow-sql-index-8-principles"
+  },
+  "1229": {
+    "order": 1229,
+    "title": "面试官：热Key问题怎么解决",
+    "en": "How to Solve Redis Hot Key Problem",
+    "slug": "how-to-solve-redis-hot-key"
+  },
+  "1231": {
+    "order": 1231,
+    "title": "有没有处理过Redis大Key",
+    "en": "Have You Handled Redis Big Key",
+    "slug": "have-you-handled-redis-big-key"
+  },
+  "1233": {
+    "order": 1233,
+    "title": "面试官： 说说线上Redis部署方案",
+    "en": "Production Redis Deployment Schemes",
+    "slug": "production-redis-deployment-schemes"
+  },
+  "1235": {
+    "order": 1235,
+    "title": "21、面试官：JWT签发后，用户注销了，Token如何失效？",
+    "en": "How to Invalidate JWT Token After User Logout",
+    "slug": "jwt-token-invalidation-after-logout"
+  },
+  "1237": {
+    "order": 1237,
+    "title": "20、面试官：大规模分布式系统，会话管理选JWT还是Session？",
+    "en": "JWT vs Session for Distributed Session Management",
+    "slug": "jwt-vs-session-distributed-session"
+  },
+  "1239": {
+    "order": 1239,
+    "title": "19、面试官：先不考虑机器配置，垃圾回收器结合业务特性，到底怎么选 ？",
+    "en": "How to Select GC Collector by Workload Characteristics",
+    "slug": "gc-collector-selection-by-workload"
+  },
+  "1241": {
+    "order": 1241,
+    "title": "18、面试官：如何实现一个“动态Trace”功能，允许在线上不停机的情况下，对任意方法的入参和返回值进行“快照”？",
+    "en": "Dynamic Trace Method Snapshot with Zero Downtime",
+    "slug": "dynamic-trace-method-snapshot-zero-downtime"
+  },
+  "1242": {
+    "order": 1242,
+    "title": "17、面试官：如何设计一个通用的“方法耗时监控”切面，但要求对业务代码零侵入？",
+    "en": "Zero-Intrusion Method Latency Monitoring AOP Design",
+    "slug": "zero-intrusion-method-latency-aop"
+  },
+  "1244": {
+    "order": 1244,
+    "title": "16、面试官：如何零代码修改，监控线上服务的慢SQL？",
+    "en": "Zero-Code Slow SQL Monitoring for Production Services",
+    "slug": "zero-code-slow-sql-monitoring"
+  },
+  "1245": {
+    "order": 1245,
+    "title": "15、面试官：如何在全链路中透传“灰度发布”标识，实现流量精准控制？",
+    "en": "Full-Link Canary Release Traffic Control",
+    "slug": "full-link-canary-release-traffic-control"
+  },
+  "1246": {
+    "order": 1246,
+    "title": "14、面试官：如何实现一个“全链路压测”的流量染色方案，确保压测流量与生产流量隔离？",
+    "en": "Full-Link Stress Test Traffic Isolation",
+    "slug": "full-link-stress-test-traffic-isolation"
+  },
+  "1247": {
+    "order": 1247,
+    "title": "13、面试官：如何构建一个“全链路业务日志”系统，将一次用户请求的所有日志串联起来？",
+    "en": "Full-Link Business Log Correlation System",
+    "slug": "full-link-business-log-correlation"
+  },
+  "1249": {
+    "order": 1249,
+    "title": "12、面试官：API网关TP99要50ms，你敢用G1吗？我的回答让他沉默了...",
+    "en": "API Gateway TP99 50ms: G1 GC Decision",
+    "slug": "api-gateway-tp99-g1-gc-decision"
+  },
+  "1251": {
+    "order": 1251,
+    "title": "11、Tomcat骚操作：Log4j两个版本打架，它凭啥能劝和？| 面试官深度揭秘",
+    "en": "Tomcat Log4j Version Conflict Resolution",
+    "slug": "tomcat-log4j-version-conflict-resolution"
+  },
+  "1253": {
+    "order": 1253,
+    "title": "10、把.class文件加密后，JVM是如何运行的？面试官：给我秀一下操作",
+    "en": "How JVM Runs Encrypted Class Files",
+    "slug": "encrypted-class-file-jvm-execution"
+  },
+  "1255": {
+    "order": 1255,
+    "title": "9、面试官：用线程池还是MQ做异步？我想要的答案，其实是这个",
+    "en": "Thread Pool vs MQ for Async Processing",
+    "slug": "thread-pool-vs-mq-for-async"
+  },
+  "1257": {
+    "order": 1257,
+    "title": "8、深夜，一个“优化”搞挂了系统... 面试官：讲讲如何设计一个不“赌命”的发布系统？",
+    "en": "Safe Release System Design Without Gambling",
+    "slug": "safe-release-system-design-no-gambling"
+  },
+  "1259": {
+    "order": 1259,
+    "title": "7、阿里P7面试官：双十一零点1亿人下单，你的购物车怎么设计不崩？",
+    "en": "Double 11 Cart Design for 100M Orders",
+    "slug": "double-11-cart-design-100m-orders"
+  },
+  "1261": {
+    "order": 1261,
+    "title": "6、阿里P7面试官：TinyURL怎么设计？我答了分布式ID，他却让我出门左转",
+    "en": "TinyURL System Design Interview",
+    "slug": "tinyurl-system-design-interview"
+  },
+  "1263": {
+    "order": 1263,
+    "title": "5、分钟内百万级数据的对账系统如何设计？",
+    "en": "Million-Record Reconciliation System Design",
+    "slug": "million-records-reconciliation-system-design"
+  },
+  "1265": {
+    "order": 1265,
+    "title": "4、线程池共享还是独享，如何选择？",
+    "en": "Thread Pool Shared vs Dedicated Selection",
+    "slug": "thread-pool-shared-vs-dedicated-selection"
+  },
+  "1267": {
+    "order": 1267,
+    "title": "3、10 万并发的商品列表页怎么扛？用“4 层防线 + 指标预算”的组合拳打服面试官",
+    "en": "100K Concurrent Product List 4-Layer Defense",
+    "slug": "100k-concurrent-product-list-4-layer-defense"
+  },
+  "1269": {
+    "order": 1269,
+    "title": "2、别只背“八大策略”：从原理到调优，一文彻底搞懂 Redis 内存淘汰",
+    "en": "Redis Eviction Policy Principles and Tuning",
+    "slug": "redis-eviction-policy-principles-tuning"
+  },
+  "1271": {
+    "order": 1271,
+    "title": "1、10万级并发电商商品详情页，如何设计？(京东）",
+    "en": "100K Concurrent E-Commerce Product Detail Page Design",
+    "slug": "100k-concurrent-product-detail-page-design"
+  },
+  "1273": {
+    "order": 1273,
+    "title": "AI大模型热门面试题",
+    "en": "AI LLM Hot Interview Questions",
+    "slug": "ai-llm-hot-interview-questions"
+  },
+  "1274": {
+    "order": 1274,
+    "title": "面试题 01：大语言模型（LLM）的“上下文窗口”是什么？突破长上下文有哪些常见技术？",
+    "en": "LLM Context Window and Long Context Techniques",
+    "slug": "llm-context-window-long-context-techniques"
+  },
+  "1275": {
+    "order": 1275,
+    "title": "面试题 02：生成参数详解：Temperature、Top-P、Top-K 在实际业务中该如何调优？",
+    "en": "LLM Generation Params Temperature Top-P Top-K Tuning",
+    "slug": "llm-generation-params-temperature-top-p-top-k-tuning"
+  },
+  "1276": {
+    "order": 1276,
+    "title": "面试题 03：深入理解 Embedding：词向量的本质是什么？在 AI 应用中有哪些典型使用场景？",
+    "en": "Embedding Word Vectors and AI Use Cases",
+    "slug": "embedding-word-vectors-ai-use-cases"
+  },
+  "1277": {
+    "order": 1277,
+    "title": "面试题 04：Token 是如何计算的？如何解决多语言环境下的 Token 消耗过快问题？",
+    "en": "LLM Token Counting and Multilingual Optimization",
+    "slug": "llm-token-counting-multilingual-optimization"
+  },
+  "1278": {
+    "order": 1278,
+    "title": "面试题 05：开源模型 vs 闭源 API：在企业级项目中如何做技术选型？",
+    "en": "Open Source vs Closed API Model Selection",
+    "slug": "open-source-vs-closed-api-model-selection"
+  },
+  "1279": {
+    "order": 1279,
+    "title": "面试题 06：Zero-Shot、Few-Shot 与 CoT（思维链）：它们分别适用于什么复杂度的任务？",
+    "en": "Zero-Shot Few-Shot CoT Task Complexity",
+    "slug": "zero-shot-few-shot-cot-task-complexity"
+  },
+  "1280": {
+    "order": 1280,
+    "title": "面试题 07：如何有效缓解大模型的幻觉问题？",
+    "en": "How to Mitigate LLM Hallucination",
+    "slug": "how-to-mitigate-llm-hallucination"
+  },
+  "1281": {
+    "order": 1281,
+    "title": "面试题 08：在复杂业务中如何对 提示词进行版本控制与动态组装？",
+    "en": "Prompt Version Control and Dynamic Assembly",
+    "slug": "prompt-version-control-dynamic-assembly"
+  },
+  "1282": {
+    "order": 1282,
+    "title": "面试题 09：如何稳定地让大模型输出符合业务规范的 JSON 或 XML 格式数据？",
+    "en": "LLM Structured JSON XML Output",
+    "slug": "llm-structured-json-xml-output"
+  },
+  "1283": {
+    "order": 1283,
+    "title": "面试题 10：一个标准 RAG 系统的完整数据流转过程是什么样的？",
+    "en": "Standard RAG System Data Flow",
+    "slug": "rag-system-data-flow"
+  },
+  "1284": {
+    "order": 1284,
+    "title": "面试题 11：如何解决切分导致的上下文语义断裂问题？",
+    "en": "RAG Chunking Context Semantic Break Fix",
+    "slug": "rag-chunking-context-semantic-break-fix"
+  },
+  "1285": {
+    "order": 1285,
+    "title": "面试题 12：向量数据库与传统关系型数据库在底层原理有什么不同？",
+    "en": "Vector DB vs RDBMS Internals Diff",
+    "slug": "vector-db-vs-rdbms-internals-diff"
+  },
+  "1286": {
+    "order": 1286,
+    "title": "面试题 13：讲讲 RAG 的多路召回与重排？为什么它们在生产环境中必不可少？",
+    "en": "RAG Multi-Recall Rerank in Production",
+    "slug": "rag-multi-recall-rerank-production"
+  },
+  "1287": {
+    "order": 1287,
+    "title": "面试题 14：如何利用大模型对用户的原始提问进行改写、拆解或扩展？",
+    "en": "LLM Query Rewrite Decompose Expand",
+    "slug": "llm-query-rewrite-decompose-expand"
+  }
+}

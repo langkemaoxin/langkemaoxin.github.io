@@ -1,0 +1,56 @@
+name: Deploy Docs
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.20.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install Deps
+        run: |
+          pnpm approve-builds --all || true
+          pnpm install --frozen-lockfile
+
+      - name: Build Docs
+        env:
+          # 面试题拆站后主站页数下降；仍给足堆以防峰值。
+          NODE_OPTIONS: --max-old-space-size=8192
+        run: |
+          pnpm run docs:build
+          touch src/.vuepress/dist/.nojekyll
+          cp src/.vuepress/public/CNAME src/.vuepress/dist/CNAME || true
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: src/.vuepress/dist
+          publish_branch: gh-pages
+          force_orphan: false
