@@ -14,7 +14,7 @@ tag:
 description: Volume、PV/PVC 生命周期、静态/动态供给与 StorageClass。
 ---
 
-> **Kubernetes 系列 · 第 11/20 篇**  
+> **Kubernetes 系列 · 第 11/30 篇**  
 > 上一篇：[《Underlay/Overlay 网络与集群 DNS 解析》](/云原生/k8s/k8s-10-network-dns/) · 下一篇：[《Ingress 七层流量分发——原理、部署模式与动态域名》](/云原生/k8s/k8s-12-ingress-l7/)
 
 ---

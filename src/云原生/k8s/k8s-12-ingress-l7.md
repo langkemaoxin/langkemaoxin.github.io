@@ -13,7 +13,7 @@ tag:
 description: Ingress Controller、资源字段、部署模式与生产侧 LVS/Keepalived 思路。
 ---
 
-> **Kubernetes 系列 · 第 12/20 篇**  
+> **Kubernetes 系列 · 第 12/30 篇**  
 > 上一篇：[《应用持久化存储——Volume、PV 与 PVC》](/云原生/k8s/k8s-11-pv-pvc/) · 下一篇：[《发布策略实战——蓝绿、金丝雀、滚动与 A/B 测试》](/云原生/k8s/k8s-13-release-strategies/)
 
 ---

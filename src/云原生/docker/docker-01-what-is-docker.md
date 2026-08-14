@@ -57,6 +57,8 @@ Docker 已广泛进入测试与生产环境，常见用途包括：
 - **服务型环境中部署和调整数据库或其他后台应用**
 - **基于 OpenShift、Cloud Foundry 等平台搭建自有 PaaS**
 
+> 💡 **OpenShift / Cloud Foundry 是什么？** 两个名字来自 Docker 诞生初期（2014-2015）的「PaaS 平台」：**OpenShift** 是红帽的容器应用平台，2015 年 v3 起底层改用 Docker + Kubernetes，如今是最主流的企业级 K8s 发行版；**Cloud Foundry** 是更早期的 PaaS，容器浪潮后式微、已转型到 K8s 之上。这条用途的「现代等价物」就是本博客 [K8s 系列](/云原生/k8s/)讲的 Kubernetes + Helm/Operator 体系。详见文末[扩展阅读](#扩展阅读-曾经的两大-paas)。
+
 在 DevOps 场景下，价值尤其明显。微服务往往有多套环境——开发、测试、预生产、生产——每套都要部署 Redis、ES、ZooKeeper 等组件，费时费力；生产流量上来还要动态扩容。Docker 把这几类痛点串起来解决：
 
 | 痛点 | 没有 Docker | 有 Docker |
@@ -138,3 +140,26 @@ Docker 采用 **Client-Server（C/S）** 架构，通过远程 API 管理容器�
 - 核心概念：**镜像、容器、仓库**；容器共享内核、进程级隔离。
 
 下一篇进入 **Docker Engine** 与 **Docker Platform** 的分层架构，把 Client、daemon、containerd、runc 的关系讲清楚。
+
+---
+
+## 扩展阅读：曾经的两大 PaaS
+
+第二节清单里提到的 OpenShift 与 Cloud Foundry，展开讲清楚——它们是理解「容器为什么火」的重要背景。
+
+### OpenShift：红帽的容器应用平台
+
+- **出身**：Red Hat 2011 年推出的 PaaS，v1/v2 用自研机制（gears/cartridges）；**2015 年 v3 推倒重来，底层换成 Docker + Kubernetes**——这次转向也是 Docker 早期价值最有力的背书
+- **现在**：v4 时代，是**最主流的企业级 K8s 发行版**。在原生 K8s 之上加了企业要的整套东西：内置镜像仓库、CI/CD（Tekton）、开发者控制台、路由、监控、强化的 RBAC 与厂商支持（红帽已被 IBM 收购）
+
+### Cloud Foundry：`cf push` 与 buildpack 的出处
+
+- **核心体验是一句 `cf push`**：`cf push myapp` 把源码推上去，剩下的**全由平台自动完成**——检测语言、构建、起实例、分配访问路由、负载均衡、按需扩缩、挂了自动拉起。开发者不写 Dockerfile、不碰 K8s YAML。这种「**只推代码，其他全托管**」就是 PaaS 的核心理念，这句命令也成了 CF 的代名词
+- **buildpack（构建包）是它的关键发明**：平台预置的一组「语言识别 + 构建脚本」包——Java buildpack 看到 `pom.xml` 就知道是 Java 项目，自动选 JDK、打 jar、配 JVM 参数。这个概念后来经 Heroku 发扬，再演化为 CNCF 的 **Cloud Native Buildpacks**（`pack` 命令），Docker/K8s 时代仍是用「代码 → 镜像」的主流路径之一
+- **现在**：容器浪潮后式微，先后改造底层（Diego）、迁到 K8s（Korifi），项目归 Cloud Foundry Foundation（Linux 基金会），商业上并入 VMware Tanzu
+
+### 两种思路的融合
+
+CF 代表「**平台替你构建**」（推代码），Docker 代表「**自己管交付物**」（推镜像），两条路线在 K8s 时代合流：buildpack 生成 OCI 镜像、Knative/Serverless 平台重新提供 `push 即部署` 的体验（见 [Serverless 系列](/云原生/serverless/)）。而「用它们搭自有 PaaS」这条 Docker 早期用途的**现代等价物**，就是 [K8s 系列](/云原生/k8s/)讲的 Kubernetes + Helm/Operator 体系——OpenShift 可以理解为它的商业化增强版。
+
+> 参考：[OpenShift 官网](https://www.redhat.com/en/technologies/cloud-computing/openshift)、[Cloud Foundry 官网](https://www.cloudfoundry.org/)、[Cloud Native Buildpacks](https://buildpacks.io/)

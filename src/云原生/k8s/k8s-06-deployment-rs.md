@@ -14,7 +14,7 @@ tag:
 description: Deployment 与 ReplicaSet/RC 关系、滚动更新与灰度发布操作要点。
 ---
 
-> **Kubernetes 系列 · 第 6/20 篇**  
+> **Kubernetes 系列 · 第 6/30 篇**  
 > 上一篇：[《工作负载核心：Pod 生命周期、Pause、Init 与探针》](/云原生/k8s/k8s-05-pod-workload) · 下一篇：[《DaemonSet、StatefulSet、Job 与 CronJob》](/云原生/k8s/k8s-07-daemon-stateful-job)
 
 ---

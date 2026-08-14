@@ -12,7 +12,7 @@ tag:
 description: 从 CNCF 定义、四要素与时间轴讲清云原生，并引出 Service Mesh 与 Istio 的背景。
 ---
 
-> **Kubernetes 系列 · 第 1/20 篇**  
+> **Kubernetes 系列 · 第 1/30 篇**  
 > 建议先读完 [Docker 系列](/云原生/docker/docker-01-what-is-docker)；下一篇：[《穿透 K8S 八大宏观架构——Master、Worker 与数据流》](/云原生/k8s/k8s-02-macro-architecture)
 
 ---

@@ -14,8 +14,9 @@ tag:
 description: 容器内 JVM 堆参数、UseContainerSupport、OOM Dump 与生产优化清单。
 ---
 
-> **Kubernetes 系列 · 第 20/20 篇（完结）**  
-> 上一篇：[《custom-metrics-server 规则配置与 Grafana 展示》](/云原生/k8s/k8s-19-custom-metrics/)
+> **Kubernetes 系列 · 第 20/30 篇**  
+> 上一篇：[《custom-metrics-server 规则配置与 Grafana 展示》](/云原生/k8s/k8s-19-custom-metrics/)  
+> 下一篇：[《生产集群部署——kubeadm 从零到高可用》](/云原生/k8s/k8s-21-deploy-kubeadm-ha)
 
 ---
 
@@ -310,6 +311,8 @@ Sidecar 用 `fsnotify` 监听 `java_pid1.hprof` 写入完成，改名带时间�
 | [17 Jenkins 灰度](/云原生/k8s/k8s-17-jenkins-canary/) | CI/CD + 金丝雀发布 | 应用版本如何安全上线 |
 
 **推荐实践顺序**：集群与对象模型（01–04）→ 工作负载与网络存储（05–12）→ 发布与网格（13–14）→ 镜像与配置（15–16）→ **自动化灰度（17）** → **可观测与 QPS 弹性（18–19）** → **JVM 容器化调优（20）**。
+
+至此主线 20 篇（概念与使用）完结；**实践篇 21–30** 接力落地：生产部署（21–23）→ 日志/安全/发布/存储/网络进阶（24–28）→ 项目上云与伸缩监控（29–30）。
 
 云原生不是「会 kubectl」就够——**发布、监控、运行时** 三条线要在生产里闭环。希望本系列能作为你团队落地 K8s 的参考手册。
 

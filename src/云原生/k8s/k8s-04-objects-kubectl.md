@@ -12,7 +12,7 @@ tag:
 description: Kubernetes 对象模型、YAML 结构、Namespace/Label，以及 kubectl 常用命令速查。
 ---
 
-> **Kubernetes 系列 · 第 4/20 篇**  
+> **Kubernetes 系列 · 第 4/30 篇**  
 > 上一篇：[《K8s 运行时实操——Minikube 安装、排障与 Helm》](/云原生/k8s/k8s-03-minikube-runtime)  
 > 下一篇：[《工作负载核心：Pod 生命周期、Pause、Init 与探针》](/云原生/k8s/k8s-05-pod-workload)
 

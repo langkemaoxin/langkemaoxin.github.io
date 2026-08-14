@@ -16,7 +16,7 @@ tag:
 description: Minikube 对接 Harbor，Docker 构建推送与 SpringCloud 上 K8s 部署。
 ---
 
-> **Kubernetes 系列 · 第 15/20 篇**  
+> **Kubernetes 系列 · 第 15/30 篇**  
 > 上一篇：[《Service Mesh 与 Istio》](/云原生/k8s/k8s-14-service-mesh-istio)  
 > 下一篇：[《Secret、ConfigMap 与部署排障》](/云原生/k8s/k8s-16-secret-configmap)
 

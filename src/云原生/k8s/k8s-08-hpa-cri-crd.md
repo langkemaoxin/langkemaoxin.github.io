@@ -15,7 +15,7 @@ tag:
 description: HPA 与 Metrics API，以及 OCI/CRI/CNI/CSI/CRD 扩展点与创建流程。
 ---
 
-> **Kubernetes 系列 · 第 8/20 篇**  
+> **Kubernetes 系列 · 第 8/30 篇**  
 > 上一篇：[《DaemonSet、StatefulSet、Job 与 CronJob》](/云原生/k8s/k8s-07-daemon-stateful-job) · 下一篇：[《Service 四层流量分发——iptables、IPVS 与四类 Port》](/云原生/k8s/k8s-09-service-l4)
 
 ---

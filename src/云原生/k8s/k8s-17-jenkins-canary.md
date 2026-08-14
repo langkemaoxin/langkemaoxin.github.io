@@ -14,7 +14,7 @@ tag:
 description: Jenkins Pipeline 驱动 Ingress 灰度：按 Header/权重的自动化发布流水线。
 ---
 
-> **Kubernetes 系列 · 第 17/20 篇**  
+> **Kubernetes 系列 · 第 17/30 篇**  
 > 上一篇：[《Secret、ConfigMap 与常见部署排障》](/云原生/k8s/k8s-16-secret-configmap/) · 下一篇：[《基于 QPS 的动态扩缩容——Prometheus Operator 与 Adapter》](/云原生/k8s/k8s-18-prometheus-hpa/)
 
 ---

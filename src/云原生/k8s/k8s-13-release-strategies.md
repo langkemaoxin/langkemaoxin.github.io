@@ -16,7 +16,7 @@ tag:
 description: 蓝绿、金丝雀、滚动与 A/B 发布的原理与实操对比。
 ---
 
-> **Kubernetes 系列 · 第 13/20 篇**  
+> **Kubernetes 系列 · 第 13/30 篇**  
 > 上一篇：[《Ingress 七层流量分发》](/云原生/k8s/k8s-12-ingress-l7)  
 > 下一篇：[《Service Mesh 与 Istio》](/云原生/k8s/k8s-14-service-mesh-istio)
 

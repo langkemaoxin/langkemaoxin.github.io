@@ -15,7 +15,7 @@ tag:
 description: custom-metrics 规则、QPS 指标、Grafana 展示与 adapter Discovery。
 ---
 
-> **Kubernetes 系列 · 第 19/20 篇**  
+> **Kubernetes 系列 · 第 19/30 篇**  
 > 上一篇：[《基于 QPS 的动态扩缩容——Prometheus Operator 与 Adapter》](/云原生/k8s/k8s-18-prometheus-hpa/) · 下一篇：[《容器内 JVM 参数解析与生产优化》](/云原生/k8s/k8s-20-jvm-in-container/)
 
 ---

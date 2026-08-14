@@ -12,7 +12,7 @@ tag:
 description: 用八张宏观架构图讲清 Master/Worker、元数据流、APIServer 与 kubelet 内部结构。
 ---
 
-> **Kubernetes 系列 · 第 2/20 篇**  
+> **Kubernetes 系列 · 第 2/30 篇**  
 > 上一篇：[《云原生原理与演进——从 CNCF 到 Service Mesh》](/云原生/k8s/k8s-01-cloud-native)  
 > 下一篇：[《K8s 运行时实操——Minikube 安装、排障与 Helm》](/云原生/k8s/k8s-03-minikube-runtime)
 

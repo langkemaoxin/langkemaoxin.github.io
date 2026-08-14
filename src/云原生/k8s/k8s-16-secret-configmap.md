@@ -17,7 +17,7 @@ tag:
 description: Secret/ConfigMap/imagePullSecrets，以及 ImagePullBackOff 等常见故障排查。
 ---
 
-> **Kubernetes 系列 · 第 16/20 篇**  
+> **Kubernetes 系列 · 第 16/30 篇**  
 > 上一篇：[《Harbor + K8s 部署 SpringCloud》](/云原生/k8s/k8s-15-harbor-springcloud)  
 > 下一篇：[《Jenkins + Ingress 自动化灰度》](/云原生/k8s/k8s-17-jenkins-canary)
 

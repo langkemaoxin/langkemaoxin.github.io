@@ -15,7 +15,7 @@ tag:
 description: DaemonSet、StatefulSet、Job/CronJob 的适用场景、DNS 与调度容忍配置。
 ---
 
-> **Kubernetes 系列 · 第 7/20 篇**  
+> **Kubernetes 系列 · 第 7/30 篇**  
 > 上一篇：[《Deployment 与副本控制——灰度更新、RC 与 ReplicaSet》](/云原生/k8s/k8s-06-deployment-rs) · 下一篇：[《HPA 自动伸缩与 CRI/CNI/CSI/CRD 扩展点》](/云原生/k8s/k8s-08-hpa-cri-crd)
 
 ---

@@ -13,7 +13,7 @@ tag:
 description: Underlay/Overlay、IPVLAN 与集群内外 DNS 解析规律。
 ---
 
-> **Kubernetes 系列 · 第 10/20 篇**  
+> **Kubernetes 系列 · 第 10/30 篇**  
 > 上一篇：[《Service 四层流量分发——iptables、IPVS 与四类 Port》](/云原生/k8s/k8s-09-service-l4/) · 下一篇：[《应用持久化存储——Volume、PV 与 PVC》](/云原生/k8s/k8s-11-pv-pvc/)
 
 ---
@@ -342,7 +342,7 @@ spec:
 
 | 要点 | 说明 |
 |------|------|
-| **必须 CNI 支持** | NetworkPolicy 由 **CNI 插件实现**（Calico、Cilium 等），Flannel 等不支持时写了也不生效——先确认插件（[Cilium 部署](/云原生/k8s-ops/k8s-ops-35-k8s集群网络插件cilium-网络加速器-部署及使用验证)） |
+| **必须 CNI 支持** | NetworkPolicy 由 **CNI 插件实现**（Calico、Cilium 等），Flannel 等不支持时写了也不生效——先确认插件（[Cilium 部署](/云原生/k8s/k8s-28-advanced-network/)） |
 | 默认全通 → 先加「deny all」 | 常见起步：给 namespace 加一条「禁止所有入站」的策略，再逐条放行 |
 | 命名空间间隔离 | `from` 里用 `namespaceSelector` 可按 ns 放行/禁止 |
 

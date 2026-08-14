@@ -16,7 +16,7 @@ tag:
 description: Sidecar 模式、Istio 控制面/数据面，以及 Bookinfo 入门实验。
 ---
 
-> **Kubernetes 系列 · 第 14/20 篇**  
+> **Kubernetes 系列 · 第 14/30 篇**  
 > 上一篇：[《发布策略实战》](/云原生/k8s/k8s-13-release-strategies)  
 > 下一篇：[《Harbor + K8s 部署 SpringCloud》](/云原生/k8s/k8s-15-harbor-springcloud)
 

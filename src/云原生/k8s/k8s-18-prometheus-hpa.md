@@ -14,7 +14,7 @@ tag:
 description: SpringBoot 指标到 Prometheus Operator，再到 adapter 驱动 HPA。
 ---
 
-> **Kubernetes 系列 · 第 18/20 篇**  
+> **Kubernetes 系列 · 第 18/30 篇**  
 > 上一篇：[《Jenkins + Ingress 自动化灰度发布流水线》](/云原生/k8s/k8s-17-jenkins-canary/) · 下一篇：[《custom-metrics-server 规则配置与 Grafana 展示》](/云原生/k8s/k8s-19-custom-metrics/)
 
 ---

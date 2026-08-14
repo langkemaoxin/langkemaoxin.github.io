@@ -14,7 +14,7 @@ tag:
 description: Pod 生命周期、Pause/Init/临时容器、探针与静态 Pod，打好工作负载基础。
 ---
 
-> **Kubernetes 系列 · 第 5/20 篇**  
+> **Kubernetes 系列 · 第 5/30 篇**  
 > 上一篇：[《Kubernetes 基本概念与 kubectl——对象模型与常用命令》](/云原生/k8s/k8s-04-objects-kubectl) · 下一篇：[《Deployment 与副本控制——灰度更新、RC 与 ReplicaSet》](/云原生/k8s/k8s-06-deployment-rs)
 
 ---

@@ -12,7 +12,7 @@ tag:
 description: Minikube 安装、镜像加速、Harbor/VirtualBox 排障、Dashboard 与 Helm 实操清单。
 ---
 
-> **Kubernetes 系列 · 第 3/20 篇**  
+> **Kubernetes 系列 · 第 3/30 篇**  
 > 上一篇：[《穿透 K8S 八大宏观架构——Master、Worker 与数据流》](/云原生/k8s/k8s-02-macro-architecture)  
 > 下一篇：[《Kubernetes 基本概念与 kubectl——对象模型与常用命令》](/云原生/k8s/k8s-04-objects-kubectl)
 
