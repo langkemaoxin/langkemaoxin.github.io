@@ -70,7 +70,7 @@ export default navbar([
   {
     text: "面试题",
     icon: "comments",
-    link: "/面试题/",
+    link: "https://interview.code-corey.com/面试题/",
   },
   {
     text: "Windows",

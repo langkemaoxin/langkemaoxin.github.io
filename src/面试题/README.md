@@ -1,16 +1,14 @@
 ---
-title: 面试题
+title: 面试题已迁移
 index: false
 icon: comments
 article: false
 ---
 
-# 面试题
+# 面试题已迁移
 
-图灵《Java+AI 大模型全栈面试核心点（2026版）》整库同步，按语雀左侧栏目分组。
+面试题栏目已拆分为独立站点，减轻本站构建压力。
 
-来源知识库：https://www.yuque.com/tulingzhouyu/db22bv
+**请前往：** [https://interview.code-corey.com/](https://interview.code-corey.com/)
 
-## 栏目目录
-
-<Catalog />
+题库入口：[https://interview.code-corey.com/面试题/](https://interview.code-corey.com/面试题/)

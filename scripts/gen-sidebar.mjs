@@ -280,6 +280,11 @@ function generateSidebar() {
     sidebarMap[mod.path] = collectModuleSidebar(mod);
   }
 
+  // 博客衍生页无侧栏，避免 /tag/xxx missing sidebar config 警告
+  for (const p of ["/tag/", "/category/", "/article/", "/star/", "/timeline/"]) {
+    sidebarMap[p] = false;
+  }
+
   const body = Object.entries(sidebarMap)
     .map(([key, value]) => `  ${JSON.stringify(key)}: ${stringifyTs(value, 4)},`)
     .join("\n");
