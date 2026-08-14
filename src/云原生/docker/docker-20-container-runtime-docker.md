@@ -1,8 +1,8 @@
 ---
 title: 容器运行时 Docker
 sidebarGroup: Docker 系列
-shortTitle: 20 容器运行时 Docker
-order: 20
+shortTitle: 附2 容器运行时 Docker
+order: 101
 date: 2026-08-13T00:00:00.000Z
 category: 云原生
 tag:

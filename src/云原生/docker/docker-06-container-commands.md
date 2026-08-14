@@ -12,7 +12,7 @@ tag:
 description: 容器日常命令——run、ps、stop、exec 与常用运维
 ---
 
-> **Docker 系列 · 第 6/18 篇**  
+> **Docker 系列 · 第 6/23 篇**  
 > 上一篇：[《容器与镜像——类与实例、读写层与生命周期》](/云原生/docker/docker-05-container-and-image)  
 > 下一篇预告：进入容器专题——attach、exec、nsenter 等方式（系列第 7 篇）
 

@@ -1,8 +1,8 @@
 ---
 title: 如何通过docker部署https访问的nginx应用？
 sidebarGroup: Docker 系列
-shortTitle: 19 如何通过docker部署https访问的ngin
-order: 19
+shortTitle: 附1 如何通过docker部署https访问的ngin
+order: 100
 date: 2026-08-13T00:00:00.000Z
 category: 云原生
 tag:

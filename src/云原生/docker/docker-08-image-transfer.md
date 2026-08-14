@@ -13,7 +13,7 @@ tag:
 description: Docker 本地镜像载入与载出——离线环境的镜像搬运术
 ---
 
-> **Docker 系列 · 第 8/18 篇**  
+> **Docker 系列 · 第 8/23 篇**  
 > 上一篇：[《进入 Docker 容器的四种方式》](/云原生/docker/docker-07-enter-container)  
 > 下一篇：[《Harbor 私有镜像仓库》](/云原生/docker/docker-09-harbor)
 

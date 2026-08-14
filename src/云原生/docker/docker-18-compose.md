@@ -12,8 +12,8 @@ tag:
 description: Docker Compose 编排——用 YAML 定义一整栈微服务
 ---
 
-> **Docker 系列 · 第 18/18 篇**  
-> 上一篇：[《网络模式与实操》](/云原生/docker/docker-17-network/) · 系列开篇：[《技术底座总览》](/云原生/docker/docker-13-tech-foundation/)
+> **Docker 系列 · 第 18/23 篇**  
+> 上一篇：[《网络模式与实操》](/云原生/docker/docker-17-network/) · 下一篇：[《数据持久化》](/云原生/docker/docker-19-data-persistence/) · 系列开篇：[《技术底座总览》](/云原生/docker/docker-13-tech-foundation/)
 
 ---
 

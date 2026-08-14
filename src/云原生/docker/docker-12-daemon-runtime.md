@@ -16,7 +16,7 @@ tag:
 description: Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链
 ---
 
-> **Docker 系列 · 第 12/18 篇**  
+> **Docker 系列 · 第 12/23 篇**  
 > 上一篇：[《进程视角看容器》](/云原生/docker/docker-11-process-view)  
 > 下一篇：[《Docker 技术底座总览》](/云原生/docker/docker-13-tech-foundation)
 

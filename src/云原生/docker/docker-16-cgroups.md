@@ -12,7 +12,7 @@ tag:
 description: CGroups 限资源——防止一个容器吃光整台机器
 ---
 
-> **Docker 系列 · 第 16/18 篇**  
+> **Docker 系列 · 第 16/23 篇**  
 > 上一篇：[《Namespace 隔离》](/云原生/docker/docker-15-namespace/) · 下一篇：[《网络模式与实操》](/云原生/docker/docker-17-network/)
 
 ---

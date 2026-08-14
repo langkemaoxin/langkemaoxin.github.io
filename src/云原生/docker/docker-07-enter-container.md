@@ -14,7 +14,7 @@ tag:
 description: 进入 Docker 容器的四种方式——以及六大命名空间
 ---
 
-> **Docker 系列 · 第 7/18 篇**  
+> **Docker 系列 · 第 7/23 篇**  
 > 上一篇：[《容器日常命令》](/云原生/docker/docker-06-container-commands)  
 > 下一篇：[《Docker 本地镜像载入与载出》](/云原生/docker/docker-08-image-transfer)
 

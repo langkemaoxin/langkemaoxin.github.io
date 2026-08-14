@@ -12,7 +12,7 @@ tag:
 description: 容器与镜像——类与实例、读写层与生命周期
 ---
 
-> **Docker 系列 · 第 5/18 篇**  
+> **Docker 系列 · 第 5/23 篇**  
 > 上一篇：[《Docker 安装三种方式——离线、在线与现成虚拟机》](/云原生/docker/docker-04-install)  
 > 下一篇预告：[《容器日常命令——run、ps、stop、exec 与常用运维》](/云原生/docker/docker-06-container-commands)
 
