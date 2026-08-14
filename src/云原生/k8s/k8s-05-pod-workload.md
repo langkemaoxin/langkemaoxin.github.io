@@ -191,6 +191,38 @@ kubectl get pod my-pod -w
 kubectl logs -f my-pod --container=init-myservice
 ```
 
+### 原生 Sidecar 容器（1.28+）：Init 的进化形态
+
+Init 容器有个天然缺陷：**跑完就退出**，不能常驻。而日志采集、服务网格代理这类「伴随容器」需要与主容器同生共死、还要比主容器**先启动、后退出**——历史上只能靠 hack（把 sidecar 写成普通容器 + 探针等待）。1.28 起 K8s 提供了正式形态（官方 [Sidecar Containers](https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/)）：**在 `initContainers` 里声明一个 `restartPolicy: Always` 的容器**，它就是原生 Sidecar：
+
+```yaml
+spec:
+  initContainers:
+    - name: log-agent            # 原生 sidecar：init 位置 + Always 重启策略
+      image: log-agent:1.0
+      restartPolicy: Always       # ← 关键：有它就是常驻 sidecar，而非一次性 init
+      volumeMounts:
+        - name: logs
+          mountPath: /var/log/app
+  containers:
+    - name: myapp
+      image: myapp:1.0
+      volumeMounts:
+        - name: logs
+          mountPath: /var/log/app
+```
+
+与普通 init 容器的行为差异，正好是 sidecar 需要的：
+
+| 行为 | 普通 init 容器 | 原生 sidecar（Always） |
+|------|---------------|------------------------|
+| 生命周期 | 跑完即退 | **常驻**，随 Pod 生灭 |
+| 启动顺序 | 先于主容器 | 先于主容器，且**就绪后主容器才启动** |
+| 退出顺序 | —— | Pod 终止时**先停主容器**，sidecar 最后退（可先 flush 日志/上报） |
+| 所在容器列表 | initContainers | initContainers（调度与资源占用按常驻算） |
+
+> 💡 这是 [14 Service Mesh 篇](/云原生/k8s/k8s-14-service-mesh-istio)里「手工注入 Envoy sidecar」的官方替代方向——Istio 等已支持用原生 sidecar 承载代理，避免「Pod 已 Running 但代理未就绪」的窗口期。
+
 ---
 
 ## 六、生命周期钩子（Hook）
@@ -363,6 +395,25 @@ CPU 可压缩（紧张时 throttle）；内存不可压缩（超限 OOM Kill）�
 
 注意：容器内 `top` 看到的往往是**节点级**总量，不是 limits。
 
+### QoS 三级：由 requests/limits 自动推导的「驱逐顺位」
+
+每个 Pod 的 requests/limits 写法组合，会自动落入三档 **QoS 等级**（Quality of Service，官方 [docs](https://kubernetes.io/docs/concepts/workloads/pods/pod-qos/)）——它平时无感，**节点资源紧张（内存不足）需要驱逐 Pod 时决定谁先走**：
+
+| 等级 | 判定条件 | 驱逐顺位 |
+|------|----------|----------|
+| **Guaranteed** | 每个容器都设置了 requests **且** requests == limits（CPU 和内存都设） | 最后被驱逐 |
+| **Burstable** | 至少设了 requests，但不满足 Guaranteed | 中间 |
+| **BestEffort** | 什么都没设 | **最先被驱逐** |
+
+```yaml
+# Guaranteed 的标准写法：CPU/内存都设，且 requests 与 limits 相同
+resources:
+  requests: { cpu: "500m", memory: "512Mi" }
+  limits:   { cpu: "500m", memory: "512Mi" }
+```
+
+> 🔑 生产含义：**核心服务用 Guaranteed 写法**（requests=limits），既是调度承诺也是驱逐免死金牌；不重要的批处理任务可以故意用 BestEffort「蹭」资源，接受最先被赶走的代价。查看顺位：`kubectl get pod <name> -o jsonpath='{.status.qosClass}'`。
+
 ---
 
 ## 十二、三种探针详解
@@ -473,6 +524,53 @@ livenessProbe:
 给应用最多 60×5=300s 启动窗口；startup 成功后 liveness 在约 15s 内可发现运行期故障。
 
 ![startupProbe 原理](/云原生/k8s/p182-01.png)
+
+---
+
+## 十三、Downward API：把 Pod 自己的信息告诉容器
+
+应用经常需要知道自己「跑在哪」——Pod 名、IP、所在节点、所属 namespace，还有自己被分配的 resources。这些信息**不该硬编码**，也难用环境变量逐个注入——K8s 的 Downward API（官方 [docs](https://kubernetes.io/docs/concepts/workloads/pods/downward-api/)）让 Pod 把**自身的元数据**暴露给自己容器里的进程，两种方式：
+
+**方式一：环境变量**——适合取简单字段：
+
+```yaml
+containers:
+  - name: myapp
+    env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name       # Pod 名
+      - name: POD_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.podIP        # Pod IP（重启会变，运行时读取才准）
+      - name: NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName       # 所在节点
+```
+
+**方式二：downwardAPI 卷**——把信息**写成文件**挂进去，且能带 labels/annotations（env 方式取不到这两个）：
+
+```yaml
+volumes:
+  - name: podinfo
+    downwardAPI:
+      items:
+        - path: labels
+          fieldRef:
+            fieldPath: metadata.labels     # 所有 label，一行一个
+        - path: annotations
+          fieldRef:
+            fieldPath: metadata.annotations
+        - path: cpu_limit
+          resourceFieldRef:
+            containerName: myapp
+            resource: limits.cpu           # 自己的 CPU limit（毫核）
+```
+
+> 💡 两个易混点：① Downward API 只能暴露**自己这个 Pod** 的信息，拿不到别的对象——那要用 API Server（或 ConfigMap）；② labels/annotations **只能通过卷**暴露，环境变量方式不支持。典型用途：日志里自动带 Pod 名、StatefulSet 应用按 hostname 组建集群（[07 篇](/云原生/k8s/k8s-07-daemon-stateful-job)）之外的自标识需求。
 
 ---
 

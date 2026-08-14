@@ -356,7 +356,41 @@ spec:
 
 ---
 
-## 九、小结
+## 九、EndpointSlices 与流量拓扑：Service 背后的数据面
+
+### 9.1 EndpointSlices：Endpoints 的现代形态
+
+前面说「Service 通过 Endpoints 找到 Pod」，更准确地说，1.19 起默认由 **EndpointSlice** 承担这个角色（官方 [docs](https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/)）：每个 Service 对应**一组** EndpointSlice（默认每片最多 100 个端点），而不是一条巨大的 Endpoints 对象。
+
+| 对比 | Endpoints（老） | EndpointSlices（现） |
+|------|-----------------|----------------------|
+| 组织方式 | 一个对象塞下**全部**端点 | 切片，每片 ≤100 端点，可分散到多节点 |
+| 大规模 Service | 端点一变全量重写，Watch 风暴 | 单片更新，变更开销小 |
+| 附加信息 | 只有 IP:Port | 带 **就绪、拓扑（节点/区）、Tolerations** 等元数据 |
+
+```bash
+kubectl get endpointslices -l kubernetes.io/service-name=my-svc
+# NAME                  ADDRESSTYPE ... ENDPOINTS
+# my-svc-abc12   IPv4         10.244.1.5,10.244.2.8,...
+```
+
+> 💡 排障时看它比看 Endpoints 直观：`Ready` 列为 false 的端点不会被转发——**Service 通了但请求 503**，先查这里 Pod 是不是 NotReady/探针失败。它带的拓扑信息也是下一节流量策略的基础。
+
+### 9.2 Service Internal Traffic Policy：集群内流量也「就近」
+
+`internalTrafficPolicy: Local`（1.26 起稳定）让 **集群内部**访问 Service 时只路由到**本节点上的端点**，跳过跨节点 SNAT 一跳，降低延迟（调用方与被调方同节点部署时收益明显）：
+
+```yaml
+spec:
+  type: ClusterIP
+  internalTrafficPolicy: Local   # 默认 Cluster（可跨节点）；Local=仅本节点端点
+```
+
+> ⚠️ Local 的代价：本节点没有健康端点时**直接连不通**（不会 fallback 到其他节点），只适合「每个节点都有完整服务副本」的形态（如 DaemonSet 服务、配合 [07 篇](/云原生/k8s/k8s-07-daemon-stateful-job)的调度策略）。它和 NodePort 的 `externalTrafficPolicy: Local` 是同一思想的内外两个入口。
+
+---
+
+## 十、小结
 
 | 主题 | 要点 |
 |------|------|

@@ -437,6 +437,80 @@ kubectl get jobs
 
 ---
 
+## 八、调度进阶：拓扑分布、优先级与驱逐
+
+前文讲过的 nodeSelector / nodeAffinity / Taint 解决「**能不能调度到这个节点**」；再往上还有三层问题：**散得均不均、抢不得过别人、节点出事了谁先走**（官方 [Scheduling 概念](https://kubernetes.io/docs/concepts/scheduling-eviction/)）。
+
+### 8.1 拓扑分布约束（topologySpreadConstraints）：把副本摊开
+
+3 副本全调度到同一节点/同一可用区，节点一挂全灭。`topologySpreadConstraints` 让调度器把副本**均匀摊到拓扑域**上：
+
+```yaml
+spec:
+  topologySpreadConstraints:
+    - maxSkew: 1                     # 各拓扑域之间副本数差最多 1
+      topologyKey: kubernetes.io/az  # 按什么标签划分拓扑域（节点= topologyKey: kubernetes.io/hostname）
+      whenUnsatisfiable: DoNotSchedule  # 摊不开就不调度（ScheduleAnyway=尽量）
+      labelSelector:
+        matchLabels:
+          app: myapp
+```
+
+| 对比 | 已学机制 | 它解决什么 |
+|------|----------|-----------|
+| nodeAffinity | 「固定去某些节点」 | 不保证**分布均匀** |
+| podAntiAffinity | 「别和别人挤」 | 是「排斥」语义，不是「均匀」语义 |
+| topologySpread | **均匀摊布** | 跨节点/跨 AZ 的高可用标准姿势 |
+
+### 8.2 Pod 优先级与抢占（PriorityClass / Preemption）
+
+集群资源吃紧时，重要的工作负载要有「插队权」——**PriorityClass** 定义优先级整数（越大越重要），Pod 引用后获得两个能力：
+
+```yaml
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: critical
+value: 1000000
+globalDefault: false
+---
+# Pod 里引用
+spec:
+  priorityClassName: critical
+```
+
+- **调度排序**：调度队列里高优先级 Pod 先出队；
+- **抢占（Preemption）**：高优先级 Pod 调度不进任何节点时，调度器会**驱逐**节点上低优先级 Pod 给它腾位（被抢占者进入 `Terminating`，由各自控制器重建）。
+
+> ⚠️ 系统 PriorityClass 有保留区间：`system-cluster-critical`（2000000000，如 Calico/CSI）和 `system-node-critical`（2000001000，如 kube-proxy）。**自定义值别超过 1000000000**，且给业务设抢占前先想清楚——被抢占的低优先级任务是会重跑（Job）还是直接丢（无状态请求）。
+
+### 8.3 驱逐的两种来源与 PDB
+
+「Pod 被赶走」有两个完全不同的发起方，排查时要先分清：
+
+| 类型 | 发起方 | 触发条件 | 特点 |
+|------|--------|----------|------|
+| **节点压力驱逐** | **kubelet**（节点级） | 内存/磁盘不足 | 按 [QoS 等级](/云原生/k8s/k8s-05-pod-workload)从 BestEffort 开始赶，**不理会 PDB**——先救节点 |
+| **API 发起驱逐** | **人类/控制器**（`kubectl drain`、 autoscaler、抢占） | 主动腾空节点等 | 尊重 **PDB**，预算不够就等待 |
+
+**PDB（PodDisruptionBudget，中断预算）**：声明「这类 Pod 至少要保持 N 个可用」，drain 等自愿中断必须遵守：
+
+```yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: myapp-pdb
+spec:
+  minAvailable: 2        # 或 maxUnavailable: 1，二选一
+  selector:
+    matchLabels:
+      app: myapp
+```
+
+有了它，`kubectl drain` 一次只会赶掉预算允许的数量，等副本补齐再继续——**滚动运维（升级节点、缩容）前先给有状态/核心服务配 PDB**，这是[发布策略篇](/云原生/k8s/k8s-13-release-strategies)之外另一条「不把可用性交给运气」的保险。
+
+---
+
 ## 小结
 
 - **DaemonSet**：每 Node 一个 Pod；配合 **Toleration** 调度到污点节点；nodeSelector / Affinity 精细节点。

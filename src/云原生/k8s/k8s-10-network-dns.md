@@ -309,7 +309,48 @@ kubectl run dns-test -i --tty --image=busybox --restart=Never --rm -- /bin/sh
 
 ---
 
-## 八、小结
+## 八、NetworkPolicy：Pod 级网络防火墙
+
+前文解决的是「**怎么通**」（Underlay/Overlay 打通 Pod 网络），NetworkPolicy 解决「**该不该通**」——默认 K8s 网络是**全通**的：任何 Pod 可以访问任何 Pod 与 Service。生产上（尤其多租户/前后端分离）需要按白名单收紧（官方 [docs](https://kubernetes.io/docs/concepts/services-networking/network-policies/)）。
+
+**心智模型三条**：
+
+- NetworkPolicy **作用于 Pod**（通过 `podSelector` 选中），描述「谁能进（ingress）/谁能出（egress）」；
+- **一旦某 Pod 被任意 Policy 选中，它就进入白名单模式**——没被规则允许的流量一律丢弃；
+- 没被任何 Policy 选中的 Pod 保持全通。
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-allow-web-only
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: api                  # 作用于 api Pod
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: web          # 只允许 web 进
+      ports:
+        - protocol: TCP
+          port: 8080
+```
+
+| 要点 | 说明 |
+|------|------|
+| **必须 CNI 支持** | NetworkPolicy 由 **CNI 插件实现**（Calico、Cilium 等），Flannel 等不支持时写了也不生效——先确认插件（[Cilium 部署](/云原生/k8s-ops/k8s-ops-35-k8s集群网络插件cilium-网络加速器-部署及使用验证)） |
+| 默认全通 → 先加「deny all」 | 常见起步：给 namespace 加一条「禁止所有入站」的策略，再逐条放行 |
+| 命名空间间隔离 | `from` 里用 `namespaceSelector` 可按 ns 放行/禁止 |
+
+> 💡 Service 层面的访问控制是 RBAC（管 API），**数据面**的访问控制就是 NetworkPolicy——一个管「能不能操作对象」，一个管「包能不能过去」，二者互补，见 [16 篇安全节](/云原生/k8s/k8s-16-secret-configmap)。
+
+---
+
+## 九、小结
 
 | 主题 | 要点 |
 |------|------|

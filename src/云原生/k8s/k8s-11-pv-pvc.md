@@ -39,6 +39,9 @@ Kubernetes 支持多种 Volume 类型：
 | 本地 | hostPath | 挂载 Node 目录/文件 |
 | 网络 | nfs、cephfs、iscsi… | 远程存储 |
 | 抽象 | persistentVolumeClaim | 引用 PVC 绑定的 PV |
+| 投射 | configMap / secret / downwardAPI / **projected** | 把配置与 Pod 元信息「投射」成文件挂载 |
+
+其中 **projected（投射卷）** 是把上述多个来源**合并投射到同一个目录**：一个挂载点同时呈现 ConfigMap、Secret 和 Downward API 文件，避免给容器挂一堆零散卷——`serviceAccountToken` 也以投射卷形式自动挂进 Pod（`/var/run/secrets/kubernetes.io/serviceaccount/`）。
 
 ### 1.1 emptyDir
 
@@ -472,7 +475,54 @@ Pod 删除后 PVC 默认保留，符合有状态应用「身份 + 存储」持�
 
 ---
 
-## 六、小结
+## 六、Volume Snapshots：给 PVC 拍快照
+
+PVC 里的数据出了问题想「回到昨天」，逐条恢复备份太重——CSI 标准（官方 [docs](https://kubernetes.io/docs/concepts/storage/volume-snapshots/)）提供了**存储系统原生的快照能力**，模型与 PV/PVC 完全对偶：
+
+| 概念 | 快照体系 | 对偶于 |
+|------|----------|--------|
+| **VolumeSnapshot** | 用户侧「我要拍/恢复一份快照」 | PVC |
+| **VolumeSnapshotContent** | 存储后端的实际快照 | PV |
+| **VolumeSnapshotClass** | 快照的参数模板（哪个驱动、是否删除快照时连底层一起删） | StorageClass |
+
+```yaml
+# 1. 拍快照（对已有 PVC）
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: db-snap-20260814
+spec:
+  volumeSnapshotClassName: csi-nfs-snapclass
+  source:
+    persistentVolumeClaimName: db-data
+---
+# 2. 从快照建新 PVC（dataSource 指向快照）
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-data-restored
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 10Gi
+  dataSource:                    # ← 关键：从快照克隆出新卷
+    apiGroup: snapshot.storage.k8s.io
+    kind: VolumeSnapshot
+    name: db-snap-20260814
+```
+
+三个使用前提：
+
+- 存储后端/CSI 驱动**必须支持快照**，且集群要装 **snapshot-controller**（external-snapshotter 项目，多数发行版已内置，可用 `kubectl get volumesnapshotclasses` 验证）；
+- 快照是**存储系统级**操作——强依赖后端能力（NFS 这类要看具体 CSI 实现是否有快照插件）；
+- `dataSource` 还能指向另一个 PVC（**卷克隆**），配合快照构成「备份 → 恢复/复制数据卷」的完整链路。
+
+> 💡 典型工作流：升级数据库前先 `kubectl apply` 一份 VolumeSnapshot，失败就从快照 `dataSource` 拉新 PVC 回滚——比任何文件级备份都快。
+
+---
+
+## 七、小结
 
 | 主题 | 要点 |
 |------|------|

@@ -415,6 +415,31 @@ kubectl api-resources --namespaced=false
 
 Node、PersistentVolume、StorageClass 等**不在** namespace 中。
 
+### 6.1 命名空间级资源治理：ResourceQuota 与 LimitRange
+
+多团队共用集群时，namespace 除了隔离资源，还能「限额」。两个互补对象（官方 [docs](https://kubernetes.io/docs/concepts/policy/)）：
+
+| 对象 | 管什么 | 典型规则 |
+|------|--------|----------|
+| **ResourceQuota** | 整个 namespace 的**总量**：CPU/内存的 requests/limits 之和、Pod/Service/PVC 等**对象数量** | `requests.cpu: "10"`、`count/pods: "50"` |
+| **LimitRange** | namespace 内**单个 Pod/容器**的默认值与上下限：default request/limit、min/max | 没写 requests 的容器自动补默认值；超出 max 直接拒绝创建 |
+
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: team-a-quota
+  namespace: team-a
+spec:
+  hard:
+    requests.cpu: "10"
+    requests.memory: 20Gi
+    limits.cpu: "20"
+    pods: "50"
+```
+
+> 💡 两者配合的逻辑：**Quota 是总量红线，LimitRange 是个体默认值**。只设 Quota 不设 LimitRange 时，不写 requests 的 Pod 会「绕过」配额统计，所以生产上通常成对出现。配额不足时新 Pod 创建直接失败（`exceeded quota`）。
+
 ---
 
 ## 七、标签（Label）与选择器（Selector）
@@ -655,6 +680,34 @@ helm uninstall my-mysql
 ```
 
 对象模型不变：**Release** 就是一组已 apply 的 Deployment/Service/ConfigMap 等。
+
+---
+
+## 十三、对象的生与死：Owner 引用、级联删除与 Finalizers
+
+对象模型不只管「长什么样」，还管「谁创建的、怎么删」——这决定了删除一个 Deployment 时，它的 ReplicaSet 和 Pod 为什么会跟着消失。
+
+**Owner 引用（ownerReferences）**：每个从属对象都记录自己的属主。Deployment → ReplicaSet → Pod 就是一条属主链。kubectl 删除对象时按链**级联删除（Cascading Deletion）**，三种模式：
+
+| 模式 | 行为 | 用法 |
+|------|------|------|
+| **background**（默认） | 立刻删属主，后台回收从属对象 | 日常删除 |
+| **foreground** | 先删从属对象、属主进入 `Terminating` 等清理完才消失 | 需要确认「删干净」的场景 |
+| **orphan** | 只删属主，从属对象被「孤儿化」保留 | RS 保留、Pod 留着排查时 |
+
+```bash
+kubectl delete deployment myapp --cascade=orphan   # 改变级联行为
+```
+
+**Finalizers** 是删除的「闸门」：`metadata.finalizers` 非空的对象，收到删除请求后**不会真删**，而是先进入 `Terminating` 状态，等控制器（或 CSI、PVC 保护等内置逻辑）做完清理、把 finalizer 逐个移除后，对象才真正消失。
+
+```bash
+# 常见「卡在 Terminating」排查：看 finalizers 是谁加的
+kubectl get pvc my-pvc -o jsonpath='{.metadata.finalizers}'
+# 常见值如 kubernetes.io/pvc-protection——等 PV 保护逻辑完成会自动移除
+```
+
+> ⚠️ 对象**卡在 Terminating 不消失**，99% 是 finalizer 没被移除（对应控制器已不在/异常）。应急可手动删掉 finalizer 字段，但要先确认没有底层资源（云盘、LB）真的需要清理，否则会泄露外部资源。官方文档：[Owners and Dependents](https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/)、[Finalizers](https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers/)。
 
 ---
 

@@ -477,7 +477,47 @@ kubectl describe ingress ingress-test
 
 ---
 
-## 十一、小结
+## 十一、Gateway API：Ingress 的继任者
+
+Ingress 用到深处会撞到两类天花板：**注解堆山**（rewrite、timeout、canary 全塞进 `annotations`，各家 Controller 方言不兼容）；**角色不分**（基础设施与应用团队改的是同一个对象）。官方为此推出了 **Gateway API**（[docs](https://kubernetes.io/docs/concepts/services-networking/gateway-api/)，2023 年发布 v1.0），核心思路是「**角色分离 + 标准化**」：
+
+| 对象 | 谁维护 | 管什么 | 类比 Ingress 时代 |
+|------|--------|--------|-------------------|
+| **GatewayClass** | 平台/云厂商 | 某类网关的实现（如 Istio、Envoy Gateway） | IngressClass |
+| **Gateway** | 基础设施团队 | 网关实例：监听端口、TLS、暴露 IP | Controller 的 Service 暴露 |
+| **HTTPRoute / TCPRoute…** | **应用团队** | 路由规则：主机、路径、**权重、超时、重试、镜像**等一等公民字段 | Ingress + 一堆注解 |
+
+```yaml
+# 应用团队只写 Route，不碰网关基础设施
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: myapp-route
+spec:
+  parentRefs:
+    - name: edge-gateway        # 绑定基础设施团队的 Gateway
+  hostnames: ["api.example.com"]
+  rules:
+    - matches:
+        - path: { type: PathPrefix, value: /v1 }
+      backendRefs:
+        - name: myapp-v1
+          port: 80
+          weight: 90            # ← 金丝雀权重是标准字段，不再是注解
+        - name: myapp-v2
+          port: 80
+          weight: 10
+```
+
+对现有体系的定位建议：
+
+- **Ingress 不会被移除**——存量稳定、够用就别动；
+- 新项目/多团队共享网关、路由规则复杂（加权灰度、跨命名空间引用后端）时优先 Gateway API；
+- [13 发布策略篇](/云原生/k8s/k8s-13-release-strategies)与 [17 Jenkins 灰度篇](/云原生/k8s/k8s-17-jenkins-canary)里基于注解的 canary，在 Gateway API 里被 `weight` 字段标准化替代——这也是 [14 Istio 篇](/云原生/k8s/k8s-14-service-mesh-istio)之外更轻量的七层灰度路径。
+
+---
+
+## 十二、小结
 
 | 主题 | 要点 |
 |------|------|

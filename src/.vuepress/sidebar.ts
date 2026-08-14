@@ -575,6 +575,9 @@ export default sidebar({
         "serverless-21-knative-可观测性-使用prometheus与grafana监控",
         "serverless-22-efk",
         "serverless-23-openfaas-函数即服务",
+        "serverless-24-云上serverless之aws-lambda",
+        "serverless-25-serverless-framework与云上iac工具链",
+        "serverless-26-serverless选型对比云上faas-vs-自建k8s",
       ],
     },
     {

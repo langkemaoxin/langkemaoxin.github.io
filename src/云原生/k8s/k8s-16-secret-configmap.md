@@ -531,6 +531,111 @@ docker pull harbor.example.com/demo/demo-provider:v1.0.1
 
 ---
 
+## 十一、安全三件套：ServiceAccount、RBAC 与 securityContext
+
+Secret 管的是「数据不让别人看」，但 K8s 安全还有另一半：**谁能操作集群（API 层）**、**容器里进程的权限有多大（运行时层）**——正好补齐这两层（官方 [Security 概念](https://kubernetes.io/docs/concepts/security/)）。
+
+### 11.1 ServiceAccount：Pod 在集群里的身份
+
+人用 kubeconfig 里的用户身份访问 API，**Pod 用 ServiceAccount（SA）**。每个 namespace 有个叫 `default` 的 SA，Pod 不指定就自动用它——1.24 起**不再自动生成长效 Secret token**，而是挂一个**投射的临时 token**（到期自动轮换）进 Pod：
+
+```bash
+kubectl get sa -n prod
+# Pod 里实际挂载的 token：
+kubectl exec <pod> -- cat /var/run/secrets/kubernetes.io/serviceaccount/token
+```
+
+> ⚠️ `default` SA 默认**几乎零权限**（除集群公开信息外读不了任何对象）——这是刻意的。Pod 里的应用要访问 API 时，正确姿势是**新建专用 SA + 最小授权**，而不是给 default 提权。
+
+### 11.2 RBAC：谁能对什么对象做什么
+
+四个对象两两配对（[Using RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)）：
+
+| 对象 | 作用域 | 定义什么 |
+|------|--------|----------|
+| **Role / ClusterRole** | ns 内 / 集全局 | 一组权限：** verbs × resources ** |
+| **RoleBinding / ClusterRoleBinding** | ns 内 / 集全局 | 把权限**绑定给主体**（User/Group/SA） |
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+  namespace: prod
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]     # 对哪些资源
+    verbs: ["get", "list", "watch"]      # 能做什么
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: prod
+subjects:
+  - kind: ServiceAccount
+    name: ci-bot                        # 授权给谁（SA/User/Group）
+roleRef:
+  kind: Role
+  name: pod-reader
+```
+
+验证某人/某 SA 的实际权限，一条命令：
+
+```bash
+kubectl auth can-i get pods -n prod --as=system:serviceaccount:prod:ci-bot
+# yes / no
+```
+
+> 💡 记法：**Role 是「权限包」，Binding 是「发放」**。Jenkins/Argo 这类要操作集群的 CI，就是「专用 SA + RoleBinding」的标准用户（[17 篇](/云原生/k8s/k8s-17-jenkins-canary)的 Jenkins 凭据同理）。
+
+### 11.3 securityContext：容器内进程的权限
+
+容器默认以镜像内 USER（常是 root）跑、且持有默认 capabilities——生产上应显式收紧（[Configure Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)）：
+
+```yaml
+spec:                       # Pod 级（作用于所有容器）
+  securityContext:
+    runAsNonRoot: true      # 禁止 root 跑
+    fsGroup: 2000           # 挂载卷的组权限
+  containers:
+    - name: myapp
+      securityContext:      # 容器级（覆盖 Pod 级）
+        runAsUser: 1000     # 以 UID 1000 运行
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]     # 丢掉全部 Linux 能力
+          add: ["NET_BIND_SERVICE"]   # 只留需要的（如绑定 80 端口）
+        readOnlyRootFilesystem: true  # 根文件系统只读（写临时文件挂 emptyDir）
+```
+
+常用强度排序：`privileged: true`（≈ 宿主机 root，只给特权 DaemonSet）＞ 默认 ＞ drop ALL + nonRoot（推荐基线）。
+
+---
+
+## 十二、Pod Security Standards：命名空间级安全基线
+
+securityContext 要逐个 Pod 手写，容易漏。**PSS（Pod Security Standards）** 把安全要求固化成三档**预置基线**，配合 **Pod Security Admission**（1.25 起替代已移除的 PSP）在**命名空间标签**上一行开启（[docs](https://kubernetes.io/docs/concepts/security/pod-security-standards/)）：
+
+| 基线 | 要求 |
+|------|------|
+| **Privileged** | 不限制（兼容旧特权负载） |
+| **Baseline**（最低防线） | 禁 hostNetwork/hostPath、hostPID、privileged、添加危险 capabilities |
+| **Restricted**（最严） | Baseline + 必须 runAsNonRoot、drop ALL capabilities、seccomp 限 RuntimeDefault |
+
+```bash
+# 对 namespace 开启：enforce（强制）+ audit（记录）+ warn（警告），模式可分别设置
+kubectl label ns prod \
+  pod-security.kubernetes.io/enforce=restricted \
+  pod-security.kubernetes.io/audit=restricted \
+  pod-security.kubernetes.io/warn=restricted
+# 之后不合规的 Pod 创建直接被拒绝，并列出违反哪条
+```
+
+> 💡 落地建议：**baseline 起步全集群铺开**（挡住高危写法），核心业务 namespace 再逐个升到 restricted；先只开 `warn`/`audit` 观察存量负载，再切 `enforce`。
+
+---
+
 ## 小结
 
 - **Secret** 存镜像仓库密码，通过 **imagePullSecrets** 让 kubelet 能拉 Harbor 私有镜像；仅 docker login 无效。
