@@ -211,7 +211,7 @@ spring:
     # uri: amqp://app-prod:password@rabbitmq.local:5672/qa1
 ```
 
-连接握手细节见 [02 安装与核心概念](/中间件/rabbitmq/rabbitmq-02-install-concepts)。
+连接握手细节见 [03 基础编程模型](/中间件/rabbitmq/rabbitmq-03-programming-model)。
 
 ---
 

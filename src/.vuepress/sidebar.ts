@@ -733,6 +733,7 @@ export default sidebar({
         "rabbitmq-09-sharding",
         "rabbitmq-10-monitor-backup-federation",
         "rabbitmq-11-cluster-ha",
+        "rabbitmq-11a-erlang-cookie",
         "rabbitmq-12-classic-backlog-degradation",
         "rabbitmq-13-amqp-and-protocols",
         "rabbitmq-14-networking",

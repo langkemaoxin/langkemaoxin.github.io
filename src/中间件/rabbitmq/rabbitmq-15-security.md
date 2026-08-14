@@ -112,6 +112,21 @@ rabbitmqctl add_user --pre-hashed-password "app-user" "{上面输出的哈希值
 
 > 标签**不影响消息收发权限**，只管管理界面。一个没有标签的用户照样能正常生产和消费——只是登不进管理 UI。
 
+### 2.5 消息署名：user-id 属性与 impersonator 标签
+
+发布消息时可以带 `user-id` 属性给消息「署名」，让消费端知道**是谁发的**。Broker 会**强制校验**：一旦设置了该属性，其值必须等于**当前连接的认证用户名**，否则拒绝发布——冒名消息发不进去（官方 [docs/validated-user-id](https://www.rabbitmq.com/docs/validated-user-id)）：
+
+```java
+AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
+        .userId("admin")   // 只有连接用户就是 admin 时才发布得出去
+        .build();
+channel.basicPublish("amq.fanout", "", props, "test".getBytes());
+```
+
+- 不设 `user-id` 则完全不校验、发布者身份保持隐私；
+- 确有「代理发布」需求（如网关替多个业务方发消息）时，给该用户挂 **`impersonator` 标签**即可豁免校验——注意 `administrator` 标签**不包含**此权限，默认任何用户都不能冒名；
+- 认真使用此特性建议配合 TLS 连接（见第五节），否则署名可信但链路内容仍可被窥视。
+
 ---
 
 ## 三、权限模型详解

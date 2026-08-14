@@ -338,13 +338,57 @@ channel.exchangeDeclare("chat.logs", "x-recent-history", true, false, args);
 
 ---
 
-## 七、Management：一句带过
+## 七、Message Interceptors（4.2+）：服务端消息拦截器
 
-Web 管理控制台 + HTTP API，端口 **15672**，`rabbitmq-plugins enable rabbitmq_management` 即可。安装与基本用法见 [02 安装与核心概念](/中间件/rabbitmq/rabbitmq-02-install-concepts)，监控与备份用法见 [10 监控、备份与联邦](/中间件/rabbitmq/rabbitmq-10-monitor-backup-federation)。本篇不重复。
+严格说这不是插件，而是 **4.2 引入的核心机制**（官方 [docs/message-interceptors](https://www.rabbitmq.com/docs/message-interceptors)）：在 Broker 上对**流入/流出**的消息统一做加工——审计打点、溯源标注、元数据校验。两个拦截点：
+
+| 拦截点 | 时机 |
+|--------|------|
+| **incoming** | 消息进入 Broker、路由到队列**之前** |
+| **outgoing** | 消息投递给客户端**之前**（转换为目标协议前） |
+
+内置拦截器都在 `rabbitmq.conf` 配置（改完重启生效）：
+
+```ini
+# 入站：给每条消息盖「接收时间戳」——0.9.1 客户端拿到 timestamp_in_ms 头，
+#       1.0/Stream 客户端拿到注解 x-opt-rabbitmq-received-time
+message_interceptors.incoming.set_header_timestamp.overwrite = true
+
+# 入站：标注消息被哪个节点接收路由（x-routed-by），多节点排障利器
+message_interceptors.incoming.set_header_routing_node.overwrite = true
+
+# 出站：盖「发送时间戳」（x-opt-rabbitmq-sent-time）
+message_interceptors.outgoing.timestamp.enabled = true
+```
+
+| 边界 | 说明 |
+|------|------|
+| 协议覆盖 | AMQP 1.0 / 0.9.1 / MQTT 的消息会被拦截；**Stream 协议不拦截** |
+| 自定义 | 拦截器是实现 `rabbit_msg_interceptor` behaviour 的 Erlang 模块，要自己写得走插件开发 |
+| 典型用法 | 全链路时间戳：received-time 与 sent-time 一减，就是消息在 Broker 内的停留耗时 |
+
+## 八、Local Random Exchange（4.0+）：本地优先的随机路由
+
+为 **RPC（request-reply）** 场景设计的新交换机类型 **`x-local-random`**（官方 [docs/local-random-exchange](https://www.rabbitmq.com/docs/local-random-exchange)）：消息**只投给发布者所连节点上的本地队列**，多个本地队列则随机挑一个——省掉跨节点一跳，把请求延迟压到最低。官方推荐与 **exclusive 队列**搭配：消费者在每个节点各起一条私有队列绑上去，发布与消费全程不跨节点。
+
+| 要点 | 说明 |
+|------|------|
+| 硬性前提 | **每个节点至少有一个在线消费者**，否则该节点上发布的消息**直接丢弃**——官方明确要求消费者实例数 ≥ 节点数 |
+| 感知丢弃 | 发布时带 `mandatory` 标记，无法路由会 basic.return 回发布者，据此发现「本节点没有消费者」 |
+| 组网约束 | **前面挂负载均衡器基本没法用**——无法保证消费者均匀分布到各节点；要求客户端**直连具体节点** |
+| 与同类对比 | `x-consistent-hash` / `x-modulus-hash`（上文与 [09 Sharding](/中间件/rabbitmq/rabbitmq-09-sharding)）是跨节点哈希分流，它是「本地随机」，目标完全不同 |
+
+它和 [17 RPC 篇](/中间件/rabbitmq/rabbitmq-17-rpc)的 direct reply-to 是互补关系：direct reply-to 优化「回复」链路，`x-local-random` 优化「请求」链路，两个一起用就是最低延迟的 RPC 组合。
 
 ---
 
-## 八、插件选型小结表
+## 九、Management：一句带过
+
+Web 管理控制台 + HTTP API，端口 **15672**，`rabbitmq-plugins enable rabbitmq_management` 即可。安装与登录见 [02 安装部署](/中间件/rabbitmq/rabbitmq-02-install-concepts)，控制台收发见 [03 编程模型](/中间件/rabbitmq/rabbitmq-03-programming-model)，监控与备份用法见 [10 监控、备份与联邦](/中间件/rabbitmq/rabbitmq-10-monitor-backup-federation)。本篇不重复。
+
+---
+
+## 十、插件选型小结表
 
 | 插件 | 解决的问题 | 内置 | 选用时机 |
 |------|-----------|------|---------|
@@ -353,6 +397,8 @@ Web 管理控制台 + HTTP API，端口 **15672**，`rabbitmq-plugins enable rab
 | **Firehose / Tracing** | 抓全量发布/投递消息排障 | 是（功能内置 + tracing 插件） | 临时调试，用完即关 |
 | **Event Exchange** | 订阅 Broker 内部事件做审计/监控 | 是 | 安全审计、资源治理、churn 告警 |
 | **Recent History Exchange** | 给新消费者补最近 N 条 | 是 | 轻量历史回放（聊天室）；大体量用 Stream |
+| **Message Interceptors**（4.2+，核心机制） | 服务端进出站消息统一打点/标注 | 是 | 全链路时间戳、路由节点溯源 |
+| **Local Random Exchange**（4.0+，核心类型） | RPC 请求本地直投、免跨节点 | 是 | 每节点都有消费者的直连集群 |
 | **Management** | Web 控制台 + HTTP API | 是 | 必装，运维标配 |
 
 ---
@@ -373,6 +419,7 @@ Web 管理控制台 + HTTP API，端口 **15672**，`rabbitmq-plugins enable rab
 > - [Consistent Hash Exchange](https://www.rabbitmq.com/docs/consistent-hash-exchange)
 > - [Delayed Message Exchange](https://www.rabbitmq.com/docs/delayed-message-exchange) ｜ [插件 README（已停维护声明）](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange)
 > - [Firehose Tracer](https://www.rabbitmq.com/docs/firehose)
+> - [Message Interceptors](https://www.rabbitmq.com/docs/message-interceptors) ｜ [Local Random Exchange](https://www.rabbitmq.com/docs/local-random-exchange)
 > - [Event Exchange](https://www.rabbitmq.com/docs/event-exchange)
 > - [Recent History Exchange](https://www.rabbitmq.com/docs/recent-history-exchange)
 > - [Management Plugin](https://www.rabbitmq.com/docs/management)

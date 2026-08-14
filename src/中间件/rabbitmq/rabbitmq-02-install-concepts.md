@@ -1,7 +1,7 @@
 ---
-title: "RabbitMQ 安装与核心概念——Queue、Exchange、Channel"
+title: "RabbitMQ 安装部署——Docker 快速上手与数据持久化"
 sidebarGroup: "RabbitMQ"
-shortTitle: "02 安装与核心概念"
+shortTitle: "02 安装部署"
 order: 2
 date: 2026-08-27
 category: "中间件"
@@ -17,11 +17,11 @@ tag:
 
 ---
 
-## 开头：装好了，先别写代码
+## 开头：先把环境装对
 
-很多教程一上来就 `basicPublish`，结果连管理控制台长什么样、Queue 和 Exchange 谁存消息谁路由都不清楚。
+本篇只做一件事：把 RabbitMQ 装好、配好、保证数据不丢。先用 Docker 一条命令拉起 3.13（含管理插件）快速体验，再用 docker-compose 固化配置并解决数据持久化——包括两个真实踩出来的坑（节点名不固定导致数据「凭空消失」、`.erlang.cookie` 权限导致启动崩溃）。
 
-本篇先用 **Docker** 快速拉起 RabbitMQ 3.13（含管理插件），再用 Web 控制台完成第一次收发，最后用 Java 客户端验证 Connection / Channel——把核心概念落到操作上。服务器环境另见下文 **CentOS / RHEL 官方 yum 安装**（当前稳定版，约 4.3.x）。
+Queue / Exchange / Connection / Channel 等核心概念不在本篇展开：控制台收发与编程模型见 [03 基础编程模型](/中间件/rabbitmq/rabbitmq-03-programming-model)，队列核心概念与持久化机制见 [04 队列核心概念](/中间件/rabbitmq/rabbitmq-04-queue-concepts)。
 
 ---
 
@@ -33,12 +33,12 @@ RabbitMQ 装好后，默认提供的是 **AMQP 消息服务**（端口 **5672**�
 
 浏览器里的 **Web 管理控制台**（Overview / Queues / Exchanges 等，端口 **15672**）不是随服务自动常开的，而是由插件 **`rabbitmq_management`** 提供。所谓「启用 / 启动管理插件」，就是打开这个插件，让 15672 开始监听。
 
-两种安装路径的差异：
+本系列统一用 Docker，两种镜像的差异：
 
-| 方式 | 如何拿到管理控制台 |
+| 镜像 | 如何拿到管理控制台 |
 |------|-------------------|
-| **Docker（推荐）** | 使用带 `-management` 后缀的镜像，插件已启用；或普通镜像里再手动 `enable` |
-| **CentOS 手动安装** | 必须执行 `rabbitmq-plugins enable rabbitmq_management` |
+| **`rabbitmq:3.13-management`**（推荐） | 插件已启用，映射 15672 即可打开控制台 |
+| `rabbitmq:3.13`（无 management 后缀） | 必须在容器里手动 `rabbitmq-plugins enable rabbitmq_management` |
 
 ---
 
@@ -92,7 +92,7 @@ Server startup complete; 5 plugins started.
 
 #### 若用了普通镜像，如何启用管理插件
 
-误用 `rabbitmq:3.13`（未带 management）时，可在运行中的容器里手动开启（与 CentOS 同一条命令）：
+误用 `rabbitmq:3.13`（未带 management）时，可在运行中的容器里手动开启：
 
 ```bash
 # 需已映射 -p 15672:15672，否则宿主机仍访问不到控制台
@@ -127,179 +127,185 @@ docker exec rabbitmq rabbitmqctl status
 | `docker start rabbitmq` | 再次启动（数据在容器内，未挂卷时重建会丢） |
 | `docker rm -f rabbitmq` | 强制删除容器 |
 
-> 需要持久化时，可增加 `-v rabbitmq_data:/var/lib/rabbitmq`，把数据目录挂到命名卷。
+> ⚠️ 表中 `rm` 后再 `run`（或 compose 的 `down` + `up`）属于**重建**：未挂卷时，队列、消息、用户、vhost 全部丢失。长期使用请按下节 1.2 配好持久化。
 
 ---
 
-### 1.2 CentOS / RHEL 手动安装（可选）
+### 1.2 docker-compose 部署与数据持久化（长期使用必看）
 
-不能用 Docker、或要在虚拟机 / 物理机上常驻运行时，按官方 **RPM（dnf/yum）** 流程安装。资料依据：[Installing on RPM-based Linux](https://www.rabbitmq.com/docs/install-rpm)、[Management Plugin](https://www.rabbitmq.com/docs/management)、[Erlang 版本要求](https://www.rabbitmq.com/docs/which-erlang)（文档线约 4.3）。
+裸 `docker run` 适合第一次体验；要把 RabbitMQ 当成后续跟练本系列的长期环境，还得补两件事：**配置固化**（compose 文件，团队协作与重建都省心）和 **数据持久化**（挂命名卷，容器重建后队列/消息/用户不丢）。其中有两个真实踩出来的坑，先给完整模板再逐个解释。
 
-> **与 1.1 的关系**：本系列 Docker 跟练仍用 `rabbitmq:3.13-management`，控制台截图也多来自 3.13。本节按官方推荐安装 **当前社区稳定版（撰写时约 4.3.x）**，管理台与 Queue / Exchange 等概念操作一致；个别菜单文案或默认行为可能略有差异。
+#### 完整 compose 模板
 
-#### 前置：发行版与版本
+在工作目录新建 `docker-compose.yml`：
 
-官方当前支持的 RPM 系发行版包括（节选）：**CentOS Stream 9/10**、**RHEL 9/10/8**、Rocky / Alma 等同代版本等。下文以 **el9**（CentOS Stream 9 / RHEL 9 一类）为例。
+```yaml
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    hostname: rabbitmq                    # ① 固定 hostname（坑①，见下文）
+    ports:
+      - "5672:5672"                       # AMQP：客户端代码连这个
+      - "15672:15672"                     # 管理控制台：浏览器访问
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq   # ② 数据持久化：队列/消息/用户/vhost 都在这
+    environment:
+      RABBITMQ_NODENAME: rabbit@rabbitmq  # ③ 固定节点名（坑①，见下文）
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
 
-| 组件 | 说明 |
-|------|------|
-| RabbitMQ | 通过 Team RabbitMQ 的 yum 仓库安装最新稳定版（撰写时约 **4.3.x**） |
-| Erlang | 须与 RabbitMQ 版本匹配；**4.3.x 需 Erlang 27.x**（见 [which-erlang](https://www.rabbitmq.com/docs/which-erlang)） |
-| 安装方式 | **优先 yum 仓库**（依赖与升级更省事）；本地单独 `rpm` 安装为次选 |
-
-版本对应关系示意（配图来自系列早期演示，请以官网矩阵为准）：
-
-![RabbitMQ 与 Erlang 版本对应关系](/中间件/rabbitmq/12/p04-01.png)
-
-#### 推荐：用官方 yum 仓库安装
-
-**1. 导入签名密钥**
-
-```bash
-rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc'
-rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key'
-rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key'
+volumes:
+  rabbitmq_data:
 ```
 
-**2. 写入仓库文件** `/etc/yum.repos.d/rabbitmq.repo`（el9 / 现代发行版）：
+一行启动：
+
+```bash
+docker compose up -d
+```
+
+相比 1.1 的裸 `docker run`，多出来的三处正是关键：
+
+| 配置 | 作用 |
+|------|------|
+| `hostname: rabbitmq` + `RABBITMQ_NODENAME` | 固定节点名，保证重建后能复用旧数据（坑①） |
+| `rabbitmq_data:/var/lib/rabbitmq` 命名卷 | RabbitMQ 的所有数据（Mnesia 元数据 + 消息）都在 `/var/lib/rabbitmq`，挂卷后重建不丢 |
+| compose 文件本身 | 端口、账号、挂载固化在文件里，`down/up` 随便重建 |
+
+#### 坑 ①：不固定节点名 → 重建后数据「凭空消失」
+
+RabbitMQ 按**节点名**在 `/var/lib/rabbitmq/mnesia` 下建数据库目录（形如 `rabbit@<hostname>`）。Docker 默认拿**容器 ID 当 hostname**，而容器每次重建 ID 都变 → 节点名变 → Mnesia 找不到旧库 → 开一个空的**新库**——老队列、消息就"丢了"（其实数据还在卷里，只是节点名对不上）。
+
+所以模板里必须同时固定 hostname 与节点名，缺一不可：
+
+```yaml
+hostname: rabbitmq
+environment:
+  RABBITMQ_NODENAME: rabbit@rabbitmq   # 节点名恒定，mnesia 一直复用同一个库
+```
+
+验证：`docker exec rabbitmq rabbitmqctl status | grep "Node name"`，每次重建后都应是 `rabbit@rabbitmq` 才对。
+
+#### 坑 ②：`.erlang.cookie` 权限错误 → 容器启动崩溃
+
+**现象**：挂命名卷后，偶尔容器一起来就挂，日志报：
+
+```text
+Error when reading /var/lib/rabbitmq/.erlang.cookie: eacces
+```
+
+`eacces` 是 Erlang 的「权限不足」错误。要理解它，得先知道这个文件是干嘛的、坏在哪一环。
+
+**`.erlang.cookie` 是什么**：RabbitMQ 用 Erlang 编写，节点内部组件之间、以及 `rabbitmqctl` 等命令行工具与节点的通信，都走 Erlang 的分布式通道。`.erlang.cookie` 就是这个通道的**共享密钥**——通信双方 cookie 一致才允许连接，所以它存在数据目录 `/var/lib/rabbitmq` 里（也就跟着进了我们挂的卷），并且属于「必须严防泄露」的敏感文件。
+
+**为什么必须是 400 + 属主可读**：Erlang 出于安全考虑，**强制要求** cookie 文件只允许属主读写（权限 `400` 或 `600`）。检查的不只是「能不能读」，还包括「属主对不对、权限松不松」——属主不是运行 RabbitMQ 的用户，或权限开得太大，Erlang 都会拒绝启动，报上面的 `eacces`。
+
+**属主为什么会变成 root**：容器里的 RabbitMQ 进程以 `rabbitmq` 用户（UID **999**）运行，它写的文件属主自然是 999；但只要卷里的文件**曾被以 root 身份写过**——常见于用临时容器初始化/恢复数据、手工 `docker cp` 拷文件进去、某些 WSL2/Docker Desktop 环境对命名卷的初始化行为——属主就变成了 root。之后 `rabbitmq` 用户（999）再按 400 去读一个 root 属主的文件，直接被拒，节点起不来。
+
+**为什么用「另起一个临时容器」来修**：目标容器已经崩了，`docker exec` 进不去；而我们日常操作的宿主机账号又看不到卷内部的文件系统。所以借用 Docker 的能力——起一个轻量的 alpine 容器，把**同一个卷**挂进去，以 root 身份改属主：
+
+```bash
+docker run --rm -v <项目名>_rabbitmq_data:/var/lib/rabbitmq alpine \
+  sh -c "chown 999:999 /var/lib/rabbitmq/.erlang.cookie && chmod 400 /var/lib/rabbitmq/.erlang.cookie"
+```
+
+逐段拆开：
+
+| 片段 | 作用 |
+|------|------|
+| `--rm` | 临时容器用完即删，不留垃圾 |
+| `-v <项目名>_rabbitmq_data:/var/lib/rabbitmq` | 把出问题的**同一个命名卷**挂进临时容器，改的才是真身 |
+| `alpine` | 仅几 MB 的基础镜像，只为借它的 shell 和 `chown` |
+| `chown 999:999` | 属主改回 `rabbitmq` 用户（容器内以 UID 操作，不必有同名用户） |
+| `chmod 400` | 收紧到「仅属主可读」，满足 Erlang 的强制要求 |
+
+修完验证一下再启动：
+
+```bash
+# 属主应为 999，权限应为 -r--------（400）
+docker run --rm -v <项目名>_rabbitmq_data:/var/lib/rabbitmq alpine ls -ln /var/lib/rabbitmq/.erlang.cookie
+
+docker compose up -d
+```
+
+> 💡 卷名默认带 compose 项目名前缀（如 `rabbitmq_rabbitmq_data`），可用 `docker volume ls` 确认实际名字。这个坑在首次挂卷、或往卷里手工写过文件后最常见——遇到 `eacces` 优先查属主。
+
+#### 验证持久化生效
+
+真正的考验是 **重建**（`down` + `up`），不是 `restart`——restart 不触发重建，数据天然在：
+
+```bash
+# 1. 建一条测试队列
+docker exec rabbitmq rabbitmqadmin -u admin -p admin declare queue name=persist_test durable=true
+
+# 2. 重建容器
+docker compose down && docker compose up -d
+# 等十几秒启动完
+
+# 3. 队列还在，持久化即生效
+docker exec rabbitmq rabbitmqadmin -u admin -p admin list queues
+```
+
+仍能看到 `persist_test` 就算成功。配好上面两步后，重建容器时队列、消息、用户、vhost 都会完整保留。
+
+#### 插件启用怎么「固化」（机制速览）
+
+`docker exec ... rabbitmq-plugins enable` 只改容器**运行时**状态，容器一重建就丢。固化思路是：RabbitMQ 启动时会读 `/etc/rabbitmq/enabled_plugins` 文件决定启用哪些插件，**在宿主机准备这份文件挂载进去**即可。
+
+- 用 `rabbitmq:3.13-management` 镜像时，管理插件已内置启用，**无需**挂这个文件；
+- 后续用到其他插件（如第 9 篇的 Sharding）时才需要，文件格式、挂载目标路径与排查方法见 [《消息分片存储插件 Sharding》](/中间件/rabbitmq/rabbitmq-09-sharding)。
+
+---
+
+### 1.3 rabbitmq.conf：把配置固化成文件
+
+前面用环境变量（`RABBITMQ_DEFAULT_USER` 等）做了最简配置；正经部署要用**配置文件**。RabbitMQ 的配置分两层，各管一摊：
+
+| 文件 | 管什么 | 格式 |
+|------|--------|------|
+| `/etc/rabbitmq/rabbitmq.conf` | **服务配置**：端口、内存水位、日志、TLS、各插件参数…… | `key = value`（3.7 起的 sysctl 格式） |
+| `/etc/rabbitmq/rabbitmq-env.conf` | **启动环境**：节点名、数据目录、Erlang 分发端口 | `RABBITMQ_XXX=yyy`（shell 风格） |
+
+优先级：**环境变量 > rabbitmq.conf**——两边都设时环境变量赢，这也是 1.2 用 `RABBITMQ_NODENAME` 固定节点名生效最直接的原因。Docker 下把文件挂进去即可，compose 补一行：
+
+```yaml
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf   # 服务配置
+```
+
+一份起步配置示例（后续各篇的配置项都落在这个文件里）：
 
 ```ini
-# /etc/yum.repos.d/rabbitmq.repo
+# 内存水位与磁盘红线（容器部署建议用绝对值，机制详见第 12 篇）
+vm_memory_high_watermark.absolute = 2GB
+disk_free_limit.absolute = 1GB
 
-## Zero dependency Erlang
-[modern-erlang]
-name=modern-erlang-el9
-baseurl=https://yum1.rabbitmq.com/erlang/el/9/$basearch
-        https://yum2.rabbitmq.com/erlang/el/9/$basearch
-repo_gpgcheck=1
-enabled=1
-gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
-gpgcheck=1
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-metadata_expire=300
-pkg_gpgcheck=1
-autorefresh=1
-type=rpm-md
+# 日志（详见第 10 篇）
+log.file.level = info
 
-[modern-erlang-noarch]
-name=modern-erlang-el9-noarch
-baseurl=https://yum1.rabbitmq.com/erlang/el/9/noarch
-        https://yum2.rabbitmq.com/erlang/el/9/noarch
-repo_gpgcheck=1
-enabled=1
-gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
-       https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
-gpgcheck=1
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-metadata_expire=300
-pkg_gpgcheck=1
-autorefresh=1
-type=rpm-md
-
-## RabbitMQ Server
-[rabbitmq-el9]
-name=rabbitmq-el9
-baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/$basearch
-        https://yum1.rabbitmq.com/rabbitmq/el/9/$basearch
-repo_gpgcheck=1
-enabled=1
-gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
-       https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
-gpgcheck=1
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-metadata_expire=300
-pkg_gpgcheck=1
-autorefresh=1
-type=rpm-md
-
-[rabbitmq-el9-noarch]
-name=rabbitmq-el9-noarch
-baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/noarch
-        https://yum1.rabbitmq.com/rabbitmq/el/9/noarch
-repo_gpgcheck=1
-enabled=1
-gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
-       https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
-gpgcheck=1
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-metadata_expire=300
-pkg_gpgcheck=1
-autorefresh=1
-type=rpm-md
+# 端口（默认即如此，列出便于查阅）
+listeners.tcp.default = 5672
+management.tcp.port = 15672
 ```
 
-> RHEL 8 / Rocky 8 等需换用官方文档中的 **el8** 仓库片段，不要直接套用上面的 `el/9`。
-
-**3. 安装依赖与软件包**
+改完 `docker compose restart` 生效。**务必验证配置真的被读到了**——有的键拼错不会报错、只是被静默忽略：
 
 ```bash
-dnf update -y
-dnf install -y logrotate
-dnf install -y erlang rabbitmq-server
+docker exec rabbitmq rabbitmqctl environment | grep -A2 vm_memory
+# 输出里能看到 vm_memory_high_watermark 的实际值才算生效
 ```
 
-仓库会拉齐 **zero-dependency Erlang** 与 `rabbitmq-server`。也可从 [GitHub Releases](https://github.com/rabbitmq/rabbitmq-server/releases) 下载 `.rpm` 后 `dnf install -y ./rabbitmq-server-*.rpm`，但须自行解决依赖，升级也不如仓库方便。
-
-![RabbitMQ RPM 安装过程](/中间件/rabbitmq/12/p05-01.png)
-
-#### 启用管理插件并启动服务
-
-RPM **装完后不会自动当守护进程跑起来**，管理控制台也不会默认打开。按固定顺序：
-
-```bash
-# 1. 启用管理插件（打开 15672 Web 控制台）
-rabbitmq-plugins enable rabbitmq_management
-
-# 2. 开机自启并立即启动（官方推荐 systemctl）
-systemctl enable --now rabbitmq-server
-
-# 3. 确认服务与节点状态
-systemctl status rabbitmq-server
-rabbitmqctl status
-```
-
-`rabbitmqctl status` 的 Runtime 信息正常，即表示 Broker 已起来。
-
-![rabbitmqctl status 启动成功示意](/中间件/rabbitmq/12/p06-01.png)
-
-#### 创建管理员并打开控制台
-
-默认用户 `guest` / `guest` **只能本机连接**。远程或习惯用独立账号时，创建管理员：
-
-```bash
-rabbitmqctl add_user admin admin
-rabbitmqctl set_user_tags admin administrator
-rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
-```
-
-浏览器访问 `http://<主机>:15672`，用 `admin` / `admin` 登录 Overview。若跨机访问，确认防火墙已放行 **15672**（以及客户端需要的 **5672**）。
-
-![管理控制台登录与 Overview 页面](/中间件/rabbitmq/12/p07-01.png)
-
-![Admin 用户与 Virtual Host 管理](/中间件/rabbitmq/12/p07-02.png)
-
-#### 常用运维命令
-
-| 命令 | 作用 |
-|------|------|
-| `systemctl start rabbitmq-server` | 启动服务 |
-| `systemctl stop rabbitmq-server` | 停止服务 |
-| `systemctl restart rabbitmq-server` | 重启服务 |
-| `systemctl status rabbitmq-server` | 查看 systemd 服务状态 |
-| `rabbitmqctl status` | 查看节点 Runtime / 应用状态 |
-| `rabbitmq-plugins list` | 查看插件启用情况 |
-
-旧环境偶见 `service rabbitmq-server start`，与 `systemctl` 等价场景下优先用 **systemctl**。
+> 💡 官方全部配置键的权威清单见 [docs/configure](https://www.rabbitmq.com/docs/configure)。集群、TLS、Federation 等专项配置在对应篇目（11 / 15 / 10）展开。
 
 ---
 
-## 二、管理控制台概览
+## 二、验证安装：登录管理控制台
 
-登录后顶部菜单：
+浏览器访问 [http://localhost:15672](http://localhost:15672)，用启动时预置的 `admin` / `admin` 登录，进入 Overview 即安装成功。
+
+顶部菜单先混个脸熟，后续各篇会反复用到：
 
 | 菜单 | 说明 |
 |------|------|
@@ -308,259 +314,15 @@ rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
 | **Exchanges / Queues** | 交换机与队列 |
 | **Admin** | 用户、权限、Virtual Host |
 
-**Virtual Host（虚拟主机）** 之间资源完全隔离，可视为独立 RabbitMQ 实例。不同 vhost 之间无法通过 Exchange 把消息转发到另一个 vhost 的 Queue。
-
----
-
-## 三、理解 Queue
-
-在 **Queues** 菜单创建名为 `test1` 的经典队列（Classic Queue）。创建时可勾选 **Durable**：表示队列元数据会落盘，Broker 重启后队列定义仍在。
-
-![创建 Classic 队列 test1](/中间件/rabbitmq/12/p08-01.png)
-
-进入 `test1` 详情页（例如 `/#/queues/%2F/test1`），可展开 **Publish message** 发消息、**Get messages** 取消息。这是管理台基于 `basic.publish` / `basic.get` 的调试能力，适合跟练与排障，**不是**生产消费方式。
-
-![在 Queue 详情页发送与消费消息](/中间件/rabbitmq/12/p08-02.png)
-
-### 3.1 Publish message：Delivery mode
-
-发消息时除 Payload（正文）外，重点看 **Delivery mode**（AMQP 属性 `delivery_mode`）：
-
-| UI 文案 | 值 | 含义 |
-|---------|-----|------|
-| **1 - Non-persistent** | `1` | **瞬态消息**。Broker 重启后**不一定**还在；即便队列是 Durable，瞬态消息在恢复时也可能被丢弃 |
-| **2 - Persistent** | `2` | **持久消息**。意图写入可恢复存储；要与 **Durable 队列**配合，重启后才更可能还在 |
-
-常见误区：
-
-- **队列 Durable ≠ 消息一定持久**：Durable 只管队列定义；消息是否按持久语义处理，看 Delivery mode（以及队列类型实现）。
-- **消息 Persistent + 非持久队列**：队列本身可能在重启时消失，消息跟着没了。
-- **Quorum Queue**：发布到仲裁队列时，消息会按持久路径处理，与 Classic 上「选 1 / 2」的观感不完全一样；本篇跟练用 Classic 即可。
-
-#### 消息要真正持久下来，需要同时满足三件事
-
-`delivery_mode = 2` 只是其中一环。一条消息想在 Broker 重启后还活着，得凑齐：
-
-| 条件 | 谁负责 | 没满足会怎样 |
-|------|--------|--------------|
-| **① 队列是 Durable** | 声明队列时 `durable=true` | Broker 重启后队列定义本身没了，里面的消息自然全没 |
-| **② 消息 `delivery_mode = 2`** | 发布消息时选 Persistent / 代码设持久属性 | 即便队列还在，瞬态消息恢复时会被丢弃 |
-| **③ 消息确实落盘并同步** | 队列类型决定（Classic / Quorum） | 见下方两种队列的差异 |
-
-前两个是**必要条件**，少一个都不行；第三个是「持久」这个词真正的含义所在，分队列类型看：
-
-**Classic 队列（本篇跟练用）**：Persistent 消息会写入磁盘的消息存储（message store）。
-
-- **优雅重启**（`systemctl restart` / `docker restart`）：①② 满足 → 消息都在。
-- **异常退出**（`kill -9` / 掉电）：Broker 可能在「收到消息」与「写入磁盘」之间就挂了，这条消息就丢——单节点 Classic 无法靠自身消除这个窗口。
-
-**Quorum Queue（生产环境持久首选）**：消息**天然全部持久**——发布时不管 `delivery_mode` 填什么，都按持久处理；基于 Raft，消息要先被**多数副本写盘**才算发布成功，再回 ack 给生产者，可靠性远高于 Classic 单节点。
-
-> **光靠 ①②③ 还不够，还得让生产者「知道」消息落盘了**——这就是 **Publisher Confirms（发布确认）**。开启后，Broker 只有在持久消息真正写盘（Quorum 则是多数副本确认）后才回 `basic.ack`，没收到就重发；不开就是「发了就忘」，崩溃窗口里的消息会无声丢失。Confirms 是和持久化配套的可靠性机制（具体用法见后续编程模型篇）。
-
-代码里发持久消息（Java）：
-
-```java
-import com.rabbitmq.client.MessageProperties;
-
-// 发布到默认交换机（""），routingKey = 队列名，即直接投到该队列
-// （Exchange 的概念见第四节，这里只关注 delivery_mode 怎么设）
-channel.basicPublish("", QUEUE_NAME,
-        MessageProperties.PERSISTENT_TEXT_PLAIN,   // 持久化文本：delivery_mode=2
-        "hello".getBytes("UTF-8"));
-
-// 或自定义属性
-AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
-        .deliveryMode(2)          // 2 = Persistent
-        .contentType("text/plain")
-        .build();
-channel.basicPublish("", QUEUE_NAME, props, body);
-```
-
-> 代价提醒：持久消息要写盘，吞吐比瞬态低，**别无脑全开 Persistent**。可丢、可重算的消息（日志、埋点）用瞬态；业务关键消息才上持久 + Quorum Queue。
-
-跟练建议：先用 **2 - Persistent** 发几条，再在 Get 里观察；想对比行为时再发 Non-persistent。
-
-### 3.2 Get messages：Ack Mode
-
-点 **Get Message(s)** 会从队列取出最多 `count` 条（FIFO）。**Ack Mode** 决定取完之后消息是**还回队列**还是**从队列删除**（对应 HTTP API 的 `ackmode`）。本机 3.13 管理台选项原文如下：
-
-| UI 文案 | API `ackmode` | 取完后消息还在队列？ | 说明 |
-|---------|---------------|----------------------|------|
-| **Nack message requeue true**（默认） | `ack_requeue_true` | **是**（重新入队） | 适合「只看一眼内容」：消息还在，Ready 数通常很快恢复。UI 文案带 Nack，API 名带 ack，都表示**不删、再入队** |
-| **Automatic ack** | `ack_requeue_false` | **否**（删除） | 名字像「自动确认」，实际是**确认并移除**——看完即消费掉。生产库上误选可能把消息弄没 |
-| **Reject requeue true** | `reject_requeue_true` | **是**（拒绝后再入队） | 走拒绝（reject）并 requeue，调试「消费失败但还要重试」的路径 |
-| **Reject requeue false** | `reject_requeue_false` | **否**（删除）；若配置了死信（DLX）可能进死信队列 | 拒绝且不重回原队列，适合模拟失败丢弃 / 死信 |
-
-怎么选（控制台调试）：
-
-1. **只想看消息、不改队列积压** → 用默认 **Nack message requeue true**（或 Reject requeue true）。
-2. **故意消费掉** → 选 **Automatic ack**。
-3. **验证死信** → 队列已绑 DLX 时，用 **Reject requeue false**。
-
-控制台 Get 不保证与客户端长连接消费同等可靠，官方也标注 HTTP get 仅适合诊断；业务消费请用客户端订阅（`basic.consume`）并按业务做手动 ACK / NACK。
-
-Queue 是 RabbitMQ 传递消息的载体，本质是 **FIFO 队列**。控制台演示的是直接对 Queue 操作；编写客户端时也是绑定对应 Queue 收发。
-
----
-
-## 四、理解 Exchange
-
-Queue 能收发消息，那 **Exchange（交换机）** 做什么？
-
-Exchange 不存储消息，它与 Queue 建立 **Binding（绑定）** 关系，Producer 把消息发到 Exchange，Exchange 再按规则转发到绑定的 Queue。
-
-进入 **Exchanges**，每个 vhost 预置多种 Exchange（如 `amq.direct`）。
-
-![预置 Exchange 列表](/中间件/rabbitmq/12/p09-01.png)
-
-选择 `amq.direct`，在 **Bindings** 中将 `test1` 绑定到该交换机（注意选择正确的 vhost，如 `/mirror`）。
-
-![将 test1 绑定到 amq.direct](/中间件/rabbitmq/12/p09-02.png)
-
-绑定完成后，Exchange 与 Queue 详情页均可见绑定关系。
-
-![Exchange 与 Queue 双向可见的绑定结果](/中间件/rabbitmq/12/p10-01.png)
-
-在 Exchange 详情页发送消息，`test1` 队列即可消费到。
-
-![经 Exchange 发送后在 Queue 消费](/中间件/rabbitmq/12/p10-02.png)
-
-要点：
-
-- Exchange **不存消息**，只负责路由
-- 通常 **Producer 对接 Exchange**，**Consumer 只消费 Queue**
-- 一个 Exchange 可绑定多个 Queue；Routing Key、Headers、Properties 决定分发策略
-
----
-
-## 五、理解 Connection 与 Channel
-
-**Connection** 对应一个客户端 TCP 连接；**Channel** 是 Connection 上的 AMQP 信道，实际 API 操作在 Channel 层完成。一个 Connection 可创建多个 Channel，复用 TCP 以减轻开销。
-
-### 5.1 Maven 依赖
-
-> 📦 **配套示例项目**：本节代码（5.1 依赖 + 5.2 消费者）可在 GitHub 运行 → [rabbitmq-blog-demo](https://github.com/code-corey/rabbitmq-blog-demo)
-
-```xml
-<dependency>
-    <groupId>com.rabbitmq</groupId>
-    <artifactId>amqp-client</artifactId>
-    <version>5.21.0</version>
-</dependency>
-```
-
-### 5.2 消费者示例
-
-```java
-public class FirstConsumer {
-    private static final String HOST_NAME = "192.168.65.112";
-    private static final int HOST_PORT = 5672;
-    private static final String QUEUE_NAME = "test2";
-    public static final String USER_NAME = "admin";
-    public static final String PASSWORD = "admin";
-    public static final String VIRTUAL_HOST = "/mirror";
-
-    public static void main(String[] args) throws Exception {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(HOST_NAME);
-        factory.setPort(HOST_PORT);
-        factory.setUsername(USER_NAME);
-        factory.setPassword(PASSWORD);
-        factory.setVirtualHost(VIRTUAL_HOST);
-
-        Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
-
-        // 队列名, durable, exclusive, autoDelete, arguments
-        channel.queueDeclare(QUEUE_NAME, true, false, false, null);
-        channel.basicQos(1);
-
-        Consumer myconsumer = new DefaultConsumer(channel) {
-            @Override
-            public void handleDelivery(String consumerTag, Envelope envelope,
-                                       AMQP.BasicProperties properties, byte[] body)
-                    throws IOException {
-                System.out.println("routingKey > " + envelope.getRoutingKey());
-                System.out.println("deliveryTag > " + envelope.getDeliveryTag());
-                System.out.println("content: " + new String(body, "UTF-8"));
-                channel.basicAck(envelope.getDeliveryTag(), false);
-            }
-        };
-
-        channel.basicConsume(QUEUE_NAME, myconsumer);
-    }
-}
-```
-
-#### `queueDeclare(...)` 的五个参数逐个看
-
-```java
-channel.queueDeclare(QUEUE_NAME, true, false, false, null);
-```
-
-方法签名是 `queueDeclare(String queue, boolean durable, boolean exclusive, boolean autoDelete, Map<String,Object> arguments)`，本例 `(true, false, false, null)` 五个参数含义如下：
-
-| # | 参数 | 本例取值 | 含义 |
-|---|------|----------|------|
-| 1 | `queue` | `"test2"` | 队列名。填空串 `""` 则由 Broker 自动生成唯一名（临时队列常用） |
-| 2 | `durable` | `true` | 队列是否**持久化**。`true` → 队列元数据落盘，Broker 重启后队列还在（即第三节的 Durable 勾选项） |
-| 3 | `exclusive` | `false` | 是否**独占**。`true` → 该队列只能被**声明它的这条 Connection** 使用，连接一断队列即删；常用于「一条连接私有的临时队列」（如 RPC 的应答队列） |
-| 4 | `autoDelete` | `false` | 是否**自动删除**。`true` → 当**最后一个消费者**取消订阅 / 断开后队列被删 |
-| 5 | `arguments` | `null` | 可选参数 `Map`，承载扩展特性 |
-
-三个最容易记混的点：
-
-- **`autoDelete` 不是「没消息就删」**：只有**曾经有过消费者**、且最后一个消费者走后才会触发删除；**从没来过消费者的队列不会被自动删**。想「没人消费就清掉」要用队列级 `x-expires`（TTL）。
-- **`exclusive=true` 会忽略 `durable`**：RabbitMQ 把独占队列当**瞬态**处理——它的生命周期绑在连接上，谈持久化没意义。所以本例若真想持久，绝不能把 `exclusive` 设成 `true`。
-- **`durable` 管队列、不管消息**：`durable=true` 只保证**队列定义**活过重启；消息能不能活过重启，看 `delivery_mode` + 队列类型（回到 3.1 的三条件）。
-
-`arguments` 常用键（本例 `null`，需要时再填）：
-
-| 键 | 作用 |
-|----|------|
-| `x-message-ttl` | 消息在队列里的存活时长（毫秒），过期作死信或丢弃 |
-| `x-dead-letter-exchange` | 死信交换机（DLX），消息被拒 / 过期 / 超长时转投它处（见 3.2） |
-| `x-max-priority` | 开启优先级队列，设最大优先级数 |
-| `x-queue-type` | 队列类型：`classic` / `quorum` / `stream`（见 3.1） |
-| `x-max-length` | 队列消息条数上限，超出的按策略丢弃或转死信 |
-
-最后一句提醒：`queueDeclare` 是**幂等**的——多次声明同名队列时，参数必须**完全一致**，否则 Broker 报 `PRECONDITION_FAILED` 并关闭 Channel（比如先用 `durable=true` 建过，再拿 `false` 声明会失败）。改参数前要先把旧队列删掉。
-
-本例 `(true, false, false, null)` 的整体含义：**一个持久、可被多连接共享、不会自动消失、无额外参数的经典队列**——最普通也最常用的生产形态。
-
-运行后在控制台往 `test2` 发消息，消费者即可收到。
-
-![控制台发消息、Java 消费者接收](/中间件/rabbitmq/12/p12-01.png)
-
-在 **Connections** 和 **Channels** 可看到一条 Connection（running）和一条 Channel（有数据交互时为 running，空闲为 idle）。
-
-![Connections 与 Channels 状态](/中间件/rabbitmq/12/p12-02.png)
-
----
-
-## 六、核心概念总结
-
-![RabbitMQ 核心概念与消息流转模型](/中间件/rabbitmq/12/p13-01.png)
-
-| 概念 | 说明 |
-|------|------|
-| **Queue** | 实际存消息的最小单元，FIFO；消息最终必须进入 Queue 才能被消费 |
-| **Exchange** | 路由组件，不存消息；与 Queue 绑定后转发消息；多数业务场景需要 Exchange |
-| **Virtual Host** | 逻辑隔离单元，权限与资源独立；不同 vhost 无法互通信 |
-| **Connection** | 客户端与 Broker 的 TCP 连接，用完应关闭 |
-| **Channel** | AMQP 信道，绝大多数 API 在 Channel 上执行；多 Channel 共享 Connection |
-
-对照上述概念再读 Java 客户端代码：先 `newConnection()`，再 `createChannel()`，然后 `queueDeclare` / `basicConsume`——这就是 RabbitMQ 使用的骨架。
+> **Virtual Host（虚拟主机）** 之间资源完全隔离，可视为独立 RabbitMQ 实例，详见 [16 · Virtual Hosts](/中间件/rabbitmq/rabbitmq-16-virtual-hosts)。
 
 ---
 
 ## 小结
 
-- 管理控制台依赖插件 `rabbitmq_management`（15672）；Docker 用 `*-management` 镜像即可，普通镜像或 yum/RPM 安装需 `rabbitmq-plugins enable`
+- 管理控制台依赖插件 `rabbitmq_management`（15672）；Docker 用 `*-management` 镜像即可，普通镜像需进容器手动 `rabbitmq-plugins enable`
 - 本地跟练：`rabbitmq:3.13-management` 一条 `docker run` 即可，账号可用环境变量预置
-- 服务器：优先官方 yum 仓库安装当前稳定版（约 4.3 + Erlang 27），`systemctl enable --now` 后启用管理插件并建管理员
-- Queue 存消息，Exchange 路由消息，Binding 连接二者
-- Connection / Channel 是客户端与 Broker 的通信层次
+- 长期使用：compose + 命名卷持久化，并**固定 hostname 与节点名**（否则容器重建后节点名变化，数据「凭空消失」）；挂卷后偶发 `.erlang.cookie` 属主变 root，改回 999 即可
+- 插件启用想固化，挂载宿主机的 `enabled_plugins` 到 `/etc/rabbitmq/enabled_plugins`（management 镜像无需）
 
-下一篇拆解完整的七步编程模型：声明 Exchange、Queue、Binding，发送与消费，以及 Push / Pull 两种模式。
+下一篇先用 Web 控制台完成第一次收发、建立 Queue / Exchange 的直觉，再拆解完整的七步编程模型。

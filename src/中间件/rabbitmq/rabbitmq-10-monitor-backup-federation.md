@@ -189,6 +189,74 @@ amqp://admin:admin@192.168.65.193:5672/
 
 ---
 
+## 四、日志：去哪看、怎么看
+
+Docker 部署下 RabbitMQ **默认把日志打到标准输出**（`docker logs rabbitmq` 即是）；传统部署默认写在 `/var/lib/rabbitmq/log/`（或 `/var/log/rabbitmq/`）。想调整，都改 `rabbitmq.conf`（配置文件体系见 [02 安装部署](/中间件/rabbitmq/rabbitmq-02-install-concepts)）：
+
+```ini
+# 同时写文件与控制台（容器里只留 console 即可）
+log.console = true
+log.console.level = info
+
+log.file.level = info
+log.file = /var/lib/rabbitmq/log/rabbit.log
+# 轮转：按大小或按时间（二选一）
+log.rotation.file.size = 100MB
+# log.rotation.file.date = $D0      # 每天一个文件
+# log.file.formatter = json         # 结构化日志，接 ELK 等平台时用
+```
+
+排障时最有用的是**分类日志级别**——只把关心的类别调到 debug，不用全局拉爆日志量：
+
+```ini
+log.connection.level = info     # 连接建立/断开、认证失败
+log.channel.level = info        # 信道生命周期与异常
+log.queue.level = info          # 队列事件
+log.federation.level = info     # 联邦链路
+log.upgrade.level = info        # 升级过程
+```
+
+三个排障入口：
+
+```bash
+# 日志文件实际在哪（容器/主机各有默认）
+rabbitmq-diagnostics log_location
+# 生效的日志配置
+rabbitmqctl environment | grep -A5 '^ {log'
+# 管理控制台节点详情页也有 Log 卡片可直接看
+```
+
+> 💡 连接莫名被断查 `connection` 类日志（心跳超时、认证失败都会留痕）；集群异常查节点日志里的 Raft/Khepri 相关条目。日志级别改动需重启节点生效。
+
+---
+
+## 五、CLI 工具箱：不止 rabbitmqctl
+
+前面各篇零散用过不少命令，这里收拢成一张速查（容器里统一 `docker exec <容器名> <命令>` 执行）：
+
+| 工具 | 定位 | 高频命令 |
+|------|------|---------|
+| **`rabbitmqctl`** | 运维主入口 | `status` / `list_queues` / `set_policy` / `add_user` |
+| **`rabbitmq-diagnostics`** | **诊断与健康检查**（排障首选） | `check_running` / `check_local_alarms` / `check_port_connectivity` / `environment` |
+| `rabbitmq-plugins` | 插件启停 | `enable` / `list -e` |
+| `rabbitmq-queues` / `rabbitmq-streams` | 队列/Stream 专项 | `rabbitmq-queues grow`（Quorum 扩副本）、`rabbitmq-streams add_super_stream` |
+| `rabbitmqadmin` | HTTP API 的 CLI 封装 | `list queues` / `declare policy` |
+
+两个通用技巧：
+
+```bash
+# ① 表格化输出，人读友好；脚本里则用 --formatter=json
+rabbitmqctl list_queues name messages_ready --formatter=pretty_table
+
+# ② diagnostics 的 check_* 系列用退出码表态，天生适合做探针/巡检
+rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms
+# 无输出、退出码 0 即健康——可直接放进定时巡检或 K8s 探针
+```
+
+> 💡 身份验证差异（09 篇踩过）：`rabbitmqctl` 系列走 Erlang 通道**不要账号密码**；`rabbitmqadmin` 走 HTTP **必须 `-u/-p`**。完整命令手册见官方 [docs/cli](https://www.rabbitmq.com/docs/cli)。
+
+---
+
 ## 小结
 
 | 主题 | 要点 |

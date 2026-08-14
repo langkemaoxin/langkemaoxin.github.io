@@ -37,7 +37,7 @@ export default hopeTheme({
     imgLazyload: true,
     imgSize: true,
     mark: true,
-    mermaid: false,
+    mermaid: true,
     spoiler: true,
     sub: true,
     sup: true,

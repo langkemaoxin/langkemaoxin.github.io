@@ -12,14 +12,14 @@ tag:
 ---
 
 > **RabbitMQ 系列 · 第 3/22 篇**  
-> 上一篇：[《RabbitMQ 安装与核心概念——Queue、Exchange、Channel》](/中间件/rabbitmq/rabbitmq-02-install-concepts)  
+> 上一篇：[《RabbitMQ 安装部署——Docker 快速上手与数据持久化》](/中间件/rabbitmq/rabbitmq-02-install-concepts)  
 > 下一篇预告：[《RabbitMQ 队列核心概念——命名、顺序、优先级与策略》](/中间件/rabbitmq/rabbitmq-04-queue-concepts)
 
 ---
 
-## 开头：控制台会点了，代码怎么写
+## 开头：从控制台到代码
 
-上一篇用 Web 控制台完成了 Queue、Exchange 的创建与绑定。实际项目里，这些声明和消费逻辑都在 Java 客户端完成。
+上一篇把环境装好了。本篇先用 Web 控制台完成 Queue、Exchange 的创建与第一次收发，把「谁存消息、谁路由」看在眼里；再进入 Java 客户端，把同一件事代码化——实际项目里，这些声明和消费逻辑都在客户端完成。
 
 RabbitMQ 支持多种语言客户端，本篇以 Java 的 **amqp-client** 为主线，把「连接 → 声明 → 绑定 → 发送 → 消费 → 关闭」七步编程模型讲透，并补充 Quorum / Stream 队列声明、消息属性与回调扩展点。
 
@@ -31,9 +31,61 @@ RabbitMQ 支持多种语言客户端，本篇以 Java 的 **amqp-client** 为主
 
 Producer 经 Connection / Channel 把消息发到 Exchange，Exchange 按 Binding 规则路由到 Queue，Consumer 从 Queue 取消息并 Ack。这是后续所有业务场景的基础。
 
+| 概念 | 说明 |
+|------|------|
+| **Queue** | 实际存消息的最小单元，FIFO；消息最终必须进入 Queue 才能被消费 |
+| **Exchange** | 路由组件，不存消息；与 Queue 绑定后转发消息；多数业务场景需要 Exchange |
+| **Virtual Host** | 逻辑隔离单元，权限与资源独立；不同 vhost 无法互通信 |
+| **Connection** | 客户端与 Broker 的 TCP 连接，用完应关闭 |
+| **Channel** | AMQP 信道，绝大多数 API 在 Channel 上执行；多 Channel 共享 Connection |
+
 ---
 
-## 二、Maven 依赖
+## 二、先用控制台收发第一条消息
+
+### 2.1 创建队列并直接收发
+
+在 **Queues** 菜单创建名为 `test1` 的经典队列（Classic Queue）。创建时可勾选 **Durable**：表示队列元数据会落盘，Broker 重启后队列定义仍在。
+
+![创建 Classic 队列 test1](/中间件/rabbitmq/12/p08-01.png)
+
+进入 `test1` 详情页（例如 `/#/queues/%2F/test1`），可展开 **Publish message** 发消息、**Get messages** 取消息。这是管理台基于 `basic.publish` / `basic.get` 的调试能力，适合跟练与排障，**不是**生产消费方式。发消息时的 Delivery mode（瞬态/持久）与取消息时的 Ack Mode（取完是否重回队列）语义较深，统一整理在 [04 的持久化与 ACK 两节](/中间件/rabbitmq/rabbitmq-04-queue-concepts)，此处先按下不表。
+
+![在 Queue 详情页发送与消费消息](/中间件/rabbitmq/12/p08-02.png)
+
+### 2.2 用 Exchange 路由
+
+Queue 能收发消息，那 **Exchange（交换机）** 做什么？
+
+Exchange 不存储消息，它与 Queue 建立 **Binding（绑定）** 关系，Producer 把消息发到 Exchange，Exchange 再按规则转发到绑定的 Queue。
+
+进入 **Exchanges**，每个 vhost 预置多种 Exchange（如 `amq.direct`）。
+
+![预置 Exchange 列表](/中间件/rabbitmq/12/p09-01.png)
+
+选择 `amq.direct`，在 **Bindings** 中将 `test1` 绑定到该交换机（注意选择正确的 vhost，如 `/mirror`）。
+
+![将 test1 绑定到 amq.direct](/中间件/rabbitmq/12/p09-02.png)
+
+绑定完成后，Exchange 与 Queue 详情页均可见绑定关系。
+
+![Exchange 与 Queue 双向可见的绑定结果](/中间件/rabbitmq/12/p10-01.png)
+
+在 Exchange 详情页发送消息，`test1` 队列即可消费到。
+
+![经 Exchange 发送后在 Queue 消费](/中间件/rabbitmq/12/p10-02.png)
+
+要点：
+
+- Exchange **不存消息**，只负责路由
+- 通常 **Producer 对接 Exchange**，**Consumer 只消费 Queue**
+- 一个 Exchange 可绑定多个 Queue；Routing Key、Headers、Properties 决定分发策略
+
+---
+
+## 三、Maven 依赖
+
+> 📦 **配套示例项目**：本系列代码可在 GitHub 运行 → [rabbitmq-blog-demo](https://github.com/code-corey/rabbitmq-blog-demo)
 
 ```xml
 <dependency>
@@ -47,9 +99,11 @@ Producer 经 Connection / Channel 把消息发到 Exchange，Exchange 按 Bindin
 
 ---
 
-## 三、七步编程模型
+## 四、七步编程模型
 
 ### Step 1：创建 Connection，获取 Channel
+
+**Connection** 对应一个客户端 TCP 连接；**Channel** 是 Connection 上的 AMQP 信道，实际 API 操作在 Channel 层完成。一个 Connection 可创建多个 Channel，复用 TCP 以减轻开销。
 
 ```java
 ConnectionFactory factory = new ConnectionFactory();
@@ -64,6 +118,19 @@ Channel channel = connection.createChannel();
 ```
 
 一般一个应用复用一个 Channel 即可。若需多个 Channel，可通过 `createChannel(int channelNumber)` 指定编号；若该编号已有 Channel 且未关闭，会返回 `null`，需注意冲突。
+
+也可以用一个 **AMQP URI 连接串**替代一串 setter（连接参数可整体存进配置中心）：
+
+```java
+ConnectionFactory factory = new ConnectionFactory();
+factory.setUri("amqp://admin:admin@192.168.65.112:5672/%2Fmirror");
+// 格式：amqp://用户:密码@主机:端口/vhost
+// vhost 名要 URL 编码：根 vhost "/" 是 %2F，"/mirror" 是 %2Fmirror
+// 还支持查询参数，如 ?connection_timeout=10000&heartbeat=30
+Connection connection = factory.newConnection();
+```
+
+> 💡 完整的查询参数清单（连接超时、心跳、Channel 上限等）见官方 [URI query parameters](https://www.rabbitmq.com/docs/uri-query-parameters)。
 
 ### Step 2：声明 Exchange
 
@@ -91,13 +158,23 @@ channel.queueDeclare(String queue, boolean durable, boolean exclusive,
     boolean autoDelete, Map<String, Object> arguments);
 ```
 
-| 参数 | 含义 |
-|------|------|
-| `durable` | 持久化队列 |
-| `exclusive` | 独占（仅当前 Connection 可用，断开即删） |
-| `autoDelete` | 无消费者时自动删除 |
+五个参数逐个看（以 `queueDeclare("test2", true, false, false, null)` 为例）：
+
+| # | 参数 | 本例取值 | 含义 |
+|---|------|----------|------|
+| 1 | `queue` | `"test2"` | 队列名。填空串 `""` 则由 Broker 自动生成唯一名（临时队列常用） |
+| 2 | `durable` | `true` | 队列是否**持久化**。`true` → 队列元数据落盘，Broker 重启后队列还在（即控制台的 Durable 勾选项） |
+| 3 | `exclusive` | `false` | 是否**独占**。`true` → 该队列只能被**声明它的这条 Connection** 使用，连接一断队列即删；常用于「一条连接私有的临时队列」（如 RPC 的应答队列） |
+| 4 | `autoDelete` | `false` | 是否**自动删除**。`true` → 当**最后一个消费者**取消订阅 / 断开后队列被删 |
+| 5 | `arguments` | `null` | 可选参数 `Map`，承载扩展特性（常用键见下文） |
 
 ![Queue 声明参数与控制台对应关系](/中间件/rabbitmq/13/p05-01.png)
+
+三个最容易记混的点：
+
+- **`autoDelete` 不是「没消息就删」**：只有**曾经有过消费者**、且最后一个消费者走后才会触发删除；**从没来过消费者的队列不会被自动删**。想「没人消费就清掉」要用队列级 `x-expires`（TTL）。
+- **`exclusive=true` 会忽略 `durable`**：RabbitMQ 把独占队列当**瞬态**处理——它的生命周期绑在连接上，谈持久化没意义。
+- **`durable` 管队列、不管消息**：`durable=true` 只保证**队列定义**活过重启；消息能不能活过重启，看 `delivery_mode` + 队列类型（三条件详解见 [04 的持久化一节](/中间件/rabbitmq/rabbitmq-04-queue-concepts)）。
 
 **Durability**：`Durable` 写磁盘，重启不丢；`Transient` 仅内存，读写更快但重启丢失。
 
@@ -125,6 +202,18 @@ channel.queueDeclare(QUEUE_NAME, true, false, false, params);
 ![Quorum 与 Stream 队列声明参数](/中间件/rabbitmq/13/p06-01.png)
 
 Stream 队列不能像 Classic 那样在控制台随便发消息就能被普通 Consumer 收到，消费时需指定 offset，后续队列类型篇详述。
+
+`arguments` 常用键（不需要时传 `null`）：
+
+| 键 | 作用 |
+|----|------|
+| `x-message-ttl` | 消息在队列里的存活时长（毫秒），过期作死信或丢弃 |
+| `x-dead-letter-exchange` | 死信交换机（DLX），消息被拒 / 过期 / 超长时转投它处（见 [08 死信篇](/中间件/rabbitmq/rabbitmq-08-dlx-delay)） |
+| `x-max-priority` | 开启优先级队列，设最大优先级数 |
+| `x-queue-type` | 队列类型：`classic` / `quorum` / `stream` |
+| `x-max-length` | 队列消息条数上限，超出的按策略丢弃或转死信 |
+
+最后一句提醒：`queueDeclare` 是**幂等**的——多次声明同名队列时，参数必须**完全一致**，否则 Broker 报 `PRECONDITION_FAILED` 并关闭 Channel（比如先用 `durable=true` 建过，再拿 `false` 声明会失败）。改参数前要先把旧队列删掉。
 
 ### Step 4：声明 Binding
 
@@ -157,7 +246,7 @@ builder.priority(MessageProperties.PERSISTENT_TEXT_PLAIN.getPriority());
 AMQP.BasicProperties prop = builder.build();
 ```
 
-**持久化**：消息是否落盘取决于 **消息 deliveryMode** 与 **Queue durable** 两者。生产环境通常都设为持久化。
+**持久化**：消息是否落盘取决于 **消息 deliveryMode** 与 **Queue durable** 两者，完整的「重启不丢」三条件见 [04 的持久化一节](/中间件/rabbitmq/rabbitmq-04-queue-concepts)。生产环境通常都设为持久化。
 
 ### Step 6：Consumer 消费消息
 
@@ -176,6 +265,14 @@ AMQP.BasicProperties prop = builder.build();
 channel.basicAck(deliveryTag, false);
 ```
 
+跑起来之后回控制台看一眼：往队列发几条消息，消费者即可收到——
+
+![控制台发消息、Java 消费者接收](/中间件/rabbitmq/12/p12-01.png)
+
+同时在 **Connections** 和 **Channels** 页可看到一条 Connection（running）和一条 Channel（有数据交互时为 running，空闲为 idle）——这就是 Step 1 说的两个层次的具象：
+
+![Connections 与 Channels 状态](/中间件/rabbitmq/12/p12-02.png)
+
 ### Step 7：关闭连接
 
 ```java
@@ -187,7 +284,7 @@ connection.close();
 
 ---
 
-## 四、消息监听与回调扩展
+## 五、消息监听与回调扩展
 
 `basicConsume` 还有重载版本，支持多个回调：
 

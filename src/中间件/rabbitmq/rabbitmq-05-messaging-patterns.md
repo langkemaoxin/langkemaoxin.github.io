@@ -463,6 +463,38 @@ Headers 模式性能较低，官方不建议大规模使用，但在多维度标
 
 ---
 
+## 八、一消息多路由：CC / BCC（Sender-Selected）
+
+direct/topic 一条消息只有一个 routing key。但像邮件一样「抄送」多个收件人是合法需求——AMQP 0-9-1 允许在**消息头**里塞额外的 routing key（官方叫 Sender-selected Distribution）：
+
+```java
+Map<String, Object> headers = new HashMap<>();
+// CC/BCC 的值是字符串列表：每个元素都是一条额外的 routing key
+headers.put("CC", List.of("audit.log", "billing"));
+headers.put("BCC", List.of("secret.archive"));
+
+AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
+        .headers(headers)
+        .build();
+
+// 消息会按 basicPublish 的 routingKey + CC + BCC 全部路由一遍
+ch.basicPublish("pattern.topic_logs", "order.created", props, body);
+```
+
+| Header | 行为 |
+|--------|------|
+| `CC` | 追加路由 key，**保留**在最终消息里，消费者可见 |
+| `BCC` | 追加路由 key，但**投递前被 Broker 删除**——收件方互相看不见，类似邮件密送 |
+
+两个语义细节：
+
+- **只要有一个 key 路由成功即算 accepted**——不会因为某个 CC 的 key 没有匹配绑定而整体失败（开了 Confirms 时仍回 `basic.ack`）；
+- 发给默认交换机时，每个 key 就是队列名（一条消息直投多个队列）；发给 topic 交换机时，每个 key 各自走一遍模式匹配。
+
+适合「同一事件要进多个子系统、又不想为每种组合建绑定」的场景。注意它是**一条消息多路由**，不是复制多条——Exchange 把它分别投到所有匹配队列，每队列各得一份。AMQP 1.0 客户端的等价物是消息注解 `x-cc`（无 BCC 等价物），见 [13 协议篇](/中间件/rabbitmq/rabbitmq-13-amqp-and-protocols)。
+
+---
+
 ## 场景选型速查
 
 | 场景 | Exchange 类型 | 典型用途 |
@@ -474,6 +506,7 @@ Headers 模式性能较低，官方不建议大规模使用，但在多维度标
 | Topics | topic | 多级主题订阅 |
 | Confirms | 任意 | 发送可靠性 |
 | Headers | headers | 多维度 Header 匹配 |
+| 一条消息投多个目标 | CC/BCC 头（任意类型） | 抄送审计、密送归档 |
 
 ---
 

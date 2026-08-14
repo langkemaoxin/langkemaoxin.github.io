@@ -27,7 +27,7 @@ tag:
 - TTL、最大长度这些参数，写死在代码里还是用 **policy**？谁覆盖谁？
 - 一个队列顶不住吞吐，为什么官方说"**单队列是反模式**"？
 
-这些都不是某一种队列类型（Classic/Quorum/Stream，见 [06 队列类型](/中间件/rabbitmq/rabbitmq-07-queue-types)）的事，而是**所有队列共有的核心概念**。本篇把它们一次讲清。durable / delivery_mode / 手动 ACK 这些已在 [02 的 3.1](/中间件/rabbitmq/rabbitmq-02-install-concepts) 和 [03 的 queueDeclare 参数](/中间件/rabbitmq/rabbitmq-03-programming-model) 讲过，这里不重复，只在需要时链回去。
+这些都不是某一种队列类型（Classic/Quorum/Stream，见 [06 队列类型](/中间件/rabbitmq/rabbitmq-07-queue-types)）的事，而是**所有队列共有的核心概念**。本篇把它们一次讲清。`queueDeclare` 五参数与手动 ACK 已在 [03 编程模型](/中间件/rabbitmq/rabbitmq-03-programming-model) 讲过；持久化三条件本篇第七节展开，这里不重复，只在需要时链回去。
 
 ---
 
@@ -152,6 +152,24 @@ channel.queueDeclare("priority.queue", true, false, false, args);
 
 > **建议优先级数用 1~10**。当前实现里每个优先级会占更多 Erlang 进程资源，开几十级并不划算。
 
+### 对照：消费者优先级（x-priority）——另一个维度的「优先」
+
+消息优先级管的是**队列里谁先出队**；还有一个容易混淆的兄弟特性管**多个消费者谁先拿**——消费者优先级。声明消费者时在 `basicConsume` 的参数里带 `x-priority`：
+
+```java
+Map<String, Object> args = new HashMap<>();
+args.put("x-priority", 10);   // 整数，可正可负；不设默认 0，数值越大越优先
+channel.basicConsume("my-queue", false, args, consumer);
+```
+
+规则三条（官方 [docs/consumer-priority](https://www.rabbitmq.com/docs/consumer-priority)）：
+
+- **高优先级消费者 active 时，消息全给它**；只有同优先级的多个消费者之间才是熟悉的轮询（round-robin）；
+- 高优先级消费者**阻塞**（prefetch 用满未 Ack、网络拥塞）时，消息才流向下面的低优先级消费者；
+- RabbitMQ **不会等**阻塞的高优先级消费者——只要有低优先级消费者空闲，消息立刻给它，不积压。active/blocked 每秒可切换多次，管理台和 rabbitmqctl 都不暴露这个状态，别试图监控它。
+
+典型用途：机房 A 的消费者优先处理、机房 B 的只做兜底；或「新版消费者优先、旧版兜底」的灰度。注意它是**消费端参数**，与队列声明的 `x-max-priority`（消息优先级）互不相干。
+
 ---
 
 ## 六、临时队列与独占队列
@@ -199,9 +217,46 @@ auto-delete 的触发条件是「**有过消费者 + 最后一个消费者离开
 
 ---
 
-## 七、持久化：一句话带过（详解见 02）
+## 七、持久化：三条件缺一不可
 
-队列有 durable / transient（元数据），消息有 persistent / transient（`delivery_mode`）。**durable 队列 + persistent 消息**才能扛重启；transient 消息即便在 durable 队列里，恢复时也会被丢弃。完整三条件 + Publisher Confirms 见 [02 的 3.1](/中间件/rabbitmq/rabbitmq-02-install-concepts)。
+队列有 durable / transient（元数据），消息有 persistent / transient（`delivery_mode`）。但 **durable 队列 + persistent 消息**只是必要条件——一条消息想在 Broker 重启后还活着，得凑齐三件事：
+
+| 条件 | 谁负责 | 没满足会怎样 |
+|------|--------|--------------|
+| **① 队列是 Durable** | 声明队列时 `durable=true` | Broker 重启后队列定义本身没了，里面的消息自然全没 |
+| **② 消息 `delivery_mode = 2`** | 发布消息时选 Persistent / 代码设持久属性 | 即便队列还在，瞬态消息恢复时会被丢弃 |
+| **③ 消息确实落盘并同步** | 队列类型决定（Classic / Quorum） | 见下方两种队列的差异 |
+
+前两个是**必要条件**，少一个都不行；第三个是「持久」这个词真正的含义所在，分队列类型看：
+
+**Classic 队列**：Persistent 消息会写入磁盘的消息存储（message store）。
+
+- **优雅重启**（`systemctl restart` / `docker restart`）：①② 满足 → 消息都在。
+- **异常退出**（`kill -9` / 掉电）：Broker 可能在「收到消息」与「写入磁盘」之间就挂了，这条消息就丢——单节点 Classic 无法靠自身消除这个窗口。
+
+**Quorum Queue（生产环境持久首选）**：消息**天然全部持久**——发布时不管 `delivery_mode` 填什么，都按持久处理；基于 Raft，消息要先被**多数副本写盘**才算发布成功，再回 ack 给生产者，可靠性远高于 Classic 单节点。
+
+代码里发持久消息（Java）：
+
+```java
+import com.rabbitmq.client.MessageProperties;
+
+// 发布到默认交换机（""），routingKey = 队列名，即直接投到该队列
+channel.basicPublish("", QUEUE_NAME,
+        MessageProperties.PERSISTENT_TEXT_PLAIN,   // 持久化文本：delivery_mode=2
+        "hello".getBytes("UTF-8"));
+
+// 或自定义属性
+AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
+        .deliveryMode(2)          // 2 = Persistent
+        .contentType("text/plain")
+        .build();
+channel.basicPublish("", QUEUE_NAME, props, body);
+```
+
+> 代价提醒：持久消息要写盘，吞吐比瞬态低，**别无脑全开 Persistent**。可丢、可重算的消息（日志、埋点）用瞬态；业务关键消息才上持久 + Quorum Queue。
+
+> **光靠 ①②③ 还不够，还得让生产者「知道」消息落盘了**——这就是 **Publisher Confirms（发布确认）**。开启后，Broker 只有在持久消息真正写盘（Quorum 则是多数副本确认）后才回 `basic.ack`，没收到就重发；不开就是「发了就忘」，崩溃窗口里的消息会无声丢失。Confirms 的具体用法见 [05 消息场景篇](/中间件/rabbitmq/rabbitmq-05-messaging-patterns)。
 
 > 一个反直觉的点：**durable 与否基本不影响吞吐和延迟**，只有在极高队列/绑定 churn（每秒上百次删建）时，transient 才在绑定操作上略快。所以选 durable 主要看**语义**，不是性能。但 **Quorum 队列必须 durable**（复制协议要求）。
 
@@ -215,12 +270,29 @@ auto-delete 的触发条件是「**有过消费者 + 最后一个消费者离开
 
 ---
 
-## 九、消费者与 ACK：一句话带过（详解见 03 / 04）
+## 九、消费者与 ACK
 
 - 两种取法：注册消费者（**push**，Broker 推）或 `basic.get`（**pull**，类似 HTTP GET）；
 - 两种确认：**auto**（写入连接 socket 即算确认，吞吐高、保障弱）与 **manual**（显式 ack，**推荐先用**）；
 - manual 下用 **prefetch（channel QoS）** 限制未 ack 的在途消息数，防消费者被打爆；prefetch 开太大（几千）又会让 Broker 内存涨；
 - 消息两种状态：**Ready**（待投）与 **Unacked**（已投未确认），管理台可见。
+
+顺带一提管理控制台的 **Get Message(s)**（队列详情页取消息调试）：它的 **Ack Mode** 决定取完之后消息是**还回队列**还是**从队列删除**（对应 HTTP API 的 `ackmode`）。3.13 管理台选项原文：
+
+| UI 文案 | API `ackmode` | 取完后消息还在队列？ | 说明 |
+|---------|---------------|----------------------|------|
+| **Nack message requeue true**（默认） | `ack_requeue_true` | **是**（重新入队） | 适合「只看一眼内容」：消息还在，Ready 数通常很快恢复。UI 文案带 Nack，API 名带 ack，都表示**不删、再入队** |
+| **Automatic ack** | `ack_requeue_false` | **否**（删除） | 名字像「自动确认」，实际是**确认并移除**——看完即消费掉。生产库上误选可能把消息弄没 |
+| **Reject requeue true** | `reject_requeue_true` | **是**（拒绝后再入队） | 走拒绝（reject）并 requeue，调试「消费失败但还要重试」的路径 |
+| **Reject requeue false** | `reject_requeue_false` | **否**（删除）；若配置了死信（DLX）可能进死信队列 | 拒绝且不重回原队列，适合模拟失败丢弃 / 死信（见 [08 死信篇](/中间件/rabbitmq/rabbitmq-08-dlx-delay)） |
+
+怎么选（控制台调试）：
+
+1. **只想看消息、不改队列积压** → 用默认 **Nack message requeue true**（或 Reject requeue true）。
+2. **故意消费掉** → 选 **Automatic ack**。
+3. **验证死信** → 队列已绑 DLX 时，用 **Reject requeue false**。
+
+控制台 Get 不保证与客户端长连接消费同等可靠，官方也标注 HTTP get 仅适合诊断；业务消费请用客户端订阅（`basic.consume`）并按业务做手动 ACK / NACK。
 
 ---
 
@@ -253,6 +325,30 @@ auto-delete 的触发条件是「**有过消费者 + 最后一个消费者离开
 
 1. **引入连接恢复延迟**（不少客户端默认 5 秒）；
 2. **用服务端命名**（新连接用新名字，彻底绕开竞态）。
+
+---
+
+## 十二、队列长度上限与溢出行为
+
+03 篇的 arguments 表里出现过 `x-max-length`，这里把机制补全。队列可以按**条数**（`x-max-length`）或**字节数**（`x-max-length-bytes`，只算消息体）设上限，也可两个都设——**谁先到谁生效**。三个关键规则（官方 [docs/maxlength](https://www.rabbitmq.com/docs/maxlength)）：
+
+- **只数 Ready 消息**：Unacked 的不计入——消费者把消息拉走不 Ack，队列照样能继续收；
+- **policy 与 x-arguments 都能设**：同时设时**取两者的较小值**生效（推荐用 policy，改起来不用重建队列，见第三节）；
+- **溢出行为由 `x-overflow` 决定**，这是最容易被忽视的一环：
+
+| `x-overflow` 取值 | 行为 | 适用 |
+|------|------|------|
+| `drop-head`（默认） | **丢最老的**——从队头挤掉旧消息腾位置（可配 DLX 转走） | 日志、埋点等「新的比旧的重要」 |
+| `reject-publish` | **拒最新的**——新消息进不来；开了 Confirms 的发布者收到 `basic.nack` 感知拒收 | 不允许静默丢老消息的业务 |
+| `reject-publish-dlx` | 同上，且把被拒消息**转死信**（**仅 Classic**，Quorum 不支持） | 既要拒新又要留痕审计 |
+
+```bash
+# policy 方式：队列最多 2 条，满了拒新
+rabbitmqctl set_policy limited "^two-messages$" \
+  '{"max-length":2,"overflow":"reject-publish"}' --apply-to queues
+```
+
+> 🔑 默认 `drop-head` 意味着：**光设 `x-max-length` 防爆，代价是悄悄丢最老的消息**。要「新消息进不来」而不是「旧消息消失」，必须显式设 `x-overflow: reject-publish`，并配合 Publisher Confirms（[05 消息场景篇](/中间件/rabbitmq/rabbitmq-05-messaging-patterns)）感知 `basic.nack`。把 overflow 死信用于「消费跟不上」告警的实践见 [08 死信篇](/中间件/rabbitmq/rabbitmq-08-dlx-delay)，队列类型对 overflow 的支持差异见 [07 队列类型](/中间件/rabbitmq/rabbitmq-07-queue-types)。
 
 ---
 

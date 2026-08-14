@@ -46,7 +46,7 @@ tag:
 
 ### ② Broker：durable 队列 + persistent 消息
 
-这是 [第 02 篇 3.1 节](/中间件/rabbitmq/rabbitmq-02-install-concepts) 反复强调的三条件：队列 `durable=true`、消息 `delivery_mode=2`、消息确实落盘同步。三者缺一，重启就可能丢。
+这是 [第 04 篇第七节](/中间件/rabbitmq/rabbitmq-04-queue-concepts) 反复强调的三条件：队列 `durable=true`、消息 `delivery_mode=2`、消息确实落盘同步。三者缺一，重启就可能丢。
 
 | 条件 | 谁负责 | 不满足的后果 |
 |------|--------|-------------|
@@ -356,8 +356,8 @@ anonymous_login_user = none
 **入门与基础（01-04）**
 
 - [01 · MQ 是什么](/中间件/rabbitmq/rabbitmq-01-what-is-mq)——从同步到异步，为什么需要 MQ
-- [02 · 安装与核心概念](/中间件/rabbitmq/rabbitmq-02-install-concepts)——Queue / Exchange / Channel，Docker 与 yum 安装
-- [03 · 编程模型](/中间件/rabbitmq/rabbitmq-03-programming-model)——从连接到消费的七步骨架
+- [02 · 安装部署](/中间件/rabbitmq/rabbitmq-02-install-concepts)——Docker 安装、compose 与数据持久化
+- [03 · 编程模型](/中间件/rabbitmq/rabbitmq-03-programming-model)——控制台收发与从连接到消费的七步骨架
 - [04 · 队列核心概念](/中间件/rabbitmq/rabbitmq-04-queue-concepts)——命名、顺序、优先级、策略
 
 **消息模式与集成（05-08）**
