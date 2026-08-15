@@ -387,6 +387,18 @@ export default sidebar({
       ],
     },
   ],
+  "/Linux/": [
+    "",
+    {
+      text: "Linux 基础",
+      icon: "terminal",
+      prefix: "basics/",
+      collapsible: true,
+      children: [
+        "linux-01-nsenter-prerequisites",
+      ],
+    },
+  ],
   "/云原生/": [
     "",
     {

@@ -7,6 +7,7 @@ import Tools from "./sidebar/Tools.mjs";
 import English from "./sidebar/English.mjs";
 import Notes from "./sidebar/Notes.mjs";
 import CloudNative from "./sidebar/云原生.mjs";
+import Linux from "./sidebar/Linux.mjs";
 import Middleware from "./sidebar/中间件.mjs";
 import Concurrency from "./sidebar/并发编程.mjs";
 import SoftwareArch from "./sidebar/软件架构.mjs";
@@ -31,6 +32,7 @@ export const modules = [
   { path: "/Tools/", dir: "Tools" },
   { path: "/English/", dir: "English" },
   { path: "/Notes/", dir: "Notes" },
+  { path: "/Linux/", dir: "Linux" },
   { path: "/云原生/", dir: "云原生" },
   { path: "/中间件/", dir: "中间件" },
   { path: "/并发编程/", dir: "并发编程" },
@@ -71,6 +73,7 @@ export const folders = {
   ...prefix("Tools", Tools),
   ...prefix("English", English),
   ...prefix("Notes", Notes),
+  ...prefix("Linux", Linux),
   ...prefix("云原生", CloudNative),
   ...prefix("中间件", Middleware),
   ...prefix("并发编程", Concurrency),

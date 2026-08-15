@@ -23,6 +23,11 @@ export default navbar([
     link: "/BigData/",
   },
   {
+    text: "Linux",
+    icon: "terminal",
+    link: "/Linux/",
+  },
+  {
     text: "云原生",
     icon: "cloud",
     link: "/云原生/",
