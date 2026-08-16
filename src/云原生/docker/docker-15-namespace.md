@@ -14,7 +14,7 @@ description: Namespace 隔离——容器如何「假装」自己是一台独立
 
 > **Docker 系列 · 第 15/18 篇**  
 > 上一篇：[《UnionFS 与镜像分层》](/云原生/docker/docker-14-unionfs/) · 下一篇：[《CGroups 限资源》](/云原生/docker/docker-16-cgroups/)  
-> 系列第 7 篇已从运维角度介绍过 [六大 Namespace](/云原生/docker/docker-07-enter/)，本篇从内核与 Docker 实现深入展开。
+> 第 7 篇讲 [如何进入容器](/云原生/docker/docker-07-enter-container)（含 `nsenter`）；本篇从内核与 Docker 实现展开 Namespace 隔离。
 
 ---
 
@@ -58,7 +58,7 @@ description: Namespace 隔离——容器如何「假装」自己是一台独立
 | **User** | `CLONE_NEWUSER` | UID/GID |
 | **UTS** | `CLONE_NEWUTS` | 主机名、NIS 域名 |
 
-Docker 默认启用其中大部分（视 `--pid`、`--network` 等模式而定）。第 7 篇列出的 **pid / net / ipc / mnt / uts / user** 六类，是日常容器隔离的主干。
+Docker 默认启用其中大部分（视 `--pid`、`--network` 等模式而定）。日常容器隔离的主干是 **pid / net / ipc / mnt / uts / user** 六类（下文逐项展开）。
 
 ---
 
@@ -174,13 +174,13 @@ chdir("/");
 
 ## 七、与第 7 篇的关系
 
-| 第 7 篇（运维视角） | 本篇（原理视角） |
-|---------------------|------------------|
-| 六大 Namespace 名称与作用 | `clone()` flags 与内核实现 |
-| nsenter / exec 进入容器 | Docker `setNamespaces` 源码路径 |
-| 日常排查命令 | Libnetwork、MNT + chroot、pivot_root |
+| [第 7 篇](/云原生/docker/docker-07-enter-container)（运维） | 本篇（原理） |
+|----------------------------------------------------------|--------------|
+| `exec` / `attach` / SSH / `nsenter` 怎么选 | `clone()` flags 与各类 Namespace 做什么 |
+| `nsenter -n` 借宿主机工具查容器网络 | Network Namespace、veth、docker0、Libnetwork |
+| 进容器开 shell、跑探测命令 | MNT + chroot / pivot_root；为何「看不见」宿主机路径 |
 
-两篇合读，既能动手进容器，也能解释「为什么进得去、为什么看不见宿主机进程」。
+两篇合读：第 7 篇负责动手进得去，本篇解释「为什么进得去、为什么看不见宿主机进程」。进程在宿主机上的真实 PID 对照另见[第 11 篇](/云原生/docker/docker-11-process-view)。
 
 ---
 

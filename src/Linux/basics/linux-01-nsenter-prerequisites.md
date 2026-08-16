@@ -65,7 +65,7 @@ description: nsenter 只是一条命令，但它踩在 /proc、命名空间、�
 | 3 | **命名空间**（核心） | 8 种 ns 各隔离什么；`/proc/<pid>/ns/*` 符号链接；inode 编号判同法 | `-m/-u/-i/-n/-p/-U` 六个开关，一个开关一种 ns | `readlink /proc/self/ns/uts` | 2 h |
 | 4 | 三个系统调用 | 只记语义：`clone`（建进程顺便建新 ns）、`unshare`（把自己移入新 ns）、**`setns`（加入已存在的 ns）** | nsenter 就是 `setns(2)` 的命令行封装 | `sudo unshare -n ip a` | 1 h |
 | 5 | 权限模型 | root / `CAP_SYS_ADMIN` / capabilities；为什么动别人的 ns 要特权 | 为什么教程里 nsenter 都带 `sudo`；哪些环境会失败 | `capsh --print \| grep sys_admin` | 30 min |
-| 6 | **nsenter 本体** | 三步用法 + 边界（cgroup 不切换） | —— | 跑通 [Docker 系列 07 篇](/云原生/docker/docker-07-enter-container) 3.2 节的六步排障 | 1 h |
+| 6 | **nsenter 本体** | 三步用法 + 边界（cgroup 不切换） | —— | 跑通 [Docker 系列 07 篇 §四](/云原生/docker/docker-07-enter-container) 的 nsenter 实操 | 1 h |
 | 7 | （可选）周边拼图 | veth/网桥、containerd-shim、OCI | 看懂 `eth0@if127`、shim 父进程这些细节 | `nsenter -n -- tcpdump -i eth0` 抓一次包 | 按需 |
 
 **前置部分（1~5）合计约 4~5 小时。** 组块 3 是最大的一块，值得单独说两句：命名空间是「操作型概念」，读十遍文档不如亲手跑一次 `unshare -n`，然后盯着那块只剩下 lo 的网卡发一会呆——那一刻你会真正明白「新建的 net ns 里什么都没有」是什么意思。
@@ -96,7 +96,7 @@ description: nsenter 只是一条命令，但它踩在 /proc、命名空间、�
 2. **Docker 容器**：`docker run -it --rm ubuntu bash` 进去练组块 1~5；
 3. **虚拟机/云主机**：任意发行版。
 
-注意：验证 `nsenter` 本体（组块 6）需要一个运行中的容器作目标，最省事的是 `docker run -d --name ns-demo alpine sleep infinity`——完整流程在 [Docker 系列 07 篇的 3.2 节](/云原生/docker/docker-07-enter-container)。
+注意：验证 `nsenter` 本体（组块 6）需要一个运行中的容器作目标，最省事的是 `docker run -d --name ns-demo alpine:3.21 sleep infinity`——完整流程在 [Docker 系列 07 篇 §四](/云原生/docker/docker-07-enter-container)。
 
 ---
 

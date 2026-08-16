@@ -1,5 +1,5 @@
 ---
-title: 进入 Docker 容器的四种方式——以及六大命名空间
+title: 进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter
 sidebarGroup: Docker 系列
 shortTitle: 07 进入容器四法
 order: 7
@@ -9,268 +9,197 @@ tag:
   - Docker
   - 云原生
   - Docker系列
-  - Namespace
+  - docker exec
   - nsenter
-description: 进入 Docker 容器的四种方式——以及六大命名空间
+description: 进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter
 ---
 
 > **Docker 系列 · 第 7/18 篇**  
-> 上一篇：[《容器日常命令》](/云原生/docker/docker-06-container-commands)  
+> 上一篇：[《容器日常命令——run、ps、stop、exec 与常用运维》](/云原生/docker/docker-06-container-commands)  
 > 下一篇：[《Docker 本地镜像载入与载出》](/云原生/docker/docker-08-image-transfer)
 
 ---
 
 ## 开头：容器跑起来了，怎么进去排障？
 
-凌晨 2 点，告警说某个微服务容器「连不上数据库」。你 `docker ps` 看到容器还在跑，但 `curl` 健康检查失败。
+凌晨 2 点，告警说某个微服务容器「连不上数据库」。你 `docker ps` 看到容器还在跑，但健康检查失败。
 
-接下来你要做三件事：
+接下来常见三种动作：
 
-1. **进到容器里** —— 看进程、看配置、看日志
-2. **在宿主机上对照** —— 容器里的 PID 1 在宿主机上是几号进程？
-3. **必要时只进网络命名空间** —— 用宿主机的 `ping`、`tcpdump` 调试容器网络
+1. **进到容器里** —— 看进程、看配置、跑一条探测命令
+2. **只借网络视图** —— 容器镜像太瘦，没有 `ping`/`tcpdump`，想用宿主机工具看容器网络
+3. **搞清别用错入口** —— `attach`、SSH、`exec`、`nsenter` 适用场景完全不同
 
-Docker 提供了多种「进入容器」的手段，适用场景各不相同。本文按 PDF 原文梳理四种方式，并深入讲解 Docker 隔离依赖的 **六大 Linux 命名空间**。
+第 6 篇已点过 `docker exec`；本篇把**进入容器的四种方式**讲清、讲对比。Namespace 原理见[第 15 篇](/云原生/docker/docker-15-namespace)；容器内外 PID / shim 对照见[第 11 篇](/云原生/docker/docker-11-process-view)。
+
+> **实验环境**：Docker Client / Server **29.1.2**（Docker Desktop）。日常 `exec`/`attach` 用 `nginx:alpine` 即可。`nsenter` 需能访问 **Linux 内核命名空间**（本机 WSL2 / Linux 宿主机；纯 Windows 引擎里通常不可用）——前置概念见 [Linux · nsenter 前置知识](/Linux/basics/linux-01-nsenter-prerequisites)。
 
 ---
 
-## 一、方式 1：`docker attach`
+## 一、方式 1：`docker exec`（推荐）
 
-`docker attach` 可以附加到**已在运行的容器**的标准输入/输出/错误流上。
+在**已运行**的容器里再起一个进程。日常运维首选。
 
 ```bash
-# 先启动一个守护态容器
-docker run -itd ubuntu:14.04 /bin/bash
+docker run -d --name demo-nginx -p 8080:80 nginx:alpine
 
-# 查看容器 ID
-docker ps
+# 执行单条命令（不必 -it）
+docker exec demo-nginx nginx -v
 
-# 附加到容器
-docker attach <容器ID>
+# 交互式 shell（alpine 多为 sh，不一定有 bash）
+docker exec -it demo-nginx sh
 ```
 
-### 局限性
+要点：
 
-- **多窗口同步**：多个终端同时 `attach` 同一容器时，所有窗口输出同步；一个窗口阻塞，其他窗口也无法操作
-- **不适合生产**：更适合本地开发调试
+| 点 | 说明 |
+|----|------|
+| 与主进程关系 | 每次 `exec` 是**新进程**，不抢主进程的 stdin/stdout |
+| 多人同时用 | 可以；各开各的 shell，互不「抢键盘」 |
+| `-i` / `-t` | 交互 shell 用 `-it`；跑完即退的单条命令通常不需要 |
+| 镜像过瘦 | 没有 `bash`/`ping` 时换 `sh`，或改用下文 `nsenter -n` 借宿主机工具 |
 
----
+第 6 篇生命周期线里的「进容器执行」就是这一招；本篇只补场景取舍。
 
-## 二、方式 2：SSH 进入容器
-
-传统做法是在镜像里安装 SSH Server，多人通过 SSH 登录，互不干扰。
-
-**不推荐在 Docker 场景使用**：
-
-- 容器设计理念是「一个进程/一组紧密相关进程」，SSH 守护进程增加复杂度
-- 镜像体积变大，攻击面扩大
-- 官方推荐用 `docker exec` 或 `nsenter`
+退出 shell：`exit` 或 `Ctrl+D`——**只结束本次 exec 进程，不会停掉容器**。
 
 ---
 
-## 三、方式 3：`nsenter`——按命名空间精准进入
+## 二、方式 2：`docker attach`
 
-### 3.1 什么是 nsenter？
-
-`nsenter` 来自 `util-linux` 包，可以在**指定进程的命名空间**下运行程序。
-
-典型场景：很多精简镜像没有 `ip`、`ping`、`ss`、`tcpdump` 等网络工具。此时可以只进入容器的 **net 命名空间**，在宿主机上用完整工具集调试网络。
+`attach` 把当前终端挂到容器**主进程**的标准输入/输出/错误流上——附着的是「已经在跑的那个进程」，不是新开一个。
 
 ```bash
-nsenter --help
+# 演示：前台式主进程用 bash，方便感受 attach
+docker run -itd --name demo-attach alpine:3.21 sh
+
+docker attach demo-attach
+# 此时你的键盘输入会进到容器里那个 sh
 ```
 
-常用选项：
+### 局限性（为什么生产少用）
+
+- **多窗口同步**：多个终端同时 `attach` 同一容器时，输出往往一起刷；一个窗口卡住，体验会互相干扰
+- **容易误伤主进程**：在 attach 会话里乱按退出键，可能直接影响主进程（容器随之退出）——交互调试要格外小心
+- **更适合本地**：快速看一眼前台进程 IO；排障开 shell 优先用 `exec`
+
+脱离会话且尽量不杀主进程：常见是 `Ctrl+P` 再 `Ctrl+Q`（取决于 TTY/`-t` 是否启用）。拿不准时，优先改用 `exec`，少用 `attach` 当「进 shell」的手段。
+
+清理演示：`docker rm -f demo-attach`。
+
+---
+
+## 三、方式 3：SSH 进入容器（不推荐）
+
+传统 VM 思维：镜像里装 `sshd`，多人 SSH 登录。
+
+**Docker 场景一般不要这么干：**
+
+- 容器理念是「一个主进程 / 一组紧密相关进程」，再挂一个 SSH 守护进程增加复杂度
+- 镜像变大、密钥与端口暴露面变大
+- 官方与社区惯例：用 `docker exec`（或必要时 `nsenter`）
+
+若你「只是想进去敲命令」——直接 `exec`，别为排障专门做带 SSH 的业务镜像。
+
+---
+
+## 四、方式 4：`nsenter`——按命名空间精准进入
+
+`nsenter`（`util-linux`）可以在**指定进程所属的命名空间**里跑程序。典型价值：
+
+> 精简镜像没有 `ip` / `ping` / `ss` / `tcpdump`，你又只想看**容器的网络视图**，不想把调试工具打进业务镜像。
+
+### 4.1 常用选项
 
 | 选项 | 含义 |
 |------|------|
-| `-t, --target pid` | 目标进程的 PID |
-| `-m, --mount` | 进入 mount 命名空间（文件系统视图） |
-| `-u, --uts` | 进入 UTS 命名空间（主机名/域名） |
-| `-i, --ipc` | 进入 IPC 命名空间（信号量、消息队列、共享内存） |
-| `-n, --net` | 进入 network 命名空间 |
-| `-p, --pid` | 进入 PID 命名空间 |
-| `-U, --user` | 进入 user 命名空间 |
+| `-t, --target pid` | 目标进程在**宿主机**上的 PID |
+| `-m` / `-u` / `-i` / `-n` / `-p` / `-U` | 分别进入 mount / uts / ipc / **net** / pid / user 命名空间 |
 
-### 3.2 安装 nsenter（宿主机）
+宿主机没有命令时，用发行版包装上即可（例如 `apt install util-linux`），不必从古早源码编译。选项与内核概念的系统学习见 [linux-01](/Linux/basics/linux-01-nsenter-prerequisites)；六大 Namespace 原理见[第 15 篇](/云原生/docker/docker-15-namespace)。
 
-若系统未预装，可从源码编译：
+### 4.2 拿到容器「PID 1」在宿主机上的 PID
 
 ```bash
-wget https://www.kernel.org/pub/linux/utils/util-linux/v2.24/util-linux-2.24.tar.gz
-tar -xzvf util-linux-2.24.tar.gz
-cd util-linux-2.24/
-./configure --without-ncurses
-make nsenter
-sudo cp nsenter /usr/local/bin
+docker run -d --name ns-demo alpine:3.21 sleep infinity
+docker inspect -f '{{.State.Pid}}' ns-demo
 ```
 
-### 3.3 获取容器首个进程的 PID
+得到的数字是宿主机（或 Desktop 里 Linux VM）上的 PID，供 `nsenter -t` 使用。PID 对照与进程树细节见[第 11 篇](/云原生/docker/docker-11-process-view)。
+
+### 4.3 进入完整命名空间（近似「进容器」）
 
 ```bash
-docker inspect -f '{{.State.Pid}}' <容器ID>
+PID=$(docker inspect -f '{{.State.Pid}}' ns-demo)
+sudo nsenter --target "$PID" --mount --uts --ipc --net --pid
 ```
 
-### 3.4 进入容器的完整命名空间
+效果接近「站在该容器的隔离视图里」；日常开 shell 仍优先 `docker exec`，这条留给需要精细控制进哪些 ns 的场景。
+
+### 4.4 只进入网络命名空间（高频排障）
 
 ```bash
-# 假设 PID 为 22299
-sudo nsenter --target 22299 --mount --uts --ipc --net --pid
+PID=$(docker inspect -f '{{.State.Pid}}' ns-demo)
+# 在容器的 net ns 里跑宿主机的工具
+sudo nsenter -t "$PID" -n ip addr
+sudo nsenter -t "$PID" -n ss -tln
 ```
 
-参数含义：
+容器里的 ESTABLISHED 连接，默认**不会**混在宿主机默认 net ns 的 `ss`/`netstat` 列表里；要看容器连接，就进它的 net ns。
 
-- `--mount`：文件系统视图
-- `--uts`：独立 hostname
-- `--ipc`：进程间通信隔离
-- `--net`：独立网络栈
-- `--pid`：独立进程 ID 空间
-
-### 3.5 只进入网络命名空间
-
-```bash
-sudo nsenter -t 3473 -n netstat | grep ESTABLISHED
-```
-
-在容器 net 命名空间内执行 `netstat`，看到的 IP 地址与宿主机不同——这就是网络隔离的效果。
-
-### 3.6 查看 Docker 容器 ESTABLISHED 连接
-
-Docker 容器的 ESTABLISHED 连接不会出现在宿主机的 `netstat` 里。需要进入容器 net 命名空间：
-
-```bash
-PID=$(docker inspect -f '{{.State.Pid}}' <容器ID>)
-sudo nsenter -t $PID -n netstat | grep ESTABLISHED
-```
+清理：`docker rm -f ns-demo`。
 
 ---
 
-## 四、Docker 隔离的六大命名空间
-
-Linux Namespace 是容器隔离的基石。Docker 默认使用以下六种：
-
-### 4.1 PID 命名空间（进程 ID）
-
-- 不同 PID 命名空间中的进程 ID **相互独立**，不同空间可以有相同 PID
-- 容器内所有进程的「父进程」在宿主机视角下是 Docker 相关进程
-- 支持**嵌套**：可以在容器里再跑 Docker（Docker in Docker）
-
-### 4.2 NET 命名空间（网络）
-
-- 每个 net 命名空间有独立的：网络设备、IP 地址、路由表、`/proc/net`
-- Docker 默认用 **veth pair** 将容器虚拟网卡连接到宿主机 **docker0 网桥**
-
-### 4.3 IPC 命名空间（进程间通信）
-
-- 容器内进程间通信仍使用 Linux IPC：信号量、消息队列、共享内存
-- 与 VM 不同，容器 IPC 实际发生在 host 上同一 PID 命名空间的进程之间
-- 每个 IPC 资源有唯一 32 位 ID，申请时需带上命名空间信息
-
-### 4.4 MNT 命名空间（挂载/文件系统）
-
-- 类似 `chroot`，让进程看到不同的文件目录树
-- 与 chroot 不同：每个命名空间在 `/proc/mounts` 中只显示**本空间**的 mount point
-
-### 4.5 UTS 命名空间（主机名/域名）
-
-- UTS = UNIX Time-sharing System
-- 每个容器可有独立 `hostname` 和 `domainname`
-- 在网络上可被视作**独立节点**，而非宿主机上的一个进程
-
-### 4.6 USER 命名空间（用户）
-
-- 容器内可以有与宿主机不同的 UID/GID
-- 可在容器内用「容器用户」执行程序，而非宿主机用户
-
----
-
-## 五、方式 4：`docker exec`（推荐）
-
-Docker 1.3+ 提供 `exec`，是**生产环境最常用**的进入方式：
-
-```bash
-docker exec --help
-
-# 进入交互式 shell
-docker exec -it <容器ID> /bin/bash
-
-# 在容器内执行单条命令
-docker exec -it rmqbroker-ha-b /bin/bash -c "ps -ef"
-```
-
-优点：
-
-- 不依赖 attach 的 IO 共享问题
-- 每次 exec 启动新进程，多人可同时操作
-- 可指定进入容器的 PID 命名空间执行应用
-
----
-
-## 六、容器内外进程对照
-
-### 6.1 容器内看进程
-
-```bash
-docker exec -it rmqbroker-ha-b /bin/bash
-ps -ef
-```
-
-容器内 PID 1 通常是启动命令（如 `sh mqbroker -c /opt/rocketmq.../broker.conf`），具有特殊意义——容器生命周期与 PID 1 绑定。
-
-### 6.2 宿主机看同一批进程
-
-```bash
-docker top rmqbroker-ha-b
-```
-
-示例输出：容器内 PID 1 的 `mqbroker` 进程，在宿主机上可能是 PID 3473。
-
-### 6.3 三个关键命令
-
-```bash
-docker top rmqbroker-ha-b    # 从宿主机看容器进程
-ps -ef | grep 3401           # 查看父进程 containerd-shim
-ps aux | grep 3473           # 查看子进程（容器内应用）
-```
-
-### 6.4 进程树关系
-
-`docker run` 启动容器时，Docker 会为每个容器启动 **containerd-shim-runc-v2** 作为父进程：
-
-```
-containerd-shim-runc-v2  (宿主机 PID 3401)
-  └── sh mqbroker ...     (宿主机 PID 3473，容器内 PID 1)
-```
-
-- `namespace` 参数：命名空间隔离
-- `cgroup` 参数：资源限制
-
-**容器的本质是进程**——shim 跑在特定 namespace 和 cgroup 下，以为自己在一台独立机器上。
-
----
-
-## 七、四种方式对比
+## 五、四种方式对比
 
 | 方式 | 适用场景 | 生产推荐 |
 |------|----------|----------|
-| `docker attach` | 本地快速调试 | ❌ |
+| `docker exec` | 日常运维、开 shell、跑探测命令 | ✅ 首选 |
+| `docker attach` | 附着主进程 IO，本地快速看输出 | ❌ 少当「进 shell」用 |
 | SSH | 传统 VM 思维 | ❌ |
-| `nsenter` | 网络/命名空间级调试 | ⚠️ 高级场景 |
-| `docker exec` | 日常运维、排障 | ✅ |
+| `nsenter` | 按 ns 进入；尤其 **只进 net** 借宿主机网络工具 | ⚠️ 高级 / Linux 宿主机 |
+
+一句话：**能 `exec` 就 `exec`；镜像太瘦要查网再用 `nsenter -n`；别为进容器装 SSH；少用 `attach` 当登录手段。**
 
 ---
 
-## 下篇预告
+## 六、和系列其它篇的分工
 
-**第 8 篇：《Docker 本地镜像载入与载出》**
+| 你想搞清楚的事 | 去哪篇 |
+|----------------|--------|
+| `run` / `ps` / `logs` / `top` / `stop` / `rm` | [第 6 篇](/云原生/docker/docker-06-container-commands) |
+| 进容器四法怎么选（本篇） | 本文 |
+| 容器内外 PID、`docker top`、shim 进程树 | [第 11 篇](/云原生/docker/docker-11-process-view) |
+| Namespace 隔离原理（pid/net/mnt…） | [第 15 篇](/云原生/docker/docker-15-namespace) |
+| `nsenter` 的 Linux 前置（`/proc`、setns、权限） | [linux-01](/Linux/basics/linux-01-nsenter-prerequisites) |
 
-- `docker save` / `docker load` 与 `docker export` / `docker import` 的区别
-- 离线搬运镜像、`docker tag` 重命名
+---
+
+## 命令速查
+
+| 目的 | 命令 |
+|------|------|
+| 推荐：交互 shell | `docker exec -it CONTAINER sh` |
+| 推荐：跑一条命令 | `docker exec CONTAINER CMD` |
+| 附着主进程 IO | `docker attach CONTAINER` |
+| 查宿主机 PID | `docker inspect -f '{{.State.Pid}}' CONTAINER` |
+| 只进网络命名空间 | `sudo nsenter -t PID -n …` |
+
+---
+
+## 小结
+
+- **首选 `docker exec`**：新进程、可多人、不碰主进程 IO。
+- **`attach` 挂的是主进程**；本地偶用，生产排障别当登录方式。
+- **别在业务镜像里靠 SSH 进容器**。
+- **`nsenter`**：按命名空间进入；容器没有网络工具时，`-n` + 宿主机 `ip`/`ss`/`tcpdump` 很有用。
+- 原理与进程对照不在本篇展开 → 第 15 / 11 篇。
 
 ---
 
 ## 思考题
 
-> 容器里没有 `ping` 命令，你如何测试它能否访问外网？（提示：`nsenter -n`）
+> 容器里没有 `ping` 命令，你如何测试它能否访问外网？（提示：`nsenter -n`，或临时 `docker run --net container:<名>` 挂一个带工具的 sidecar 容器。）
 
-欢迎在评论区留下你的做法。下一篇见 🐳
+下一篇见 🐳

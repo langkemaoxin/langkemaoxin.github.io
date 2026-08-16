@@ -25,7 +25,7 @@ description: 进程视角看容器——PID 命名空间与宿主机对照
 
 你在容器内 `ps -ef` 看到 nginx 的 PID 是 1，以为它是「系统第一个进程」。但在宿主机上 `docker top` 一看，同一个 nginx 却是 PID 9955。
 
-**容器不是虚拟机**——它只是宿主机上的普通进程，套了一层 PID 命名空间。本文从 Linux `/proc` 文件系统出发，完整 walkthrough 容器进程在宿主机上的真实身份、cgroup 路径，以及 `docker exec` 与 PID 1 的关系。
+**容器不是虚拟机**——它只是宿主机上的普通进程，套了一层 PID 命名空间。本文从 Linux `/proc` 文件系统出发，完整 walkthrough 容器进程在宿主机上的真实身份、cgroup 路径，以及 `docker exec` 与 PID 1 的关系。若只想选「怎么进容器」（exec / attach / nsenter），见[第 7 篇](/云原生/docker/docker-07-enter-container)。
 
 ---
 

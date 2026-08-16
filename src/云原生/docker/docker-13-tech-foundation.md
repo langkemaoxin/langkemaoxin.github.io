@@ -99,7 +99,7 @@ Docker Engine 使用的 Linux 隔离技术包括：
 | **uts** | 主机名、NIS 域名 |
 | **user** | UID/GID 映射 |
 
-此外还有 **cgroup** namespace（隔离 cgroup 根目录视图）和较新的 **time** namespace 等。系列第 7 篇已从运维视角介绍过六大 Namespace；第 15 篇会从实现原理深入展开。
+此外还有 **cgroup** namespace（隔离 cgroup 根目录视图）和较新的 **time** namespace 等。进容器手段见第 7 篇；Namespace 实现原理见第 15 篇。
 
 ### 4.2 Cgroups —— 能用多少
 
