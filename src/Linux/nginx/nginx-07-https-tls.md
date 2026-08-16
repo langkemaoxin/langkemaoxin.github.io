@@ -24,7 +24,7 @@ description: 在 Ubuntu 上为 Nginx 配置 TLS 证书、HTTP 跳转 HTTPS、安
 
 证书挂在 Nginx，浏览器只信入口；上游可在内网明文，或再走 TLS。本篇在 Ubuntu 上完成：**监听 443、跳转、基础加固**，并讲清性能账。
 
-![TLS 在 Nginx 终结，上游内网转发](/Linux/nginx/07/p01-01.png)
+<!-- 配图占位: TLS 在 Nginx 终结，上游内网转发 | /Linux/nginx/07/p01-01.png -->
 
 ---
 
@@ -50,7 +50,7 @@ sudo chmod 600 /etc/nginx/ssl/example.com.key
 
 生产推荐 **Let’s Encrypt + certbot**（或公司证书平台），并配置自动续期后 `nginx -s reload`。
 
-![证书与私钥文件权限](/Linux/nginx/07/p02-01.png)
+<!-- 配图占位: 证书与私钥文件权限 | /Linux/nginx/07/p02-01.png -->
 
 ---
 
@@ -96,7 +96,7 @@ curl -kI https://127.0.0.1/ -H 'Host: example.com'
 
 > `http2 on;` 与 `listen ... ssl http2` 的写法随版本演变，以你安装的 `nginx -v` 对应文档为准；`-t` 不通过就改回该版本支持的写法。
 
-![HTTPS 与 80→443 跳转](/Linux/nginx/07/p03-01.png)
+<!-- 配图占位: HTTPS 与 80→443 跳转 | /Linux/nginx/07/p03-01.png -->
 
 反代时别忘了：
 
@@ -123,7 +123,7 @@ proxy_set_header X-Forwarded-Proto $scheme;
 2. 短连接狂刷 API，优先保证 **keepalive（浏览器↔Nginx）** 与会话复用。  
 3. 压测要分「新建 TLS」与「复用连接」两组，数字会差一个数量级。
 
-![TLS 全握手 vs 会话复用](/Linux/nginx/07/p04-01.png)
+<!-- 配图占位: TLS 全握手 vs 会话复用 | /Linux/nginx/07/p04-01.png -->
 
 ---
 

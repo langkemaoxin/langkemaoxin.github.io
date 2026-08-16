@@ -41,7 +41,7 @@ dockerd 启动时读 `/etc/docker/daemon.json`，本机的真实配置（日志�
 
 | 配置项 | 作用 | 验证方式 |
 |------|------|------|
-| `registry-mirrors` | 镜像拉取加速 | `docker info` Registry Mirrors |
+| `registry-mirrors` | 镜像拉取加速（配置步骤与验收见[第 4 篇](/云原生/docker/docker-04-install)） | `docker info` Registry Mirrors |
 | `log-driver` / `log-opts` | 全局日志驱动与轮转（[第 20 篇](/云原生/docker/docker-20-logging-monitoring/)） | `docker info` Logging Driver |
 | `live-restore` | daemon 重启/升级时容器不断（本篇主角） | `docker info` Live Restore |
 | `metrics-addr` | 暴露 Prometheus 指标端点 | `curl :9323/metrics` |

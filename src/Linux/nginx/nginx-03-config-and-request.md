@@ -22,7 +22,7 @@ description: 弄清 Nginx 配置上下文与 include 结构，用最小 Ubuntu �
 
 新人常把 `proxy_pass` 写进错误的花括号里，或改完不 `-t` 直接 reload，结果 master 拒绝新配置、线上仍是旧行为。本篇把 **上下文** 和 **请求匹配顺序** 钉死，后面所有实战都建立在这上面。
 
-![配置上下文树与请求匹配流水线](/Linux/nginx/03/p01-01.png)
+<!-- 配图占位: 配置上下文树与请求匹配流水线 | /Linux/nginx/03/p01-01.png -->
 
 ---
 
@@ -62,7 +62,7 @@ http {
 
 指令有「合法上下文」限制：写错位置时，`nginx -t` 会直接报 *directive is not allowed here*。
 
-![Ubuntu nginx.conf 与 sites-enabled 关系](/Linux/nginx/03/p02-01.png)
+<!-- 配图占位: Ubuntu nginx.conf 与 sites-enabled 关系 | /Linux/nginx/03/p02-01.png -->
 
 ---
 
@@ -106,7 +106,7 @@ sudo nginx -t && sudo systemctl reload nginx
 curl -H 'Host: demo.local' http://127.0.0.1/
 ```
 
-![curl 带 Host 访问 demo 站点](/Linux/nginx/03/p03-01.png)
+<!-- 配图占位: curl 带 Host 访问 demo 站点 | /Linux/nginx/03/p03-01.png -->
 
 ---
 
@@ -132,7 +132,7 @@ curl -H 'Host: demo.local' http://127.0.0.1/
 
 静态文件、`proxy_pass`、`return`/`rewrite` 等在对应 location（及继承的指令）里生效。
 
-![Host 选 server 再选 location 的流程图](/Linux/nginx/03/p04-01.png)
+<!-- 配图占位: Host 选 server 再选 location 的流程图 | /Linux/nginx/03/p04-01.png -->
 
 **性能直觉**：`server_name` 精确匹配走哈希，成本低；大量正则 `server_name` 会按序试，站点极多时更该用精确名或合理拆分。location 里滥用正则同理——第 8 篇展开。
 

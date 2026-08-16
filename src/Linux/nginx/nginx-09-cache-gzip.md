@@ -23,7 +23,7 @@ description: 在 Ubuntu 上配置 Nginx proxy_cache 与 gzip：缓存路径、ke
 
 热点 GET、不变的 JSON/HTML 片段，可以由 Nginx **代理缓存**；文本响应可用 **gzip** 换带宽。两者都是用入口资源换上游与网络成本——要用对场景。
 
-![未缓存 vs proxy_cache 命中路径](/Linux/nginx/09/p01-01.png)
+<!-- 配图占位: 未缓存 vs proxy_cache 命中路径 | /Linux/nginx/09/p01-01.png -->
 
 ---
 
@@ -52,7 +52,7 @@ sudo nginx -t && sudo systemctl reload nginx
 curl -IH 'Accept-Encoding: gzip' -H 'Host: www.example.com' http://127.0.0.1/ | grep -i content-encoding
 ```
 
-![响应头出现 Content-Encoding: gzip](/Linux/nginx/09/p02-01.png)
+<!-- 配图占位: 响应头出现 Content-Encoding: gzip | /Linux/nginx/09/p02-01.png -->
 
 | 参数 | 直觉 |
 |------|------|
@@ -106,7 +106,7 @@ curl -IH 'Host: cache.example.com' http://127.0.0.1/api/ping   # HIT
 
 `$upstream_cache_status` 常见：`MISS` / `HIT` / `BYPASS` / `EXPIRED` / `STALE` / `UPDATING`。
 
-![X-Cache-Status 从 MISS 到 HIT](/Linux/nginx/09/p03-01.png)
+<!-- 配图占位: X-Cache-Status 从 MISS 到 HIT | /Linux/nginx/09/p03-01.png -->
 
 ---
 
@@ -145,7 +145,7 @@ proxy_cache_key $scheme$host$request_uri;
 2. 看 `X-Cache-Status` 与上游 QPS，而不是只看 Nginx CPU。  
 3. gzip 对已是 CDN 压缩的流量可能重复劳动——有上层 CDN 时避免双压。
 
-![命中率、上游 QPS 与 CPU 的三角关系](/Linux/nginx/09/p04-01.png)
+<!-- 配图占位: 命中率、上游 QPS 与 CPU 的三角关系 | /Linux/nginx/09/p04-01.png -->
 
 清理缓存（运维手段）：删 `proxy_cache_path` 目录文件并 reload，或使用第三方/Plus 的 purge；OSS 无官方万能 PURGE 指令。
 

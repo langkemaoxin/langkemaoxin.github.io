@@ -165,22 +165,75 @@ docker -v
 
 ### 配置镜像加速（国内常用）
 
-```bash
-mkdir -p /etc/docker
+国内直连 Docker Hub（`docker.io`）经常很慢或超时。配置 **`registry-mirrors`** 后，`docker pull`（以及后面装 Harbor 时 `install.sh` 拉组件镜像）会优先走加速站。
 
-cat > /etc/docker/daemon.json << 'EOF'
+**是什么**：`daemon.json` 里的仓库镜像列表，给引擎当「拉取中转」。  
+**为什么现在配**：装完 Docker 立刻配，后面所有 pull 都受益；拖到装 Harbor 再配也行，但 `./install.sh` 会白等很久。
+
+#### Linux（systemd）主路径
+
+```bash
+sudo mkdir -p /etc/docker
+
+# 若已有 daemon.json，先备份，再合并字段——不要整文件覆盖丢掉其它配置
+sudo cp /etc/docker/daemon.json /etc/docker/daemon.json.bak 2>/dev/null || true
+```
+
+若文件不存在或可以整段重写（确认没有要保留的项），最小示例如下。加速地址以你当前能通的为准（云厂商、DaoCloud 等会调整，失效就换一个）：
+
+```bash
+sudo tee /etc/docker/daemon.json <<'EOF'
 {
   "registry-mirrors": [
-    "https://mirror.ccs.tencentyun.com"
+    "https://docker.m.daocloud.io"
   ]
 }
 EOF
-
-systemctl daemon-reload
-systemctl restart docker
 ```
 
-可将加速地址替换为其他云厂商或自建 Registry 镜像。
+若文件里已有别的配置（日志、`insecure-registries` 等），应**手工合并**成一个 JSON，例如：
+
+```json
+{
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io"
+  ],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  }
+}
+```
+
+注意：JSON 必须是 **无 BOM 的 UTF-8**。Windows 记事本「另存为 UTF-8」有时会带 BOM，Docker 启动会报类似 `invalid character 'ï'`——用 VS Code / 正确无 BOM 方式保存。
+
+重启引擎并验收：
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+docker info | grep -A8 'Registry Mirrors'
+```
+
+应能看到你写入的地址。再测拉取：
+
+```bash
+docker pull alpine:3.21
+```
+
+比直连 Hub 明显更快或不再超时，说明加速生效。
+
+#### Docker Desktop
+
+打开 **Settings → Docker Engine**，在 JSON 中加入同样的 `"registry-mirrors": [...]`，点 **Apply & restart**。  
+仅改 `%USERPROFILE%\.docker\daemon.json` 有时不会进引擎；改完同样用 `docker info` 看 Registry Mirrors。
+
+#### 和后续文章的关系
+
+- 装 **Harbor**（[第 9 篇](/云原生/docker/docker-09-harbor)）前，请先完成本节验收；在线安装包很小，慢通常慢在 `install.sh` 拉镜像。  
+- `daemon.json` 其它项（live-restore、日志等）见[第 23 篇](/云原生/docker/docker-23-daemon-ops)。
 
 ### 启动与验证
 
@@ -220,6 +273,7 @@ Docker 与 K8s 学习栈涉及 Linux 内核、存储、网络等多方面配置�
 | 客户端版本 | `docker -v` | 输出版本号 |
 | 引擎信息 | `docker info` | 无致命错误，Storage Driver 等正常 |
 | 基本能力 | `docker run --rm hello-world` | 能 pull/run（在线环境） |
+| 镜像加速（国内） | `docker info \| grep -A5 'Registry Mirrors'` | 列表非空且地址可用 |
 
 ---
 
@@ -227,7 +281,8 @@ Docker 与 K8s 学习栈涉及 Linux 内核、存储、网络等多方面配置�
 
 - 安装产物 = **Docker CLI + dockerd**（及依赖的 containerd/runc 等）。  
 - **离线**：静态 tgz → `/usr/bin` → systemd unit → `systemctl start`。  
-- **在线**：yum/apt + CE 源 → `docker-ce` → 可选 `daemon.json` 加速。  
-- **现成 VM/云镜像**：跳过基建，适合快速上手与 K8s 联调。  
+- **在线**：yum/apt + CE 源 → `docker-ce` → **建议立刻**配 `registry-mirrors` 并用 `docker info` 验收。  
+- **现成 VM/云镜像**：跳过基建，适合快速上手与 K8s 联调；仍建议确认加速是否已配。  
+- 后面装 Harbor（第 9 篇）若 `install.sh` 拉镜像很慢，先回到本节把加速跑通。
 
 下一篇讲 **容器与镜像** 的关系：只读镜像层、可写容器层，以及「类与实例」模型。

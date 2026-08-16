@@ -23,7 +23,7 @@ description: 讲清 Nginx location 的前缀、精确、正则匹配优先级，
 
 一个 `server` 里多个 `location`，有人写前缀、有人写正则，结果「明明写了规则却不生效」。根因几乎总是：**匹配优先级与查找算法和直觉不一致**。
 
-![多种 location 同时存在时的选择示意](/Linux/nginx/08/p01-01.png)
+<!-- 配图占位: 多种 location 同时存在时的选择示意 | /Linux/nginx/08/p01-01.png -->
 
 ---
 
@@ -49,7 +49,7 @@ description: 讲清 Nginx location 的前缀、精确、正则匹配优先级，
 4. 否则按配置文件顺序测试 **正则** `~` / `~*`，**第一个**匹配成功的胜出。  
 5. 若正则都未中 → 用第 1 步的最长前缀。
 
-![location 匹配决策流程图](/Linux/nginx/08/p02-01.png)
+<!-- 配图占位: location 匹配决策流程图 | /Linux/nginx/08/p02-01.png -->
 
 **实战口诀**：
 
@@ -105,7 +105,7 @@ curl -iH 'Host: app.example.com' http://127.0.0.1/health
 curl -IH 'Host: app.example.com' http://127.0.0.1/static/app.js
 ```
 
-![health 精确匹配与 static 的 ^~](/Linux/nginx/08/p03-01.png)
+<!-- 配图占位: health 精确匹配与 static 的 ^~ | /Linux/nginx/08/p03-01.png -->
 
 ---
 
@@ -145,7 +145,7 @@ location /blog {
 - 站点配置膨胀后，CPU 会耗在「选 location」而不是业务。  
 - 优化顺序：合并规则 → `^~` 固定静态前缀 → 正则尽量少且具体 → 热路径避免 `rewrite last` 来回跳。
 
-![前缀命中 vs 多次正则尝试的成本对比](/Linux/nginx/08/p04-01.png)
+<!-- 配图占位: 前缀命中 vs 多次正则尝试的成本对比 | /Linux/nginx/08/p04-01.png -->
 
 ---
 

@@ -22,7 +22,7 @@ description: 在 Ubuntu 上用 Nginx 托管静态站点，区分 root 与 alias�
 
 CI 打出 `dist/`，运维要做的是：放到机器某目录、Nginx `root` 指过去、按域名（或路径）对外提供，并且 **A 站的请求绝不能落到 B 站目录**。
 
-![多域名静态站点目录与 server 映射](/Linux/nginx/04/p01-01.png)
+<!-- 配图占位: 多域名静态站点目录与 server 映射 | /Linux/nginx/04/p01-01.png -->
 
 ---
 
@@ -60,7 +60,7 @@ sudo nginx -t && sudo systemctl reload nginx
 curl -H 'Host: site-a.example.com' http://127.0.0.1/
 ```
 
-![静态资源与 expires 缓存头](/Linux/nginx/04/p02-01.png)
+<!-- 配图占位: 静态资源与 expires 缓存头 | /Linux/nginx/04/p02-01.png -->
 
 `sendfile on;`（常在 `http` 块）让内核直接把文件送进 socket，减少用户态拷贝——静态站性能的基础开关之一。
 
@@ -85,7 +85,7 @@ location /img/ {
 
 `alias` 的 location 若以 `/` 结尾，路径拼接规则更严，写完一定用真实文件 `curl` 验证。配错时 access 里常是 404，error 里可能有 *open() failed*。
 
-![root 与 alias 路径拼接对比](/Linux/nginx/04/p03-01.png)
+<!-- 配图占位: root 与 alias 路径拼接对比 | /Linux/nginx/04/p03-01.png -->
 
 ---
 
@@ -127,7 +127,7 @@ server {
 }
 ```
 
-![default_server 兜底未匹配 Host 的请求](/Linux/nginx/04/p04-01.png)
+<!-- 配图占位: default_server 兜底未匹配 Host 的请求 | /Linux/nginx/04/p04-01.png -->
 
 ---
 

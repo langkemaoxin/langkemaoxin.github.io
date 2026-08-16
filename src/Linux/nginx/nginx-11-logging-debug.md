@@ -23,7 +23,7 @@ description: 配置 Nginx access/error 日志与自定义格式，用状态码�
 
 反代链路一长，问题可能在证书、location、上游超时、限流或磁盘满。运维默认顺序：**error.log → access 状态码与 upstream 字段 → `nginx -t` / 进程 → 系统 `ss`/`df`**。
 
-![排障从 error 到 access 再到系统层](/Linux/nginx/11/p01-01.png)
+<!-- 配图占位: 排障从 error 到 access 再到系统层 | /Linux/nginx/11/p01-01.png -->
 
 ---
 
@@ -46,7 +46,7 @@ sudo nginx -s reopen
 # 或 systemctl kill -s USR1 nginx
 ```
 
-![tail 跟踪 error 与 access](/Linux/nginx/11/p02-01.png)
+<!-- 配图占位: tail 跟踪 error 与 access | /Linux/nginx/11/p02-01.png -->
 
 ---
 
@@ -76,7 +76,7 @@ access_log /var/log/nginx/access.log main_ext;
 
 静态资源可 `access_log off;` 降磁盘 IO。
 
-![带 upstream 字段的 access 日志样例](/Linux/nginx/11/p03-01.png)
+<!-- 配图占位: 带 upstream 字段的 access 日志样例 | /Linux/nginx/11/p03-01.png -->
 
 ---
 
@@ -131,7 +131,7 @@ events {
 
 建议：生产默认 `warn`；access 用结构化字段但避免超长 `$request_body`；压测环境可关 access 对比基线。
 
-![debug 日志量与延迟风险示意](/Linux/nginx/11/p04-01.png)
+<!-- 配图占位: debug 日志量与延迟风险示意 | /Linux/nginx/11/p04-01.png -->
 
 ---
 

@@ -23,7 +23,7 @@ description: 总结 Nginx 在 Linux/Ubuntu 上的事件模型与 worker 调优�
 
 入口慢，不一定是 `worker_connections` 太小——更常见是 **TLS CPU、上游慢、磁盘日志、缓存未命中、fd 耗尽、限流误伤**。本篇给出调优优先级与一份可勾选的生产清单。
 
-![性能调优优先级金字塔](/Linux/nginx/12/p01-01.png)
+<!-- 配图占位: 性能调优优先级金字塔 | /Linux/nginx/12/p01-01.png -->
 
 ---
 
@@ -37,7 +37,7 @@ description: 总结 Nginx 在 Linux/Ubuntu 上的事件模型与 worker 调优�
 - 盲目加 worker 会增加上下文切换与缓存污染。  
 - 阻塞在 worker 里的操作（慢磁盘、傻等）会拖住该 worker 上所有连接——所以反代、缓存路径要避免阻塞逻辑。
 
-![单 worker 内 epoll 事件循环示意](/Linux/nginx/12/p02-01.png)
+<!-- 配图占位: 单 worker 内 epoll 事件循环示意 | /Linux/nginx/12/p02-01.png -->
 
 ```nginx
 worker_processes auto;
@@ -82,7 +82,7 @@ http {
 }
 ```
 
-![从上游到 worker 的排查顺序](/Linux/nginx/12/p03-01.png)
+<!-- 配图占位: 从上游到 worker 的排查顺序 | /Linux/nginx/12/p03-01.png -->
 
 ---
 
@@ -133,7 +133,7 @@ http {
 - [ ] 灰度 Host/机器；保留上一版配置可回滚
 - [ ] 与容器/K8s 入口职责清晰（避免双层乱改头）
 
-![上线前检查清单示意](/Linux/nginx/12/p04-01.png)
+<!-- 配图占位: 上线前检查清单示意 | /Linux/nginx/12/p04-01.png -->
 
 ---
 

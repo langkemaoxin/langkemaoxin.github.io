@@ -245,14 +245,48 @@ COPY . .
 
 ## 五、`CMD` 与 `ENTRYPOINT`：谁说了算？
 
-| | **CMD** | **ENTRYPOINT** |
-|--|---------|----------------|
-| 角色 | 默认参数 / 默认命令 | 固定入口（容器「主程序」） |
-| `docker run 镜像 新参数` | 常会**整段替换** CMD | 入口仍在，新参数多半当**传给入口的参数** |
+容器启动时，引擎最终要拉起**一条进程**，可以想成：
 
-推荐 **exec 格式**（JSON 数组），信号转发更干净，例如 `CMD ["echo", "hi"]`，而不是 `CMD echo hi`（后者包一层 `sh -c`）。
+```text
+最终命令 ≈ 「程序」 + 「参数」
+```
 
-本机小实验：
+两者分工就是：
+
+| | **ENTRYPOINT** | **CMD** |
+|--|----------------|---------|
+| **用来做什么** | 定死这个镜像的**主程序 / 入口**（「这个容器是干什么的」） | 给出**默认参数**；若没写 ENTRYPOINT，则 CMD 本身就是整条默认命令 |
+| **心态** | 「怎么 run，主程序都还是它」 | 「没人多写东西时，用这套默认值」 |
+| **`docker run 镜像 后面跟的内容`** | **一般不换入口**，多半变成传给入口的**参数** | **整段被替换**（不再用 Dockerfile 里的 CMD） |
+
+拼装公式（exec 格式、两者都写时）：
+
+```text
+实际执行 = ENTRYPOINT 里的数组成员  +  （run 后面的参数；若没有，就用 CMD）
+```
+
+### 5.1 三种写法：究竟解决什么问题
+
+**① 只写 CMD** —— 「默认启动命令，允许整条换掉」
+
+```dockerfile
+FROM alpine:3.21
+CMD ["echo", "only-cmd-default"]
+```
+
+- `docker run --rm lab-cmd:1.0` → 执行 `echo only-cmd-default`
+- `docker run --rm lab-cmd:1.0 echo replaced-entirely` → **整段 CMD 被换掉**，变成跑 `echo replaced-entirely`  
+  （适合通用工具镜像、临时覆盖命令；本机输出见 §5.3）
+
+**② 只写 ENTRYPOINT** —— 「一启动就跑这个程序」
+
+入口固定；`run` 后面跟的都是参数。适合「镜像本身就是一个固定服务」。
+
+**③ ENTRYPOINT + CMD（最常见）** —— 「入口固定，默认参数可改」
+
+这是生产里最有用的组合：主程序不变，端口/子命令/配置开关可以改。
+
+### 5.2 本机实验：两者一起写时谁说了算
 
 ```dockerfile
 FROM alpine:3.21
@@ -273,7 +307,68 @@ fixed-prefix default-arg
 fixed-prefix overridden-arg
 ```
 
-`lab-web` 没写 CMD，是因为 `nginx:alpine` 已经提供了合适的 `ENTRYPOINT`/`CMD`；你只 `COPY` 内容即可。
+对照公式：
+
+| 你敲的命令 | 实际相当于 |
+|------------|------------|
+| `docker run … lab-ep:1.0` | `echo fixed-prefix default-arg`（用了 CMD） |
+| `docker run … lab-ep:1.0 overridden-arg` | `echo fixed-prefix overridden-arg`（**只换了 CMD**，ENTRYPOINT 还在） |
+
+所以：`run` 后面跟的不是「再开一个无关命令」，而是**塞给入口的参数**——这就是 ENTRYPOINT 存在的意义。
+
+### 5.3 对照：只有 CMD 时，「后面跟的东西」完全不同
+
+```dockerfile
+FROM alpine:3.21
+CMD ["echo", "only-cmd-default"]
+```
+
+```bash
+docker build -t lab-cmd:1.0 -f Dockerfile.cmd .
+docker run --rm lab-cmd:1.0
+docker run --rm lab-cmd:1.0 echo replaced-entirely
+```
+
+本机输出：
+
+```text
+only-cmd-default
+replaced-entirely
+```
+
+第二次**没有**再打印 `only-cmd-default`——因为没有 ENTRYPOINT 托底，`run` 后面的内容替换了整条 CMD。
+
+**口诀**：
+
+- 想「主程序永远不变」→ 用 **ENTRYPOINT**
+- 想「默认参数 / 默认可被换掉的命令」→ 用 **CMD**
+- 两者一起 → 固定入口 + 可改参数（推荐）
+
+### 5.4 写法：优先 exec 格式（JSON 数组）
+
+```dockerfile
+# 推荐：exec 格式 —— 直接 exec 进程，信号转发更干净
+CMD ["echo", "hi"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+# 不推荐当默认习惯：shell 格式 —— 实际是 /bin/sh -c "…"
+CMD echo hi
+```
+
+shell 格式里环境变量容易「看起来能展开」；exec 格式更直白，需要展开时再显式写 `["sh", "-c", "…"]`。日常优先 JSON 数组。
+
+### 5.5 回扣 `lab-web`：为什么案例里没写这两项？
+
+`nginx:alpine` **已经**带了合适的 `ENTRYPOINT`（入口脚本）和 `CMD`（前台跑 nginx）。你的 Dockerfile 只 `COPY` 首页即可——站在基础镜像的入口上定制内容，而不必重写「怎么启动 Nginx」。
+
+若你自己做业务镜像（例如 `java -jar app.jar`），典型写法是：
+
+```dockerfile
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+CMD ["--spring.profiles.active=prod"]
+```
+
+换环境时：`docker run myapp --spring.profiles.active=test`，入口仍是 `java -jar`，只改参数。
 
 ---
 

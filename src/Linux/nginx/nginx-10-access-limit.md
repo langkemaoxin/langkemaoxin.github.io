@@ -23,7 +23,7 @@ description: 在 Ubuntu Nginx 上配置 IP allow/deny、HTTP Basic Auth、limit_
 
 管理后台只给办公室 IP、登录接口防刷、下载站限制并发连接——这些都应在 Nginx 挡住，而不是等应用线程打满。
 
-![IP 控制、鉴权与限流叠加在 location 上](/Linux/nginx/10/p01-01.png)
+<!-- 配图占位: IP 控制、鉴权与限流叠加在 location 上 | /Linux/nginx/10/p01-01.png -->
 
 ---
 
@@ -44,7 +44,7 @@ location /admin/ {
 
 若 Nginx 前还有 LB，`$remote_addr` 可能是 LB IP，需 `real_ip` 信任代理后再限制（见模块 `ngx_http_realip_module`）。
 
-![allow/deny 顺序匹配](/Linux/nginx/10/p02-01.png)
+<!-- 配图占位: allow/deny 顺序匹配 | /Linux/nginx/10/p02-01.png -->
 
 ---
 
@@ -75,7 +75,7 @@ curl -u alice:密码 -IH 'Host: www.example.com' http://127.0.0.1/private/
 
 Basic Auth 仅适合内网工具、演示环境；公网正式账号体系应走应用 SSO/OIDC（Plus 有更多集成，OSS 可用 `auth_request` 反代鉴权服务）。
 
-![Basic Auth 401 与成功访问](/Linux/nginx/10/p03-01.png)
+<!-- 配图占位: Basic Auth 401 与成功访问 | /Linux/nginx/10/p03-01.png -->
 
 ---
 
@@ -125,7 +125,7 @@ server {
 
 限制的是 **连接数**，适合大文件、慢客户端占连接的场景；和 `limit_req`（请求速率）互补。
 
-![limit_req 漏桶与 limit_conn 并发上限](/Linux/nginx/10/p04-01.png)
+<!-- 配图占位: limit_req 漏桶与 limit_conn 并发上限 | /Linux/nginx/10/p04-01.png -->
 
 ---
 

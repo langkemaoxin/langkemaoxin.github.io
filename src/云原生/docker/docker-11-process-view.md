@@ -1,5 +1,5 @@
 ---
-title: 进程视角看容器——PID 命名空间与宿主机对照
+title: 进程视角看容器——容器内外 PID 对照与生命周期
 sidebarGroup: Docker 系列
 shortTitle: 11 进程视角看容器
 order: 11
@@ -10,9 +10,8 @@ tag:
   - 云原生
   - Docker系列
   - PID Namespace
-  - cgroup
   - proc
-description: 进程视角看容器——PID 命名空间与宿主机对照
+description: 进程视角看容器——容器内外 PID 对照与生命周期
 ---
 
 > **Docker 系列 · 第 11/18 篇**  
@@ -23,367 +22,300 @@ description: 进程视角看容器——PID 命名空间与宿主机对照
 
 ## 开头：容器里 PID 是 1，宿主机上是几号？
 
-你在容器内 `ps -ef` 看到 nginx 的 PID 是 1，以为它是「系统第一个进程」。但在宿主机上 `docker top` 一看，同一个 nginx 却是 PID 9955。
+你在容器里 `ps` 看到 nginx 的 PID 是 **1**，以为它是「整台机器的一号进程」。换到宿主机用 `docker top` 一看，同一个 master 却是 **10420**。
 
-**容器不是虚拟机**——它只是宿主机上的普通进程，套了一层 PID 命名空间。本文从 Linux `/proc` 文件系统出发，完整 walkthrough 容器进程在宿主机上的真实身份、cgroup 路径，以及 `docker exec` 与 PID 1 的关系。若只想选「怎么进容器」（exec / attach / nsenter），见[第 7 篇](/云原生/docker/docker-07-enter-container)。
+要回答的问题很具体：
+
+1. 这两套数字怎么对上？  
+2. `docker exec` 拉起的进程，父进程到底是谁？  
+3. 杀掉「容器里的 PID 1」会发生什么？
+
+**容器不是虚拟机**——它是宿主机（或 Desktop 里那台 Linux VM）上的普通进程，只是套了 PID 命名空间，看到的编号不同。若只想选「怎么进容器」，见[第 7 篇](/云原生/docker/docker-07-enter-container)；Namespace 原理见[第 15 篇](/云原生/docker/docker-15-namespace)；shim / runtime 链见[第 12 篇](/云原生/docker/docker-12-daemon-runtime)。
+
+> **实验环境**（文中输出均来自本机）：Docker Client / Server **29.1.2**（Docker Desktop）。示例容器：`lab-proc`（`nginx:alpine`）、`lab-kill`（`alpine:3.21 sleep infinity`）。  
+> **Desktop 注意**：`docker top` / `inspect` 的 PID 属于 **Linux 引擎（VM）**，不是 Windows 任务管理器里的 PID。看 `/proc`、cgroup 时，用 `docker run --rm --pid=host …` 进入同一 PID 视图（下文有命令）。
 
 ---
 
-## 一、Linux /proc 与进程信息
-
-每个进程在 `/proc/<pid>/` 下有完整信息目录：
+## 一、先跑起来
 
 ```bash
-ls -l /proc/27880
+docker run -d --name lab-proc nginx:alpine
+docker ps --filter name=lab-proc
 ```
 
-| 文件/目录 | 含义 |
-|-----------|------|
+本机：
+
+```text
+CONTAINER ID   IMAGE          STATUS         NAMES
+b2e73a660658   nginx:alpine   Up …           lab-proc
+```
+
+后面所有对照都围着这一个实例转。
+
+---
+
+## 二、两边看进程：对上同一条 nginx
+
+### 2.1 容器内
+
+```bash
+docker exec lab-proc ps -ef
+```
+
+本机（节选）：
+
+```text
+PID   USER     TIME  COMMAND
+    1 root      0:00 nginx: master process nginx -g daemon off;
+   30 nginx     0:00 nginx: worker process
+  …
+```
+
+容器视角：master 是 **PID 1**。
+
+### 2.2 宿主机视角：`docker top`
+
+```bash
+docker top lab-proc
+```
+
+本机（节选）：
+
+```text
+UID     PID    PPID   CMD
+root    10420  10395  nginx: master process nginx -g daemon off;
+statd   10456  10420  nginx: worker process
+…
+```
+
+### 2.3 官方字段：`State.Pid`
+
+```bash
+docker inspect -f '{{.State.Pid}}' lab-proc
+```
+
+本机：`10420`。
+
+| 视角 | nginx master | 说明 |
+|------|--------------|------|
+| 容器内 `ps` | PID **1** | 容器 PID 命名空间里的「一号进程」 |
+| `docker top` / `State.Pid` | **10420** | 引擎宿主机（VM）上的真实 PID |
+| 宿主机 PPID | **10395** | 本机是 `containerd-shim-runc-v2`（见第五节） |
+
+**验收**：`State.Pid` 与 `docker top` 里 master 那一行的 PID 一致，且对应容器内的 PID 1。
+
+---
+
+## 三、为什么会这样？（PID Namespace，点到为止）
+
+**是什么**：Linux **PID Namespace** 让一组进程拥有**独立的 PID 编号空间**。
+
+**为什么**：这样每个容器都可以有自己的「PID 1」，彼此不撞号；同时它们仍是宿主机上的真实进程。
+
+**直观结论**：
+
+- 容器内 PID 1 ≠ 宿主机（或 VM）的 PID 1  
+- 编号不同，**进程是同一个**  
+- 默认每个容器一个独立 PID namespace  
+
+更深的 `clone()` / 各类 Namespace 见[第 15 篇](/云原生/docker/docker-15-namespace)。本篇只要求你会「两边对照」。
+
+---
+
+## 四、用 `/proc` 核实：还是那个 nginx
+
+在 Desktop 上不要去 Windows 里找 `/proc`；进引擎的 PID 命名空间即可：
+
+```bash
+PID=$(docker inspect -f '{{.State.Pid}}' lab-proc)   # 本机 10420
+
+docker run --rm --pid=host --privileged alpine:3.21 sh -c "
+  tr '\\0' ' ' < /proc/$PID/cmdline; echo
+  ls -l /proc/$PID/exe /proc/$PID/ns/pid
+"
+```
+
+本机结果：
+
+```text
+nginx: master process nginx -g daemon off;
+… /proc/10420/exe -> /usr/sbin/nginx
+… /proc/10420/ns/pid -> pid:[4026533167]
+```
+
+常用节点（按需查，不必背）：
+
+| 路径 | 含义 |
+|------|------|
 | `cmdline` | 启动命令 |
-| `cwd` | 当前工作目录（符号链接） |
-| `environ` | 环境变量 |
-| `exe` | 可执行文件路径（符号链接） |
-| `fd` | 文件描述符 |
-| `maps` | 内存映射 |
-| `root` | 根目录 |
-| `stat` / `status` | 进程状态 |
-| `ns` | 命名空间 inode（关键！） |
+| `exe` | 二进制 |
+| `ns/pid` | 所属 PID 命名空间（inode 可判断「是否同一 ns」） |
+| `cgroup` | 归属哪个 cgroup（见第七节） |
 
-通过 `exe` 可定位进程对应的二进制：
+---
+
+## 五、`docker exec` 再拉一个进程：PPID 是谁？
+
+### 5.1 容器里起 `sleep`
 
 ```bash
-ls -l /proc/27880/exe
-# exe -> /usr/sbin/sshd
+docker exec -d lab-proc sleep 2000
+docker exec lab-proc ps -ef
+```
+
+本机（节选）：
+
+```text
+PID   USER     TIME  COMMAND
+    1 root      0:00 nginx: master process …
+   56 root      0:00 sleep 2000
+```
+
+容器内：`sleep` 是 PID **56**（编号随当时进程表变化）。
+
+### 5.2 宿主机再看
+
+```bash
+docker top lab-proc
+```
+
+本机与 sleep 相关的一行：
+
+```text
+UID    PID    PPID   CMD
+root   10533  10395  sleep 2000
+```
+
+对照：
+
+| | nginx master | sleep（exec 拉起） |
+|--|--------------|-------------------|
+| 容器内 PID | 1 | 56（本机当次） |
+| 宿主机 PID | 10420 | 10533 |
+| 宿主机 PPID | **10395** | **10395** |
+
+两边 PPID 都是 **10395**，不是「容器里的 PID 1」。本机查进程名：
+
+```text
+10395  …  containerd-shim-runc-v2 -namespace moby -id b2e73a660658… 
+10420  10395  nginx: master …
+10533  10395  sleep 2000
+```
+
+**结论（怎么做层面）**：
+
+- `exec` 出的进程进了**同一个容器的 PID namespace / cgroup**（所以 `docker top` 能看见）  
+- 在宿主机进程树上，它们的父进程往往是 **shim**，不是容器内的 PID 1  
+
+shim 为什么存在、和 dockerd/containerd/runc 的关系 → [第 12 篇](/云原生/docker/docker-12-daemon-runtime)。
+
+---
+
+## 六、杀掉「PID 1」：容器就结束了
+
+另起一个简单容器（主进程就是 `sleep`，方便对照）：
+
+```bash
+docker run -d --name lab-kill alpine:3.21 sleep infinity
+docker exec lab-kill ps -ef
+# PID 1 = sleep infinity
+
+PID=$(docker inspect -f '{{.State.Pid}}' lab-kill)
+docker run --rm --pid=host --privileged alpine:3.21 kill -9 "$PID"
+docker ps -a --filter name=lab-kill
+```
+
+本机：
+
+```text
+NAMES      STATUS
+lab-kill   Exited (137) …
+```
+
+（137 常见于被 SIGKILL。）
+
+**核心**：容器生命周期与**容器内 PID 1**绑定。PID 1 退出，这个容器就结束；里面其它进程一般也会随之清理。日常请用 `docker stop` / `docker kill`，不要习惯性在宿主机乱杀 PID——这里只为讲清关系。
+
+---
+
+## 七、cgroup：点到为止
+
+本机引擎是 **cgroup v2**。对 `lab-proc` 的 master：
+
+```bash
+docker run --rm --pid=host --privileged alpine:3.21 \
+  cat /proc/10420/cgroup
+```
+
+本机类似：
+
+```text
+0::/../b2e73a660658eed03b277755e5832542a63a2e5d86636ab67aa75cb08993e16e
+```
+
+路径里带着**完整容器 ID**——说明资源控制也挂在「这个容器」名下。老资料里的  
+
+`/sys/fs/cgroup/memory/docker/<id>/`  
+
+多为 **cgroup v1** 布局；你机器若是 v2，不要死抄旧路径。CPU/内存限额怎么配 → [第 16 篇](/云原生/docker/docker-16-cgroups)。
+
+---
+
+## 八、排障四步（可照抄）
+
+```bash
+# 1. 容器内看见什么
+docker exec lab-proc ps -ef
+
+# 2. 宿主机（引擎）PID 对照
+docker top lab-proc
+docker inspect -f '{{.State.Pid}}' lab-proc
+
+# 3. /proc 核实（Desktop 用 --pid=host）
+PID=$(docker inspect -f '{{.State.Pid}}' lab-proc)
+docker run --rm --pid=host --privileged alpine:3.21 \
+  ls -l /proc/$PID/exe /proc/$PID/ns/pid
+
+# 4. 父进程是不是 shim
+docker run --rm --pid=host --privileged alpine:3.21 \
+  ps -o pid,ppid,args -p $(docker top lab-proc | awk 'NR==2{print $2","$3}')
+```
+
+清理实验：
+
+```bash
+docker rm -f lab-proc lab-kill
 ```
 
 ---
 
-## 二、PID 命名空间（Namespace）
+## 九、和系列其它篇的分工
 
-Docker 进程管理的基础是 Linux **PID Namespace**：
-
-- 不同 PID 命名空间中，进程 ID **相互独立**
-- 两个不同命名空间可以有相同 PID 数字
-- 每个 Container 默认拥有**独立 PID 命名空间**
-- 容器进程**本质上仍运行在宿主机**，只是看到的 PID 编号不同
-
-> 容器内 PID 1 ≠ 宿主机 PID 1。容器内 PID 1 是「容器视角的第一个进程」，在宿主机上通常是几千、几万的普通 PID。
-
----
-
-## 三、找出容器 ID 与 inspect
-
-```bash
-docker ps
-```
-
-示例：
-
-```
-CONTAINER ID   IMAGE                          COMMAND                  PORTS                    NAMES
-460d68823930   lemonbar/centos6-ssh:latest    "/bin/sh -c '/usr/sb…"   0.0.0.0:6021->22/tcp     centos6-2
-```
-
-查看详细信息：
-
-```bash
-docker inspect 460d68823930
-```
-
-关键字段：
-
-```json
-"State": {
-  "Pid": 4962,
-  "Status": "running"
-},
-"GraphDriver": {
-  "Data": {
-    "MergedDir": "/var/lib/docker/overlay2/.../merged"
-  }
-},
-"NetworkSettings": {
-  "SandboxKey": "/var/run/docker/netns/ea66261fb6d8",
-  "IPAddress": "172.17.0.6"
-}
-```
-
-**`State.Pid`** = 容器内 init 进程在**宿主机**上的 PID（本例 4962）。
-
-快捷命令：
-
-```bash
-docker inspect -f '{{.State.Pid}}' centos6-2
-# 4962
-```
+| 你想搞清楚的事 | 去哪篇 |
+|----------------|--------|
+| exec / attach / nsenter 怎么选 | [第 7 篇](/云原生/docker/docker-07-enter-container) |
+| 容器内外 PID、exec 的 PPID、杀 PID 1（本篇） | 本文 |
+| dockerd → containerd → shim → runc | [第 12 篇](/云原生/docker/docker-12-daemon-runtime) |
+| Namespace 隔离原理 | [第 15 篇](/云原生/docker/docker-15-namespace) |
+| Cgroups 限资源 | [第 16 篇](/云原生/docker/docker-16-cgroups) |
 
 ---
 
-## 四、进入 cgroup 目录
-
-每个容器在 cgroup 中有独立目录，路径含完整容器 ID：
-
-```bash
-cd /sys/fs/cgroup/memory/docker/460d688239304172f39bb9586bfc5959e0c3db64e7c3a0937f1003f94408ebbd/
-ls -l
-```
-
-常见文件：
-
-| 文件 | 含义 |
-|------|------|
-| `cgroup.procs` | 属于该 cgroup 的进程 PID 列表 |
-| `tasks` | 同 cgroup.procs（兼容旧接口） |
-| `memory.usage_in_bytes` | 内存使用量 |
-| `memory.limit_in_bytes` | 内存限制 |
-
-PIDs cgroup 路径：
-
-```bash
-cd /sys/fs/cgroup/pids/docker/460d688239304172f39bb9586bfc5959e0c3db64e7c3a0937f1003f94408ebbd/
-cat cgroup.procs
-# 4962
-cat pids.max
-# max
-```
-
----
-
-## 五、docker top：宿主机视角看容器进程
-
-```bash
-docker top centos6-2
-```
-
-输出：
-
-```
-UID    PID    PPID   C   STIME   TTY   TIME       CMD
-root   4962   4948   0   16:24   pts/0 00:00:00   /usr/sbin/sshd -D
-```
-
-对照容器内：
-
-```bash
-docker exec centos6-2 ps -ef
-```
-
-```
-UID   PID  PPID  CMD
-root    1     0  /usr/sbin/sshd -D
-```
-
-| 视角 | sshd PID | PPID |
-|------|----------|------|
-| 容器内 | 1 | 0 |
-| 宿主机 | 4962 | 4948（containerd-shim） |
-
----
-
-## 六、实验：docker exec 启动 sleep 进程
-
-### 6.1 在容器内启动后台 sleep
-
-```bash
-docker exec -d centos6-2 sleep 2000
-```
-
-### 6.2 容器内查看
-
-```bash
-docker exec centos6-2 ps -ef
-```
-
-```
-UID   PID  PPID  CMD
-root    1     0  /usr/sbin/sshd -D
-root    6     0  sleep 2000
-root   10     0  ps -ef
-```
-
-容器内 sleep 的 PID 是 6，PPID 显示 0（PID 命名空间隔离效果）。
-
-### 6.3 宿主机查看
-
-```bash
-docker top centos6-2
-```
-
-```
-UID    PID     PPID   CMD
-root   4962    4948   /usr/sbin/sshd -D
-root   11539   4948   sleep 2000
-```
-
-**关键发现**：
-
-- sleep 属于 centos6-2 的 **PID 命名空间**（容器内 PID 6）
-- 但在宿主机上是 PID 11539
-- **PPPID 是 4948（containerd-shim）**，不是容器内 PID 1
-
-### 6.4 cgroup 验证
-
-```bash
-cat /sys/fs/cgroup/pids/docker/460d68823930.../cgroup.procs
-# 4962
-# 11539
-```
-
-两个 PID 都在同一容器的 cgroup 中。
-
-### 6.5 进程树
-
-```bash
-docker exec centos6-2 pstree -p
-# sshd(1)
-
-docker exec centos6-2 ps -auxf
-```
-
-容器内看不到 shim 父进程——命名空间隔离。
-
----
-
-## 七、dockerd 与进程父子关系
-
-`docker run` 时，Docker 为每个容器启动 **containerd-shim-runc-v2**：
-
-```bash
-ps -ef | grep containerd-shim
-```
-
-```
-root  3401  1  0 12:06 ?  00:00:00 /usr/bin/containerd-shim-runc-v2 \
-  -namespace moby -id e9eaef999da9... -address /run/containerd/containerd.sock
-root  3473  3401 0 12:06 ?  00:00:00 sh mqbroker -c /opt/rocketmq.../broker.conf
-```
-
-- shim 跑在特定 **namespace** 和 **cgroup** 下
-- 容器内应用进程（3473）的父进程是 shim（3401）
-- shim 以为自己在一台独立机器上
-
-### docker exec 的特殊性
-
-`docker exec` 可以进入容器 PID 命名空间启动进程，但：
-
-- 新进程属于容器的 namespace 和 cgroup ✅
-- **父进程是 Docker Daemon / containerd**，而非容器 PID 1 ⚠️
-
-Redis 容器示例：
-
-```bash
-docker exec -d redis sleep 2000
-docker exec redis ps -ef
-# redis  1  0  redis-server *:6379
-# root  11  0  sleep 2000
-
-docker top redis
-# redis  9955  1264  redis-server *:6379
-# root   9984  1264  sleep 2000
-```
-
-sleep 的宿主机 PPID 是 1264（shim），不是 9955（redis-server）。
-
-### 杀掉 PID 1 会怎样？
-
-```bash
-PID=$(docker inspect -f '{{.State.Pid}}' redis)
-sudo kill $PID
-docker ps -a
-# redis 容器 Status: Exited
-```
-
-**容器生命周期 = PID 1 生命周期**。PID 1 退出，命名空间内所有进程随之退出。
-
----
-
-## 八、Docker 文件目录结构
-
-Docker 默认数据目录：`/var/lib/docker/`
-
-```
-/var/lib/docker/
-├── containers/    # 每个容器的 config、日志、hosts 等
-├── image/         # 镜像层与元数据
-├── network/       # 网络配置
-├── overlay2/      # 存储驱动（层文件）
-├── volumes/       # 数据卷
-├── tmp/
-└── trust/
-```
-
-单个容器目录：
-
-```
-/var/lib/docker/containers/<完整容器ID>/
-├── config.v2.json
-├── hostname
-├── hosts
-├── resolv.conf
-└── <容器ID>-json.log
-```
-
-### 在容器内看 /proc
-
-```bash
-docker exec centos6-2 ls /proc
-```
-
-容器内 `/proc` 只显示**本 PID 命名空间**可见的进程——通常只有容器内进程 + 内核线程，看不到宿主机其他进程。
-
----
-
-## 九、三个实用命令总结
-
-```bash
-docker top <容器名>              # 宿主机视角：容器进程 PID 映射
-docker inspect -f '{{.State.Pid}}' <容器>   # 容器 init 进程宿主机 PID
-ps -ef | grep <shim_pid>         # 查看 shim 父进程链
-```
-
-完整排障链：
-
-```bash
-# 1. 容器内
-docker exec myapp ps -ef
-
-# 2. 宿主机对照
-docker top myapp
-
-# 3. 宿主机 PID → 命名空间
-ls -l /proc/<宿主机PID>/ns/
-
-# 4. cgroup 归属
-cat /sys/fs/cgroup/pids/docker/<容器完整ID>/cgroup.procs
-```
-
----
-
-## 十、核心结论
-
-| 概念 | 说明 |
-|------|------|
-| 容器 = 进程组 | 不是 VM，是带 namespace/cgroup 的进程 |
-| PID 1 | 容器内 init；宿主机上是普通 PID |
-| 生命周期 | 与 PID 1 绑定；kill PID 1 → 容器退出 |
-| docker exec | 进入 namespace 启动进程；父进程是 shim/daemon |
-| cgroup | `/sys/fs/cgroup/*/docker/<容器ID>/` 可审计资源与进程 |
-
----
-
-## 下篇预告
-
-**第 12 篇：《Docker Daemon 与 runtime》**
-
-- dockerd → containerd → containerd-shim → runc 调用链
-- OCI image-spec / runtime-spec 与 CRI
+## 小结
+
+- 容器 = 带 namespace（和 cgroup）的**进程组**，不是微型虚拟机。  
+- **同一进程两套 PID**：容器内常见 1；`State.Pid` / `docker top` 是引擎宿主机上的号。  
+- `docker exec` 进同一 namespace，但宿主机树上父进程常常是 **shim**。  
+- **PID 1 退出 → 容器退出**。  
+- Desktop 看 `/proc` 用 `--pid=host`；cgroup 以本机 v1/v2 实际路径为准。
 
 ---
 
 ## 思考题
 
-> 为什么 containerd-shim 要让 runc 启动容器后立即退出，而不是一直驻留？
+> 为什么 `containerd-shim` 在 runc 把容器拉起来之后可以退出「创建动作」，却仍留下一个 shim 进程陪着容器？若没有 shim，dockerd 升级时已运行的容器会怎样？
 
-提示：这样 dockerd/containerd 升级或重启时，已运行容器不会中断。
+提示：垫片负责 IO/状态与生命周期解耦——展开见第 12 篇。
 
 下一篇见 🐳

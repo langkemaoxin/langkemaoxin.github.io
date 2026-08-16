@@ -23,7 +23,7 @@ description: 在 Ubuntu 上用 apt 默认源或 nginx.org 官方源安装 Nginx 
 
 空谈 `proxy_pass` 之前，运维要先保证三件事：装对包、服务由 systemd 管着、改配置能 **校验 + 热加载** 而不丢连接。
 
-![Ubuntu 上 Nginx 安装与控制路径总览](/Linux/nginx/02/p01-01.png)
+<!-- 配图占位: Ubuntu 上 Nginx 安装与控制路径总览 | /Linux/nginx/02/p01-01.png -->
 
 官方参考：[Installing NGINX Open Source](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)、[Controlling nginx](https://nginx.org/en/docs/control.html)。
 
@@ -59,7 +59,7 @@ sudo ufw allow 'Nginx Full'   # 或分别 allow 80,443
 sudo ufw status
 ```
 
-![apt 安装成功与默认欢迎页](/Linux/nginx/02/p02-01.png)
+<!-- 配图占位: apt 安装成功与默认欢迎页 | /Linux/nginx/02/p02-01.png -->
 
 Ubuntu 包常见路径：
 
@@ -104,7 +104,7 @@ nginx -v
 sudo systemctl enable --now nginx
 ```
 
-![配置 nginx.org 源与 pin 优先级](/Linux/nginx/02/p03-01.png)
+<!-- 配图占位: 配置 nginx.org 源与 pin 优先级 | /Linux/nginx/02/p03-01.png -->
 
 动态模块（如 `nginx-module-njs`）可按需 `apt install`，再在配置里 `load_module`。见官方 [Dynamic modules](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#dynamic-modules)。
 
@@ -126,7 +126,7 @@ sudo systemctl status nginx
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-![nginx -t 通过后 reload](/Linux/nginx/02/p04-01.png)
+<!-- 配图占位: nginx -t 通过后 reload | /Linux/nginx/02/p04-01.png -->
 
 ---
 
@@ -151,7 +151,7 @@ Nginx 认的是发给 **master** 的信号（也可用 `nginx -s <信号>`）：
 
 `restart` / `stop`+`start` 会拆掉监听与连接，适合升级二进制或排查卡死；**日常改配置用 reload**。
 
-![reload 时新旧 worker 交替示意](/Linux/nginx/02/p05-01.png)
+<!-- 配图占位: reload 时新旧 worker 交替示意 | /Linux/nginx/02/p05-01.png -->
 
 查看进程：
 

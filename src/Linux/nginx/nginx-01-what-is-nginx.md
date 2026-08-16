@@ -25,7 +25,7 @@ description: 从运维视角认识 Nginx Open Source：它能做什么、和 Apa
 
 这个门口，生产里最常见的就是 **Nginx**。
 
-![Nginx 作为流量入口：静态、反代、负载均衡示意](/Linux/nginx/01/p01-01.png)
+<!-- 配图占位: Nginx 作为流量入口：静态、反代、负载均衡示意 | /Linux/nginx/01/p01-01.png -->
 
 ---
 
@@ -53,7 +53,7 @@ description: 从运维视角认识 Nginx Open Source：它能做什么、和 Apa
 
 Nginx 走的是另一条路：**少量 worker 进程 + 每个 worker 里事件驱动、非阻塞处理大量连接**。在 Linux 上默认用 **epoll** 等机制，把「等 socket 可读/可写」交给内核，进程自己不傻等。
 
-![多进程阻塞模型 vs Nginx 事件驱动模型对比](/Linux/nginx/01/p01-02.png)
+<!-- 配图占位: 多进程阻塞模型 vs Nginx 事件驱动模型对比 | /Linux/nginx/01/p01-02.png -->
 
 直觉上记住三句话即可：
 
@@ -76,7 +76,7 @@ Nginx 走的是另一条路：**少量 worker 进程 + 每个 worker 里事件�
 
 另有可选的 **cache loader / cache manager**（开了 proxy_cache 时）。Ubuntu 包安装后用 `ps -ef | grep nginx` 一眼能分清。
 
-![master 管理多个 worker 的进程关系](/Linux/nginx/01/p01-03.png)
+<!-- 配图占位: master 管理多个 worker 的进程关系 | /Linux/nginx/01/p01-03.png -->
 
 **优雅重载（reload）**：master 加载新配置 → 起新 worker → 旧 worker 处理完已有连接再退出。这是改配置的主路径；硬 `kill -9` 会丢掉连接，生产忌用。第 2 篇会把信号与 `systemctl` 对照讲清。
 

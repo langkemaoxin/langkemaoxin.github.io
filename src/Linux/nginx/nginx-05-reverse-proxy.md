@@ -23,7 +23,7 @@ description: 在 Ubuntu 上用 Nginx 做 HTTP 反向代理：proxy_pass 写法�
 
 后端 Spring Boot / Node 监听 `127.0.0.1:8080`，公网只该看到 Nginx。Nginx 负责：收请求 →（可选改 URI）→ 转到上游 → 把响应原样或加工后回给客户端。这就是 **反向代理**。
 
-![浏览器 → Nginx → 上游应用](/Linux/nginx/05/p01-01.png)
+<!-- 配图占位: 浏览器 → Nginx → 上游应用 | /Linux/nginx/05/p01-01.png -->
 
 ---
 
@@ -61,7 +61,7 @@ sudo nginx -t && sudo systemctl reload nginx
 curl -H 'Host: api.example.com' http://127.0.0.1/
 ```
 
-![反代成功时上游日志看到来自 Nginx 的请求](/Linux/nginx/05/p02-01.png)
+<!-- 配图占位: 反代成功时上游日志看到来自 Nginx 的请求 | /Linux/nginx/05/p02-01.png -->
 
 ---
 
@@ -87,7 +87,7 @@ location /app/ {
 
 写完用 access 日志或上游日志核对路径，不要凭感觉。
 
-![proxy_pass 尾斜杠导致 URI 替换差异](/Linux/nginx/05/p03-01.png)
+<!-- 配图占位: proxy_pass 尾斜杠导致 URI 替换差异 | /Linux/nginx/05/p03-01.png -->
 
 ---
 
@@ -166,7 +166,7 @@ server {
 
 复用 Nginx→上游的连接，减少握手与 TIME_WAIT，**高 QPS 时收益明显**。下一篇 upstream 负载均衡会继续用这个块。
 
-![缓冲与上游 keepalive 对延迟/连接数的影响](/Linux/nginx/05/p04-01.png)
+<!-- 配图占位: 缓冲与上游 keepalive 对延迟/连接数的影响 | /Linux/nginx/05/p04-01.png -->
 
 ### 3. 客户端体大小
 

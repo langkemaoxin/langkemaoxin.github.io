@@ -257,10 +257,9 @@ docker tag alpine:3.21 harbor.example.com/demo/alpine:3.21
 
 **第 9 篇：《Harbor 私有镜像仓库》**
 
-- 钉死 FQDN → 带 SAN 的 HTTPS → 安装 Harbor
-- 客户端 `certs.d` 信任与 `login` / `tag` / `push` 金路径
-- hostname / SAN / tag 不一致时的排障 checklist
-- 为什么 Registry 能按 layer 增量传，而不是每次 U 盘全量 tar
+- 按时间线：准备 → HTTP 安装 → 客户端登录 → 第一次 push
+- 再升级 HTTPS + SAN；hostname / SAN / tag 必须一致
+- `daemon.json` / `certs.d` 与 Docker Desktop 注意点
 
 ---
 

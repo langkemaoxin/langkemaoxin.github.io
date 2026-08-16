@@ -23,7 +23,7 @@ description: 用 Nginx Open Source 配置 HTTP 负载均衡：round-robin、leas
 
 反代指向单机时，垂直扩容很快到顶。下一步是 **upstream 池**：Nginx 在多台上游之间分发请求，并在某台连续失败时暂时摘掉。
 
-![Nginx upstream 将请求分到多台上游](/Linux/nginx/06/p01-01.png)
+<!-- 配图占位: Nginx upstream 将请求分到多台上游 | /Linux/nginx/06/p01-01.png -->
 
 > Open Source 主要是 **被动** 健康检查（请求失败才计数）。主动定期探测是 Plus 能力；OSS 可用外部探活 + 改配置/脚本，或第三方模块——本篇聚焦官方 OSS 行为。
 
@@ -62,7 +62,7 @@ python3 -m http.server 8083 --bind 127.0.0.1 &
 
 多次 `curl -H 'Host: lb.example.com' http://127.0.0.1/`，默认 **加权轮询（round-robin）** 轮流打到各 server。
 
-![轮询访问三台上游](/Linux/nginx/06/p02-01.png)
+<!-- 配图占位: 轮询访问三台上游 | /Linux/nginx/06/p02-01.png -->
 
 ---
 
@@ -99,7 +99,7 @@ upstream sticky_by_ip {
 }
 ```
 
-![least_conn 与 ip_hash 适用场景](/Linux/nginx/06/p03-01.png)
+<!-- 配图占位: least_conn 与 ip_hash 适用场景 | /Linux/nginx/06/p03-01.png -->
 
 **会话粘滞取舍**：`ip_hash` 简单，但客户端经多层 NAT/公司出口时会扎堆；更稳妥是应用层无会话或 Redis 会话，负载层保持无状态轮询。
 
@@ -128,7 +128,7 @@ proxy_next_upstream_tries 2;
 
 含义：当前上游失败时，**换下一台再试**（注意：非幂等 POST 要谨慎开启，避免重复提交）。
 
-![max_fails 摘除与 fail_timeout 恢复探测](/Linux/nginx/06/p04-01.png)
+<!-- 配图占位: max_fails 摘除与 fail_timeout 恢复探测 | /Linux/nginx/06/p04-01.png -->
 
 ---
 
