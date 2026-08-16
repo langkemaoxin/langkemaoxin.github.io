@@ -5,4 +5,9 @@ export default {
     icon: "terminal",
     order: 1,
   },
+  nginx: {
+    title: "Nginx",
+    icon: "server",
+    order: 2,
+  },
 };

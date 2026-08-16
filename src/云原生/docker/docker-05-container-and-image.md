@@ -228,7 +228,7 @@ docker rmi mylab/alpine:demo
 
 ### 4.7 `commit`：能固化，但不作为首选生产线
 
-可以把容器可写层提交成新镜像（教学/应急有用）：
+可以把容器可写层提交成新镜像（教学/应急有用）。下面四行是一条完整演示链：**先造一个未启动的容器 → 把它固化成新镜像 → 删掉临时容器 → 用 history 核对多出来的层**。本例几乎没改文件，目的是走通流程，不是做出「有内容差异」的镜像。
 
 ```bash
 cid=$(docker create alpine:3.21)
@@ -236,6 +236,17 @@ docker commit -m "lab note" "$cid" mylab/alpine:committed
 docker rm "$cid"
 docker history mylab/alpine:committed
 ```
+
+逐行含义：
+
+| 步骤 | 命令 | 在干什么 |
+|------|------|----------|
+| 1 | `cid=$(docker create alpine:3.21)` | `create` 只**创建**容器、**不启动**进程；把容器 ID 存进变量 `cid`，供后面引用 |
+| 2 | `docker commit -m "lab note" "$cid" mylab/alpine:committed` | 把该容器当前状态（镜像层 + 可写层）打成**新镜像**；`-m` 写进层的 COMMENT；名字是 `mylab/alpine:committed` |
+| 3 | `docker rm "$cid"` | 临时容器使命完成，删掉实例；**新镜像仍留在本地** |
+| 4 | `docker history mylab/alpine:committed` | 看分层历史；相对原始 `alpine:3.21`，顶部多一行带 COMMENT `lab note` 的层 |
+
+`create` 与 `run` 的差别：`run` ≈ create + start；这里故意用 `create`，避免起进程，只为 commit 留一个可引用的容器对象。若你在 commit 前往容器里写过文件或装过包，新层里才会有实质内容；本例几乎是「空提交」，history 上仍能看到那条 `lab note` 记录。
 
 本机会在历史顶部看到带 COMMENT `lab note` 的新层。长期维护更推荐 **Dockerfile 重建**（可重复、可审查）——见第 10 篇。
 
@@ -251,14 +262,14 @@ docker history mylab/alpine:committed
 
 ## 五、读懂 `docker inspect`：容器元数据地图
 
-`docker inspect` 可检查容器、镜像等多种对象（见[官方 inspect](https://docs.docker.com/reference/cli/docker/inspect/)）。对容器执行时，返回的是引擎眼里这份实例的**完整说明书**——JSON 数组里通常只有一个对象，但字段极多。
+`docker inspect` 可检查容器、镜像等多种对象（见[官方 inspect](https://docs.docker.com/reference/cli/docker/inspect/)）。对容器执行时，返回的是引擎眼里这份实例的**完整说明书**——最外层是 JSON **数组**，通常只有一个对象：`[{ ... }]`。字段很多，别想一次背完。
 
 正确读法：
 
-1. **先按块扫**（身份 → State → Config → HostConfig → NetworkSettings → Mounts）
+1. **按真实 JSON 出现的块顺序扫**（身份 → State → 路径/名称 → HostConfig → Mounts → Config → NetworkSettings → Manifest）
 2. **再用 `--format` 取字段**，别每次肉眼翻几百行
 
-下面以本机实验容器为准：
+下面以本机实验容器为准（先起、再看；示例 JSON 与本机一次真实输出一致）：
 
 ```bash
 docker run -d --name demo-nginx -p 8080:80 nginx:alpine
@@ -274,116 +285,396 @@ docker inspect demo-nginx
 
 同一条 `docker inspect` 也可写 `docker container inspect`；对象名冲突时可用类型前缀消歧。
 
-### 5.2 身份与「从哪启动」
+下面从数组里**第一个对象**开始，按块拆开对照。
 
-| 字段 | 含义 | 本机 `demo-nginx` 示例 |
-|------|------|------------------------|
-| `Id` | 容器完整 ID | `99285b68aa3b…`（`ps` 里只显示前 12 位） |
-| `Name` | 名称，常带前导 `/` | `/demo-nginx` |
-| `Created` | 创建时间（UTC） | `2026-08-16T08:16:39Z` |
-| `Image` | 所用镜像的内容摘要（sha256） | `sha256:4a73073bd557…` |
-| `Path` + `Args` | 实际启动的可执行文件与参数 | Path=`/docker-entrypoint.sh`，Args=`nginx -g daemon off;` |
-| `Driver` | 存储驱动 | `overlayfs` |
-| `Platform` | 平台 | `linux` |
-| `RestartCount` | 按重启策略已重启次数 | `0` |
-| `LogPath` | 默认 json-file 日志在 daemon 侧的路径 | 在 Desktop/Linux 上路径形态不同，一般用 `docker logs` 即可 |
+### 5.2 身份与「进程 1 怎么起来」
 
-`Path`/`Args` 回答的是：「进程 1 到底是怎么拉起来的？」——和镜像里的 `Entrypoint`+`Cmd` 对应，但这里是**解析后的运行结果**。
+```json
+{
+  "Id": "f4184869fb43ec14361b84d682e9aa0f5475033bbba411bed96878737cea42a9",
+  "Created": "2026-08-16T08:34:06.386404784Z",
+  "Path": "/docker-entrypoint.sh",
+  "Args": [
+    "nginx",
+    "-g",
+    "daemon off;"
+  ]
+}
+```
+
+| 字段 | 含义 |
+|------|------|
+| `Id` | 容器完整 ID；`docker ps` 通常只显示前 12 位（本例 `f4184869fb43`） |
+| `Created` | 创建时间（UTC） |
+| `Path` + `Args` | 实际启动的可执行文件与参数——「进程 1 到底怎么拉起来」 |
+
+`Path`/`Args` 对应镜像里的 `Entrypoint`+`Cmd` 解析结果：本例入口是 `/docker-entrypoint.sh`，参数是 `nginx -g daemon off;`。
 
 ### 5.3 `State`：现在活着吗？
 
-| 字段 | 含义 |
-|------|------|
-| `Status` | 总状态字符串：`created` / `running` / `exited` / `paused`… |
-| `Running` / `Paused` / `Restarting` / `Dead` | 布尔开关，细拆状态 |
-| `Pid` | 容器主进程在**宿主机（或 VM）PID 命名空间**里的进程号；未运行多为 `0` |
-| `ExitCode` | 退出码；正在跑时通常为上次/当前约定值（本机 running 时为 `0`） |
-| `Error` | 引擎记录的错误信息；正常为空串 |
-| `OOMKilled` | 是否曾因内存不足被杀 |
-| `StartedAt` / `FinishedAt` | 启动 / 结束时间；未结束时 `FinishedAt` 可能是零值时间 |
-
-本机节选：
-
-```text
-Status=running  Running=true  Pid=1655  ExitCode=0  OOMKilled=false
-StartedAt=2026-08-16T08:16:39Z
+```json
+"State": {
+  "Status": "running",
+  "Running": true,
+  "Paused": false,
+  "Restarting": false,
+  "OOMKilled": false,
+  "Dead": false,
+  "Pid": 2274,
+  "ExitCode": 0,
+  "Error": "",
+  "StartedAt": "2026-08-16T08:34:06.482946851Z",
+  "FinishedAt": "0001-01-01T00:00:00Z"
+}
 ```
 
-排障口诀：先看 `Status`/`Error`/`OOMKilled`/`ExitCode`，再决定要不要看日志或资源限制。
+| 字段 | 含义 |
+|------|------|
+| `Status` | 总状态：`created` / `running` / `exited` / `paused`… |
+| `Running` / `Paused` / `Restarting` / `Dead` | 布尔开关，细拆状态 |
+| `Pid` | 容器主进程在**宿主机（或 Desktop 里的 Linux VM）**上的 PID；未运行多为 `0` |
+| `ExitCode` | 退出码；正在跑时常见为 `0` |
+| `Error` | 引擎记录的错误；正常为空串 |
+| `OOMKilled` | 是否曾因内存不足被杀 |
+| `StartedAt` / `FinishedAt` | 启动 / 结束时间；未结束时 `FinishedAt` 常是零值 `0001-01-01T00:00:00Z` |
 
-### 5.4 `Config`：镜像带来的「默认运行配置」
+排障口诀：先看 `Status` / `Error` / `OOMKilled` / `ExitCode`，再决定要不要看日志或资源限制。
 
-这一块主要来自镜像配置 + `run` 时覆盖，描述**容器内期望的应用配置**（不等于宿主机端口怎么映射）。
+### 5.4 镜像指针、日志路径与其它顶层字段
 
-| 字段 | 含义 | 本机示例 |
-|------|------|----------|
-| `Hostname` | 容器主机名 | 默认常取 ID 前缀：`99285b68aa3b` |
-| `Image` | 创建时用的镜像引用名 | `nginx:alpine` |
-| `Entrypoint` | 入口 | `["/docker-entrypoint.sh"]` |
-| `Cmd` | 传给入口的默认命令 | `["nginx","-g","daemon off;"]` |
-| `Env` | 环境变量 | 含 `PATH`、`NGINX_VERSION=1.31.3` 等 |
-| `ExposedPorts` | 镜像声明「我听这些端口」（文档式） | `80/tcp` |
-| `WorkingDir` | 工作目录 | `/` |
-| `User` | 以何用户跑；空表示默认（多为 root，视镜像） | `""` |
-| `Labels` | 键值标签 | 镜像/构建时打的元数据 |
-| `StopSignal` / `StopTimeout` | `docker stop` 时优先信号与超时相关 | 本机 `StopSignal=SIGQUIT`（Nginx 镜像常见） |
-| `Tty` / `OpenStdin` / `Attach*` | 是否分配 TTY、是否挂接标准流 | 后台 `-d` 时多为 false |
+紧挨在 `State` 后面的一批顶层键：
 
-注意：`ExposedPorts` **不会**自动在宿主机开门；真要映射看下一节 `HostConfig.PortBindings` / `NetworkSettings.Ports`。
+```json
+{
+  "Image": "sha256:4a73073bd557c65b759505da037898b61f1be6cbcc3c2c3aeac22d2a470c1752",
+  "ResolvConfPath": "/var/lib/docker/containers/f4184869fb43…/resolv.conf",
+  "HostnamePath": "/var/lib/docker/containers/f4184869fb43…/hostname",
+  "HostsPath": "/var/lib/docker/containers/f4184869fb43…/hosts",
+  "LogPath": "/var/lib/docker/containers/f4184869fb43…/f4184869fb43…-json.log",
+  "Name": "/demo-nginx",
+  "RestartCount": 0,
+  "Driver": "overlayfs",
+  "Platform": "linux",
+  "MountLabel": "",
+  "ProcessLabel": "",
+  "AppArmorProfile": "",
+  "ExecIDs": null
+}
+```
+
+（路径里的容器 ID 已用 `…` 缩短；你本机 `inspect` 里是完整路径。）
+
+| 字段 | 含义 |
+|------|------|
+| `Image` | 所用镜像的**内容摘要**（sha256），不是 `nginx:alpine` 这个名字 |
+| `Name` | 容器名，常带前导 `/` → `/demo-nginx` |
+| `RestartCount` | 按重启策略已重启次数 |
+| `Driver` | 存储驱动（本机 `overlayfs`） |
+| `Platform` | 平台（`linux`） |
+| `LogPath` | 默认 json-file 日志在 daemon 侧的路径；日常用 `docker logs` 即可 |
+| `ResolvConfPath` / `HostnamePath` / `HostsPath` | 注入容器的 DNS/hostname/hosts 在宿主机（或 VM）上的文件 |
+| `AppArmorProfile` / `MountLabel` / `ProcessLabel` | Linux 安全模块相关；Desktop 上常为空 |
+| `ExecIDs` | 当前是否有 `docker exec` 会话；没有则为 `null` |
+
+注意：这里的 `Image` 是摘要；人读的镜像名在后面的 `Config.Image`。
 
 ### 5.5 `HostConfig`：宿主机怎么约束这个容器
 
-| 字段 | 含义 | 本机示例 |
-|------|------|----------|
-| `PortBindings` | 端口发布请求：容器口 → 宿主机口 | `80/tcp → HostPort 8080` |
-| `RestartPolicy` | 重启策略 | `Name=no`（默认不自动重启） |
-| `NetworkMode` | 网络模式 | `bridge` |
-| `Binds` | bind mount 字符串列表 | 本例 `null`（没挂目录） |
-| `Mounts`（HostConfig 内） | 较新的挂载声明结构 | 与顶层 `Mounts` 结果呼应 |
-| `Memory` / `NanoCpus` 等 | 资源限制；`0` 常表示未限制 | 本机均为 `0` |
-| `Privileged` / `CapAdd` / `CapDrop` | 权限与能力 | 安全相关，默认收紧 |
-| `AutoRemove` | 是否退出即删（对应 `--rm`） | |
+`Config` 偏「应用想怎样」；`HostConfig` 偏「宿主机允许怎样」。本例完整块如下（很长是正常的——大量资源字段为 `0`/`null`/`false` 表示**未限制 / 用默认**）：
 
-`Config` 偏「应用想怎样」；`HostConfig` 偏「宿主机允许怎样」。端口、重启、资源、特权多在这里。
+```json
+"HostConfig": {
+  "Binds": null,
+  "ContainerIDFile": "",
+  "LogConfig": {
+    "Type": "json-file",
+    "Config": {}
+  },
+  "NetworkMode": "bridge",
+  "PortBindings": {
+    "80/tcp": [
+      {
+        "HostIp": "",
+        "HostPort": "8080"
+      }
+    ]
+  },
+  "RestartPolicy": {
+    "Name": "no",
+    "MaximumRetryCount": 0
+  },
+  "AutoRemove": false,
+  "VolumeDriver": "",
+  "VolumesFrom": null,
+  "ConsoleSize": [0, 0],
+  "CapAdd": null,
+  "CapDrop": null,
+  "CgroupnsMode": "private",
+  "Dns": null,
+  "DnsOptions": [],
+  "DnsSearch": [],
+  "ExtraHosts": null,
+  "GroupAdd": null,
+  "IpcMode": "private",
+  "Cgroup": "",
+  "Links": null,
+  "OomScoreAdj": 0,
+  "PidMode": "",
+  "Privileged": false,
+  "PublishAllPorts": false,
+  "ReadonlyRootfs": false,
+  "SecurityOpt": null,
+  "UTSMode": "",
+  "UsernsMode": "",
+  "ShmSize": 67108864,
+  "Runtime": "runc",
+  "Isolation": "",
+  "CpuShares": 0,
+  "Memory": 0,
+  "NanoCpus": 0,
+  "CgroupParent": "",
+  "BlkioWeight": 0,
+  "BlkioWeightDevice": [],
+  "BlkioDeviceReadBps": [],
+  "BlkioDeviceWriteBps": [],
+  "BlkioDeviceReadIOps": [],
+  "BlkioDeviceWriteIOps": [],
+  "CpuPeriod": 0,
+  "CpuQuota": 0,
+  "CpuRealtimePeriod": 0,
+  "CpuRealtimeRuntime": 0,
+  "CpusetCpus": "",
+  "CpusetMems": "",
+  "Devices": [],
+  "DeviceCgroupRules": null,
+  "DeviceRequests": null,
+  "MemoryReservation": 0,
+  "MemorySwap": 0,
+  "MemorySwappiness": null,
+  "OomKillDisable": null,
+  "PidsLimit": null,
+  "Ulimits": [],
+  "CpuCount": 0,
+  "CpuPercent": 0,
+  "IOMaximumIOps": 0,
+  "IOMaximumBandwidth": 0,
+  "MaskedPaths": [
+    "/proc/acpi",
+    "/proc/asound",
+    "/proc/interrupts",
+    "/proc/kcore",
+    "/proc/keys",
+    "/proc/latency_stats",
+    "/proc/sched_debug",
+    "/proc/scsi",
+    "/proc/timer_list",
+    "/proc/timer_stats",
+    "/sys/devices/virtual/powercap",
+    "/sys/firmware"
+  ],
+  "ReadonlyPaths": [
+    "/proc/bus",
+    "/proc/fs",
+    "/proc/irq",
+    "/proc/sys",
+    "/proc/sysrq-trigger"
+  ]
+}
+```
 
-### 5.6 `NetworkSettings`：网络与端口真相
+排障时优先盯这些：
+
+| 字段 | 本例 | 含义 |
+|------|------|------|
+| `PortBindings` | `80/tcp → HostPort 8080` | **你请求的**端口发布（来自 `-p 8080:80`） |
+| `NetworkMode` | `bridge` | 网络模式 |
+| `RestartPolicy.Name` | `no` | 不自动重启 |
+| `AutoRemove` | `false` | 退出后不自动删（`--rm` 才会是 true） |
+| `Binds` | `null` | 没有 `-v` bind mount |
+| `Memory` / `NanoCpus` 等 | `0` | 未设资源上限 |
+| `Privileged` / `CapAdd` / `CapDrop` | 默认收紧 | 权限与 Linux capabilities |
+| `LogConfig.Type` | `json-file` | 日志驱动 |
+| `Runtime` | `runc` | 底层 OCI runtime |
+| `MaskedPaths` / `ReadonlyPaths` | 一串 `/proc`、`/sys` | 引擎默认遮罩/只读，降低容器碰敏感内核接口的风险 |
+
+其余 CPU/IO/ulimit 字段本例全是「未配置」的零值——看到一长串别慌，多数可以跳过。
+
+### 5.6 `GraphDriver` 与顶层 `Mounts`
+
+```json
+"GraphDriver": {
+  "Data": null,
+  "Name": ""
+},
+"Mounts": []
+```
 
 | 字段 | 含义 |
 |------|------|
-| `Ports` | **实际生效**的端口映射 |
-| `Networks` | 加入的网络及每张网的 IP/网关/MAC |
-| 顶层 `IPAddress` / `Gateway` / `MacAddress` | 旧式扁平字段；在较新引擎 / Desktop 上**经常为空**，请改看 `Networks.<网络名>` |
+| `GraphDriver` | 可写层用的图驱动信息；排存储问题时偶用。本机 Desktop 上 `Data`/`Name` 可能为空，不代表容器没存储 |
+| `Mounts` | **解析后的挂载结果**（类型、源、目标、读写）。本例 `[]`——没挂 volume/bind |
 
-本机：
+可写层里 `echo` 出来的文件**不会**出现在 `Mounts`；`Mounts` 只描述显式挂载。
 
-```text
-Ports: 80/tcp → 0.0.0.0:8080 与 [::]:8080
-Networks.bridge.IPAddress = 172.17.0.2
-Networks.bridge.Gateway   = 172.17.0.1
-顶层 IPAddress = ""   ← 空，不代表没 IP
+### 5.7 `Config`：镜像带来的「默认运行配置」
+
+描述容器内期望的应用配置（不等于宿主机端口怎么映射）：
+
+```json
+"Config": {
+  "Hostname": "f4184869fb43",
+  "Domainname": "",
+  "User": "",
+  "AttachStdin": false,
+  "AttachStdout": false,
+  "AttachStderr": false,
+  "ExposedPorts": {
+    "80/tcp": {}
+  },
+  "Tty": false,
+  "OpenStdin": false,
+  "StdinOnce": false,
+  "Env": [
+    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+    "NGINX_VERSION=1.31.3",
+    "PKG_RELEASE=1",
+    "DYNPKG_RELEASE=1",
+    "NJS_VERSION=1.0.0",
+    "NJS_RELEASE=1",
+    "ACME_VERSION=0.4.1"
+  ],
+  "Cmd": [
+    "nginx",
+    "-g",
+    "daemon off;"
+  ],
+  "Image": "nginx:alpine",
+  "Volumes": null,
+  "WorkingDir": "/",
+  "Entrypoint": [
+    "/docker-entrypoint.sh"
+  ],
+  "OnBuild": null,
+  "Labels": {
+    "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+  },
+  "StopSignal": "SIGQUIT",
+  "StopTimeout": 1
+}
 ```
+
+| 字段 | 含义 | 本例 |
+|------|------|------|
+| `Hostname` | 容器主机名 | 默认常取 ID 前缀：`f4184869fb43` |
+| `Image` | 创建时用的镜像**引用名** | `nginx:alpine` |
+| `Entrypoint` / `Cmd` | 入口与默认参数 | 与前面 `Path`/`Args` 对应 |
+| `Env` | 环境变量 | 含 `PATH`、`NGINX_VERSION=1.31.3` 等 |
+| `ExposedPorts` | 镜像声明「我听这些端口」（文档式） | `80/tcp` |
+| `WorkingDir` | 工作目录 | `/` |
+| `User` | 以何用户跑；空多为镜像默认（常是 root） | `""` |
+| `Labels` | 键值标签 | maintainer 等 |
+| `StopSignal` / `StopTimeout` | `docker stop` 相关 | Nginx 镜像常见 `SIGQUIT` |
+| `Tty` / `OpenStdin` / `Attach*` | TTY 与标准流挂接 | 后台 `-d` 时多为 false |
+
+注意：`ExposedPorts` **不会**自动在宿主机开门；真要映射看 `HostConfig.PortBindings` 和下一节 `NetworkSettings.Ports`。
+
+### 5.8 `NetworkSettings`：网络与端口真相
+
+```json
+"NetworkSettings": {
+  "Bridge": "",
+  "SandboxID": "147606b6557f06927d9490a9566cb39e9c357067f04e596a914af12589e0ec88",
+  "SandboxKey": "/var/run/docker/netns/147606b6557f",
+  "Ports": {
+    "80/tcp": [
+      {
+        "HostIp": "0.0.0.0",
+        "HostPort": "8080"
+      },
+      {
+        "HostIp": "::",
+        "HostPort": "8080"
+      }
+    ]
+  },
+  "HairpinMode": false,
+  "LinkLocalIPv6Address": "",
+  "LinkLocalIPv6PrefixLen": 0,
+  "SecondaryIPAddresses": null,
+  "SecondaryIPv6Addresses": null,
+  "EndpointID": "",
+  "Gateway": "",
+  "GlobalIPv6Address": "",
+  "GlobalIPv6PrefixLen": 0,
+  "IPAddress": "",
+  "IPPrefixLen": 0,
+  "IPv6Gateway": "",
+  "MacAddress": "",
+  "Networks": {
+    "bridge": {
+      "IPAMConfig": null,
+      "Links": null,
+      "Aliases": null,
+      "MacAddress": "02:24:6a:fe:b2:23",
+      "DriverOpts": null,
+      "GwPriority": 0,
+      "NetworkID": "eeec2fc3251d2340ae077e373244a09d6ef0690300fe4e74dfacb25aac7bff93",
+      "EndpointID": "47a615eb54f4a92c2a7a5337484291eaa4ef411a746f1da39bf0eb776794c4ad",
+      "Gateway": "172.17.0.1",
+      "IPAddress": "172.17.0.2",
+      "IPPrefixLen": 16,
+      "IPv6Gateway": "",
+      "GlobalIPv6Address": "",
+      "GlobalIPv6PrefixLen": 0,
+      "DNSNames": null
+    }
+  }
+}
+```
+
+| 字段 | 含义 |
+|------|------|
+| `Ports` | **实际生效**的端口映射：本例容器 `80` → 宿主机 `0.0.0.0:8080` 与 `[::]:8080` |
+| `Networks.bridge.IPAddress` | 容器在 bridge 网上的 IP：`172.17.0.2` |
+| `Networks.bridge.Gateway` | 网关：`172.17.0.1` |
+| 顶层 `IPAddress` / `Gateway` / `MacAddress` | 旧式扁平字段；较新引擎 / Desktop 上**经常为空**——空不代表没 IP，请改看 `Networks.<网络名>` |
+| `SandboxID` / `SandboxKey` | 网络命名空间相关标识；日常排障很少直接用 |
 
 从 Windows/macOS 宿主机访问服务，优先用**发布端口**（本例 `8080`），不要假设能直接路由到 `172.17.0.2`。
 
-### 5.7 `Mounts`：实际挂上了什么
+### 5.9 `ImageManifestDescriptor`：这份镜像清单是谁
 
-顶层 `Mounts` 是**解析后的挂载结果**（类型、源、目标、读写）。本例为空数组 `[]`——没挂 volume/bind。有数据卷时，这里能看到 `Type`（`bind`/`volume`）、`Source`、`Destination`、`RW` 等。
+较新引擎还会带上 OCI manifest 描述（多平台 / 溯源时有用）：
 
-可写层里乱写的文件**不会**出现在 `Mounts` 里；`Mounts` 只描述显式挂载。
+```json
+"ImageManifestDescriptor": {
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "digest": "sha256:1d40e3eb3bf4f138de1d67193f2aa5309fcaf343eb5ffadbf5e9439de1eb1ebb",
+  "size": 2495,
+  "annotations": {
+    "com.docker.official-images.bashbrew.arch": "amd64",
+    "org.opencontainers.image.base.digest": "sha256:303405b1401ffdc4fc6e57c8824761cf39bd28b8399e0c5933a20e7273c8cbf5",
+    "org.opencontainers.image.base.name": "nginx:1.31.3-alpine-slim",
+    "org.opencontainers.image.created": "2026-07-15T23:57:27Z",
+    "org.opencontainers.image.revision": "ccdab6c99ae2e2fc53a144dc68d6b8f44163adf2",
+    "org.opencontainers.image.source": "https://github.com/nginx/docker-nginx.git#ccdab6c99ae2e2fc53a144dc68d6b8f44163adf2:mainline/alpine",
+    "org.opencontainers.image.url": "https://hub.docker.com/_/nginx",
+    "org.opencontainers.image.version": "1.31.3-alpine"
+  },
+  "platform": {
+    "architecture": "amd64",
+    "os": "linux"
+  }
+}
+```
 
-### 5.8 其他常见顶层字段（点到为止）
+日常运维看 `platform`（确认 amd64/arm64）和 `annotations` 里的版本/来源即可；其余可当扩展元数据。
 
-| 字段 | 含义 |
-|------|------|
-| `GraphDriver` | 可写层用的图驱动及底层目录信息（排存储问题偶用） |
-| `HostsPath` / `HostnamePath` / `ResolvConfPath` | 注入容器的 hosts/hostname/resolv 在宿主机上的文件路径 |
-| `AppArmorProfile` / `MountLabel` / `ProcessLabel` | Linux 安全模块相关标签 |
-| `ExecIDs` | 当前 `docker exec` 会话相关 ID（有 exec 时才有内容） |
-| `ImageManifestDescriptor` | 与镜像 manifest 相关的描述（多平台场景更有用） |
+到这里，`inspect` 数组里那一个对象的主要块就齐了。回头对照你自己的 `docker inspect demo-nginx`，顺序应大致相同，具体 ID/IP/时间会不同。
 
-多数日常运维用不到整块；知道「安全/存储/DNS 注入信息在这里」即可。
+### 5.10 常用 `--format` 配方（本机可直接抄）
 
-### 5.9 常用 `--format` 配方（本机可直接抄）
+完整 JSON 适合学习；排障时用 `--format` 只取需要的字段：
 
 ```bash
 # 状态一眼看清
@@ -405,9 +696,9 @@ docker inspect demo-nginx --format "{{range .Config.Env}}{{println .}}{{end}}"
 docker inspect demo-nginx --format "{{json .Mounts}}"
 ```
 
-本机前几条对应结果（节选）：`Name=/demo-nginx`、`Status=running`、`Image=nginx:alpine`、`8080->80`、`172.17.0.2`。
+本机对应结果（节选）：`Name=/demo-nginx`、`Status=running`、`Image=nginx:alpine`、`8080->80`、`172.17.0.2`。
 
----
+实验看完可清理：`docker rm -f demo-nginx`。
 
 ## 六、容器生命周期（概念图，命令细节见第 6 篇）
 
@@ -467,7 +758,7 @@ stateDiagram-v2
 
 - 镜像分发，容器运行；一对多，可写层隔离——**删容器 ≠ 删镜像，改容器 ≠ 改镜像**。
 - 镜像日常：`pull` → `images` → `inspect`/`history` → `tag` → `rmi`；`commit` 能救急，生产线优先 Dockerfile。
-- 容器 `inspect`：按 **State / Config / HostConfig / NetworkSettings / Mounts** 读；Desktop 下 IP 看 `Networks`，端口看 `Ports`。
+- 容器 `inspect`：按块对照完整 JSON（身份 → State → HostConfig → Config → NetworkSettings…）；Desktop 下 IP 看 `Networks`，端口看 `Ports`。
 - 容器怎么跑、怎么停、怎么清 → **第 6 篇**；离线打包 → 第 8 篇；分层原理 → 第 14 篇。
 
 下一篇见 🐳
