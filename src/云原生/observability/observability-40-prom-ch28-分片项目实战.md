@@ -3,7 +3,7 @@ title: Prometheus 第28章：分片项目实战
 sidebarGroup: 可观测性
 shortTitle: 40 分片项目实战
 order: 40
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

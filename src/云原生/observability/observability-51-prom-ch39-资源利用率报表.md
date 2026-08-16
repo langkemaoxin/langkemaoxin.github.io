@@ -3,7 +3,7 @@ title: Prometheus 第39章：资源利用率报表
 sidebarGroup: 可观测性
 shortTitle: 51 资源利用率报表
 order: 51
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

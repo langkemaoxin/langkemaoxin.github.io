@@ -3,7 +3,7 @@ title: Serverless 选型对比：云上 FaaS vs 自建 K8s
 sidebarGroup: Serverless
 shortTitle: 26 选型对比总结
 order: 26
-date: '2026-08-14'
+date: 2026-08-14
 category: 云原生
 tag:
   - Serverless

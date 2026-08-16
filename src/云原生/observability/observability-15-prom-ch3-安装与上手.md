@@ -3,7 +3,7 @@ title: Prometheus 第3章：安装与上手
 sidebarGroup: 可观测性
 shortTitle: 15 安装与上手
 order: 15
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

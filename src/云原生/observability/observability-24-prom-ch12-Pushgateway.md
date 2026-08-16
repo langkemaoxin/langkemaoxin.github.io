@@ -3,7 +3,7 @@ title: Prometheus 第12章：Pushgateway
 sidebarGroup: 可观测性
 shortTitle: 24 Pushgateway
 order: 24
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

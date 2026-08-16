@@ -3,7 +3,7 @@ title: Prometheus 第14章：K8s 监控复杂度
 sidebarGroup: 可观测性
 shortTitle: 26 K8s 监控复杂度
 order: 26
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

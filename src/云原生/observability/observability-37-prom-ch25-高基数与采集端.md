@@ -3,7 +3,7 @@ title: Prometheus 第25章：高基数与采集端
 sidebarGroup: 可观测性
 shortTitle: 37 高基数与采集端
 order: 37
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

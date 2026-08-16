@@ -3,7 +3,7 @@ title: Prometheus 第37章：HTTP API
 sidebarGroup: 可观测性
 shortTitle: 49 HTTP API
 order: 49
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

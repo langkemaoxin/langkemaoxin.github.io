@@ -3,7 +3,7 @@ title: Prometheus 第10章：redis-exporter
 sidebarGroup: 可观测性
 shortTitle: 22 redis-exporter
 order: 22
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

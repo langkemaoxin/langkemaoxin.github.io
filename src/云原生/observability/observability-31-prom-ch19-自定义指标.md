@@ -3,7 +3,7 @@ title: Prometheus 第19章：自定义指标
 sidebarGroup: 可观测性
 shortTitle: 31 自定义指标
 order: 31
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

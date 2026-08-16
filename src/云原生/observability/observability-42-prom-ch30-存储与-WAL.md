@@ -3,7 +3,7 @@ title: Prometheus 第30章：存储与 WAL
 sidebarGroup: 可观测性
 shortTitle: 42 存储与 WAL
 order: 42
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

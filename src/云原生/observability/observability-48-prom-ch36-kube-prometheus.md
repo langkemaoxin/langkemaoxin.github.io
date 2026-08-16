@@ -3,7 +3,7 @@ title: Prometheus 第36章：kube-prometheus
 sidebarGroup: 可观测性
 shortTitle: 48 kube-prometheus
 order: 48
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

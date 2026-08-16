@@ -3,7 +3,7 @@ title: 云上 Serverless 之 AWS Lambda
 sidebarGroup: Serverless
 shortTitle: 24 AWS Lambda
 order: 24
-date: '2026-08-14'
+date: 2026-08-14
 category: 云原生
 tag:
   - Serverless

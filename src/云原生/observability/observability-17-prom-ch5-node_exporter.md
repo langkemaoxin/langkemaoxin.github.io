@@ -3,7 +3,7 @@ title: Prometheus 第5章：node_exporter
 sidebarGroup: 可观测性
 shortTitle: 17 node_exporter
 order: 17
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

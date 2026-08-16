@@ -3,7 +3,7 @@ title: Prometheus 第27章：动态分片
 sidebarGroup: 可观测性
 shortTitle: 39 动态分片
 order: 39
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

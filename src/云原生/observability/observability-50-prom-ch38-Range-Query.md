@@ -3,7 +3,7 @@ title: Prometheus 第38章：Range Query
 sidebarGroup: 可观测性
 shortTitle: 50 Range Query
 order: 50
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

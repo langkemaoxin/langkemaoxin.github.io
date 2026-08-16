@@ -3,7 +3,7 @@ title: Gin 示例 part01～part16 合集
 sidebarGroup: Golang
 shortTitle: 02 Gin 示例合集
 order: 2
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Golang

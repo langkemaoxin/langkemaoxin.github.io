@@ -3,7 +3,7 @@ title: Prometheus 第26章：客户端指标类型
 sidebarGroup: 可观测性
 shortTitle: 38 客户端指标类型
 order: 38
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

@@ -3,7 +3,7 @@ title: Prometheus 第20章：监控体系综述
 sidebarGroup: 可观测性
 shortTitle: 32 监控体系综述
 order: 32
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

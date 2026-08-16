@@ -3,7 +3,7 @@ title: Prometheus 第1章：开篇与学习路径
 sidebarGroup: 可观测性
 shortTitle: 13 开篇与学习路径
 order: 13
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

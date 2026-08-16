@@ -3,7 +3,7 @@ title: Prometheus 第7章：服务发现与 Relabel
 sidebarGroup: 可观测性
 shortTitle: 19 服务发现与 Relabel
 order: 19
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

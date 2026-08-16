@@ -3,7 +3,7 @@ title: Prometheus 第40章：配置与 confd
 sidebarGroup: 可观测性
 shortTitle: 52 配置与 confd
 order: 52
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

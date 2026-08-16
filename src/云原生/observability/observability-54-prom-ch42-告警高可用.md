@@ -3,7 +3,7 @@ title: Prometheus 第42章：告警高可用
 sidebarGroup: 可观测性
 shortTitle: 54 告警高可用
 order: 54
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

@@ -3,7 +3,7 @@ title: Go 基础练习 unit 合集
 sidebarGroup: Golang
 shortTitle: 03 基础练习合集
 order: 3
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Golang

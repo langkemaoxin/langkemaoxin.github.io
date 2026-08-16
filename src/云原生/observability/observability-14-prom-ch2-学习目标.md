@@ -3,7 +3,7 @@ title: Prometheus 第2章：学习目标
 sidebarGroup: 可观测性
 shortTitle: 14 学习目标
 order: 14
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

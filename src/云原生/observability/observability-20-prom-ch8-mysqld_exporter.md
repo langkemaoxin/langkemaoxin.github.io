@@ -3,7 +3,7 @@ title: Prometheus 第8章：mysqld_exporter
 sidebarGroup: 可观测性
 shortTitle: 20 mysqld_exporter
 order: 20
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

@@ -3,7 +3,7 @@ title: Prometheus 第32章：TSDB 索引与 Compact
 sidebarGroup: 可观测性
 shortTitle: 44 TSDB 索引与 Compact
 order: 44
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

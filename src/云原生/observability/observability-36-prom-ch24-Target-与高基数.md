@@ -3,7 +3,7 @@ title: Prometheus 第24章：Target 与高基数
 sidebarGroup: 可观测性
 shortTitle: 36 Target 与高基数
 order: 36
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

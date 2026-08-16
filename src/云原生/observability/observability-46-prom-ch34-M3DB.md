@@ -3,7 +3,7 @@ title: Prometheus 第34章：M3DB
 sidebarGroup: 可观测性
 shortTitle: 46 M3DB
 order: 46
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

@@ -3,7 +3,7 @@ title: Prometheus 第41章：告警源码
 sidebarGroup: 可观测性
 shortTitle: 53 告警源码
 order: 53
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

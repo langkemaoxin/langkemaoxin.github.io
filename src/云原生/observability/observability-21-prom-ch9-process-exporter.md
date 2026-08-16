@@ -3,7 +3,7 @@ title: Prometheus 第9章：process-exporter
 sidebarGroup: 可观测性
 shortTitle: 21 process-exporter
 order: 21
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

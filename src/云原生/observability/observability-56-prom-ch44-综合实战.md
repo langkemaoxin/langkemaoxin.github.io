@@ -3,7 +3,7 @@ title: Prometheus 第44章：综合实战
 sidebarGroup: 可观测性
 shortTitle: 56 综合实战
 order: 56
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

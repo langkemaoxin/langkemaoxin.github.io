@@ -3,7 +3,7 @@ title: Prometheus 第33章：联邦与 Remote
 sidebarGroup: 可观测性
 shortTitle: 45 联邦与 Remote
 order: 45
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

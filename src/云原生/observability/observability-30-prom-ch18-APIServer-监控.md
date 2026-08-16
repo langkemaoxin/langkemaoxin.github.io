@@ -3,7 +3,7 @@ title: Prometheus 第18章：APIServer 监控
 sidebarGroup: 可观测性
 shortTitle: 30 APIServer 监控
 order: 30
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

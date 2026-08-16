@@ -3,7 +3,7 @@ title: Prometheus 第22章：K8s 服务发现
 sidebarGroup: 可观测性
 shortTitle: 34 K8s 服务发现
 order: 34
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

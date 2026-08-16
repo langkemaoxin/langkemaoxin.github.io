@@ -3,7 +3,7 @@ title: Serverless Framework 与云上 IaC 工具链
 sidebarGroup: Serverless
 shortTitle: 25 Serverless Framework
 order: 25
-date: '2026-08-14'
+date: 2026-08-14
 category: 云原生
 tag:
   - Serverless

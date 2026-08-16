@@ -3,7 +3,7 @@ title: Serverless 概念入门
 sidebarGroup: Serverless
 shortTitle: 02 概念入门
 order: 2
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Serverless

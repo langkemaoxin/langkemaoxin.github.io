@@ -3,7 +3,7 @@ title: Prometheus 第15章：K8s 监控组件部署
 sidebarGroup: 可观测性
 shortTitle: 27 K8s 监控组件部署
 order: 27
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

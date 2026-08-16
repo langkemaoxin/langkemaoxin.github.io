@@ -3,7 +3,7 @@ title: Prometheus 第6章：PromQL 基础
 sidebarGroup: 可观测性
 shortTitle: 18 PromQL 基础
 order: 18
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

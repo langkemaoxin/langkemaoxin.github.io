@@ -3,7 +3,7 @@ title: Prometheus 第31章：压缩算法
 sidebarGroup: 可观测性
 shortTitle: 43 压缩算法
 order: 43
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

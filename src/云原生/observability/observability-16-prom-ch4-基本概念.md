@@ -3,7 +3,7 @@ title: Prometheus 第4章：基本概念
 sidebarGroup: 可观测性
 shortTitle: 16 基本概念
 order: 16
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

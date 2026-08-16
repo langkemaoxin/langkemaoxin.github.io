@@ -3,7 +3,7 @@ title: Prometheus 第35章：Thanos
 sidebarGroup: 可观测性
 shortTitle: 47 Thanos
 order: 47
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

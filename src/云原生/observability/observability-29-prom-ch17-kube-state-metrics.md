@@ -3,7 +3,7 @@ title: Prometheus 第17章：kube-state-metrics
 sidebarGroup: 可观测性
 shortTitle: 29 kube-state-metrics
 order: 29
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

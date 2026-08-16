@@ -3,7 +3,7 @@ title: Prometheus 第21章：etcd TLS
 sidebarGroup: 可观测性
 shortTitle: 33 etcd TLS
 order: 33
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

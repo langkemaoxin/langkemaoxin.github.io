@@ -3,7 +3,7 @@ title: Prometheus 第43章：Alertmanager 流水线
 sidebarGroup: 可观测性
 shortTitle: 55 Alertmanager 流水线
 order: 55
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

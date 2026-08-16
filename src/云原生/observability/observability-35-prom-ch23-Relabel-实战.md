@@ -3,7 +3,7 @@ title: Prometheus 第23章：Relabel 实战
 sidebarGroup: 可观测性
 shortTitle: 35 Relabel 实战
 order: 35
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus

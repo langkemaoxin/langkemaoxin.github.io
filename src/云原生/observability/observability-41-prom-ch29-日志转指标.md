@@ -3,7 +3,7 @@ title: Prometheus 第29章：日志转指标
 sidebarGroup: 可观测性
 shortTitle: 41 日志转指标
 order: 41
-date: '2026-08-13'
+date: 2026-08-13
 category: 云原生
 tag:
   - Prometheus
