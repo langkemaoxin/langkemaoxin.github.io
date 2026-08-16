@@ -14,7 +14,7 @@ description: Docker → Kubernetes → Serverless 主线，辅以运维笔记、
 
 1. **Docker / Kubernetes**：精写主线，建议按序阅读  
 2. **K8s 运维笔记**：部署、网络、存储等课堂笔记（已去重）  
-3. **DevOps / Serverless / 可观测性 / 平台与实战**：按需深入  
+3. **DevOps / GitOps**：精写 15 篇（CI 三路径 + Argo CD）；**Serverless / 可观测性 / 平台与实战**：按需深入  
 4. **Golang / 扩展专题**：工具链与周边专题
 
 ## 栏目
@@ -25,7 +25,7 @@ description: Docker → Kubernetes → Serverless 主线，辅以运维笔记、
 | Docker | 容器引擎（含 Containerd / HTTPS 进阶） |
 | Kubernetes | 编排精写主线（20 篇） |
 | K8s 运维笔记 | 部署与组件课堂笔记 |
-| DevOps / GitOps | CI/CD、Argo CD |
+| DevOps / GitOps | DevOps → CI 三路径 → Argo CD / GitOps（15 篇） |
 | Serverless | Knative / Tekton / OpenFaaS |
 | 可观测性 | 监控链路 + Prometheus 按章合并 |
 | 平台与实战 | PaaS、微服务、多集群等 |
