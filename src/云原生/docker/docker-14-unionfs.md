@@ -12,7 +12,7 @@ tag:
 description: UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的
 ---
 
-> **Docker 系列 · 第 14/23 篇**  
+> **Docker 系列 · 第 14/18 篇**  
 > 上一篇：[《技术底座总览》](/云原生/docker/docker-13-tech-foundation/) · 下一篇：[《Namespace 隔离》](/云原生/docker/docker-15-namespace/)
 
 ---

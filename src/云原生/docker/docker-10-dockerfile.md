@@ -14,7 +14,7 @@ tag:
 description: Dockerfile 自制镜像——从语法到发布
 ---
 
-> **Docker 系列 · 第 10/23 篇**  
+> **Docker 系列 · 第 10/18 篇**  
 > 上一篇：[《Harbor 私有镜像仓库》](/云原生/docker/docker-09-harbor)  
 > 下一篇：[《进程视角看容器》](/云原生/docker/docker-11-process-view)
 

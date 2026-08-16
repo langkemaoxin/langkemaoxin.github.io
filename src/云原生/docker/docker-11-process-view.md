@@ -15,7 +15,7 @@ tag:
 description: 进程视角看容器——PID 命名空间与宿主机对照
 ---
 
-> **Docker 系列 · 第 11/23 篇**  
+> **Docker 系列 · 第 11/18 篇**  
 > 上一篇：[《Dockerfile 自制镜像》](/云原生/docker/docker-10-dockerfile)  
 > 下一篇：[《Docker Daemon 与 runtime》](/云原生/docker/docker-12-daemon-runtime)
 

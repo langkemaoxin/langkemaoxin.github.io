@@ -12,7 +12,7 @@ tag:
 description: CGroups 限资源——防止一个容器吃光整台机器
 ---
 
-> **Docker 系列 · 第 16/23 篇**  
+> **Docker 系列 · 第 16/18 篇**  
 > 上一篇：[《Namespace 隔离》](/云原生/docker/docker-15-namespace/) · 下一篇：[《网络模式与实操》](/云原生/docker/docker-17-network/)
 
 ---
@@ -148,95 +148,7 @@ docker run -m 512m ...
 
 ---
 
-## 六、cgroup v2：你现在的系统其实是这套（本机实测）
-
-上面第四、五节走的是 **cgroup v1** 的目录与文件——那是历史格局（也是大量老教程的基准）。但 2026 年主流发行版（Ubuntu 21.10+、Debian 11+、RHEL 9、Rocky/Alma 9）**默认都是 cgroup v2**，你在生产上摸到的会是另一套文件名。先验证本机：
-
-```bash
-$ stat -fc %T /sys/fs/cgroup
-cgroup2fs                ← v2 的文件系统类型（v1 会显示 tmpfs）
-```
-
-### 6.1 v1 与 v2 的核心差异
-
-| | v1（老） | v2（现在） |
-|------|------|------|
-| 层级结构 | **每个控制器一棵树**（/cpu、/memory 各自为政） | **统一层级**：一棵树，控制器文件平铺在每个目录 |
-| 进程归属 | `tasks`（还能列线程） | `cgroup.procs`（线程归 cgroup.threads） |
-| 与 systemd | 各自挂载，Docker 自建 `docker/` 目录 | systemd 统一管理，容器挂在 `system.slice/docker-<ID>.scope` |
-| 内核态度 | 已标记 deprecated | 4.15+ 成熟，新特性只进 v2 |
-
-### 6.2 实测：限额容器的 v2 目录与控制文件
-
-```bash
-$ docker run -d --name cg-demo --cpus 0.5 -m 100m busybox sleep 120
-
-$ ls /sys/fs/cgroup/system.slice/ | grep docker
-docker-364ab449e833...db11c.scope          ← 容器 = systemd scope 单元
-
-$ CG=/sys/fs/cgroup/system.slice/docker-364ab449...scope
-$ for f in cpu.max cpu.weight memory.max memory.swap.max memory.high pids.max; do
-    echo "$f = $(cat $CG/$f)"; done
-cpu.max = 50000 100000        ← --cpus 0.5：每 100ms 周期可用 50ms（v1 两个文件合成一个）
-cpu.weight = 100              ← 相对权重（v1 的 cpu.shares 换了个名字和刻度）
-memory.max = 104857600        ← -m 100m 的硬上限（v1 memory.limit_in_bytes）
-memory.swap.max = 104857600   ← swap 限额：未显式指定时默认等于内存限额（总可甩 2×100m）
-memory.high = max             ← 软限（触发回收/节流而非 OOM），未设
-pids.max = 9519               ← 进程数上限（跟随系统默认，可用 --pids-limit 收紧）
-```
-
-文件名迁移对照表（看老教程/排查老系统时换算用）：
-
-| v1 | v2 | Docker 参数 |
-|------|------|------|
-| `cpu.cfs_quota_us` + `cpu.cfs_period_us` | `cpu.max`（合成「quota period」一行） | `--cpus` |
-| `cpu.shares` | `cpu.weight` | `--cpu-shares` |
-| `memory.limit_in_bytes` | `memory.max` | `-m / --memory` |
-| `memory.memsw.limit_in_bytes` | `memory.swap.max` | `--memory-swap`（**总额**语义） |
-| `tasks` | `cgroup.procs` | — |
-| （无） | `memory.high` / `pids.max` | `--memory-reservation` / `--pids-limit` |
-
-### 6.3 限额是动真格的：OOM 与 fork 双实测
-
-**内存超限**——限 100M、吃 300M：
-
-```bash
-$ docker run --name oom-demo -m 100m busybox \
-    sh -c 'a=$(dd if=/dev/zero bs=1M count=300 2>/dev/null | base64); echo got ${#a}'
-（无输出，进程被杀）
-
-$ docker inspect oom-demo --format 'ExitCode={{.State.ExitCode}}  OOMKilled={{.State.OOMKilled}}'
-ExitCode=137  OOMKilled=true          ← 137 = 128+9(SIGKILL)，OOM Killer 处决
-```
-
-**进程数超限**——`--pids-limit 5`，第 6 个进程 fork 失败：
-
-```bash
-$ docker run --rm --pids-limit 5 busybox sh -c 'for i in 1 2 3 4 5 6 7 8; do sleep 10 & done; echo ok'
-sh: line 0: can't fork: Resource temporarily unavailable
-```
-
-这正是防「进程炸弹」的闸门（`docker stats` 的 PIDS 列就是它的用量）。
-
-### 6.4 docker update：线上动态调限额
-
-限额不是终身制，`docker update` 不停容器直接改 cgroup 文件：
-
-```bash
-$ docker update --memory 200m --memory-swap 400m --cpus 1 cg-demo
-cg-demo
-
-# 实测控制文件立刻变化：
-cpu.max    = 100000 100000        ← 0.5 核 → 1 核
-memory.max = 209715200            ← 100MB → 200MB
-```
-
-> 🔑 内存告警时的标准动作：`docker update --memory xxx --memory-swap xxx <容器>` 先止血，再排期重启改 compose/启动参数固化（update 的结果重启后丢失）。
-
----
-
-
-## 七、Docker 如何使用 Cgroups
+## 六、Docker 如何使用 Cgroups
 
 Docker **并未实现新的调度器**，主要做：
 
@@ -250,7 +162,7 @@ Docker **并未实现新的调度器**，主要做：
 
 ---
 
-## 八、与 Namespace 的分工
+## 七、与 Namespace 的分工
 
 | 机制 | 回答的问题 | 典型场景 |
 |------|------------|----------|
@@ -261,7 +173,7 @@ Docker **并未实现新的调度器**，主要做：
 
 ---
 
-## 九、实操建议
+## 八、实操建议
 
 ```bash
 # 限制 0.5 核、512MB 内存
@@ -270,7 +182,7 @@ docker run -d --name app \
   -m 512m \
   nginx:alpine
 
-# 查看 cgroup 路径（v1 在 /sys/fs/cgroup/<子系统>/docker/<id>/，v2 见第六节 system.slice/docker-<id>.scope）
+# 查看 cgroup 路径（ cgroup v2 路径可能不同，以系统为准）
 docker inspect app --format '{{.HostConfig.CpuQuota}}'
 ```
 
@@ -298,9 +210,6 @@ services:
 | **docker 目录** | 每容器一个 cgroup 子目录 |
 | **tasks** | 归属该 cgroup 的 PID 列表 |
 | **cfs_quota** | 限制 CPU 占用比例 |
-| **cgroup v2** | 统一层级 + `cpu.max`/`memory.max`/`pids.max`，现代系统默认（第六节） |
-| **OOMKilled** | 超内存硬限被内核处决，ExitCode 137 |
-| **docker update** | 不停容器动态调限额（重启失效，需固化） |
 | **与 Namespace** | 视图隔离 + 资源限额，缺一不可 |
 
 ---

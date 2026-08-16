@@ -15,7 +15,7 @@ tag:
 description: Harbor 私有镜像仓库——从安装到 SAN 证书与 push 排障
 ---
 
-> **Docker 系列 · 第 9/23 篇**  
+> **Docker 系列 · 第 9/18 篇**  
 > 上一篇：[《Docker 本地镜像载入与载出》](/云原生/docker/docker-08-image-transfer)  
 > 下一篇：[《Dockerfile 自制镜像》](/云原生/docker/docker-10-dockerfile)
 

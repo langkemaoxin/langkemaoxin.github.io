@@ -12,7 +12,7 @@ tag:
 description: Docker 安装三种方式——离线、在线与现成虚拟机
 ---
 
-> **Docker 系列 · 第 4/23 篇**  
+> **Docker 系列 · 第 4/18 篇**  
 > 上一篇：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-03-container-vs-vm)  
 > 下一篇预告：[《容器与镜像——类与实例、读写层与生命周期》](/云原生/docker/docker-05-container-and-image)
 

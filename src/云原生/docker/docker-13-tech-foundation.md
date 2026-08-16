@@ -12,7 +12,7 @@ tag:
 description: Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器
 ---
 
-> **Docker 系列 · 第 13/23 篇**  
+> **Docker 系列 · 第 13/18 篇**  
 > 本篇是底层原理的总览与导航；下一篇深入文件系统：[《UnionFS 与镜像分层》](/云原生/docker/docker-14-unionfs/)
 
 ---

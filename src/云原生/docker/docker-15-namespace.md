@@ -12,7 +12,7 @@ tag:
 description: Namespace 隔离——容器如何「假装」自己是一台独立机器
 ---
 
-> **Docker 系列 · 第 15/23 篇**  
+> **Docker 系列 · 第 15/18 篇**  
 > 上一篇：[《UnionFS 与镜像分层》](/云原生/docker/docker-14-unionfs/) · 下一篇：[《CGroups 限资源》](/云原生/docker/docker-16-cgroups/)  
 > 系列第 7 篇已从运维角度介绍过 [六大 Namespace](/云原生/docker/docker-07-enter/)，本篇从内核与 Docker 实现深入展开。
 

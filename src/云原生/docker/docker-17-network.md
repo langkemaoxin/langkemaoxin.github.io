@@ -12,7 +12,7 @@ tag:
 description: Docker 网络模式与实操——从 docker0 到 overlay
 ---
 
-> **Docker 系列 · 第 17/23 篇**  
+> **Docker 系列 · 第 17/18 篇**  
 > 上一篇：[《CGroups 限资源》](/云原生/docker/docker-16-cgroups/) · 下一篇：[《Compose 编排》](/云原生/docker/docker-18-compose/)
 
 ---

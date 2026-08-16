@@ -1,8 +1,8 @@
 ---
 title: 轻量级容器管理工具 Containerd
 sidebarGroup: Docker 系列
-shortTitle: 附3 轻量级容器管理工具 Containerd
-order: 102
+shortTitle: 21 轻量级容器管理工具 Containerd
+order: 21
 date: 2026-08-13T00:00:00.000Z
 category: 云原生
 tag:
