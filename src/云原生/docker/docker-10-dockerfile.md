@@ -1,5 +1,5 @@
 ---
-title: Dockerfile 自制镜像——从语法到发布
+title: Dockerfile 自制镜像——从最小实验到完整静态站案例
 sidebarGroup: Docker 系列
 shortTitle: 10 Dockerfile 自制镜像
 order: 10
@@ -11,7 +11,7 @@ tag:
   - Docker系列
   - Dockerfile
   - 镜像
-description: Dockerfile 自制镜像——从语法到发布
+description: Dockerfile 自制镜像——从最小实验到完整静态站案例
 ---
 
 > **Docker 系列 · 第 10/18 篇**  
@@ -20,327 +20,314 @@ description: Dockerfile 自制镜像——从语法到发布
 
 ---
 
-## 开头：拉别人的镜像总有冗余，能不能自己做一个？
+## 开头：拉别人的镜像总不对劲，能不能自己做一个？
 
-官方 `ubuntu` 镜像几百 MB，你的 Go 程序编译后只有一个 10 MB 的二进制文件——塞进完整 OS 镜像里太浪费。
+常见痛点：
 
-Docker 镜像的本质是 **root filesystem + metadata 的分层集合**。你可以：
+- 官方镜像太大，你的业务其实只需要一个静态页或一个二进制
+- 在容器里手改配置再 `docker commit`——同事复现不了，CI 也接不上
+- 想把「安装依赖 + 拷文件 + 启动命令」写成**可版本管理的配方**
 
-1. 用 **Dockerfile** 声明式构建（推荐）
-2. 用 **`docker commit`** 把容器改动提交为新镜像
+Docker 提供两条路：`commit`（临时救急，见[第 5 篇](/云原生/docker/docker-05-container-and-image)）与 **`docker build` + Dockerfile**（正式交付）。本篇把第二条**从最小实验跑到一个完整案例**。
 
-本文按 PDF 原文梳理 Dockerfile 语法、最佳实践，以及镜像发布流程。
-
----
-
-## 一、什么是 Docker Image？
-
-- 文件与 metadata 的集合（root filesystem）
-- **分层（layered）**：每一层可增删改文件，形成新 image
-- 不同 image 可**共享相同 layer**
-- Image 本身 **只读**；容器是在其上增加可写层
-
-### 获取镜像的两种方式
-
-| 方式 | 命令/方法 |
-|------|-----------|
-| Build | `docker build` + Dockerfile |
-| Pull | `docker pull` 从 Registry（默认 Docker Hub） |
-
-```bash
-docker pull ubuntu:14.04
-docker image ls
-```
+> **实验环境**（文中输出均来自本机）：Docker Client / Server **29.1.2**（Docker Desktop）。官方参考：[Dockerfile reference](https://docs.docker.com/reference/dockerfile/)、[docker build](https://docs.docker.com/reference/cli/docker/build/)、[Best practices](https://docs.docker.com/build/building/best-practices/)。多阶段构建与缓存深挖见[第 22 篇](/云原生/docker/docker-22-build-advanced)。
 
 ---
 
-## 二、制作最小 Base Image（FROM scratch）
+## 一、是什么：Dockerfile 在解决什么？
 
-`scratch` 是空镜像，适合打包**静态编译**的单文件程序。
+**是什么**：Dockerfile 是一份文本配方，引擎按指令顺序构建镜像（层叠文件系统 + 配置元数据）。
 
-### 2.1 编写 C 语言 hello 程序
+**为什么**：同一份文件 → 同一套步骤 → 可审查、可 CI；比「某台机器上 commit 出来的神秘镜像」靠谱。
 
-```c
-// hello.c
-#include <stdio.h>
-int main() {
-    printf("Hello Docker\n");
-    return 0;
-}
-```
+**怎么做**：在目录里放 `Dockerfile`（以及要拷进镜像的文件），执行：
 
 ```bash
-gcc -static -o hello hello.c
+docker build -t <名字>:<标签> <上下文目录>
 ```
 
-### 2.2 Dockerfile
+**背景**：
+
+| 概念 | 白话 |
+|------|------|
+| **构建上下文** | `build` 最后那个路径（常写 `.`）；`COPY`/`ADD` **只能**从上下文里取文件，不能 `COPY ../../秘密` |
+| **层（layer）** | 多数会改文件系统的指令会产生新层；层可缓存、可复用（直觉见下文 `history`，原理见第 14 / 22 篇） |
+| **只读镜像** | 构建结果是模板；跑起来才有容器可写层 |
+
+获取镜像的两条日常路：`docker pull`（别人做好的）与 `docker build`（自己声明式做）。
+
+---
+
+## 二、最小实验：先建立「build → run」直觉
+
+新建空目录，只放一个 Dockerfile：
 
 ```dockerfile
-FROM scratch
-ADD hello /
-CMD ["/hello"]
+FROM alpine:3.21
+CMD ["echo", "hello-from-dockerfile"]
 ```
-
-### 2.3 构建与运行
 
 ```bash
-docker build -t yunduan/hello-world .
-docker image ls
-docker history yunduan/hello-world
-docker run yunduan/hello-world
+docker build -t lab-mini:1.0 .
+docker run --rm lab-mini:1.0
 ```
 
-`docker history` 可查看每层构建指令及大小。
+本机输出：
+
+```text
+hello-from-dockerfile
+```
+
+`history` 能看到你加的 `CMD` 叠在 alpine 之上（节选）：
+
+```text
+IMAGE          CREATED BY                            SIZE
+7d41b5fb18ed   CMD ["echo" "hello-from-dockerfile"]  0B
+…              ADD alpine-minirootfs-…               8.5MB
+```
+
+做到这里：你已经会用 Dockerfile 造镜像并跑起来。下面做一个**能用浏览器/curl 验收**的完整案例。
 
 ---
 
-## 三、两种构建镜像的方式
+## 三、完整案例：用 Dockerfile 定制 Nginx 静态站
 
-### 3.1 docker commit
+目标：把自定义首页打进 `nginx:alpine`，映射端口后能打开页面。
 
-在运行中的容器里做了修改后，提交为新镜像：
+### 3.1 准备目录与文件
 
-```bash
-docker commit <容器ID> my-centos:v2
+```text
+lab-web/
+├── Dockerfile
+└── index.html
 ```
 
-会在原镜像上**新增一层**，记录容器内的变更。适合临时调试，**不推荐**作为正式交付方式（不可复现、无 Dockerfile 文档）。
+`index.html`：
 
-### 3.2 docker build（推荐）
-
-```bash
-docker image build -t myapp:1.0 .
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>lab-web</title>
+</head>
+<body>
+  <h1>Hello from Dockerfile</h1>
+  <p>Built with nginx:alpine - Docker series lab.</p>
+</body>
+</html>
 ```
 
-从 Dockerfile 逐条指令构建，可版本管理、CI 集成。
-
----
-
-## 四、Dockerfile 指令详解
-
-### 4.1 FROM
-
-指定基础镜像。
+`Dockerfile`：
 
 ```dockerfile
-FROM scratch          # 空镜像，制作 base image
-FROM centos           # 使用官方 centos
-FROM ubuntu:14.04     # 指定 tag
-```
-
-**原则**：尽量使用官方 image 作为 base。
-
-### 4.2 LABEL
-
-镜像元数据，相当于注释。
-
-```dockerfile
-LABEL maintainer="yunduan@gmail.com"
+FROM nginx:alpine
+LABEL maintainer="docker-series@example.com"
 LABEL version="1.0"
-LABEL description="This is description"
+LABEL description="Static site lab for Dockerfile chapter"
+
+COPY index.html /usr/share/nginx/html/index.html
+
+EXPOSE 80
 ```
 
-**原则**：Metadata 不可少，便于运维和合规。
+说明（用到再讲）：
 
-### 4.3 RUN
+| 指令 | 在本案例里的作用 |
+|------|------------------|
+| `FROM nginx:alpine` | 基于官方轻量 Nginx；默认已有启动入口与 `CMD` |
+| `LABEL` | 元数据，方便检索与合规，不增大多少体积 |
+| `COPY` | 把上下文里的首页覆盖到 Nginx 默认站点目录 |
+| `EXPOSE 80` | **声明**容器听 80；真正映射靠 `run -p`（文档性质） |
 
-执行命令并**创建新 Image Layer**。
+未再写 `CMD`：沿用基础镜像的 `ENTRYPOINT` + `CMD`（Nginx 前台跑）——这正是「站在别人肩膀上定制」的常见写法。
 
-```dockerfile
-RUN yum update && yum install -y vim \
-    python-dev
+### 3.2 构建
 
-RUN apt-get update && apt-get install -y perl \
-    pwgen --no-install-recommends && rm -rf \
-    /var/lib/apt/lists/*
+在 `lab-web/` 目录：
 
-RUN /bin/bash -c 'source $HOME/.bashrc; echo $HOME'
+```bash
+docker build -t lab-web:1.0 .
 ```
 
-**原则**：
+本机构建末尾类似：
 
-- 复杂 RUN 用 `\` 换行
-- 合并多条命令为一行，减少无用分层
-- 安装包后清理 cache（`rm -rf /var/lib/apt/lists/*`）
-
-### 4.4 WORKDIR
-
-设定工作目录，类似 `cd`。
-
-```dockerfile
-WORKDIR /root
-WORKDIR /test    # 不存在则自动创建
-WORKDIR demo
-RUN pwd            # 输出 /test/demo
+```text
+[2/2] COPY index.html /usr/share/nginx/html/index.html
+… naming to docker.io/library/lab-web:1.0
 ```
 
-**原则**：用 WORKDIR，不要用 `RUN cd`；尽量用绝对路径。
+本机镜像：
 
-### 4.5 ADD 与 COPY
-
-把本地文件添加到镜像。
-
-```dockerfile
-ADD hello /
-ADD test.tar.gz /          # 自动解压 tar.gz
-COPY hello test/           # 仅复制，不解压
+```text
+REPOSITORY   TAG   IMAGE ID       SIZE
+lab-web      1.0   fe5964eaf073   92.7MB
 ```
 
-**原则**：
+（体积主要来自 `nginx:alpine` 基础层；你的 `COPY` 只有几十 KB 量级。）
 
-- 大部分情况 **COPY 优先于 ADD**
-- ADD 额外支持自动解压
-- 远程文件用 `curl`/`wget` + COPY，不要用 ADD URL
+### 3.3 运行并验收
 
-### 4.6 ENV
-
-设置环境变量，便于引用和维护。
-
-```dockerfile
-ENV MYSQL_VERSION 5.6
-RUN apt-get install -y mysql-server="${MYSQL_VERSION}" \
-    && rm -rf /var/lib/apt/lists/*
+```bash
+docker run -d --name lab-web -p 8088:80 lab-web:1.0
+curl -sS http://127.0.0.1:8088/
 ```
 
-**原则**：用 ENV 增加可维护性，避免硬编码。
+本机响应正文：
 
-### 4.7 VOLUME 与 EXPOSE
-
-```dockerfile
-VOLUME /data
-EXPOSE 8080
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>lab-web</title>
+</head>
+<body>
+  <h1>Hello from Dockerfile</h1>
+  <p>Built with nginx:alpine - Docker series lab.</p>
+</body>
+</html>
 ```
 
-- `VOLUME`：声明挂载点
-- `EXPOSE`：声明容器监听端口（文档性质，实际映射靠 `-p`）
+响应头可见 `Server: nginx/1.31.3`、`HTTP/1.1 200 OK`。浏览器打开 `http://127.0.0.1:8088/` 应看到同一标题。
 
-### 4.8 CMD 与 ENTRYPOINT
+### 3.4 看分层：你的改动落在哪
 
-| 指令 | 作用 | 特点 |
-|------|------|------|
-| **CMD** | 容器启动默认命令 | `docker run` 指定其他命令时 CMD 被覆盖；多个 CMD 只执行最后一个 |
-| **ENTRYPOINT** | 容器启动必执行命令 | 不会被 `docker run` 参数覆盖；适合把容器当「服务」运行 |
-
-**最佳实践**：写 shell 脚本作为 entrypoint，CMD 传默认参数。
-
-#### Shell 格式
-
-```dockerfile
-RUN apt-get install -y vim
-CMD echo "hello docker"
-ENTRYPOINT echo "hello docker"
+```bash
+docker history lab-web:1.0
 ```
 
-Shell 格式会包一层 `/bin/sh -c`。
+本机顶部与本案例相关的几行（精简）：
 
-#### Exec 格式（推荐）
-
-```dockerfile
-RUN ["apt-get", "install", "-y", "vim"]
-CMD ["/bin/echo", "hello docker"]
-ENTRYPOINT ["/bin/echo", "hello docker"]
+```text
+CREATED BY                                         SIZE
+EXPOSE [80/tcp]                                    0B
+COPY index.html /usr/share/nginx/html/index.html   24.6kB
+LABEL description=… / version=… / maintainer=…     0B
+…（其下是 nginx:alpine / alpine 官方层）
 ```
 
-#### Shell vs Exec 的关键差异
-
-**Dockerfile A**（Shell 格式 ENTRYPOINT）：
-
-```dockerfile
-FROM centos
-ENV name Docker
-ENTRYPOINT echo "hello $name"
-```
-
-`docker run` 时，`$name` 会被 shell 展开 → 输出 `hello Docker`。
-
-**Dockerfile B**（Exec 格式 ENTRYPOINT）：
-
-```dockerfile
-FROM centos
-ENV name Docker
-ENTRYPOINT ["/bin/bash", "-c", "echo hello $name"]
-```
-
-Exec 格式不经过 shell，`$name` 需显式用 bash -c 才能展开。
+**验收清单**：build 成功 → 容器 Up → curl 出你的 HTML → history 里能看到 `COPY`。跑完可清理：`docker rm -f lab-web`。
 
 ---
 
-## 五、完整 Dockerfile 示例
+## 四、案例延伸：指令怎么选？
+
+### 4.1 `COPY` vs `ADD`
+
+官方最佳实践：**多数情况用 `COPY`**。`ADD` 额外能力（本地 tar 自动解压等）容易让读者看不懂「到底拷了什么」；远程 URL 更推荐在 `RUN` 里 `curl`/`wget` 并校验，而不是 `ADD https://…`。
+
+本案例只有一个 HTML → `COPY` 足够。
+
+### 4.2 `WORKDIR` / `ENV` / `RUN`
+
+本案例没装包；若基础镜像是「空 OS + 自己装运行时」，常见模式：
 
 ```dockerfile
-FROM centos:7
-LABEL maintainer="ops@example.com"
-LABEL version="1.0"
-
-ENV APP_HOME /opt/app
-WORKDIR ${APP_HOME}
-
-RUN yum install -y vim \
-    && yum clean all
-
-COPY app.jar ${APP_HOME}/app.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
-CMD ["--spring.profiles.active=prod"]
+WORKDIR /app
+ENV APP_ENV=prod
+RUN apk add --no-cache curl \
+    && rm -rf /var/cache/apk/*
+COPY . .
 ```
 
-构建：
+原则（现行最佳实践口径）：
 
-```bash
-docker build -t myapp:1.0 .
-docker run -d -p 8080:8080 myapp:1.0
-```
+- 用 `WORKDIR`，少写 `RUN cd …`
+- `RUN` 里把「安装 + 清理缓存」串在同一条，减少无用层、缩小体积
+- 需要变量就用 `ENV`，避免魔法字符串散落
+
+### 4.3 `VOLUME`
+
+声明挂载点（数据目录）。静态站案例不需要；有状态数据时再声明，真正挂载仍靠 `run -v`（存储篇再展开）。
 
 ---
 
-## 六、镜像发布
+## 五、`CMD` 与 `ENTRYPOINT`：谁说了算？
 
-构建完成后推送到 Registry（如 Harbor）：
+| | **CMD** | **ENTRYPOINT** |
+|--|---------|----------------|
+| 角色 | 默认参数 / 默认命令 | 固定入口（容器「主程序」） |
+| `docker run 镜像 新参数` | 常会**整段替换** CMD | 入口仍在，新参数多半当**传给入口的参数** |
+
+推荐 **exec 格式**（JSON 数组），信号转发更干净，例如 `CMD ["echo", "hi"]`，而不是 `CMD echo hi`（后者包一层 `sh -c`）。
+
+本机小实验：
+
+```dockerfile
+FROM alpine:3.21
+ENTRYPOINT ["echo", "fixed-prefix"]
+CMD ["default-arg"]
+```
 
 ```bash
-# 登录私有仓库
+docker build -t lab-ep:1.0 -f Dockerfile.ep .
+docker run --rm lab-ep:1.0
+docker run --rm lab-ep:1.0 overridden-arg
+```
+
+本机输出：
+
+```text
+fixed-prefix default-arg
+fixed-prefix overridden-arg
+```
+
+`lab-web` 没写 CMD，是因为 `nginx:alpine` 已经提供了合适的 `ENTRYPOINT`/`CMD`；你只 `COPY` 内容即可。
+
+---
+
+## 六、构建完如何发布？
+
+本地验证通过后，打上私有仓前缀再推（Harbor 的信任与 hostname 见[第 9 篇](/云原生/docker/docker-09-harbor)）：
+
+```bash
+docker tag lab-web:1.0 harbor.daemon.io/demo/lab-web:1.0
 docker login harbor.daemon.io
-
-# 打 tag
-docker tag myapp:1.0 harbor.daemon.io/demo/myapp:1.0
-
-# 推送
-docker push harbor.daemon.io/demo/myapp:1.0
+docker push harbor.daemon.io/demo/lab-web:1.0
 ```
 
----
-
-## 七、指令速查表
-
-| 指令 | 作用 | 是否新建层 |
-|------|------|------------|
-| FROM | 基础镜像 | 是（首层） |
-| RUN | 执行命令 | 是 |
-| COPY/ADD | 复制文件 | 是 |
-| ENV | 环境变量 | 否（metadata） |
-| WORKDIR | 工作目录 | 否 |
-| EXPOSE | 声明端口 | 否 |
-| VOLUME | 声明卷 | 否 |
-| CMD | 默认启动命令 | 否 |
-| ENTRYPOINT | 固定入口 | 否 |
+没有 Harbor 时，至少保留 `lab-web:1.0` 与 Dockerfile 进 Git——**配方进仓库，比只传一个匿名 IMAGE ID 更重要**。
 
 ---
 
-## 下篇预告
+## 七、和 `commit`、进阶构建的边界
 
-**第 11 篇：《进程视角看容器》**
+| 做法 | 何时用 |
+|------|--------|
+| `docker commit` | 临时留存实验现场；不作为交付（第 5 篇） |
+| **Dockerfile + build**（本篇） | 可复现的日常交付 |
+| 多阶段 / BuildKit 缓存调优 | 镜像过大、构建太慢 → [第 22 篇](/云原生/docker/docker-22-build-advanced) |
+| 分层与 UnionFS 原理 | [第 14 篇](/云原生/docker/docker-14-unionfs) |
 
-- 容器 PID 在宿主机上是几号？
-- `/proc/<pid>` 与 cgroup 目录 walkthrough
+---
+
+## 命令与指令速查
+
+| 目的 | 命令 / 指令 |
+|------|-------------|
+| 构建 | `docker build -t NAME:TAG .` |
+| 运行案例 | `docker run -d --name lab-web -p 8088:80 lab-web:1.0` |
+| 看层 | `docker history IMAGE` |
+| 基础镜像 | `FROM` |
+| 拷文件 | `COPY`（优先于 `ADD`） |
+| 元数据 | `LABEL` |
+| 声明端口 | `EXPOSE` |
+| 入口 / 默认参数 | `ENTRYPOINT` / `CMD`（优先 exec 格式） |
+
+---
+
+## 小结
+
+- Dockerfile 把「怎么做出镜像」写成可重复配方；`build` 的上下文决定你能 `COPY` 什么。
+- 先跑通最小 `CMD`，再做一个**完整静态站案例**：`FROM nginx:alpine` → `COPY` 首页 → `-p` 映射 → `curl` 验收。
+- `EXPOSE` 不替你开宿主机端口；`COPY` 优先于 `ADD`；`CMD`/`ENTRYPOINT` 分工用本机小实验记牢。
+- 发布走 tag + Registry；瘦身与缓存优化留给第 22 篇。
 
 ---
 
 ## 思考题
 
-> 为什么 Dockerfile 里要尽量合并 RUN 指令，而不是每条命令写一个 RUN？
-
-提示：每条 RUN 产生一层，层越多镜像越大，构建缓存粒度也越碎。
+> 若把 `COPY index.html …` 写成 `ADD index.html …`，构建结果通常一样吗？什么情况下你才会故意用 `ADD`？
 
 下一篇见 🐳

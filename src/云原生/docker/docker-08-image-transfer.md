@@ -257,9 +257,9 @@ docker tag alpine:3.21 harbor.example.com/demo/alpine:3.21
 
 **第 9 篇：《Harbor 私有镜像仓库》**
 
-- Harbor 安装与 HTTPS / SAN 证书
-- 客户端信任私有仓库
-- `docker push` 常见 hostname 报错与修复
+- 钉死 FQDN → 带 SAN 的 HTTPS → 安装 Harbor
+- 客户端 `certs.d` 信任与 `login` / `tag` / `push` 金路径
+- hostname / SAN / tag 不一致时的排障 checklist
 - 为什么 Registry 能按 layer 增量传，而不是每次 U 盘全量 tar
 
 ---

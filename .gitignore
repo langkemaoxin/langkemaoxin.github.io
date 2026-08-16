@@ -22,3 +22,6 @@ src/.vuepress/dist/
 scripts/tools/pngquant/*.zip
 scripts/tools/pngquant/**/Drag*.bat
 scripts/tools/pngquant/pngquant/
+
+_temp
+_tmp*

@@ -47,7 +47,7 @@ dockerd 启动时读 `/etc/docker/daemon.json`，本机的真实配置（日志�
 | `metrics-addr` | 暴露 Prometheus 指标端点 | `curl :9323/metrics` |
 | `data-root` | 数据目录迁移（默认 `/var/lib/docker`） | `docker info` Docker Root Dir |
 | `storage-driver` | 存储驱动（现代默认 `overlayfs`，即原 overlay2 演进） | `docker info` Storage Driver |
-| `insecure-registries` | HTTP 私有仓库白名单（[第 9 篇](/云原生/docker/docker-09-harbor/)） | `docker info` Insecure Registries |
+| `insecure-registries` | HTTP 私有仓库白名单；HTTPS + 已信任 CA 的 Harbor 主路径通常不必靠它（细节见[第 9 篇](/云原生/docker/docker-09-harbor)） | `docker info` Insecure Registries |
 | `debug` | daemon 调试日志 | daemon 日志变详细 |
 
 ```
