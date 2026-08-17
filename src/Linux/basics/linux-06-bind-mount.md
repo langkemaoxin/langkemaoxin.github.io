@@ -81,7 +81,7 @@ underneath.txt                       # ← 原内容完好归来；in-tmpfs.txt 
 | tmpfs 挂着 | `in-tmpfs.txt` | 原内容被盖住；写入落在 tmpfs |
 | umount 后 | `underneath.txt` | 揭开盖布；tmpfs 里的文件随挂载对象消失 |
 
-**背景知识**：系统当前挂着哪些东西，内核记在 `/proc/self/mountinfo` 里，`mount`、`findmnt` 命令本质上都是在读它——第三节逐字段拆。
+**背景知识**：系统当前挂着哪些东西，内核记在 proc 的挂载表文件里（`/proc/self/mountinfo` 信息最全，`findmnt` 默认读它）——第三节把查挂载表的三位工具逐个讲清。
 
 ---
 
@@ -135,21 +135,55 @@ appended-from-src
 
 ## 三、挂载表：内核为这条 bind 记了什么
 
-每条挂载，内核都在 `/proc/self/mountinfo` 里有一行记录。刚挂的这条，用三种工具各看一眼：
+每条挂载，内核都记在一本「挂载账本」里。查这本账有三个常用入口——**账本原文、专职查询命令、老习惯**——先把三位「查账人」各自是谁、用来干嘛讲清楚，再看同一条 bind 记录在它们眼里的样子。
+
+### ① 账本原文：`/proc/self/mountinfo`
+
+**是什么**：`/proc/<pid>/mountinfo` 是内核为**每个进程**准备的挂载表——列出该进程视角下的全部挂载，一行一条、字段最全（`/proc/self/` 是「永远指向当前正在读它的进程自己」的快捷方式，[第 1 篇](/Linux/basics/linux-01-nsenter-prerequisites)组块 1 认过；本机此刻 53 行）。
+
+**用来干嘛**：它是**第一手记录**，后面两个工具本质上都是它的「阅读器」；而且标记 bind 的关键字段（root 子树）**只有这里有**；第八节进容器看挂载表，读的也是它。
+
+**怎么做**：拿挂载点当关键词 grep：
+
+```bash
+$ grep ' /tmp/lab6-dst ' /proc/self/mountinfo
+795 80 8:48 /tmp/lab6-src /tmp/lab6-dst rw,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+```
+
+这行就是内核为第二节那条 bind 记的账——信息密度之王，本节末尾逐字段解剖。
+
+### ② 专职查询命令：`findmnt`
+
+**是什么**：util-linux 的挂载表查询命令（与 mount 同一个包），默认按 TARGET / SOURCE / FSTYPE / OPTIONS 四列输出，支持按挂载点、类型、选项过滤，还能查挂载点的传播属性（第六节用的 `findmnt -no TARGET,PROPAGATION` 就是它）。
+
+**用来干嘛**：日常排查的首选。官方手册把话说得很直白：「（mount 的）列表模式**只为向后兼容保留**；要更稳健、可定制的输出，请用 findmnt(8)」（mount(8)）。
+
+**怎么做**：
 
 ```bash
 $ findmnt /tmp/lab6-dst
 TARGET        SOURCE                  FSTYPE OPTIONS
 /tmp/lab6-dst /dev/sdd[/tmp/lab6-src] ext4   rw,relatime,discard,errors=remount-ro,data=ordered
+```
 
-$ grep ' /tmp/lab6-dst ' /proc/self/mountinfo
-795 80 8:48 /tmp/lab6-src /tmp/lab6-dst rw,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+**怎么读**：它把 mountinfo 里的「源设备 + root 子树」两个字段**拼成** `/dev/sdd[/tmp/lab6-src]`——**方括号就是 bind 的标志**：方括号外是设备，方括号里是被搬过来的源子树。日常一眼识别 bind，认这个写法最快。
 
+### ③ 老习惯：`mount` 不带参数
+
+**是什么**：`mount` 不带任何参数 = 列出全部挂载——上古用法，老教程和老运维脚本里到处都是，得看得懂。
+
+**怎么做**（grep 只是为了从几十行里捞出我们要的那条）：
+
+```bash
 $ mount | grep lab6-dst
 /dev/sdd on /tmp/lab6-dst type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)
 ```
 
-mountinfo 那行**逐字段解剖**（字段定义见 [proc(5)](https://man7.org/linux/man-pages/man5/proc.5.html)）：
+**怎么读——坑就在这**：这条输出**看不出任何 bind 的痕迹**——没有源子树、没有方括号，和一条普通的整盘挂载长得一模一样。原因（本机实测）：无参 mount 读的是 `/etc/mtab`，它是指向 `/proc/self/mounts` 的软链——**那份老格式文件里根本没有 root 字段**，bind 的证据在读它的那一刻就丢了。所以：**查挂载表认 ①②；看到 `mount | grep` 的老写法，心里要知道它丢了什么。**
+
+### mountinfo 那行，逐字段解剖
+
+（字段定义见 [proc(5)](https://man7.org/linux/man-pages/man5/proc.5.html)）：
 
 | 字段 | 值 | 含义 |
 |------|-----|------|
@@ -163,7 +197,7 @@ mountinfo 那行**逐字段解剖**（字段定义见 [proc(5)](https://man7.org
 | 源设备 | `/dev/sdd` | 超级块所在设备 |
 | 超级块选项 | `rw,discard,…` | 设备级的选项 |
 
-**怎么读**：bind 的本质在这里露出来了——**没有新设备、没有数据复制，只是挂载表里多了一条「把 8:48 设备的 `/tmp/lab6-src` 子树，接到 `/tmp/lab6-dst`」的记录**。findmnt 把设备和子树拼成 `/dev/sdd[/tmp/lab6-src]`，**方括号就是 bind 的标志**。`df` 也从侧面佐证：两个路径算的是同一块盘，不存在新空间：
+**怎么读**：bind 的本质在这里露出来了——**没有新设备、没有数据复制，只是挂载表里多了一条「把 8:48 设备的 `/tmp/lab6-src` 子树，接到 `/tmp/lab6-dst`」的记录**（②里 findmnt 的方括号，拼的就是这行的「源设备 + root」两个字段）。`df` 也从侧面佐证：两个路径算的是同一块盘，不存在新空间：
 
 ```bash
 $ df /tmp/lab6-src /tmp/lab6-dst | awk '{print $1, $6}'
