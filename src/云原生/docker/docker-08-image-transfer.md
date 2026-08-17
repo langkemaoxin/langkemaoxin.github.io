@@ -13,9 +13,8 @@ tag:
 description: Docker 本地镜像载入与载出——离线环境的镜像搬运术
 ---
 
-> **Docker 系列 · 第 8/18 篇**  
-> 上一篇：[《进入 Docker 容器的四种方式》](/云原生/docker/docker-07-enter-container)  
-> 下一篇：[《Harbor 私有镜像仓库》](/云原生/docker/docker-09-harbor)
+> **Docker 系列 · 第 8/24 篇**
+> 上一篇：[《进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter》](/云原生/docker/docker-07-enter-container) · 下一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-10-dockerfile)
 
 ---
 
@@ -255,11 +254,11 @@ docker tag alpine:3.21 harbor.example.com/demo/alpine:3.21
 
 ## 下篇预告
 
-**第 9 篇：《Harbor 私有镜像仓库》**
+**第 9 篇：《Dockerfile 自制镜像》**
 
-- 按时间线：准备 → HTTP 安装 → 客户端登录 → 第一次 push
-- 再升级 HTTPS + SAN；hostname / SAN / tag 必须一致
-- `daemon.json` / `certs.d` 与 Docker Desktop 注意点
+- 从最小 `FROM` + `CMD` 实验，到完整静态站案例
+- 指令与层、常用写法与验收清单
+- 本地 `build` 通过后，再接到第 10 篇 Harbor 做私仓 `push`
 
 ---
 
@@ -267,6 +266,6 @@ docker tag alpine:3.21 harbor.example.com/demo/alpine:3.21
 
 > 为什么 Docker 镜像通常不适合「FTP 随便拷一份本地目录」，而要用 `save/load`，长期则用 Registry 的分层 push/pull？
 
-提示：镜像由多个 layer 组成，每层有内容摘要；引擎与 Registry 认的是这套格式。`save/load` 保住完整镜像身份；Registry 还能只传缺失的层——这正是下一篇 Harbor「港口」要发挥的能力。
+提示：镜像由多个 layer 组成，每层有内容摘要；引擎与 Registry 认的是这套格式。`save/load` 保住完整镜像身份；Registry 还能只传缺失的层——这正是后续 Harbor「港口」要发挥的能力。
 
 下一篇见 🐳

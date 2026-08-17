@@ -1,8 +1,8 @@
 ---
 title: Harbor 私有镜像仓库——按步骤从安装到第一次 push
 sidebarGroup: Docker 系列
-shortTitle: 09 Harbor 私有仓库
-order: 9
+shortTitle: 10 Harbor 私有仓库
+order: 10
 date: 2026-08-16T00:00:00.000Z
 category: 云原生
 tag:
@@ -15,9 +15,8 @@ tag:
 description: Harbor 私有镜像仓库——按步骤从安装到第一次 push，可照做的操作手册
 ---
 
-> **Docker 系列 · 第 9/18 篇**  
-> 上一篇：[《Docker 本地镜像载入与载出》](/云原生/docker/docker-08-image-transfer)  
-> 下一篇：[《Dockerfile 自制镜像》](/云原生/docker/docker-10-dockerfile)
+> **Docker 系列 · 第 10/24 篇**
+> 上一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-10-dockerfile) · 下一篇：[《Docker 网络模式与实操——从 docker0 到 overlay》](/云原生/docker/docker-17-network)
 
 ---
 
@@ -1018,8 +1017,8 @@ docker push harbor.daemon.io/demo/nginx:alpine
 | 安装 Docker、**配置 registry-mirrors** | [第 4 篇](/云原生/docker/docker-04-install) |
 | 离线 `save`/`load`、tag 命名 | [第 8 篇](/云原生/docker/docker-08-image-transfer) |
 | Harbor 安装到 push（本篇） | 本文 |
-| Dockerfile 构建后再发布 | [第 10 篇](/云原生/docker/docker-10-dockerfile) |
-| `daemon.json` 全貌 | [第 23 篇](/云原生/docker/docker-23-daemon-ops) |
+| Dockerfile 构建后再发布 | [第 9 篇](/云原生/docker/docker-10-dockerfile) |
+| `daemon.json` 全貌 | [第 24 篇](/云原生/docker/docker-23-daemon-ops) |
 
 ---
 

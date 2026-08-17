@@ -1,8 +1,8 @@
 ---
 title: Namespace 隔离——容器如何「假装」自己是一台独立机器
 sidebarGroup: Docker 系列
-shortTitle: 15 Namespace 隔离
-order: 15
+shortTitle: 18 Namespace 隔离
+order: 18
 date: 2026-08-22T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,9 +12,8 @@ tag:
 description: Namespace 隔离——容器如何「假装」自己是一台独立机器
 ---
 
-> **Docker 系列 · 第 15/18 篇**  
-> 上一篇：[《UnionFS 与镜像分层》](/云原生/docker/docker-14-unionfs/) · 下一篇：[《CGroups 限资源》](/云原生/docker/docker-16-cgroups/)  
-> 第 7 篇讲 [如何进入容器](/云原生/docker/docker-07-enter-container)（含 `nsenter`）；本篇从内核与 Docker 实现展开 Namespace 隔离。
+> **Docker 系列 · 第 18/24 篇**
+> 上一篇：[《UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的》](/云原生/docker/docker-14-unionfs) · 下一篇：[《进程视角看容器——容器内外 PID 对照与生命周期》](/云原生/docker/docker-11-process-view)
 
 ---
 
@@ -107,7 +106,7 @@ containerRouter.postContainersStart
 
 Namespace 让容器网络栈与宿主机及其他容器隔离，但服务通常仍需**访问外网或被外部访问**。
 
-每个 `docker run` 的容器默认拥有**独立 Network Namespace**。Docker 提供 **Host、Container、None、Bridge** 等模式（第 17 篇详述）；默认 **Bridge** 模式下还会：
+每个 `docker run` 的容器默认拥有**独立 Network Namespace**。Docker 提供 **Host、Container、None、Bridge** 等模式（第 11 篇详述）；默认 **Bridge** 模式下还会：
 
 1. 创建 **docker0** 虚拟网桥
 2. 为容器分配 IP，默认网关指向 docker0
@@ -180,7 +179,7 @@ chdir("/");
 | `nsenter -n` 借宿主机工具查容器网络 | Network Namespace、veth、docker0、Libnetwork |
 | 进容器开 shell、跑探测命令 | MNT + chroot / pivot_root；为何「看不见」宿主机路径 |
 
-两篇合读：第 7 篇负责动手进得去，本篇解释「为什么进得去、为什么看不见宿主机进程」。进程在宿主机上的真实 PID 对照另见[第 11 篇](/云原生/docker/docker-11-process-view)。
+两篇合读：第 7 篇负责动手进得去，本篇解释「为什么进得去、为什么看不见宿主机进程」。进程在宿主机上的真实 PID 对照另见[第 19 篇](/云原生/docker/docker-11-process-view)。
 
 ---
 
@@ -199,9 +198,9 @@ chdir("/");
 
 ## 下篇预告
 
-**第 16 篇：《CGroups 限资源》**
+**第 19 篇：《进程视角看容器》**
 
-Namespace 管「看见什么」，Cgroups 管「能用多少 CPU、内存、磁盘 I/O」。我们将查看 `/sys/fs/cgroup` 下的 docker 目录，理解 `cpu.cfs_quota_us` 等参数如何限制容器。
+原理讲完，下一篇用本机实验把「容器内外两套 PID」「exec 的 PPID 为什么是 shim」「杀掉 PID 1 容器就退出」对照清楚——这是 Namespace 在排障里的落地点。
 
 ---
 

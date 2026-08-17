@@ -12,8 +12,8 @@ tag:
 description: Docker 是什么？——从 jar 包部署到镜像一键上线
 ---
 
-> **Docker 系列 · 第 1/18 篇**  
-> 下一篇预告：[《Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作》](/云原生/docker/docker-02-engine-platform)
+> **Docker 系列 · 第 1/24 篇**
+> 下一篇：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-03-container-vs-vm)
 
 ---
 
@@ -126,7 +126,7 @@ Docker 采用 **Client-Server（C/S）** 架构，通过远程 API 管理容器�
 
 很多人把 Docker 理解成「轻量级虚拟机」——**这是不准确的**。Docker 与 KVM 都是虚拟化技术，但抽象层不同：Docker 抽象层更少，**利用宿主机内核**；虚拟机需要 **Guest OS**。新建容器时无需像 VM 那样引导完整操作系统，因此可达**秒级**启动；VM 加载 Guest OS 往往是**分钟级**。
 
-容器与虚拟机的详细对比见系列第 3 篇；Engine 组件与调用链见第 2 篇。
+容器与虚拟机的详细对比见系列第 2 篇；Engine 组件与调用链见第 3 篇。
 
 ---
 

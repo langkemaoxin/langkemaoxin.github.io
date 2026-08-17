@@ -1,8 +1,8 @@
 ---
 title: Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作
 sidebarGroup: Docker 系列
-shortTitle: 02 Engine 与平台
-order: 2
+shortTitle: 03 Engine 与平台
+order: 3
 date: 2026-08-09T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,9 +12,8 @@ tag:
 description: Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作
 ---
 
-> **Docker 系列 · 第 2/18 篇**  
-> 上一篇：[《Docker 是什么？——从 jar 包部署到镜像一键上线》](/云原生/docker/docker-01-what-is-docker)  
-> 下一篇预告：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-03-container-vs-vm)
+> **Docker 系列 · 第 3/24 篇**
+> 上一篇：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-03-container-vs-vm) · 下一篇：[《Docker 安装三种方式——离线、在线与现成虚拟机》](/云原生/docker/docker-04-install)
 
 ---
 
@@ -156,7 +155,9 @@ OCI 制定 **runtime-spec** 与 **image-spec** 后，**runc** 成为通用低层
 - 在宿主机直接执行 `runc`，子命令风格与 `docker` 相近  
 - 其他实现（如 crictl + containerd 纯 CRI 路径）也可在同一规范下运行容器  
 
-Engine 是「用户友好的集成栈」；OCI 是「接口与实现解耦的规范层」。这一分工对后来 **Kubernetes 弃用 dockershim、默认 containerd/CRI-O** 的演进也有铺垫——后文系列会涉及 daemon 底层原理篇。
+Engine 是「用户友好的集成栈」；OCI 是「接口与实现解耦的规范层」。这一分工对后来 **Kubernetes 弃用 dockershim、默认 containerd/CRI-O** 的演进也有铺垫。
+
+本篇只建立**组件地图**：谁在链路上、各自干什么。`dockerd → containerd → shim → runc` 的完整调用链、与进程树的对照，放到主线后半的 [第 21 篇](/云原生/docker/docker-12-daemon-runtime)（建议先读完进程视角与 Cgroups 再深入）。
 
 ---
 
@@ -167,4 +168,4 @@ Engine 是「用户友好的集成栈」；OCI 是「接口与实现解耦的规
 - **Docker Platform** 强调应用与基础设施隔离的三层模型。  
 - 核心对象：**镜像（模板）、容器（实例）、Registry（仓库）**；Host 是运行载体。  
 
-下一篇专门对比**容器与虚拟机**，澄清「轻量 VM」误解，并用表格量化启动速度、密度与隔离差异。
+下一篇进入实操：**Docker 安装的三种方式**（离线、在线、现成虚拟机环境）。

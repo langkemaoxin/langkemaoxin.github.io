@@ -1,20 +1,23 @@
 ---
 title: 如何通过docker部署https访问的nginx应用？
 sidebarGroup: Docker 系列
-shortTitle: 19 如何通过docker部署https访问的ngin
-order: 19
+shortTitle: 14 HTTPS Nginx 实战
+order: 14
 date: 2026-08-13T00:00:00.000Z
 category: 云原生
 tag:
-  - Docker 进阶
+  - Docker
   - 云原生
-  - 课程笔记
-description: 如何通过docker容器部署https访问的nginx应用？ 一、应用目录准备 ~~~powershell 存储配置文件 mkdir -p nginxdir/nginx/conf.d ~~~ ~~~p...
+  - Docker系列
+  - HTTPS
+  - Nginx
+description: 如何通过 docker 部署 HTTPS 访问的 nginx 应用——目录、证书、反向代理与验收
 ---
 
-> **Docker 进阶 · 第 1 篇**
+> **Docker 系列 · 第 14/24 篇**
+> 上一篇：[《Docker Compose 编排——用 YAML 定义一整栈微服务》](/云原生/docker/docker-18-compose) · 下一篇：[《容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧》](/云原生/docker/docker-20-logging-monitoring)
 >
-> 来源课程笔记整理优化；插图已迁入博客静态目录。
+> 主线实战篇：在已掌握网络与 Compose 的基础上，部署可 HTTPS 访问的 nginx；插图已迁入博客静态目录。
 
 ---
 

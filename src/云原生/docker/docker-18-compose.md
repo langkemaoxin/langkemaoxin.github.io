@@ -1,8 +1,8 @@
 ---
 title: Docker Compose 编排——用 YAML 定义一整栈微服务
 sidebarGroup: Docker 系列
-shortTitle: 18 Compose 编排
-order: 18
+shortTitle: 13 Compose 编排
+order: 13
 date: 2026-08-25T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,8 @@ tag:
 description: Docker Compose 编排——用 YAML 定义一整栈微服务
 ---
 
-> **Docker 系列 · 第 18/18 篇**  
-> 上一篇：[《网络模式与实操》](/云原生/docker/docker-17-network/) · 系列开篇：[《技术底座总览》](/云原生/docker/docker-13-tech-foundation/)
+> **Docker 系列 · 第 13/24 篇**
+> 上一篇：[《数据持久化——Volume、Bind Mount 与 tmpfs：容器删了，数据凭什么还在》](/云原生/docker/docker-19-data-persistence) · 下一篇：[《如何通过 docker 部署 HTTPS 访问的 nginx 应用》](/云原生/docker/docker-19-如何通过docker部署https访问的nginx应用)
 
 ---
 
@@ -197,7 +197,7 @@ networks:
     name: existing_net
 ```
 
-与第 17 篇自定义 bridge 一致：**同一 network 下服务可用服务名 DNS 互访**。
+与第 11 篇自定义 bridge 一致：**同一 network 下服务可用服务名 DNS 互访**。
 
 ### 4.7 deploy（Swarm / Compose 扩展）
 
@@ -218,7 +218,7 @@ services:
         order: start-first
 ```
 
-单机 `docker compose up` 对部分 `deploy` 字段支持有限；**Swarm 模式**下语义最完整。资源 limits 与第 16 篇 Cgroups 对应。
+单机 `docker compose up` 对部分 `deploy` 字段支持有限；**Swarm 模式**下语义最完整。资源 limits 与第 20 篇 Cgroups 对应。
 
 ### 4.8 其他常用字段（速览）
 
@@ -339,14 +339,15 @@ V2 推荐作为默认；CI 脚本可逐步迁移。
 
 ---
 
-## 八、Compose 与系列前文的衔接
+## 八、Compose 与系列其它篇的衔接
 
-| 前文 | 在 Compose 中的体现 |
+| 相关篇 | 在 Compose 中的体现 |
 |------|---------------------|
-| 第 14 篇 UnionFS / 镜像 | `build` / `image` |
-| 第 15 篇 Namespace | `network_mode`、`pid` |
-| 第 16 篇 Cgroups | `deploy.resources.limits` |
-| 第 17 篇网络 | `networks`、`ports`、服务名 DNS |
+| [第 11 篇](/云原生/docker/docker-17-network) 网络（前文） | `networks`、`ports`、服务名 DNS |
+| [第 12 篇](/云原生/docker/docker-19-data-persistence) 持久化（前文） | `volumes`、bind mount |
+| [第 17 篇](/云原生/docker/docker-14-unionfs) UnionFS（后文） | `build` / `image` 分层缓存 |
+| [第 18 篇](/云原生/docker/docker-15-namespace) Namespace（后文） | `network_mode`、`pid` |
+| [第 20 篇](/云原生/docker/docker-16-cgroups) Cgroups（后文） | `deploy.resources.limits` |
 
 ---
 
@@ -363,9 +364,9 @@ V2 推荐作为默认；CI 脚本可逐步迁移。
 
 ---
 
-## 系列结语
+## 阶段小结
 
-至此 **Docker 系列 18 篇** 完结：从安装使用到底层 Namespace、Cgroup、UnionFS，再到网络与 Compose 编排，构成一套可查阅的知识库脉络。
+至此，主线已覆盖：**安装与日常命令 → 镜像交付 → 网络 / 持久化 / Compose 编排**。下一篇进入 HTTPS Nginx 实战，再往后是日志监控，然后转入底层原理（Namespace、进程视角、Cgroups、runtime）。
 
 后续 **Kubernetes**、**Serverless** 专栏将在本仓库 `src/云原生/` 下继续展开；容器运行时与 OCI 的理解，会直接迁移到 Pod、CRI 与云原生调度层。
 
@@ -375,4 +376,4 @@ V2 推荐作为默认；CI 脚本可逐步迁移。
 
 > 若 `web` 依赖 `db`，仅配置 `depends_on: [db]` 而不做 healthcheck，应用启动仍报「连接拒绝」时，应从哪几个方向排查？
 
-欢迎在评论区分享你的 Compose 踩坑记录。系列完结，感谢阅读 🐳
+欢迎在评论区分享你的 Compose 踩坑记录。下一篇见 🐳

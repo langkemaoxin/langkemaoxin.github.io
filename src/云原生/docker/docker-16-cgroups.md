@@ -1,8 +1,8 @@
 ---
 title: CGroups 限资源——防止一个容器吃光整台机器
 sidebarGroup: Docker 系列
-shortTitle: 16 CGroups 限资源
-order: 16
+shortTitle: 20 CGroups 限资源
+order: 20
 date: 2026-08-23T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,8 @@ tag:
 description: CGroups 限资源——防止一个容器吃光整台机器
 ---
 
-> **Docker 系列 · 第 16/18 篇**  
-> 上一篇：[《Namespace 隔离》](/云原生/docker/docker-15-namespace/) · 下一篇：[《网络模式与实操》](/云原生/docker/docker-17-network/)
+> **Docker 系列 · 第 20/24 篇**
+> 上一篇：[《进程视角看容器——容器内外 PID 对照与生命周期》](/云原生/docker/docker-11-process-view) · 下一篇：[《Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链》](/云原生/docker/docker-12-daemon-runtime)
 
 ---
 
@@ -216,9 +216,9 @@ services:
 
 ## 下篇预告
 
-**第 17 篇：《网络模式与实操》**
+**第 21 篇：《Docker Daemon 与 runtime》**
 
-隔离与限额就绪后，服务如何对外暴露、容器之间如何互通？我们将系统梳理 bridge / host / none / container / overlay / macvlan，并实操 docker0、自定义 bridge 与常用 network 命令。
+视图隔离（Namespace）与资源限额（Cgroups）都齐了，下一篇把调用链补全：`dockerd → containerd → shim → runc` 如何把这些内核能力串成一次 `docker run`。
 
 ---
 

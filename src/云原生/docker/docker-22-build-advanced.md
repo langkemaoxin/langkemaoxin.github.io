@@ -1,8 +1,8 @@
 ---
 title: 构建进阶——多阶段构建、缓存优化与 BuildKit
 sidebarGroup: Docker 系列
-shortTitle: 22 构建进阶
-order: 22
+shortTitle: 23 构建进阶
+order: 23
 date: 2026-08-27T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,8 @@ tag:
 description: 构建进阶——多阶段构建、缓存优化与 BuildKit
 ---
 
-> **Docker 系列 · 第 22/23 篇**  
-> 上一篇：[《容器安全》](/云原生/docker/docker-21-container-security/) · 下一篇：[《Daemon 运维》](/云原生/docker/docker-23-daemon-ops/)
+> **Docker 系列 · 第 23/24 篇**
+> 上一篇：[《容器安全——Capabilities 降权、Seccomp 与不该用的 --privileged》](/云原生/docker/docker-21-container-security) · 下一篇：[《Daemon 运维——daemon.json、live-restore 与远程管理》](/云原生/docker/docker-23-daemon-ops)
 
 ---
 
@@ -21,7 +21,7 @@ description: 构建进阶——多阶段构建、缓存优化与 BuildKit
 
 团队写了个 Go 的 HTTP 服务，二十行代码。Dockerfile 很直觉：`FROM golang` → `COPY` 源码 → `go build` → 完事。构建成功，镜像 **1.44GB**——每次发布推 1.44G、拉 1.44G，服务器磁盘被各种版本挤爆。
 
-问题出在哪、怎么把镜像压到 **20MB（72 倍瘦身）**、构建缓存怎么配才能「改一行代码秒级重建」——本篇在本机（Docker 29.x，WSL2）从反面教材开始实测。前置知识：[第 10 篇 Dockerfile 基础](/云原生/docker/docker-10-dockerfile/)、[第 14 篇分层与缓存](/云原生/docker/docker-14-unionfs/)。
+问题出在哪、怎么把镜像压到 **20MB（72 倍瘦身）**、构建缓存怎么配才能「改一行代码秒级重建」——本篇在本机（Docker 29.x，WSL2）从反面教材开始实测。前置知识：[第 9 篇 Dockerfile 基础](/云原生/docker/docker-10-dockerfile/)、[第 17 篇分层与缓存](/云原生/docker/docker-14-unionfs/)。
 
 ---
 
@@ -94,7 +94,7 @@ hello multi-stage                          ← 瘦身镜像真的能跑
 | 前端 | `node` 构建 | `nginx:alpine` 只装 dist 静态文件 |
 | 静态编译型一律 | 任意 | **`scratch`**（空镜像，二进制即镜像） |
 
-> 🔑 多阶段的本质是把「构建依赖」和「运行依赖」分离——镜像里多出来的每一 MB，都会乘以拉取次数、节点数、版本数。瘦身不只是省钱，是缩小攻击面（[第 21 篇](/云原生/docker/docker-21-container-security/)：装得越少，漏洞越少）。
+> 🔑 多阶段的本质是把「构建依赖」和「运行依赖」分离——镜像里多出来的每一 MB，都会乘以拉取次数、节点数、版本数。瘦身不只是省钱，是缩小攻击面（[第 22 篇](/云原生/docker/docker-21-container-security/)：装得越少，漏洞越少）。
 
 ---
 
@@ -102,7 +102,7 @@ hello multi-stage                          ← 瘦身镜像真的能跑
 
 ### 3.1 实测看缓存命中
 
-[第 14 篇](/云原生/docker/docker-14-unionfs/)讲过「指令一层、上层变则下层全部重建」。原样重建上面的多阶段 Dockerfile，看真实输出：
+[第 17 篇](/云原生/docker/docker-14-unionfs/)讲过「指令一层、上层变则下层全部重建」。原样重建上面的多阶段 Dockerfile，看真实输出：
 
 ```bash
 $ docker build -f Dockerfile.multi -t demo-slim .
@@ -195,7 +195,7 @@ RUN CGO_ENABLED=0 go build -ldflags="-X main.version=${VERSION}" -o server main.
 | `--mount=type=secret` | 构建期密钥挂内存，不进镜像层 |
 | 多平台构建 | `--platform linux/amd64,linux/arm64` 一条命令出多架构镜像 |
 | 远程缓存后端 | 缓存推 S3/registry/GitHub Actions，CI 提速 |
-| Attestations | 构建 SBOM、provenance 签名（[第 21 篇](/云原生/docker/docker-21-container-security/)供应链安全的落点） |
+| Attestations | 构建 SBOM、provenance 签名（[第 22 篇](/云原生/docker/docker-21-container-security/)供应链安全的落点） |
 
 > ⚠️ 本机实测环境的一个真实坑：**CLI 没装 buildx 插件时 `docker build` 会静默回退到传统构建器**（`docker buildx version` 报 `unknown command`，构建输出是 `Step n/m` 而非 BuildKit 的 `#n`）。Ubuntu 上装法：`apt install docker-buildx-plugin`（docker 官方源）或从 [buildx releases](https://github.com/docker/buildx/releases) 下载放入 `~/.docker/cli-plugins/`。判断当前用的哪个构建器，看输出格式最直接。
 

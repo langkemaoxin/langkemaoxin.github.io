@@ -1,8 +1,8 @@
 ---
 title: Docker 网络模式与实操——从 docker0 到 overlay
 sidebarGroup: Docker 系列
-shortTitle: 17 网络模式与实操
-order: 17
+shortTitle: 11 网络模式与实操
+order: 11
 date: 2026-08-24T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,8 @@ tag:
 description: Docker 网络模式与实操——从 docker0 到 overlay
 ---
 
-> **Docker 系列 · 第 17/18 篇**  
-> 上一篇：[《CGroups 限资源》](/云原生/docker/docker-16-cgroups/) · 下一篇：[《Compose 编排》](/云原生/docker/docker-18-compose/)
+> **Docker 系列 · 第 11/24 篇**
+> 上一篇：[《Harbor 私有镜像仓库——按步骤从安装到第一次 push》](/云原生/docker/docker-09-harbor) · 下一篇：[《数据持久化——Volume、Bind Mount 与 tmpfs：容器删了，数据凭什么还在》](/云原生/docker/docker-19-data-persistence)
 
 ---
 
@@ -130,7 +130,7 @@ iptables -t nat -L DOCKER
 DNAT tcp -- anywhere anywhere tcp dpt:6379 to:172.17.0.4:6379
 ```
 
-访问宿主机 `127.0.0.1:6379` → PREROUTING DNAT 到容器 IP → 容器内 Redis 响应。这与第 15 篇 Namespace + iptables 叙述一致。
+访问宿主机 `127.0.0.1:6379` → PREROUTING DNAT 到容器 IP → 容器内 Redis 响应。Network Namespace 与 iptables 的内核侧叙述，见后文[第 18 篇](/云原生/docker/docker-15-namespace)。
 
 ---
 
@@ -321,9 +321,9 @@ docker network --help
 
 ## 下篇预告
 
-**第 18 篇：《Compose 编排》**
+**第 12 篇：《数据持久化》**
 
-单机多容器靠脚本也能起，但 YAML 声明式编排 + 一条 `docker-compose up` 更可持续。我们将讲清 Compose 架构、关键 YAML 字段与常用命令。
+网络打通之后，下一个坑往往是：容器一删，MySQL 数据没了。下一篇讲清 Volume、Bind Mount 与 tmpfs，再接到 Compose 编排。
 
 ---
 

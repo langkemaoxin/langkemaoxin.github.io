@@ -1,8 +1,8 @@
 ---
 title: 容器安全——Capabilities 降权、Seccomp 与不该用的 --privileged
 sidebarGroup: Docker 系列
-shortTitle: 21 容器安全
-order: 21
+shortTitle: 22 容器安全
+order: 22
 date: 2026-08-26T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,8 @@ tag:
 description: 容器安全——Capabilities 降权、Seccomp 与不该用的 --privileged
 ---
 
-> **Docker 系列 · 第 21/23 篇**  
-> 上一篇：[《容器日志与监控》](/云原生/docker/docker-20-logging-monitoring/) · 下一篇：[《构建进阶——多阶段构建与 BuildKit》](/云原生/docker/docker-22-build-advanced/)
+> **Docker 系列 · 第 22/24 篇**
+> 上一篇：[《Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链》](/云原生/docker/docker-12-daemon-runtime) · 下一篇：[《构建进阶——多阶段构建、缓存优化与 BuildKit》](/云原生/docker/docker-22-build-advanced)
 
 ---
 
@@ -21,7 +21,7 @@ description: 容器安全——Capabilities 降权、Seccomp 与不该用的 --p
 
 你在网上搜某个报错，答案第一条说「加 `--privileged` 就好了」——很多容器就这样带着**全部 root 权限**上了生产。某天镜像里一个被投毒的依赖执行了 `mount`、加载内核模块、读写宿主机磁盘……容器一破，宿主机跟着破。
 
-先把立场立住：**容器是隔离工具，不是安全边界**（[第 3 篇](/云原生/docker/docker-03-container-vs-vm/)讲过它共享内核）。共享内核之上的安全，靠的是一层层「降权」：capabilities 切细、seccomp 拦系统调用、非 root 运行、必要时的更强隔离。本篇在本机（Docker 29.x，WSL2）把每一层都实测一遍——所有 CapEff 值、报错都是真实输出。
+先把立场立住：**容器是隔离工具，不是安全边界**（[第 2 篇](/云原生/docker/docker-03-container-vs-vm/)讲过它共享内核）。共享内核之上的安全，靠的是一层层「降权」：capabilities 切细、seccomp 拦系统调用、非 root 运行、必要时的更强隔离。本篇在本机（Docker 29.x，WSL2）把每一层都实测一遍——所有 CapEff 值、报错都是真实输出。
 
 ---
 
@@ -31,10 +31,10 @@ description: 容器安全——Capabilities 降权、Seccomp 与不该用的 --p
 
 | 防线 | 管什么 | 本系列对应 |
 |------|------|------|
-| ① 内核命名空间/cgroups | 视图与资源隔离（隔离的「底座」） | [第 15 篇](/云原生/docker/docker-15-namespace/) / [第 16 篇](/云原生/docker/docker-16-cgroups/) |
+| ① 内核命名空间/cgroups | 视图与资源隔离（隔离的「底座」） | [第 18 篇](/云原生/docker/docker-15-namespace/) / [第 20 篇](/云原生/docker/docker-16-cgroups/) |
 | ② **容器配置** | capabilities、seccomp、非 root | **本篇主线** |
 | ③ 内核加固特性 | AppArmor/SELinux | 本篇简述 |
-| ④ daemon 攻击面 | socket 权限、TLS、rootless | 本篇简述 + [第 23 篇](/云原生/docker/docker-23-daemon-ops/) |
+| ④ daemon 攻击面 | socket 权限、TLS、rootless | 本篇简述 + [第 24 篇](/云原生/docker/docker-23-daemon-ops/) |
 
 本机 daemon 实际启用了哪些安全机制，`docker info` 直接给出：
 
@@ -91,7 +91,7 @@ mount OK: tmpfs mounted                      ← privileged 下 SYS_ADMIN 回来
 # 典型 Web 服务：几乎不需要任何特权
 docker run -d --cap-drop=ALL --cap-add=NET_BIND_SERVICE nginx   # 只留"绑 80 端口"能力
 
-# Compose 写法（第 18 篇字段表的落地）
+# Compose 写法（第 13 篇字段表的落地）
 services:
   web:
     cap_drop: [ ALL ]
@@ -114,7 +114,7 @@ $ docker run --rm --user 1000:1000 busybox sh -c 'touch /etc/x'
 touch: /etc/x: Permission denied            ← 普通用户碰不了系统目录
 ```
 
-镜像层面用 Dockerfile 的 `USER` 指令固化（[第 10 篇](/云原生/docker/docker-10-dockerfile/)）：
+镜像层面用 Dockerfile 的 `USER` 指令固化（[第 9 篇](/云原生/docker/docker-10-dockerfile/)）：
 
 ```dockerfile
 RUN groupadd -r app -g 1000 && useradd -r -g app -u 1000 app
@@ -164,7 +164,7 @@ docker inspect <容器> --format '{{.HostConfig.SecurityOpt}}'
 - **User Namespace 重映射**（`userns-remap`）：daemon 配置后，容器里的 root 实际是宿主机上的一个高位 UID（如 165536:165536）——容器攻破后拿到的「root」在宿主机上连普通文件都读不了。LXC/ Podman 用户已经很熟这个模型。
 - **Rootless 模式**：整个 dockerd 都跑在普通用户下（配合 systemd 用户服务），daemon 本身被攻破也没有 root 权限。官方有专门文档：[Rootless mode](https://docs.docker.com/engine/security/rootless/)。
 
-daemon 侧的攻击面（socket 权限、`DOCKER_HOST`、TLS）在[第 23 篇 daemon 运维](/云原生/docker/docker-23-daemon-ops/)展开。
+daemon 侧的攻击面（socket 权限、`DOCKER_HOST`、TLS）在[第 24 篇 daemon 运维](/云原生/docker/docker-23-daemon-ops/)展开。
 
 ---
 
@@ -174,8 +174,8 @@ daemon 侧的攻击面（socket 权限、`DOCKER_HOST`、TLS）在[第 23 篇 da
 
 - **可信来源**：优先 Docker Official Images / Verified Publisher；`docker pull` 看清来源，别拉来路不明的镜像。
 - **签名验证**：Content Trust（`DOCKER_CONTENT_TRUST=1`）只拉签名镜像，生产可配 daemon 强制校验。
-- **漏洞扫描**：`docker scout`（官方）或 Trivy 对镜像做 CVE 扫描并纳入 CI；Harbor 内置 Trivy（[第 9 篇](/云原生/docker/docker-09-harbor/)提过的漏洞扫描能力就是它）。
-- **SBOM/来源证明**：构建时生成软件物料清单与 provenance 证明（[第 22 篇](/云原生/docker/docker-22-build-advanced/)实测 buildx 的 attestation）。
+- **漏洞扫描**：`docker scout`（官方）或 Trivy 对镜像做 CVE 扫描并纳入 CI；Harbor 内置 Trivy（[第 10 篇](/云原生/docker/docker-09-harbor/)提过的漏洞扫描能力就是它）。
+- **SBOM/来源证明**：构建时生成软件物料清单与 provenance 证明（[第 23 篇](/云原生/docker/docker-22-build-advanced/)实测 buildx 的 attestation）。
 
 ---
 
@@ -188,7 +188,7 @@ daemon 侧的攻击面（socket 权限、`DOCKER_HOST`、TLS）在[第 23 篇 da
 | seccomp 默认在 | `docker info` Security Options | `Profile: builtin` |
 | 不用 privileged | 用 `--device`/精确 cap-add 替代 | privileged = 宿主机全量 cap |
 | 镜像可信 + 扫描 | Official/VP 镜像 + scout/Trivy | — |
-| daemon socket 保护 | 不随意 `-v /var/run/docker.sock` 进容器 | 第 23 篇展开 |
+| daemon socket 保护 | 不随意 `-v /var/run/docker.sock` 进容器 | 第 24 篇展开 |
 
 ---
 

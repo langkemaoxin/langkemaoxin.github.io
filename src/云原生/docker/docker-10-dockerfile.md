@@ -1,8 +1,8 @@
 ---
 title: Dockerfile 自制镜像——从最小实验到完整静态站案例
 sidebarGroup: Docker 系列
-shortTitle: 10 Dockerfile 自制镜像
-order: 10
+shortTitle: 09 Dockerfile 自制镜像
+order: 9
 date: 2026-08-17T00:00:00.000Z
 category: 云原生
 tag:
@@ -14,9 +14,8 @@ tag:
 description: Dockerfile 自制镜像——从最小实验到完整静态站案例
 ---
 
-> **Docker 系列 · 第 10/18 篇**  
-> 上一篇：[《Harbor 私有镜像仓库》](/云原生/docker/docker-09-harbor)  
-> 下一篇：[《进程视角看容器》](/云原生/docker/docker-11-process-view)
+> **Docker 系列 · 第 9/24 篇**
+> 上一篇：[《Docker 本地镜像载入与载出——离线环境的镜像搬运工》](/云原生/docker/docker-08-image-transfer) · 下一篇：[《Harbor 私有镜像仓库——按步骤从安装到第一次 push》](/云原生/docker/docker-09-harbor)
 
 ---
 
@@ -30,7 +29,7 @@ description: Dockerfile 自制镜像——从最小实验到完整静态站案�
 
 Docker 提供两条路：`commit`（临时救急，见[第 5 篇](/云原生/docker/docker-05-container-and-image)）与 **`docker build` + Dockerfile**（正式交付）。本篇把第二条**从最小实验跑到一个完整案例**。
 
-> **实验环境**（文中输出均来自本机）：Docker Client / Server **29.1.2**（Docker Desktop）。官方参考：[Dockerfile reference](https://docs.docker.com/reference/dockerfile/)、[docker build](https://docs.docker.com/reference/cli/docker/build/)、[Best practices](https://docs.docker.com/build/building/best-practices/)。多阶段构建与缓存深挖见[第 22 篇](/云原生/docker/docker-22-build-advanced)。
+> **实验环境**（文中输出均来自本机）：Docker Client / Server **29.1.2**（Docker Desktop）。官方参考：[Dockerfile reference](https://docs.docker.com/reference/dockerfile/)、[docker build](https://docs.docker.com/reference/cli/docker/build/)、[Best practices](https://docs.docker.com/build/building/best-practices/)。多阶段构建与缓存深挖见[第 23 篇](/云原生/docker/docker-22-build-advanced)。
 
 ---
 
@@ -374,7 +373,7 @@ CMD ["--spring.profiles.active=prod"]
 
 ## 六、构建完如何发布？
 
-本地验证通过后，打上私有仓前缀再推（Harbor 的信任与 hostname 见[第 9 篇](/云原生/docker/docker-09-harbor)）：
+本地验证通过后，打上私有仓前缀再推（Harbor 的信任与 hostname 见[第 10 篇](/云原生/docker/docker-09-harbor)）：
 
 ```bash
 docker tag lab-web:1.0 harbor.daemon.io/demo/lab-web:1.0
@@ -392,8 +391,8 @@ docker push harbor.daemon.io/demo/lab-web:1.0
 |------|--------|
 | `docker commit` | 临时留存实验现场；不作为交付（第 5 篇） |
 | **Dockerfile + build**（本篇） | 可复现的日常交付 |
-| 多阶段 / BuildKit 缓存调优 | 镜像过大、构建太慢 → [第 22 篇](/云原生/docker/docker-22-build-advanced) |
-| 分层与 UnionFS 原理 | [第 14 篇](/云原生/docker/docker-14-unionfs) |
+| 多阶段 / BuildKit 缓存调优 | 镜像过大、构建太慢 → [第 23 篇](/云原生/docker/docker-22-build-advanced) |
+| 分层与 UnionFS 原理 | [第 17 篇](/云原生/docker/docker-14-unionfs) |
 
 ---
 
@@ -417,7 +416,7 @@ docker push harbor.daemon.io/demo/lab-web:1.0
 - Dockerfile 把「怎么做出镜像」写成可重复配方；`build` 的上下文决定你能 `COPY` 什么。
 - 先跑通最小 `CMD`，再做一个**完整静态站案例**：`FROM nginx:alpine` → `COPY` 首页 → `-p` 映射 → `curl` 验收。
 - `EXPOSE` 不替你开宿主机端口；`COPY` 优先于 `ADD`；`CMD`/`ENTRYPOINT` 分工用本机小实验记牢。
-- 发布走 tag + Registry；瘦身与缓存优化留给第 22 篇。
+- 发布走 tag + Registry；瘦身与缓存优化留给第 23 篇。
 
 ---
 

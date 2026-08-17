@@ -1,8 +1,8 @@
 ---
 title: 容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」
 sidebarGroup: Docker 系列
-shortTitle: 03 容器 vs 虚拟机
-order: 3
+shortTitle: 02 容器 vs 虚拟机
+order: 2
 date: 2026-08-10T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,9 +12,8 @@ tag:
 description: 容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」
 ---
 
-> **Docker 系列 · 第 3/18 篇**  
-> 上一篇：[《Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作》](/云原生/docker/docker-02-engine-platform)  
-> 下一篇预告：[《Docker 安装三种方式——离线、在线与现成虚拟机》](/云原生/docker/docker-04-install)
+> **Docker 系列 · 第 2/24 篇**
+> 上一篇：[《Docker 是什么？——从 jar 包部署到镜像一键上线》](/云原生/docker/docker-01-what-is-docker) · 下一篇：[《Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作》](/云原生/docker/docker-02-engine-platform)
 
 ---
 

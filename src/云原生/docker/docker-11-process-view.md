@@ -1,8 +1,8 @@
 ---
 title: 进程视角看容器——容器内外 PID 对照与生命周期
 sidebarGroup: Docker 系列
-shortTitle: 11 进程视角看容器
-order: 11
+shortTitle: 19 进程视角看容器
+order: 19
 date: 2026-08-18T00:00:00.000Z
 category: 云原生
 tag:
@@ -14,9 +14,8 @@ tag:
 description: 进程视角看容器——容器内外 PID 对照与生命周期
 ---
 
-> **Docker 系列 · 第 11/18 篇**  
-> 上一篇：[《Dockerfile 自制镜像》](/云原生/docker/docker-10-dockerfile)  
-> 下一篇：[《Docker Daemon 与 runtime》](/云原生/docker/docker-12-daemon-runtime)
+> **Docker 系列 · 第 19/24 篇**
+> 上一篇：[《Namespace 隔离——容器如何「假装」自己是一台独立机器》](/云原生/docker/docker-15-namespace) · 下一篇：[《CGroups 限资源——防止一个容器吃光整台机器》](/云原生/docker/docker-16-cgroups)
 
 ---
 
@@ -30,7 +29,9 @@ description: 进程视角看容器——容器内外 PID 对照与生命周期
 2. `docker exec` 拉起的进程，父进程到底是谁？  
 3. 杀掉「容器里的 PID 1」会发生什么？
 
-**容器不是虚拟机**——它是宿主机（或 Desktop 里那台 Linux VM）上的普通进程，只是套了 PID 命名空间，看到的编号不同。若只想选「怎么进容器」，见[第 7 篇](/云原生/docker/docker-07-enter-container)；Namespace 原理见[第 15 篇](/云原生/docker/docker-15-namespace)；shim / runtime 链见[第 12 篇](/云原生/docker/docker-12-daemon-runtime)。
+**容器不是虚拟机**——它是宿主机（或 Desktop 里那台 Linux VM）上的普通进程，只是套了 PID 命名空间，看到的编号不同。
+
+**前置**：[第 16 篇](/云原生/docker/docker-13-tech-foundation) 的底座总览，以及上一篇 [Namespace 隔离](/云原生/docker/docker-15-namespace)。本篇不再补原理，只做**本机对照实验**。若只想选「怎么进容器」，见[第 7 篇](/云原生/docker/docker-07-enter-container)；shim / runtime 完整调用链见[第 21 篇](/云原生/docker/docker-12-daemon-runtime)。
 
 > **实验环境**（文中输出均来自本机）：Docker Client / Server **29.1.2**（Docker Desktop）。示例容器：`lab-proc`（`nginx:alpine`）、`lab-kill`（`alpine:3.21 sleep infinity`）。  
 > **Desktop 注意**：`docker top` / `inspect` 的 PID 属于 **Linux 引擎（VM）**，不是 Windows 任务管理器里的 PID。看 `/proc`、cgroup 时，用 `docker run --rm --pid=host …` 进入同一 PID 视图（下文有命令）。
@@ -119,7 +120,7 @@ docker inspect -f '{{.State.Pid}}' lab-proc
 - 编号不同，**进程是同一个**  
 - 默认每个容器一个独立 PID namespace  
 
-更深的 `clone()` / 各类 Namespace 见[第 15 篇](/云原生/docker/docker-15-namespace)。本篇只要求你会「两边对照」。
+更深的 `clone()` / 各类 Namespace，上一篇[第 18 篇](/云原生/docker/docker-15-namespace)已展开。本篇只要求你会「两边对照」。
 
 ---
 
@@ -208,7 +209,7 @@ root   10533  10395  sleep 2000
 - `exec` 出的进程进了**同一个容器的 PID namespace / cgroup**（所以 `docker top` 能看见）  
 - 在宿主机进程树上，它们的父进程往往是 **shim**，不是容器内的 PID 1  
 
-shim 为什么存在、和 dockerd/containerd/runc 的关系 → [第 12 篇](/云原生/docker/docker-12-daemon-runtime)。
+shim 为什么存在、和 dockerd/containerd/runc 的关系 → [第 21 篇](/云原生/docker/docker-12-daemon-runtime)。
 
 ---
 
@@ -258,7 +259,7 @@ docker run --rm --pid=host --privileged alpine:3.21 \
 
 `/sys/fs/cgroup/memory/docker/<id>/`  
 
-多为 **cgroup v1** 布局；你机器若是 v2，不要死抄旧路径。CPU/内存限额怎么配 → [第 16 篇](/云原生/docker/docker-16-cgroups)。
+多为 **cgroup v1** 布局；你机器若是 v2，不要死抄旧路径。CPU/内存限额怎么配 → [第 20 篇](/云原生/docker/docker-16-cgroups)。
 
 ---
 
@@ -296,9 +297,9 @@ docker rm -f lab-proc lab-kill
 |----------------|--------|
 | exec / attach / nsenter 怎么选 | [第 7 篇](/云原生/docker/docker-07-enter-container) |
 | 容器内外 PID、exec 的 PPID、杀 PID 1（本篇） | 本文 |
-| dockerd → containerd → shim → runc | [第 12 篇](/云原生/docker/docker-12-daemon-runtime) |
-| Namespace 隔离原理 | [第 15 篇](/云原生/docker/docker-15-namespace) |
-| Cgroups 限资源 | [第 16 篇](/云原生/docker/docker-16-cgroups) |
+| dockerd → containerd → shim → runc | [第 21 篇](/云原生/docker/docker-12-daemon-runtime) |
+| Namespace 隔离原理（上一篇） | [第 18 篇](/云原生/docker/docker-15-namespace) |
+| Cgroups 限资源 | [第 20 篇](/云原生/docker/docker-16-cgroups) |
 
 ---
 
@@ -316,6 +317,6 @@ docker rm -f lab-proc lab-kill
 
 > 为什么 `containerd-shim` 在 runc 把容器拉起来之后可以退出「创建动作」，却仍留下一个 shim 进程陪着容器？若没有 shim，dockerd 升级时已运行的容器会怎样？
 
-提示：垫片负责 IO/状态与生命周期解耦——展开见第 12 篇。
+提示：垫片负责 IO/状态与生命周期解耦——展开见第 21 篇。
 
 下一篇见 🐳

@@ -1,8 +1,8 @@
 ---
 title: Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链
 sidebarGroup: Docker 系列
-shortTitle: 12 Daemon 与 runtime
-order: 12
+shortTitle: 21 Daemon 与 runtime
+order: 21
 date: 2026-08-19T00:00:00.000Z
 category: 云原生
 tag:
@@ -16,9 +16,8 @@ tag:
 description: Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链
 ---
 
-> **Docker 系列 · 第 12/18 篇**  
-> 上一篇：[《进程视角看容器》](/云原生/docker/docker-11-process-view)  
-> 下一篇：[《Docker 技术底座总览》](/云原生/docker/docker-13-tech-foundation)
+> **Docker 系列 · 第 21/24 篇**
+> 上一篇：[《CGroups 限资源——防止一个容器吃光整台机器》](/云原生/docker/docker-16-cgroups) · 下一篇：[《容器安全——Capabilities 降权、Seccomp 与不该用的 --privileged》](/云原生/docker/docker-21-container-security)
 
 ---
 
@@ -32,7 +31,7 @@ docker run -d nginx
 
 几秒内容器就起来了。但这条命令经历了 **CLI → dockerd → containerd → containerd-shim → runc** 五级调用，每一层职责不同。
 
-理解这条链路，是读懂 Kubernetes CRI、排查「dockerd 挂了容器还在不在」等问题的基础。本文梳理 Docker 1.11 之后的 runtime 架构与 OCI 标准。
+[第 3 篇](/云原生/docker/docker-02-engine-platform) 已画过组件地图；[第 19 篇](/云原生/docker/docker-11-process-view) 也在进程树上见过 shim。本篇把这条链路**按职责拆开**：谁管 API、谁管生命周期、谁真正 `clone()` 出隔离进程——这是读懂 Kubernetes CRI、排查「dockerd 挂了容器还在不在」的基础。
 
 ---
 
@@ -301,9 +300,9 @@ K8s 1.24+ 移除 dockershim
 
 ---
 
-## 七、与上一篇的串联
+## 七、与进程视角篇的串联
 
-| 上一篇（进程视角） | 本篇（runtime 链） |
+| [第 19 篇](/云原生/docker/docker-11-process-view)（进程视角） | 本篇（runtime 链） |
 |-------------------|-------------------|
 | 容器内 PID 1 | shim 启动的第一个进程 |
 | 宿主机 PPID = shim | shim 由 containerd 创建 |
@@ -324,9 +323,9 @@ K8s 1.24+ 移除 dockershim
 
 ## 下篇预告
 
-**第 13 篇：[《Docker 技术底座总览》](/云原生/docker/docker-13-tech-foundation)**
+**第 22 篇：[《容器安全》](/云原生/docker/docker-21-container-security)**
 
-- Namespace、CGroup 与 UnionFS 如何拼出容器
+- Capabilities 降权、Seccomp，以及为什么不该随手 `--privileged`
 
 ---
 

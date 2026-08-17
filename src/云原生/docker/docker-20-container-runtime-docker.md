@@ -1,18 +1,22 @@
 ---
 title: 容器运行时 Docker
-sidebarGroup: Docker 系列
-shortTitle: 20 容器运行时 Docker
-order: 20
+sidebarGroup: Docker 附录
+shortTitle: 01 容器运行时 Docker（课程笔记）
+order: 1
 date: 2026-08-13T00:00:00.000Z
 category: 云原生
 tag:
-  - Serverless
+  - Docker
   - 云原生
+  - Docker附录
   - 课程笔记
-description: 容器运行时 Docker 一、容器运行时（Container Runtime） 是什么 容器的运行时（runtime）就是运行和管理容器进程、镜像的工具。 二、 容器运行时分类 Docker属于容器技...
+  - 容器运行时
+description: 容器运行时 Docker（课程笔记附录）——低层/高层 runtime 分类与 Docker 栈补充阅读
 ---
 
-> **Docker 进阶 · 第 2 篇**
+> **Docker 附录 · 第 1/2 篇**
+>
+> 课程笔记整理；主线阅读请按 [Docker 系列](/云原生/docker/docker-01-what-is-docker/) 顺序。与主线第 3 篇（Engine 地图）、第 21 篇（Daemon 与 runtime）有内容重叠，建议学完主线后再作补充阅读。
 >
 > 来源课程笔记整理优化；插图已迁入博客静态目录。
 

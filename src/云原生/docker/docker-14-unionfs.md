@@ -1,8 +1,8 @@
 ---
 title: UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的
 sidebarGroup: Docker 系列
-shortTitle: 14 UnionFS 与分层
-order: 14
+shortTitle: 17 UnionFS 与分层
+order: 17
 date: 2026-08-21T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,8 @@ tag:
 description: UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的
 ---
 
-> **Docker 系列 · 第 14/18 篇**  
-> 上一篇：[《技术底座总览》](/云原生/docker/docker-13-tech-foundation/) · 下一篇：[《Namespace 隔离》](/云原生/docker/docker-15-namespace/)
+> **Docker 系列 · 第 17/24 篇**
+> 上一篇：[《Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器》](/云原生/docker/docker-13-tech-foundation) · 下一篇：[《Namespace 隔离——容器如何「假装」自己是一台独立机器》](/云原生/docker/docker-15-namespace)
 
 ---
 
@@ -214,7 +214,7 @@ AUFS 未能进入 Linux 主线内核，发行版兼容性促使 Docker 支持多
 
 ## 下篇预告
 
-**第 15 篇：《Namespace 隔离》**
+**第 18 篇：《Namespace 隔离》**
 
 文件系统分层解决「装什么」；Namespace 解决「看见什么」。我们将深入 PID 隔离、`clone()`  flags，以及 Libnetwork 与 Chroot 如何补齐网络与根目录隔离。
 

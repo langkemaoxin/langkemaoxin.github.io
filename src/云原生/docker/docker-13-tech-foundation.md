@@ -1,8 +1,8 @@
 ---
 title: Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器
 sidebarGroup: Docker 系列
-shortTitle: 13 技术底座总览
-order: 13
+shortTitle: 16 技术底座总览
+order: 16
 date: 2026-08-20T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,10 @@ tag:
 description: Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器
 ---
 
-> **Docker 系列 · 第 13/18 篇**  
-> 本篇是底层原理的总览与导航；下一篇深入文件系统：[《UnionFS 与镜像分层》](/云原生/docker/docker-14-unionfs/)
+> **Docker 系列 · 第 16/24 篇**
+> 上一篇：[《容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧》](/云原生/docker/docker-20-logging-monitoring) · 下一篇：[《UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的》](/云原生/docker/docker-14-unionfs)
+>
+> 本篇起进入**底层原理**阶段：先总览地图，再分篇深入 UnionFS → Namespace → 进程视角 → Cgroups → Daemon/runtime。
 
 ---
 
@@ -99,7 +101,7 @@ Docker Engine 使用的 Linux 隔离技术包括：
 | **uts** | 主机名、NIS 域名 |
 | **user** | UID/GID 映射 |
 
-此外还有 **cgroup** namespace（隔离 cgroup 根目录视图）和较新的 **time** namespace 等。进容器手段见第 7 篇；Namespace 实现原理见第 15 篇。
+此外还有 **cgroup** namespace（隔离 cgroup 根目录视图）和较新的 **time** namespace 等。进容器手段见第 7 篇；Namespace 实现原理见第 18 篇。
 
 ### 4.2 Cgroups —— 能用多少
 
@@ -170,7 +172,7 @@ flowchart LR
 
 ## 下篇预告
 
-**第 14 篇：《UnionFS 与镜像分层》**
+**第 17 篇：《UnionFS 与镜像分层》**
 
 我们将用 AUFS 的 `company/home` 实验理解联合挂载，再对照 Dockerfile 的 `build` 输出，看清 Layer 如何堆叠、缓存如何复用。
 

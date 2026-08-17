@@ -1,8 +1,8 @@
 ---
 title: 容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧
 sidebarGroup: Docker 系列
-shortTitle: 20 日志与监控
-order: 20
+shortTitle: 15 日志与监控
+order: 15
 date: 2026-08-25T00:00:00.000Z
 category: 云原生
 tag:
@@ -12,8 +12,8 @@ tag:
 description: 容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧
 ---
 
-> **Docker 系列 · 第 20/23 篇**  
-> 上一篇：[《数据持久化》](/云原生/docker/docker-19-data-persistence/) · 下一篇：[《容器安全》](/云原生/docker/docker-21-container-security/)
+> **Docker 系列 · 第 15/24 篇**
+> 上一篇：[《如何通过 docker 部署 HTTPS 访问的 nginx 应用》](/云原生/docker/docker-19-如何通过docker部署https访问的nginx应用) · 下一篇：[《Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器》](/云原生/docker/docker-13-tech-foundation)
 
 ---
 
@@ -30,11 +30,11 @@ description: 容器日志与监控——logs 原理、日志轮转与 stats/even
 
 ## 一、容器日志的第一原则：应用写 stdout/stderr
 
-Docker 的日志采集模型来自 [12-Factor](https://12factor.net/zh_cn/logs)：**应用只管往 stdout/stderr 打日志，收集、轮转、转发交给外面**。容器里 PID 1 进程（[第 11 篇](/云原生/docker/docker-11-process-view/)讲过它和容器的生死绑定）写到这两个流的每一行，都会被 Docker 接住、交给 logging driver 处理。
+Docker 的日志采集模型来自 [12-Factor](https://12factor.net/zh_cn/logs)：**应用只管往 stdout/stderr 打日志，收集、轮转、转发交给外面**。容器里 **PID 1** 进程写到这两个流的每一行，都会被 Docker 接住、交给 logging driver 处理（PID 1 与容器生死绑定，后文[第 19 篇](/云原生/docker/docker-11-process-view/)会对照实验）。
 
 这意味着两件反直觉的事：
 
-- 往容器里的 `/var/log/app.log` 写文件？**`docker logs` 看不到**——那只是可写层里的普通文件，还得自己解决轮转和读取（[第 19 篇](/云原生/docker/docker-19-data-persistence/)的挂载知识这时候才用得上）；
+- 往容器里的 `/var/log/app.log` 写文件？**`docker logs` 看不到**——那只是可写层里的普通文件，还得自己解决轮转和读取（[第 12 篇](/云原生/docker/docker-19-data-persistence/)的挂载知识这时候才用得上）；
 - Nginx 这类默认写文件日志的软件，官方镜像都做了适配：`nginx` 镜像把 `/var/log/nginx/access.log` 软链到了 `/dev/stdout`。
 
 > 🔑 判断一个镜像日志姿势对不对，就看一条：`docker logs` 能不能看到它的业务日志。
@@ -97,7 +97,7 @@ docker logs -t web            # 显示时间戳
 }
 ```
 
-**容器级**用 `--log-opt` 覆盖（也可以在 Compose 的 `logging:` 字段写，见[第 18 篇](/云原生/docker/docker-18-compose/)）：
+**容器级**用 `--log-opt` 覆盖（也可以在 Compose 的 `logging:` 字段写，见[第 13 篇](/云原生/docker/docker-18-compose/)）：
 
 ```bash
 docker run -d --log-opt max-size=10m --log-opt max-file=3 nginx
@@ -171,7 +171,7 @@ d4ebafc773e4   new-api            0.05%     23.57MiB / 7.757GiB   0.30%     5.14
 
 | 列 | 含义 | 背后机制 |
 |------|------|------|
-| CPU % | 占宿主机 CPU 的百分比 | cgroups CPU 统计（[第 16 篇](/云原生/docker/docker-16-cgroups/)） |
+| CPU % | 占宿主机 CPU 的百分比 | cgroups CPU 统计（后文[第 20 篇](/云原生/docker/docker-16-cgroups/)） |
 | MEM USAGE / LIMIT | 已用内存 / 上限（`-m` 没配就是宿主机内存） | cgroups memory；LIMIT 显示 7.757GiB = 没限额，**生产该配** |
 | NET I/O / BLOCK I/O | 网络/块设备累计流量 | cgroups netcls/blkio |
 | PIDS | 容器内进程/线程数 | cgroups pids（防进程炸弹） |
@@ -206,13 +206,13 @@ Local Volumes   6         6         70.26MB   0B (0%)
 Build Cache     0         0         0B        0B
 ```
 
-四类对象占了多少磁盘、多少可回收。本机实测：7 个镜像 1.9G、98% 可回收（存在未使用镜像）——`docker image prune` 的时机判断就靠这张表（[第 19 篇](/云原生/docker/docker-19-data-persistence/)讲过 volume 的 RECLAIMABLE 为什么是 0：命名卷不算可回收）。
+四类对象占了多少磁盘、多少可回收。本机实测：7 个镜像 1.9G、98% 可回收（存在未使用镜像）——`docker image prune` 的时机判断就靠这张表（[第 12 篇](/云原生/docker/docker-19-data-persistence/)讲过 volume 的 RECLAIMABLE 为什么是 0：命名卷不算可回收）。
 
 ---
 
 ## 六、走向专业监控：Prometheus 指标接口
 
-`stats`/`events` 是人看的；机器采集走 daemon 的 **Prometheus 指标端点**：daemon.json 配 `"metrics-addr": ":9323"` 后，`/metrics` 暴露容器 CPU/内存/网络等全套指标，配 Prometheus + Grafana（或 cAdvisor）就是完整的容器监控体系。配置和实测放在[第 23 篇 daemon 运维](/云原生/docker/docker-23-daemon-ops/)（涉及 daemon 重启，正好一起讲）。
+`stats`/`events` 是人看的；机器采集走 daemon 的 **Prometheus 指标端点**：daemon.json 配 `"metrics-addr": ":9323"` 后，`/metrics` 暴露容器 CPU/内存/网络等全套指标，配 Prometheus + Grafana（或 cAdvisor）就是完整的容器监控体系。配置和实测放在[第 24 篇 daemon 运维](/云原生/docker/docker-23-daemon-ops/)（涉及 daemon 重启，正好一起讲）。
 
 ---
 
@@ -222,7 +222,7 @@ Build Cache     0         0         0B        0B
 - `json-file` 驱动把每行存成 JSON（`log`/`stream`/`time`）在 `containers/<id>/<id>-json.log`；`--tail`/`--since`/`-f` 是排查三件套。
 - **轮转必配**：daemon.json 全局默认 + `--log-opt` 容器级覆盖；实测 2000 行在 1k×2 份轮转下只剩 16 行——轮转就是有代价的丢弃。
 - 换 logging driver（fluentd/splunk/none…）后 `docker logs` 失效，只有 `json-file`/`local` 支持读取。
-- 监控三板斧：`stats`（资源，LIMIT 列即限额检查）、`events`（生命周期审计）、`system df`（磁盘去向）；机器采集用 Prometheus 端点（第 23 篇）。
+- 监控三板斧：`stats`（资源，LIMIT 列即限额检查）、`events`（生命周期审计）、`system df`（磁盘去向）；机器采集用 Prometheus 端点（第 24 篇）。
 
 **思考题**：一个没配 `max-size` 的容器跑了两年后，你怎么安全地清理它的 json.log 而不影响业务？（提示：直接 `rm` 文件行不行？文件被进程持有后会怎样——`truncate` 和重启容器两种方案的差别。）
 

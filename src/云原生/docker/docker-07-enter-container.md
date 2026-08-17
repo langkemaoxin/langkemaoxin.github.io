@@ -14,9 +14,8 @@ tag:
 description: 进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter
 ---
 
-> **Docker 系列 · 第 7/18 篇**  
-> 上一篇：[《容器日常命令——run、ps、stop、exec 与常用运维》](/云原生/docker/docker-06-container-commands)  
-> 下一篇：[《Docker 本地镜像载入与载出》](/云原生/docker/docker-08-image-transfer)
+> **Docker 系列 · 第 7/24 篇**
+> 上一篇：[《容器日常命令——run、ps、stop、exec 与常用运维》](/云原生/docker/docker-06-container-commands) · 下一篇：[《Docker 本地镜像载入与载出——离线环境的镜像搬运工》](/云原生/docker/docker-08-image-transfer)
 
 ---
 
@@ -30,7 +29,7 @@ description: 进入 Docker 容器的四种方式——exec、attach、SSH 与 ns
 2. **只借网络视图** —— 容器镜像太瘦，没有 `ping`/`tcpdump`，想用宿主机工具看容器网络
 3. **搞清别用错入口** —— `attach`、SSH、`exec`、`nsenter` 适用场景完全不同
 
-第 6 篇已点过 `docker exec`；本篇把**进入容器的四种方式**讲清、讲对比。Namespace 原理见[第 15 篇](/云原生/docker/docker-15-namespace)；容器内外 PID / shim 对照见[第 11 篇](/云原生/docker/docker-11-process-view)。
+第 6 篇已点过 `docker exec`；本篇把**进入容器的四种方式**讲清、讲对比。Namespace 原理见[第 18 篇](/云原生/docker/docker-15-namespace)；容器内外 PID / shim 对照见[第 19 篇](/云原生/docker/docker-11-process-view)。
 
 > **实验环境**：Docker Client / Server **29.1.2**（Docker Desktop）。日常 `exec`/`attach` 用 `nginx:alpine` 即可。`nsenter` 需能访问 **Linux 内核命名空间**（本机 WSL2 / Linux 宿主机；纯 Windows 引擎里通常不可用）——前置概念见 [Linux · nsenter 前置知识](/Linux/basics/linux-01-nsenter-prerequisites)。
 
@@ -116,7 +115,7 @@ docker attach demo-attach
 | `-t, --target pid` | 目标进程在**宿主机**上的 PID |
 | `-m` / `-u` / `-i` / `-n` / `-p` / `-U` | 分别进入 mount / uts / ipc / **net** / pid / user 命名空间 |
 
-宿主机没有命令时，用发行版包装上即可（例如 `apt install util-linux`），不必从古早源码编译。选项与内核概念的系统学习见 [linux-01](/Linux/basics/linux-01-nsenter-prerequisites)；六大 Namespace 原理见[第 15 篇](/云原生/docker/docker-15-namespace)。
+宿主机没有命令时，用发行版包装上即可（例如 `apt install util-linux`），不必从古早源码编译。选项与内核概念的系统学习见 [linux-01](/Linux/basics/linux-01-nsenter-prerequisites)；六大 Namespace 原理见[第 18 篇](/云原生/docker/docker-15-namespace)。
 
 ### 4.2 拿到容器「PID 1」在宿主机上的 PID
 
@@ -125,7 +124,7 @@ docker run -d --name ns-demo alpine:3.21 sleep infinity
 docker inspect -f '{{.State.Pid}}' ns-demo
 ```
 
-得到的数字是宿主机（或 Desktop 里 Linux VM）上的 PID，供 `nsenter -t` 使用。PID 对照与进程树细节见[第 11 篇](/云原生/docker/docker-11-process-view)。
+得到的数字是宿主机（或 Desktop 里 Linux VM）上的 PID，供 `nsenter -t` 使用。PID 对照与进程树细节见[第 19 篇](/云原生/docker/docker-11-process-view)。
 
 ### 4.3 进入完整命名空间（近似「进容器」）
 
@@ -170,8 +169,8 @@ sudo nsenter -t "$PID" -n ss -tln
 |----------------|--------|
 | `run` / `ps` / `logs` / `top` / `stop` / `rm` | [第 6 篇](/云原生/docker/docker-06-container-commands) |
 | 进容器四法怎么选（本篇） | 本文 |
-| 容器内外 PID、`docker top`、shim 进程树 | [第 11 篇](/云原生/docker/docker-11-process-view) |
-| Namespace 隔离原理（pid/net/mnt…） | [第 15 篇](/云原生/docker/docker-15-namespace) |
+| 容器内外 PID、`docker top`、shim 进程树 | [第 19 篇](/云原生/docker/docker-11-process-view) |
+| Namespace 隔离原理（pid/net/mnt…） | [第 18 篇](/云原生/docker/docker-15-namespace) |
 | `nsenter` 的 Linux 前置（`/proc`、setns、权限） | [linux-01](/Linux/basics/linux-01-nsenter-prerequisites) |
 
 ---
