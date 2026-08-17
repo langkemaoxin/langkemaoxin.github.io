@@ -58,10 +58,20 @@ $ echo tmpfs-file > /tmp/lab6-mp/in-tmpfs.txt   # 往挂载点里写
 $ ls -A /tmp/lab6-mp
 in-tmpfs.txt
 
-$ umount /tmp/lab6-mp
+$ umount /tmp/lab6-mp                 # ← 卸载：把 tmpfs 从这个目录摘下来
 $ ls -A /tmp/lab6-mp
 underneath.txt                       # ← 原内容完好归来；in-tmpfs.txt 随挂载一起消失
 ```
+
+**命令拆解**——`mount` 是三段式：`mount -t <类型> <设备> <挂载点>`，逐段对照：
+
+| 段 | 本例 | 是什么 |
+|----|------|--------|
+| `-t tmpfs` | 文件系统**类型** | **tmpfs = 基于内存的临时文件系统**：不占磁盘、挂上即是一块空白「内存盘」、卸载即清空——不用准备磁盘分区就能演示挂载，所以拿它当教具（Docker 的 `docker run --tmpfs` 就是让 Docker 替你执行了这条 mount，见[第 12 篇](/云原生/docker/docker-12-data-persistence)六） |
+| `tmpfs6` | **「设备」位** | 真磁盘挂载这里放设备（如 `/dev/sdb1`）；tmpfs **没有设备**——这个位置只是给这块内存盘起的**名字**（随便取），之后 `df`、`/proc/self/mountinfo` 里靠它辨认 |
+| `/tmp/lab6-mp` | **挂载点** | 把新文件系统的**根**接到这个目录上；即刻起这个路径显示的就是新文件系统的内容 |
+
+对照常规写法 `mount -t ext4 /dev/sdb1 /mnt/data`：三段结构不变，tmpfs 只是把「设备」换成了「内存 + 一个名字」。
 
 **怎么读**：挂载是**替换视图**，不是合并——这个路径此刻看到的是新文件系统的内容，原内容只是被**盖住**了，并没有被删；卸载即「揭开」。写在挂载点里的文件属于那个新文件系统（这里是内存里的 tmpfs），卸载后自然不在原目录。
 
