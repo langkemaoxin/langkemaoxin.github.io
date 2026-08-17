@@ -21,7 +21,7 @@ description: 数据持久化——Volume、Bind Mount 与 tmpfs：容器删了�
 
 你用容器跑了个 MySQL，测试数据灌了两周。某天升级镜像版本：`docker rm` 旧容器、`docker run` 新容器——**库没了，两周白干**。
 
-这不是 bug，是设计：容器的文件系统由「只读镜像层 + 一个可写层」组成（[第 5 篇](/云原生/docker/docker-05-container-and-image/)讲过心智模型；UnionFS 细节见后文[第 17 篇](/云原生/docker/docker-17-unionfs/)），**可写层属于容器**，容器删除它就没了。`docker rm` 从不留情。
+这不是 bug，是设计：容器的文件系统由「只读镜像层 + 一个可写层」组成（[第 5 篇](/云原生/docker/docker-05-container-and-image/)讲过这个心智模型），**可写层属于容器**，容器删除它就没了。`docker rm` 从不留情。
 
 要让数据活得比容器久，Docker 提供三种把数据「挂」到容器外的机制：**Volume（卷）、Bind Mount（绑定挂载）、tmpfs（内存挂载）**。本篇全部在本机实测（Docker 29.x，WSL2 Ubuntu-22.04），看完你能准确回答三个问题：三种机制各适合什么场景？为什么 `volume prune` 不会误删你的数据库卷？卷里的数据到底存在宿主机哪里？
 
@@ -122,10 +122,10 @@ $ docker run --rm -v autodata:/data busybox echo 'auto-created ok'
 auto-created ok
 
 $ docker volume ls | grep autodata
-local     autodata          # 卷被自动创建了
+local     autodata
 ```
 
-而 `--mount` 是严格模式，bind 源路径不存在直接报错、不猜你的意图：
+输出确认：卷就这样被悄悄创建了。而 `--mount` 是严格模式，bind 源路径不存在直接报错、不猜你的意图：
 
 ```bash
 $ docker run --rm --mount type=bind,source=/root/no-such-dir,target=/src busybox echo hi
@@ -139,46 +139,71 @@ bind source path does not exist: /root/no-such-dir
 
 ## 三、匿名卷与悬空卷：prune 到底删什么（实测）
 
-不给卷名、只给容器内路径（`-v /data`），Docker 会生成一个 **64 位哈希名的匿名卷**：
+不给卷名、只给容器内路径（`-v /data`），Docker 会生成一个 **64 位哈希名的匿名卷**；镜像的 Dockerfile 里若声明了 `VOLUME /xxx`，起容器时也会自动生成匿名卷（很多数据库官方镜像都这么干）。
+
+匿名卷的生死取决于**容器怎么删**，两种方式结局完全相反（以下均为实测）。
+
+**方式一：`--rm` 容器退出——匿名卷连带一起删**：
 
 ```bash
-$ docker run --rm -d --name anon-demo -v /data busybox sleep 120
-$ docker inspect anon-demo --format '{{range .Mounts}}type={{.Type}} name={{.Name}} dst={{.Destination}}{{println}}{{end}}'
-type=volume name=b7b465d7217c7e5301f9f49e958854b52c52d03388b2232aaf89ff9b1797fada dst=/data
+$ docker run --rm -d --name anon-rm-demo -v /data busybox sleep 60
+b388970b614ca80ac636ecc229343c0e06f338583d9e09101c1046962c4dc0fb
+
+$ docker inspect anon-rm-demo --format '{{range .Mounts}}type={{.Type}} name={{.Name}} dst={{.Destination}}{{println}}{{end}}'
+type=volume name=12aa00229028ff1ff4c71a66fe49d8b53811bcfb1b60782cfde410c9b7546291 dst=/data
+
+$ docker stop anon-rm-demo
+anon-rm-demo
+
+$ docker volume inspect 12aa00229028ff1ff4c71a66fe49d8b53811bcfb1b60782cfde410c9b7546291
+[]
+Error response from daemon: get 12aa00229028ff1ff4c71a66fe49d8b53811bcfb1b60782cfde410c9b7546291: no such volume
 ```
 
-另外，镜像的 Dockerfile 里若声明了 `VOLUME /xxx`，起容器时也会自动生成匿名卷（很多数据库官方镜像都这么干）。容器删了，匿名卷却**不会跟着删**——久而久之堆出一堆「悬空卷」（dangling，没有任何容器引用）：
+容器退出，`--rm` 把容器和匿名卷**一起**带走了。
+
+**方式二：`docker rm`（不带 `-v`）——匿名卷留下来，变成悬空卷**：
 
 ```bash
+$ docker run --name anon-keep -v /data busybox sh -c 'echo keep > /data/f'
+
+$ docker inspect anon-keep --format '{{range .Mounts}}type={{.Type}} name={{.Name}} dst={{.Destination}}{{println}}{{end}}'
+type=volume name=057fcecb958d190946c93b684407c9691213bc36d4848f584c984dc98bd2eb05 dst=/data
+
+$ docker rm anon-keep
+anon-keep
+
 $ docker volume ls -f dangling=true
 DRIVER    VOLUME NAME
-local     061dc58888c362c004f4da556b11c32b4befe2d53f220e4504b28567664a5817
-local     3351d6bb6d09d411b09d9d853bcd15c11123fbddad4f04dfcdb03c6d0d449091
-...
+local     057fcecb958d190946c93b684407c9691213bc36d4848f584c984dc98bd2eb05
 ```
 
-清理用 `docker volume prune`。但**先看清它的边界再敲**——实测（先显式创建一个从未被使用的命名卷 `orphan`）：
+容器没了、卷还在，且再没有任何容器引用它——这就是**悬空卷**（dangling）。生产上真正堆出悬空卷的，正是这种「不带 `--rm`、`docker rm` 也不加 `-v`」的日常用法。清理用 `docker volume prune`，但**先看清它的边界再敲**——实测（先显式创建一个从未被使用的命名卷 `orphan`，此时机器上唯一的悬空卷是上面那个匿名卷）：
 
 ```bash
+$ docker volume create orphan
+orphan
+
 $ docker volume prune -f
 Deleted Volumes:
-b7b465d7217c7e5301f9f49e958854b52c52d03388b2232aaf89ff9b1797fada
-061dc58888c362c004f4da556b11c32b4befe2d53f220e4504b28567664a5817
-3351d6bb6d09d411b09d9d853bcd15c11123fbddad4f04dfcdb03c6d0d449091
-...（共 5 个，全是匿名悬空卷）
+057fcecb958d190946c93b684407c9691213bc36d4848f584c984dc98bd2eb05
 
-Total reclaimed space: 223.6kB
+Total reclaimed space: 5B
+
+$ docker volume ls | grep orphan
+local     orphan
 ```
 
-注意结果：**`orphan` 这个显式命名的卷（哪怕没有任何容器用它）没被删**，`mydata` 也没被删。
+注意结果：prune 只删了那个**匿名**悬空卷；`orphan` 这个显式命名的卷哪怕从未被任何容器使用，也**没被删**。
 
-> ⚠️ `docker volume prune` 默认**只删匿名的悬空卷，不删命名卷**——这是官方故意的保护设计。`docker volume prune -a` 才会连未使用的命名卷一起删，生产环境慎用 `-a`。要删指定卷永远用 `docker volume rm <卷名>`（同样实测：`docker volume rm autodata orphan mydata` 三个精确删除）。
+> ⚠️ `docker volume prune` 默认**只删匿名的悬空卷，不删命名卷**——这是官方故意的保护设计（`docker volume prune --help` 写明：`-a, --all  Remove all unused volumes, not just anonymous ones`）。`docker volume prune -a` 才会连未使用的命名卷一起删，生产环境慎用 `-a`。要删指定卷，永远用 `docker volume rm <卷名>` 精确删除（实测：`docker volume rm orphan`，输出卷名即成功）。
 
 ---
 
 ## 四、Bind Mount：把宿主机目录直接挂进来（实测）
 
 ```bash
+$ mkdir -p /root/bind-demo
 $ echo 'host-file-content' > /root/bind-demo/host.txt
 
 $ docker run --rm -v /root/bind-demo:/src busybox cat /src/host.txt
@@ -206,15 +231,17 @@ tmpfs on /scratch type tmpfs (rw,nosuid,nodev,noexec,relatime)
 hello
 ```
 
-`mount` 输出证实 `/scratch` 是一块 **tmpfs 内存文件系统**：读写极快、容器一停数据即焚、**永不落盘**。适合放密钥/令牌文件、会话缓存这类「用完就该消失、绝不能留在磁盘上被镜像或快镜带走」的数据。
+`mount` 输出证实 `/scratch` 是一块 **tmpfs 内存文件系统**：读写极快、容器一停数据即焚、**永不落盘**。适合放密钥/令牌文件、会话缓存这类「用完就该消失、绝不能留在磁盘上被镜像或快照带走」的数据。
 
 ---
 
 ## 六、卷的备份与恢复（实测）
 
-卷不能 `docker cp` 直接整目录导出？官方套路是**临时容器 + tar**：把卷挂到一个短命容器里，打包到另一个 bind mount 目录：
+卷的真身在 `/var/lib/docker/volumes/` 深处，不方便直接在宿主机打包；官方套路是**临时容器 + tar**：把卷挂到一个短命容器里，打包到另一个 bind mount 目录：
 
 ```bash
+$ mkdir -p /root/backup
+
 $ docker run --rm -v mydata:/data -v /root/backup:/backup busybox tar cvf /backup/mydata.tar -C /data .
 ./
 ./note.txt
@@ -224,7 +251,21 @@ drwxr-xr-x root/root         0 2026-08-14 13:14:08 ./
 -rw-r--r-- root root        11 2026-08-14 13:14:08 ./note.txt
 ```
 
-恢复就是反过来：把 tar 解到新卷（`tar xvf /backup/mydata.tar -C /data`）。定时任务里跑这两条，就是最朴素的卷备份方案。多容器共享一个卷则用 `--volumes-from <容器>` 直接继承其挂载配置。
+恢复就是反过来：新建一个空卷，把 tar 解进去（实测完整链路）：
+
+```bash
+$ docker volume create mydata-restored
+mydata-restored
+
+$ docker run --rm -v mydata-restored:/data -v /root/backup:/backup busybox tar xvf /backup/mydata.tar -C /data
+./
+./note.txt
+
+$ docker run --rm -v mydata-restored:/data busybox cat /data/note.txt
+persist-me
+```
+
+定时任务里跑这两条，就是最朴素的卷备份方案。多容器共享一个卷则用 `--volumes-from <容器>` 直接继承其挂载配置。
 
 ---
 
@@ -264,7 +305,7 @@ services:
     image: mysql:8.4
     volumes:
       - db-data:/var/lib/mysql           # 命名卷：数据持久化
-      - ./init:/docker-entrypoint-init.d:ro   # bind mount + 只读：初始化脚本
+      - ./init:/docker-entrypoint-initdb.d:ro   # bind mount + 只读：初始化脚本（MySQL 官方镜像的固定目录）
 
 volumes:
   db-data: {}                            # 顶层声明命名卷
@@ -276,13 +317,14 @@ volumes:
 
 - 容器可写层随容器生灭；持久化 = 把数据路径挂到容器外。**三种机制**：Volume（Docker 管理、生产数据首选）、Bind Mount（宿主机目录、开发共享）、tmpfs（内存、敏感临时数据）。
 - 命名卷数据在宿主机 `/var/lib/docker/volumes/<名>/_data`；**容器删、数据在**；`-v` 引用不存在命名卷会自动创建，`--mount` 严格报错——脚本用 `--mount`。
+- 匿名卷结局取决于删除方式：**`--rm` 容器退出时连带删除；`docker rm`（不带 `-v`）则残留成悬空卷**（实测验证）。
 - **`volume prune` 只删匿名悬空卷，命名卷哪怕没被使用也不删**（实测验证）；`-a` 才会连命名卷一起删。
 - Bind mount 是双向实时同步，`:ro` 只读由内核强制；tmpfs 永不落盘。
 - 备份 = 临时容器 + tar；跨主机共享 = 卷驱动（NFS/云盘）。
 
 **思考题**：为什么数据库镜像的 Dockerfile 要写 `VOLUME /var/lib/mysql`？不写会怎样？（提示：匿名卷 + 没挂命名卷时，数据落在哪、容器删除后命运如何。）
 
-下一篇：[《容器日志与监控》](/云原生/docker/docker-15-logging-monitoring/)。
+下一篇：[《Docker Compose 编排——用 YAML 定义一整栈微服务》](/云原生/docker/docker-13-compose/)。
 
 ---
 

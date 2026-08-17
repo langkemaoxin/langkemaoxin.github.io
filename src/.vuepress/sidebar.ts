@@ -396,6 +396,8 @@ export default sidebar({
       collapsible: true,
       children: [
         "linux-01-nsenter-prerequisites",
+        "linux-02-ip-subnet-gateway",
+        "linux-03-nat",
       ],
     },
     {
@@ -439,7 +441,9 @@ export default sidebar({
       collapsible: true,
       children: [
         "docker-01-what-is-docker",
+        "docker-a01-container-runtime-docker",
         "docker-02-container-vs-vm",
+        "docker-a02-containerd",
         "docker-03-engine-platform",
         "docker-04-install",
         "docker-05-container-and-image",
@@ -462,8 +466,6 @@ export default sidebar({
         "docker-22-container-security",
         "docker-23-build-advanced",
         "docker-24-daemon-ops",
-        "docker-a01-container-runtime-docker",
-        "docker-a02-containerd",
       ],
     },
     {
