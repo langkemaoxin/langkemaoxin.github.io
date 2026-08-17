@@ -1,0 +1,448 @@
+---
+title: bind 挂载实操——Docker 的 -v 在内核层做的事
+sidebarGroup: Linux 基础
+shortTitle: 06 bind 挂载
+order: 6
+date: 2026-08-17T00:00:00.000Z
+category: Linux
+tag:
+  - Linux
+  - 文件系统
+  - mount
+  - Docker前置
+description: 一行 mount --bind 复刻 Docker -v 的内核层真相：挂载点为什么「遮住」原内容、两个路径同一个 inode、逐字段读懂 /proc/self/mountinfo、:ro 的 EROFS 在哪一层、--bind 与 --rbind 的子挂载差别、挂载传播 private/shared 真漏实测——最后在容器的挂载表里找到 -v 留下的那条记录。全部本机实测。
+---
+
+> **Linux 板块 · 第 6 篇**  
+> 上一篇：[《网络命名空间与 iptables 规则实操》](/Linux/basics/linux-05-netns-iptables)（netns/veth/iptables；本篇起从网络转向文件系统）  
+> 读完可接着看：[《数据持久化：Volume、Bind Mount 与 tmpfs》](/云原生/docker/docker-12-data-persistence)（本文是它第五节 Bind Mount 的直接前置）｜[《Docker 的 Namespace》](/云原生/docker/docker-18-namespace)（mnt namespace 的系统展开）
+
+---
+
+## 开头：Docker 系列里欠下的三笔账
+
+Docker 系列[第 12 篇](/云原生/docker/docker-12-data-persistence)讲 Bind Mount 时，说过三句很有底气的话：
+
+> 「bind mount 挂进去的就是宿主机目录本身……不存在复制、也不存在延迟」
+> 「拒绝发生在**内核文件系统层**（EROFS），不是 Docker 模拟的报错」
+> inspect 输出里那串 `"Propagation":"rprivate"`——当时标注「进阶话题，本文不展开」
+
+凭什么断言「同一份文件」？EROFS 到底是哪一层在拒绝？rprivate 是什么、为什么非要它不可？这三笔账，底层是同一个答案：**bind 挂载（bind mount）**——一条 Linux 2.4 时代就进内核的机制。Docker 的 `-v /宿主路径:容器路径` 在内核层做的全部事情，一行 `mount --bind` 就能复刻。
+
+本文动手做一遍：先看懂「挂载」本身，再挂一条 bind、读懂挂载表里的记录、试只读与单文件、搬进 mount namespace、亲手触发一次「挂载泄漏」，最后进容器找到 `-v` 留下的那条记录——开头三笔账逐笔销掉。
+
+> **实验环境**：WSL2 Ubuntu-22.04（root；挂载操作需要），内核 6.6.87.2，util-linux 2.37.2（mount/findmnt），Docker 29.1.3。实验对象全部放在 `/tmp/lab6-*`，文末统一清理，删掉即净。
+
+---
+
+## 一、挂载的本质：挂载点是「盖」上去的
+
+**是什么**：Linux 把所有文件组织成一棵以 `/` 为根的大树；`mount` 做的事，是把一个文件系统的**根**接到这棵树的某个目录上。官方手册原话：「挂上后，该目录**原有的内容（若有）、属主与权限都变得不可见**；只要这个文件系统还挂着，这个路径指的就是新文件系统的根」（[mount(8)](https://man7.org/linux/man-pages/man8/mount.8.html)）。
+
+**为什么先讲它**：bind 挂载只是普通挂载的特例——把「源」从块设备换成**一条路径**。而「遮蔽」这个词，直接解释了 Docker 系列的坑①（bind 一个空目录到 `/usr/share/nginx/html`，镜像自带页面「消失」）。
+
+**怎么做（本机实测）**，挂一块内存文件系统 tmpfs 到目录上，全程盯着这个目录：
+
+```bash
+$ mkdir /tmp/lab6-mp
+$ echo 'underneath' > /tmp/lab6-mp/underneath.txt
+
+$ ls -A /tmp/lab6-mp
+underneath.txt                       # ← 挂载前：目录自己的内容
+
+$ mount -t tmpfs tmpfs6 /tmp/lab6-mp # ← 把一个 tmpfs 挂到这个目录
+$ ls -A /tmp/lab6-mp
+（空）                                # ← 原文件"消失"了
+
+$ echo tmpfs-file > /tmp/lab6-mp/in-tmpfs.txt   # 往挂载点里写
+$ ls -A /tmp/lab6-mp
+in-tmpfs.txt
+
+$ umount /tmp/lab6-mp
+$ ls -A /tmp/lab6-mp
+underneath.txt                       # ← 原内容完好归来；in-tmpfs.txt 随挂载一起消失
+```
+
+**怎么读**：挂载是**替换视图**，不是合并——这个路径此刻看到的是新文件系统的内容，原内容只是被**盖住**了，并没有被删；卸载即「揭开」。写在挂载点里的文件属于那个新文件系统（这里是内存里的 tmpfs），卸载后自然不在原目录。
+
+| 时刻 | `/tmp/lab6-mp` 里看得见 | 为什么 |
+|------|------------------------|--------|
+| 挂载前 | `underneath.txt` | 目录自己的内容 |
+| tmpfs 挂着 | `in-tmpfs.txt` | 原内容被盖住；写入落在 tmpfs |
+| umount 后 | `underneath.txt` | 揭开盖布；tmpfs 里的文件随挂载对象消失 |
+
+**背景知识**：系统当前挂着哪些东西，内核记在 `/proc/self/mountinfo` 里，`mount`、`findmnt` 命令本质上都是在读它——第三节逐字段拆。
+
+---
+
+## 二、bind 挂载：同一份文件，第二个入口
+
+**是什么**：`mount --bind 源路径 目标路径`——把源路径处的那棵子树**原样再挂一次**到目标路径，之后两个路径指向同一份数据。官方手册特意强调：bind「**不会在内核 VFS 里创建任何二等或特殊节点**……内核里没有任何地方记录『这个文件系统是 bind 挂上去的』」（mount(8)）。
+
+**为什么**：不需要块设备、不复制一个字节，就能让任意位置的目录出现在第二个位置，而且这是**内核级**的映射，对进程完全透明——容器投递宿主目录、往容器注入 `/etc/hosts`、chroot 抢救系统，用的都是它。
+
+**怎么做（本机实测）**：
+
+```bash
+$ mkdir /tmp/lab6-src /tmp/lab6-dst
+$ echo 'host-data' > /tmp/lab6-src/a.txt
+$ ls -A /tmp/lab6-dst
+（空）
+
+$ mount --bind /tmp/lab6-src /tmp/lab6-dst
+$ ls -A /tmp/lab6-dst
+a.txt
+$ cat /tmp/lab6-dst/a.txt
+host-data
+```
+
+「同一份文件」的铁证——**inode 同号**：
+
+```bash
+$ stat -c 'inode=%i  size=%s  %n' /tmp/lab6-src/a.txt /tmp/lab6-dst/a.txt
+inode=118907  size=10  /tmp/lab6-src/a.txt
+inode=118907  size=10  /tmp/lab6-dst/a.txt
+```
+
+双向「同步」其实是零成本（注意没有任何同步过程）：
+
+```bash
+$ echo written-from-dst > /tmp/lab6-dst/b.txt    # 从"挂载点"这边写
+$ ls -A /tmp/lab6-src                            # 源那边立刻可见
+a.txt  b.txt
+
+$ echo 'appended-from-src' >> /tmp/lab6-src/a.txt  # 从源这边追加
+$ cat /tmp/lab6-dst/a.txt                          # 挂载点读到
+host-data
+appended-from-src
+```
+
+**怎么读**：inode 是文件在内核里的身份证。两个路径解析到**同一个** inode，意味着它们不是「两份持续同步的数据」，而是**同一份**。Docker 系列那句「不存在复制、也不存在延迟」的全部底气，就在这两行同号的 inode 里。
+
+**背景知识**：你可能会想到硬链接——同一个 inode 多个名字，确实很像。区别在层次：硬链接是**文件系统内**的机制（inode 层，只能作用于单个文件，不能跨文件系统）；bind 是**挂载表**层的机制，搬动的是整棵子树，目录连同里面的所有内容一起走。
+
+---
+
+## 三、挂载表：内核为这条 bind 记了什么
+
+每条挂载，内核都在 `/proc/self/mountinfo` 里有一行记录。刚挂的这条，用三种工具各看一眼：
+
+```bash
+$ findmnt /tmp/lab6-dst
+TARGET        SOURCE                  FSTYPE OPTIONS
+/tmp/lab6-dst /dev/sdd[/tmp/lab6-src] ext4   rw,relatime,discard,errors=remount-ro,data=ordered
+
+$ grep ' /tmp/lab6-dst ' /proc/self/mountinfo
+795 80 8:48 /tmp/lab6-src /tmp/lab6-dst rw,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+
+$ mount | grep lab6-dst
+/dev/sdd on /tmp/lab6-dst type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)
+```
+
+mountinfo 那行**逐字段解剖**（字段定义见 [proc(5)](https://man7.org/linux/man-pages/man5/proc.5.html)）：
+
+| 字段 | 值 | 含义 |
+|------|-----|------|
+| 挂载 ID | `795` | 这条挂载在内核挂载表里的编号 |
+| 父挂载 ID | `80` | 挂在哪个挂载之下（这里是 `/` 所在的挂载） |
+| 设备号 | `8:48` | 数据真正所在的设备（本机是 `/dev/sdd`） |
+| **root** | `/tmp/lab6-src` | **本次挂载露出的是设备上的哪棵子树** ← bind 的记录方式 |
+| 挂载点 | `/tmp/lab6-dst` | 接到目录树的哪个位置 |
+| 挂载选项 | `rw,relatime` | 这条挂载自己的 VFS 标志（第五节的 ro 改的就是它） |
+| 文件系统 | `ext4` | 类型 |
+| 源设备 | `/dev/sdd` | 超级块所在设备 |
+| 超级块选项 | `rw,discard,…` | 设备级的选项 |
+
+**怎么读**：bind 的本质在这里露出来了——**没有新设备、没有数据复制，只是挂载表里多了一条「把 8:48 设备的 `/tmp/lab6-src` 子树，接到 `/tmp/lab6-dst`」的记录**。findmnt 把设备和子树拼成 `/dev/sdd[/tmp/lab6-src]`，**方括号就是 bind 的标志**。`df` 也从侧面佐证：两个路径算的是同一块盘，不存在新空间：
+
+```bash
+$ df /tmp/lab6-src /tmp/lab6-dst | awk '{print $1, $6}'
+Filesystem Mounted
+/dev/sdd /
+/dev/sdd /tmp/lab6-dst
+```
+
+顺带一个易错点。手册原话：bind「只挂（单个文件系统的）一部分，**不带其下可能存在的子挂载**」。实测——先在源目录里再挂一个 tmpfs 当「子挂载」：
+
+```bash
+$ mkdir /tmp/lab6-src/sub
+$ mount -t tmpfs sub6 /tmp/lab6-src/sub          # 源里的"子挂载"
+$ echo 'inside-submount' > /tmp/lab6-src/sub/only-in-sub.txt
+
+$ ls -A /tmp/lab6-dst/sub                        # 第二节已挂的 bind 视角：空
+（空）
+
+$ mkdir /tmp/lab6-rb
+$ mount --rbind /tmp/lab6-src /tmp/lab6-rb       # rbind = 递归，带子挂载
+$ ls -A /tmp/lab6-rb/sub
+only-in-sub.txt
+```
+
+**怎么读**：`--bind` 搬过去的是**挂载那一刻**那棵子树，后来在源里新挂的子挂载不跟过去；要让子挂载跟着走，用 `--rbind`。这个差别文末清理时还会咬人一口（见「清理」的注释）。
+
+---
+
+## 四、它不是软链接：两种「别名」，两个世界
+
+**是什么**：软链接（symlink）和 bind 挂载都能让内容「出现在第二个路径」，但它们活在不同层面。三条命令就能看清差别：
+
+```bash
+# 准备：src 是真目录；via-link 是指向它的软链接；via-bind 是 bind 挂载点
+$ mkdir -p /tmp/lab6-nest/src /tmp/lab6-nest/here/via-bind
+$ ln -sfn /tmp/lab6-nest/src /tmp/lab6-nest/here/via-link
+$ mount --bind /tmp/lab6-nest/src /tmp/lab6-nest/here/via-bind
+```
+
+```bash
+$ readlink /tmp/lab6-nest/here/via-link      # 软链接：是"链接"，读得出目标
+/tmp/lab6-nest/src
+$ readlink /tmp/lab6-nest/here/via-bind; echo "退出码 $?"   # bind：不是链接，读不出
+（无输出）
+退出码 1
+
+$ realpath /tmp/lab6-nest/here/via-link/a.txt    # 软链接：路径解析会"跳"回源
+/tmp/lab6-nest/src/a.txt
+$ realpath /tmp/lab6-nest/here/via-bind/a.txt    # bind：路径就是它看起来的样子
+/tmp/lab6-nest/here/via-bind/a.txt
+
+$ realpath /tmp/lab6-nest/here/via-link/..       # 软链接再上一级——跳进了源的父目录！
+/tmp/lab6-nest
+$ realpath /tmp/lab6-nest/here/via-bind/..       # bind 的"上一级"符合直觉
+/tmp/lab6-nest/here
+```
+
+**怎么读**：软链接是**盘上的对象**——它存在文件系统的 inode 里，谁挂了这个文件系统，谁就看得见同一条链接；路径解析经过它时会跳到目标处。bind 是**挂载表里的记录**——挂载点本身就是一条真实路径，不跳。`via-link/..` 竟然落在 `/tmp/lab6-nest`（源的父目录）而不是 `here`，这就是很多程序（相对路径计算、`..` 回溯、realpath 归一化）对软链接过敏的原因；而 bind 的路径永远「是它看起来的样子」。
+
+**为什么这个区别重要**：挂载表是**按 mount namespace 一份**的（下一节实测），所以 bind 可以做到「**不同进程看到不同的视图**」——这正是容器技术要的性质；软链接刻在盘上，人人看到的都一样，给不了这个性质。Docker 能给每个容器定制挂载视图，根基就在这行区别上。
+
+---
+
+## 五、只读 bind：EROFS 从哪来；单文件也能 bind
+
+**怎么做**：给 bind 加只读，经典写法两步走——先 bind，再 remount：
+
+```bash
+$ mkdir /tmp/lab6-ro
+$ mount --bind /tmp/lab6-src /tmp/lab6-ro
+$ mount -o remount,ro,bind /tmp/lab6-ro        # 第二步只改这一条挂载的标志
+```
+
+（util-linux 2.27 起也支持一步 `mount -o bind,ro 源 目标`——由 mount 命令在用户态自动补第二次 remount 系统调用，手册注明「非原子」；本机 2.37 实测可用，两种写法效果相同。）
+
+写入被拒，报错原文：
+
+```bash
+$ findmnt -no OPTIONS /tmp/lab6-ro
+ro,relatime,discard,errors=remount-ro,data=ordered
+
+$ echo x > /tmp/lab6-ro/try.txt
+bash: /tmp/lab6-ro/try.txt: Read-only file system
+```
+
+而**同一时刻**，源路径照常可写：
+
+```bash
+$ echo 'still-writable' >> /tmp/lab6-src/a.txt && echo OK
+OK
+```
+
+解锁也只是一次 remount：
+
+```bash
+$ mount -o remount,rw,bind /tmp/lab6-ro
+$ findmnt -no OPTIONS /tmp/lab6-ro
+rw,relatime,discard,errors=remount-ro,data=ordered
+```
+
+**怎么读**：只读锁的是**这一条挂载（VFS 条目）**，不是那块盘——回顾第三节 mountinfo 的两组选项：「挂载选项」和「超级块选项」，ro 只改前者，所以源路径（另一条挂载）不受影响。这也是 Docker `:ro` 的实现方式：容器内进程写文件时，内核在 VFS 层直接返回 `EROFS`（errno 30，显示为 `Read-only file system`）——它是内核行为，进程绕不过去，不是 Docker 模拟的报错。第七节会在容器输出里亲眼看到这两组选项同框。
+
+**单文件 bind**：bind 的源不一定是目录，**单个文件**也行（挂载点必须先存在一个同名文件）：
+
+```bash
+$ echo 'KEY=42' > /tmp/lab6-src/app.conf
+$ touch /tmp/lab6-conf                          # 挂载点先建好
+$ mount --bind /tmp/lab6-src/app.conf /tmp/lab6-conf
+
+$ cat /tmp/lab6-conf
+KEY=42
+$ stat -c 'inode=%i  %n' /tmp/lab6-src/app.conf /tmp/lab6-conf
+inode=118919  /tmp/lab6-src/app.conf
+inode=118919  /tmp/lab6-conf
+```
+
+同一 inode，同一份文件。第七节会看到 Docker 注入 `/etc/hosts` 用的正是这一手。
+
+---
+
+## 六、进屋：bind 与 mount namespace、挂载传播
+
+[第 1 篇](/Linux/basics/linux-01-nsenter-prerequisites)讲过：mnt namespace 隔离的就是挂载表。`unshare -m` 建一间「挂载屋子」，在屋里挂 bind：
+
+```bash
+$ mkdir /tmp/lab6-ns
+
+$ unshare -m sh -c 'mount --bind /tmp/lab6-src /tmp/lab6-ns && ls -A /tmp/lab6-ns'
+a.txt  app.conf  b.txt  sub
+
+$ ls -A /tmp/lab6-ns                           # 屋外（宿主）同一时刻看
+（空）
+```
+
+**怎么读**：新 mnt ns 拿到的是挂载表的**副本**，屋里后挂的 bind 屋外自然没有——和[第 5 篇](/Linux/basics/linux-05-netns-iptables)「iptables 规则属于 netns」是同一个道理：**视图类资源跟着命名空间走**。
+
+但「屋外看不见」其实有两层原因，第二层叫**挂载传播**（propagation）。先看本机挂载点的传播属性：
+
+```bash
+$ findmnt -no TARGET,PROPAGATION /
+/      private
+```
+
+挂载点除了 rw/ro，还带一个传播属性（mount(8)「Shared subtree operations」一节）：
+
+| 属性 | 含义 |
+|------|------|
+| **private** | 这里的挂载/卸载事件**不外传**，别人的也传不进来 |
+| **shared** | 同组（peer group）成员之间**互相传播**挂载事件 |
+| slave / unbindable | 单向只收 / 禁止被 bind（完整语义见 [mount_namespaces(7)](https://man7.org/linux/man-pages/man7/mount_namespaces.7.html)） |
+
+「传播」不是比喻，**真的能漏**。把一个挂载点显式设为 shared，再让屋里（`--propagation unchanged`，即不让 unshare 自动设 private）往它下面挂一个 bind：
+
+```bash
+$ mount -t tmpfs shared6 /tmp/lab6-shared
+$ mount --make-shared /tmp/lab6-shared
+$ echo 'LEAKED-FILE' > /tmp/lab6-src/proof.txt
+
+$ unshare -m --propagation unchanged sh -c 'mount --bind /tmp/lab6-src /tmp/lab6-shared/leak'
+# （unshare 进程已退出）
+
+$ ls -A /tmp/lab6-shared/leak                   # 宿主此刻看——漏出来了
+a.txt  app.conf  b.txt  proof.txt  sub
+$ cat /tmp/lab6-shared/leak/proof.txt
+LEAKED-FILE
+```
+
+unshare 里的 shell 早已退出，但它屋里挂的那条 bind 出现在了**宿主**的挂载表里。对照组：private 挂载点做完全相同的操作，宿主那边空空如也（本机实测，`ls /tmp/lab6-priv/leak` 无输出）。
+
+**怎么读**：Docker inspect 里那个 `"Propagation":"rprivate"` 现在有了全解——**r**ecursive **private**：Docker 把挂进容器的子树**显式设成递归私有**，焊死传播门，保证容器内外的挂载操作互不波及。另外注意环境差异：本机（WSL）的 `/` 本身是 private，且 `unshare -m` 默认也会把新 ns 整棵设为 private（unshare(1) 的默认行为），所以本机「想漏都要特意造」；标准 systemd 主机的 `/` 通常是 shared，在那类机器上「屋里挂载漏到宿主」是真实存在的坑——更显出 Docker 一律 rprivate 的必要性。
+
+---
+
+## 七、回到 Docker：`-v` 那一行，内核层到底做了什么
+
+材料齐了。跑一个 busybox 容器，bind 同一个源目录，进容器看挂载表：
+
+```bash
+$ docker run --rm -v /tmp/lab6-src:/src busybox grep ' /src ' /proc/self/mountinfo
+955 946 8:48 /tmp/lab6-src /src rw,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+```
+
+和第三节宿主自己那条并排看：
+
+| 字段 | 宿主（第三节） | 容器里 |
+|------|---------------|--------|
+| 设备号 | `8:48` | `8:48`——**同一块盘** |
+| root | `/tmp/lab6-src` | `/tmp/lab6-src`——**同一棵子树** |
+| 挂载点 | `/tmp/lab6-dst` | `/src`——只是换成了容器内路径 |
+| 父挂载 | `80`（`/` 所在挂载） | `946`（容器的 overlay 根，见[Docker 系列 17 篇](/云原生/docker/docker-17-unionfs)） |
+
+inode 跨过容器边界仍然同号：
+
+```bash
+$ docker run --rm -v /tmp/lab6-src:/src busybox stat -c 'inode=%i' /src/a.txt
+118907
+$ stat -c 'inode=%i' /tmp/lab6-src/a.txt         # 宿主同一文件
+118907
+```
+
+`:ro` 版——两组选项同框，肉眼看懂「锁的只是挂载」：
+
+```bash
+$ docker run --rm -v /tmp/lab6-src:/src:ro busybox sh -c \
+    'grep " /src " /proc/self/mountinfo; echo try > /src/ro-try.txt'
+955 946 8:48 /tmp/lab6-src /src ro,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+sh: can't create /src/ro-try.txt: Read-only file system
+```
+
+挂载选项是 `ro`、超级块选项仍是 `rw`——和第五节本机实验一模一样，报错原文也是同一个 `Read-only file system`（EROFS）。
+
+单文件 bind 的现成用户——**每个容器**的 `/etc/hosts`、`/etc/hostname`、`/etc/resolv.conf`：
+
+```bash
+$ docker run --rm busybox grep -E ' /etc/(hosts|resolv.conf|hostname) ' /proc/self/mountinfo
+955 946 8:48 /var/lib/docker/containers/1972…/resolv.conf /etc/resolv.conf rw,relatime - ext4 /dev/sdd rw,…
+956 946 8:48 /var/lib/docker/containers/1972…/hostname    /etc/hostname    rw,relatime - ext4 /dev/sdd rw,…
+957 946 8:48 /var/lib/docker/containers/1972…/hosts       /etc/hosts       rw,relatime - ext4 /dev/sdd rw,…
+```
+
+（容器 ID 目录名已截短。）dockerd 为容器生成这三个文件后，**逐个单文件 bind** 进容器的挂载表——第五节手搓的就是这件事的原型；`/etc/resolv.conf` 里写着 `127.0.0.11`，那正是[第 5 篇](/Linux/basics/linux-05-netns-iptables)拆过的嵌入式 DNS 的入口。
+
+**开头三笔账，逐笔销掉**：
+
+1. 「同一份文件、无复制无延迟」→ inode 同号（第二、七节），两边操作的是同一个文件对象
+2. 「EROFS 在内核层」→ 只读是挂载选项（第五节），容器输出里 `ro` 与 `rw` 同框为证
+3. 「rprivate 不展开」→ 第六节传播属性；Docker 主动递归设 private，焊死跨命名空间的挂载传播
+
+再加上 Docker 系列的坑①（bind 空目录遮蔽镜像内容）——就是第一节的盖布。
+
+**一句话总结**：`docker run -v /宿主路径:容器路径` = 新建 mnt namespace（第 1 篇）＋ 在它的挂载表里写一条 bind 记录（本文）＋ 默认递归 private（第六节）。
+
+---
+
+## 八、开机自动挂：/etc/fstab 里的 bind
+
+上面的挂载都是临时的，重启即失。 fstab 一行就能固化（手册原例就是 `/olddir /newdir none bind`）：
+
+```bash
+$ echo '/tmp/lab6-src /tmp/lab6-fstab none bind 0 0' >> /etc/fstab
+$ mkdir /tmp/lab6-fstab
+$ mount -a                                      # 立即生效，无需重启
+
+$ findmnt /tmp/lab6-fstab
+TARGET          SOURCE                  FSTYPE OPTIONS
+/tmp/lab6-fstab /dev/sdd[/tmp/lab6-src] ext4   rw,relatime,discard,errors=remount-ro,data=ordered
+```
+
+标准 Linux 由 systemd 在启动时处理 fstab。**本机 WSL 注意**：`/etc/wsl.conf` 里 `automount` 的 `mountFsTab=false`，WSL 启动并不处理 `/etc/fstab`，重启后这条 bind 不会自动挂上，需手动 `mount -a`（或交给 systemd 挂载单元）——环境差异，如实记录。（实测完已把这行从 fstab 删除。）
+
+**清理**（本文全部实验对象，一步不落）：
+
+```bash
+$ umount /tmp/lab6-shared/leak                  # 先卸"漏"进宿主的那条
+$ umount /tmp/lab6-rb/sub /tmp/lab6-src/sub     # rbind 复制出的子挂载要先卸
+$ umount /tmp/lab6-dst /tmp/lab6-rb /tmp/lab6-ro /tmp/lab6-conf \
+         /tmp/lab6-nest/here/via-bind /tmp/lab6-shared /tmp/lab6-priv
+$ rm -rf /tmp/lab6-*
+$ findmnt | grep lab6 || echo 挂载表无残留
+挂载表无残留
+```
+
+（第二条注释是实测踩的坑：直接卸 rbind 的顶层会报 `Device or resource busy`，因为目标侧复制出的子挂载还占着 `/tmp/lab6-rb/sub`——正好是第三节「子挂载」知识的现场复习。）
+
+---
+
+## 小结
+
+- **挂载的本质**：把文件系统的根「盖」到某个路径上，原内容被遮蔽、卸载即揭开——bind 空目录让镜像内容「消失」就是这个盖布
+- **bind 挂载**：挂载表里多一条「设备 + root 子树 → 新挂载点」的记录；两个路径同一 inode、零复制零延迟；`--bind` 不带子挂载，`--rbind` 才带
+- **与软链接的本质区别**：链接是盘上的对象（人人同见），bind 是挂载表里的记录（**每个 mnt ns 一份**）——容器按容器定制视图的根基
+- **只读 bind**：`remount,ro,bind` 锁的是挂载（VFS 条目），源路径仍可写；Docker `:ro` 的 EROFS 是同一机制，内核行为、进程绕不过
+- **挂载传播**：private 不外传（本机默认），shared 真会跨命名空间「漏」（实测复现）；Docker 的 `rprivate` = 递归 private，焊死传播门
+- **Docker 的 `-v`** = mnt ns + 一条 bind 记录 + rprivate；`/etc/hosts` 等三件套是单文件 bind 的现成用户
+- **fstab**：`/源路径 /目标路径 none bind 0 0`；WSL 默认不处理 fstab，需手动 `mount -a`
+
+---
+
+## 思考题
+
+> 1. 第七节容器里 `ls -A /src` 能看到 `sub` 目录，但里面是空的（宿主在 `/tmp/lab6-src/sub` 挂的 tmpfs 文件看不到）。不加任何额外参数的前提下，宿主**后来**在 `/tmp/lab6-src` 下新挂一个子挂载，已经运行中的容器能看到吗？想让容器里 `--rbind` 式地全看到，该查 Docker 的哪个机制？（提示：第三节 bind 只搬「挂载那一刻」的子树；第六节讲过一种让挂载事件「跟过去」的属性。）
+> 2. 容器里明明是 root，为什么 `umount /src` 卸不掉宿主 bind 进来的挂载？（提示：umount(2) 需要 `CAP_SYS_ADMIN` 能力；`docker run` 默认给容器的能力白名单里没有它——能力模型见[第 1 篇](/Linux/basics/linux-01-nsenter-prerequisites)组块 5。）
+
+---
+
+## 参考资料
+
+- [mount(8) - Linux manual page](https://man7.org/linux/man-pages/man8/mount.8.html)（util-linux 2.43.devel 手册，2026-05 取自上游；本机 util-linux 2.37.2）——bind 操作、fstab 写法、只读两层语义、Shared subtree operations
+- [mount_namespaces(7)](https://man7.org/linux/man-pages/man7/mount_namespaces.7.html)（man-pages 6.18）——挂载命名空间与传播属性完整语义
+- [proc(5)](https://man7.org/linux/man-pages/man5/proc.5.html) —— `/proc/self/mountinfo` 字段定义 ｜ [fstab(5)](https://man7.org/linux/man-pages/man5/fstab.5.html) ｜ [findmnt(8)](https://man7.org/linux/man-pages/man8/findmnt.8.html)
+- [Docker Docs · Bind mounts](https://docs.docker.com/engine/storage/bind-mounts/)（2026-07 版）——`-v`/`--mount` 行为、遮蔽与自动建目录
+- 本机实测环境：WSL2 Ubuntu-22.04（内核 6.6.87.2，root）、util-linux 2.37.2、Docker 29.1.3（busybox 镜像）

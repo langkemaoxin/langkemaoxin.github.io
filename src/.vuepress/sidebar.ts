@@ -400,6 +400,7 @@ export default sidebar({
         "linux-03-tcpdump",
         "linux-04-nat",
         "linux-05-netns-iptables",
+        "linux-06-bind-mount",
       ],
     },
     {
