@@ -13,7 +13,7 @@ description: Docker 安装三种方式——离线、在线与现成虚拟机
 ---
 
 > **Docker 系列 · 第 4/24 篇**
-> 上一篇：[《Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作》](/云原生/docker/docker-02-engine-platform) · 下一篇：[《容器与镜像——类与实例、读写层与生命周期》](/云原生/docker/docker-05-container-and-image)
+> 上一篇：[《Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作》](/云原生/docker/docker-03-engine-platform) · 下一篇：[《容器与镜像——类与实例、读写层与生命周期》](/云原生/docker/docker-05-container-and-image)
 
 ---
 
@@ -231,8 +231,8 @@ docker pull alpine:3.21
 
 #### 和后续文章的关系
 
-- 装 **Harbor**（[第 10 篇](/云原生/docker/docker-09-harbor)）前，请先完成本节验收；在线安装包很小，慢通常慢在 `install.sh` 拉镜像。  
-- `daemon.json` 其它项（live-restore、日志等）见[第 24 篇](/云原生/docker/docker-23-daemon-ops)。
+- 装 **Harbor**（[第 10 篇](/云原生/docker/docker-10-harbor)）前，请先完成本节验收；在线安装包很小，慢通常慢在 `install.sh` 拉镜像。  
+- `daemon.json` 其它项（live-restore、日志等）见[第 24 篇](/云原生/docker/docker-24-daemon-ops)。
 
 ### 启动与验证
 

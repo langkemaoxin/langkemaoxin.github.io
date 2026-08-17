@@ -13,7 +13,7 @@ description: Namespace 隔离——容器如何「假装」自己是一台独立
 ---
 
 > **Docker 系列 · 第 18/24 篇**
-> 上一篇：[《UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的》](/云原生/docker/docker-14-unionfs) · 下一篇：[《进程视角看容器——容器内外 PID 对照与生命周期》](/云原生/docker/docker-11-process-view)
+> 上一篇：[《UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的》](/云原生/docker/docker-17-unionfs) · 下一篇：[《进程视角看容器——容器内外 PID 对照与生命周期》](/云原生/docker/docker-19-process-view)
 
 ---
 
@@ -179,7 +179,7 @@ chdir("/");
 | `nsenter -n` 借宿主机工具查容器网络 | Network Namespace、veth、docker0、Libnetwork |
 | 进容器开 shell、跑探测命令 | MNT + chroot / pivot_root；为何「看不见」宿主机路径 |
 
-两篇合读：第 7 篇负责动手进得去，本篇解释「为什么进得去、为什么看不见宿主机进程」。进程在宿主机上的真实 PID 对照另见[第 19 篇](/云原生/docker/docker-11-process-view)。
+两篇合读：第 7 篇负责动手进得去，本篇解释「为什么进得去、为什么看不见宿主机进程」。进程在宿主机上的真实 PID 对照另见[第 19 篇](/云原生/docker/docker-19-process-view)。
 
 ---
 

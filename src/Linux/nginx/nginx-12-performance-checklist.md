@@ -150,7 +150,7 @@ http {
 
 延伸阅读：
 
-- 容器 HTTPS：[Docker 部署 HTTPS Nginx](/云原生/docker/docker-19-如何通过docker部署https访问的nginx应用)  
+- 容器 HTTPS：[Docker 部署 HTTPS Nginx](/云原生/docker/docker-14-https-nginx)  
 - K8s 前端代理：[集群中部署微服务前端代理 Nginx](/云原生/platform/platform-17-k8s集群中部署微服务项目前端代理服务-nginx)  
 - TCP/UDP：`stream{}`、njs、Gateway Fabric / Ingress ——可作为二期专题
 

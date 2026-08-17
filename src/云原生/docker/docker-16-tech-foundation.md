@@ -13,7 +13,7 @@ description: Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如�
 ---
 
 > **Docker 系列 · 第 16/24 篇**
-> 上一篇：[《容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧》](/云原生/docker/docker-20-logging-monitoring) · 下一篇：[《UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的》](/云原生/docker/docker-14-unionfs)
+> 上一篇：[《容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧》](/云原生/docker/docker-15-logging-monitoring) · 下一篇：[《UnionFS 与镜像分层——Docker 镜像为什么是一层一层叠出来的》](/云原生/docker/docker-17-unionfs)
 >
 > 本篇起进入**底层原理**阶段：先总览地图，再分篇深入 UnionFS → Namespace → 进程视角 → Cgroups → Daemon/runtime。
 
@@ -109,7 +109,7 @@ Namespaces 解决「看见谁」，**Cgroups 解决「能用多少」**。
 
 常用子系统包括：`cpu`、`memory`、`blkio`、`devices`、`freezer` 等。Docker 为每个容器在 `/sys/fs/cgroup/.../docker/<容器ID>/` 下创建对应 cgroup，通过修改 `cpu.cfs_quota_us`、`memory.limit_in_bytes` 等文件限制资源。
 
-详见：[《CGroups 限资源》](/云原生/docker/docker-16-cgroups)
+详见：[《CGroups 限资源》](/云原生/docker/docker-20-cgroups)
 
 ### 4.3 UnionFS —— 镜像怎么叠
 
@@ -119,7 +119,7 @@ Namespaces 解决「看见谁」，**Cgroups 解决「能用多少」**。
 - Dockerfile 每条指令产生一层
 - 运行时在最上层叠加可写 Container Layer
 
-详见：[《UnionFS 与镜像分层》](/云原生/docker/docker-14-unionfs)
+详见：[《UnionFS 与镜像分层》](/云原生/docker/docker-17-unionfs)
 
 ---
 
@@ -150,11 +150,11 @@ flowchart LR
 
 | 篇目 | 主题 | 链接 |
 |------|------|------|
-| **14** | UnionFS、AUFS、镜像分层与 build 缓存 | [docker-14-unionfs](/云原生/docker/docker-14-unionfs) |
-| **15** | 进程/网络隔离、Libnetwork、Chroot | [docker-15-namespace](/云原生/docker/docker-15-namespace) |
-| **16** | Cgroups 子系统与资源限制实操 | [docker-16-cgroups](/云原生/docker/docker-16-cgroups) |
-| **17** | bridge/host/none/overlay 等网络模式 | [docker-17-network](/云原生/docker/docker-17-network) |
-| **18** | Compose YAML 与常用命令 | [docker-18-compose](/云原生/docker/docker-18-compose) |
+| **14** | UnionFS、AUFS、镜像分层与 build 缓存 | [docker-17-unionfs](/云原生/docker/docker-17-unionfs) |
+| **15** | 进程/网络隔离、Libnetwork、Chroot | [docker-18-namespace](/云原生/docker/docker-18-namespace) |
+| **16** | Cgroups 子系统与资源限制实操 | [docker-20-cgroups](/云原生/docker/docker-20-cgroups) |
+| **17** | bridge/host/none/overlay 等网络模式 | [docker-11-network](/云原生/docker/docker-11-network) |
+| **18** | Compose YAML 与常用命令 | [docker-13-compose](/云原生/docker/docker-13-compose) |
 
 ---
 

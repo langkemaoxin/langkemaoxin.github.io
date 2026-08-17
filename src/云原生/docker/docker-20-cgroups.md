@@ -13,7 +13,7 @@ description: CGroups 限资源——防止一个容器吃光整台机器
 ---
 
 > **Docker 系列 · 第 20/24 篇**
-> 上一篇：[《进程视角看容器——容器内外 PID 对照与生命周期》](/云原生/docker/docker-11-process-view) · 下一篇：[《Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链》](/云原生/docker/docker-12-daemon-runtime)
+> 上一篇：[《进程视角看容器——容器内外 PID 对照与生命周期》](/云原生/docker/docker-19-process-view) · 下一篇：[《Docker Daemon 与 runtime——从 dockerd 到 runc 的调用链》](/云原生/docker/docker-21-daemon-runtime)
 
 ---
 

@@ -1,0 +1,8 @@
+﻿wsl : /mnt/e/MyGithub/langkemaoxin.github.io/src/浜戝師鐢?docker/_lab_net.sh: line 2: set: pipefail
+所在位置 E:\DevCache\tmp\ps-script-32192db8-9ba9-4b3c-b94b-31574cfcfaed.ps1:106 字符: 1
++ wsl -e bash -lc 'sed -i "s/\r$//" /mnt/e/MyGithub/langkemaoxin.github ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (/mnt/e/MyGithub...: set: pipefail:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+: invalid option name

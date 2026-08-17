@@ -35,9 +35,9 @@ description: Containerd 课程笔记附录——轻量级容器管理工具补�
 - 对于容器编排服务来说，运行时只需要使用containerd+runC，更加轻量，容易管理。
 - 独立之后containerd的特性演进可以和Docker Engine分开，专注容器运行时管理，可以更稳定。
 
-![image-20220218112209583](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218112209583.png)
+![image-20220218112209583](/云原生/docker/docker-a02-containerd/image-20220218112209583.png)
 
-![image-20220218221135407](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218221135407.png)
+![image-20220218221135407](/云原生/docker/docker-a02-containerd/image-20220218221135407.png)
 
 ## 1.1 Containerd前世今生
 
@@ -54,7 +54,7 @@ description: Containerd 课程笔记附录——轻量级容器管理工具补�
 
 Containerd设计的目的是为了嵌入到Kubernetes中使用，它是一个工业级的容器运行时，不提供给开发人员和终端用户直接使用，这样就避免了与Docker产生竞争，但事实上，Containerd已经实现大多数容器管理功能，例如：容器生命周期管理、容器镜像传输和管理、容器存储与网络管理等。
 
-![image-20220220093315501](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220220093315501.png)
+![image-20220220093315501](/云原生/docker/docker-a02-containerd/image-20220220093315501.png)
 
 - Containerd 采用标准的 C/S 架构
   - 服务端通过 GRPC 协议提供稳定的 API
@@ -78,19 +78,19 @@ Containerd设计的目的是为了嵌入到Kubernetes中使用，它是一个工
 - **Snapshot Plugin** : 用来管理容器镜像的文件系统快照。镜像中的每一个 layer 都会被解压成文件系统快照，类似于 Docker 中的 `graphdriver`。
 - **Metrics** : 暴露各个组件的监控指标。
 
-![image-20220220093649732](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220220093649732.png)
+![image-20220220093649732](/云原生/docker/docker-a02-containerd/image-20220220093649732.png)
 
 ### 1.2.3 架构缩略图
 
 Containerd 被分为三个大块：`Storage`、`Metadata` 和 `Runtime`
 
-![image-20220220093958799](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220220093958799.png)
+![image-20220220093958799](/云原生/docker/docker-a02-containerd/image-20220220093958799.png)
 
 ### 1.2.4 与其它容器运行时工具性能对比
 
 这是使用 bucketbench 对 Docker、crio 和 Containerd 的性能测试结果，包括启动、停止和删除容器，以比较它们所耗的时间：
 
-![image-20220220095224783](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220220095224783.png)
+![image-20220220095224783](/云原生/docker/docker-a02-containerd/image-20220220095224783.png)
 
 结论： Containerd 在各个方面都表现良好，总体性能优于 `Docker` 和 `crio` 。
 
@@ -176,13 +176,13 @@ Containerd有两种安装包：
 
 ### 2.2.1 获取安装包
 
-![image-20220218114231583](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218114231583.png)
+![image-20220218114231583](/云原生/docker/docker-a02-containerd/image-20220218114231583.png)
 
-![image-20220218114320745](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218114320745.png)
+![image-20220218114320745](/云原生/docker/docker-a02-containerd/image-20220218114320745.png)
 
-![image-20220218114353357](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218114353357.png)
+![image-20220218114353357](/云原生/docker/docker-a02-containerd/image-20220218114353357.png)
 
-![image-20220218123330897](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218123330897.png)
+![image-20220218123330897](/云原生/docker/docker-a02-containerd/image-20220218123330897.png)
 
 ~~~powershell
 下载Containerd安装包
@@ -805,13 +805,13 @@ Server:
 
 ##### 2.2.2.10.1 获取runC
 
-![image-20220218215925093](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218215925093.png)
+![image-20220218215925093](/云原生/docker/docker-a02-containerd/image-20220218215925093.png)
 
-![image-20220218215958943](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218215958943.png)
+![image-20220218215958943](/云原生/docker/docker-a02-containerd/image-20220218215958943.png)
 
-![image-20220218220023181](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218220023181.png)
+![image-20220218220023181](/云原生/docker/docker-a02-containerd/image-20220218220023181.png)
 
-![image-20220218220124773](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218220124773.png)
+![image-20220218220124773](/云原生/docker/docker-a02-containerd/image-20220218220124773.png)
 
 ~~~powershell
 使用wget下载
@@ -1561,9 +1561,9 @@ nginx2       docker.io/library/nginx:alpine    io.containerd.runc.v2
 
 ## 5.1 Harbor准备
 
-![image-20220218211611942](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218211611942.png)
+![image-20220218211611942](/云原生/docker/docker-a02-containerd/image-20220218211611942.png)
 
-![image-20220218211755113](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220218211755113.png)
+![image-20220218211755113](/云原生/docker/docker-a02-containerd/image-20220218211755113.png)
 
 ## 5.2 配置Containerd使用Harbor仓库
 
@@ -1770,7 +1770,7 @@ config-sha256:dd025cdfe837e1c6395365870a491cf16bae668218edb07d85c626928a60e478: 
 elapsed: 0.5 s                                                                    total:  9.3 Ki (18.1 KiB/s)
 ~~~
 
-![image-20220220111100489](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220220111100489.png)
+![image-20220220111100489](/云原生/docker/docker-a02-containerd/image-20220220111100489.png)
 
 ~~~powershell
 下载已上传容器镜像
@@ -1866,13 +1866,13 @@ nginxapp     docker.io/library/nginx:latest    io.containerd.runc.v2
 
 ### 7.1.1 获取CNI工具源码
 
-![image-20220219095355845](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219095355845.png)
+![image-20220219095355845](/云原生/docker/docker-a02-containerd/image-20220219095355845.png)
 
-![image-20220219095427153](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219095427153.png)
+![image-20220219095427153](/云原生/docker/docker-a02-containerd/image-20220219095427153.png)
 
-![image-20220219095515772](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219095515772.png)
+![image-20220219095515772](/云原生/docker/docker-a02-containerd/image-20220219095515772.png)
 
-![image-20220219095615236](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219095615236.png)
+![image-20220219095615236](/云原生/docker/docker-a02-containerd/image-20220219095615236.png)
 
 ~~~powershell
 使用wget下载cni工具源码包
@@ -1906,13 +1906,13 @@ CODE-OF-CONDUCT.md  CONVENTIONS.md   Documentation  go.sum  libcni         logo.
 
 ### 7.1.2 获取CNI Plugins（CNI插件）
 
-![image-20220219095946940](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219095946940.png)
+![image-20220219095946940](/云原生/docker/docker-a02-containerd/image-20220219095946940.png)
 
-![image-20220219100008810](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219100008810.png)
+![image-20220219100008810](/云原生/docker/docker-a02-containerd/image-20220219100008810.png)
 
-![image-20220219100056059](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219100056059.png)
+![image-20220219100056059](/云原生/docker/docker-a02-containerd/image-20220219100056059.png)
 
-![image-20220219100303944](/云原生/docker/docker-21-轻量级容器管理工具-containerd/image-20220219100303944.png)
+![image-20220219100303944](/云原生/docker/docker-a02-containerd/image-20220219100303944.png)
 
 ~~~powershell
 使用wget下载cni插件工具源码包

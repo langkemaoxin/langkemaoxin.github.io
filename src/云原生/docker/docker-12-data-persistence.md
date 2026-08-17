@@ -13,7 +13,7 @@ description: 数据持久化——Volume、Bind Mount 与 tmpfs：容器删了�
 ---
 
 > **Docker 系列 · 第 12/24 篇**
-> 上一篇：[《Docker 网络模式与实操——从 docker0 到 overlay》](/云原生/docker/docker-17-network) · 下一篇：[《Docker Compose 编排——用 YAML 定义一整栈微服务》](/云原生/docker/docker-18-compose)
+> 上一篇：[《Docker 网络模式与实操——从 docker0 到 overlay》](/云原生/docker/docker-11-network) · 下一篇：[《Docker Compose 编排——用 YAML 定义一整栈微服务》](/云原生/docker/docker-13-compose)
 
 ---
 
@@ -21,7 +21,7 @@ description: 数据持久化——Volume、Bind Mount 与 tmpfs：容器删了�
 
 你用容器跑了个 MySQL，测试数据灌了两周。某天升级镜像版本：`docker rm` 旧容器、`docker run` 新容器——**库没了，两周白干**。
 
-这不是 bug，是设计：容器的文件系统由「只读镜像层 + 一个可写层」组成（[第 5 篇](/云原生/docker/docker-05-container-and-image/)讲过心智模型；UnionFS 细节见后文[第 17 篇](/云原生/docker/docker-14-unionfs/)），**可写层属于容器**，容器删除它就没了。`docker rm` 从不留情。
+这不是 bug，是设计：容器的文件系统由「只读镜像层 + 一个可写层」组成（[第 5 篇](/云原生/docker/docker-05-container-and-image/)讲过心智模型；UnionFS 细节见后文[第 17 篇](/云原生/docker/docker-17-unionfs/)），**可写层属于容器**，容器删除它就没了。`docker rm` 从不留情。
 
 要让数据活得比容器久，Docker 提供三种把数据「挂」到容器外的机制：**Volume（卷）、Bind Mount（绑定挂载）、tmpfs（内存挂载）**。本篇全部在本机实测（Docker 29.x，WSL2 Ubuntu-22.04），看完你能准确回答三个问题：三种机制各适合什么场景？为什么 `volume prune` 不会误删你的数据库卷？卷里的数据到底存在宿主机哪里？
 
@@ -256,7 +256,7 @@ docker volume create --driver local \
 | 跨主机共享存储 | 卷驱动（NFS/云盘/分布式存储） |
 | 迁移/备份卷 | tar 打包套路（第六节） |
 
-下一篇 Compose 会用到挂载字段；先熟悉下面写法，到[第 13 篇](/云原生/docker/docker-18-compose/)就能对上每一行含义：
+下一篇 Compose 会用到挂载字段；先熟悉下面写法，到[第 13 篇](/云原生/docker/docker-13-compose/)就能对上每一行含义：
 
 ```yaml
 services:
@@ -282,7 +282,7 @@ volumes:
 
 **思考题**：为什么数据库镜像的 Dockerfile 要写 `VOLUME /var/lib/mysql`？不写会怎样？（提示：匿名卷 + 没挂命名卷时，数据落在哪、容器删除后命运如何。）
 
-下一篇：[《容器日志与监控》](/云原生/docker/docker-20-logging-monitoring/)。
+下一篇：[《容器日志与监控》](/云原生/docker/docker-15-logging-monitoring/)。
 
 ---
 

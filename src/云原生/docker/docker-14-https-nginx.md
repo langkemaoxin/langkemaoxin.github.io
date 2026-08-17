@@ -15,7 +15,7 @@ description: 如何通过 docker 部署 HTTPS 访问的 nginx 应用——目录
 ---
 
 > **Docker 系列 · 第 14/24 篇**
-> 上一篇：[《Docker Compose 编排——用 YAML 定义一整栈微服务》](/云原生/docker/docker-18-compose) · 下一篇：[《容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧》](/云原生/docker/docker-20-logging-monitoring)
+> 上一篇：[《Docker Compose 编排——用 YAML 定义一整栈微服务》](/云原生/docker/docker-13-compose) · 下一篇：[《容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧》](/云原生/docker/docker-15-logging-monitoring)
 >
 > 主线实战篇：在已掌握网络与 Compose 的基础上，部署可 HTTPS 访问的 nginx；插图已迁入博客静态目录。
 

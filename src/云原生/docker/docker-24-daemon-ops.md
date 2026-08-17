@@ -13,7 +13,7 @@ description: Daemon 运维——daemon.json、live-restore 与远程管理
 ---
 
 > **Docker 系列 · 第 24/24 篇**
-> 上一篇：[《构建进阶——多阶段构建、缓存优化与 BuildKit》](/云原生/docker/docker-22-build-advanced)
+> 上一篇：[《构建进阶——多阶段构建、缓存优化与 BuildKit》](/云原生/docker/docker-23-build-advanced)
 
 ---
 
@@ -42,12 +42,12 @@ dockerd 启动时读 `/etc/docker/daemon.json`，本机的真实配置（日志�
 | 配置项 | 作用 | 验证方式 |
 |------|------|------|
 | `registry-mirrors` | 镜像拉取加速（配置步骤与验收见[第 4 篇](/云原生/docker/docker-04-install)） | `docker info` Registry Mirrors |
-| `log-driver` / `log-opts` | 全局日志驱动与轮转（[第 15 篇](/云原生/docker/docker-20-logging-monitoring/)） | `docker info` Logging Driver |
+| `log-driver` / `log-opts` | 全局日志驱动与轮转（[第 15 篇](/云原生/docker/docker-15-logging-monitoring/)） | `docker info` Logging Driver |
 | `live-restore` | daemon 重启/升级时容器不断（本篇主角） | `docker info` Live Restore |
 | `metrics-addr` | 暴露 Prometheus 指标端点 | `curl :9323/metrics` |
 | `data-root` | 数据目录迁移（默认 `/var/lib/docker`） | `docker info` Docker Root Dir |
 | `storage-driver` | 存储驱动（现代默认 `overlayfs`，即原 overlay2 演进） | `docker info` Storage Driver |
-| `insecure-registries` | HTTP 私有仓库白名单；HTTPS + 已信任 CA 的 Harbor 主路径通常不必靠它（细节见[第 10 篇](/云原生/docker/docker-09-harbor)） | `docker info` Insecure Registries |
+| `insecure-registries` | HTTP 私有仓库白名单；HTTPS + 已信任 CA 的 Harbor 主路径通常不必靠它（细节见[第 10 篇](/云原生/docker/docker-10-harbor)） | `docker info` Insecure Registries |
 | `debug` | daemon 调试日志 | daemon 日志变详细 |
 
 ```
@@ -74,7 +74,7 @@ rabbit3   Up 4 hours                        rabbit3   Up 16 seconds
 new-api   Up 4 hours (healthy)              new-api   Up 9 seconds (health: starting)
 ```
 
-**所有容器被杀掉再拉起**（幸亏配了 `restart: unless-stopped`，见 [第 12 篇](/云原生/docker/docker-19-data-persistence/)——但「重启」本身就是一次服务中断：连接断开、内存态丢失、数据库要做崩溃恢复）。对生产上有状态服务，这就是升级窗口的痛。
+**所有容器被杀掉再拉起**（幸亏配了 `restart: unless-stopped`，见 [第 12 篇](/云原生/docker/docker-12-data-persistence/)——但「重启」本身就是一次服务中断：连接断开、内存态丢失、数据库要做崩溃恢复）。对生产上有状态服务，这就是升级窗口的痛。
 
 ---
 
@@ -127,7 +127,7 @@ rabbit@rabbit3                               # 集群三节点完好
 | 场景 | live-restore 能救吗 |
 |------|:---:|
 | 重启 dockerd（升级 Docker、改配置） | ✅ 本篇实测 |
-| dockerd 崩溃 | ✅（容器本来就独立于 daemon 生命周期，[第 21 篇](/云原生/docker/docker-12-daemon-runtime/)的 shim 机制） |
+| dockerd 崩溃 | ✅（容器本来就独立于 daemon 生命周期，[第 21 篇](/云原生/docker/docker-21-daemon-runtime/)的 shim 机制） |
 | **重启/升级 containerd** | ❌（shim 是 containerd 的孩子，它动容器就动） |
 | 宿主机重启 | ❌（靠 restart 策略拉起） |
 | daemon 停太久（跨版本超兼容期） | ⚠️ 升级跨大版本时官方建议别依赖它停太久 |
@@ -145,7 +145,7 @@ engine_daemon_container_actions_seconds_bucket{action="changes",le="0.005"} 1
 ...
 ```
 
-`engine_daemon_*` 系列指标覆盖容器动作耗时、engine 状态、镜像/构建统计。配上 Prometheus 抓取任务 + Grafana 面板（或直接用现成的 docker engine dashboard），[第 15 篇](/云原生/docker/docker-20-logging-monitoring/)说的「机器采集」就闭环了。**只绑 127.0.0.1**，需要远程采集用反代加认证，别裸奔公网。
+`engine_daemon_*` 系列指标覆盖容器动作耗时、engine 状态、镜像/构建统计。配上 Prometheus 抓取任务 + Grafana 面板（或直接用现成的 docker engine dashboard），[第 15 篇](/云原生/docker/docker-15-logging-monitoring/)说的「机器采集」就闭环了。**只绑 127.0.0.1**，需要远程采集用反代加认证，别裸奔公网。
 
 ---
 
@@ -162,7 +162,7 @@ systemctl start docker                                  # 4. 起新配置启动
 docker info | grep "Docker Root Dir"                    # 5. 验证 → 确认无误后删 .bak
 ```
 
-> ⚠️ 用 `rsync -aHAX` 而不是 `cp`：镜像层里有硬链接和稀疏文件，拷错参数磁盘直接翻倍。操作前先 `docker system df` 评估体积（[第 15 篇](/云原生/docker/docker-20-logging-monitoring/)）。
+> ⚠️ 用 `rsync -aHAX` 而不是 `cp`：镜像层里有硬链接和稀疏文件，拷错参数磁盘直接翻倍。操作前先 `docker system df` 评估体积（[第 15 篇](/云原生/docker/docker-15-logging-monitoring/)）。
 
 ---
 
@@ -189,7 +189,7 @@ $ docker context use default && docker context rm demo-remote   # 用完还原
 
 之后所有 `docker ...` 命令自动作用于当前 context 指向的 daemon——服务器批量操作、本地开发连测试机，不用每次敲 `-H`。
 
-> ⚠️ 远程暴露 daemon = 远程 root（[第 22 篇](/云原生/docker/docker-21-container-security/)）：优先走 **SSH**（`ssh://user@host`，免证书管理、有审计），要开 TCP 必须配 TLS 双向认证，绝不裸 2375。
+> ⚠️ 远程暴露 daemon = 远程 root（[第 22 篇](/云原生/docker/docker-22-container-security/)）：优先走 **SSH**（`ssh://user@host`，免证书管理、有审计），要开 TCP 必须配 TLS 双向认证，绝不裸 2375。
 
 ---
 

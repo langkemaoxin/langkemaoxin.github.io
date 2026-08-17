@@ -13,7 +13,7 @@ description: Docker 是什么？——从 jar 包部署到镜像一键上线
 ---
 
 > **Docker 系列 · 第 1/24 篇**
-> 下一篇：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-03-container-vs-vm)
+> 下一篇：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-02-container-vs-vm)
 
 ---
 

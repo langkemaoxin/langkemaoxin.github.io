@@ -25,7 +25,7 @@ description: GitOps 环境规划——角色、仓库与网络边界，避免把
 本篇只做**规划**：谁负责什么、仓库怎么拆、网络怎么通。具体安装：
 
 - K8s → 本站 Kubernetes / 平台专栏  
-- Harbor → [Docker · Harbor](/云原生/docker/docker-09-harbor)  
+- Harbor → [Docker · Harbor](/云原生/docker/docker-10-harbor)  
 - Argo CD → 第 9 篇  
 - GitLab / Runner → 第 12 篇相关小节  
 

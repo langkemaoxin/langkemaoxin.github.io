@@ -13,7 +13,7 @@ description: Docker Compose 编排——用 YAML 定义一整栈微服务
 ---
 
 > **Docker 系列 · 第 13/24 篇**
-> 上一篇：[《数据持久化——Volume、Bind Mount 与 tmpfs：容器删了，数据凭什么还在》](/云原生/docker/docker-19-data-persistence) · 下一篇：[《如何通过 docker 部署 HTTPS 访问的 nginx 应用》](/云原生/docker/docker-19-如何通过docker部署https访问的nginx应用)
+> 上一篇：[《数据持久化——Volume、Bind Mount 与 tmpfs：容器删了，数据凭什么还在》](/云原生/docker/docker-12-data-persistence) · 下一篇：[《如何通过 docker 部署 HTTPS 访问的 nginx 应用》](/云原生/docker/docker-14-https-nginx)
 
 ---
 
@@ -343,11 +343,11 @@ V2 推荐作为默认；CI 脚本可逐步迁移。
 
 | 相关篇 | 在 Compose 中的体现 |
 |------|---------------------|
-| [第 11 篇](/云原生/docker/docker-17-network) 网络（前文） | `networks`、`ports`、服务名 DNS |
-| [第 12 篇](/云原生/docker/docker-19-data-persistence) 持久化（前文） | `volumes`、bind mount |
-| [第 17 篇](/云原生/docker/docker-14-unionfs) UnionFS（后文） | `build` / `image` 分层缓存 |
-| [第 18 篇](/云原生/docker/docker-15-namespace) Namespace（后文） | `network_mode`、`pid` |
-| [第 20 篇](/云原生/docker/docker-16-cgroups) Cgroups（后文） | `deploy.resources.limits` |
+| [第 11 篇](/云原生/docker/docker-11-network) 网络（前文） | `networks`、`ports`、服务名 DNS |
+| [第 12 篇](/云原生/docker/docker-12-data-persistence) 持久化（前文） | `volumes`、bind mount |
+| [第 17 篇](/云原生/docker/docker-17-unionfs) UnionFS（后文） | `build` / `image` 分层缓存 |
+| [第 18 篇](/云原生/docker/docker-18-namespace) Namespace（后文） | `network_mode`、`pid` |
+| [第 20 篇](/云原生/docker/docker-20-cgroups) Cgroups（后文） | `deploy.resources.limits` |
 
 ---
 

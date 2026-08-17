@@ -13,7 +13,7 @@ description: UnionFS 与镜像分层——Docker 镜像为什么是一层一层�
 ---
 
 > **Docker 系列 · 第 17/24 篇**
-> 上一篇：[《Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器》](/云原生/docker/docker-13-tech-foundation) · 下一篇：[《Namespace 隔离——容器如何「假装」自己是一台独立机器》](/云原生/docker/docker-15-namespace)
+> 上一篇：[《Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器》](/云原生/docker/docker-16-tech-foundation) · 下一篇：[《Namespace 隔离——容器如何「假装」自己是一台独立机器》](/云原生/docker/docker-18-namespace)
 
 ---
 

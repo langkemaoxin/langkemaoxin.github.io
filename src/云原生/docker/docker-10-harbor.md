@@ -16,7 +16,7 @@ description: Harbor 私有镜像仓库——按步骤从安装到第一次 push�
 ---
 
 > **Docker 系列 · 第 10/24 篇**
-> 上一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-10-dockerfile) · 下一篇：[《Docker 网络模式与实操——从 docker0 到 overlay》](/云原生/docker/docker-17-network)
+> 上一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-09-dockerfile) · 下一篇：[《Docker 网络模式与实操——从 docker0 到 overlay》](/云原生/docker/docker-11-network)
 
 ---
 
@@ -340,7 +340,7 @@ http://127.0.0.1:85/
 
 本机登录页（Harbor v2.15.2，界面为中文）：
 
-![Harbor 登录页](/云原生/docker/docker-09-harbor/01-login.png)
+![Harbor 登录页](/云原生/docker/docker-10-harbor/01-login.png)
 
 1. 用户名：`admin`  
 2. 密码：步骤 4 里 `harbor_admin_password`（本文为 `Harbor12345`）  
@@ -352,7 +352,7 @@ http://127.0.0.1:85/
 
 登录成功默认进入 **项目** 列表。本机截图：
 
-![Harbor 项目页与侧栏](/云原生/docker/docker-09-harbor/02-projects.png)
+![Harbor 项目页与侧栏](/云原生/docker/docker-10-harbor/02-projects.png)
 
 页面可以分成三块看：
 
@@ -377,7 +377,7 @@ http://127.0.0.1:85/
 
 日志页本机截图：
 
-![Harbor 日志](/云原生/docker/docker-09-harbor/03-logs.png)
+![Harbor 日志](/云原生/docker/docker-10-harbor/03-logs.png)
 
 #### 系统管理（展开后）
 
@@ -397,9 +397,9 @@ http://127.0.0.1:85/
 
 用户管理、配置管理本机截图：
 
-![Harbor 用户管理](/云原生/docker/docker-09-harbor/04-users.png)
+![Harbor 用户管理](/云原生/docker/docker-10-harbor/04-users.png)
 
-![Harbor 配置管理](/云原生/docker/docker-09-harbor/05-configs.png)
+![Harbor 配置管理](/云原生/docker/docker-10-harbor/05-configs.png)
 
 侧栏底部还有：
 
@@ -658,7 +658,7 @@ docker pull harbor.daemon.io:85/demo/nginx:alpine
 
 **验收**：CLI push 成功（有 digest）+ UI 项目 `demo` 下能看到 `nginx`。
 
-![Harbor 登录页](/云原生/docker/docker-09-harbor/成功推送镜像.png)
+![Harbor 登录页](/云原生/docker/docker-10-harbor/成功推送镜像.png)
 
 ---
 
@@ -821,7 +821,7 @@ docker rm harbor-nginx
 
 侧栏：**系统管理 → 用户管理 → 创建用户**。
 
-![Harbor 用户管理](/云原生/docker/docker-09-harbor/04-users.png)
+![Harbor 用户管理](/云原生/docker/docker-10-harbor/04-users.png)
 
 - 用户名、邮箱、密码各自一套（可要求对方首次登录后改密）。  
 - **不要**把这些账号勾成系统管理员（除非对方真要管整台 Harbor）。
@@ -1017,8 +1017,8 @@ docker push harbor.daemon.io/demo/nginx:alpine
 | 安装 Docker、**配置 registry-mirrors** | [第 4 篇](/云原生/docker/docker-04-install) |
 | 离线 `save`/`load`、tag 命名 | [第 8 篇](/云原生/docker/docker-08-image-transfer) |
 | Harbor 安装到 push（本篇） | 本文 |
-| Dockerfile 构建后再发布 | [第 9 篇](/云原生/docker/docker-10-dockerfile) |
-| `daemon.json` 全貌 | [第 24 篇](/云原生/docker/docker-23-daemon-ops) |
+| Dockerfile 构建后再发布 | [第 9 篇](/云原生/docker/docker-09-dockerfile) |
+| `daemon.json` 全貌 | [第 24 篇](/云原生/docker/docker-24-daemon-ops) |
 
 ---
 

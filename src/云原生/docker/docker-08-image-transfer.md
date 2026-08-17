@@ -14,7 +14,7 @@ description: Docker 本地镜像载入与载出——离线环境的镜像搬运
 ---
 
 > **Docker 系列 · 第 8/24 篇**
-> 上一篇：[《进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter》](/云原生/docker/docker-07-enter-container) · 下一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-10-dockerfile)
+> 上一篇：[《进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter》](/云原生/docker/docker-07-enter-container) · 下一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-09-dockerfile)
 
 ---
 

@@ -13,7 +13,7 @@ description: Docker Engine 与平台架构——Client、daemon、containerd、r
 ---
 
 > **Docker 系列 · 第 3/24 篇**
-> 上一篇：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-03-container-vs-vm) · 下一篇：[《Docker 安装三种方式——离线、在线与现成虚拟机》](/云原生/docker/docker-04-install)
+> 上一篇：[《容器 vs 虚拟机——为什么 Docker 不是「轻量 VM」》](/云原生/docker/docker-02-container-vs-vm) · 下一篇：[《Docker 安装三种方式——离线、在线与现成虚拟机》](/云原生/docker/docker-04-install)
 
 ---
 
@@ -157,7 +157,7 @@ OCI 制定 **runtime-spec** 与 **image-spec** 后，**runc** 成为通用低层
 
 Engine 是「用户友好的集成栈」；OCI 是「接口与实现解耦的规范层」。这一分工对后来 **Kubernetes 弃用 dockershim、默认 containerd/CRI-O** 的演进也有铺垫。
 
-本篇只建立**组件地图**：谁在链路上、各自干什么。`dockerd → containerd → shim → runc` 的完整调用链、与进程树的对照，放到主线后半的 [第 21 篇](/云原生/docker/docker-12-daemon-runtime)（建议先读完进程视角与 Cgroups 再深入）。
+本篇只建立**组件地图**：谁在链路上、各自干什么。`dockerd → containerd → shim → runc` 的完整调用链、与进程树的对照，放到主线后半的 [第 21 篇](/云原生/docker/docker-21-daemon-runtime)（建议先读完进程视角与 Cgroups 再深入）。
 
 ---
 
