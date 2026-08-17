@@ -31,16 +31,22 @@ description: Docker 网络模式与实操——从 docker0 到 overlay / macvlan
 大规模用 Docker 后，网络往往是踩坑最多的一块。本篇按一条线走完，并且**每条关键命令都会写清：要查什么 → 命令 → 本机结果 → 怎么读**。
 
 1. 先补够本篇用的背景（Network Namespace 白话）  
-2. 默认 bridge + 端口发布全集（本机实测）  
-3. **自定义 bridge + 容器名 DNS + 网段从哪来**（多容器推荐解法）  
-4. **多网络、别名与网络分区**（`--alias` / `--internal` / `gw-priority`）  
-5. host / none / container  
-6. **overlay（跨主机）与 macvlan / ipvlan 展开实测**  
-7. 选型与命令速查  
+2. **`docker network` 命令全家福**（七件兵器先摆上桌）  
+3. 默认 bridge + 端口发布全集（本机实测）  
+4. **自定义 bridge + 容器名 DNS + 网段从哪来**（多容器推荐解法）  
+5. **多网络、别名与网络分区**（`--alias` / `--internal` / `gw-priority`）  
+6. host / none / container  
+7. **overlay（跨主机）与 macvlan / ipvlan 展开实测**（🧗 进阶）  
+8. 选型与命令速查  
+
+> 🗺️ **0 基础路线图**：本篇混排了主线和进阶块，第一次读**只走主线**，读完就能应付日常绝大多数容器网络场景；带 🧗 标记的进阶块，用到再回头。
+> - **主线（顺序读）**：一（背景）→ 二（命令全家福）→ 三（bridge，跳过 3.4.2）→ 四（自定义网络与 DNS，跳过 4.4 的「拆穿」框、4.5、4.6）→ 六（host）→ 七（none）→ 八（container:）→ 十二（选型速查）
+> - **进阶块（🧗，按需回看）**：3.4.2 防火墙与加固 ｜ 4.4 拆穿框 ｜ 4.5 地址池 ｜ 4.6 固定 IP ｜ 五 多网络三件套 ｜ 九 overlay ｜ 十 macvlan ｜ 十一 ipvlan
+> - **Docker Desktop 用户**（Windows/Mac 桌面版）：`docker` / `docker exec` 等容器侧命令照做；宿主侧命令（`ip`、`ss`、`iptables`、tcpdump）跑在 Desktop 内置的 Linux 虚拟机里，你的终端没有——这些段落**看结论跳实操**即可。实在想跟做：`docker run -it --privileged --pid=host --net=host alpine nsenter -t 1 -m -u -n -i sh` 可钻进那台虚拟机（进阶玩法，不急）。
 
 > **实验环境**（文中输出均来自本机）：WSL2 Ubuntu-22.04 里的**原生 Docker Engine 29.1.3**（systemd 拉起，非 Docker Desktop）。`docker0`、`veth` 都在这个 Linux 环境里，`ip` / `ss` / `iptables` 命令直接可用。  
 > **WSL2 注意**：引擎的 `eth0`（`172.22.x.x`）是 Windows 分配的虚拟网卡，不是你办公室的物理网卡；`host` / `macvlan` 语境里的「宿主机」指这台 WSL 虚拟机，文中会标明。  
-> **前置（可选）**：对 `Subnet` / `/16` / 网关陌生，先看 [《读 Docker 网络前要懂的 IP、网段与网关》](/Linux/basics/linux-02-ip-subnet-gateway)；对 tcpdump 抓包用法陌生，先看 [《tcpdump 抓包入门》](/Linux/basics/linux-03-tcpdump)；对 NAT / DNAT / MASQUERADE 陌生，先看 [《NAT 白话拆解》](/Linux/basics/linux-04-nat)。  
+> **前置（可选）**：对 `Subnet` / `/16` / 网关陌生，先看 [《读 Docker 网络前要懂的 IP、网段与网关》](/Linux/basics/linux-02-ip-subnet-gateway)；对 tcpdump 抓包用法陌生，先看 [《tcpdump 抓包入门》](/Linux/basics/linux-03-tcpdump)；对 NAT / DNAT / MASQUERADE 陌生，先看 [《NAT 白话拆解》](/Linux/basics/linux-04-nat)；对 **netns / iptables 表链规则**陌生，先看 [《网络命名空间与 iptables 规则实操》](/Linux/basics/linux-05-netns-iptables)。  
 > 官方参考：[Networking overview](https://docs.docker.com/engine/network/)、[bridge](https://docs.docker.com/engine/network/drivers/bridge/)、[overlay](https://docs.docker.com/engine/network/drivers/overlay/)、[macvlan](https://docs.docker.com/engine/network/drivers/macvlan/)、[ipvlan](https://docs.docker.com/engine/network/drivers/ipvlan/)。
 
 ---
@@ -51,7 +57,7 @@ description: Docker 网络模式与实操——从 docker0 到 overlay / macvlan
 
 **为什么**：否则所有容器抢同一套端口、互相看见对方的监听，隔离就塌了；也没法给每个容器分配独立 IP。
 
-**和本篇的关系**（够用即可，内核 `clone()` 细节见[第 18 篇](/云原生/docker/docker-18-namespace)）：
+**和本篇的关系**（够用即可；想亲手建一间 netns、拉一根 veth 的，去 [《netns 与 iptables 实操》](/Linux/basics/linux-05-netns-iptables)；内核 `clone()` 细节见[第 18 篇](/云原生/docker/docker-18-namespace)）：
 
 | 你在容器里看到的 | 实际含义 |
 |------------------|----------|
@@ -63,7 +69,48 @@ description: Docker 网络模式与实操——从 docker0 到 overlay / macvlan
 
 ---
 
-## 二、先看清：Docker 装好后有哪些网络？
+## 二、`docker network` 命令全家福——先把七件兵器摆上桌
+
+正文按场景逐个实操之前，先把 `docker network` 命令族整个摆出来——后面每一节用到的都是这七件里的某一件，忘了随时回来查表。
+
+**要查什么**：`docker network` 下到底有哪几件兵器？
+
+```bash
+docker network --help
+```
+
+```text
+Usage:  docker network COMMAND
+
+Manage networks
+
+Commands:
+  connect     Connect a container to a network
+  create      Create a network
+  disconnect  Disconnect a container from a network
+  inspect     Display detailed information on one or more networks
+  ls          List networks
+  prune       Remove all unused networks
+  rm          Remove one or more networks
+
+Run 'docker network COMMAND --help' for more information on a command.
+```
+
+**怎么读**：七件兵器按「**建 → 查 → 挂 → 删**」的使用生命周期记：
+
+| 命令 | 干什么 | 本文实测 |
+|------|--------|----------|
+| `network create` | **建**一张网（可指定 bridge/overlay/macvlan/ipvlan 驱动，不写默认 bridge） | 4.2、9.3、10.3、11.3 节 |
+| `network ls` | **查**清单：名字 / 驱动 / 范围 | 2.1 节 |
+| `network inspect` | **查**详情：网段、网关、挂了哪些容器、驱动选项 | 3.2②、4.2④、5.3 等贯穿全文 |
+| `network connect` | **挂**：给运行中的容器再插一张网 | 4.2①、4.6④ |
+| `network disconnect` | **拔**：把容器从一张网上摘下来 | 十三节速查 |
+| `network rm` | **删**指定网 | 各节清理段 |
+| `network prune` | **删**所有没人用的网（一次性大扫除，慎用） | 十三节速查 |
+
+另有两条通用旗标贯穿全文：`-f` 过滤（如 `docker network ls -f driver=bridge`）、`--format` 从输出里挑字段（如 inspect 取 Subnet）——细节随用随讲。
+
+### 2.1 第一件兵器：`ls` 看清家里有什么
 
 **要查什么**：引擎里已经内置了哪些网络？名字、驱动、作用范围分别是什么？
 
@@ -120,6 +167,8 @@ NETWORK ID     NAME      DRIVER    SCOPE
 | 4 | **从网段拿 IP** | 自动分内网地址 | 例如分到 `172.17.0.4`，网关指向 docker0 |
 | 5 | **NAT** 与 **`-p`** | 出门 / 进站两套机制 | 容器访问外网靠 NAT 伪装；外面访问你靠端口映射 |
 
+前两个零件（netns、veth）不用 Docker 也能徒手做出来——[《netns 与 iptables 实操》](/Linux/basics/linux-05-netns-iptables)第二节就是这张图的无 Docker 版：建两间「网络屋子」、一根虚拟网线连通、互 ping。
+
 进出站不要混：
 
 | 方向 | 机制 | 白话 |
@@ -168,6 +217,16 @@ docker run -d --name lab-net-web -p 18080:80 nginx:alpine
 docker network inspect bridge --format \
   'Subnet={{(index .IPAM.Config 0).Subnet}} Gateway={{(index .IPAM.Config 0).Gateway}}'
 ```
+
+`inspect` 的完整输出是一大坨 JSON；`--format '…'` 跟一张**挑字段的模板**（Go 模板语法），只打印你关心的东西。模板里那串「咒语」拆开就三层：
+
+| 片段 | 是什么 |
+|------|--------|
+| `{{ }}` | 模板外壳，里面写「要取什么」 |
+| `index .IPAM.Config 0` | JSON 里 `IPAM.Config` 是个数组，这句 = 取它的**第 1 个元素**（网段配置就存在这） |
+| `.Subnet` / `.Gateway` | 取该元素里的「子网」「网关」两个字段；`Subnet=` 这类普通文字原样打印 |
+
+这套语法全文还会出现很多次（取容器 IP、数网上挂了几个容器……），认过这一次，后面都是熟面孔。
 
 本机：
 
@@ -360,6 +419,8 @@ $ docker port lab-pub-rand
 
 #### 3.4.2 防火墙与 28.x 的默认加固
 
+> 🧗 **进阶块，可先跳过**——讲给管生产机/被防火墙规则绕晕的人；主线只需记住一句「没 `-p` 发布的端口，外面进不来」。
+
 Docker 的端口规则全写在 iptables 里，其中有一条链**专门留给用户**：`DOCKER-USER`。容器进出的流量先过它、再走 Docker 自己的规则——「限制某些容器只能被哪些网段访问」的企业防火墙规则就挂在这里（本机实测，默认是空的，等你来写）：
 
 ```bash
@@ -374,7 +435,7 @@ num  target     prot opt source               destination
 - **未经 `-p` 发布的端口，外部直连路由被默认阻断**（旧版 filter 表 FORWARD 放行时，知道容器 IP 就能直达任意端口）；确有直连需求要用网络选项 `gateway_mode_ipv[46]=nat-unprotected` 显式放开
 - 28.3.3 修复 CVE-2025-54388：firewalld reload 后，原本只绑回环的端口会被局域网直达
 
-细节见 [Packet filtering and firewalls](https://docs.docker.com/engine/network/packet-filtering-firewalls/) 与 [28.x release notes](https://docs.docker.com/engine/release-notes/28/)。
+细节见 [Packet filtering and firewalls](https://docs.docker.com/engine/network/packet-filtering-firewalls/) 与 [28.x release notes](https://docs.docker.com/engine/release-notes/28/)；表/链/规则的系统读法前置是 [《netns 与 iptables 实操》](/Linux/basics/linux-05-netns-iptables)第三节。
 
 ---
 
@@ -424,6 +485,16 @@ docker exec lab-net-web ping -c 2 lab-net-db
 docker exec lab-net-web nslookup lab-net-db 127.0.0.11
 ```
 
+三个部分容易看串，拆开：
+
+| 部分 | 是什么 |
+|------|--------|
+| `docker exec lab-net-web` | 进 **lab-net-web** 容器里执行后面的命令 |
+| `nslookup lab-net-db` | 查「`lab-net-db` 这个名字对应的 IP」 |
+| 末尾的 `127.0.0.11` | **点名让 `127.0.0.11` 这台 DNS 来回答**——nslookup 第二个参数是「用哪台服务器查」，不是要查的东西 |
+
+这一步想证明的就一件事：**「容器名 → IP」这张翻译表，由 Docker 嵌入式 DNS（`127.0.0.11`）持有**。末尾参数是把「谁在答」钉成实验条件；不带它，nslookup 会用容器默认 DNS——在自定义网络上恰好也是 `127.0.0.11`（4.4 节有 resolv.conf 对比实测）。
+
 本机：
 
 ```text
@@ -461,13 +532,22 @@ docker network inspect lab-app-net --format \
 
 ### 4.4 DNS 到底怎么配：两套机制与四个旗标
 
-第三节看到「默认 bridge 容器名不通」，根子是两套 DNS 机制（同一台机器实测对比）：
+先把本节要用的四个名词说成人话（够用即可，系统展开是 Linux 基础的事）：
+
+- **DNS**：一个「名字 → IP」的**翻译服务**。程序要用名字连别人时，操作系统找一台 DNS 服务器发问「这名字的 IP 是多少」，对方作答——一问一答，仅此而已
+- **`/etc/resolv.conf`**：Linux 的 **DNS 配置单**，`nameserver` 行写的就是「该问谁」。想看一个容器的 DNS 行为，第一步永远是 `cat` 它的这个文件
+- **`127.0.0.11`**：一个回环地址，指向「**容器自己本机上**蹲着的 Docker 翻译员」（嵌入式 DNS）。[前置第 2 篇](/Linux/basics/linux-02-ip-subnet-gateway)讲过 `127.0.0.1` 只在本机内部转——`127.0.0.11` 同一个道理，只是回环段里的另一个号
+- **`/etc/hosts`**：另一张翻译表，**写死在本机文件里**，查询时**先查它、查不到才问 DNS**。4.3 节 `--link` 和下面的 `--add-host` 改的都是这张表
+
+名词齐了，再看机制。第三节看到「默认 bridge 容器名不通」，根子是两套 DNS 机制（同一台机器实测对比）：
 
 | | 默认 bridge | 自定义网络 |
 |---|---|---|
 | `/etc/resolv.conf` 写谁 | **照抄宿主机**的 nameserver | **`127.0.0.11`**（Docker 嵌入式 DNS） |
 | 容器名解析 | ❌ 无 | ✅ 有 |
 | 查外部域名 | 容器直接问宿主的 DNS | 先问 `127.0.0.11`，由它**转发**给宿主配置的上游 |
+
+> 🧰 **先认识一下探针 `busybox`**：把 `ls` / `cat` / `ping` / `nslookup` / `ip` 等 100 多个常用命令塞进**约 1MB 单文件**的「瑞士军刀」镜像（靠符号链接一个二进制扮演一百个命令）。本篇大量 `docker run --rm busybox …`，都是拿它当**一次性探针**：镜像小、自带网络诊断工具、跑完即删。注意里面是精简版工具（没有 `dig`、参数偏少）；长驻实验容器用 `alpine:3.21`——它的底座正是 busybox，外加 apk 包管理。
 
 ```bash
 $ docker run --rm busybox cat /etc/resolv.conf
@@ -481,6 +561,21 @@ options ndots:0
 ```
 
 （`172.22.208.1` 是本机 WSL 宿主的 DNS；注释行是 Docker 生成文件时写进去的说明。）
+
+> 🔍 **拆穿（🧗 进阶拆解，赶时间可跳，不影响主线）**：`nameserver 127.0.0.11` 是谁写的？ 不是镜像里带来的，是 dockerd 在容器启动那一刻**现写的**——挂了任何自定义网络就写 `127.0.0.11` 并启用嵌入式 DNS；只挂默认 bridge / none / host 就抄宿主的。翻译员也**不直接监听 53 口**：它在容器自己 netns 的回环上开**随机端口**（逐容器一套），再往 netns 里写一条 nat 规则，把「访问 `127.0.0.11:53`」半路改写到随机真口。进容器的网络命名空间看规则（`nsenter -n` 只进网络那一份，容器得在跑）：
+>
+> ```bash
+> docker run -d --name lab-dns-d --network lab-alias-net alpine:3.21 sleep 60
+> nsenter -t $(docker inspect -f '{{.State.Pid}}' lab-dns-d) -n iptables -t nat -S | grep 'dport 53'
+> ```
+>
+> ```text
+> -A OUTPUT -d 127.0.0.11/32 -j DOCKER_OUTPUT
+> -A DOCKER_OUTPUT -d 127.0.0.11/32 -p tcp --dport 53 -j DNAT --to-destination 127.0.0.11:39611
+> -A DOCKER_OUTPUT -d 127.0.0.11/32 -p udp --dport 53 -j DNAT --to-destination 127.0.0.11:36846
+> ```
+>
+> 所以 `nslookup … 127.0.0.11`（默认问 53）能通，通的是 **DNAT**。为什么偏偏用 `127.0.0.11` 不用 `127.0.0.1`？看匹配条件 `-d 127.0.0.11/32`——**专属的回环地址让改写规则干干净净**，不碰 localhost 本身的 53 口，容器里自己跑本地 DNS 也不会被误伤。也正因为这文件每次现写，下面的 `--dns` 旗标才能覆盖它。（**netns、表/链、规则读法**的系统实操，见 [《网络命名空间与 iptables 规则实操》](/Linux/basics/linux-05-netns-iptables)——那里手搓了同款 DNAT 把戏。）
 
 要改容器的 DNS 行为，`docker run` 有四个旗标：
 
@@ -501,19 +596,15 @@ mybox
 
 > 配套还有 `--add-host 名字:IP`：往容器 `/etc/hosts` 追加条目（地址写 `host-gateway` 可拿到宿主地址）。另一条 28.0 起的行为变化：宿主 resolv.conf 里的 nameserver 一律从**宿主网络命名空间**访问，容器侧本地 DNS 代理不再被绕路。
 
-### 4.5 网段从哪来：地址池、自选子网与 IPv6
+### 4.5 网段从哪来：地址池与自选子网
 
-4.2 节的自定义网络拿到 `172.21.0.0/16`——谁分的？不写 `--subnet` 时，Docker 从**默认地址池**顺序切网段（实测连建两张）：
+> 🧗 **进阶块，可先跳过**——网段怎么发号、池子用完怎么办；第一次读记住「不写 `--subnet`，Docker 会自动分好」就够了。
 
-```bash
-$ docker network create lab-pool-1 && docker network create lab-pool-2
+回头看会发现规律：Compose 建的网是 `172.18`、`172.19`、`172.20`，4.2 节建的 `lab-app-net` 是 `172.21`——**每建一张新网，网段号自动往后排**。谁在发号？发完了怎么办？这节把这台「发号机」拆开。
 
-$ docker network inspect lab-pool-1 lab-pool-2 --format '{{.Name}}: {{(index .IPAM.Config 0).Subnet}}'
-lab-pool-1: 172.27.0.0/16
-lab-pool-2: 172.28.0.0/16
-```
+#### 发号机：一块大地皮，按固定面积切
 
-默认池等价于 `daemon.json` 里这段（官方文档）：
+不写 `--subnet` 时，Docker 的 **IPAM**（IP 地址管理子系统）从**默认地址池**里领网段。池子等价于 `daemon.json` 里的默认配置（官方文档）：
 
 ```json
 {
@@ -524,12 +615,59 @@ lab-pool-2: 172.28.0.0/16
 }
 ```
 
-`base` 是可切的总范围，`size` 是每张网切多长：默认从 `172.17.0.0/12` 切 `/16`——其中 172.17 已归 docker0，自定义网络从 172.18 往后排，`/12` 总共也就十几张；不够就轮到 192.168 池（切 `/20`）。**报「pool exhausted」建不了网时，把 `size` 调小**（如 24）就能扩出几百张。改 `daemon.json` 要重启引擎，本文不实操。
+白话：**`base` 是一块大地皮，`size` 是每张网切多大面积**。第一块地皮 `172.17.0.0/12` 按 `/16` 切，就是这一串：
 
-两个本机实测细节：
+```text
+172.17.0.0/16   172.18.0.0/16   172.19.0.0/16   …   172.31.0.0/16
+（15 段；第一段永远归 docker0，其余 14 段排队发给自定义网络）
+```
 
-- **分配会避开宿主已用前缀**：本机 `/16` 分配一路跳过 `172.22`——因为宿主 `eth0` 是 `172.22.212.111/20`，占了这段
-- **29.0 新写法**：`--subnet` 地址写 0、只给前缀长度，即「从池里要一个指定大小的网段」。实测 `--subnet 0.0.0.0/24` 拿到了 `172.22.0.0/24`——`/24` 与宿主那个 `/20` 不冲突，这段就能用：
+本机实况（当前全部自定义网按序排，实测）：
+
+```text
+172.18  new-api_new-api-network    （Compose 建的）
+172.19  rabbitmq_default           （Compose 建的）
+172.20  rabbitmq-cluster_default   （Compose 建的）
+172.21  lab-app-net                （4.2 节建的）
+172.22  ——空缺——                   （原因见下）
+172.23  docker_gwbridge            （Swarm 的对外门桥）
+```
+
+连建两张验证（实测）：
+
+```bash
+$ docker network create lab-pool-1 && docker network create lab-pool-2
+
+$ docker network inspect lab-pool-1 lab-pool-2 --format '{{.Name}}: {{(index .IPAM.Config 0).Subnet}}'
+lab-pool-1: 172.27.0.0/16
+lab-pool-2: 172.28.0.0/16
+```
+
+为什么直接跳到 172.27？——172.22 被宿主占（见下），172.23 归 docker_gwbridge，172.24~172.26 当时被本节前后的实验网占着。**发号机永远取当前最小的空闲段**；网络删掉，段就回池子重新可用。
+
+#### 发号前先查宿主：172.22 为什么空着
+
+宿主 `eth0` 是 `172.22.212.111/20`，落在候选段 `172.22.0.0/16` 里。发号机的规矩：**候选段与宿主已有网段只要有一丁点重叠，整段让开**。发号粒度是 `/16`，所以哪怕那个 `/20` 只占这段的十六分之一，整个 `172.22.0.0/16` 都不发——不是浪费，是保守：网段撞了比缺一段麻烦得多。（「一个网段落在另一个网段里」怎么判断？前缀包含关系，[前置第 2 篇](/Linux/basics/linux-02-ip-subnet-gateway) 3.2 节有二进制展开。）
+
+#### 地皮发完了：两块地皮接力与真实报错（实测把池子建满）
+
+真把池子建满看了一遍（连建 24 张空网，建完即删）：第一块地皮剩余的 8 段 `/16`（172.24~172.31）发完后，**自动落到第二块**——`192.168.0.0/16` 按 `/20` 切出的 16 段也全部发完，第 25 张才报错：
+
+```text
+172.24.0.0/16 … 172.31.0.0/16        ← 第一块地皮的 8 段
+192.168.0.0/20   192.168.16.0/20   192.168.32.0/20   192.168.48.0/20
+… （中间还有 11 段）
+192.168.224.0/20   192.168.240.0/20  ← 第二块地皮的 16 段，正好铺满
+
+$ docker network create lab-exh-24
+Error response from daemon: all predefined address pools have been fully subnetted
+```
+
+8 + 16 = 24，两块默认地皮的家底就这么大。**遇到这条报错的解法：把 `size` 调小**——地皮总面积不变、每张网变小，张数就多（`/12` 切 `/24` 能出 4096 张）。改 `daemon.json` 需重启引擎，本文不实操。
+
+#### 29.0 新写法：只要面积，地段随你挑
+
+前面的 `--subnet` 都要写死整段地址；29.0 起地址部分可以写 `0`、只给前缀长度——意思是「**从默认池里给我挑一块这么大的**」：
 
 ```bash
 $ docker network create --subnet 0.0.0.0/24 lab-unspec
@@ -538,25 +676,49 @@ $ docker network inspect lab-unspec --format '{{(index .IPAM.Config 0).Subnet}}'
 172.22.0.0/24
 ```
 
-> 此写法 Docker 29.0.0 引入；官方注明降级到旧版后这样建的网会不可用。
+挑中的正是 `172.22.0.0/24`：它只占 `172.22.0.0 ~ 172.22.0.255`，**不碰**宿主占的 `172.22.208.0/20`——重叠检查照做，只是粒度从 `/16` 细到 `/24`，之前整段让开的 172.22 里前一小块就能用了。此写法 29.0.0 引入，官方注明降级到旧版后这样建的网会不可用。
 
-**IPv6**：`docker network create --ipv6 ...` 开启，子网不指定时自动从 ULA 前缀分配；28.0 起还可用 `--ipv4=false` 建**纯 IPv6** 网络。嵌入式 DNS 没有对应 IPv6 地址——`127.0.0.11` 这个 IPv4 地址在 IPv6-only 容器里照常工作。本篇实验网均为 IPv4，IPv6 实操见[官方 Networking 文档的 IPv6 章节](https://docs.docker.com/engine/network/)。
+#### IPv6：同一台发号机，另一块地皮
+
+`docker network create --ipv6 ...` 开启后走同一套机制，只是地皮换成 IPv6 的 **ULA 前缀**（`fd00::/8`，相当于 IPv6 世界的私有地址段）；28.0 起还能 `--ipv4=false` 建**纯 IPv6** 网络。嵌入式 DNS 没有对应的 IPv6 地址——`127.0.0.11` 这个 IPv4 地址在 IPv6-only 容器里照常工作。本篇实验网均为 IPv4，IPv6 实操见[官方 Networking 文档](https://docs.docker.com/engine/network/)。
 
 ### 4.6 给容器指定固定 IP：`--ip`
 
-自动分配的 IP 重启会变；遗留系统写死地址时，就得把号钉住。前提：**IP 必须落在该网络的子网内**——所以实操套路是「建网时显式给子网 + 起容器时给 IP」：
+> 🧗 **进阶块，可先跳过**——迁移遗留系统、必须钉死 IP 时再回来。
+
+**要查什么**：`--ip` 钉的号能不能生效？给了子网外的地址会怎样？运行中的容器能不能后补固定号？
+
+**① 建一张子网明确的网**
 
 ```bash
 $ docker network create --subnet 172.30.0.0/16 lab-fixed-net
+```
 
+`--subnet` 显式划定这张网的地址池（不写就由 4.5 的发号机从默认池里挑）。**`--ip` 钉的号必须落在这个池子里**——所以钉号前先给网一个明确边界。
+
+**② 起容器时钉号**
+
+```bash
 $ docker run -d --name lab-fixed-1 --network lab-fixed-net --ip 172.30.0.10 \
     alpine:3.21 sleep infinity
+```
 
+| 部分 | 是什么 |
+|------|--------|
+| `--network lab-fixed-net` | 挂到刚建的那张网（而不是默认 bridge） |
+| `--ip 172.30.0.10` | 钉死地址：不走自动分配；容器重启、删了重建，都领这个号 |
+| `sleep infinity` | 主进程永久睡眠——容器有个不退出的活儿干，才能保持运行供检查 |
+
+用老朋友（3.2 ③ 同款）把地址取出来验证：
+
+```bash
 $ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' lab-fixed-1
 172.30.0.10
 ```
 
-给了子网外的地址直接被拒（实测报错原文）：
+**结果**：取出的正是钉的号——生效了。
+
+**③ 给子网外的地址：直接被拒（实测报错原文）**
 
 ```bash
 $ docker run --rm --network lab-fixed-net --ip 192.168.50.10 alpine:3.21 true
@@ -564,17 +726,30 @@ docker: Error response from daemon: invalid config for network lab-fixed-net: in
 no configured subnet contains IP address 192.168.50.10
 ```
 
-运行中的容器补固定 IP 用 `docker network connect --ip`（和 4.2 节的「后挂网」同一姿势）：
+**怎么读**：daemon 建端点时校验地址归属，`192.168.50.10` 不在 `172.30.0.0/16` 池子里，整条创建请求被拒。**钉号不是随便写个地址**，永远受子网约束。
+
+**④ 运行中的容器后补固定 IP**
 
 ```bash
 $ docker run -d --name lab-fixed-2 alpine:3.21 sleep infinity      # 先起在默认 bridge
 $ docker network connect --ip 172.30.0.11 lab-fixed-net lab-fixed-2
+```
 
+`docker network connect` 是「给已在跑的容器插一张网」（4.2 ① 用过同一姿势），这里多带 `--ip`——插入时就把号钉成 `172.30.0.11`。
+
+这次验证要用**新格式的 inspect**——容器挂了两张网，得把每张网的号都列出来，所以遍历改成「键值对」形态：
+
+```bash
 $ docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}={{$v.IPAddress}} {{end}}' lab-fixed-2
 bridge=172.17.0.5 lab-fixed-net=172.30.0.11
 ```
 
-**怎么读**：`lab-fixed-2` 两张网各一个号，固定号只在 `--subnet` 明确的那张网上有效。
+| 片段 | 是什么 |
+|------|--------|
+| `range $k,$v := .NetworkSettings.Networks` | 遍历容器的每个网络端点：`$k` 接网络名，`$v` 接该端点的详情 |
+| `{{$k}}={{$v.IPAddress}}` | 打成 `网络名=IP` 一对一对，一眼看全 |
+
+**结果**：`bridge=172.17.0.5`（默认 bridge 自动分的）+ `lab-fixed-net=172.30.0.11`（后插并钉死的）——一张网一个号；固定号只在 `--subnet` 明确的那张网上有效。
 
 > 🔑 **固定 IP 是给遗留系统的迁就，不是推荐架构**——新应用一律用容器名/别名（DNS 自动跟随拓扑变化），官方文档也是这个取向。
 
@@ -582,36 +757,71 @@ bridge=172.17.0.5 lab-fixed-net=172.30.0.11
 
 ## 五、多网络、别名与网络分区（实测）
 
+> 🧗 **进阶块，可先跳过**——多网络三件套（网关竞选 / 别名 / 纯内网），多容器协作玩熟后再看。
+
 4.2 节里 `lab-net-web` 同时挂了默认 bridge 和自定义网、拿到两个 IP——「一个容器多张网卡」是正式能力，本节补齐三件配套工具。
 
 ### 5.1 `gw-priority`：多张网，默认网关听谁的
 
-容器挂多张网时 `default via ...` 只能有一条，Docker 自己挑，且网络增减时会变。要固定，用 28.0 新增的 `gw-priority`（数字大者优先，默认 0）——注意它只能走 `--network` 的**长语法**：
+**要查什么**：容器挂两张网后，`default via` 到底听哪张的？`gw-priority` 能不能钉住？
+
+容器挂多张网时 `default via ...` 只能有一条，Docker 自己挑，且网络增减时会变。要固定，用 28.0 新增的 `gw-priority`（数字大者优先，默认 0）——注意它**只能走 `--network` 的长语法**。
+
+先备两张普通网（不写 `--subnet`，发号机自动分；本机分到 172.25 和 172.26 两段，你机器上不同，**记下哪张是哪段**，下面要对号）：
 
 ```bash
 $ docker network create lab-gw-a && docker network create lab-gw-b
+```
 
+起容器，两条长语法逐段拆开：
+
+```bash
 $ docker run -d --name lab-gw-demo \
     --network name=lab-gw-a \
     --network name=lab-gw-b,gw-priority=1 \
     alpine:3.21 sleep infinity
+```
 
+| 部分 | 是什么 |
+|------|--------|
+| `--network name=lab-gw-a` | **长语法**：`name=` 指定网络名。同一个旗标写两遍 = 一次挂两张网 |
+| `name=lab-gw-b,gw-priority=1` | 同一张网的附加选项用**逗号**跟在后面：这张网竞选默认网关的优先级为 1 |
+
+看结果——容器里的路由表：
+
+```bash
 $ docker exec lab-gw-demo ip route
 default via 172.26.0.1 dev eth0
 172.25.0.0/16 dev eth1 scope link  src 172.25.0.2
 172.26.0.0/16 dev eth0 scope link  src 172.26.0.2
 ```
 
-**怎么读**：容器里 `eth0`/`eth1` 两张网卡；`default via 172.26.0.1` 走的是 `lab-gw-b`（172.26.0.0/16，优先级 1），另一张降级为普通直连。场景：一张网上外网、一张连内网，想让出网固定走某张时用。
+**怎么读**（逐行）：
+
+| 行 | 含义 |
+|----|------|
+| `default via 172.26.0.1 dev eth0` | 默认网关走了 **lab-gw-b** 段（172.26）的网关——优先级 1 生效 |
+| `172.25.0.0/16 dev eth1 scope link` | lab-gw-a 降级成普通直连：只服务去这片网段的包，走第二张网卡 `eth1` |
+| `172.26.0.0/16 dev eth0 scope link` | 本网段内部直连 |
+
+场景：一张网上外网、一张连内网，想让出网固定走某张时用。
 
 ### 5.2 `--network-alias`：网络里的「外号」
 
-容器名全局唯一，但同一网络内可以用**别名**互称——Compose 里 `network_aliases:` 的底层就是它。实测一个容器挂两个别名：
+容器名全局唯一，但同一网络内可以用**别名**互称——Compose 里 `network_aliases:` 的底层就是它。**要查什么**：挂了别名的容器，DNS 查别名能不能解析到它？实测一个容器挂两个别名：
 
 ```bash
 $ docker run -d --name lab-alias-1 --network lab-alias-net \
     --network-alias db.local --network-alias cache alpine:3.21 sleep infinity
+```
 
+| 部分 | 是什么 |
+|------|--------|
+| `--network-alias db.local` | 在**这张网内**给容器挂别名 `db.local`；旗标可重复，一个容器多个外号 |
+
+用 4.2 ③ 同款的「点名查 DNS」验证（`nslookup 要查的名字 用哪台DNS`）：
+
+```bash
 $ docker run --rm --network lab-alias-net busybox nslookup db.local 127.0.0.11
 Server:		127.0.0.11
 Address:	127.0.0.11:53
@@ -621,9 +831,9 @@ Name:	db.local
 Address: 172.24.0.2
 ```
 
-（`cache` 同样解析到 `172.24.0.2`。）
+**结果**：别名 `db.local` 解析到 `172.24.0.2`——嵌入式 DNS 把别名和容器名一样登记。（`cache` 同样解析到 `172.24.0.2`。）
 
-「一组容器共享同一个别名」是更有用的形态——嵌入式 DNS 会把**所有成员**都报出来（实测）：
+「一组容器共享同一个别名」是更有用的形态——**要查什么**：两个容器挂**同一个**别名，DNS 会报几个？实测：
 
 ```bash
 $ docker run -d --name lab-rr-1 --network lab-rr-net --network-alias web.local alpine:3.21 sleep infinity
@@ -640,11 +850,13 @@ Name:	web.local
 Address: 172.21.0.2
 ```
 
-**怎么读**：一次查询返回**两条** A 记录——嵌入式 DNS 对同别名成员轮询（round-robin），客户端每次从中取一个，等于最朴素的负载均衡。这也坐实了开头那句用法：一组「都提供 db 服务」的容器共享别名 `db.local`，客户端连别名——加副本就是多一条解析记录，客户端配置一个字不用改。
+**怎么读**：一次查询返回**两条** A 记录（`.2` 和 `.3` 两个容器）——嵌入式 DNS 对同别名成员轮询（round-robin），客户端每次从中取一个，等于最朴素的负载均衡。这也坐实了开头那句用法：一组「都提供 db 服务」的容器共享别名 `db.local`，客户端连别名——加副本就是多一条解析记录，客户端配置一个字不用改。
 
 ### 5.3 `--internal`：不给出口的「纯内网」
 
-`--internal` 建的网**不接外网**：容器没有默认路由、没有出网 NAT，只有同网互访。数据库、缓存这类「根本不该自己上网」的服务用它做分区（官方文档的示例拓扑正是「前端普通网 + 后端 internal 网」）。实测：
+`--internal` 建的网**不接外网**：容器没有默认路由、没有出网 NAT，只有同网互访。数据库、缓存这类「根本不该自己上网」的服务用它做分区（官方文档的示例拓扑正是「前端普通网 + 后端 internal 网」）。
+
+**要查什么**：`--internal` 建的网长什么样？容器是不是真的既出不了网、又不影响同网互访？
 
 ```bash
 $ docker network create --internal lab-int-net
@@ -652,7 +864,16 @@ $ docker network create --internal lab-int-net
 $ docker network inspect lab-int-net --format \
   'Internal={{.Internal}} Subnet={{(index .IPAM.Config 0).Subnet}}'
 Internal=true Subnet=172.21.0.0/16
+```
 
+| 部分 / 结果 | 是什么 |
+|------|--------|
+| `--internal` | 建网时打上「纯内网」标记 |
+| `Internal=true` | inspect 确认标记生效（对比普通网这里是 `false`） |
+
+起两个容器做双向验证：
+
+```bash
 $ docker run -d --name lab-int-1 --network lab-int-net alpine:3.21 sleep infinity
 $ docker run -d --name lab-int-2 --network lab-int-net alpine:3.21 sleep infinity
 
@@ -666,51 +887,128 @@ $ docker exec lab-int-1 ping -c 2 223.5.5.5
 ping: sendto: Network unreachable
 ```
 
-**怎么读**：路由表里**没有 `default via`**——内核不知道外网包往哪送，直接报 `Network unreachable`（不是丢包超时，是干脆没有路）。隔离做在路由层，比一层层防火墙规则更干脆。
+**怎么读**（三段输出对三件事）：
+
+| 输出 | 含义 |
+|------|------|
+| 路由表**只有一条**、没有 `default via` | 没有默认网关——内核不知道外网包往哪送 |
+| ping 同网容器 `0% packet loss` | 同网互访**不受影响** |
+| ping 公网 `Network unreachable` | 不是丢包超时，是**干脆没有路**——隔离做在路由层，比一层层防火墙规则更干脆 |
 
 **验收**：`Internal=true`；容器路由表无 default；同网 ping 通、出网 `Network unreachable`。
 
 ---
 
-## 六、host 模式
+## 六、host 模式：干脆不给容器配网络，直接用宿主机的
 
-### 6.1 是什么 / 为什么 / 怎么做
+### 6.1 一句话和一个比喻
 
-**是什么**：容器与 **引擎宿主机** 共享 Network Namespace——不配独立容器 IP，直接用主机网络栈。
+前面讲的默认 bridge、自定义 bridge，都是给容器**单独配一套网络**（自己的 IP、自己的 localhost）。host 模式反着来：**不配了——容器直接用宿主机（引擎）那一套网络**。
 
-**为什么**：少一层 veth/NAT，延迟更低；适合对网络极敏感、且能接受「和主机抢端口」的场景（如部分监控 agent）。
+打个比方：之前是「一人一间出租屋，各有各的门牌和门锁」；host 模式是「直接搬进房东家客厅住」：
 
-**要查什么**：`--network host` 之后，容器里看到的网卡是不是「整台引擎」的，而不再是单独的 `172.17.0.x`？
+- 没有自己的门牌 → **没有容器 IP**
+- 房东家有什么你就用什么 → 宿主机的**网卡、路由，容器里全能看见、全能用**
+- 你在客厅放音乐，全楼都听得见 → 容器占的**端口就是宿主机的端口**，和宿主机上的程序抢着用
+- 你在客厅喊「隔壁小王」，房东家的通讯录里查无此人 → **容器名互访失效**
+
+为什么有人要这么干：一个字，**快**。少了一层虚拟网线和地址转换（NAT），网络性能最好——高吞吐网关、监控组件这类场景会用。代价就是比喻里的后两条：**几乎没有网络隔离**。
+
+> 想知道「单独配一套网络」在系统层面是怎么回事（Network Namespace），见 [《netns 与 iptables 实操》](/Linux/basics/linux-05-netns-iptables)——host 模式就是跳过了那一步。
+
+### 6.2 亲手验证：搬进「房东家」之后，四件事各变成什么样
+
+**要查什么**：容器的网卡长什么样？localhost 还是不是自己的？端口怎么算？容器名还能不能用？
+
+**① 进屋一看：这全是宿主机的东西**
 
 ```bash
-docker run -d --name lab-net-host --network host nginx:alpine
-docker exec lab-net-host ip -4 addr
+$ docker run --rm --network host busybox ip -4 addr | grep inet
+    inet 127.0.0.1/8 scope host lo
+    inet 172.22.212.111/20 brd 172.22.223.255 scope global eth0
+    inet 172.19.0.1/16 brd 172.19.255.255 scope global br-232b31f9d168
+    inet 172.20.0.1/16 brd 172.20.255.255 scope global br-c88cb4c6fe5f
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-d4438b6fccbf
+...（后面还有几行网桥，同款）
 ```
 
-本机（节选）：
+**怎么读**：对照 3.2④——bridge 容器里只有一块自己的 `eth0`（`172.17.0.x`）；这里冒出来的 `eth0`（`172.22.212.111`）和一排 `br-` 开头的网桥，**全是宿主机的网卡清单**。路由表也一样，打开就是宿主机的整张表。原因就一句话：**没给容器分网络，用的本来就是宿主机这套**。
 
-```text
-inet 172.22.212.111/20 … eth0
-inet 172.17.0.1/16 … docker0
+`docker inspect` 去查它的 IP，得到的是**空**的——「容器 IP」这个东西在 host 模式下不存在。
+
+**② localhost：这次真的指向宿主机了**
+
+还记得开头的问题吗：bridge 模式下，Web 容器里的 `localhost` 是 Web 自己，连不上隔壁的 MySQL。host 模式下变成什么样？做个对照实验——先在**宿主机的** localhost 上开个小服务，再让两种容器分别去访问它（实测）：
+
+```bash
+$ python3 -m http.server 18095 --bind 127.0.0.1 &      # 宿主机的 localhost 上开个网页服务
+
+$ docker run --rm --network host busybox wget -qO- http://127.0.0.1:18095/ >/dev/null && echo 通
+通
+
+$ docker run --rm busybox wget -qO- http://127.0.0.1:18095/
+wget: can't connect to remote host (127.0.0.1): Connection refused
 ```
 
-**怎么读**：
+**怎么读**：host 容器访问 `127.0.0.1:18095` **通了**——它的 localhost 和宿主机是同一个；bridge 容器被拒绝——它的 localhost 在自己屋里，屋里没有这个服务。「localhost 有时通有时不通」的完整答案，就是这两行。
 
-| 你看到的 | 含义 |
-|----------|------|
-| 出现引擎的 `eth0`、`docker0`、各种 `br-…` | 容器**没有**自己那份隔离网卡视图，看到的就是主机网络栈 |
-| `172.22.212.111` | WSL 虚拟机的地址，**不是**你办公室 Windows 网卡 IP |
-| 看不到单独的 `172.17.0.x` 容器 IP | 正常：host 模式本来就不给容器再分一份 bridge IP |
+**③ 端口：不用 `-p`，直接就是宿主机的端口**
 
-### 6.2 取舍与 WSL2 差异
+```bash
+$ docker run -d --name lab-host-srv --network host \
+    busybox sh -c 'mkdir -p /tmp/www && echo host-mode-ok > /tmp/www/index.html && httpd -f -p 18096 -h /tmp/www'
+
+$ curl -s http://127.0.0.1:18096/
+host-mode-ok
+```
+
+（`busybox httpd -f -p 18096` = 用 busybox 自带的迷你网页服务，前台监听 18096。）
+
+**怎么读**：没写任何 `-p`，宿主机 `curl` 就直接通了——容器里的服务**听在宿主机的 18096 上**。这也解释了 3.4.1 出现过的那条警告 `WARNING: Published ports are discarded`：host 模式下根本没有「映射」这回事，`-p` 写了也被扔掉。
+
+**④ 翻车现场：和宿主机抢端口，撞了就起不来**
+
+宿主机先用 18097，再让 host 容器也听 18097（实测）：
+
+```bash
+$ python3 -m http.server 18097 --bind 0.0.0.0 &        # 宿主机占住 18097
+
+$ docker run -d --name lab-host-conflict --network host busybox httpd -f -p 18097
+
+$ docker ps -a --filter name=lab-host-conflict --format '{{.Status}}'
+Exited (1)
+
+$ docker logs lab-host-conflict
+httpd: bind: Address already in use
+```
+
+**怎么读**：同一个端口只能一个人听。真实世界更常见的翻法：宿主机自己跑着 nginx 占了 80，你再 `docker run --network host nginx:alpine`，容器里的 nginx 试了几次绑不上，直接退出，日志里只剩一句 `still could not bind()`——**host 容器和宿主机程序是零距离抢端口，谁先起谁赢**。
+
+**⑤ 容器名：查无此人**
+
+```bash
+$ docker run --rm --network host busybox cat /etc/resolv.conf
+nameserver 172.22.208.1
+# Based on host file: '/etc/resolv.conf' (legacy)
+
+$ docker run --rm --network host busybox nslookup lab-net-db
+;; connection timed out; no servers could be reached
+```
+
+**怎么读**：4.4 讲过，「容器名 → IP」的翻译员（`127.0.0.11`）只有**自定义网络**才有；host 模式用的是宿主机的 DNS 配置（这里就是 Windows 网关那台），而它压根不认识 Docker 的容器名——所以解析失败。多容器互访，请回第四节。
+
+### 6.3 什么时候用
 
 | | |
 |--|--|
-| 优点 | 无 NAT；端口即主机端口 |
-| 缺点 | **无端口隔离**；隔离性最弱；容器名 DNS 等「Docker 网络能力」也不走这套 |
-| WSL2 | `host` 共享的是 **WSL 虚拟机**的网络栈，不是 Windows 主机网卡（见[官方 host driver](https://docs.docker.com/engine/network/drivers/host/)） |
+| 优点 | 性能最好（无 NAT、无虚拟网线）；localhost 与宿主机互通 |
+| 缺点 | 和宿主机抢端口、也没有端口隔离；网络全暴露；容器名互访失效 |
+| 适合 | 高吞吐网关、监控组件——明确要「就用这台机器的网络」时 |
+| 不适合 | 日常 Web / 数据库服务——隔离的收益远大于那点性能 |
 
-适用：明确需要共享主机网络、并接受上述代价时。日常 Web/DB **不要**默认用 host。
+两个提醒：在 WSL2 里，这个「宿主机」指 WSL 虚拟机而不是 Windows 本机（见开头的环境说明与[官方 host driver](https://docs.docker.com/engine/network/drivers/host/)）；host 模式带来的安全边界问题，[第 22 篇容器安全](/云原生/docker/docker-22-container-security)再展开。
+
+**验收**：容器里的网卡路由 = 宿主机的；localhost 通到宿主机服务；不写 `-p` 端口也开在宿主机上；和宿主机抢端口必有一死；容器名解析不了。
 
 ---
 
@@ -788,6 +1086,8 @@ docker exec lab-net-s2 wget -qO- http://127.0.0.1/ | head -c 80
 ---
 
 ## 九、overlay 模式（跨主机覆盖网络）——展开
+
+> 🧗 **进阶块，可先跳过**——多机集群（Swarm）才用得上；单机读者知道「有这个模式、跨主机要靠它」即可。
 
 ### 9.1 是什么
 
@@ -877,6 +1177,8 @@ docker swarm leave --force
 
 ## 十、macvlan 模式——展开
 
+> 🧗 **进阶块，可先跳过**——让容器直接出现在办公网里（要和网络同事对二层/MAC 规划），真有此需求再读。
+
 ### 10.1 是什么
 
 **macvlan** 让容器拥有 **独立 MAC 地址**，在二层上像「插在交换机上的另一台机器」：
@@ -956,6 +1258,8 @@ docker network rm lab-macvlan-net
 
 ## 十一、ipvlan 模式——macvlan 的兄弟（实测）
 
+> 🧗 **进阶块，可先跳过**——云上替代 macvlan 的方案，和上一节配套读。
+
 ### 11.1 是什么
 
 和 macvlan 一样「不走 docker0、直接从宿主网卡派生」，差别在**二层身份**——ipvlan 的容器**共用父接口的 MAC**，交换机眼里始终只有宿主机一台设备。
@@ -967,18 +1271,32 @@ docker network rm lab-macvlan-net
 | 云上可用性 | 多数云**禁止**杂散 MAC | 通常可行——ipvlan 的主场景 |
 | 经典限制 | 宿主机与容器默认不能互访 | 同样默认不能互访（设计使然） |
 
-这个差别不是文档空话，本机三方实测（建网：`docker network create -d ipvlan -o parent=eth0 --subnet 192.168.210.0/24 --gateway 192.168.210.1 lab-ipv-p`）：
+这个差别不是文档空话，本机三方实测。**要查什么**：三种环境里 `eth0` 的 MAC 各是什么——ipvlan 容器的是否与宿主机相同？先建一张指定 parent 的 ipvlan 网：
+
+```bash
+$ docker network create -d ipvlan -o parent=eth0 \
+    --subnet 192.168.210.0/24 --gateway 192.168.210.1 lab-ipv-p
+```
+
+| 部分 | 是什么 |
+|------|--------|
+| `-d ipvlan` | 用 ipvlan 驱动建网 |
+| `-o parent=eth0` | 指定父接口：容器从这个口「派生」，**共享它的 MAC** |
+
+再取三方的 MAC 对比。命令里的管道是「列网卡 → 筛出 MAC 列」两步：`ip link show eth0` 打印网卡详情（其中一行是 `link/ether xx:xx:... brd ...`），`awk '/ether/{print $2}'` 只把**匹配 ether 的那一行的第二列**（MAC 本身）挑出来：
 
 ```bash
 $ docker run --rm busybox ip link show eth0 | awk '/ether/{print $2}'
-7e:f4:e9:ae:a6:7a                          # bridge 容器：随机 MAC（28.0+ 行为）
+7e:f4:e9:ae:a6:7a                          # ① bridge 容器：随机 MAC（28.0+ 行为）
 
 $ docker run --rm --network lab-ipv-p busybox ip link show eth0 | awk '/ether/{print $2}'
-00:15:5d:94:91:57                          # ipvlan 容器
+00:15:5d:94:91:57                          # ② ipvlan 容器
 
 $ ip link show eth0 | awk '/ether/{print $2}'
-00:15:5d:94:91:57                          # 宿主机 eth0——和 ipvlan 容器一字不差
+00:15:5d:94:91:57                          # ③ 宿主机 eth0
 ```
+
+**怎么读**：② 和 ③ **一字不差**——ipvlan 容器确实共用宿主 eth0 的 MAC；① 是随机值，两种驱动在此分道扬镳。
 
 ### 11.2 为什么 / 什么时候选它
 
@@ -988,7 +1306,9 @@ $ ip link show eth0 | awk '/ether/{print $2}'
 
 ### 11.3 怎么做（本机实测）
 
-学习环境可以**不指定 parent**：驱动自建一个 `dummy` 类型接口当父口，网络完全本地化（官方文档明示的行为）：
+**要查什么**：不指定 parent 能不能建 ipvlan 网？容器能不能拿到规划子网内的 IP、同网互 ping？
+
+学习环境可以**不指定 parent**：驱动自建一个 `dummy` 类型接口当父口，网络完全本地化（官方文档明示的行为）。
 
 ```bash
 $ docker network create -d ipvlan \
@@ -1007,7 +1327,17 @@ $ docker exec lab-ipv-1 ping -c 2 lab-ipv-2
 2 packets transmitted, 2 packets received, 0% packet loss
 ```
 
-**怎么读**：流程与 macvlan 实验几乎同形（建网 → 拿规划子网内 IP → 同网互 ping 通），差别全在二层身份。注意无 parent 时容器共享的是 dummy 父口的 MAC、不是宿主 eth0 的——验证「真共享」要像 11.1 那样指定 `-o parent=eth0`。
+逐条读：
+
+| 命令 / 输出 | 含义 |
+|-------------|------|
+| `create` 不带 `-o parent` | 允许——驱动自建 dummy 父口兜底 |
+| `--gateway 192.168.210.1` | 指定网关号；不写则自动取网段里第一个可用地址 |
+| `Driver=ipvlan Parent=` | 确认驱动；`Parent` 为空 = 用的就是 dummy 父口（`{{index .Options "parent"}}` 是从网络的选项字典里取 `parent` 这一项） |
+| `inet 192.168.210.2/24` | 容器领到规划 `/24` 内的号——建网生效 |
+| `ping lab-ipv-2` 通 | ipvlan 也是**自定义网**，同样享受容器名 DNS（4.2/4.4 那套 `127.0.0.11`）——不只是 bridge 独有 |
+
+**与 macvlan 实验对照**：流程几乎同形（建网 → 拿规划子网内 IP → 同网互 ping 通），差别全在二层身份。注意无 parent 时容器共享的是 dummy 父口的 MAC、不是宿主 eth0 的——验证「真共享」要像 11.1 那样指定 `-o parent=eth0`。
 
 生产接真实网络：`-o parent=eth0`（或 VLAN 子接口 `eth0.10`，Docker 自动建删）、`-o ipvlan_mode=l2|l3`；子网规划要求与 macvlan 相同——**必须与 parent 所在网络匹配**。
 
@@ -1094,7 +1424,7 @@ docker port lab-net-web
 若中途打断，统一清掉：
 
 ```bash
-docker rm -f lab-net-web lab-net-db lab-net-host lab-net-none \
+docker rm -f lab-net-web lab-net-db lab-net-host lab-net-none lab-host-srv lab-host-conflict \
   lab-net-s1 lab-net-s2 lab-ov-1 lab-ov-2 lab-mac-1 lab-ipv-1 lab-ipv-2 \
   lab-pub-loop lab-pub-range lab-pub-rand lab-host-p lab-alias-1 \
   lab-gw-demo lab-int-1 lab-int-2 lab-ct-a lab-fixed-1 lab-fixed-2 \
@@ -1118,7 +1448,7 @@ docker swarm leave --force 2>/dev/null
 - **端口发布**：`-p 127.0.0.1:…` 只开本机、`-P` 随机、`/udp` 与范围写法；`docker port` 查映射；host 模式下 `-p` 被丢弃。每个 `-p` 伴生一个 **docker-proxy** 用户态代理兜底回环场景。防火墙规则挂 `DOCKER-USER` 链；28 起默认加固（随机 MAC、未发布端口外部直连被阻断）。  
 - **网段从哪来**：默认地址池按 `size` 顺序切（`daemon.json` 可调），会避开宿主已用前缀；29.0 支持 `--subnet 0.0.0.0/24` 只要长度不要网段；固定 IP 用 `--ip`（必须在子网内，网段外直接报错）。  
 - **多网络**：`gw-priority` 定默认网关；`--network-alias` 网内外号（多容器共享别名时 DNS 轮询返回全部成员）；`--internal` 纯内网（路由表无 default，隔离在路由层）。  
-- **host / none / container**：共享主机栈、断网、共享指定容器栈；container: 模式下 `--hostname` / `-p` 等旗标不可用（conflicting options）。  
+- **host / none / container**：host = 宿主网络原件（网卡路由同款、localhost 互通、与宿主抢端口、无容器名 DNS、`-p` 被丢弃）；none = 断网只剩 lo；container: = 共享指定容器栈（`--hostname` / `-p` 等旗标不可用，conflicting options）。  
 - **overlay**：看 `Scope=swarm` + 名字 ping；用完 `swarm leave`。  
 - **macvlan / ipvlan**：都直连物理网络、无需 `-p`；macvlan 独立 MAC（云上常被禁），ipvlan 共用父口 MAC（实测与宿主 eth0 一字不差）；WSL2 上「能起来」≠「进了办公室 LAN」。  
 
@@ -1130,6 +1460,14 @@ docker swarm leave --force 2>/dev/null
 > 2. `-p 127.0.0.1:18081:80` 起的服务，为什么局域网另一台机器访问 `你的IP:18081` 不通？数据库镜像如果不小心用 `-p 3306:3306` 跑在了公司服务器上，比 `--internal` 网络里的数据库多了什么风险？
 
 （提示一：对照第三节 `bad address` 与第四节 `nslookup` / `ping lab-net-db` 的本机结果。提示二：对照 3.4.1 的 `ss` 监听地址与 5.3 的路由表。）
+
+---
+
+## 参考资料
+
+- 官方：[Networking overview](https://docs.docker.com/engine/network/)、[bridge](https://docs.docker.com/engine/network/drivers/bridge/)、[overlay](https://docs.docker.com/engine/network/drivers/overlay/)、[macvlan](https://docs.docker.com/engine/network/drivers/macvlan/)、[ipvlan](https://docs.docker.com/engine/network/drivers/ipvlan/)、[Packet filtering and firewalls](https://docs.docker.com/engine/network/packet-filtering-firewalls/)、[28.x release notes](https://docs.docker.com/engine/release-notes/28/)
+- Linux 板块前置（顺完这条线再读本篇最稳）：[IP、网段与网关](/Linux/basics/linux-02-ip-subnet-gateway) → [tcpdump 抓包入门](/Linux/basics/linux-03-tcpdump) → [NAT 白话拆解](/Linux/basics/linux-04-nat) → [netns 与 iptables 实操](/Linux/basics/linux-05-netns-iptables)
+- 本机实测环境：WSL2 Ubuntu-22.04 + 原生 Docker Engine 29.1.3
 
 ---
 

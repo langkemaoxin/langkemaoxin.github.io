@@ -16,7 +16,7 @@ description: 用两侧同时抓包的实测，看清 NAT 如何改写源/目的�
 
 > **Linux 板块 · 第 4 篇**  
 > 上一篇：[《tcpdump 抓包入门》](/Linux/basics/linux-03-tcpdump)（本文两侧抓包用的兵器，在那篇练手）  
-> 读完可接着看：[《Docker 网络模式与实操》](/云原生/docker/docker-11-network)（`-p` 端口发布、iptables 规则全集都在那篇展开）
+> 下一篇：[《网络命名空间与 iptables 规则实操》](/Linux/basics/linux-05-netns-iptables)（本文规则的表/链体系与 netns 动手篇；读完再进 Docker 系列最顺）
 
 ---
 

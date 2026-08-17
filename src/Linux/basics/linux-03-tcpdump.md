@@ -48,6 +48,8 @@ $ tcpdump -ni lo tcp port 18097 -c 2
 
 这就是 tcpdump 的位置：**当所有配置类工具都说「没问题」时，它让你看见包本身的生死**。第 4 篇拆 NAT 时还要靠它两侧抓包拍现行——本文先把这件兵器正式交到你手上。
 
+> 想亲手复现这个现场：`python3 -m http.server 18097 --bind 127.0.0.1 &` 起一个只绑回环的服务，再拿 eth0 的地址去 curl 它。
+
 ### 回读 `ss -tln`：账本其实写得明明白白
 
 破案之后再回头把开头那行 `ss -tln | grep 18097` 拆透——它是「配置层」工具的代表，本文后面还会反复出现。
@@ -318,6 +320,7 @@ Flags 字母表（摘自手册，常用的六个）：
 TCP 行只告诉你「有多少数据」，`-A` 把数据内容按 ASCII 打出来：
 
 ```bash
+$ python3 -m http.server 18098 --bind 127.0.0.1 &
 $ tcpdump -A -s0 -ni lo "tcp dst port 18098" -c 4 &
 $ curl -s "http://127.0.0.1:18098/hello?name=world" -o /dev/null
 ```
@@ -412,6 +415,12 @@ reading from file /tmp/docker-http.pcap, link-type EN10MB (Ethernet), snapshot l
 ```
 
 注意 `36820 > 80` 的端口——若省掉一个 `n`，同样的文件会显示成 `172.17.0.4.http`：端口被翻译成了服务名。文件是原始证据，回读时才决定怎么呈现，这也是「落盘再分析」的好处之一。生产上长时间抓包的配套件：`-C` 按大小切文件、`-W` 限制个数（环形覆盖）、`-G` 按时间轮转——名字先记下，用到再查手册。
+
+**收尾清理**：本文起过三个练手服务（开头 18097、第五节 18099、第六节 18098，都是 `python3 -m http.server`），连同落盘的 pcap 一起清掉：
+
+```bash
+$ pkill -f http.server && rm -f /tmp/docker-http.pcap
+```
 
 ---
 

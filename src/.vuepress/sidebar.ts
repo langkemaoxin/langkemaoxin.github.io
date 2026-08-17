@@ -399,6 +399,7 @@ export default sidebar({
         "linux-02-ip-subnet-gateway",
         "linux-03-tcpdump",
         "linux-04-nat",
+        "linux-05-netns-iptables",
       ],
     },
     {
