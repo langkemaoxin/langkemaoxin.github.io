@@ -16,7 +16,7 @@ description: 用白话+本机实测讲清 IP、私有地址与 NAT、网段（/2
 
 > **Linux 板块 · 第 2 篇**  
 > 上一篇：[《nsenter 前置知识》](/Linux/basics/linux-01-nsenter-prerequisites)  
-> 下一篇：[《NAT 白话拆解》](/Linux/basics/linux-03-nat)（把本文「网关」手里的换头术拆开看）
+> 下一篇：[《tcpdump 抓包入门》](/Linux/basics/linux-03-tcpdump)（本文之后的排障与验证，都要靠它把包拍给你看）
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: NAT 白话拆解——容器为什么能上网，外网为什么进不来
 sidebarGroup: Linux 基础
-shortTitle: 03 NAT 地址转换
-order: 3
+shortTitle: 04 NAT 地址转换
+order: 4
 date: 2026-08-17T00:00:00.000Z
 category: Linux
 tag:
@@ -14,15 +14,15 @@ tag:
 description: 用两侧同时抓包的实测，看清 NAT 如何改写源/目的地址：MASQUERADE 让容器出网、DNAT 是 -p 端口映射的真身、连接跟踪表负责把回程包还给正确的容器。
 ---
 
-> **Linux 板块 · 第 3 篇**  
-> 上一篇：[《读 Docker 网络前要懂的 IP、网段与网关》](/Linux/basics/linux-02-ip-subnet-gateway)  
+> **Linux 板块 · 第 4 篇**  
+> 上一篇：[《tcpdump 抓包入门》](/Linux/basics/linux-03-tcpdump)（本文两侧抓包用的兵器，在那篇练手）  
 > 读完可接着看：[《Docker 网络模式与实操》](/云原生/docker/docker-11-network)（`-p` 端口发布、iptables 规则全集都在那篇展开）
 
 ---
 
 ## 开头：私有地址的包，凭什么能活着到公网
 
-上一篇结尾留了个没拆完的疑问：容器 IP 是 `172.17.0.5` 这样的私有地址，公网上**没有任何人认识它**，可它 ping `223.5.5.5` 就是通了——
+第 2 篇结尾留了个没拆完的疑问：容器 IP 是 `172.17.0.5` 这样的私有地址，公网上**没有任何人认识它**，可它 ping `223.5.5.5` 就是通了——上一篇 tcpdump 结尾的思考题也问了：这时 eth0 上抓到的源地址会是谁？
 
 ```text
 64 bytes from 223.5.5.5: seq=0 ttl=113 time=5.168 ms
@@ -30,7 +30,7 @@ description: 用两侧同时抓包的实测，看清 NAT 如何改写源/目的�
 
 这个包离开容器后必然被**换过头面**才活着到达公网，回来时又被**换了回来**。干这件事的技术叫 NAT。本文用「两侧同时抓包」的实测，把这个换头过程当场拍下来给你看；顺手回答另一个方向的问题：**为什么外网主动进不来，非得 `-p` 开门**。
 
-> **实验环境**：WSL2 Ubuntu-22.04 + 原生 Docker Engine 29.1.3，iptables v1.8.7（legacy 后端）。你的机器号码会不同，结构一致即可对照。抓包工具 `tcpdump`，连接跟踪表直接读内核的 `/proc/net/nf_conntrack`（无需装 conntrack 命令）。文中 `iptables`、`tcpdump` 都需要 root（本环境默认用户即 root）。
+> **实验环境**：WSL2 Ubuntu-22.04 + 原生 Docker Engine 29.1.3，iptables v1.8.7（legacy 后端）。你的机器号码会不同，结构一致即可对照。抓包工具 `tcpdump`（用法见[上一篇](/Linux/basics/linux-03-tcpdump)），连接跟踪表直接读内核的 `/proc/net/nf_conntrack`（无需装 conntrack 命令）。文中 `iptables`、`tcpdump` 都需要 root（本环境默认用户即 root）。
 
 ---
 

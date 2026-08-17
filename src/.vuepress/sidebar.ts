@@ -397,7 +397,8 @@ export default sidebar({
       children: [
         "linux-01-nsenter-prerequisites",
         "linux-02-ip-subnet-gateway",
-        "linux-03-nat",
+        "linux-03-tcpdump",
+        "linux-04-nat",
       ],
     },
     {
