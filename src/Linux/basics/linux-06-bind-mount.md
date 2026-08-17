@@ -265,34 +265,83 @@ $ realpath /tmp/lab6-nest/here/via-bind/..       # bind 的"上一级"符合直�
 
 ## 五、只读 bind：EROFS 从哪来；单文件也能 bind
 
-**怎么做**：给 bind 加只读，经典写法两步走——先 bind，再 remount：
+**为什么先讲它**（回收开头第二笔账）：Docker 系列说 `:ro` 的拒绝「发生在**内核文件系统层**，进程绕不过去，不是 Docker 模拟的报错」。这句话的底气来自本节要弄清的一件事——**ro 到底锁住了什么**：不是盘，不是文件，而是挂载表里**那一条记录**。锁的对象搞对了，「源还能写」「容器绕不过去」这些结论才站得住。
+
+**先挂再锁：为什么经典写法是两步**：
 
 ```bash
 $ mkdir /tmp/lab6-ro
-$ mount --bind /tmp/lab6-src /tmp/lab6-ro
-$ mount -o remount,ro,bind /tmp/lab6-ro        # 第二步只改这一条挂载的标志
+$ mount --bind /tmp/lab6-src /tmp/lab6-ro          # 第一步：正常 bind，此刻还是可写
+$ mount -o remount,ro,bind /tmp/lab6-ro            # 第二步：把「这一条挂载」的标志位改成 ro
 ```
 
-（util-linux 2.27 起也支持一步 `mount -o bind,ro 源 目标`——由 mount 命令在用户态自动补第二次 remount 系统调用，手册注明「非原子」；本机 2.37 实测可用，两种写法效果相同。）
+为什么要分两步？**内核的 bind 挂载在创建时不接受 ro 标志**——只读是挂载条目的 VFS 标志，只能挂上之后用 `remount` 去改。（util-linux 2.27 起 `mount -o bind,ro 源 目标` 可一步写完，但那只是 mount 命令在用户态自动替你补了第二次 remount 系统调用，手册注明「非原子」；本机 2.37.2 实测可用，两种写法效果相同。）
 
-写入被拒，报错原文：
+第二条 remount 逐段拆开看：
+
+| 段 | 含义 |
+|----|------|
+| `mount -o` | 后面跟逗号分隔的选项列表 |
+| `remount` | 不是挂新的，是**修改已存在的那条挂载** |
+| `ro` | 要改成的标志：只读 |
+| `bind` | 声明改的是**这条 bind 挂载（VFS 条目）自己的标志**——不是「再做一次 bind」（少写它的下场见下方易混点） |
+
+**看证据，再动手**。先确认 ro 真的挂上了——`findmnt -no OPTIONS 挂载点`（`-n` 不要表头，`-o` 指定只输出选项列）：
 
 ```bash
 $ findmnt -no OPTIONS /tmp/lab6-ro
 ro,relatime,discard,errors=remount-ro,data=ordered
+```
 
+这行输出有个**容易看走眼的地方**：开头一个 `ro`、结尾又有一个 `remount-ro`——它们是两个不相干的东西。回到第三节的解剖：挂载表的选项本来就分**两组**，findmnt 把它们拼成了一行，拆开看 mountinfo 原文：
+
+```bash
+$ grep ' /tmp/lab6-ro ' /proc/self/mountinfo
+797 80 8:48 /tmp/lab6-src /tmp/lab6-ro ro,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+```
+
+| 选项组 | 原文 | 此刻的值 | 说明 |
+|------|------|------|------|
+| **挂载选项**（这条挂载自己的标志） | 第 6 字段 | `ro,relatime` | ← remount 改的是它，**已生效** |
+| **超级块选项**（整块盘的属性） | 第 9 字段起 | `rw,discard,…` | **还是 rw！** 盘没被动过 |
+
+（结尾那个 `errors=remount-ro` 是 ext4 的超级块选项「文件系统出错时自动转只读」，名字里恰好带 ro，与我们无关。）**同一块盘、同一个 inode，一条挂载 ro、另一条 rw**——这就是「只读锁的是入口，不是数据」的原文证据。
+
+把两条真实记录并排看（前一行是第三节的 lab6-dst，后一行是本节的 lab6-ro，**root 子树相同**）：
+
+```text
+795 80 8:48 /tmp/lab6-src /tmp/lab6-dst rw,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+797 80 8:48 /tmp/lab6-src /tmp/lab6-ro  ro,relatime - ext4 /dev/sdd rw,discard,errors=remount-ro,data=ordered
+```
+
+设备号相同、root 字段（第 4 列）相同、超级块选项（第 9 列起）相同——**唯一不同的是第 6 列挂载标志：`rw` vs `ro`**。画成图：
+
+```text
+            同一份底层数据（/dev/sdd 上的 /tmp/lab6-src 子树，inode 也只有一套）
+                             ↑
+             ┌───────────────┴───────────────┐
+             ↓                               ↓
+     /tmp/lab6-dst 这条挂载          /tmp/lab6-ro 这条挂载
+     标志 rw（没人动过）              标志 ro（remount 改的）
+```
+
+**只读是「门」的属性，不是「货」的属性**——走 ro 那扇门的写入被拦下，走 rw 那扇门照常放行。
+
+现在写一个字试试，从只读入口：
+
+```bash
 $ echo x > /tmp/lab6-ro/try.txt
 bash: /tmp/lab6-ro/try.txt: Read-only file system
 ```
 
-而**同一时刻**，源路径照常可写：
+这句报错就是开头第二笔账的答案：内核 VFS 层直接返回 **`EROFS`**（errno 30，显示为 `Read-only file system`），bash 只是转述——报错发生在**内核**，任何进程绕不过去。它和 Docker 系列第 12 篇 5.3 里容器内写 `:ro` 挂载收到的报错一字不差，因为是**同一个内核在同一个层**拒绝的。而同一时刻，从**源路径**这条挂载写入毫无障碍：
 
 ```bash
 $ echo 'still-writable' >> /tmp/lab6-src/a.txt && echo OK
 OK
 ```
 
-解锁也只是一次 remount：
+**解锁**也只是一次 remount，把标志改回来：
 
 ```bash
 $ mount -o remount,rw,bind /tmp/lab6-ro
@@ -300,13 +349,24 @@ $ findmnt -no OPTIONS /tmp/lab6-ro
 rw,relatime,discard,errors=remount-ro,data=ordered
 ```
 
-**怎么读**：只读锁的是**这一条挂载（VFS 条目）**，不是那块盘——回顾第三节 mountinfo 的两组选项：「挂载选项」和「超级块选项」，ro 只改前者，所以源路径（另一条挂载）不受影响。这也是 Docker `:ro` 的实现方式：容器内进程写文件时，内核在 VFS 层直接返回 `EROFS`（errno 30，显示为 `Read-only file system`）——它是内核行为，进程绕不过去，不是 Docker 模拟的报错。第七节会在容器输出里亲眼看到这两组选项同框。
+（首字符 `ro`→`rw`；超级块那组从头到尾没变过。）
 
-**单文件 bind**：bind 的源不一定是目录，**单个文件**也行（挂载点必须先存在一个同名文件）：
+> ⚠️ **易混点：remount 里的 `bind` 少写会怎样？**（实测）
+>
+> ```bash
+> $ mount -o remount,ro /tmp/lab6-ro          # 少写了 bind
+> $ grep ' /tmp/lab6-ro ' /proc/self/mountinfo
+> 797 80 8:48 /tmp/lab6-src /tmp/lab6-ro rw,relatime - ext4 /dev/sdd rw,...
+>                                            # ↑ 命令成功返回，但 ro 哪儿都没出现！
+> ```
+>
+> 命令 exit 0、没有任何报错，但这条挂载**没被锁上**——ro 被静默丢弃。手册语义：不带 `bind` 的 remount，操作对象是**超级块**而不是这条挂载；本机实测连超级块也没动成（用 strace 跟踪时，内核直接回 `mount point is busy`——它确实去碰了整块盘所属的超级块，被系统占用顶了回来）。老内核时代这条路真走通时，会把同一块盘的**所有入口**一起变只读，比静默无效更危险。两种结局指向同一句忠告：**`remount,ro,bind` 三个词一个都不能少**。
+
+**单文件也能 bind——挂载点必须「类型匹配」**。Docker 往容器注入 `/etc/hosts`（一个**文件**，不是目录）用的就是这一手。bind 的源不限于目录：
 
 ```bash
 $ echo 'KEY=42' > /tmp/lab6-src/app.conf
-$ touch /tmp/lab6-conf                          # 挂载点先建好
+$ touch /tmp/lab6-conf                             # 挂载点先建好——注意：建的是一个「文件」
 $ mount --bind /tmp/lab6-src/app.conf /tmp/lab6-conf
 
 $ cat /tmp/lab6-conf
@@ -316,7 +376,15 @@ inode=118919  /tmp/lab6-src/app.conf
 inode=118919  /tmp/lab6-conf
 ```
 
-同一 inode，同一份文件。第七节会看到 Docker 注入 `/etc/hosts` 用的正是这一手。
+同一 inode、同一份文件——和第二节的目录 bind 一个道理。那为什么挂载点必须先 `touch` 一个**文件**、拿目录当挂载点会怎样？实测：
+
+```bash
+$ mkdir /tmp/lab6-conf-dir
+$ mount --bind /tmp/lab6-src/app.conf /tmp/lab6-conf-dir
+mount: /tmp/lab6-conf-dir: mount(2) system call failed: Not a directory.
+```
+
+内核返回 `ENOTDIR`：**源和挂载点类型必须一致**——文件挂到文件上、目录挂到目录上。这里正好和 Docker 系列[第 12 篇](/云原生/docker/docker-12-data-persistence)坑②对上：`-v` 打错路径时 Docker 自动创建的永远是**目录**——想挂单个文件而目标不存在，得到的是目录、类型对不上。所以 Docker 注入 `/etc/hosts` 的姿势必然是「先在容器里放好这个文件，再 bind」——第七节进容器验证这一手。
 
 ---
 
