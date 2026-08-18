@@ -29,9 +29,13 @@ description: Docker Compose 编排——用 YAML 定义一整栈微服务
 
 **Docker Compose** 把它变成「声明式」：用 **一份 YAML 描述整组容器应该长什么样**（终态），**一条命令**让 Docker 把实际状态搬到这个终态。官方定位一句话：定义、分享、运行多容器应用的工具。
 
-本篇全部在本机实测（WSL2 Ubuntu-22.04 + Docker 29.1.3 + Compose 插件 v2.40.3），从一份最小文件起步，逐个加服务、加卷、加变量、加健康检查——每一行 YAML 都跑给你看。看完你能回答：`up`/`down` 到底创建了什么、删了什么？服务之间怎么互相找到对方（提示：第 11 篇）？第 12 篇的卷语法怎么搬进来？`depends_on` 为什么经常「不够用」？
+本篇全部在本机实测，每一行 YAML、每条输出都跑给你看。实验对象是一套**逐步长大的三件套**：`web`（nginx 页面服务）+ `redis`（缓存）+ `site`（自建镜像的静态站）——从一份 5 行的最小文件起步，每节把 compose.yaml **整体替换**成新版本，跟着抄就能复现全部实验。看完你能回答：`up`/`down` 到底创建了什么、删了什么？服务之间怎么互相找到对方（提示：第 11 篇）？第 12 篇的卷语法怎么搬进来？`depends_on` 为什么经常「不够用」？
 
-全文路线：一是模型 → 二最小工程 → 三多服务与 DNS → 四持久化 → 五配置与变量 → 六就绪等待 → 七本地构建 → 八扩缩与资源 → 九命令速查与两代 Compose → 十系列衔接。
+> **实验环境**（文中输出均来自本机）：WSL2 Ubuntu-22.04 + Docker 29.1.3 + Compose 插件 v2.40.3。官方参考：[Compose overview](https://docs.docker.com/compose/)、[Compose file reference](https://docs.docker.com/reference/compose-file/)。
+>
+> 🗺️ **0 基础路线图**：第一次读只走主线，读完就能「一份文件起一套环境、改配置心里有底」。带 🧗 的进阶块用到再回头。
+> - **主线（顺序读）**：一（三层模型）→ 二（最小工程）→ 三（多服务与 DNS）→ 四（持久化）→ 五（.env 与校验）→ 六（就绪等待）→ 九（命令速查）
+> - **进阶块（🧗）**：七 build 本地构建 ｜ 八 `--scale` 与 deploy 资源限制
 
 ---
 
@@ -51,7 +55,7 @@ Project（工程）          ← 一份 compose.yaml + .env，一个独立的名
 
 字段上，compose.yaml 的每个服务几乎都能在 `docker run` 里找到对应旗标：`ports` 对 `-p`、`volumes` 对 `-v`、`environment` 对 `-e`、`networks` 对 `--network`——前面 11、12 篇学的知识**原样可用**，只是换了写法。
 
-边界也要说清：Compose 是**单机**编排工具，不做集群负载均衡与健康重调度——那是 Swarm/K8s 的地盘。单机与小规模多容器场景，它就是最优解。
+边界也要说清：Compose 是**单机**编排工具，不做集群那套事——负载均衡（把请求分摊给多个实例）、故障重调度（实例挂了自动在别处重拉一个）是 Swarm/K8s 的地盘。单机与小规模多容器场景，它就是最优解。
 
 ---
 
@@ -83,6 +87,17 @@ $ docker compose up -d
 
 六行输出，Compose 替你做了两件事：**建了一个项目网络** `compose-lab_default`，**起了一个容器** `compose-lab-web-1`。注意命名规则：**项目名-服务名-序号**——多个工程共存时天然不冲突。
 
+先回头把敲过的命令逐条拆开（`$` 是提示符，不用敲；这些写法后面每节都在用）：
+
+| 命令 | 干什么 |
+|------|--------|
+| `mkdir -p /root/compose-lab` | 建实验目录；`-p`＝需要的父目录一并创建 |
+| `cd /root/compose-lab`（与上一行用 `&&` 相连） | 进目录；`&&`＝前一条**成功**才执行后一条，后面反复出现 |
+| `cat > compose.yaml <<'EOF' … EOF` | heredoc 写文件：把两个 `EOF` 之间的内容**原样**写进 `compose.yaml`。不习惯的话，用任何编辑器创建同样内容的文件，效果相同 |
+| `docker compose up -d` | 按 compose.yaml 把整个项目跑起来；`-d`＝后台运行（detached） |
+
+再看 YAML 那 5 行：`services:` 下面缩进一层是**服务名**（`web:`），再缩进一层是它的声明——`image` 用什么镜像、`ports` 把宿主机 8080 转发到容器 80（语义同第 11 篇的 `-p`）。缩进是 YAML 的语法（空格，别用 Tab），层级就是靠它表达的。
+
 ### 2.2 验证它真的活了
 
 ```bash
@@ -98,7 +113,15 @@ web-1  | 2026/08/17 13:00:20 [notice] 1#1: start worker process 35
 web-1  | 172.26.0.1 - - [17/Aug/2026:13:00:21 +0000] "GET / HTTP/1.1" 200 896 "-" "curl/7.81.0" "-"
 ```
 
-`ps` 比 `docker ps` 多了 **SERVICE 列**；`logs` 只看本项目的服务，日志行自带 `web-1 |` 前缀——多服务日志混着看也不乱。
+三条命令逐条拆：
+
+| 命令 | 干什么 | 输出怎么读 |
+|------|--------|-----------|
+| `docker compose ps` | 列本项目的容器 | 比第 6 篇的 `docker ps` 多一列 **SERVICE**（这个容器属于哪个服务）；PORTS 列的 `0.0.0.0:8080->80` 即「宿主机 8080 → 容器 80」 |
+| `curl -s localhost:8080 \| grep "<title>"` | 验证页面真通了 | `curl -s` 静默抓网页；`\|`（管道）把左边命令的输出交给右边；`grep "<title>"` 只留含标题的那一行，少刷屏 |
+| `docker compose logs --tail=2 web` | 看服务日志 | `--tail=2` 只取最后 2 行；`web-1 \|` 前缀标明来自哪个容器——多服务混看也不乱 |
+
+第二行日志顺便读懂（nginx 访问日志的标准格式）：宿主机（从网关 `172.26.0.1` 过来）在 `13:00:21` 请求了 `GET /`，nginx 回了 `200`（成功）——正式排障时，`logs -f`（`-f`＝follow，持续滚动新日志）配这个格式，就是你的眼睛。
 
 ### 2.3 down：对称清场
 
@@ -118,7 +141,7 @@ $ docker compose down
 
 ## 三、多服务与服务名 DNS：第 11 篇直接复用（实测）
 
-真实项目从来不止一个服务。加一个 `redis`，并让 `web` 依赖它：
+真实项目从来不止一个服务。把 compose.yaml **整体替换**为两服务版——新增 `redis`，`web` 用 `depends_on` 依赖它（短格式就是个名单）：
 
 ```yaml
 services:
@@ -163,13 +186,20 @@ PONG
 
 `127.0.0.11` 就是第 11 篇讲过的内嵌 DNS——Compose 没有发明新网络，只是**自动帮你建了自定义 bridge 并把服务名注册成 DNS 名**。你的应用配置里写 `redis:6379` 即可，不用 IP、不用 `--link`。
 
+两条 `exec` 命令拆开（`exec`＝在**已运行**的服务容器里再执行一条命令，等价于第 12 篇 5.2 用过的 `docker exec`）：
+
+| 命令段 | 含义 |
+|--------|------|
+| `nslookup redis` | nslookup 是「查域名 → IP」的小工具（alpine 镜像自带）；查的名字就是**服务名** redis。输出里 `Non-authoritative answer` 是 DNS 应答的例行措辞，可忽略——重点是 `Name: redis → Address: 172.26.0.2` |
+| `redis-cli ping` | redis-cli 是 redis 官方镜像自带的客户端；`ping` 是握手命令，回 `PONG`＝服务活着、能接活 |
+
 > ⚠️ `depends_on` 短格式只保证**启动顺序**（redis 容器先 start），不保证 redis **就绪**（能接受连接）。web 启动瞬间去连 redis 仍可能吃一个 connection refused——解法在第六节（healthcheck + condition）。
 
 ---
 
 ## 四、数据持久化：第 12 篇的语法原样搬进来（实测）
 
-第 12 篇十节预告过一段 Compose 写法，现在每一行都能对上了。给 redis 加**命名卷**、给 web 挂**bind mount**（healthcheck 三行先照抄，六节拆解）：
+第 12 篇十节预告过一段 Compose 写法，现在每一行都能对上了。把 compose.yaml **整体替换**为持久化版——给 redis 加**命名卷**、给 web 挂 **bind mount**（healthcheck 三行先照抄，六节拆解）：
 
 ```yaml
 services:
@@ -210,7 +240,7 @@ $ curl -s localhost:8080
 <h1>hello from bind mount</h1>
 ```
 
-两个机制同时生效：bind mount 让 nginx 立刻读到宿主机的页面（第 12 篇 5.2 的热更新）；命名卷落在哪：
+两个机制同时生效：bind mount 让 nginx 立刻读到宿主机的页面（第 12 篇 5.2 的热更新）；命名卷落在哪——`--format '{{.Name}}'` 让 ls 只输出卷名列（Go 模板，第 12 篇 2.3 认过），`| grep compose` 从中筛出本项目的：
 
 ```bash
 $ docker volume ls --format '{{.Name}}' | grep compose
@@ -236,7 +266,7 @@ $ docker compose up -d >/dev/null && docker compose exec redis redis-cli get com
 (nil)
 ```
 
-`down -v` 才会删命名卷（`-v` 就是 `docker rm -v` 的工程级版本）。回头对照第 12 篇十节那段 MySQL 预告，逐行翻译：
+`>/dev/null` 把 `up` 的过程输出丢进「黑洞」（`/dev/null` 第 12 篇 6.2 认过：写进去的一律消失），好让屏幕只留我们关心的 `get` 结果。而结果是 `(nil)`——redis-cli 对「不存在的键」的固定答复：数据真的随卷一起没了。`down -v` 才会删命名卷（`-v` 就是 `docker rm -v` 的工程级版本）。回头对照第 12 篇十节那段 MySQL 预告，逐行翻译：
 
 | 预告写法 | 对应本篇知识点 |
 |------|------|
@@ -248,12 +278,14 @@ $ docker compose up -d >/dev/null && docker compose exec redis redis-cli get com
 
 ## 五、配置与变体：.env、变量替换与 config 校验（实测）
 
-同一份 compose.yaml 要在开发/测试环境跑出不同姿态，靠**变量替换**。写法 `${变量名:-默认值}`，变量从**环境变量**或**同目录 `.env` 文件**来：
+同一份 compose.yaml 要在开发/测试环境跑出不同姿态，靠**变量替换**。写法 `${变量名:-默认值}`（变量有值用变量、没值用默认），变量从**环境变量**或**同目录 `.env` 文件**来。准备两个文件：
 
 ```bash
 $ printf 'WEB_PORT=8081\nWHO=from-env-file\n' > .env
 $ printf 'GREETING=hi-from-envfile\nONLY_IN_ENVFILE=yes\n' > app.env
 ```
+
+`printf` 拆开：把引号里的内容打到标准输出，`\n` 是换行符（printf 不自动换行，得手动写）；`> 文件名` 把输出**重定向**写进文件。于是 `.env` 是两行 `KEY=VALUE`（Compose 专属的变量来源），`app.env` 也是两行（给后面 `env_file` 用的普通键值文件）。再把 compose.yaml **整体替换**为变量版：
 
 ```yaml
 services:
@@ -266,20 +298,53 @@ services:
     environment:
       GREETING: overridden-by-environment    # 与 env_file 重名，environment 赢
       WHO: ${WHO:-default}
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"                       # 资源上限，八节拆解，这里先带上
+          memory: 128M
 ```
 
-**先校验再启动**——`docker compose config` 把变量替换、默认值、合并规则全部渲染成最终结果，看到的就是 Docker 实际会用的：
+**先校验再启动**——`docker compose config` 不启动任何东西，只把「变量替换、默认值、合并规则」全部渲染成**最终生效的 YAML**（你看到的，就是 Docker 稍后实际会用的）：
 
 ```bash
-$ docker compose config | grep -E 'image:|published:|GREETING|ONLY_IN|WHO|cpus|memory'
+$ docker compose config
+name: compose-lab
+services:
+  web:
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: "134217728"
+    environment:
       GREETING: overridden-by-environment
       ONLY_IN_ENVFILE: "yes"
       WHO: from-env-file
     image: nginx:alpine
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
         published: "8081"
+        protocol: tcp
+networks:
+  default:
+    name: compose-lab_default
 ```
 
-渲染结果逐一印证：`WEB_PORT` 从 `.env` 来（8081）；`env_file` 的 `ONLY_IN_ENVFILE` 原样注入；重名的 `GREETING` 以 `environment` 为准。**容器内实际值再验一层**（`printenv`）：
+输出里五处值得看：
+
+| 渲染结果 | 说明 |
+|----------|------|
+| `name: compose-lab` | 项目名自动取自目录名（九节还会再见它） |
+| `published: "8081"` | `${WEB_PORT:-8080}` 被 `.env` 里的 8081 替换——变量真的生效了 |
+| `GREETING: overridden-by-environment` | 与 env_file 重名时，**`environment` 赢** |
+| `ONLY_IN_ENVFILE: "yes"` | env_file 独有的键，原样注入 |
+| `memory: "134217728"` | `128M` 被换算成字节数（128×1024×1024），`cpus: 0.5` 同理被规范化——**渲染结果才是真相** |
+
+**容器内实际值再验一层**（`sh -c '…'`＝把字符串交给容器内的 shell 执行；三条 `printenv`——打印环境变量——用 `;` 相连＝依次执行、互不影响）：
 
 ```bash
 $ docker compose up -d >/dev/null
@@ -292,7 +357,7 @@ $ curl -s -o /dev/null -w '%{http_code}\n' localhost:8081
 200
 ```
 
-优先级链：**`environment` > `env_file`**；而 `${VAR}` 替换发生在**解析 YAML 时**（宿主机侧），与容器内环境变量是两个阶段的事。养成习惯：改完 YAML 先 `docker compose config` 看渲染结果，变量拼错当场现形。
+最后一条是「只要状态码」的惯用写法，拆开：`-o /dev/null` 把网页正文丢进黑洞，`-w '%{http_code}\n'` 让 curl 收尾时打印 HTTP 状态码（200＝成功）。端口是 **8081**——正是 `.env` 里 `WEB_PORT` 的值，从文件到端口端到端闭环。优先级链：**`environment` > `env_file`**；而 `${VAR}` 替换发生在**解析 YAML 时**（宿主机侧），与容器内环境变量是两个阶段的事。养成习惯：改完 YAML 先 `docker compose config` 看渲染结果，变量拼错当场现形。
 
 ---
 
@@ -340,7 +405,7 @@ redis 先经历探针检测，状态变 **Healthy** 后 web 才 Starting——�
 
 ## 七、构建自己的镜像：build 字段（实测）
 
-`image` 用现成镜像，`build` 则让 Compose 直接从 Dockerfile 构建本项目的镜像。给实验栈加一个自建静态站：
+`image` 用现成镜像，`build` 则让 Compose 直接从 Dockerfile 构建本项目的镜像（Dockerfile 完整教程在[第 9 篇](/云原生/docker/docker-09-dockerfile)，这里三行够用）。先准备构建材料——一个页面 + 一个三行的 Dockerfile：
 
 ```bash
 $ mkdir -p site
@@ -351,6 +416,16 @@ COPY index.html /www/index.html
 CMD ["httpd", "-f", "-p", "80", "-h", "/www"]
 EOF
 ```
+
+Dockerfile 三行逐行看：
+
+| 行 | 干什么 |
+|----|--------|
+| `FROM busybox` | 以 busybox 镜像为底座 |
+| `COPY index.html /www/index.html` | 把构建目录里的 index.html 拷进镜像的 `/www/` |
+| `CMD ["httpd", "-f", "-p", "80", "-h", "/www"]` | 容器启动命令：跑 busybox 自带的 httpd 网页服务器——`-f` 前台运行、`-p 80` 监听 80 端口、`-h /www` 以 `/www` 为站点根目录 |
+
+再把 compose.yaml **整体替换**（这次只剩 site 一个服务，前几节的 web/redis 已完成历史使命）：
 
 ```yaml
 services:
@@ -373,7 +448,7 @@ time="…" level=warning msg="Docker Compose is configured to build using Bake, 
  Container compose-lab-site-1  Started
 ```
 
-（本机没装 buildx 插件，Compose 退回内置构建链路，输出为 BuildKit 步骤式，中间省略若干行。）要点：镜像**自动打上 `项目名-服务名` 的 tag**（`compose-lab-site:latest`），不用手动 `docker build` + `docker tag`。验证页面（刚 Started 的容器隔一拍再访问更稳）：
+（开头那行 warning 是说：本机没装 buildx——官方构建插件，Bake 是它的新一代入口；没装也不影响，Compose 自动退回内置构建链路，输出为 BuildKit 步骤式，`#5`、`#6` 是步骤编号，中间省略若干行。）要点：镜像**自动打上 `项目名-服务名` 的 tag**（`compose-lab-site:latest`），不用手动 `docker build` + `docker tag`。验证页面（`&&`＝前一条成功才执行；刚 Started 的容器有一拍启动时间，隔一秒再访问更稳）：
 
 ```bash
 $ sleep 1 && curl -s localhost:8082
@@ -411,7 +486,7 @@ compose-lab-site-1 0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
 compose-lab-site-2 0.0.0.0:8081->80/tcp, [::]:8081->80/tcp
 ```
 
-两个容器各拿到一个宿主端口——单机扩容成立。多实例的负载均衡仍需前置（nginx/网关），这是架构问题，不是 Compose 的锅。
+两个容器各拿到一个宿主端口——单机扩容成立。多实例的**负载均衡**（把请求分摊给多个实例）仍需前面加一层（如 nginx/网关），这是架构问题，不是 Compose 的锅。
 
 ### 8.2 deploy.resources：单机 up 也生效（附实测证据）
 
@@ -426,14 +501,14 @@ compose-lab-site-2 0.0.0.0:8081->80/tcp, [::]:8081->80/tcp
           memory: 128M
 ```
 
-口说无凭，inspect 容器的宿主配置（第 20 篇 Cgroups 的字段将在那里细讲）：
+口说无凭，inspect 容器的宿主配置（`--format` 的 Go 模板写法第 12 篇 2.3 认过；NanoCpus/Memory 是内核 cgroup 的字段，[第 20 篇](/云原生/docker/docker-20-cgroups)细讲）：
 
 ```bash
 $ docker inspect compose-lab-web-1 --format 'NanoCpus={{.HostConfig.NanoCpus}} Memory={{.HostConfig.Memory}}'
 NanoCpus=500000000 Memory=134217728
 ```
 
-0.5 CPU（5 亿纳秒）与 128 MiB（134217728 字节）实打实写进了容器的资源限制。`deploy` 里 `replicas`、`restart_policy`、`update_config` 等字段则仍属 Swarm 语义，单机 `up` 会忽略——需要滚动更新与重调度时，就是离开 Compose 换编排系统的信号。
+0.5 CPU（5 亿纳秒）与 128 MiB（134217728 字节）实打实写进了容器的资源限制。`deploy` 里 `replicas`、`restart_policy`、`update_config` 等字段则仍属 Swarm 语义，单机 `up` 会忽略——需要滚动更新（新版容器逐个替换旧版）与故障重调度（实例挂了自动重拉）时，就是离开 Compose 换编排系统的信号。
 
 ---
 
@@ -451,12 +526,14 @@ NanoCpus=500000000 Memory=134217728
 | 校验 | `docker compose config [--services]` | 五 |
 | 清 | `docker compose down [-v]` | 二、四 |
 
-`run --rm` 补一个实测：起一次性容器跑命令，容器自动删除，照样能用服务名 DNS：
+`run --rm` 补一个实测——起一个**一次性**容器执行命令：
 
 ```bash
 $ docker compose run --rm site wget -qO- http://site
 <h1>built by compose</h1>
 ```
+
+拆开：`run` 与 `up` 的区别是一次性（跑完命令就退出），`--rm`＝退出即删不留尸体；`wget -qO- http://site` 用容器内的 wget 抓网页——`-q` 安静模式、`-O-` 把内容打印到终端而不是存成文件。注意主机名 `site` 照样解析——一次性容器也接在项目网络上，服务名 DNS 对它一样有效。
 
 指定文件与项目名：`docker compose -f docker-compose.prod.yml up -d`、`-p myproj up -d`。
 
@@ -474,10 +551,10 @@ services:
 
 （顺带注意输出第二行：项目名 `ver-test` 来自目录名。）两个历史包袱一次说清：
 
-- **`version:` 顶层键**：V1 时代用来声明文件 schema 版本；Compose Specification 统一后已无意义，**新文件直接不写**
-- **`docker-compose`（V1，带连字符的独立二进制）**：2023 年 6 月已 EOL，Python 实现被 Go 重写的 **V2 插件**（`docker compose`）取代。见到 `docker-compose up` 老脚本，翻译成 `docker compose up` 即可
+- **`version:` 顶层键**：V1 时代用来声明文件格式规范的版本（schema＝格式规范）；Compose Specification 统一后已无意义，**新文件直接不写**
+- **`docker-compose`（V1，带连字符的独立二进制）**：2023 年 6 月已 EOL（End of Life，官方停止维护），Python 实现被 Go 重写的 **V2 插件**（`docker compose`）取代。见到 `docker-compose up` 老脚本，翻译成 `docker compose up` 即可
 
-另一个 V1 时代的坑也顺手平反：教程说端口必须加引号，否则 YAML 把 `53:53` 解析成六十进制整数——那是 V1 的 Python YAML 1.1 解析器的行为。实测 V2 不加引号照常解析：
+另一个 V1 时代的坑也顺手平反：教程说端口必须加引号，否则 YAML 会把 `53:53` 解析成六十进制整数（像「53 分 53 秒」那样换算成一个数）——那是 V1 的 Python YAML 1.1 解析器的行为。实测 V2 不加引号照常解析（`head -4`＝只看前 4 行）：
 
 ```bash
 $ docker compose -f port-test.yaml config | head -4
