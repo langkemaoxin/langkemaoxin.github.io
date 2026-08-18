@@ -570,7 +570,7 @@ Filesystem                Size      Used Available Use% Mounted on
 tmpfs                     3.9G         0      3.9G   0% /scratch
 ```
 
-宿主机 7.9G 内存，容器里 `df` 看到 3.9G——正好一半。测试机无所谓，生产上不设限就是给容器留了「吃掉宿主一半内存」的口子。设上限用 `size=`，实测写爆会被拒绝：
+宿主机 7.9G 内存，容器里 `df` 看到 3.9G——正好一半。测试机无所谓，生产上不设限就是给容器留了「吃掉宿主一半内存」的口子。设上限用 `size=`，而「写爆一块盘」需要一个能**精确控制写入量**的工具——`dd`（数据搬运工，名字源自 disk duplicator：从 `if` 读、往 `of` 写，每次搬 `bs` 这么大、共搬 `count` 次）。实测：
 
 ```bash
 $ docker run --rm --tmpfs /scratch:size=1m busybox sh -c 'dd if=/dev/zero of=/scratch/f bs=1M count=3; ls -l /scratch'
@@ -581,7 +581,27 @@ dd: error writing '/scratch/f': No space left on device
 -rw-r--r--    1 root     root     1048576 Aug 17 12:39 /scratch/f
 ```
 
-1 MiB 上限，写入第 2 个块就被 `ENOSPC` 拦下，文件停在 1048576 字节。其余常用参数（`--tmpfs 路径:opt1,opt2` 逗号分隔；`--mount` 写法为 `tmpfs-size`/`tmpfs-mode`）：
+命令逐段拆解：
+
+| 段 | 含义 |
+|----|------|
+| `dd` | 按块复制数据：写入总量 = `bs × count`，正好拿来精确「灌水」 |
+| `if=/dev/zero` | 输入源：`/dev/zero` 是个**永远读得出 `\0` 字节**的字符设备，要多少有多少（它的兄弟 `/dev/null` 正相反，只进不出的黑洞） |
+| `of=/scratch/f` | 输出目标：在 tmpfs 里建文件 `f` 往里写 |
+| `bs=1M` | 块大小 1 MiB——dd 一块一块搬 |
+| `count=3` | 搬 3 块，计划写入 3 MiB；上限只有 1 MiB，**必然写爆——这就是实验设计** |
+| `;` + `ls -l /scratch` | 分号 = 前一条**无论成败**都接着跑下一条；dd 失败了，正好看看文件停在了多大 |
+
+输出逐行读：
+
+| 行 | 怎么读 |
+|----|--------|
+| `dd: error writing … No space left on device` | 写到第 2 块时撞上 `ENOSPC`（空间不够，内核拒绝）——这就是上限在强制执行 |
+| `2+0 records in` / `1+0 records out` | 完整读进 2 块、完整写出 1 块——第 2 块读出来了，没写成 |
+| `1048576 bytes (1.0MB) copied` | 实际写入量：正好 1 MiB = 上限本体 |
+| `-rw-r--r-- … 1048576 … /scratch/f` | `ls -l` 印证：文件就停在 1048576 字节 |
+
+一句话：**上限 1 MiB 的盘，想写 3 MiB，写满第 1 048 576 字节就被内核拦下**——`size=` 是硬顶，不是建议值。其余常用参数（`--tmpfs 路径:opt1,opt2` 逗号分隔；`--mount` 写法为 `tmpfs-size`/`tmpfs-mode`）：
 
 | 参数 | 干什么 | 默认 |
 |------|------|------|
