@@ -123,7 +123,7 @@ Run 'docker volume COMMAND --help' for more information on a command.
 | `--mount type=volume,source=…,target=…` | 挂卷的**严格版**（拼错立刻报错） | 3.3 |
 | `--mount type=bind,…` | bind 的严格版 | 3.3 |
 | `--tmpfs 容器路径[:opts]` | 内存挂载（`opts` 可带 `size`/`mode` 等） | 六 |
-| `--mount type=image,src=…,dst=…` | 把另一个镜像**只读**挂进容器 | 七 |
+| `--mount type=image,src=…,dst=…` | 把另一个镜像**只读**挂进容器（进阶） | 七 |
 | `:ro` 后缀 | 只读挂载 | 五 |
 | `--volumes-from 容器` | 继承另一个容器的全部挂载 | 八 |
 
@@ -215,7 +215,7 @@ $ docker volume ls | grep autodata
 local     autodata
 ```
 
-输出确认：卷就这样被悄悄创建了。而 `--mount` 是严格模式，bind 源路径不存在直接报错、不猜你的意图：
+输出确认：卷就这样被悄悄创建了。而 `--mount` 是严格模式——不猜你的意图。第五节才细讲 bind，这里先借用它的报错看一眼：源路径不存在，立刻失败，不会偷偷建目录：
 
 ```bash
 $ docker run --rm --mount type=bind,source=/root/no-such-dir,target=/src busybox echo hi
@@ -481,7 +481,7 @@ $ docker run --rm -v /root/empty-dir:/usr/share/nginx/html nginx:alpine ls -A /u
 $ rm -rf /root/empty-dir                                       # 演示完清掉
 ```
 
-同样是「空的东西挂到有内容的路径」，结局完全不同（空卷那组 3.4 刚实测过）：
+同样是「空的东西挂到有内容的路径」，结局完全不同（空命名卷会把镜像内容拷进卷，见进阶 3.4）：
 
 | 挂载方式 | 挂到 `/usr/share/nginx/html` 后看到 | 为什么 |
 |------|------|------|
@@ -674,9 +674,44 @@ sh: line 0: /t/s: Permission denied
 
 ## 七、Image Mount：把另一个镜像只读挂进来（实测）
 
-生产镜像越来越「瘦」：distroless、加固镜像（Hardened Images）这类连 shell、`ps`、`curl` 都不带。容器行为异常想进去看看，`docker exec <容器> sh` 直接告诉你没有这个文件。老办法要么重打一个带工具的镜像（污染交付物），要么 `docker cp` 往里拷工具（改动现场）。官方 Storage 文档（2026-08 新页）给出的第四种挂载是第三个选项：**Image Mount**——把一个工具镜像（如 busybox）**只读**挂进容器，原镜像一个字节不用动。
+> 🧗 **进阶块，可先跳过**——这不是持久化。主线三种挂载已经够用；等你碰到「容器在跑，里面却没有 `sh`」再回来。
 
-### 7.1 基本用法：alpine 容器里出现 busybox 的整套工具（实测）
+Volume / bind / tmpfs 给容器一块可读可写的地方。还有一种挂载**不存你的数据**：把另一张镜像里的文件，盖到当前容器的某条路径上。
+
+问题来自 [第 7 篇](/云原生/docker/docker-07-enter-container/)：排障靠 `docker exec … sh`。有的镜像为了安全，打包时故意不装 `sh`、`ps`、`curl`，这条路就断了。
+
+### 7.1 是什么：和 bind 同一类动作，盖上去的换成镜像
+
+Bind 是把**宿主机目录**盖到容器的 `/src`。Image Mount 是把**另一张镜像的文件系统**盖到容器的 `/dbg`，而且强制只读。
+
+```text
+alpine 容器
+  /          ← alpine 自己的文件（shell、库……）
+  /dbg       ← 盖上 busybox 镜像的文件（只读）
+```
+
+| | Bind Mount | Image Mount |
+|------|------|------|
+| 盖上去的是 | 宿主机某个目录 | 另一张镜像里的文件 |
+| 读写 | 默认可写，可加 `:ro` | **强制只读** |
+| 容器删了 | 宿主数据还在 | 什么都不留（本来就不是数据） |
+| 和持久化的关系 | 开发用的一种持久化 | **不是**持久化 |
+
+和 5.4 坑①一样：盖上去会遮蔽该路径原来的内容。官方类比仍是「往 `/mnt` 插 U 盘」。
+
+### 7.2 为什么：进不去容器时的第三种办法
+
+| 办法 | 问题 |
+|------|------|
+| 重打一个带工具的镜像 | 交付物变了 |
+| `docker cp` 往里拷工具 | 改了正在跑的现场 |
+| Image Mount 挂 busybox | 只读、原镜像不动、容器删了不留痕迹 |
+
+官方另外两个用途各记一句：只读资产（数据集、模型）用镜像分发；可选工具单独打包，需要时再挂——不当本篇主线。
+
+### 7.3 怎么做：先看文件出现（实测）
+
+**要查什么**：起一个 alpine 容器，同时把 busybox 镜像挂到 `/dbg`，`/dbg/bin` 里会不会出现 busybox 的工具？
 
 ```bash
 $ docker run --rm --mount type=image,source=busybox,dst=/dbg alpine ls /dbg/bin 2>/dev/null | head -6
@@ -687,11 +722,25 @@ add-shell
 adduser
 ```
 
-alpine 容器的 `/dbg` 下就是 busybox 镜像的完整 `/bin`。开讲前三条要点：
+命令按字段读：
 
-- **只认 `--mount type=image`，没有 `-v` 写法**——`-v busybox:/dbg` 会被解析成「名为 busybox 的**命名卷**」（3.3 的知识点），语义完全变了
-- **要求 daemon 启用 containerd image store**。本机 `docker info` 显示 `Storage Driver: overlayfs`、`driver-type: io.containerd.snapshotter.v1`，即满足；旧版经典存储驱动不支持
-- **实验特性**：29.1.3 下每条 `type=image` 命令都会先打一行 `WARNING: Image mount is an experimental feature`（走 stderr，上面的 `2>/dev/null` 就是滤掉它；下文代码块同样省略此行）
+| 段 | 含义 |
+|----|------|
+| `alpine` | **要跑的**那个容器用哪张镜像（本篇一直在用） |
+| `--mount type=image` | 挂载类型换成「另一张镜像」 |
+| `source=busybox` | **被挂进来的**那张镜像 |
+| `dst=/dbg` | 盖在容器的哪条路径 |
+| `ls /dbg/bin` | 用 alpine **自己的** `ls` 去看挂进来的文件——还没执行 busybox |
+| `2>/dev/null` | 丢掉 stderr。本机 29.1.3 每条 `type=image` 都会先打一行 `WARNING: Image mount is an experimental feature`（走 stderr）；下文代码块同样省略此行 |
+| `head -6` | 工具很多，只看前几个名字 |
+
+看到 `[`、`acpid` 这些，说明 busybox 的 `/bin` 已经出现在 alpine 的 `/dbg/bin`。
+
+怎么做时的三条约束：
+
+- **只认 `--mount type=image`，没有 `-v` 写法**。`-v busybox:/dbg` 会被解析成「名为 busybox 的**命名卷**」（3.3），语义完全变了。
+- **Docker 存镜像有两套方式**。Image Mount 只在新套路上能用：镜像交给 containerd 管（官方叫 containerd image store）。本机 `docker info` 里能看到 `Storage Driver: overlayfs`、`driver-type: io.containerd.snapshotter.v1`，即满足；旧版「经典存储驱动」没有这个功能。
+- **源镜像不会自动 pull**，本地没有会直接报错（7.5 实测）。
 
 只读是强制的，和 5.3 的 `:ro` 一样由内核拒绝：
 
@@ -700,16 +749,25 @@ $ docker run --rm --mount type=image,source=busybox:musl,dst=/dbg alpine sh -c '
 touch: /dbg/x: Read-only file system
 ```
 
-### 7.2 大坑：文件看得见，就是跑不起来（实测）
+### 7.4 背景知识：文件看得见 ≠ 跑得动（实测）
 
-挂进来的二进制能不能执行，取决于 **libc 是否匹配**。`busybox:latest` 是 glibc（Debian 基）构建，alpine 是 musl——实测翻车：
+上一节执行的是 alpine 的 `ls`。若直接跑挂进来的 `/dbg/bin/echo`：
 
 ```bash
 $ docker run --rm --mount type=image,source=busybox,dst=/dbg alpine /dbg/bin/echo hello
 exec /dbg/bin/echo: no such file or directory
 ```
 
-报错极具误导性——`ls` 明明看得到这个文件。真相：glibc 二进制启动时要找动态链接器（`/lib64/ld-linux-x86-64.so.2`），musl 系的 alpine 里没有，内核找不到加载器，报的就是这句 "no such file or directory"。换成 musl 版 busybox 立刻正常：
+报错极具误导性——`ls` 明明看得到这个文件。
+
+**背景**：程序分两种。静态链接的，自己带齐所依赖的代码，拷过去就能跑。动态链接的，启动时还要找两样东西：加载器（把程序装进内存的那个小程序）和 C 语言标准库（libc）。Linux 上常见两套 libc，对不上就启动失败：
+
+- **glibc**：Debian、Ubuntu 等常用
+- **musl**：alpine 常用
+
+默认的 `busybox:latest` 按 glibc 构建；alpine 里是 musl。glibc 程序启动要找 `/lib64/ld-linux-x86-64.so.2` 这个加载器，alpine 里没有。内核找不到加载器，报的就是这句 `no such file or directory`。
+
+换成 musl 版 busybox，加载器和库对上了，立刻正常：
 
 ```bash
 $ docker pull busybox:musl
@@ -719,9 +777,9 @@ $ docker run --rm --mount type=image,source=busybox:musl,dst=/dbg alpine /dbg/bi
 hello-from-mounted-image
 ```
 
-（静态链接的二进制没有这个问题，这也是官方示例用 `busybox:musl` 的原因。）
+静态链接的二进制没有这个问题，这也是官方示例用 `busybox:musl` 的原因。
 
-### 7.3 三个小特性：subpath、不自动 pull、inspect（实测）
+### 7.5 其余怎么做：subpath、不自动 pull、inspect（实测）
 
 只想要镜像的一部分？`image-subpath` 挂子目录：
 
@@ -751,13 +809,17 @@ $ docker inspect img-demo --format '{{json .Mounts}}'
 $ docker rm -f img-demo
 ```
 
-Compose 里用长语法 `type: image`（`image.subpath` 需 Compose ≥ 2.35.0）。最后强调定位：**Image Mount 不是持久化机制**——挂进来的是只读内容、不产生任何数据；它是「借工具/借资产」的手法，选型时回到第十节的表。
+下一篇 Compose 用长语法 `type: image`（`image.subpath` 需 Compose ≥ 2.35.0）即可，不必这节先会 YAML。定位再强调一次：**Image Mount 不是持久化**——挂进来的是只读内容、不产生任何数据；选型时回到第十节的表。
 
 ---
 
 ## 八、卷的备份与恢复（实测）
 
-第三节实测过：卷的真身就在 `/var/lib/docker/volumes/mydata/_data`，宿主机 root 直接就能读。那备份是不是直接 `tar` 这个目录完事？**能用，但有前提**——你得有 root、卷用的是 `local` 驱动，而且官方总览页（2026-07）明确：直接访问卷数据属于 **unsupported、未定义行为**（3.1 的提醒框说过）。`/var/lib/docker/…` 是 Docker 的实现细节，一旦卷挂到 NFS/云盘（第九节），本地压根没有这个目录。官方因此给了一套**与存储位置无关**的通用套路：**临时容器 + tar**——不管数据实际在哪，先挂进一个一次性容器，再打包到另一个 bind mount 目录带走。
+**是什么**：不直接去宿主机抠卷目录，而是起一个一次性容器，把卷挂进去，用 `tar` 打包（或解开）到一个 bind 目录里带走。
+
+**为什么**：第三节看过卷的真身在 `/var/lib/docker/volumes/mydata/_data`，root 直接 `tar` 这个目录**能用，但有前提**——你得有 root、卷用的是 `local` 驱动，而且官方总览页（2026-07）明确：直接访问卷数据属于 **unsupported、未定义行为**（3.2 的提醒框说过）。`/var/lib/docker/…` 是实现细节，一旦卷挂到 NFS/云盘（第九节），本地压根没有这个目录。所以官方给了一套**与存储位置无关**的套路：**临时容器 + tar**。
+
+下面完整案例继续用第三节的 `mydata`（里面已有 `note.txt`）。
 
 ### 8.1 备份：把卷 tar 成宿主机上的一个文件（实测）
 
@@ -799,7 +861,9 @@ persist-me
 
 ### 8.3 `--volumes-from`：备份整个容器的卷，不用逐个查（实测）
 
-真实场景里，一个数据库容器可能挂了好几个卷，逐个 `-v 卷名:…` 备份还得先查清单。`--volumes-from <容器>` 让新容器**原样继承**目标容器的全部挂载：
+**是什么**：`--volumes-from <容器>` 让新容器**原样继承**目标容器已经挂上的全部卷和 bind，自己的 `docker run` 里一个 `-v` 都不用写。
+
+**为什么**：真实数据库容器可能挂了好几个卷，逐个 `-v 卷名:…` 备份还得先查清单。继承之后，备份「这个容器的全部数据」一行就能做。
 
 ```bash
 $ docker run -d --name db-like -v mydata:/var/lib/data busybox sleep infinity
@@ -830,7 +894,13 @@ $ docker rm -f db-like
 
 ## 九、卷驱动：卷不一定在本地磁盘
 
-`docker volume inspect` 输出里的 `"Driver": "local"` 暗示卷有「驱动」概念。为什么需要它？前面的卷数据全落在本机 `/var/lib/docker/volumes/`，两个需求它答不了：**多台主机共享同一份数据**（数据库主从、共享文件），以及**数据要交给专业存储管**（NFS、云盘）——`local` 驱动把数据放本机，换个驱动就能放别处。创建时用 `--opt` 传驱动参数，比如官方文档的 NFS 卷：
+> 🧗 **进阶块，可先跳过**——单机把数据放命名卷就够了。跨主机共享、或要把数据交给 NFS/云盘时再看。本节命令来自官方文档，**本机未接 NFS，没有实测输出**。
+
+**是什么**：`docker volume inspect` 里的 `"Driver": "local"` 表示「这块卷由哪个驱动保管」。默认 `local` = 数据在本机 `/var/lib/docker/volumes/`。换驱动（或给 `local` 加 `--opt`），数据就可以落到别处。
+
+**为什么**：本机磁盘答不了两件事——多台主机共享同一份数据，以及把数据交给专业存储管。
+
+官方 NFS 卷的写法长这样（地址和路径换成你的 NAS 即可）：
 
 ```bash
 docker volume create --driver local \
@@ -840,53 +910,63 @@ docker volume create --driver local \
   nfs-data
 ```
 
-创建后 `docker run -v nfs-data:/data ...` 照常用——应用无感知，数据已在网络存储上。第三方卷驱动还能对接云盘（AWS EBS、Azure Disk）、分布式存储（Ceph、GlusterFS）。这是「可插拔存储」的接口，K8s 里的 PV/PVC 走的是同一思想。
-
-官方卷文档同页还有两个 `local` 驱动的花活，思路相同（驱动 + `--opt` 决定数据去哪）：**CIFS/Samba 卷**（`--opt type=cifs`，Windows 共享目录直接挂给容器，不用先在宿主机配挂载点）和**块设备挂载**（文件先 `mkfs.ext4` 建文件系统、`losetup` 映射成 loop 设备，再 `--opt device=/dev/loopN` 整块挂进容器——官方自己都标注「仅作示例、不推荐常规使用」）；另有 rclone 这类第三方卷驱动把数据放上 S3/WebDAV 远端。
+创建后 `docker run -v nfs-data:/data ...` 照常用——应用无感知，数据已在网络存储上。同一思路还能对接 CIFS/Samba 共享、云盘、分布式存储；第三方驱动（如 rclone）可以把数据放到对象存储。细节以官方卷文档为准，本篇不展开。
 
 ---
 
-## 十、选型决策与 Compose 回顾
+## 十、选型决策与 Compose 预览
 
 决策速查：
 
 | 你的需求 | 用什么 |
 |------|------|
-| 数据库/中间件的数据目录 | 命名卷（Compose 里 `volumes:` 顶层声明 + 服务引用） |
+| 数据库/中间件的数据目录 | 命名卷 |
 | 开发热更新源码、共享配置 | bind mount（开发环境专用；单文件也能挂） |
 | 密钥等临时数据 | tmpfs（记得 `size=` 设限；严格不落盘还要看 swap） |
-| 调试无 shell 的精简镜像 | image mount 挂个工具镜像（第七节） |
-| 跨主机共享存储 | 卷驱动（NFS/CIFS/云盘/分布式存储） |
+| 容器里没有 shell，只想临时借工具 | image mount（第七节，不是持久化） |
+| 跨主机共享存储 | 卷驱动（第九节） |
 | 迁移/备份卷 | tar 打包套路（第八节） |
 
-下一篇 Compose 会用到挂载字段；先熟悉下面写法，到[第 13 篇](/云原生/docker/docker-13-compose/)就能对上每一行含义：
+下一篇才会系统地讲 Compose。下面三行只是「本篇的挂载」写成 YAML 长什么样，现在认个脸即可：
 
 ```yaml
 services:
   db:
     image: mysql:8.4
     volumes:
-      - db-data:/var/lib/mysql           # 命名卷：数据持久化
-      - ./init:/docker-entrypoint-initdb.d:ro   # bind mount + 只读：初始化脚本（MySQL 官方镜像的固定目录）
+      - db-data:/var/lib/mysql           # 命名卷：对应第三节
+      - ./init:/docker-entrypoint-initdb.d:ro   # bind + 只读：对应第五节（MySQL 官方镜像用来放初始化脚本的固定目录）
 
 volumes:
-  db-data: {}                            # 顶层声明命名卷
+  db-data: {}                            # 顶层声明命名卷，相当于 docker volume create
+```
+
+---
+
+## 本篇实验清理（可照抄）
+
+跟做留下的容器、卷和目录，一次性清掉（没有的项可忽略）：
+
+```bash
+docker rm -f lab-mount-demo bind-live tmp-demo img-demo helper db-like 2>/dev/null
+docker volume rm mydata autodata mydata-restored 2>/dev/null
+rm -rf /root/bind-demo /root/backup
 ```
 
 ---
 
 ## 小结
 
-- 容器可写层随容器生灭；持久化 = 把数据路径挂到容器外。**三种机制**：Volume（Docker 管理、生产数据首选）、Bind Mount（宿主机目录、开发共享）、tmpfs（内存、敏感临时数据）；另有只读「借工具」的 Image Mount（第七节）。注意：**直接访问卷的宿主机目录是官方 unsupported 行为**，演示可以、生产不行。
-- 命名卷数据在宿主机 `/var/lib/docker/volumes/<名>/_data`；**容器删、数据在**；`-v` 引用不存在命名卷会自动创建，`--mount` 严格报错——脚本用 `--mount`。空卷默认会把镜像内容拷进卷（`volume-nocopy`/`:nocopy` 关闭），`volume-subpath` 可只挂卷的某个子目录（3.4、3.5）。
-- 匿名卷结局取决于删除方式（实测验证）：`--rm` 退出即连带删、`docker rm` 不带 `-v` 残留成悬空卷、`docker rm -v` 手动连卷删；**命名卷永不跟随容器**。注意 `rm -v` 与 `run -v` 同字母不同义。
-- **`volume prune` 只删匿名悬空卷，命名卷哪怕没被使用也不删**（实测验证）；`-a` 才会连命名卷一起删。
-- Bind mount 双向实时同步（本质是两边操作同一份文件），单文件也能挂；`:ro` 只读由内核强制（`EROFS`）；它会**遮蔽**挂载点的镜像原有内容，`-v` 源路径不存在时**静默建目录**（文件场景拿到的是空目录）、`--mount` 报错；路径强耦合宿主机——生产用命名卷，bind 留给开发机。
-- tmpfs 是内存文件系统：默认上限 = **宿主内存 50%**（`size=` 设限，`mode`/`uid`/`noexec` 可调），不能容器间共享、仅 Linux；官方明确**内存吃紧时可能换出到 swap**——「绝不落盘」只在无 swap 的机器上成立。
-- Image Mount（2026-08 新类型，需 containerd image store，29.1.3 下为实验特性）：把另一个镜像**只读**挂进容器，调试精简镜像的「借工具」手法；只认 `--mount`、源镜像不自动 pull，注意 libc 匹配（glibc 二进制在 musl 镜像里报误导性的 no such file）。
-- 备份/恢复 = 临时容器 + tar（`cvf`/`xvf` 同一套路，与存储位置无关）；备份「整个容器的卷」或共享数据用 `--volumes-from`；跨主机共享 = 卷驱动（NFS/CIFS/云盘）。
+- 容器可写层随容器生灭；持久化 = 把数据路径挂到容器外。**主线三种机制**：Volume（Docker 管理、生产数据首选）、Bind Mount（宿主机目录、开发共享）、tmpfs（内存、敏感临时数据）。**直接访问卷的宿主机目录是官方 unsupported 行为**，演示可以、生产不行。
+- 命名卷：**容器删、数据在**；真身在 `/var/lib/docker/volumes/<名>/_data`。`-v` 引用不存在命名卷会自动创建，`--mount` 严格报错——脚本用 `--mount`。
+- 匿名卷结局取决于删除方式：`--rm` 退出即连带删、`docker rm` 不带 `-v` 残留成悬空卷、`docker rm -v` 手动连卷删；**命名卷永不跟随容器**。`rm -v` 与 `run -v` 同字母不同义。Dockerfile 的 `VOLUME` 只声明挂载点，没挂命名卷时会变成匿名卷。
+- **`volume prune` 只删匿名悬空卷，命名卷哪怕没被使用也不删**；`-a` 才会连命名卷一起删。
+- Bind mount 两边操作同一份文件；`:ro` 由内核强制；会**遮蔽**挂载点原有内容；`-v` 源路径不存在时**静默建目录**。生产用命名卷，bind 留给开发机。
+- tmpfs 默认上限 = **宿主内存 50%**（`size=` 设限）；不能容器间共享、仅 Linux；内存吃紧时**可能换出到 swap**。
+- 备份/恢复 = 临时容器 + tar；整容器的卷用 `--volumes-from`。
+- 进阶：空卷垫底 / `volume-subpath`（3.4、3.5）；Image Mount 只读借工具，注意 musl/glibc 对不上时会报误导性的 `no such file`（第七节）；跨主机用卷驱动（第九节）。
 
-**思考题**：为什么数据库镜像的 Dockerfile 要写 `VOLUME /var/lib/mysql`？不写会怎样？（提示：匿名卷 + 没挂命名卷时，数据落在哪、容器删除后命运如何。）
+**思考题**：为什么数据库镜像的 Dockerfile 要写 `VOLUME /var/lib/mysql`？不写会怎样？（提示：第四节——匿名卷 + 没挂命名卷时，数据落在哪、容器删除后命运如何。）
 
 下一篇：[《Docker Compose 编排——用 YAML 定义一整栈微服务》](/云原生/docker/docker-13-compose/)。
 
@@ -895,7 +975,7 @@ volumes:
 ## 参考资料
 
 - [Docker Docs · Storage](https://docs.docker.com/engine/storage/) — 挂载类型总览（2026-07 版：五种挂载；直接访问卷数据 unsupported）
-- [Volumes](https://docs.docker.com/engine/storage/volumes/) — 卷生命周期、备份恢复、卷驱动、NFS/CIFS/块设备
+- [Volumes](https://docs.docker.com/engine/storage/volumes/) — 卷生命周期、备份恢复、卷驱动
 - [Bind mounts](https://docs.docker.com/engine/storage/bind-mounts/)（2026-07 更新版：遮蔽行为、`-v` 自动建目录与 `--mount` 的 `bind-create-src`）/ [tmpfs](https://docs.docker.com/engine/storage/tmpfs/)（默认 50% 内存、可能换出 swap）
-- [Image mounts](https://docs.docker.com/engine/storage/image-mounts/)（2026-08 新页；前提 [containerd image store](https://docs.docker.com/engine/storage/containerd-image-store/)）
+- [Image mounts](https://docs.docker.com/engine/storage/image-mounts/)（2026-08 新页；前提 [containerd image store](https://docs.docker.com/engine/storage/containerd/)）
 - 本机实测环境：WSL2 Ubuntu-22.04 + Docker 29.1.3

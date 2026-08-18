@@ -531,6 +531,26 @@ $ findmnt | grep lab6 || echo 挂载表无残留
 ```
 
 （第二条注释是实测踩的坑：直接卸 rbind 的顶层会报 `Device or resource busy`，因为目标侧复制出的子挂载还占着 `/tmp/lab6-rb/sub`——正好是第三节「子挂载」知识的现场复习。）
+---
+## 案例
+
+1、把本机的路径和WSL中的目录绑定在一起，方便代码进行同步
+
+```shell
+
+# 新建一个目录（我本机默认没有这个目录）
+sudo mkdir -p /mnt/c
+
+# 绑定C盘到 /mnt/c中
+# -t drvfs：指定文件系统类型为 drvfs（WSL 专用的 Windows 文件系统驱动）
+sudo mount -t drvfs C: /mnt/c
+
+# 3. 做成软链接：/root/trufor → Windows 那个文件夹
+ln -s /mnt/c/Users/chengongyi/Projects/baidu-forgery-detection-trial/trufor-deploy /root/trufor
+
+```
+
+
 
 ---
 
