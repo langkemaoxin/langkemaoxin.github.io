@@ -469,6 +469,7 @@ export default sidebar({
         "docker-22-container-security",
         "docker-23-build-advanced",
         "docker-24-daemon-ops",
+        "docker-25-trufor-image-packaging",
       ],
     },
     {

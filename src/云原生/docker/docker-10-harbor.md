@@ -24,12 +24,14 @@ description: Harbor 私有镜像仓库——按步骤从安装到第一次 push�
 
 第 8 篇解决的是**离线搬运**（`save` / `load`）。团队日常还差一步：大家往**同一个私有仓库**里 `push` / `pull`，有网页可以管项目和权限——这就是 **Harbor**。
 
-本篇是**可照做的操作手册**：按 **步骤 1 → 10** 做完，再跟 **拉取运行案例** 与 **团队账号说明**，你应能：
+本篇是**可照做的操作手册**：按 **步骤 1 → 10** 做完，再跟 **用户登录已有 Harbor**、**案例一（同机拉取运行）**、**案例二（开发机镜像推到公司服务器 Harbor）** 与 **团队账号说明**，你应能：
 
 1. 浏览器登录 Harbor  
 2. 用 `docker login` / `tag` / `push` 把镜像推进去  
-3. 从 Harbor `pull` 镜像并 `run` 起来（见步骤 10 后的案例）  
-4. 知道团队场景下何时要登录、如何开账号（勿共用 admin）  
+3. 作为普通用户登录公司已有的 HTTP/HTTPS Harbor（含 `insecure-registries`）  
+4. 从 Harbor `pull` 镜像并 `run` 起来（案例一）  
+5. 公司已有 Harbor 时，把**本机自制镜像**推上去、并发给同事用（案例二）  
+6. 知道团队场景下何时要登录、如何开账号（勿共用 admin）  
 
 先走 **HTTP** 把整条链路跑通；**HTTPS + 证书**放在文末「可选加固」，不挡主路径。
 
@@ -49,9 +51,12 @@ description: Harbor 私有镜像仓库——按步骤从安装到第一次 push�
 | **6** | 浏览器登录 UI，认识侧栏 | admin 进入「项目」页；菜单见步骤 6 截图 |
 | **7** | 配置 `insecure-registries` | `docker info` 列表里有该地址 |
 | **8** | `docker login` | `Login Succeeded`（Desktop 用 `localhost:85`） |
+| **登录全过程** | 用户登录已有 Harbor：浏览器 + `docker login` | Web 进控制台；CLI 出现 `Login Succeeded`；HTTP 仓先配 insecure |
 | **9** | UI 创建项目 `demo` | 项目列表出现 demo |
 | **10** | `tag` + `push` + UI 核对 | 有 digest；Desktop 用 `localhost:85/...` |
-| **案例** | 从 Harbor `pull` + `run` Nginx | `http://127.0.0.1:8088` 出现欢迎页 |
+| **案例一** | 从 Harbor `pull` + `run` Nginx | `http://127.0.0.1:8088` 出现欢迎页 |
+| **案例二** | 开发机自制镜像 → 推公司服务器 Harbor | push 出 digest；同事按话术能 pull |
+| **案例三** | 把本机 `trufor-api:cvpr2023` 推到 `192.168.13.21:8000` 的 `other` | Harbor 项目 other 里看到标签 cvpr2023 |
 | **团队** | 登录规则、开账号、别共用 admin | 每人/机器人有独立凭据；按项目授权 |
 | **可选** | 升级 HTTPS + SAN | 主路径跑通后再做 |
 
@@ -553,6 +558,134 @@ docker login localhost:85 -u admin
 
 ---
 
+## 用户如何登录一台已有的 Harbor
+
+上面步骤 6～8 是**安装机自己练**。职场更常见的是：Harbor 已经在公司服务器上，你只是一台 Docker 客户端（例如 `pc3507`），要用浏览器管项目、用 CLI 做 `login` / `push` / `pull`。
+
+登录其实是 **两套入口**，不要混：
+
+| 入口 | 给谁用 | 命令 / 地址 | 过关 |
+|------|--------|-------------|------|
+| **Web UI** | 人：看项目、建仓库、改密码、授权 | 浏览器打开 `http://地址:端口` 或 `https://地址` | 进入「项目」页 |
+| **Registry CLI** | Docker 引擎：push / pull | `docker login 地址:端口` | `Login Succeeded` |
+
+浏览器能打开登录页，**不代表** `docker login` 一定成功。Docker 默认用 **HTTPS** 访问 Registry；Harbor 若只开了 **HTTP**（内网很常见，端口经常是 `80` / `85` / `8000`），CLI 会报：
+
+```text
+Error response from daemon: Get "https://192.168.13.21:8000/v2/":
+http: server gave HTTP response to HTTPS client
+```
+
+意思：客户端按 HTTPS 去问，服务器用明文 HTTP 回答。先把仓库标成「允许 HTTP」，再 login。本机真实踩过的地址就是 `192.168.13.21:8000`。
+
+下面按用户视角走一遍。把文中的地址换成运维给你的；三处必须写成**同一串**（含端口）：`docker login`、`insecure-registries`、`docker tag` / `push`。
+
+### 0. 向运维要齐这些
+
+| 要什么 | 例子 | 没有会怎样 |
+|--------|------|------------|
+| 仓库地址（IP 或 FQDN）+ 端口 | `192.168.13.21:8000` | login 连错地方 |
+| HTTP 还是 HTTPS | HTTP | 漏配 insecure，就会报上面那条 HTTPS/HTTP 对不上 |
+| 账号 | `admin`（仅实验）或你的个人用户 / Robot Token | `unauthorized` |
+| 密码 | 安装时的 `harbor_admin_password`，或运维发给你的密码 | 登录失败 |
+| 项目名 | `demo` / `team` | 后面 tag 路径不对 |
+
+生产环境不要全员共用 `admin`，见后文「团队怎么用」。实验机临时用 `admin` 可以。
+
+### 1. 浏览器登录（确认仓库活着、账号对）
+
+```text
+http://192.168.13.21:8000
+```
+
+HTTPS 仓库则是 `https://域名`（443 可省略）。打不开时先查：VPN、防火墙、端口是否写对、是否该用 `http` 而不是 `https`。
+
+登录页填：
+
+1. 用户名：`admin` 或你的账号  
+2. 密码：运维给的（实验常用 `harbor.yml` 里的 `harbor_admin_password`）  
+3. 点 **登录**
+
+**验收**：进入「项目」列表，而不是停在登录失败。能进 Web，只说明 **HTTP(S) 网页通、账号对**；CLI 还要做第 2、3 步。
+
+### 2. HTTP 仓库：先让 Docker 允许明文（必做）
+
+只对 **HTTP** Harbor 做这一步。正规 CA 的 HTTPS 跳过；自签 HTTPS 走证书（案例二第 2 步），不要用 insecure 糊弄生产。
+
+在 **跑 `docker` 命令的那台 Linux** 上编辑 `/etc/docker/daemon.json`。已有 `registry-mirrors`、`dns` 等字段时**合并**，不要整文件覆盖：
+
+```json
+{
+  "insecure-registries": [
+    "192.168.13.21:8000"
+  ]
+}
+```
+
+地址必须带端口，和 `docker login` 完全一致。然后：
+
+```bash
+sudo systemctl restart docker
+docker info | grep -A 20 "Insecure Registries"
+```
+
+**验收**：列表里出现 `192.168.13.21:8000`。没有这一行就重启没生效，或改错了文件（Desktop 用户改 **Settings → Docker Engine**，见步骤 7）。
+
+Windows + Docker Desktop：不要只改 WSL 的 `/etc/docker/daemon.json`，引擎往往不读它。
+
+### 3. `docker login`
+
+```bash
+docker login 192.168.13.21:8000 -u admin
+# Password: 输入密码（终端通常不回显，属正常）
+```
+
+不想让密码进 history：
+
+```bash
+echo '你的密码' | docker login 192.168.13.21:8000 -u admin --password-stdin
+```
+
+**验收**：
+
+```text
+Login Succeeded
+```
+
+凭证写在客户端 `~/.docker/config.json` 里（base64，不是加密）。不要把这份文件提交进 Git。
+
+本篇安装实验（Harbor 与 Docker 同机）对应命令是：
+
+```bash
+docker login harbor.daemon.io:85 -u admin
+# Desktop 同机请改用：
+docker login localhost:85 -u admin
+```
+
+### 4. 登录成功之后才能做什么
+
+| 操作 | 要不要已经 login |
+|------|------------------|
+| 公开项目 `docker pull` | 常常可以不登录 |
+| 私有项目 `pull` / 任何 `push` | **必须**已 login，且对该项目有权限 |
+| Web 里建项目、加人 | 用浏览器那套账号，与 CLI 是同一用户体系 |
+
+接下来才是 `docker tag` / `docker push`（步骤 10、案例二）。没 `Login Succeeded` 就去 push，多半是 `unauthorized`。
+
+### 5. 登录失败对照（用户侧）
+
+| 现象 | 意思 | 处理 |
+|------|------|------|
+| `http: server gave HTTP response to HTTPS client` | Docker 走 HTTPS，Harbor 是 HTTP | 第 2 步：`insecure-registries` 写上 `IP:端口`，重启引擎后再 login |
+| `Get "https://…/v2/": dial tcp … i/o timeout` / `connection refused` | 网络或端口不对 | 先 `curl -sI http://IP:端口/v2/`；401 表示仓库活着 |
+| `unauthorized: authentication required` | 用户名/密码错，或没 login | 核对账号；密码是否改过 |
+| Desktop 上 `harbor.xxx:端口` 超时，`localhost:端口` 成功 | 引擎在 VM 里解析不到你的 FQDN | 同机用 `localhost:端口`（步骤 8） |
+| 改了 WSL 的 `daemon.json` 仍报 HTTPS/HTTP | Desktop 没读这份文件 | 改 Docker Desktop → Docker Engine |
+
+**用户侧一句话**：浏览器登录证明人能进 Harbor；`docker login` 证明引擎能认证 Registry。HTTP 仓必须先把 `地址:端口` 写入 `insecure-registries` 并重启 Docker，再 login，否则就会是「server gave HTTP response to HTTPS client」。
+
+---
+
 ## 步骤 9：创建项目 `demo`
 
 Harbor 里镜像落在「项目」下，名字会出现在 tag 路径里：`…/demo/…`。
@@ -662,7 +795,7 @@ docker pull harbor.daemon.io:85/demo/nginx:alpine
 
 ---
 
-## 案例：从 Harbor 拉取并运行 Nginx
+## 案例一：从 Harbor 拉取并运行 Nginx（同机视角）
 
 push 只是把镜像「存进仓库」。真正用起来，是：**不从 Docker Hub 拉，而是从自己的 Harbor 拉下来跑**。
 
@@ -775,7 +908,165 @@ docker rm harbor-nginx
 | 地址写法 | `nginx:alpine` | `localhost:85/demo/nginx:alpine` |
 | 适用 | 个人实验、公开镜像 | 团队统一版本、内网离线/受限环境 |
 
-团队日常可以约定：业务镜像只推 Harbor，部署机只 `pull` Harbor 地址，版本和权限都在 Harbor 项目里管。下一节专门讲：**要不要人人登录、要不要把密码发给所有人**。
+团队日常可以约定：业务镜像只推 Harbor，部署机只 `pull` Harbor 地址，版本和权限都在 Harbor 项目里管。案例一走的是「Harbor 装在本机」的同机视角；**真实职场更常见的形态——Harbor 在公司服务器、开发机只管推——正是接下来案例二的内容**。再往后专门讲：**要不要人人登录、要不要把密码发给所有人**。
+
+---
+
+## 案例二：把本机自制镜像推到公司服务器的 Harbor（跨机教程）
+
+> **场景**：公司服务器上的 Harbor 由运维装好并维护，我只是**开发机上的使用者**。我在本机做了一枚镜像（第 6 篇末尾 `commit` 出来的 `myweb:v1`，或第 9 篇 Dockerfile `build` 的产物），要推到公司 Harbor 的团队项目里给大家用。
+>
+> **与案例一的差别**：案例一里 Harbor 和 docker 在同一台机器，地址写 `localhost:85` 就完事；本案例 Harbor 在**另一台服务器**上，多出三件必须做对的事——**地址写法、信任配置、账号权限**。
+>
+> **示例约定**（全文把这两个值换成你们运维给的实际值）：
+>
+> | 占位 | 示例值 | 换成什么 |
+> |------|--------|----------|
+> | 仓库地址 | `hub.company.com`（HTTPS，443 端口） | 运维给的地址；若带非标端口如 `:8443`，**必须连端口一起写** |
+> | 项目名 | `team` | 你所在的 Harbor 项目 |
+>
+> 命令路径与本篇步骤 7～10 的同机实测一致，跨机差异点均已标注；文末报错表是按关键字归纳的常见报错（排障对号入座用，非逐条本机复现）。
+
+### 第 0 步：向运维要齐四样信息
+
+推之前先拿全，少一样都会卡在半路：
+
+| 要什么 | 用来干什么 | 没有会怎样 |
+|--------|------------|------------|
+| **仓库地址**（含端口、HTTP 还是 HTTPS） | login / tag 的前缀 | 地址猜错 → 一直超时或推错地方 |
+| **你的账号**（用户名/密码或机器人 Token） | `docker login` | 没 push 权限 |
+| **目标项目名**（或建项目的权限） | tag 路径的第二段 | 项目不存在 → push 被拒 |
+| **自签 CA 证书**（仅自签 HTTPS 时） | 客户端信任仓库 | `x509: certificate signed by unknown authority` |
+
+### 第 1 步：连通性验证（先 curl，后 docker）
+
+网络层先通，再动 Docker 配置，排障能少绕一半路：
+
+```bash
+# HTTPS 仓库（本例 443 端口可省略）
+curl -sI https://hub.company.com/v2/ | head -3
+
+# HTTP 仓库（非标端口必须带上）
+curl -sI http://hub.company.com:8080/v2/ | head -3
+```
+
+`/v2/` 是 Registry 标准探测端点，**返回 401 是正常的**——它代表「仓库活着，但你要认证」；返回 200 也正常（匿名可访问）。要命的是超时、`Connection refused`、`Could not resolve host`：
+
+| 现象 | 先查什么 |
+|------|----------|
+| `Could not resolve host` | 公司没内网 DNS？在开发机 hosts 里加一行：`<服务器IP> hub.company.com`（Linux `/etc/hosts`，Windows 见步骤 2 旁注） |
+| 超时 / `Connection refused` | VPN 没连？防火墙、端口是否写对（问运维要 `地址:端口` 的准确写法） |
+| curl 通、后面 docker 不通 | 多半是信任配置问题 → 第 2 步 |
+
+> 端口规则：**80（HTTP）/ 443（HTTPS）可以不写，其它端口必须显式带**，而且 login、tag、daemon 配置三处要写**完全一致**的字符串（对照步骤 2 的「铁律」）。
+
+### 第 2 步：让 Docker 信任这个仓库（三选一）
+
+按公司仓库的协议对号入座：
+
+| 公司仓库是 | 你要做的 | 验收 |
+|------------|----------|------|
+| **正规 CA 签发的 HTTPS**（域名证书） | 什么都不用做 | 直接跳到第 3 步 |
+| **自签 / 内部 CA 的 HTTPS** | 找运维拿 `ca.crt`：Linux 放 `/etc/docker/certs.d/hub.company.com/ca.crt`（目录名含端口时连端口一起，如 `hub.company.com:8443`），做法见[官方证书文档](https://docs.docker.com/engine/security/certs/)；Docker Desktop 的引擎在 VM 里、路径与 Linux 宿主机不同，同样按该文档的 Desktop 部分处理 | `docker login` 不再报 x509 |
+| **HTTP**（内网过渡方案） | 把 `hub.company.com:8080` 加进 `insecure-registries`——做法与步骤 7 完全相同（Linux 改 `/etc/docker/daemon.json` 后重启引擎；Desktop 在 Settings → Docker Engine 里合并字段），记得**合并而不是覆盖**已有配置 | `docker info` 的 Insecure Registries 列表里有该地址 |
+
+### 第 3 步：`docker login` 拿到推送凭证
+
+```bash
+docker login hub.company.com -u 你的账号
+# 提示 Password 时输入密码（或机器人 Token）
+```
+
+不想让密码进 shell history，用标准输入传：
+
+```bash
+echo '你的密码或Token' | docker login hub.company.com -u 你的账号 --password-stdin
+```
+
+**验收**：输出 `Login Succeeded`（与步骤 8 同机实测的输出一致）。
+
+> 凭证会写进 `~/.docker/config.json`——里面是 **base64 编码而不是加密**，等于明文。别把这份文件提交进仓库或随手发人；公司人多时让运维给你发**机器人 Token** 而不是个人密码。
+
+### 第 4 步：确认本机自制镜像就绪
+
+```bash
+docker images myweb
+```
+
+能看到 `myweb:v1` 即可——它怎么来的不重要：第 6 篇末尾案例是「容器改完 `docker commit`」固化出来的；第 9 篇是 Dockerfile `docker build -t myweb:v1 .` 构建出来的。**公司交付优先 Dockerfile**（可审查、可 CI），commit 只用于救急。
+
+### 第 5 步：`docker tag` 打成公司仓库的完整名字
+
+```bash
+docker tag myweb:v1 hub.company.com/team/myweb:v1
+```
+
+这串名字的四段解剖（对照步骤 10 的格式）：
+
+```text
+hub.company.com   /   team   /   myweb   :   v1
+└─ 仓库地址           └─ 项目     └─ 仓库名      └─ 标签
+   （运维给的）        （已存在）   （自取）       （建议有语义）
+```
+
+三条规矩：
+
+1. **不带地址就推错地方**：`docker push team/myweb:v1` 会被当成往 Docker Hub 推（见思考题）。
+2. **项目必须先存在**：`team` 不存在或你没有它的推送权限，push 必被拒（见报错表 `denied`）。项目由运维或项目管理员在 UI 里建（做法同步骤 9）。
+3. **标签要有语义**：`v1`、`1.4.2`、`20260818` 都比 `latest` 好追溯——`latest` 只是个普通名字，不代表「最新」。
+
+### 第 6 步：`docker push`
+
+```bash
+docker push hub.company.com/team/myweb:v1
+```
+
+成功标志与步骤 10 同机实测一致：**最后一行出现 digest**：
+
+```text
+v1: digest: sha256:一长串十六进制 size: 数字
+```
+
+推送过程中每层显示 `Pushed`；如果基础层公司仓库里已有（比如别人推过同款 `nginx:alpine` 基底），会显示 `Layer already exists`——这就是第 8 篇说过的「分层增量」：**只传缺的层**，同基底镜像第二次推会明显变快。
+
+### 第 7 步：验收三连
+
+| 验收方式 | 操作 | 过关标准 |
+|----------|------|----------|
+| CLI | push 末尾的 digest | 有 `sha256:…` 且无报错 |
+| Web UI | 登录 `https://hub.company.com` → 项目 `team` → 仓库 `myweb` | 能看到标签 `v1`、digest 与 CLI 一致 |
+| 换机拉取 | 在服务器/同事机器：`docker pull hub.company.com/team/myweb:v1`（先完成对方的第 1～3 步） | 拉下来 `docker run` 出你的自定义首页 |
+
+### 第 8 步：发给同事的一分钟上手说明
+
+推完镜像，把下面这段话术发给要用的同事（把占位换成实际值）：
+
+```text
+拉取公司 Harbor 镜像：
+1. hosts 加一行（若公司没有内网 DNS）：<服务器IP> hub.company.com
+2. 自签证书的话：把 ca.crt 放到 /etc/docker/certs.d/hub.company.com/ca.crt；
+   HTTP 仓库则把 hub.company.com:端口 加进 insecure-registries 并重启 Docker
+3. docker login hub.company.com -u 你的账号   ← 私有项目必须；公开项目 pull 可跳过
+4. docker pull hub.company.com/team/myweb:v1
+```
+
+### 跨机常见报错对照表
+
+| 报错关键字 | 意思 | 处理 |
+|------------|------|------|
+| `no such host` / `i/o timeout` | 名字解析不了 / 网络不通 | hosts、VPN、防火墙；端口是否漏写（第 1 步） |
+| `http: server gave HTTP response to HTTPS client` | 客户端按 HTTPS 访问，仓库却是 HTTP | HTTP 仓库要配 insecure，且地址（含端口）三处写法一致（第 2 步） |
+| `x509: certificate signed by unknown authority` | 自签证书不被信任 | `ca.crt` 放进 `certs.d`（第 2 步）；别用 `--insecure-registry` 掩盖生产证书问题 |
+| `unauthorized: authentication required` | 没登录或密码错 | 重新 `docker login`；Token 是否过期 |
+| `denied: requested access to the resource is denied` | 登录了但**没这个项目的推送权限** | 项目名拼对了吗？找项目管理员把你的账号加为 Developer（角色见「团队怎么用」） |
+| `name unknown: project … not found` | 项目不存在 | 先建项目（步骤 9），或改成正确的项目名 |
+| push 目标显示 `docker.io/...` | tag 没带仓库地址 | 重打 tag（第 5 步规矩 1） |
+
+（同机 Desktop 的 `502 Bad Gateway` 类问题见上文排障表——那是另一条网络路径的坑。）
+
+### 一句话收束
+
+**同机练手用 `localhost:85`；公司实战把「地址、信任、账号」三件事换成运维给的信息，login → tag → push 的命令形态与步骤 8～10 完全一样。**
 
 ---
 
@@ -805,7 +1096,7 @@ docker rm harbor-nginx
 
   不必先 login。  
 - 一要 **`docker push`**，就一定要有账号，并且该账号对该项目有推送权限。  
-- 案例里的 `docker login`：本机刚 push 过、或项目是私有时，登录最省事；公开项目仅 pull 时可以跳过。
+- 案例一里的 `docker login`：本机刚 push 过、或项目是私有时，登录最省事；公开项目仅 pull 时可以跳过。
 
 **选型直觉**：基础镜像、只读公共库 → 可公开，方便大家匿名 pull；业务/含密钥配置的镜像 → 用**私有项目**，强制登录。
 
@@ -1000,10 +1291,12 @@ docker push harbor.daemon.io/demo/nginx:alpine
 | 7 | 改了 WSL 的 `/etc/docker/daemon.json` 不生效 | Desktop 用户改 **Settings → Docker Engine**；确认 JSON 无 BOM |
 | 7～8 | login 超时 / TLS（Desktop） | 改用 `docker login localhost:85`；不要死磕 `harbor.daemon.io:85` |
 | 7～8 | login 超时 / TLS（纯 Linux） | insecure 含 `host:port`；引擎已重启；JSON 无 BOM |
+| 登录全过程 | `http: server gave HTTP response to HTTPS client` | HTTP 仓：`insecure-registries` 写 `IP:端口`（如 `192.168.13.21:8000`），重启后再 `docker login`；见「用户如何登录一台已有的 Harbor」 |
 | 10 | 推到 docker.io | tag 必须带仓库地址与端口，如 `localhost:85/demo/...` |
 | 10 | `502 Bad Gateway` + 层 `Unavailable`（Desktop） | UI 虽正常，引擎访问 `harbor.daemon.io` 失败；改用 `localhost:85` 重新 login/tag/push |
 | 可选 HTTPS | unknown authority | `certs.d/.../ca.crt` + 重启 Docker |
 | Desktop | 同机 login/push 失败 | insecure 进 Engine；推送地址用 **localhost:85** |
+| 跨机（案例二） | `no such host` / 超时 / `x509` / `unauthorized` / `denied` | 逐条对照**案例二的跨机报错表**：先 curl 后 docker；地址三处一致；权限找项目管理员 |
 
 **铁律**：改访问名时，hosts、`harbor.yml` 的 `hostname`、证书 SAN、`login`/`tag` 一起改。  
 **Desktop 铁律**：浏览器可以用域名或 `127.0.0.1`；**docker login/push 优先 `localhost:85`**。
@@ -1025,11 +1318,108 @@ docker push harbor.daemon.io/demo/nginx:alpine
 ## 小结
 
 1. 按 **步骤 1～10** 走完 = Harbor 可安装、可登录、可 push；再跟案例 = 能从 Harbor pull 并 run。  
-2. **团队**：公开项目可匿名 pull；**push 必须登录**；**勿共用 admin**，用本地用户 / Robot + 项目角色。  
-3. **先 HTTP 闭环，再考虑 HTTPS**。  
-4. 名字用 **FQDN 或 IP**，短主机名容易推错到 Docker Hub。  
-5. **Docker Desktop 本机推送**：login/tag/push 用 **`localhost:85`**，避免 `harbor.daemon.io` 在引擎侧 502/超时。  
-6. 每一步都有**验收**；过不了先查排障表，再往下。
+2. **用户登录已有 Harbor**：浏览器进 UI 是一套；`docker login 地址:端口` 是另一套。HTTP 仓必须先配 `insecure-registries`，否则 CLI 会报 `server gave HTTP response to HTTPS client`。  
+3. **团队**：公开项目可匿名 pull；**push 必须登录**；**勿共用 admin**，用本地用户 / Robot + 项目角色。  
+4. **先 HTTP 闭环，再考虑 HTTPS**。  
+5. 名字用 **FQDN 或 IP**，短主机名容易推错到 Docker Hub。  
+6. **Docker Desktop 本机推送**：login/tag/push 用 **`localhost:85`**，避免 `harbor.daemon.io` 在引擎侧 502/超时。  
+7. 每一步都有**验收**；过不了先查排障表，再往下。  
+8. **公司已有 Harbor 时**（案例二）：找运维要齐「地址、账号、项目、证书」四样；跨机三件事——地址写法、信任配置、账号权限——对号入座后，login → tag → push 与同机形态完全一样。  
+9. **案例三**：HTTP Harbor `192.168.13.21:8000`、项目 `other`，把已有镜像 `trufor-api:cvpr2023` 打成 `地址/项目/镜像:标签` 再 push。
+
+---
+
+## 案例三：把本机 TruFor 镜像推到 Harbor 的 `other`
+
+这是一次真实推送：构建机 `pc3507` 上已经有镜像，要放到内网 HTTP Harbor。
+
+本机当时的镜像：
+
+```text
+$ docker images | grep trufor
+trufor-api:cvpr2023    c53226f00e0f    10.1GB    3.4GB
+```
+
+目标：
+
+```text
+192.168.13.21:8000/other/trufor-api:cvpr2023
+│                │     │          │
+│                │     │          └─ 标签（沿用原 tag）
+│                │     └─ 仓库名（沿用原仓库名即可）
+│                └─ Harbor 项目（必须先在 UI 里存在）
+└─ 仓库地址:端口（HTTP）
+```
+
+`other` 必须已在 Harbor 里建好。没有就先用浏览器登录 `http://192.168.13.21:8000`，新建项目 **other**。账号要对这个项目有推送权限（实验可用 `admin`）。
+
+### 1. HTTP 仓写入 insecure（login 报 HTTPS 错时先做）
+
+Docker 默认连 `https://192.168.13.21:8000`。Harbor 的 8000 若是明文 HTTP，会报：
+
+```text
+Error response from daemon: Get "https://192.168.13.21:8000/v2/":
+http: server gave HTTP response to HTTPS client
+```
+
+在 **跑 docker 的那台 Linux** 上合并 `/etc/docker/daemon.json`（保留原有 `registry-mirrors`、`dns`）：
+
+```json
+{
+  "insecure-registries": [
+    "192.168.13.21:8000"
+  ]
+}
+```
+
+```bash
+sudo systemctl restart docker
+docker info | grep -A 20 "Insecure Registries"
+```
+
+**验收**：列表里有 `192.168.13.21:8000`。地址必须带端口，和后面 login / tag 完全一致。完整登录过程见上文「用户如何登录一台已有的 Harbor」。
+
+### 2. 登录
+
+```bash
+docker login 192.168.13.21:8000 -u admin
+```
+
+**验收**：`Login Succeeded`。
+
+### 3. 打标签
+
+本地名字 `trufor-api:cvpr2023` 没有仓库前缀，`docker push` 会当成推 Docker Hub。先改名，镜像 ID 不变，只是多一个名字：
+
+```bash
+docker tag trufor-api:cvpr2023 192.168.13.21:8000/other/trufor-api:cvpr2023
+docker images | grep trufor
+```
+
+应看到两行：原来的 `trufor-api:cvpr2023`，以及带 `192.168.13.21:8000/other/` 的那条。
+
+### 4. 推送
+
+```bash
+docker push 192.168.13.21:8000/other/trufor-api:cvpr2023
+```
+
+镜像约 10GB，第一次会较慢。成功时最后一行有 `digest: sha256:...`。
+
+不要写成 `docker push other/trufor-api:cvpr2023`（没写地址会往 Docker Hub 推）。
+
+### 5. 核对与拉取
+
+浏览器：`http://192.168.13.21:8000` → 项目 **other** → 仓库 **trufor-api** → 标签 **cvpr2023**。
+
+其它机器拉取（同样要配 insecure + 私有项目要 login）：
+
+```bash
+docker pull 192.168.13.21:8000/other/trufor-api:cvpr2023
+docker run -d --name imageTest -p 8088:8088 192.168.13.21:8000/other/trufor-api:cvpr2023
+```
+
+`run` 仍要 `-p 8088:8088`。只 `EXPOSE` 没有端口映射，宿主机浏览器打不开 `/docs`。
 
 ---
 
