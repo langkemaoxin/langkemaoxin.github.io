@@ -15,7 +15,7 @@ description: Dockerfile 自制镜像——从最小实验到完整静态站案�
 ---
 
 > **Docker 系列 · 第 9/24 篇**
-> 上一篇：[《Docker 本地镜像载入与载出——离线环境的镜像搬运工》](/云原生/docker/docker-08-image-transfer) · 下一篇：[《Harbor 私有镜像仓库——按步骤从安装到第一次 push》](/云原生/docker/docker-10-harbor)
+> 上一篇：[《Docker 本地镜像载入与载出——离线环境的镜像搬运工》](/云原生/docker/docker-08-image-transfer) · 下一篇：[《Harbor 安装》](/云原生/docker/docker-10-harbor)
 
 ---
 
@@ -373,7 +373,7 @@ CMD ["--spring.profiles.active=prod"]
 
 ## 六、构建完如何发布？
 
-本地验证通过后，打上私有仓前缀再推（Harbor 的信任与 hostname 见[第 10 篇](/云原生/docker/docker-10-harbor)）：
+本地验证通过后，打上私有仓前缀再推（先装 Harbor 见[第 10 篇](/云原生/docker/docker-10-harbor)，tag / push 见[使用篇](/云原生/docker/docker-10-harbor-usage)）：
 
 ```bash
 docker tag lab-web:1.0 harbor.daemon.io/demo/lab-web:1.0
@@ -695,7 +695,7 @@ aspnet-app:1.0 158MB
 | 层 | 回答的问题 | 本系列落点 |
 |------|------|------|
 | Dockerfile（本篇） | 镜像**怎么做**出来 | `docker build` |
-| Registry | 镜像**放哪**、怎么共享 | [第 10 篇](/云原生/docker/docker-10-harbor) Harbor |
+| Registry | 镜像**放哪**、怎么共享 | [第 10 篇安装](/云原生/docker/docker-10-harbor) · [使用](/云原生/docker/docker-10-harbor-usage) |
 | 部署 | **在哪跑**、怎么起一整套 | [第 13 篇](/云原生/docker/docker-13-compose) compose |
 | CI/CD 流水线 | **何时做**（谁触发）、做完**送哪**、**谁来验** | Jenkins / GitLab CI / GitHub Actions |
 

@@ -455,6 +455,7 @@ export default sidebar({
         "docker-08-image-transfer",
         "docker-09-dockerfile",
         "docker-10-harbor",
+        "docker-10-harbor-usage",
         "docker-11-network",
         "docker-12-data-persistence",
         "docker-13-compose",

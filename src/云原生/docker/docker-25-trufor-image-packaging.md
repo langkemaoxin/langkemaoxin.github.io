@@ -26,7 +26,7 @@ description: 一次真实交付：把 CVPR 2023 开源取证模型 TruFor 打成
 
 需求很具体：公司要试图像篡改检测。官方仓库 [grip-unina/TruFor](https://github.com/grip-unina/TruFor)（CVPR 2023）给的是「把图丢进目录、跑完就退出」的 `test_docker`。运维要的是长期 HTTP 服务：上传一张图，返回分数和定位图。
 
-交付物做成一个目录 `trufor-deploy`，镜像名 `trufor-api:cvpr2023`。构建机是 **WSL2 Ubuntu-22.04 + Docker**，默认用户 root。本机 GTX 1050 只有 2GB 显存，官方建议约 8GB，所以这台机器走 CPU；有 GPU 的运维机再用 Compose 叠加文件开 GPU。
+交付目录已开源：[code-corey/trufor-deploy](https://github.com/code-corey/trufor-deploy)。镜像名 `trufor-api:cvpr2023`。构建机是 **WSL2 Ubuntu-22.04 + Docker**，默认用户 root。本机 GTX 1050 只有 2GB 显存，官方建议约 8GB，所以这台机器走 CPU；有 GPU 的运维机再用 Compose 叠加文件开 GPU。
 
 表面任务是写 Dockerfile。真正卡住的是：**构建时要访问的外网全不稳定**，以及 **容器起来了不等于宿主机浏览器能打开**。
 
@@ -52,7 +52,7 @@ Compose 拆成两份：主文件管端口和环境变量；`docker-compose.gpu.y
 
 ## 交付目录与代码结构
 
-构建上下文就是 `trufor-deploy/`。构建机最终认的是这份树（权重 zip 要和 `Dockerfile` 同级，不进 git 也没关系）：
+构建上下文就是 `trufor-deploy/`（GitHub：[code-corey/trufor-deploy](https://github.com/code-corey/trufor-deploy)）。构建机最终认的是这份树（权重 zip 要和 `Dockerfile` 同级，**不进 Git**）：
 
 ```text
 trufor-deploy/
@@ -364,7 +364,9 @@ docker run -d --name imageTest -p 8088:8088 trufor-api:cvpr2023
 - `TruFor_weights.zip`
 
 ```bash
-cd ~/trufor/trufor-deploy
+git clone https://github.com/code-corey/trufor-deploy.git
+cd trufor-deploy
+# 把官方 TruFor_weights.zip 放到与 Dockerfile 同级
 docker compose build
 docker run -d --name imageTest -p 8088:8088 trufor-api:cvpr2023
 curl http://127.0.0.1:8088/health
