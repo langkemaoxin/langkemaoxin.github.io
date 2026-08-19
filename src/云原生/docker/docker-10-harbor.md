@@ -16,7 +16,7 @@ description: 只讲 Harbor 怎么装：检查 Docker、改 harbor.yml、prepare/
 ---
 
 > **Docker 系列 · 第 10/24 篇**
-> 上一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-09-dockerfile) · 下一篇：[《Harbor 使用——用案例拉取与推送镜像》](/云原生/docker/docker-10-harbor-usage)
+> 上一篇：[《Dockerfile——从一句 echo 滚到三个能 curl 的自制镜像》](/云原生/docker/docker-09-dockerfile) · 下一篇：[《Harbor 使用——用案例拉取与推送镜像》](/云原生/docker/docker-10-harbor-usage)
 
 ---
 

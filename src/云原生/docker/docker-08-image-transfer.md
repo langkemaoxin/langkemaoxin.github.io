@@ -14,7 +14,7 @@ description: Docker 本地镜像载入与载出——离线环境的镜像搬运
 ---
 
 > **Docker 系列 · 第 8/24 篇**
-> 上一篇：[《进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter》](/云原生/docker/docker-07-enter-container) · 下一篇：[《Dockerfile 自制镜像——从最小实验到完整静态站案例》](/云原生/docker/docker-09-dockerfile)
+> 上一篇：[《进入 Docker 容器的四种方式——exec、attach、SSH 与 nsenter》](/云原生/docker/docker-07-enter-container) · 下一篇：[《Dockerfile——从一句 echo 滚到三个能 curl 的自制镜像》](/云原生/docker/docker-09-dockerfile)
 
 ---
 
@@ -254,10 +254,9 @@ docker tag alpine:3.21 harbor.example.com/demo/alpine:3.21
 
 ## 下篇预告
 
-**第 9 篇：《Dockerfile 自制镜像》**
+**第 9 篇：《Dockerfile——从一句 echo 滚到三个能 curl 的自制镜像》**
 
-- 从最小 `FROM` + `CMD` 实验，到完整静态站案例
-- 指令与层、常用写法与验收清单
+- 从两行 `FROM` + `CMD`，每次加一种能力：COPY 静态页、history、ENTRYPOINT、先清单后代码、多阶段
 - 本地 `build` 通过后，再接到第 10 篇 Harbor 做私仓 `push`
 
 ---
