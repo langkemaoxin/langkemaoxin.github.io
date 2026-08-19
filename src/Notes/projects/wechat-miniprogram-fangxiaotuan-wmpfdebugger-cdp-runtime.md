@@ -182,7 +182,141 @@ ws://127.0.0.1:62000
 
 > **CDP = 怎么跟调试目标说话；execution context = 说话时你进的是哪一间 JS 房间；contextId = 那间房的门牌号。**
 
-这里埋一颗种子，雪球 7 会用到：Python 里 `POST /probe` 和 `python -m fxt_api --probe` 干的就是「敲门认门牌」。
+### 2.4 用 Python 把每个房间敲一遍（可直接跑）
+
+前置：WMPFDebugger 已起、房小团已连接、本机已 `pip install websockets`。  
+下面这段**不依赖**完整业务仓库，专门用来列出：每个 `contextId` 里有没有 `wx`、页面栈有多长——帮你亲眼看见「很多房间，只有一间是办事车间」。
+
+```python
+# list_contexts.py
+# 用法：python list_contexts.py
+# 作用：连上 ws://127.0.0.1:62000，扫描 contextId=1..20，打印每间房的探测结果
+
+import asyncio
+import json
+import websockets
+
+CDP_URL = "ws://127.0.0.1:62000"
+MAX_ID = 20
+
+# 在「某一间房」里执行的探针：看看这间有没有办事能力
+PROBE_JS = """
+(function () {
+  var hasWx = typeof wx !== 'undefined';
+  var getAppType = typeof getApp;
+  var pages = -1;
+  if (typeof getCurrentPages === 'function') {
+    try { pages = getCurrentPages().length; } catch (e) { pages = -1; }
+  }
+  var ok = hasWx && getAppType === 'function' && pages > 0;
+  return { ok: ok, hasWx: hasWx, getAppType: getAppType, pages: pages };
+})()
+"""
+
+
+async def cdp_call(ws, msg_id, method, params):
+    """发一条 CDP 命令，等到同 id 的回包。"""
+    await ws.send(json.dumps({"id": msg_id, "method": method, "params": params}))
+    while True:
+        raw = await ws.recv()
+        msg = json.loads(raw)
+        if msg.get("id") == msg_id:
+            return msg
+
+
+async def main():
+    print(f"连接 {CDP_URL} …")
+    async with websockets.connect(CDP_URL, max_size=8 * 1024 * 1024) as ws:
+        # 打开 Runtime 域（后面才能 evaluate）
+        await cdp_call(ws, 1, "Runtime.enable", {})
+
+        chosen = None
+        print(f"{'contextId':>10}  {'ok':>5}  {'hasWx':>6}  {'getApp':>10}  pages  备注")
+        print("-" * 72)
+
+        next_id = 2
+        for context_id in range(1, MAX_ID + 1):
+            next_id += 1
+            resp = await cdp_call(
+                ws,
+                next_id,
+                "Runtime.evaluate",
+                {
+                    "expression": PROBE_JS,
+                    "contextId": context_id,   # ← 门牌号：进哪一间房
+                    "returnByValue": True,
+                    "awaitPromise": False,
+                },
+            )
+
+            # 房间不存在时，CDP 常回 error
+            if resp.get("error"):
+                err = resp["error"]
+                msg = err.get("message", err) if isinstance(err, dict) else err
+                print(f"{context_id:>10}  {'—':>5}  {'—':>6}  {'—':>10}  {'—':>5}  无此房间 ({msg})")
+                continue
+
+            result = (resp.get("result") or {}).get("result") or {}
+            # 该房间执行抛错 / 没有 returnByValue
+            if (resp.get("result") or {}).get("exceptionDetails"):
+                print(f"{context_id:>10}  {'—':>5}  {'—':>6}  {'—':>10}  {'—':>5}  执行异常")
+                continue
+
+            info = result.get("value") or {}
+            ok = bool(info.get("ok"))
+            note = "← 办事车间候选" if ok else ""
+            if ok and chosen is None:
+                chosen = context_id
+                note = "← 选用这个 contextId"
+            print(
+                f"{context_id:>10}  {str(ok):>5}  {str(info.get('hasWx')):>6}  "
+                f"{str(info.get('getAppType')):>10}  {str(info.get('pages')):>5}  {note}"
+            )
+
+        print("-" * 72)
+        if chosen is None:
+            print("没有找到可用的办事车间。检查：调试器、小程序是否已连接、是否关了 Clash。")
+        else:
+            print(f"结论：以后 Runtime.evaluate 请带 contextId={chosen}")
+            print("仓库里等价命令：python -m fxt_api --probe")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+你可能会看到类似输出（数字以本机为准）：
+
+```text
+连接 ws://127.0.0.1:62000 …
+ contextId     ok   hasWx      getApp  pages  备注
+------------------------------------------------------------------------
+         1  False   False   undefined     -1
+         2  False   False   undefined     -1
+         3   True    True    function      2  ← 选用这个 contextId
+         4      —       —           —      —  无此房间 (...)
+         ...
+结论：以后 Runtime.evaluate 请带 contextId=3
+```
+
+读表的方式：
+
+| 列 | 含义 |
+|---|---|
+| `contextId` | 房间门牌号 |
+| `ok` | 是否像办事车间（有 wx + getApp + 页面栈） |
+| `hasWx` / `getApp` / `pages` | 这间房里探针看到的细节 |
+| 无此房间 | 这个编号当前不存在，跳过即可 |
+
+完整仓库里已经封装好了同一逻辑，不必每次手抄：
+
+```powershell
+cd <fxt-miniprogram-search-api 仓库目录>
+python -m fxt_api --probe
+# 或 HTTP：POST http://127.0.0.1:8787/probe
+```
+
+雪球 7 的 `POST /probe` 干的就是「敲门认门牌」。
 
 若连不上：先查 Clash 是否开着、Chrome DevTools 是否占着 62000、小程序是否已 `miniapp client connected`——这三项比「改代码」更常是真凶。
 
