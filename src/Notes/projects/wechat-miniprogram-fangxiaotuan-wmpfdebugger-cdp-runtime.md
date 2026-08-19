@@ -39,7 +39,7 @@ description: 从「mitm 解不出小区单价」接着往下滚：每次只加�
 |------|----------------|------------------|
 | **1** | 认清「别解包，进逻辑层」 | 两层车间模型钉在墙上；mitm 失败不再等于做不了 |
 | **2** | WMPFDebugger + 认清 CDP / 房间号 | `62000` 通了；探针选出办事车间（本机曾是 `contextId=3`） |
-| **3** | `getCurrentPages` / 路由 | 看清栈顶是详情还是搜索；知道该往哪一页动手 |
+| **3** | 读懂页面栈（一摞纸） | 看清叠了几层、栈顶是谁；知道该在哪一页动手 |
 | **4** | dump 详情页 `$vm` | `infoSections` 里直接出现参考单价、拿地价格 |
 | **5** | 搜索页第一次采集 | 踩坑：读了 `projectList`，搜「金茂」却返回附近盘 / 土拍地 |
 | **6** | `keywordSearch` + `searchProjectList` | 首条变成真正的「城西金茂晓棠 / 42605」 |
@@ -324,37 +324,88 @@ python -m fxt_api --probe
 
 ## 雪球 3：先问「现在站在哪一页」，再谈读写
 
-这一球只加：**读页面栈**。不加搜索、不 dump 单价。
+这一球只加：**读页面栈**。不加搜索、不 dump 单价。  
+雪球 2 找到了「办事车间」这间房；进门之后还要问：**你人站在哪一层楼？**
 
-在逻辑层执行：
+### 3.1 页面栈是什么？（一摞纸）
+
+**页面栈 = 小程序里「你一路点进来、现在叠在一起的那些页面」，像一摞纸。**
+
+```text
+打开首页          → 纸上只有 1 张
+再点进楼盘主页    → 盖第 2 张
+再点进详细信息    → 盖第 3 张（最上面 = 你屏幕上正在看的）
+点一次返回        → 撕掉最上面那张，露出下面那张
+```
+
+微信官方 API：
 
 ```js
-var pages = getCurrentPages();
-var top = pages[pages.length - 1];
+getCurrentPages()  // 返回从「最早打开」到「当前屏」的页面数组（底 → 顶）
+```
+
+| 概念 | 是什么 | 从哪来 |
+|------|--------|--------|
+| **路由表** | 小程序*声明过*的全部页面路径（像商场目录） | `__wxConfig.pages`（往往几百条） |
+| **页面栈** | *此刻*实际打开了哪些页、谁在最上面（像你走进了哪几层） | `getCurrentPages()` |
+
+目录再全，也不代表你人在那一层。**接口能不能调通，看的是栈顶是谁**，不是路由表有多厚。
+
+### 3.2 这段代码在干什么？
+
+在逻辑层（带上雪球 2 的 `contextId`）执行：
+
+```js
+var pages = getCurrentPages();           // 整摞纸：从底到顶
+var top = pages[pages.length - 1];       // 最上面那张 = 当前页
 ({
-  n: pages.length,
-  routes: pages.map(p => p.route || p.__route__),
-  top: top.route || top.__route__
+  n: pages.length,                       // 一共叠了几层
+  routes: pages.map(p => p.route || p.__route__),  // 每一层的路径名
+  top: top.route || top.__route__        // 栈顶路径（当前屏）
 });
 ```
+
+逐行：
+
+| 写法 | 含义 |
+|------|------|
+| `getCurrentPages()` | 取出整摞页面对象 |
+| `pages[pages.length - 1]` | 数组最后一项 = 栈顶 = 你正在看的页 |
+| `n` | 叠了几层 |
+| `routes` | 从底到顶每一层的路由字符串 |
+| `top` | **当前页**路由——后面搜 / dump 都默认对着它 |
 
 详情态本机实拍过类似：
 
 ```text
 n = 2
 routes =
-  subpackages/project/pages/index          // 楼盘主页
-  subpackages/project-info/pages/index     // 详细信息（栈顶）
+  subpackages/project/pages/index          // 底层：楼盘主页
+  subpackages/project-info/pages/index     // 栈顶：详细信息 ← 屏幕上就是它
+top =
+  subpackages/project-info/pages/index
 ```
 
-全站路由表可以从 `__wxConfig.pages` 一次倒出几百条（搜索、土拍、二手……都有）。**但接口能不能调通，取决于栈顶是谁**，不取决于路由表有多全。
+画成纸摞：
 
-记住两个关键路由，后面两球会反复撞上：
+```text
+        ┌─────────────────────────────────────┐
+  栈顶 → │ project-info/pages/index  详细信息  │  ← 屏幕 / $vm 在这里
+        ├─────────────────────────────────────┤
+  更早 → │ project/pages/index       楼盘主页  │
+        └─────────────────────────────────────┘
+```
 
-| 你要干什么 | 栈顶最好是 |
-|---|---|
-| 读单价 / 拿地价 | `subpackages/project-info/pages/index` |
-| 按小区名搜列表 | `subpackages/search/pages/result` |
+### 3.3 为什么要先问栈顶？
+
+因为不同页上挂的方法、数据不一样：
+
+| 你要干什么 | 栈顶最好是 | 上面才有 |
+|---|---|---|
+| 读单价 / 拿地价 | `subpackages/project-info/pages/index` | `infoSections`、`reload` |
+| 按小区名搜列表 | `subpackages/search/pages/result` | `keywordSearch`、`searchProjectList` |
+
+栈顶错了：不是 CDP 坏了，是「进对了房间，却站错了楼层」——雪球 5 踩的坑，有一半都是这个。
 
 也可以从 CDP 喊一句切页（联调 API 时用过）：
 
@@ -362,7 +413,9 @@ routes =
 wx.navigateTo({ url: '/subpackages/search/pages/result' });
 ```
 
-当场效果：你不再对着错误的页面空跑 `searchSubmit`。
+`navigateTo` = 再盖一张纸；不要和 `redirectTo`（换掉当前这张）搞混。
+
+当场效果：你知道接下来该 dump 详情，还是该去搜名单；不再对着错误页面空跑。
 
 ---
 
