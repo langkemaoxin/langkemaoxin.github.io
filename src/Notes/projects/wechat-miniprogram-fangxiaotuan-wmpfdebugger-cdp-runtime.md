@@ -40,6 +40,7 @@ description: 从「mitm 解不出小区单价」接着往下滚：每次只加�
 | **1** | 认清「别解包，进逻辑层」 | 两层车间模型钉在墙上；mitm 失败不再等于做不了 |
 | **2** | WMPFDebugger + 认清 CDP / 房间号 | `62000` 通了；探针选出办事车间（本机曾是 `contextId=3`） |
 | **3** | 读懂页面栈（一摞纸） | 看清叠了几层、栈顶是谁；知道该在哪一页动手 |
+| **3.5** | 实战回放：从 DevTools 同款 62000 捞数据 | 不用 Chrome 抢线；脚本扫房间 → 扫页面栈/路由表 → dump 栈顶 vm |
 | **4** | dump 详情页 `$vm` | `infoSections` 里直接出现参考单价、拿地价格 |
 | **5** | 搜索页第一次采集 | 踩坑：读了 `projectList`，搜「金茂」却返回附近盘 / 土拍地 |
 | **6** | `keywordSearch` + `searchProjectList` | 首条变成真正的「城西金茂晓棠 / 42605」 |
@@ -416,6 +417,163 @@ wx.navigateTo({ url: '/subpackages/search/pages/result' });
 `navigateTo` = 再盖一张纸；不要和 `redirectTo`（换掉当前这张）搞混。
 
 当场效果：你知道接下来该 dump 详情，还是该去搜名单；不再对着错误页面空跑。
+
+---
+
+## 雪球 3.5：实战回放——你丢给我 `devtools://...?ws=127.0.0.1:62000`，我到底怎么捞的？
+
+对话里出现过这个地址：
+
+```text
+devtools://devtools/bundled/inspector.html?ws=127.0.0.1:62000
+```
+
+它和雪球 2 的插座是**同一根线**：浏览器 DevTools 前端通过 `ws=127.0.0.1:62000` 连上 WMPFDebugger。  
+当时你让我「分析当前 vm / 路由 / 页面栈，再把其它也扫一遍」。**我并没有靠在 Chrome 里人肉点 Elements**——原因和做法如下。
+
+### 为什么不盯着 Chrome DevTools 面板抠？
+
+1. 本机常出现 ***The tab is inactive***，面板半死不活；
+2. Chrome 占着 62000 时，脚本端 CDP 会抢连接、互相踢；
+3. Elements 里多半是 `page-frame.html` **渲染层壳**，单价不在 DOM 树上；
+4. 要批量扫「所有 context / 所有注册路由 / vm 字段名」，脚本比人手点快、可落盘。
+
+所以实际路径是：
+
+```text
+同一个 ws://127.0.0.1:62000
+        │
+        ├─ Chrome DevTools（可选用，但别和脚本同时占）
+        │
+        └─ Node / Python CDP 客户端  ← 我们主要用这个
+              Runtime.evaluate(表达式, contextId)
+```
+
+本地脚手架在 `fxt-runtime-scraper` 里（API 仓库是后抽的搜索薄层），关键脚本：
+
+| 脚本 | 干什么 |
+|------|--------|
+| `npm run probe` / `python -m fxt_api --probe` | 扫所有 `contextId`，认办事车间 |
+| `node src/dump-routes.js` | 扫**页面栈** + **全站注册路由表** |
+| `node src/dump-vm.js` | dump **栈顶** `$vm` / `_data` / `infoSections` |
+
+产物曾落到：`data/debug/routes_dump.json`、`data/debug/vm_dump.json`。
+
+### 第一步：扫「所有房间」（execution context）
+
+和雪球 2.4 同一思路：`contextId = 1..N` 轮询探针。本机结果是 **`contextId=3`** 带 `wx` + 页面栈。  
+后面所有 dump **都固定对着 3 号房说话**——否则你在渲染层房间里找 `getCurrentPages`，要么没有，要么不是业务栈。
+
+### 第二步：扫「页面栈 + 全站路由」（你要的路由 / 栈）
+
+`dump-routes.js` 注入的逻辑层表达式，核心就两块：
+
+**A. 当前页面栈（此刻叠了哪些纸）**
+
+```js
+var pages = getCurrentPages();
+pages.map(function (p, i) {
+  var vm = p.$vm || p;
+  var d = vm._data || vm.$data || {};
+  return {
+    index: i,
+    route: p.route || p.__route__,
+    options: p.options,           // 例如 project_id=42605
+    projectId: d.projectId,
+    projectName: d.projectInfo && d.projectInfo.name,
+    dataKeys: Object.keys(d).slice(0, 40),
+    methods: ['reload','searchSubmit','loadNext','getProjectDetail']
+      .filter(function (n) { return typeof vm[n] === 'function'; })
+  };
+});
+```
+
+本机详情态实拍过：
+
+```text
+pageStackLen = 2
+[0] subpackages/project/pages/index       // 楼下：楼盘主页，有 getProjectDetail
+[1] subpackages/project-info/pages/index  // 栈顶：详细信息，有 reload；projectId=42605
+topRoute = subpackages/project-info/pages/index
+```
+
+**B. 全站已注册路由（商场目录，不是当前栈）**
+
+同一次 evaluate 里再读 `__wxConfig`：
+
+```js
+__wxConfig.pages          // 主包/已展开路径列表
+__wxConfig.entryPagePath  // 入口
+// 再拼 subPackages，得到 allRegisteredRoutes（本机曾扫到约 500+ 条）
+```
+
+这样就能回答两类完全不同的问题：
+
+| 问题 | 看哪份数据 |
+|------|------------|
+| **现在**人在哪一页？ | `pageStack` / `topRoute` |
+| 小程序**一共声明了**哪些页？（搜索页路径叫什么？） | `allRegisteredRoutes` / `__wxConfig.pages` |
+
+「扫描所有其它」在这一步的含义就是：**把目录整本倒出来**，从中标出和业务相关的，例如：
+
+- `subpackages/search/pages/index`、`.../result`
+- `subpackages/project/pages/index`
+- `subpackages/project-info/pages/index`（以及 tags、housing-database…）
+- 以及 auction / map / ershou 等一堆分包（知道有，但不一定要爬）
+
+### 第三步：扫「当前栈顶的 vm」（你要的 vm）
+
+`dump-vm.js` 在**同一 contextId** 里对栈顶页做结构摘要：
+
+```js
+var pages = getCurrentPages();
+var page = pages[pages.length - 1];
+var vm = page.$vm || page;
+var data = vm._data || vm.$data || {};
+
+// 大致会收集：
+// - route / pageKeys / vmKeys / dataKeys / methodNames
+// - projectId、projectInfo、infoSections（含 rows 标题）
+// - 把 infoSections 展平打成 flat（楼盘名、参考单价、拿地价格…）
+// - $children 摘要（后面搜列表时会在子组件上找到 searchSubmit）
+```
+
+本机在「城西金茂晓棠」详情栈顶时，dump 直接给出：
+
+```text
+projectId = 42605
+projectInfo.name = 城西金茂晓棠
+infoSections = 基本信息 / 销售信息 / 建筑概况 / 物业信息
+flat.参考单价 = 住宅22189-25782元/㎡
+flat.拿地价格 = 13200.00元/㎡（成交楼面地价）
+```
+
+**这就是「根据 DevTools 同款 62000 拿到 vm」的真实做法**：不是解析 `devtools://` 这个 URL 本身，而是连它指向的 WebSocket，在逻辑层 `evaluate` 一把。
+
+### 三步串起来（对照你的原话）
+
+```text
+你给的：devtools://inspector.html?ws=127.0.0.1:62000
+          │
+          ▼
+我做的：  ① 扫全部 contextId     → 锁定办事车间（如 3）
+          ② dump-routes           → 页面栈 + 全站路由表
+          ③ dump-vm               → 栈顶 $vm / infoSections / flat
+          ④（后续雪球）在搜索页再 dump 组件字段
+               → 发现 searchProjectList / keywordSearch
+```
+
+命令备忘（在 `fxt-runtime-scraper` 目录）：
+
+```powershell
+# 终端已起 WMPFDebugger，小程序已连接；关掉 Chrome 对 62000 的占用
+npm run probe
+node src/dump-routes.js
+node src/dump-vm.js
+# 看 data/debug/routes_dump.json 、 vm_dump.json
+```
+
+当场效果：后面雪球 4～6 不是猜字段名，而是**对着 dump 出来的钥匙串**（`reload`、`infoSections`、`keywordSearch`、`searchProjectList`）逐个试。
 
 ---
 
