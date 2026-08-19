@@ -38,7 +38,7 @@ description: 从「mitm 解不出小区单价」接着往下滚：每次只加�
 | 雪球 | 这一球加上去的 | 当场能看见的效果 |
 |------|----------------|------------------|
 | **1** | 认清「别解包，进逻辑层」 | 两层车间模型钉在墙上；mitm 失败不再等于做不了 |
-| **2** | WMPFDebugger + `contextId` | `ws://127.0.0.1:62000` 通了；探针选出 appservice（本机曾是 `3`） |
+| **2** | WMPFDebugger + 认清 CDP / 房间号 | `62000` 通了；探针选出办事车间（本机曾是 `contextId=3`） |
 | **3** | `getCurrentPages` / 路由 | 看清栈顶是详情还是搜索；知道该往哪一页动手 |
 | **4** | dump 详情页 `$vm` | `infoSections` 里直接出现参考单价、拿地价格 |
 | **5** | 搜索页第一次采集 | 踩坑：读了 `projectList`，搜「金茂」却返回附近盘 / 土拍地 |
@@ -93,17 +93,78 @@ Runtime.evaluate({
 
 ---
 
-## 雪球 2：连上 62000，并认出哪个 context 才是「办事车间」
+## 雪球 2：连上 62000，并认出哪个「房间」才是办事车间
 
-这一球只加：**连通 + 选对 contextId**。
+这一球只加两件事：**连上调试口**，以及**选对要说话的那间 JS 房间**。  
+先把两个术语用大白话钉死，再动手。
 
-CDP 里会有很多 execution context。渲染层、插件、逻辑层搅在一起。只有同时满足大致这些条件的，才是你要的 appservice：
+### 2.1 CDP 是什么？（遥控器说明书）
+
+**CDP = Chrome DevTools Protocol（Chrome 开发者工具协议）。**
+
+平时你在 Chrome 里按 F12，点 Elements / Console / Network，并不是「魔法」，而是 DevTools 界面在跟浏览器内核说话。说的那套语言就叫 CDP：一条条 JSON 命令，例如：
+
+- 「执行这段 JS」→ `Runtime.evaluate`
+- 「打开网络监听」→ `Network.enable`
+
+WMPFDebugger 干的事，是给 PC 微信小程序也开出**同一套遥控口**，默认挂在本机：
+
+```text
+ws://127.0.0.1:62000
+```
+
+对照表：
+
+| 角色 | 类比 | 在本故事里是谁 |
+|------|------|----------------|
+| 你的 Python / Node 脚本，或 Chrome DevTools | 拿遥控器的人 | 客户端 |
+| **CDP** | 遥控器和电器之间的协议 / 语言 | 怎么下命令 |
+| `ws://127.0.0.1:62000` | 墙上的插座 | WebSocket 地址 |
+| 小程序运行时 | 被遥控的电器 | WMPF 里的 JS 环境 |
+
+所以：**CDP 不是微信私有发明**，是 Chromium 系通用的调试协议。连上 62000，就能用和 Chrome 一样的方式对小程序说：*请执行这段 JS，把返回值给我。*
+
+### 2.2 execution context 是什么？（JS 房间 / 门牌号）
+
+**execution context = 一段 JS 正在里面跑的「房间」（沙箱）。**
+
+同一个 `62000` 插座后面，往往不止一间房。连上之后，里面可能同时有：
+
+```text
+连上 ws://127.0.0.1:62000 之后，里面可能有：
+
+  房间 1：某个页面壳（渲染层 webview）
+  房间 2：另一个 webview
+  房间 3：appservice 逻辑层   ← 有 wx、getCurrentPages、业务 vm
+  房间 4：插件 / 其它…
+```
+
+每间房有一个编号，CDP 里叫 **`contextId`**（本机冒烟时曾是 `3`）。
+
+关键点只有一句：
+
+> **你在错误的房间里执行 `getCurrentPages()`，可能根本没有这个函数，或页面栈是空的。**  
+> 业务明文（后面的 `searchProjectList`、`infoSections`）住在**逻辑层那一间**里。
+
+因此雪球 2 不是「连上 Wi‑Fi 就完了」，而是：
+
+```text
+1. 插上插座：连 ws://127.0.0.1:62000
+2. 发现里面有很多 JS「房间」（execution context）
+3. 挨个敲门，找出带业务能力的「办事车间」（appservice）
+4. 记住门牌号 contextId
+5. 以后 Runtime.evaluate 都对着这扇门说话
+```
+
+### 2.3 怎么认出办事车间？
+
+探针很土：从 `contextId = 1, 2, 3…` 挨个问同一段 JS——这间房有没有这些东西：
 
 - `typeof wx !== 'undefined'`
 - `typeof getApp === 'function'`
 - `typeof getCurrentPages === 'function'` 且 `pages.length > 0`
 
-做法极简：从 `contextId = 1..N` 轮询同一段探测表达式，命中就写入 `config.local.json`。
+哪个答「有」，就写入 `config.local.json`，后面所有 evaluate 都带上这个编号。
 
 本机冒烟输出（摘要）：
 
@@ -115,9 +176,13 @@ CDP 里会有很多 execution context。渲染层、插件、逻辑层搅在一�
 当场效果：
 
 - 连得上 `ws://127.0.0.1:62000`；
-- 知道以后所有 `Runtime.evaluate` 都带上 **`contextId: 3`**（冷启动后会变，要重新 probe）。
+- 知道以后所有 `Runtime.evaluate` 都带上 **`contextId: 3`**（小程序冷启动后编号会变，要重新 probe）。
 
-这里埋一颗种子，雪球 7 会用到：Python 里 `POST /probe` 和 `python -m fxt_api --probe` 干的就是这件事。
+一句话收束：
+
+> **CDP = 怎么跟调试目标说话；execution context = 说话时你进的是哪一间 JS 房间；contextId = 那间房的门牌号。**
+
+这里埋一颗种子，雪球 7 会用到：Python 里 `POST /probe` 和 `python -m fxt_api --probe` 干的就是「敲门认门牌」。
 
 若连不上：先查 Clash 是否开着、Chrome DevTools 是否占着 62000、小程序是否已 `miniapp client connected`——这三项比「改代码」更常是真凶。
 
