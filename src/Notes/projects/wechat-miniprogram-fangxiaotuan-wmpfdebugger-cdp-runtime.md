@@ -550,203 +550,72 @@ flat.拿地价格 = 13200.00元/㎡（成交楼面地价）
 
 **这就是「根据 DevTools 同款 62000 拿到 vm」的真实做法**：不是解析 `devtools://` 这个 URL 本身，而是连它指向的 WebSocket，在逻辑层 `evaluate` 一把。
 
-### 用 Python 一次捞：页面栈 + 全站路由 + 栈顶 vm
+### 万能 Python 脚本：一次扫完房间 / 页面栈 / 路由 / vm
 
-下面这段可单独保存为 `dump_stack_and_vm.py`。前置与雪球 2.4 相同：`pip install websockets`，WMPFDebugger 已连上，**关掉 Chrome 对 62000 的占用**。  
-`CONTEXT_ID` 先填雪球 2 探到的门牌号（本机曾是 `3`）；不确定就先跑 `list_contexts.py`。
+早期示例需要手填 `CONTEXT_ID=3`，还偏房小团字段。现已收成**万能探针**（任意经 WMPFDebugger 打开的小程序都能用）：
 
-```python
-# dump_stack_and_vm.py
-# 用法：python dump_stack_and_vm.py
-# 作用：在指定 contextId 里读页面栈、全站路由表、栈顶 vm 摘要，写到 dump_out.json
+| 能力 | 说明 |
+|------|------|
+| 自动扫 `contextId` | 列出每间房的 `hasWx` / `pages`，自动选办事车间 |
+| 页面栈 | 每一层 `route` / `options` / `dataKeys` / 方法提示 |
+| 全站路由 | `__wxConfig` 展开后的完整 `registeredRoutes` |
+| 栈顶 vm | 标量预览、方法名、子树里的 `keywordSearch`/`searchSubmit`/`reload`… |
+| 顺手展平 | 若存在通用 `infoSections` 结构，额外给出 `flatFromInfoSections` |
 
-import asyncio
-import json
-from pathlib import Path
+仓库文件：
 
-import websockets
-
-CDP_URL = "ws://127.0.0.1:62000"
-CONTEXT_ID = 3  # ← 改成你 probe 到的办事车间门牌号
-OUT = Path("dump_out.json")
-
-# 一次 evaluate：页面栈 + __wxConfig 路由目录 + 栈顶 vm/infoSections
-DUMP_JS = r"""
-(function () {
-  function keysOf(obj, n) {
-    try { return Object.keys(obj || {}).slice(0, n || 40); }
-    catch (e) { return []; }
-  }
-  function stripHtml(s) {
-    return String(s == null ? '' : s).replace(/<[^>]+>/g, '').trim();
-  }
-  function pageBrief(p, i) {
-    var vm = p.$vm || p;
-    var d = vm._data || vm.$data || {};
-    return {
-      index: i,
-      route: p.route || p.__route__ || null,
-      options: p.options || null,
-      projectId: d.projectId || null,
-      projectName: (d.projectInfo && d.projectInfo.name) || null,
-      dataKeys: keysOf(d, 40),
-      hasReload: typeof vm.reload === 'function',
-      hasKeywordSearch: typeof vm.keywordSearch === 'function'
-    };
-  }
-
-  var out = { hasWx: typeof wx !== 'undefined' };
-
-  // —— 页面栈（此刻叠了哪些纸）——
-  if (typeof getCurrentPages === 'function') {
-    var pages = getCurrentPages() || [];
-    out.pageStackLen = pages.length;
-    out.pageStack = pages.map(pageBrief);
-    out.topRoute = pages.length
-      ? (pages[pages.length - 1].route || pages[pages.length - 1].__route__)
-      : null;
-  }
-
-  // —— 全站注册路由（商场目录）——
-  try {
-    if (typeof __wxConfig !== 'undefined' && __wxConfig) {
-      var pagesCfg = __wxConfig.pages || [];
-      var subs = __wxConfig.subPackages || __wxConfig.subpackages || [];
-      var all = pagesCfg.slice();
-      subs.forEach(function (sp) {
-        (sp.pages || []).forEach(function (p) {
-          all.push((sp.root ? String(sp.root).replace(/\/$/, '') + '/' : '') + p);
-        });
-      });
-      out.entryPagePath = __wxConfig.entryPagePath || null;
-      out.registeredCount = all.length;
-      // 只挑和楼盘/搜索相关的路径，避免刷屏；完整列表可改成 all
-      out.registeredSample = all.filter(function (r) {
-        return /search|project-info|project\/pages/i.test(r);
-      }).slice(0, 40);
-      out.registeredAll = all; // 真正的「扫所有其它路由」
-    }
-  } catch (e) {
-    out.wxConfigError = String(e);
-  }
-
-  // —— 栈顶 vm（业务明文）——
-  try {
-    var pages2 = getCurrentPages() || [];
-    if (pages2.length) {
-      var page = pages2[pages2.length - 1];
-      var vm = page.$vm || page;
-      var data = vm._data || vm.$data || {};
-      var sections = data.infoSections || vm.infoSections || [];
-      var flat = {};
-      (sections || []).forEach(function (sec) {
-        (sec.rows || []).forEach(function (row) {
-          var key = stripHtml(row.text || row.name || '');
-          if (!key) return;
-          var val = row.value;
-          if (val && typeof val === 'object') {
-            if (Array.isArray(val.text)) flat[key] = val.text.join(',');
-            else if (val.text != null) flat[key] = stripHtml(val.text);
-            else flat[key] = JSON.stringify(val);
-          } else {
-            flat[key] = val;
-          }
-        });
-      });
-      out.vm = {
-        route: page.route || page.__route__,
-        projectId: data.projectId || vm.projectId || null,
-        dataKeys: keysOf(data, 50),
-        methodHint: ['reload', 'keywordSearch', 'searchSubmit', 'getProjectDetail']
-          .filter(function (n) { return typeof vm[n] === 'function'; }),
-        projectInfoName: (data.projectInfo && data.projectInfo.name) || null,
-        infoSectionTitles: (sections || []).map(function (s) { return s.title || s.key; }),
-        flat: flat
-      };
-    }
-  } catch (e) {
-    out.vmError = String(e);
-  }
-
-  return out;
-})()
-"""
-
-
-async def cdp_call(ws, msg_id, method, params):
-    await ws.send(json.dumps({"id": msg_id, "method": method, "params": params}))
-    while True:
-        msg = json.loads(await ws.recv())
-        if msg.get("id") == msg_id:
-            return msg
-
-
-async def main():
-    print(f"连接 {CDP_URL} ，contextId={CONTEXT_ID} …")
-    async with websockets.connect(CDP_URL, max_size=16 * 1024 * 1024) as ws:
-        await cdp_call(ws, 1, "Runtime.enable", {})
-        resp = await cdp_call(
-            ws,
-            2,
-            "Runtime.evaluate",
-            {
-                "expression": DUMP_JS,
-                "contextId": CONTEXT_ID,
-                "returnByValue": True,
-                "awaitPromise": False,
-            },
-        )
-        if resp.get("error"):
-            raise SystemExit(f"CDP error: {resp['error']}")
-        body = resp.get("result") or {}
-        if body.get("exceptionDetails"):
-            raise SystemExit(f"JS exception: {body['exceptionDetails']}")
-        value = (body.get("result") or {}).get("value")
-        OUT.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
-
-        # 终端只打印摘要，完整 JSON 在文件里
-        print(f"topRoute     = {value.get('topRoute')}")
-        print(f"pageStackLen = {value.get('pageStackLen')}")
-        for p in value.get("pageStack") or []:
-            print(f"  [{p['index']}] {p['route']}  projectId={p.get('projectId')}")
-        print(f"registeredCount = {value.get('registeredCount')}")
-        print("registeredSample (search/project 相关):")
-        for r in (value.get("registeredSample") or [])[:15]:
-            print(f"  - {r}")
-        vm = value.get("vm") or {}
-        print(f"vm.projectId = {vm.get('projectId')}  name={vm.get('projectInfoName')}")
-        flat = vm.get("flat") or {}
-        for k in ("楼盘名", "参考单价", "拿地价格", "楼盘地址"):
-            if k in flat:
-                print(f"  flat[{k}] = {flat[k]}")
-        print(f"已写入 {OUT.resolve()}")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
-```
-
-跑完后看两处：
-
-| 输出 | 对应你当时的问题 |
-|------|------------------|
-| `pageStack` / `topRoute` | 当前页面栈、栈顶路由 |
-| `registeredAll` / `registeredSample` | 「扫描所有其它」注册路由 |
-| `vm.flat` | 栈顶 vm 里的明文单价 / 拿地价等 |
-
-仓库里也可用封装好的探测（只认门牌，不 dump 全表）：
+- https://github.com/code-corey/fxt-miniprogram-search-api/blob/main/dump_wmpf.py  
+- 实现：`fxt_api/dump_all.py`
 
 ```powershell
-python -m fxt_api --probe
+cd <clone 后的 fxt-miniprogram-search-api>
+python -m pip install -r requirements.txt
+
+# 默认连 ws://127.0.0.1:62000，自动 probe，写出 dump_wmpf.json
+python dump_wmpf.py
+
+# 常用参数
+python dump_wmpf.py --cdp-url ws://127.0.0.1:62000 -o out.json
+python dump_wmpf.py --context-id 3                 # 已知门牌可跳过盲扫结果里的选用逻辑仍会记录
+python dump_wmpf.py --route-filter search          # 终端额外打印含 search 的注册路由
+python -m fxt_api --dump --route-filter project-info
 ```
 
-Node 脚手架等价命令仍是：
+输出 JSON 骨架（万能，不绑死业务名）：
 
-```powershell
-npm run probe
-node src/dump-routes.js
-node src/dump-vm.js
+```json
+{
+  "cdpUrl": "ws://127.0.0.1:62000",
+  "chosenContextId": 3,
+  "contexts": [
+    { "contextId": 3, "ok": true, "hasWx": true, "getAppType": "function", "pages": 2 }
+  ],
+  "dump": {
+    "topRoute": "subpackages/project-info/pages/index",
+    "pageStack": [ { "index": 0, "route": "...", "dataKeys": [], "methods": [] } ],
+    "registeredCount": 563,
+    "registeredRoutes": [ "pages/index/index", "subpackages/search/pages/result", "..." ],
+    "topVm": {
+      "dataKeys": ["projectId", "infoSections", "..."],
+      "methods": ["reload", "..."],
+      "scalarPreview": {},
+      "flatFromInfoSections": { "参考单价": "...", "拿地价格": "..." },
+      "interestingComponents": []
+    }
+  }
+}
 ```
+
+对照你当时的三个问题：
+
+| 你要的 | 看 JSON 哪里 |
+|--------|----------------|
+| 有哪些 execution context / contextId | `contexts` + `chosenContextId` |
+| 页面栈 / 当前路由 | `dump.pageStack` / `dump.topRoute` |
+| 扫所有其它页面路径 | `dump.registeredRoutes` |
+| 当前 vm | `dump.topVm` |
+
+前置不变：WMPFDebugger 已连、关 Clash、**别让 Chrome DevTools 占着 62000**。
 
 ### 三步串起来（对照你的原话）
 
