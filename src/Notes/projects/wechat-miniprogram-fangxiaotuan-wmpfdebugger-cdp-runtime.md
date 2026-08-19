@@ -949,7 +949,7 @@ uvicorn fxt_api.api_server:app --host 127.0.0.1 --port 8787
 |---|---|---|
 | GET | `/health` | 进程还活着 |
 | POST | `/probe` | 雪球 2 |
-| GET | `/search?q=小区名` | 雪球 3 检查路由 + 雪球 6 搜索 |
+| GET | `/search?q=小区名` | 雪球 6.5 剧本 S + 雪球 6 |
 
 一次 `GET /search?q=城西金茂晓棠` 在服务器内部滚过的路径：
 
@@ -1008,6 +1008,7 @@ for item in result.items:
 | `未找到搜索组件` | 雪球 3 | 栈顶改到 `search/pages/result` |
 | 有单价在屏上但脚本读不到 | 雪球 4 | dump `$vm`，读 `infoSections` |
 | 关键词对、列表却是附近盘 | 雪球 5→6 | 改用 `keywordSearch` + `searchProjectList` |
+| 扫描有路由但 `/search` 仍失败 | 雪球 6.5 | 看 `topRoute` 是否已是 `search/pages/result`；先切页再搜 |
 | HTTP 503 | 雪球 7 的前置 | 把异常原文当线索，回到上表 |
 
 合规边界（整条雪道共用）：只整理本机已登录账号正常浏览可见的信息；控制频率；升级微信后 Frida 偏移可能失效；**不要**把 `config.local.json` 和隐私字段推进公开仓库。
