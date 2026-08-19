@@ -44,6 +44,7 @@ description: 从「mitm 解不出小区单价」接着往下滚：每次只加�
 | **4** | dump 详情页 `$vm` | `infoSections` 里直接出现参考单价、拿地价格 |
 | **5** | 搜索页第一次采集 | 踩坑：读了 `projectList`，搜「金茂」却返回附近盘 / 土拍地 |
 | **6** | `keywordSearch` + `searchProjectList` | 首条变成真正的「城西金茂晓棠 / 42605」 |
+| **6.5** | 扫描结果怎么变成「查询接口」 | 地图≠数据；选对路由 → 站对栈顶 → 调方法 → 读 vm → HTTP 返回 |
 | **7** 🧗 | Python FastAPI `/search` | 浏览器一条 URL 拿走列表 JSON |
 
 环境指纹（文中数字均来自本机实跑）：
@@ -743,9 +744,183 @@ node src/dump-vm.js
 
 ---
 
+## 雪球 6.5：有了 `scan_routes` 结果，怎么「调用接口」返回数据？
+
+先看一份真实扫描摘要（和你本机跑出来的同类）：
+
+```text
+chosenContextId = 3
+entryPagePath   = pages/index/index.html
+topRoute        = subpackages/project-info/pages/index
+pageStackLen    = 2
+  [0] subpackages/project/pages/index       name=城西金茂晓棠 id=42605
+  [1] subpackages/project-info/pages/index  name=城西金茂晓棠 id=42605
+registeredCount = 563
+  … 其中有 subpackages/search/pages/result 等
+```
+
+### 6.5.1 扫描结果本身不是业务数据
+
+| 扫描给你的 | 它**是**什么 | 它**不是**什么 |
+|------------|--------------|----------------|
+| `chosenContextId` | 以后说话的门牌号 | 小区列表 |
+| `pageStack` / `topRoute` | **现在**人站在哪一页 | 全站业务 JSON |
+| `registeredRoutes`（563 条） | 小程序**声明过**的页面路径目录 | 已经打开、已经加载好的数据 |
+| `entryPagePath` | 冷启动入口 | 当前查询结果 |
+
+一句话钉死：
+
+> **`scan_routes` = 地图 + GPS。**  
+> 地图告诉你「搜索结果页叫什么、详情页叫什么」；GPS 告诉你「人现在在详情页」。  
+> **真正的小区列表 / 单价，还要走到那一页，让小程序自己请求，再从 vm 抄出来。**
+
+所以不存在「对着 563 条路由直接 HTTP 打微信后端拿明文」这一步——后端包可能仍加密；我们走的是 **CDP → 逻辑层方法 → vm 明文**。
+
+专用命令（只扫栈 + 路由，比万能 dump 更轻）：
+
+```powershell
+python scan_routes.py
+python scan_routes.py --filter search -o routes_scan.json
+# 或
+python -m fxt_api --scan-routes --filter search
+```
+
+仓库：https://github.com/code-corey/fxt-miniprogram-search-api
+
+### 6.5.2 利用扫描结果的标准四步（查询闭环）
+
+把「用户想查一个小区名」拆成四步。每一步都用扫描结果里的某一格。
+
+```text
+① 查地图（registeredRoutes）
+     找到能力对应的页面路径
+        搜索 → …/search/pages/result
+        详情 → …/project-info/pages/index
+
+② 看 GPS（pageStack / topRoute）
+     栈顶是不是目标页？
+        是 → 下一步
+        否 → CDP 里 wx.navigateTo / 人手点过去，再扫一次确认
+
+③ 在栈顶调「小程序自己的方法」（不是你自己拼业务 HTTPS）
+        搜索页：keywordSearch(关键词)
+        详情页：改 projectId + reload()
+
+④ 读 vm 里已经解密的字段，组装成你的 API 响应
+        搜索：searchProjectList → [{id,name,price…}]
+        详情：infoSections → flat（参考单价、拿地价格…）
+```
+
+对照你这份扫描：
+
+| 你想做的事 | 扫描怎么用 | 中间必须补上的动作 | 最后读哪里 |
+|------------|------------|--------------------|------------|
+| **按名搜索** | 在 563 条里确认有 `subpackages/search/pages/result` | 但 `topRoute` 现在是 **project-info**，要先切到搜索结果页 | `searchProjectList` |
+| **读当前盘单价** | `topRoute` 已是 project-info，栈里还有 projectId=42605 | **不用切页**，直接读栈顶 vm | `infoSections` / `flat` |
+| **换另一个 id 的详情** | 路由仍用 project-info | `vm.projectId = 新id` → `reload()` → 再读 | 同上 |
+
+### 6.5.3 「调用接口」到底调用的是谁？
+
+这里最容易混：口语里的「调接口」有两层。
+
+```text
+层 A —— 你对外提供的接口（Python FastAPI）
+        GET /search?q=城西金茂晓棠
+        ↑ 浏览器 / 别的程序打这个
+
+层 B —— 小程序对它自己后端的 HTTPS
+        例如 fxt-api.…（可能仍加密）
+        ↑ 只有小程序逻辑层会发；我们一般不直接仿造
+
+层 C —— CDP 调试调用（Runtime.evaluate）
+        在 contextId=3 里执行：keywordSearch / reload / 读 vm
+        ↑ 本方案真正动手的地方
+```
+
+**查询返回数据的主路径是 A ← C，不是 A ← 直接打 B。**
+
+细节时序（搜索为例）：
+
+```text
+客户端                  FastAPI(/search)              CDP :62000              小程序逻辑层
+   |                         |                            |                        |
+   |  GET ?q=锦江城市花园三期  |                            |                        |
+   |------------------------>|                            |                        |
+   |                         |  connect + Runtime.enable  |                        |
+   |                         |--------------------------->|                        |
+   |                         |  evaluate: 当前 topRoute?  |                        |
+   |                         |--------------------------->|  getCurrentPages()     |
+   |                         |  若不是 search/result      |                        |
+   |                         |  evaluate: navigateTo(...) |----------------------->|
+   |                         |--------------------------->|  打开搜索结果页         |
+   |                         |  evaluate: keywordSearch(q)|----------------------->|
+   |                         |                            |     小程序自己请求后端  |
+   |                         |                            |     （加密/解密它自己做）|
+   |                         |  轮询 evaluate: 读列表     |<-----------------------|
+   |                         |--------------------------->|  searchProjectList     |
+   |                         |  JSON {items:[…]}          |                        |
+   |<------------------------|                            |                        |
+```
+
+要点：
+
+1. **FastAPI 不解析业务密文**；它只编排 CDP。  
+2. **必须栈顶对**：你扫描时停在 project-info，若直接 `/search` 而不切页，就会找不到 `keywordSearch` 或读到错误的 `projectList`。  
+3. **返回给调用方的 JSON**，来自逻辑层内存，字段在雪球 6 / 4 已经验过。
+
+### 6.5.4 两种查询剧本（把扫描用满）
+
+**剧本 S —— 搜索列表（对应 `GET /search`）**
+
+1. `scan_routes` / 已知地图：目标路由 = `subpackages/search/pages/result`  
+2. 若 `topRoute !=` 该路径 →
+
+```js
+wx.navigateTo({ url: '/subpackages/search/pages/result' });
+// 或人手打开搜索结果页
+```
+
+3. CDP：`keywordSearch(q)`（雪球 6）  
+4. CDP：读 `searchProjectList`，`stripHtml(name)`  
+5. 你的接口返回：
+
+```json
+{ "keyword": "…", "route": "…/search/pages/result", "count": N, "items": [ { "id", "name", "…" } ] }
+```
+
+**剧本 D —— 详情明文（单价 / 拿地价）**
+
+1. 地图：目标 = `subpackages/project-info/pages/index`  
+2. 你当前扫描已经满足栈顶 = project-info，且 hint id=42605 → **可直接读**  
+3. 若要换盘：CDP 设 `projectId` + `reload()`（雪球 4）  
+4. 读 `infoSections` → `flat`  
+5. 将来可封成 `GET /project/{id}`（仓库里搜索已封，详情可按同一模式再滚一球）
+
+### 6.5.5 和「563 条路由」的正确关系
+
+563 条的价值是**选型与排障**，不是循环 563 次去爬：
+
+- 用 `--filter search` 快速确认搜索页真实路径叫 `…/result` 而不是别的；  
+- 用 `pageStack` 解释「为什么接口 503 / 空列表」——往往是栈顶错了；  
+- 新能力（土拍、二手）先在目录里找路由，再 dump 该页 vm 找方法名，而不是猜 URL。
+
+### 6.5.6 最小心智模型（背下来）
+
+```text
+scan_routes  →  知道「去哪一页、人在哪」
+dump_wmpf    →  知道「这一页有哪些方法/字段」
+evaluate 调方法 + 读 vm  →  真正拿到明文
+FastAPI      →  把上面三步包成别人会用的 HTTP
+```
+
+你这份扫描已经说明：门牌 3 可用、人在详情、目录里有搜索页。  
+要「查询返回列表」，差的不是再扫一遍，而是 **把栈顶切到 search/result，再走雪球 6 + 雪球 7**。
+
+---
+
 ## 雪球 7 🧗：把「抄小票」封成一条 HTTP
 
-这一球只加封装，不再改小程序侧原理。代码在独立仓库：
+这一球只加封装：把雪球 6.5 的剧本 S 收成 HTTP。代码在独立仓库：
 
 https://github.com/code-corey/fxt-miniprogram-search-api
 
