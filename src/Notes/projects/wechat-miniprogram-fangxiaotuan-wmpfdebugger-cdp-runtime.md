@@ -1,5 +1,5 @@
 ---
-title: "房小团运行时取数复盘：WMPFDebugger + CDP 如何读到明文，以及 Python 搜索 API"
+title: "房小团运行时取数：从连上 CDP，滚到一条 /search 拿明文"
 sidebarGroup: "项目与工作流"
 shortTitle: "房小团 CDP 取数"
 order: 24
@@ -12,233 +12,306 @@ tag:
   - "房小团"
   - "FastAPI"
   - "Runtime.evaluate"
-description: 在 mitm 解不开 mmtls / 业务包仍加密之后，改走 WMPFDebugger 打开 CDP，在小程序逻辑层调用 keywordSearch、读取 searchProjectList 明文；并封装成 Python / FastAPI 搜索接口的真实复盘。
+description: 从「mitm 解不出小区单价」接着往下滚：每次只加一个因素——连上 CDP、认准 contextId、看清页面栈、dump 详情 vm、踩穿搜索列表坑、封成 Python /search——像滚雪球一样学会在逻辑层抄明文。
 ---
 
 > **相关阅读**
-> - [《PC 微信小程序抓包复盘：为什么「成都房小团」解不出小区单价》](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective)（路径 A：mitm 失败）
-> - [《WMPFDebugger——让 PC 微信小程序也能用 Chrome DevTools》](/Notes/tools/wmpfdebugger)（工具安装与启动顺序）
+> - [《PC 微信小程序抓包复盘：为什么「成都房小团」解不出小区单价》](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective)（路径 A：mitm 为什么死）
+> - [《WMPFDebugger——让 PC 微信小程序也能用 Chrome DevTools》](/Notes/tools/wmpfdebugger)（怎么装、怎么起）
 > - [《微信 MMTLS——抓包工具看不见的那条 80 端口连接》](/Notes/tools/wechat-mmtls)
 
-> **一句话结论**  
-> 不要去解微信通道或业务 AES。让小程序自己请求、自己解密，再用 **CDP `Runtime.evaluate`** 从逻辑层 **`vm` / `searchProjectList` / `infoSections`** 把已经是明文的数据抄出来。  
-> Python 侧封装成 `GET /search?q=小区名`，底层连的是 `ws://127.0.0.1:62000`。
+---
+
+## 开头：单价就在手机屏幕上，抓包里却没有
+
+业务目标只有一行字：从 PC 微信「成都房小团」拿出**小区名 + 参考单价**（进详情还能看到**拿地价格**）。
+
+[上一篇](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective)把 Proxifier + mitm 搭齐了，结论也很硬：外层几乎全是 **mmtls**，装 CA 也解不出业务 JSON。换上 [WMPFDebugger](/Notes/tools/wmpfdebugger) 之后，又容易掉进两种「看起来有戏、其实还没碰到明文」的坑：
+
+1. 浏览器打开 `devtools://...?ws=127.0.0.1:62000`，页面写着 *The tab is inactive*，还和脚本抢连接；
+2. Network 里偶见 `fxt-api.huanjutang.com`，响应仍可能是业务加密；Elements 里的 `page-frame.html` 壳上也几乎没有单价字段。
+
+根因一句话：**明文不在你拦的那条车上，而在小程序逻辑层已经拆好的货单上**——加密请求、解密填表，都是小程序自己干完的。你要做的不是解 AES，而是用 CDP 进到 **appservice**，喊它搜一把、再把桌上的 `vm` 抄走。
+
+本篇不先背 CDP 手册。故事只有一条：**从一个「解不出」的小区名，滚到浏览器里一条 `GET /search?q=…` 返回明文 JSON**。每一球只加一个因素。
+
+| 雪球 | 这一球加上去的 | 当场能看见的效果 |
+|------|----------------|------------------|
+| **1** | 认清「别解包，进逻辑层」 | 两层车间模型钉在墙上；mitm 失败不再等于做不了 |
+| **2** | WMPFDebugger + `contextId` | `ws://127.0.0.1:62000` 通了；探针选出 appservice（本机曾是 `3`） |
+| **3** | `getCurrentPages` / 路由 | 看清栈顶是详情还是搜索；知道该往哪一页动手 |
+| **4** | dump 详情页 `$vm` | `infoSections` 里直接出现参考单价、拿地价格 |
+| **5** | 搜索页第一次采集 | 踩坑：读了 `projectList`，搜「金茂」却返回附近盘 / 土拍地 |
+| **6** | `keywordSearch` + `searchProjectList` | 首条变成真正的「城西金茂晓棠 / 42605」 |
+| **7** 🧗 | Python FastAPI `/search` | 浏览器一条 URL 拿走列表 JSON |
+
+环境指纹（文中数字均来自本机实跑）：
+
+- Windows 10 + PC 微信，WMPF 路径里见过 **25297**
+- [WMPFDebugger](https://github.com/evi0s/WMPFDebugger) 已能打出 `miniapp client connected`
+- CDP：`ws://127.0.0.1:62000`；脚本侧 Node / Python 均可
+- 独立 API 仓库：https://github.com/code-corey/fxt-miniprogram-search-api
+
+启动顺序先钉死（后面每球都假设你遵守）：**先开 WMPFDebugger → 再开/重开房小团 → 关 Clash → 不要开 Chrome 抢 62000 → 再连 CDP。**
 
 ---
 
-## 一、问题从哪里来
+## 雪球 1：先换脑——明文住在哪一层？
 
-业务目标没变：从 PC 微信「成都房小团」拿到**小区名 + 参考单价**（细节页还有**拿地价格**等）。
+上一篇证明「拦车」不行。这一球只加一个观念，不加任何新工具：
 
-路径 A（mitm + Proxifier）已经复盘过：外层几乎全是 **mmtls**，装 CA 也解不出业务 JSON。
+```text
+PC 微信小程序两层车间：
 
-路径 B 上 WMPFDebugger 后，又踩过两类坑：
+  渲染层（webview / page-frame）
+    → DevTools Elements 里那层壳
+    → 业务字段很少，别在这里找单价
 
-1. **Chrome `devtools://...?ws=127.0.0.1:62000`**：常显示 *The tab is inactive*，且和脚本抢 CDP 连接。
-2. **只看 Network / 壳页面 DOM**：即便看见 `fxt-api.huanjutang.com/...`，响应仍可能是**业务层加密**；`page-frame.html` 壳上也几乎没有业务字段。
+  逻辑层（appservice）
+    → 跑 JS、发请求、解密、填 Vue vm / data
+    → 明文业务对象住在这里  ← 我们要进的门
+```
 
-真正打通的路径是参考文档那条原则：
+WMPFDebugger 在中间干的事也可以缩成三步（细节见[工具篇](/Notes/tools/wmpfdebugger)）：
 
-> **不解密网络包；在 appservice（逻辑层）里调用小程序自己的方法，读内存里的明文。**
+1. 按 WMPF 版本偏移注入，强制打开远程调试；
+2. 把微信私有调试协议翻译成标准 **Chrome DevTools Protocol**；
+3. 在本机露出 `ws://127.0.0.1:62000`。
 
----
-
-## 二、架构心智模型（为什么 CDP 能读到明文）
-
-可以把 PC 微信小程序理解成两层车间：
-
-| 层 | 角色 | 你平时看见什么 |
-|---|---|---|
-| 渲染层 | 画 UI（webview / page-frame） | DevTools Elements 里那层壳 |
-| **逻辑层（appservice）** | 跑 JS、发请求、解密、填 `data` / Vue `vm` | **明文业务对象住在这里** |
-
-WMPFDebugger 做的事：
-
-1. 用 Frida 等手段，按本机 **WMPF 版本偏移**，强制打开小程序远程调试；
-2. 把调试通道翻译成标准 **Chrome DevTools Protocol**；
-3. 在本机暴露类似：`ws://127.0.0.1:62000`。
-
-你的脚本（Node / Python）作为 **CDP 客户端**连上去，对指定 **`contextId`（execution context）** 执行：
+你之后写的每一行脚本，本质都是同一句 CDP：
 
 ```text
 Runtime.evaluate({
-  expression: "...一段小程序逻辑层 JS...",
+  expression: "...跑在小程序逻辑层的 JS...",
   contextId: <appservice 的 id>,
   returnByValue: true
 })
 ```
 
-关键点：
-
-- 表达式跑在**小程序自己的 JS 环境**里，能用 `getCurrentPages`、`wx`、页面上的 `keywordSearch` / `reload`；
-- 小程序内部请求后端时，**加密与解密都由它完成**；
-- 你只读它放进 `vm._data` 的结果——此时已是明文。
-
-所以这不是「破解 AES」，而是「让收银员自己算账，你只抄小票」。
-
-```text
-浏览器 / 脚本
-    │  CDP WebSocket
-    ▼
-WMPFDebugger (:62000)
-    │  调试通道
-    ▼
-微信 WMPF 小程序
-  ├─ 渲染层（壳 DOM，业务字段少）
-  └─ 逻辑层 appservice  ← Runtime.evaluate 落在这里
-         ├─ keywordSearch / searchSubmit / reload
-         ├─ searchProjectList（搜索明文列表）
-         └─ projectInfo / infoSections（详情明文，含拿地价等）
-```
+类比钉在墙上：**别撬保险柜；让收银员自己算账，你只抄小票。**  
+雪球 4、6 抄的就是这张小票；雪球 7 只是把「抄小票」封成 HTTP。
 
 ---
 
-## 三、真实打通步骤（这次怎么做成的）
+## 雪球 2：连上 62000，并认出哪个 context 才是「办事车间」
 
-### 3.1 环境前提
+这一球只加：**连通 + 选对 contextId**。
 
-| 项 | 要求 |
-|---|---|
-| WMPFDebugger | 本机可跑，偏移匹配当前微信 WMPF（实测曾见 25297） |
-| 系统代理 | **关掉 Clash 等**（否则污染 62000） |
-| Chrome DevTools | **不要**同时占 `devtools://...62000` |
-| 小程序 | 房小团已打开，调试器日志出现 `miniapp client connected` |
+CDP 里会有很多 execution context。渲染层、插件、逻辑层搅在一起。只有同时满足大致这些条件的，才是你要的 appservice：
 
-启动顺序（易错）：先开 WMPFDebugger → 再开/重开小程序 → 再连 CDP。
+- `typeof wx !== 'undefined'`
+- `typeof getApp === 'function'`
+- `typeof getCurrentPages === 'function'` 且 `pages.length > 0`
 
-### 3.2 找到逻辑层 `contextId`
+做法极简：从 `contextId = 1..N` 轮询同一段探测表达式，命中就写入 `config.local.json`。
 
-CDP 里有多个 execution context。只有带 `wx` + `getApp` + `getCurrentPages` 的才是 appservice。
-
-做法：从 `contextId=1..N` 轮询一段探测表达式，挑 `ok && pages > 0` 的那个，写入 `config.local.json`。  
-这次冒烟结果是 **`contextId=3`**（冷启动后会变，要重新 probe）。
-
-### 3.3 先看「现在站在哪一页」
-
-逻辑层：
-
-```js
-getCurrentPages()  // 页面栈
-pages[i].route     // 如 subpackages/project-info/pages/index
-page.$vm           // Vue 实例
-```
-
-实测详情态页面栈示例：
-
-1. `subpackages/project/pages/index`（楼盘主页）
-2. `subpackages/project-info/pages/index`（详细信息，栈顶）
-
-全站路由表可从 `__wxConfig.pages` 读出（数百条）；**页面栈**才是当前打开了谁。
-
-抓搜索必须尽量停在：
+本机冒烟输出（摘要）：
 
 ```text
-subpackages/search/pages/result
+[WX_OK] contextId=3 hasWx=true getApp=function pages=2
+已选用 contextId=3
 ```
 
-也可用 `wx.navigateTo({ url: '/subpackages/search/pages/result' })` 从 CDP 切过去（本次启动 API 联调时用过）。
+当场效果：
 
-### 3.4 详情页：明文在 `vm` 里长什么样
+- 连得上 `ws://127.0.0.1:62000`；
+- 知道以后所有 `Runtime.evaluate` 都带上 **`contextId: 3`**（冷启动后会变，要重新 probe）。
 
-在详情栈顶对 `$vm` dump，关键字段包括：
+这里埋一颗种子，雪球 7 会用到：Python 里 `POST /probe` 和 `python -m fxt_api --probe` 干的就是这件事。
 
-| 字段 | 含义 |
+若连不上：先查 Clash 是否开着、Chrome DevTools 是否占着 62000、小程序是否已 `miniapp client connected`——这三项比「改代码」更常是真凶。
+
+---
+
+## 雪球 3：先问「现在站在哪一页」，再谈读写
+
+这一球只加：**读页面栈**。不加搜索、不 dump 单价。
+
+在逻辑层执行：
+
+```js
+var pages = getCurrentPages();
+var top = pages[pages.length - 1];
+({
+  n: pages.length,
+  routes: pages.map(p => p.route || p.__route__),
+  top: top.route || top.__route__
+});
+```
+
+详情态本机实拍过类似：
+
+```text
+n = 2
+routes =
+  subpackages/project/pages/index          // 楼盘主页
+  subpackages/project-info/pages/index     // 详细信息（栈顶）
+```
+
+全站路由表可以从 `__wxConfig.pages` 一次倒出几百条（搜索、土拍、二手……都有）。**但接口能不能调通，取决于栈顶是谁**，不取决于路由表有多全。
+
+记住两个关键路由，后面两球会反复撞上：
+
+| 你要干什么 | 栈顶最好是 |
+|---|---|
+| 读单价 / 拿地价 | `subpackages/project-info/pages/index` |
+| 按小区名搜列表 | `subpackages/search/pages/result` |
+
+也可以从 CDP 喊一句切页（联调 API 时用过）：
+
+```js
+wx.navigateTo({ url: '/subpackages/search/pages/result' });
+```
+
+当场效果：你不再对着错误的页面空跑 `searchSubmit`。
+
+---
+
+## 雪球 4：在详情页 dump `vm`——单价原来一直躺在桌上
+
+这一球只加：**读栈顶 `$vm`**。假设你已经手动点进任意楼盘详情（例如城西金茂晓棠）。
+
+关键字段一次认齐：
+
+| 字段 / 方法 | 是什么 |
 |---|---|
 | `projectId` | 如 `42605` |
 | `projectInfo` | 名称、tags、sections |
-| **`infoSections`** | 基本信息 / 销售 / 建筑 / 物业 分行明文 |
-| 方法 `reload` | 改 `projectId` 后可刷新详情 |
+| **`infoSections`** | 基本信息 / 销售 / 建筑 / 物业——分行明文 |
+| `reload` | 改 `projectId` 后再调用，可换盘刷新 |
 
-「城西金茂晓棠」实测 `flat` 摘录：
+「城西金茂晓棠」本机从 `infoSections` 展平后的摘录：
 
-- 参考单价：`住宅22189-25782元/㎡`
-- 拿地时间：`2025-11-20`
-- 拿地价格：`13200.00元/㎡（成交楼面地价）`
+```text
+楼盘名     城西金茂晓棠
+参考单价   住宅22189-25782元/㎡
+拿地时间   2025-11-20
+拿地价格   13200.00元/㎡（成交楼面地价）
+楼盘地址   成都市武侯区花龙一路
+```
 
-这证明：**单价 / 拿地价根本不必解包，详情页内存里已有。**
+当场效果：
 
-### 3.5 搜索页：最大的坑——读错了列表
+- **证明路径成立**：单价 / 拿地价不必解包，逻辑层已经有明文；
+- 后续「按 ID 拉详情」的剧本也就清楚了：改 `projectId` → 调 `reload` → 再读 `infoSections`。
 
-搜索结果页组件上同时存在：
-
-| 字段 | 实际是什么 |
-|---|---|
-| `projectList` | 默认「附近/最新」流，**不是**关键词结果 |
-| **`searchProjectList`** | **关键词搜索明文列表**（名字常带 HTML 高亮） |
-| `showSearchProjectList` | 是否展示搜索结果 |
-| `keywordSearch` | **真正触发关键词搜索**（带 debounce） |
-| `searchSubmit` / `onSubmit` | 容易误触；曾把列表清空 |
-
-错误路径（我们踩过）：
-
-1. 只调 `searchSubmit` → `inputVal` 变了，但一直读 `projectList` → 返回一堆无关「天元府 / 土拍地块」；
-2. 误调 `onSubmit` / `loadSearchData` → `searchProjectList` 被清空。
-
-正确路径：
-
-1. 设置 `inputVal`（以及 `params.search_data.keyword`）；
-2. 调用 **`keywordSearch(关键词)`**；
-3. 等待 debounce + 网络返回；
-4. 采集 **`searchProjectList`**，并对 `name` 做 `stripHtml`。
-
-「城西金茂晓棠」修复后首条即为：
-
-| id | name | avg_price | area |
-|---|---|---|---|
-| 42605 | 城西金茂晓棠 | 22189-25782元/㎡ | 武侯区 |
+种子：搜索 API 暂时只做「按名找 ID」；详情可以按同一 CDP 模式继续滚成第二个接口。
 
 ---
 
-## 四、Python 网站 / 接口：怎么封装的
+## 雪球 5：第一次搜——为什么「金茂」变成了「天元府」？
 
-代码已独立成仓库（见文末链接）。核心模块：
+这一球故意只做「半成品」：停在搜索结果页，设关键词，调你以为对的方法，读你以为对的列表。
+
+搜索页组件上同时躺着好几份名单（dump 方法名时能看到）：
+
+| 名字 | 它实际是什么 |
+|---|---|
+| `projectList` | 默认「附近 / 最新」流 |
+| `searchProjectList` | 关键词结果（名字常带 HTML 高亮） |
+| `keywordSearch` | 真正触发关键词搜索（带 debounce） |
+| `searchSubmit` / `onSubmit` | 容易误触；曾把结果清空 |
+
+错误路径（本机真实踩过）：
+
+1. 只调 `searchSubmit`，`inputVal` 已经变成「城西金茂晓棠」；
+2. 采集时读的是 **`projectList`**；
+3. 返回一串无关项：天元府、锦里云邸、各种「××亩」土拍地块……
+
+调试采样里甚至出现过：`inputVal` 正确，但连续 8 秒 `projectList` 前几名纹丝不动——**关键词写进了输入框，名单却还是附近流**。
+
+当场效果（这一球的「成功」就是把失败看清楚）：
+
+- 你知道「能连上 CDP」≠「搜对了」；
+- 下一球只改两处：触发方法 + 读哪份名单。
+
+另一次误触 `onSubmit` / `loadSearchData`，会把 `searchProjectList` 直接清成 `0`——所以雪球 6 只碰 `keywordSearch`。
+
+---
+
+## 雪球 6：换成 `keywordSearch`，改读 `searchProjectList`
+
+这一球只改触发与采集，其它不动：
+
+```text
+1. inputVal = 关键词
+2. 顺手写下 params.search_data.keyword（若存在）
+3. 调用 keywordSearch(关键词)   ← 不是 searchSubmit
+4. 等 debounce + 网络返回
+5. 读 searchProjectList         ← 不是 projectList
+6. name 做 stripHtml（去掉 <span style=...> 高亮）
+```
+
+本机用「城西金茂晓棠」试触发后，`searchProjectList` 前几名变成：
+
+```text
+城西金茂晓棠
+东城金茂晓棠
+东城金茂晓棠二期
+青羊金茂锦棠
+东城金茂锦棠
+```
+
+修采集后首条：
+
+| id | name | avg_price | area |
+|---|---|---|---|
+| **42605** | **城西金茂晓棠** | 22189-25782元/㎡ | 武侯区 |
+
+当场效果：搜索链路闭环。  
+和雪球 4 拼起来就是完整业务：`搜名字 → 得 id →（可选）进详情 reload → 抄 infoSections`。
+
+---
+
+## 雪球 7 🧗：把「抄小票」封成一条 HTTP
+
+这一球只加封装，不再改小程序侧原理。代码在独立仓库：
+
+https://github.com/code-corey/fxt-miniprogram-search-api
+
+模块怎么长（每层只干一件事）：
 
 ```text
 fxt_api/
-  config.py      # 读 config.default.json / config.local.json
-  cdp.py         # WebSocket CDP 客户端（send / evaluate）
-  exprs.py       # 注入逻辑层的 JS 字符串
-  probe.py       # 扫描 contextId
-  search.py      # search_by_name / search_by_name_async
-  api_server.py  # FastAPI：/health /probe /search
-  __main__.py    # CLI：python -m fxt_api 小区名
+  cdp.py         # WebSocket 说 CDP
+  exprs.py       # 要注入的 JS 字符串
+  probe.py       # 雪球 2：选 contextId
+  search.py      # 雪球 6：keywordSearch + 采集
+  api_server.py  # FastAPI 门面
+  config.py      # cdpUrl / contextId / 延迟
 ```
 
-### 4.1 HTTP 入口
+起服务：
 
-```text
+```powershell
+cd E:\MyGithub\fxt-miniprogram-search-api   # 或你的 clone 路径
+python -m pip install -r requirements.txt
+python -m fxt_api --probe
 uvicorn fxt_api.api_server:app --host 127.0.0.1 --port 8787
 ```
 
-| 方法 | 路径 | 作用 |
+| 方法 | 路径 | 对应前面哪一球 |
 |---|---|---|
-| GET | `/health` | 探活 |
-| POST | `/probe` | 重探并保存 `contextId` |
-| GET | `/search?q=小区名&max_items=50` | 返回搜索列表 JSON |
+| GET | `/health` | 进程还活着 |
+| POST | `/probe` | 雪球 2 |
+| GET | `/search?q=小区名` | 雪球 3 检查路由 + 雪球 6 搜索 |
 
-示例（URL 编码后的「锦江城市花园三期」）：
-
-```text
-http://127.0.0.1:8787/search?q=%E9%94%A6%E6%B1%9F%E5%9F%8E%E5%B8%82%E8%8A%B1%E5%9B%AD%E4%B8%89%E6%9C%9F
-```
-
-### 4.2 一次 `/search` 的完整执行流
+一次 `GET /search?q=城西金茂晓棠` 在服务器内部滚过的路径：
 
 ```text
 浏览器
-  → FastAPI GET /search
-  → load_config()（cdpUrl、contextId；缺则 auto_probe）
-  → websockets.connect(ws://127.0.0.1:62000)
+  → FastAPI 解出 q
+  → 读 config（缺 contextId 就 auto_probe）
+  → connect ws://127.0.0.1:62000
   → Runtime.enable
-  → Runtime.evaluate(PAGE_INFO, contextId)     # 当前路由 / 是否搜索页
-  → Runtime.evaluate(keywordSearch(q), ...)    # 触发小程序自己搜
-  → 轮询 COLLECT_SEARCH_LIST                   # 读 searchProjectList
-  → 规整为 {id,name,price,district,extra,...}
-  → 关闭 CDP
-  → JSON 响应
+  → evaluate(PAGE_INFO)              # 雪球 3
+  → evaluate(keywordSearch(q))       # 雪球 6
+  → 轮询 searchProjectList
+  → JSON { keyword, route, count, items[] }
+  → 断开 CDP
 ```
 
-响应形状示意：
+响应形状（示意，字段以实跑为准）：
 
 ```json
 {
@@ -250,7 +323,6 @@ http://127.0.0.1:8787/search?q=%E9%94%A6%E6%B1%9F%E5%9F%8E%E5%B8%82%E8%8A%B1%E5%
     {
       "id": "42605",
       "name": "城西金茂晓棠",
-      "price": ["22189-25782元/㎡"],
       "district": "武侯区",
       "extra": { "avg_price": ["22189-25782元/㎡"], "area": "武侯区" }
     }
@@ -258,7 +330,7 @@ http://127.0.0.1:8787/search?q=%E9%94%A6%E6%B1%9F%E5%9F%8E%E5%B8%82%E8%8A%B1%E5%
 }
 ```
 
-### 4.3 库调用（不启 HTTP 也行）
+不启 HTTP 也能滚同一球：
 
 ```python
 from fxt_api import search_by_name
@@ -268,61 +340,32 @@ for item in result.items:
     print(item.id, item.name, item.extra.get("avg_price"))
 ```
 
-### 4.4 和 Node 脚手架的关系
-
-本地还有完整运行时爬虫工程 `fxt-runtime-scraper`（probe / search / fetch-detail / export-csv）。  
-Python 仓库是把其中**「按名搜索列表」**抽成可独立安装、可 HTTP 调用的薄层；详情 `reload` + `infoSections` 仍可按同一 CDP 模式继续加接口。
+本地还有更完整的 Node 脚手架 `fxt-runtime-scraper`（含详情 fetch / CSV）。Python 仓库是把**雪球 6**抽成可独立安装的薄层——雪球 4 的详情接口，按同一模式再滚一轮即可。
 
 ---
 
-## 五、失败对照表（方便以后排障）
+## 整条雪道回顾（出问题对照这张表）
 
-| 现象 | 常见原因 | 处理 |
+| 你看见的现象 | 多半停在哪一球没滚对 | 先做什么 |
 |---|---|---|
-| CDP 连不上 / 超时 | 调试器没起、Clash 开着、Chrome 占 62000 | 关代理、关 DevTools、重启调试器 |
-| `Cannot find context` | 冷启动后 contextId 变了 | `POST /probe` 或 `python -m fxt_api --probe` |
-| 搜出来全是附近盘 / 土拍地 | 读了 `projectList`，或没调 `keywordSearch` | 读 `searchProjectList` |
-| `未找到搜索组件` | 不在搜索结果页 | 打开 `search/pages/result` 或 CDP `navigateTo` |
-| 详情没有拿地价 | 不在 `project-info` 或未 `reload` | 进详情页再读 `infoSections` |
+| CDP 超时 / 连不上 | 雪球 2 之前 | 关 Clash、关 Chrome DevTools、确认 miniapp connected |
+| `Cannot find context` | 雪球 2 | 重新 `--probe` |
+| `未找到搜索组件` | 雪球 3 | 栈顶改到 `search/pages/result` |
+| 有单价在屏上但脚本读不到 | 雪球 4 | dump `$vm`，读 `infoSections` |
+| 关键词对、列表却是附近盘 | 雪球 5→6 | 改用 `keywordSearch` + `searchProjectList` |
+| HTTP 503 | 雪球 7 的前置 | 把异常原文当线索，回到上表 |
+
+合规边界（整条雪道共用）：只整理本机已登录账号正常浏览可见的信息；控制频率；升级微信后 Frida 偏移可能失效；**不要**把 `config.local.json` 和隐私字段推进公开仓库。
 
 ---
 
-## 六、合规与边界
-
-- 仅用于本机已登录账号、正常浏览可见的业务信息整理。
-- 依赖用户已授权运行的调试器与前台小程序，不是对公网的无登录爬虫。
-- 控制频率；微信 / WMPF 升级后 Frida 偏移可能失效，需跟 WMPFDebugger 适配。
-- **不要**把 `config.local.json`、账号 Cookie、抓包原文里的隐私字段推上公开仓库。
-
----
-
-## 七、可复用经验（跨小程序）
-
-1. **外层 mitm 失败 ≠ 做不了**：先问「明文落在渲染层还是逻辑层」。
-2. **DevTools UI 不是唯一客户端**：任何语言实现 CDP `Runtime.evaluate` 即可。
-3. **先 dump `vm` 字段名，再写采集**：这次若一开始就看到 `searchProjectList` / `keywordSearch`，能少走半天弯路。
-4. **页面栈比路由表更重要**：接口行为往往绑定「当前栈顶是哪一页」。
-5. **封装 API 时把前置条件写进 503 文案**：调试器、contextId、搜索页，比返回空列表更好排查。
-
----
-
-## 八、产物与链接
+## 你现在手里有什么
 
 | 产物 | 位置 |
 |---|---|
-| 本复盘 | `src/Notes/projects/wechat-miniprogram-fangxiaotuan-wmpfdebugger-cdp-runtime.md` |
-| 工具说明 | [WMPFDebugger 笔记](/Notes/tools/wmpfdebugger) |
+| 本篇（滚雪球版） | `src/Notes/projects/wechat-miniprogram-fangxiaotuan-wmpfdebugger-cdp-runtime.md` |
 | mitm 失败复盘 | [房小团抓包复盘](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective) |
-| Python 搜索 API 仓库 | https://github.com/code-corey/fxt-miniprogram-search-api |
+| 调试器怎么装 | [WMPFDebugger](/Notes/tools/wmpfdebugger) |
+| Python `/search` | https://github.com/code-corey/fxt-miniprogram-search-api |
 
-本地联调备忘：
-
-```powershell
-# 终端 A：WMPFDebugger
-# 终端 B：
-cd <repo>
-python -m pip install -r requirements.txt
-python -m fxt_api --probe
-uvicorn fxt_api.api_server:app --host 127.0.0.1 --port 8787
-# 浏览器：/search?q=城西金茂晓棠
-```
+下一球若继续滚：给 FastAPI 加 `GET /project/{id}`，内部走雪球 4 的 `reload` + `infoSections`，把拿地价也变成一条 URL。
