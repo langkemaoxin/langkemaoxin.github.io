@@ -17,7 +17,7 @@ description: 手搓一个迷你容器网络：ip netns 建独立网络栈、veth
 > **Linux 板块 · 第 5 篇**  
 > 上一篇：[《NAT 白话拆解》](/Linux/basics/linux-04-nat)（MASQUERADE/DNAT 的场景与抓包）  
 > 下一篇：[《bind 挂载实操》](/Linux/basics/linux-06-bind-mount)（系列从网络转向文件系统：Docker `-v` 的内核层前置）  
-> 读完可接着看：[《Docker 网络模式与实操》](/云原生/docker/docker-11-network)（本文是它 4.4 节「拆穿框」的直接前置）
+> 读完可接着看：[《Docker 网络——从 localhost 不通滚到能用名字互访》](/云原生/docker/docker-11-network)（本文是它雪球 3「拆穿」框的直接前置）
 
 ---
 

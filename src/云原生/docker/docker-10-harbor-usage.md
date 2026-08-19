@@ -16,7 +16,7 @@ description: Harbor 已经装好之后怎么用：两个真实案例——从仓
 ---
 
 > **Docker 系列 · 第 10b 篇（使用）**
-> 上一篇：[《Harbor 安装》](/云原生/docker/docker-10-harbor) · 下一篇：[《Docker 网络模式与实操》](/云原生/docker/docker-11-network)
+> 上一篇：[《Harbor 安装》](/云原生/docker/docker-10-harbor) · 下一篇：[《Docker 网络——从 localhost 不通滚到能用名字互访》](/云原生/docker/docker-11-network)
 
 ---
 
@@ -257,4 +257,4 @@ docker push 仓库地址:端口/项目/myweb:v1
 2. **推**：`docker tag` 打上同一套全名 → `docker login` → `docker push`。  
 3. HTTP 仓先配 `insecure-registries`。缺地址的 tag 会推到 Docker Hub。
 
-安装步骤回到[第 10 篇](/云原生/docker/docker-10-harbor)。下一篇：[《Docker 网络》](/云原生/docker/docker-11-network)。
+安装步骤回到[第 10 篇](/云原生/docker/docker-10-harbor)。下一篇：[《Docker 网络——从 localhost 不通滚到能用名字互访》](/云原生/docker/docker-11-network)。

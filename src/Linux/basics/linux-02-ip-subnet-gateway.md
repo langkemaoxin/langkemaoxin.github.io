@@ -273,7 +273,7 @@ Gateway 172.17.0.1     →  池子的门 / docker0 的门牌
 
 ## 六、和 Docker 第 11 篇怎么衔接
 
-读 [《Docker 网络模式与实操》](/云原生/docker/docker-11-network) 时：
+读 [《Docker 网络——从 localhost 不通滚到能用名字互访》](/云原生/docker/docker-11-network) 时：
 
 1. 看见 `Subnet` / `Gateway` → 回想本文「地址池 + 门」
 2. 看见容器 `172.17.0.x` → 「池子里的一户」，不是公网 IP

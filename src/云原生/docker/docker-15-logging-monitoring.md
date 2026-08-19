@@ -13,7 +13,7 @@ description: 容器日志与监控——logs 原理、日志轮转与 stats/even
 ---
 
 > **Docker 系列 · 第 15/24 篇**
-> 上一篇：[《如何通过 docker 部署 HTTPS 访问的 nginx 应用》](/云原生/docker/docker-14-https-nginx) · 下一篇：[《Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器》](/云原生/docker/docker-16-tech-foundation)
+> 上一篇：[《HTTPS Nginx——从浏览器红页滚到本机全绿》](/云原生/docker/docker-14-https-nginx) · 下一篇：[《Docker 技术底座总览——Namespace、CGroup 与 UnionFS 如何拼出容器》](/云原生/docker/docker-16-tech-foundation)
 
 ---
 

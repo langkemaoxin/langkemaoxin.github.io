@@ -13,7 +13,7 @@ description: 从一个 5 行 Nginx 开始，每次只加一个因素：多服务
 ---
 
 > **Docker 系列 · 第 13/24 篇**
-> 上一篇：[《数据持久化——Volume、Bind Mount 与 tmpfs：容器删了，数据凭什么还在》](/云原生/docker/docker-12-data-persistence) · 下一篇：[《如何通过 docker 部署 HTTPS 访问的 nginx 应用》](/云原生/docker/docker-14-https-nginx)
+> 上一篇：[《数据持久化——从容器一删库没了，滚到三种挂载》](/云原生/docker/docker-12-data-persistence) · 下一篇：[《HTTPS Nginx——从浏览器红页滚到本机全绿》](/云原生/docker/docker-14-https-nginx)
 
 ---
 
@@ -209,7 +209,7 @@ curl -s localhost:8080
 <h1>hello from bind mount</h1>
 ```
 
-这就是[第 12 篇](/云原生/docker/docker-12-data-persistence) 的 bind：改宿主机文件，容器读到的就是新页面。语法仍是 `宿主机路径:容器路径:ro`，只是写进 YAML 的 `volumes:`。
+这就是[第 12 篇雪球 3](/云原生/docker/docker-12-data-persistence) 的 bind：改宿主机文件，容器读到的就是新页面。语法仍是 `宿主机路径:容器路径:ro`，只是写进 YAML 的 `volumes:`。
 
 ---
 
@@ -249,7 +249,7 @@ OK
 compose-lab_redis-data
 ```
 
-然后做第 12 篇同款实验——**先 down 掉整套，再 up**：
+然后做[第 12 篇雪球 1](/云原生/docker/docker-12-data-persistence) 同款实验——**先 down 掉整套，再 up**：
 
 ```bash
 docker compose down && docker compose up -d
@@ -275,7 +275,7 @@ docker compose exec redis redis-cli get compose:proof
 (nil)
 ```
 
-`(nil)` 是 redis 对「键不存在」的固定答复。`down -v` 才会删命名卷。对照第 12 篇 MySQL 预告：`db-data:/var/lib/mysql` 就是这一球的 redis 写法。
+`(nil)` 是 redis 对「键不存在」的固定答复。`down -v` 才会删命名卷。对照第 12 篇开头的 MySQL 故事：`db-data:/var/lib/mysql` 就是这一球的 redis 写法。
 
 ---
 
@@ -560,7 +560,7 @@ the attribute `version` is obsolete, it will be ignored, please remove it to avo
 | 相关篇 | 在这一路上出现的位置 |
 |------|----------------------|
 | [第 11 篇](/云原生/docker/docker-11-network) 网络 | 雪球 2：项目网络 + 服务名 DNS |
-| [第 12 篇](/云原生/docker/docker-12-data-persistence) 持久化 | 雪球 3 bind、雪球 4 命名卷 |
+| [第 12 篇](/云原生/docker/docker-12-data-persistence) 持久化 | 雪球 3 bind、雪球 1 命名卷 |
 | [第 9 篇](/云原生/docker/docker-09-dockerfile) Dockerfile | 雪球 7 `build` |
 | [第 14 篇](/云原生/docker/docker-14-https-nginx) HTTPS | 下一篇：把编排用到一个完整站点 |
 | [第 20 篇](/云原生/docker/docker-20-cgroups) | 雪球 8 的 NanoCpus / Memory |
@@ -581,7 +581,7 @@ the attribute `version` is obsolete, it will be ignored, please remove it to avo
 
 **思考题**：`web` 只写了 `depends_on: [db]`，启动仍报连接拒绝。先查 start 是否等于 ready，再查应用有没有重试、探针探的是不是那个端口。
 
-下一篇：[《如何通过 docker 部署 HTTPS 访问的 nginx 应用》](/云原生/docker/docker-14-https-nginx)。
+下一篇：[《HTTPS Nginx——从浏览器红页滚到本机全绿》](/云原生/docker/docker-14-https-nginx)。
 
 ---
 
