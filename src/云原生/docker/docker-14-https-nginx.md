@@ -15,7 +15,7 @@ description: 从「连接不是私密连接」出发，同一站点每次只加�
 ---
 
 > **Docker 系列 · 第 14/24 篇**
-> 上一篇：[《Docker Compose 编排——从一个 Nginx 滚成一整栈》](/云原生/docker/docker-13-compose) · 下一篇：[《容器日志与监控——logs 原理、日志轮转与 stats/events 三板斧》](/云原生/docker/docker-15-logging-monitoring)
+> 上一篇：[《Docker Compose 编排——从一个 Nginx 滚成一整栈》](/云原生/docker/docker-13-compose) · 下一篇：[《容器日志与监控——盯住同一个容器，从 logs 第一行滚到磁盘账单》](/云原生/docker/docker-15-logging-monitoring)
 >
 > 主线实战篇：端口发布（11）、挂载（12）、Compose（13）在这里拼成第一个完整项目。Nginx 本体见 [Linux/Nginx 系列](/Linux/nginx/nginx-01-what-is-nginx)。
 
