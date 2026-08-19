@@ -374,6 +374,7 @@ export default sidebar({
         "zero-to-hero-auto-warehouse",
         "project-learning-map",
         "three-blog-skills-for-retrospective-and-publish",
+        "wechat-miniprogram-fangxiaotuan-mitm-retrospective",
         "hello-202026",
       ],
     },
@@ -384,6 +385,16 @@ export default sidebar({
       collapsible: true,
       children: [
         "技术专家10问自查清单",
+      ],
+    },
+    {
+      text: "工具",
+      icon: "folder",
+      prefix: "tools/",
+      collapsible: true,
+      children: [
+        "proxifier",
+        "mitmproxy",
       ],
     },
   ],
