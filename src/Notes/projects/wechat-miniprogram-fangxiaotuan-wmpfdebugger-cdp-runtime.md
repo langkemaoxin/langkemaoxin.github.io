@@ -630,14 +630,16 @@ python -m fxt_api --dump --route-filter project-info
                → 发现 searchProjectList / keywordSearch
 ```
 
-命令备忘（在 `fxt-runtime-scraper` 目录）：
+命令备忘：
 
 ```powershell
-# 终端已起 WMPFDebugger，小程序已连接；关掉 Chrome 对 62000 的占用
+# 万能一把梭（推荐）
+python dump_wmpf.py -o dump_wmpf.json --route-filter search
+
+# 或 Node 脚手架分步
 npm run probe
 node src/dump-routes.js
 node src/dump-vm.js
-# 看 data/debug/routes_dump.json 、 vm_dump.json
 ```
 
 当场效果：后面雪球 4～6 不是猜字段名，而是**对着 dump 出来的钥匙串**（`reload`、`infoSections`、`keywordSearch`、`searchProjectList`）逐个试。
