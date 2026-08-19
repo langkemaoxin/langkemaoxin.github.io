@@ -17,6 +17,7 @@ description: 从「mitm 只能看到 mmtls 密文」说起，讲清 WMPFDebugger
 > **相关阅读**
 > - [《微信 MMTLS——抓包工具看不见的那条 80 端口连接》](/Notes/tools/wechat-mmtls)
 > - [《PC 微信小程序抓包复盘：为什么「成都房小团」解不出小区单价》](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective)
+> - [《房小团运行时取数复盘：WMPFDebugger + CDP 如何读到明文，以及 Python 搜索 API》](/Notes/projects/wechat-miniprogram-fangxiaotuan-wmpfdebugger-cdp-runtime)
 
 ---
 
