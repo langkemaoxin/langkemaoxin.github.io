@@ -395,6 +395,8 @@ export default sidebar({
       children: [
         "proxifier",
         "mitmproxy",
+        "mitmweb",
+        "wechat-mmtls",
       ],
     },
   ],

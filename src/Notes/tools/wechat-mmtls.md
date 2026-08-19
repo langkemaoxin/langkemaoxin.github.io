@@ -2,7 +2,7 @@
 title: "微信 MMTLS——抓包工具看不见的那条 80 端口连接，一球剥一层"
 sidebarGroup: "工具"
 shortTitle: "微信 MMTLS"
-order: 3
+order: 4
 date: 2026-08-19
 category: "笔记"
 tag:
@@ -13,13 +13,18 @@ tag:
 description: 从 netstat 里微信仅有的一条 80 端口外连开始，每次只剥一层：tshark 抓包、openssl 对照、记录头逐字节解析、P-256/HKDF/AES-GCM 亲手演示、两阶段握手与 0-RTT，最后读懂 Citizen Lab 的安全账本。
 ---
 
-## 开头：两件套齐全了，微信还是一团黑
+> **代理抓包系列 · 第 4/4 篇**
+> 上一篇：[《mitmweb——在浏览器里点着用 mitmproxy》](/Notes/tools/mitmweb)
 
-[上一篇的 mitmproxy](/Notes/tools/mitmproxy) 把 HTTPS 变成了玻璃管，[再上一篇的 Proxifier](/Notes/tools/proxifier) 能把不认代理的程序押送到管子里。工具箱齐了，拿最常用的那个 App 练手——微信：
+---
 
-- mitmproxy 的流量列表里，微信的请求**一条都不出现**；
+## 开头：工具箱齐了，微信还是一团黑
+
+[Proxifier](/Notes/tools/proxifier) 能把不认代理的程序押送到管子里，[mitmproxy](/Notes/tools/mitmproxy) / [mitmweb](/Notes/tools/mitmweb) 把标准 HTTPS 变成了玻璃管。工具箱齐了，拿最常用的那个 App 练手——微信：
+
+- mitmproxy / mitmweb 的流量列表里，微信的请求**一条都不出现**；
 - 抓包工具里能看到微信在收发数据，但打开全是**无意义的二进制**；
-- 想给它配代理？微信自己没有代理设置，真要走代理得靠[上一篇的 Proxifier](/Notes/tools/proxifier) 在外面硬拦——拦下来也进不了 mitmproxy 的眼。
+- 想给它配代理？微信自己没有代理设置，真要走代理得靠 [Proxifier](/Notes/tools/proxifier) 在外面硬拦——拦下来也进不了 mitmproxy 的眼。
 
 浏览器、curl、绝大多数 App 都能开膛，为什么偏偏微信是铁板一块？
 
@@ -445,8 +450,10 @@ Citizen Lab 2024 年 10 月这篇论文不是吓唬人，是逐条记账。账�
 
 ### 和系列其它篇
 
-- [《mitmproxy——从看见一条明文，滚到改流量、造假后端》](/Notes/tools/mitmproxy)：本篇的痛点起点。它的「两头握手」手艺只对标准 TLS 有效，本篇解释了为什么。
-- [《Proxifier——让不认代理的程序也走代理》](/Notes/tools/proxifier)：押送流量的手段对微信其实有效（TCP 层面拦得下来），但押到 mitmproxy 也开不了膛——「拦得下」和「看得见」是两回事。
+本系列：[Proxifier](/Notes/tools/proxifier)（押送）→ [mitmproxy](/Notes/tools/mitmproxy)（开膛）→ [mitmweb](/Notes/tools/mitmweb)（点着用）→ **本篇（边界）**。
+
+- [《mitmproxy》](/Notes/tools/mitmproxy) / [《mitmweb》](/Notes/tools/mitmweb)：本篇的痛点起点。它们的「两头握手」手艺只对标准 TLS 有效，本篇解释了为什么。
+- [《Proxifier》](/Notes/tools/proxifier)：押送流量的手段对微信其实有效（TCP 层面拦得下来），但押到 mitmproxy 也开不了膛——「拦得下」和「看得见」是两回事。
 - [《tcpdump 抓包》](/Linux/basics/linux-03-tcpdump)：Linux 侧的同类观测工具；本篇的 tshark 是它的 Wireshark 家族表亲。
 
 ### 小结与思考题

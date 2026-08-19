@@ -9,7 +9,12 @@ tag:
   - "mitmproxy"
   - "网络代理"
   - "HTTP"
-description: 从一条明文 HTTP 请求开始，每次只加一个因素：HTTPS 证书、Web 界面、map-local 改响应、addon 脚本、录制回放，像滚雪球一样学会 mitmproxy。
+description: 从安装 mitmproxy 开始，每次只加一个因素：明文抓包、HTTPS 证书、Web 界面、map-local 改响应、addon 脚本、录制回放，像滚雪球一样学会看流量和改流量。
+---
+
+> **代理抓包系列 · 第 2/4 篇**
+> 上一篇：[《Proxifier——让不认代理的程序也走代理》](/Notes/tools/proxifier) · 下一篇：[《mitmweb——在浏览器里点着用 mitmproxy》](/Notes/tools/mitmweb)
+
 ---
 
 ## 开头：想看看它到底发了什么，可流量是黑的
@@ -24,28 +29,73 @@ description: 从一条明文 HTTP 请求开始，每次只加一个因素：HTTP
 
 它和[上一篇的 Proxifier](/Notes/tools/proxifier) 是天然搭档：**Proxifier 负责「把程序的流量押送到代理」，mitmproxy 负责「代理里打开看、随手改」**。本篇先单练 mitmproxy，联动放章末。
 
-本篇不先背概念。实验从头到尾只有一条故事：**让一条 curl 的请求先「被看见」，再「被改掉」，最后「被凭空造出来」**。环境指纹（文中输出均来自本机实跑，mitmweb 界面部分为操作手册）：
+本篇不先背概念。实验从头到尾只有一条故事：**先把工具装上，再让一条 curl 的请求「被看见」，再「被改掉」，最后「被凭空造出来」**。环境指纹（文中输出均来自本机实跑，mitmweb 界面部分为操作手册）：
 
 - Windows 10 Enterprise LTSC 2021（10.0.19044）+ Git Bash（MSYS）
-- mitmproxy **12.2.3**（PyPI 当前最新版，2026-05-12 发布；`pip install mitmproxy`，Python 3.14.3 / OpenSSL 4.0.0）
+- mitmproxy **12.2.3**（PyPI 当前最新版，2026-05-12 发布；本篇主路径 `pip install mitmproxy`，Python 3.14.3 / OpenSSL 4.0.0）
 - Windows 自带 curl 8.21.0（注意：TLS 走 **schannel**，本篇好几个坑源于它）
 
-实验目录固定在 `~/mitm-lab`，全部命令都在 Git Bash 里跑。
+实验目录固定在 `~/mitm-lab`，全部命令都在 Git Bash 里跑。官方入口：[安装说明](https://docs.mitmproxy.org/stable/overview/installation/)、[文档首页](https://docs.mitmproxy.org/stable/)、[下载页](https://mitmproxy.org/downloads/)。
 
 | 雪球 | 这一球加上去的 | 当场能看见的效果 |
 |------|----------------|------------------|
+| **0** | pip / 安装包装上 mitmproxy | `mitmdump --version` 打出 12.x；命令在 PATH 里 |
 | **1** | mitmdump + 一条 curl | HTTP 明文请求/响应直接打印在日志里 |
 | **2** | HTTPS（CONNECT 隧道） | 先死在证书上（exit 35/60）；认了 mitmproxy 的 CA 后明文可见 |
-| **3** | mitmweb | 一个进程两个端口：代理 + 浏览器里的流量检查器 |
+| **3** | mitmweb（尝一口） | 一个进程两个端口；界面里看见 flow（深挖见下一篇） |
 | **4** | `--map-local` / `--modify-headers` | curl 要 hi.txt 却拿到假文件；请求头里的 UA 被删 |
 | **5** | 一个 8 行的 addon 脚本 | 每个响应自动多一个头、正文自动追加一行 |
 | **6** 🧗 | `-w` 录制 + `--server-replay` | 后端已死，curl 仍拿到录好的响应 |
 
 ---
 
+## 雪球 0：装上 mitmproxy——先让三个命令出现在 PATH
+
+还没代理、没流量，这一球只做一件事：**本机能打出 `mitmdump`**。装完立刻用 `--version` 验收，别装完不知道有没有装上。
+
+**路径 A（本篇主路径，本机实跑）**：有 Python ≥ 3.12 时，一条 pip 就够：
+
+```bash
+pip install mitmproxy
+mitmdump --version
+```
+
+本机实拍：
+
+```text
+Mitmproxy: 12.2.3
+Python:    3.14.3
+OpenSSL:   OpenSSL 4.0.0 14 Apr 2026
+Platform:  Windows-10-10.0.19044-SP0
+```
+
+再确认命令落在哪（PowerShell / cmd）：
+
+```powershell
+where.exe mitmdump
+```
+
+本机：`C:\Users\chengongyi\AppData\Local\Programs\Python\Python314\Scripts\mitmdump.exe`。装上的其实是**同一引擎三个壳**：`mitmproxy`（终端全屏）、`mitmweb`（浏览器界面）、`mitmdump`（纯命令行）。本篇主线用 `mitmdump`，雪球 3 才切到 `mitmweb`。
+
+**路径 B（官方对 Windows 的推荐）**：去 [mitmproxy.org/downloads](https://mitmproxy.org/downloads/) 下安装包，装完三个命令进 PATH。独立二进制也能用，但冷启动更慢。官方还建议装 [Windows Terminal](https://aka.ms/terminal)，`mitmproxy` 那个 TUI 界面渲染会舒服很多。
+
+其它平台一笔带过（细节以官方安装页为准）：
+
+| 平台 | 常用装法 |
+|------|----------|
+| macOS | `brew install --cask mitmproxy` |
+| Linux | 官网独立二进制（发行版包常落后） |
+| 任意有 uv 的环境 | `uv tool install mitmproxy` |
+
+首次真正跑起代理时，mitmproxy 会在 `~/.mitmproxy/` 生成自签 CA——**这一球先知道目录会冒出来**；要不要信任它、HTTPS 怎么解开，整件事留给雪球 2。
+
+装好了。下一球开始：起代理，让一条 curl 的明文请求出现在日志里。
+
+---
+
 ## 雪球 1：mitmdump + 一条 curl——三分钟看见明文
 
-先不碰 HTTPS。两个终端，一个当「被观测的程序」，一个当「眼睛」。
+雪球 0 已经装好。先不碰 HTTPS。两个终端，一个当「被观测的程序」，一个当「眼睛」。
 
 准备实验目录和靶子文件（一个普通的 HTTP 文件服务器当后端）：
 
@@ -194,7 +244,7 @@ PSParentPath : ...Certificate::CurrentUser\Root
 
 ## 雪球 3：加上 mitmweb——把流量列表搬进浏览器
 
-`mitmdump` 是纯文本账本，看得见但不方便翻。`mitmweb` 是同一引擎的 Web 界面版：
+`mitmdump` 是纯文本账本，看得见但不方便翻。`mitmweb` 是同一引擎的 Web 界面版——**这一球只尝一口**；门禁 token、流解剖、筛选、拦截手改、导出整套点法，滚到[下一篇《mitmweb》](/Notes/tools/mitmweb)。
 
 ```bash
 mitmweb --set web_open_browser=false --web-port 18099 -p 18080
@@ -209,14 +259,13 @@ TCP    0.0.0.0:18080     LISTENING   （代理口，程序把流量送到这）
 TCP    127.0.0.1:18099   LISTENING   （Web 界面口，只绑本机回环）
 ```
 
-浏览器打开 `http://127.0.0.1:18099`，再随便产生点流量，就能看到（界面操作，基于官方文档的手册）：
+浏览器打开 `http://127.0.0.1:18099`（若先吃到 403，带上启动日志里的 token，见下一篇雪球 1），再产生一条流量：
 
-- **左侧流列表**：每个 flow 一行，方法、URL、状态码、大小——相当于永久免费的「全程序版 F12」；
-- **点开一条**：右侧 Request / Response 两个标签，头、正文、原始字节随便看，图片还能预览；
-- **Intercept（拦截）**：设个过滤表达式（如 `~u baidu`），命中的请求会**停在半路等你**——你可以改完再放行，这就是「手动版」的雪球 4；
-- **Replay**：对着一条流按 `r` 重放请求。
+```bash
+curl -x http://127.0.0.1:18080 http://127.0.0.1:18081/hi.txt
+```
 
-三类发行版一句话分清（同一套引擎三个壳）：`mitmproxy` 终端全屏界面、`mitmweb` 浏览器界面、`mitmdump` 无界面纯命令行。本篇主线用 mitmdump（可脚本化、可复制），日常翻流量用 mitmweb。
+左侧流列表就会多出一行。这一球只要看见：**代理口收流量，界面口给人点**。三兄弟（雪球 0）里日常翻流量用 mitmweb，命令行改流量继续用 mitmdump——下一球立刻回到 mitmdump。
 
 ---
 
@@ -412,29 +461,39 @@ curl -x http://127.0.0.1:18080 http://127.0.0.1:18081/not-recorded.txt
 
 | 你记住的 | 它长在哪一球 |
 |----------|--------------|
+| `pip install` / 安装包 → `mitmdump --version` 验收；三兄弟同引擎 | 雪球 0 |
 | flow = 一次请求→响应往返；mitmproxy 一切以 flow 为单位 | 雪球 1 的五行日志 |
 | 普通代理只挖隧道（密文），mitmproxy 两头握手（全明文） | 雪球 2 的对照图 |
 | 信任根：`--cacert`（curl）/ 导入 CA（系统/浏览器） | 雪球 2 的 35→60→200 三连 |
-| 三兄弟：mitmproxy（TUI）/ mitmweb（Web）/ mitmdump（CLI） | 雪球 3 |
+| 三兄弟同引擎；mitmweb = 代理口 + 界面口（深挖见专篇） | 雪球 0、3 |
 | map-local 短路响应、modify-headers 空值删头、`--options` 是语法权威 | 雪球 4 |
 | addon = 事件钩子上的 Python 函数；Content-Length 自动重算 | 雪球 5 |
 | `-w` 录 flow，`--server-replay` 原样倒带 | 雪球 6 的 `[replay]` |
 
 ### 版本事实与历史包袱
 
-- 本机 12.2.3 = PyPI 当前最新（2026-05-12）；要求 Python ≥ 3.12，Windows/macOS/Linux 三平台。
+- 本机 12.2.3 = PyPI 当前最新（2026-05-12）；要求 Python ≥ 3.12，Windows/macOS/Linux 三平台。Windows 也可用官网安装包（雪球 0 路径 B）。
 - `--modify-headers` 的旧语法 `~q-Header` 在 v12 已不可用（本机报错原样收录在雪球 4）——老教程迁移时注意。
 - mitmproxy 默认端口 8080，mitmweb 界面默认 8081；被占就用 `-p` / `--web-port`。
 - 三个 Windows 专属坑都踩在雪球 2/4：schannel 吊销检查（`--ssl-no-revoke`）、MSYS 路径改写（`MSYS_NO_PATHCONV=1`）、Python 块缓冲（日志 kill 后才落盘）。
 
 ### 和其它篇的关系
 
-- [《Proxifier——让不认代理的程序也走代理》](/Notes/tools/proxifier)：**联动是这个系列的完全体**。curl 认 `-x`，可黑盒程序不认——Proxifier 规则里把 Action 指到 mitmproxy 的代理端口（如 `Proxy HTTP 127.0.0.1:18080`），被押送来的流量就自动进了玻璃管，HTTPS 照样开膛（前提是目标程序信任 mitmproxy 的 CA）。
+本系列：[Proxifier](/Notes/tools/proxifier)（押送）→ **本篇（开膛）** → [mitmweb](/Notes/tools/mitmweb)（点着用）→ [微信 MMTLS](/Notes/tools/wechat-mmtls)（边界）。
+
+- [《Proxifier》](/Notes/tools/proxifier)：**联动是这个系列的完全体**。curl 认 `-x`，黑盒程序不认。可照抄步骤：
+  1. 按本篇起代理：`mitmdump -p 18080`（或下一篇的 `mitmweb ... -p 18080`）；
+  2. Proxifier → `Profile → Proxy Servers` 登记：`Address 127.0.0.1`、`Port 18080`、`Protocol HTTP`；
+  3. `Profile → Proxification Rules` 新建规则：目标程序 → Action = 刚登记的那个代理；
+  4. 目标若走 HTTPS，须信任 mitmproxy 的 CA（本篇雪球 2 的 `.cer` / `.pem`）。
+  押送来的流量就进了玻璃管；在 mitmweb 里点开看，效果一样。
+- [《mitmweb》](/Notes/tools/mitmweb)：雪球 3 尝过的 Web 壳，专篇把看、筛、改、放在浏览器里滚完。
+- [《微信 MMTLS》](/Notes/tools/wechat-mmtls)：工具箱齐了仍抓不到微信时，读这篇——系列收官。
 - [《netns 与 iptables》](/Linux/basics/linux-05-netns-iptables)：Linux 侧「不改程序改流量」的另一种实现（重定向/透明代理），思路同源。
 
 ### 小结与思考题
 
-雪球滚完：明文可见（1）→ HTTPS 解锁（2）→ 界面翻阅（3）→ 命令行改流量（4）→ 脚本改流量（5）→ 录制回放（6）。一句话收拢：**mitmproxy 把「流量」变成了可看、可改、可存、可放的一等公民。**
+雪球滚完：装上工具（0）→ 明文可见（1）→ HTTPS 解锁（2）→ 界面翻阅（3）→ 命令行改流量（4）→ 脚本改流量（5）→ 录制回放（6）。一句话收拢：**mitmproxy 把「流量」变成了可看、可改、可存、可放的一等公民。**
 
 思考题：
 

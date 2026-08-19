@@ -11,6 +11,11 @@ tag:
 description: 从一个连不上外网的 curl 开始，每次只加一个因素：代理服务器、一条规则、规则顺序、DNS 走代理、连接列表、代理链，像滚雪球一样学会用 Proxifier。
 ---
 
+> **代理抓包系列 · 第 1/4 篇**
+> 下一篇：[《mitmproxy——从看见一条明文，滚到改流量、造假后端》](/Notes/tools/mitmproxy)
+
+---
+
 ## 开头：浏览器能上，git 和 ssh 却连不上
 
 本机开着 Clash Verge，系统代理已设置，浏览器访问 GitHub 一切正常。可一进终端：
@@ -278,6 +283,9 @@ Proxifier 里对应同一个开关：菜单 `Profile → Name Resolution`，勾�
 
 ### 和其它篇的关系
 
+本系列：**本篇（押送）→ [mitmproxy](/Notes/tools/mitmproxy)（开膛）→ [mitmweb](/Notes/tools/mitmweb)（点着用）→ [微信 MMTLS](/Notes/tools/wechat-mmtls)（边界）**。
+
+- 下一篇把代理换成 mitmproxy 后，Proxifier 规则的 Action 指到 `127.0.0.1:18080`，黑盒程序的流量就能进玻璃管——可照抄步骤写在 [mitmproxy 章末「和其它篇的关系」](/Notes/tools/mitmproxy)。
 - 「在系统层把流量改道」这个思想，Linux 侧的同门是 iptables 的 NAT/重定向——见 [《netns 与 iptables——把命名空间里的流量拐个弯》](/Linux/basics/linux-05-netns-iptables)。Proxifier 相当于把这类「出口统一改造」做成了带 GUI 的按进程精细版。
 - 代理本身（mihomo/SOCKS5）的行为不在本篇范围，本篇只解决「让程序把流量交出去」。
 
