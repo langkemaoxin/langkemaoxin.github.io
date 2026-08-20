@@ -5,4 +5,9 @@ export default {
     icon: "weixin",
     order: 1,
   },
+  practice: {
+    title: "小程序实战",
+    icon: "list-check",
+    order: 2,
+  },
 };

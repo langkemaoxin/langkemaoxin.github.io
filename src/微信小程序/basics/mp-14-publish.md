@@ -17,7 +17,7 @@ description: 开发版、体验版、审核中、正式版四态如何流转。�
 
 > **小程序开发系列 · 第 14/14 篇**  
 > 上一篇：[《分包与性能》](/微信小程序/basics/mp-13-subpackages-performance)  
-> 系列完结 · [回到板块首页](/微信小程序/)
+> 系列完结 · [回到板块首页](/微信小程序/) · 下一步：[实战篇 · TodoList](/微信小程序/practice/td-01-create-project)
 
 ---
 
@@ -92,7 +92,9 @@ demo 里点「打印 accountInfo」可核对当前小程序身份：
 
 1. 双线程与能力边界 → 2. 工程与工具 → 3. 页面四件套 → 4. setData → 5. 事件 → 6. 路由栈 → 7. 生命周期 → 8. WXS → 9. 内置组件 → 10. 自定义组件 → 11. API/域名 → 12. Skyline → 13. 分包 → **14. 发布**。
 
-贯穿 demo：[mp-demo-lab2](https://github.com/code-corey/mp-demo-lab2)（待办「小事记」）。建议你本地再从 01 扫到 14：每个实验按钮背后，都该能对上某一篇的雪球表。
+贯穿 demo：[mp-demo-lab2](https://github.com/code-corey/mp-demo-lab2)（待办「小事记」实验台）。建议你本地再从 01 扫到 14：每个实验按钮背后，都该能对上某一篇的雪球表。
+
+想把知识收成一个能用的小程序？继续 **[实战篇 · 从 0 做 TodoList](/微信小程序/practice/td-01-create-project)**（成品仓 [mp-todolist](https://github.com/code-corey/mp-todolist)）。
 
 ## 小结
 
