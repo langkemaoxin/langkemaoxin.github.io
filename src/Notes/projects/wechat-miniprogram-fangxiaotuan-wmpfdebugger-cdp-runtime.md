@@ -15,52 +15,64 @@ tag:
 description: 从「mitm 解不出小区单价」接着往下滚：每次只加一个因素——连上 CDP、认准 contextId、看清页面栈、dump 详情 vm、踩穿搜索列表坑、封成 Python /search——像滚雪球一样学会在逻辑层抄明文。
 ---
 
-> **相关阅读**
-> - [《PC 微信小程序抓包复盘：为什么「成都房小团」解不出小区单价》](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective)（路径 A：mitm 为什么死）
-> - [《WMPFDebugger——让 PC 微信小程序也能用 Chrome DevTools》](/Notes/tools/wmpfdebugger)（怎么装、怎么起）
-> - [《微信 MMTLS——抓包工具看不见的那条 80 端口连接》](/Notes/tools/wechat-mmtls)
+> - 
 
 ---
 
-## 开头：单价就在手机屏幕上，抓包里却没有
+## 如何对微信小程序进行抓包
 
-业务目标只有一行字：从 PC 微信「成都房小团」拿出**小区名 + 参考单价**（进详情还能看到**拿地价格**）。
+> - Windows 10 + PC 微信，WMPF 路径里见过 **25297**
+> - [WMPFDebugger](https://github.com/evi0s/WMPFDebugger) 已能打出 `miniapp client connected`
+> - CDP：`ws://127.0.0.1:62000`；脚本侧 Node / Python 均可
+> - 独立 API 仓库：https://github.com/code-corey/fxt-miniprogram-search-api
+
+
 
 [上一篇](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective)把 Proxifier + mitm 搭齐了，结论也很硬：外层几乎全是 **mmtls**，装 CA 也解不出业务 JSON。换上 [WMPFDebugger](/Notes/tools/wmpfdebugger) 之后，又容易掉进两种「看起来有戏、其实还没碰到明文」的坑：
 
-1. 浏览器打开 `devtools://...?ws=127.0.0.1:62000`，页面写着 *The tab is inactive*，还和脚本抢连接；
-2. Network 里偶见 `fxt-api.huanjutang.com`，响应仍可能是业务加密；Elements 里的 `page-frame.html` 壳上也几乎没有单价字段。
+1. 浏览器打开 devtools://devtools/bundled/inspector.html?ws=127.0.0.1:62000
+2. Network 里偶见 `fxt-api.huanjutang.com`，响应仍可能是业务加密，所以根本就无法从网页请求链接中看到什么数据
+3. Elements 里的 `page-frame.html` 壳上也几乎没有单价字段。
 
-根因一句话：**明文不在你拦的那条车上，而在小程序逻辑层已经拆好的货单上**——加密请求、解密填表，都是小程序自己干完的。你要做的不是解 AES，而是用 CDP 进到 **appservice**，喊它搜一把、再把桌上的 `vm` 抄走。
+![image-20260820101607939](E:\MyGithub\langkemaoxin.github.io\src\Notes\img\wechat-miniprogram-fangxiaotuan-wmpfdebugger-cdp-runtime\image-20260820101607939.png)
 
-本篇不先背 CDP 手册。故事只有一条：**从一个「解不出」的小区名，滚到浏览器里一条 `GET /search?q=…` 返回明文 JSON**。每一球只加一个因素。
+所以爬虫进度就陷入了停滞。接口的返回结果是加密的，页面上也无法获取什么内容，没法使用Dom解析。
 
-| 雪球 | 这一球加上去的 | 当场能看见的效果 |
-|------|----------------|------------------|
-| **1** | 认清「别解包，进逻辑层」 | 两层车间模型钉在墙上；mitm 失败不再等于做不了 |
-| **2** | WMPFDebugger + 认清 CDP / 房间号 | `62000` 通了；探针选出办事车间（本机曾是 `contextId=3`） |
-| **3** | 读懂页面栈（一摞纸） | 看清叠了几层、栈顶是谁；知道该在哪一页动手 |
-| **3.5** | 实战回放：从 DevTools 同款 62000 捞数据 | 不用 Chrome 抢线；脚本扫房间 → 扫页面栈/路由表 → dump 栈顶 vm |
-| **4** | dump 详情页 `$vm` | `infoSections` 里直接出现参考单价、拿地价格 |
-| **5** | 搜索页第一次采集 | 踩坑：读了 `projectList`，搜「金茂」却返回附近盘 / 土拍地 |
-| **6** | `keywordSearch` + `searchProjectList` | 首条变成真正的「城西金茂晓棠 / 42605」 |
-| **6.5** | 扫描结果怎么变成「查询接口」 | 地图≠数据；选对路由 → 站对栈顶 → 调方法 → 读 vm → HTTP 返回 |
-| **7** 🧗 | Python FastAPI `/search` | 浏览器一条 URL 拿走列表 JSON |
+所以，我们得换一种思路才行，我们的任务是获取数据，那么在什么地方能够获到数据呢？
 
-环境指纹（文中数字均来自本机实跑）：
+ 
 
-- Windows 10 + PC 微信，WMPF 路径里见过 **25297**
-- [WMPFDebugger](https://github.com/evi0s/WMPFDebugger) 已能打出 `miniapp client connected`
-- CDP：`ws://127.0.0.1:62000`；脚本侧 Node / Python 均可
-- 独立 API 仓库：https://github.com/code-corey/fxt-miniprogram-search-api
+```
 
-启动顺序先钉死（后面每球都假设你遵守）：**先开 WMPFDebugger → 再开/重开房小团 → 关 Clash → 不要开 Chrome 抢 62000 → 再连 CDP。**
+┌─────────────────────────────────────────────────────────────┐
+│                     脚本整体结构                              │
+├─────────────────────────────────────────────────────────────┤
+│  1. CDP 基础层 (CdpSession, evaluate)                        │
+│     └── 封装 WebSocket 通信，发送 CDP 命令                     │
+│                                                            │
+│  2. 数据采集层 (get_current_page_info)                       │
+│     └── 执行 JS，从页面内存读取数据                             │
+│                                                            │
+│  3. 数据处理层 (print_page_info, extract_project_info)       │
+│     └── 格式化打印、提取结构化数据                              │
+│                                                            │
+│  4. 输出层 (save_as_markdown)                               │
+│     └── 保存为 JSON / Markdown                              │
+│                                                            │
+│  5. 主流程 (main)                                           │
+│     └── 协调各层执行                                         │
+└─────────────────────────────────────────────────────────────┘
+```
+
+
+
+
 
 ---
 
-## 雪球 1：先换脑——明文住在哪一层？
+## 思路1：先换脑——明文住在哪一层？
 
-上一篇证明「拦车」不行。这一球只加一个观念，不加任何新工具：
+既然通过无法通过接口进行获取数据，能否从微信小程序本身的特性入手
 
 ```text
 PC 微信小程序两层车间：
@@ -90,8 +102,9 @@ Runtime.evaluate({
 })
 ```
 
-类比钉在墙上：**别撬保险柜；让收银员自己算账，你只抄小票。**  
-雪球 4、6 抄的就是这张小票；雪球 7 只是把「抄小票」封成 HTTP。
+简单来说，就是我们可以借助WMPFDebugger这个工具，往微信小程序 发送一些请求。
+
+
 
 ---
 
@@ -1022,6 +1035,10 @@ for item in result.items:
 | 本篇（滚雪球版） | `src/Notes/projects/wechat-miniprogram-fangxiaotuan-wmpfdebugger-cdp-runtime.md` |
 | mitm 失败复盘 | [房小团抓包复盘](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective) |
 | 调试器怎么装 | [WMPFDebugger](/Notes/tools/wmpfdebugger) |
-| Python `/search` | https://github.com/code-corey/fxt-miniprogram-search-api |
+| Python `/search` + `scan_routes` / `dump_wmpf` | https://github.com/code-corey/fxt-miniprogram-search-api |
 
-下一球若继续滚：给 FastAPI 加 `GET /project/{id}`，内部走雪球 4 的 `reload` + `infoSections`，把拿地价也变成一条 URL。
+**相关阅读**
+
+- [《PC 微信小程序抓包复盘：为什么「成都房小团」解不出小区单价》](/Notes/projects/wechat-miniprogram-fangxiaotuan-mitm-retrospective)（路径 A：mitm 为什么死）
+- [《WMPFDebugger——让 PC 微信小程序也能用 Chrome DevTools》](/Notes/tools/wmpfdebugger)（怎么装、怎么起）
+- [《微信 MMTLS——抓包工具看不见的那条 80 端口连接》](/Notes/tools/wechat-mmtls)
