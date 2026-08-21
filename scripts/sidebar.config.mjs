@@ -17,6 +17,7 @@ import Distributed from "./sidebar/分布式.mjs";
 import Microservices from "./sidebar/微服务.mjs";
 import SourceAnalysis from "./sidebar/源码剖析.mjs";
 import MiniProgram from "./sidebar/微信小程序.mjs";
+import Frontend from "./sidebar/前端.mjs";
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
  * @typedef {{ path: string, dir: string }} SidebarModuleConfig
@@ -44,6 +45,7 @@ export const modules = [
   { path: "/微服务/", dir: "微服务" },
   { path: "/源码剖析/", dir: "源码剖析" },
   { path: "/微信小程序/", dir: "微信小程序" },
+  { path: "/前端/", dir: "前端" },
 ];
 
 /**
@@ -86,6 +88,7 @@ export const folders = {
   ...prefix("微服务", Microservices),
   ...prefix("源码剖析", SourceAnalysis),
   ...prefix("微信小程序", MiniProgram),
+  ...prefix("前端", Frontend),
 };
 
 /** 未单独配置 icon 时的默认图标 */

@@ -78,6 +78,11 @@ export default navbar([
     link: "/微信小程序/",
   },
   {
+    text: "前端",
+    icon: "laptop-code",
+    link: "/前端/",
+  },
+  {
     text: "面试题",
     icon: "comments",
     link: "https://interview.code-corey.com/面试题/",
