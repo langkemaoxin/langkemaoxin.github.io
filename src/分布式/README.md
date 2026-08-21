@@ -7,7 +7,13 @@ article: false
 
 # 分布式
 
-本专栏聚焦分布式系统中的一致性与事务协作。当前已展开 **Seata 系列（8 篇）**：从分布式事务场景、AT/TCC 实战，到 TCC 核心源码与隔离性面试题。
+本专栏聚焦分布式系统中的一致性与事务协作。建议从**学习总纲**进入：它以西蒙学习法把整个领域拆成六大阶段 50+ 知识单元（本地事务 → CAP/BASE → 2PC/XA → Seata AT/TCC/Saga → 可靠消息与最大努力通知 → Paxos/Raft/Gossip），后续文章按该大纲逐步展开。
+
+## 学习路线
+
+- [分布式事务学习总纲：零基础到资深专家的完整教学大纲](./roadmap/distributed-tx-roadmap.md)
+
+当前已展开 **Seata 系列（8 篇）**：从分布式事务场景、AT/TCC 实战，到 TCC 核心源码与隔离性面试题。
 
 Seata **内核源码深化**另见微服务专栏：[Seata 内核源码深化](/微服务/seata/seata-kernel-01-source)。
 

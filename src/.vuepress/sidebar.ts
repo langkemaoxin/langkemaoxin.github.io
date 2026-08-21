@@ -48,6 +48,7 @@ export default sidebar({
         "how-to-build-tech-info-radar",
         "harness-engineering",
         "2026年AI-Agent框架选型指南：从“大爆发”到“大灭绝”后的生存法则",
+        "agent-docker-sandbox-dialogue",
       ],
     },
     {
@@ -1071,6 +1072,15 @@ export default sidebar({
   ],
   "/分布式/": [
     "",
+    {
+      text: "学习路线",
+      icon: "map",
+      prefix: "roadmap/",
+      collapsible: true,
+      children: [
+        "distributed-tx-roadmap",
+      ],
+    },
     {
       text: "Seata",
       icon: "network-wired",

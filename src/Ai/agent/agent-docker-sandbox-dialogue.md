@@ -1455,7 +1455,982 @@ stdin 这条路：**不经过 shell 解析（没有转义问题）、没有长�
 
 ---
 
-（逐字实录重建中：对话 15 起待回填。）
+---
+
+## 对话 15
+
+**🧑‍🎓 学生：** 看不懂你在说什么，你可以参考现有的代码是如何实现的，但是你在和我讲解的时候，不要认为我读过这些代码。
+
+这个章节再给我解释一遍
+
+**🧑‍🏫 老师：**
+
+你说得对，这章我讲砸了——满嘴"接口""协议""抽象方法"，默认你知道一堆框架概念。重讲，这次从一个非常具体的困境出发，一行代码一行代码地说。
+
+---
+
+## 第 6 课（重讲版）：主程序怎么"看"到沙箱里的文件
+
+### 困境
+
+接前面的设定：agent（主程序，在主容器里）在干活，沙箱容器在宿主机上跑着。现在它遇到一个再普通不过的需求：
+
+> 用户上传了 `data.csv`，agent 想看看里面写了什么，才能决定下一步怎么分析。
+
+问题来了：**文件在沙箱容器里，主程序在主容器里——两个隔离的箱子，主程序根本"看不见"沙箱里的文件系统。**
+
+摆在你面前两条路：
+
+**路 A：专门修一条"取文件"的通道。** Docker 确实有拷贝文件的命令（`docker cp`），把文件从沙箱拷到主容器，读完再删。听着直接，但 agent 的需求不止"读"——还要写、列目录、搜索……每种都修一条专用通道？每条通道还各有各的坑。通道越修越多，系统越养越肥。
+
+**路 B：用你唯一已有的通道——递纸条。** 从第 3 课起我们就有一条万能通道：`docker exec`（往沙箱递一条命令，命令的输出会传回来）。那么——
+
+> **"读文件"能不能改写成一条命令？能：让它执行一段小程序——"打开 xx 文件，把内容打印出来"。** 打印出来的文本，会沿着你早已熟悉的回程路（容器 → dockerd → sock → docker 进程 → 主程序）送到主程序手上。
+
+这就是全部秘密：**"看文件" = 递一张写着"帮我把文件内容打出来"的纸条。**
+
+### 回顾刚才的实验，这次一行行拆
+
+```
+echo '{"path":"/tmp/demo.txt","offset":0,"limit":2}' | base64 -w0 | docker exec -i lesson-file python3 -c "<脚本>"
+```
+
+竖线 `|` 的意思是"把左边的输出，塞进右边的输入"。所以这是**三节管道**：
+
+| 节 | 干什么 |
+|---|---|
+| `echo '{"path":...,"limit":2}'` | 写参数纸条：读哪个文件、跳过前几行、读几行（JSON 格式，键值一目了然） |
+| `base64 -w0` | 把纸条转成"安全字母"（为什么？下面单讲） |
+| `docker exec -i 容器 python3 -c "<脚本>"` | 纸条从管道流进容器（`-i` 就是"把 stdin 接进容器"），容器里的 python3 执行脚本 |
+
+### 纸条上的脚本，逐行读
+
+这段不是我编的——**真实项目源码里就是几乎一字不差的这一段**。每行都配了人话：
+
+```python
+import base64, json, sys
+
+# ① 从 stdin 读入那张 base64 纸条 → 解码成 JSON 文本 → 解析成字典
+d = json.loads(base64.b64decode(sys.stdin.read()))
+
+# ② 打开参数指定的文件，读全文，按行切开
+lines = open(d['path'], encoding='utf-8').read().splitlines()
+
+# ③ 按 offset/limit 切片：跳过前 offset 行，取 limit 行
+for i, line in enumerate(lines[d['offset']:d['offset']+d['limit']]):
+    n = d['offset'] + i + 1        # 行号从 1 开始数
+    print(f'{n:6d}\t{line}')        # 打印：行号 + tab + 内容
+```
+
+真实输出（文件一共 3 行，但 `limit:2`，所以只出 2 行——**连分页都顺便有了**）：
+
+```
+     1	line one: hello
+     2	line two: world
+```
+
+这个输出打印到哪去了？沿着回程路，最终出现在主程序的 `r.stdout` 里。**主程序"看"到了文件——从头到尾它没碰过沙箱的文件系统，只是收到一段文本。**
+
+### 举一反三：所有文件操作都是纸条
+
+| agent 想做的 | 纸条上写什么 |
+|---|---|
+| 读文件 | "打开文件，打印内容"（上面这段） |
+| 写文件 | "从 stdin 读内容，写进 xx 文件" |
+| 列目录 | "遍历目录，打印每个名字" |
+| 搜内容 | "逐行找包含 xx 的行，打印出来" |
+
+所以主程序只需要会一件事：**递纸条**。所有文件操作，不过是换一张纸条的措辞。
+
+### 补讲：参数为什么要先 base64 再进管道
+
+直觉做法是直接拼进命令：`python3 xxx "/tmp/demo.txt"`。两个坑：
+
+**坑 1：转义。** 假设文件名叫 `it's my "file".txt`（带引号、空格），拼进命令行后 shell 会把引号当成自己的语法符号，命令当场碎掉；恶意构造的内容甚至能拼出一条你没打算执行的命令（这就是"注入"）。base64 之后，任何内容都变成一串无害字母（`aXQncyBteSAiZmlsZS50eHQ=`），拼到哪都不会碎。
+
+**坑 2：长度。** 操作系统规定一条命令的参数总长有上限（叫 ARG_MAX，约 2MB）。写大文件时内容拼在命令里直接超限报错；而走管道（stdin）**没有这个限制**。
+
+### 对照真实项目（这次不装你读过代码）
+
+项目用的 DeepAgents 框架里有个类，干的正是"把读/写/列/搜全都做成纸条模板"这件事。它定了一条规矩：**你想接一种新沙箱（比如 SSH 到远程机器、某个云沙箱），只需要实现"递纸条"这一个函数，所有纸条模板白送。**
+
+项目里的 `DockerSandbox` 类，就是那个"会递纸条的实现"——递纸条的具体动作，就是你前几课学的 `docker exec`。
+
+这也终于彻底回答了插问 1：**兜底镜像为什么必须是 python 镜像？** 因为所有纸条都是 Python 写的——容器里没有 python3，读文件写文件全瘫。python3 是沙箱自己的命根子，跟用户写不写 Python 无关。
+
+---
+
+重讲版检查题（换了个问法，就考这课的核心转变）：
+
+> **主程序想看沙箱里的一个文件，它自己是"看不见"的（隔离）。可它最后还是拿到了文件内容——用你自己的话说说，这份内容是怎么到达它手上的？**
+
+把重讲版记进博客（第一版留作对照，这个"讲砸又重讲"的过程本身就是实录的一部分）：
+
+🔧 **老师操作**：博客重排（重讲版入正文、第一版降级为"附：留作对照"），更新长期记忆。
+
+博客已更新：重讲版放在正文位置，第一版降级为"附：留作对照"——并且我在记忆里给自己记了一笔：**后面所有课直接用重讲版这种"具体困境 → 逐行拆"的风格，不再犯第 6 课的错**。
+
+检查题等你（用自己的话，一两句就行）：
+
+> **主程序想看沙箱里的一个文件，它自己是"看不见"的（隔离）。可它最后还是拿到了文件内容——这份内容是怎么到达它手上的？**
+
+---
+
+## 对话 16
+
+**🧑‍🎓 学生：** 如果要想实现这个功能，总共需要几个文件，几个脚本？给我一个完整的代码】
+
+**🧑‍🏫 老师：**
+
+问得太好了——这是检验前六课有没有真懂的最佳方式。答案先给你：
+
+> **2 个文件、0 个预装脚本。**（sandbox.py + demo.py；而"递进容器的那些纸条"不是文件，是嵌在代码里的字符串——这正是第 6 课的意义）
+
+我们现在就把它写出来、跑起来。先创建文件：
+
+🔧 **老师操作**：写入 `F:\code\Python\sandbox-lab\sandbox.py`（完整内容如下）：
+
+```python
+"""最小可用沙箱：把第 1-6 课的知识点拼成能跑的代码。
+
+用法见 demo.py。依赖：本机能执行 docker 命令，本地有 python:3.12-slim 镜像。
+"""
+import base64
+import json
+import subprocess
+
+IMAGE = "python:3.12-slim"   # 兜底镜像必须是 python（第 6 课：所有纸条都是 Python 写的）
+WORKDIR = "/tmp"             # 真实项目是 /workspace，由挂载的宿主机目录自动产生（第 8 课）
+CPU = "1"                    # 资源"信用卡额度"（插问 2）
+MEM = "512m"
+EXEC_TIMEOUT = 30            # 递进去的命令最多跑 30 秒，防死循环
+
+# ---- 两段"纸条脚本"：不是文件，是字符串，用完即弃（第 6 课核心） ----
+_READ_SCRIPT = """
+import base64, json, sys
+d = json.loads(base64.b64decode(sys.stdin.read()))
+try:
+    lines = open(d['path'], encoding='utf-8').read().splitlines()
+except FileNotFoundError:
+    print('ERROR: file not found'); sys.exit(1)
+for i, line in enumerate(lines[d['offset']:d['offset']+d['limit']]):
+    print(f"{d['offset']+i+1:6d}\t{line}")
+"""
+
+_WRITE_SCRIPT = """
+import base64, json, os, sys
+d = json.loads(base64.b64decode(sys.stdin.read()))
+os.makedirs(os.path.dirname(d['path']) or '.', exist_ok=True)
+with open(d['path'], 'w', encoding='utf-8') as f:
+    f.write(d['content'])
+print('OK')
+"""
+
+
+class Sandbox:
+    """一场对话（会话）对应一个容器。"""
+
+    def __init__(self, session_id: str):
+        self.session_id = session_id
+        self.name = f"mylab-sandbox-{session_id}"   # 容器名 = 会话 ID（第 5 课：按名找回）
+        self.container_id = None                     # None = 还没创建 → 懒加载
+
+    # ---------- 第 4 课【叫人】：启动 docker CLI 这个短命进程 ----------
+    def _run(self, cmd, input_bytes=None, timeout=None):
+        return subprocess.run(
+            cmd, input=input_bytes, capture_output=True,
+            timeout=timeout, check=False,
+        )
+
+    # ---------- 第 5 课：体检 + 自愈 ----------
+    def _ensure_alive(self):
+        if self.container_id is None:
+            self._create()                          # 第一次（懒加载）
+            return
+        r = self._run(["docker", "inspect", "-f",
+                       "{{.State.Running}}", self.container_id])
+        if r.returncode == 0 and r.stdout.decode().strip() == "true":
+            return                                  # 99% 的日常：活着，直接走
+        rs = self._run(["docker", "start", self.container_id])
+        if rs.returncode != 0:                      # start 都失败 = 容器没了 → 重建
+            self.container_id = None
+            self._create()
+
+    # ---------- 第 3/4 课：create（备料登记）+ start（开机） ----------
+    def _create(self):
+        r = self._run([
+            "docker", "create",
+            "--name", self.name,
+            "-w", WORKDIR,
+            "--cpus", CPU, "--memory", MEM,
+            IMAGE,
+            "sleep", "infinity",                    # 主进程：睡觉保活
+        ])
+        if r.returncode != 0:
+            raise RuntimeError(f"docker create 失败: {r.stderr.decode()}")
+        self.container_id = r.stdout.decode().strip()
+        self._run(["docker", "start", self.container_id])
+
+    # ---------- 第 3 课：递纸条 ----------
+    def execute(self, command: str, timeout=None):
+        self._ensure_alive()
+        r = self._run(
+            ["docker", "exec", "-w", WORKDIR,
+             self.container_id, "sh", "-lc", command],
+            timeout=timeout or EXEC_TIMEOUT,
+        )
+        output = (r.stdout or b"") + (r.stderr or b"")   # 输出+报错合并，像真终端
+        return output.decode(errors="replace"), r.returncode
+
+    # ---------- 第 6 课：文件操作 = 换一张纸条的措辞 ----------
+    def read_file(self, path, offset=0, limit=2000):
+        payload = json.dumps({"path": path, "offset": offset, "limit": limit})
+        return self._pipe_script(_READ_SCRIPT, payload)
+
+    def write_file(self, path, content):
+        payload = json.dumps({"path": path, "content": content})
+        return self._pipe_script(_WRITE_SCRIPT, payload)
+
+    def _pipe_script(self, script, payload_json):
+        """JSON → base64 → stdin → 容器里的 python3（避转义、避 ARG_MAX）。"""
+        self._ensure_alive()
+        b64 = base64.b64encode(payload_json.encode()).decode()
+        r = self._run(
+            ["docker", "exec", "-i", self.container_id,
+             "python3", "-c", script],
+            input_bytes=b64.encode(),
+        )
+        return (r.stdout or b"").decode(errors="replace"), r.returncode
+
+    # ---------- 收尾 ----------
+    def destroy(self):
+        self._run(["docker", "rm", "-f", self.name])
+        self.container_id = None
+```
+
+🔧 **老师操作**：写入 `F:\code\Python\sandbox-lab\demo.py`（完整内容如下）：
+
+```python
+"""演示：像 agent 一样使用沙箱——完整走一遍第 1-6 课的知识点。"""
+import subprocess
+
+from sandbox import Sandbox
+
+sb = Sandbox(session_id="demo001")          # 一场对话开始
+
+# 1. 第 6 课：写文件 = 递一张"写文件"纸条
+out, code = sb.write_file("/tmp/analyze.py",
+    "data = [3, 1, 4, 1, 5, 9, 2, 6]\n"
+    "print('sum =', sum(data))\n"
+    "print('avg =', sum(data)/len(data))\n")
+print("[1] 写文件:", out.strip(), "| 退出码:", code)
+
+# 2. 第 6 课：读文件 = 递一张"读文件"纸条（limit=2 只取前 2 行）
+out, code = sb.read_file("/tmp/analyze.py", limit=2)
+print("[2] 读回前 2 行:")
+print(out)
+
+# 3. 第 3 课：执行命令 = 递纸条
+out, code = sb.execute("python3 analyze.py")
+print("[3] 执行结果:")
+print(out, "| 退出码:", code)
+
+# 4. 第 5 课：自愈——手动停掉容器，再执行，依然成功
+subprocess.run(["docker", "stop", sb.name], capture_output=True)
+print("[4] 容器已被手动停止，再次执行:")
+out, code = sb.execute("echo revived && ls")
+print(out, "| 退出码:", code)
+
+# 5. 清理
+sb.destroy()
+print("[5] 容器已删除，演示结束")
+```
+
+两个文件写好了，现在真刀真枪跑一遍：
+
+🔧 **老师操作**：WSL 里运行 `python3 demo.py`，真实输出：
+
+```
+[1] 写文件: OK | 退出码: 0
+[2] 读回前 2 行:
+     1	data = [3, 1, 4, 1, 5, 9, 2, 6]
+     2	print('sum =', sum(data))
+
+[3] 执行结果:
+sum = 31
+avg = 3.875
+ | 退出码: 0
+[4] 容器已被手动停止，再次执行:
+revived
+analyze.py
+ | 退出码: 0
+[5] 容器已删除，演示结束
+```
+
+**一次跑通，五个功能全部验证成功。**现在把整个东西给你讲清楚。
+
+---
+
+## 你问的答案：2 个文件，0 个脚本
+
+```
+F:\code\Python\sandbox-lab\
+ ├─ sandbox.py   ← 沙箱本体（一个类，约 100 行）
+ └─ demo.py      ← 演示：像 agent 一样用它（约 30 行）
+```
+
+**"0 个脚本"是重点**：递进容器执行的那些"纸条"（读文件脚本、写文件脚本）**不是磁盘上的文件**，是嵌在 sandbox.py 顶部的两个字符串常量（`_READ_SCRIPT`、`_WRITE_SCRIPT`）——用的时候拼进命令递进去，用完即弃。这就是第 6 课"纸条"的实体形态。
+
+## 自己跑一遍（WSL + Docker）
+
+```bash
+cd /mnt/f/code/Python/sandbox-lab
+python3 demo.py
+```
+
+## 刚才的真实输出，逐行对应知识点
+
+```
+[1] 写文件: OK | 退出码: 0                          ← 第 6 课：写文件 = 递"写文件纸条"
+[2] 读回前 2 行:
+     1	data = [3, 1, 4, 1, 5, 9, 2, 6]             ← 第 6 课：读文件纸条，limit=2 分页生效
+     2	print('sum =', sum(data))
+[3] 执行结果:
+sum = 31                                            ← 第 3 课：exec 递纸条，真 Python 算的
+avg = 3.875
+[4] 容器已被手动停止，再次执行:
+revived                                             ← 第 5 课：体检发现停了 → start 拉起 → 照常执行
+analyze.py                                          ← 而且文件还在（容器只是停，没删）
+[5] 容器已删除，演示结束                             ← destroy 清理现场
+```
+
+## sandbox.py 的代码地图（每个方法 = 你学过的一课）
+
+| 代码位置 | 干什么 | 来自哪课 |
+|---|---|---|
+| `_run()` | subprocess 启动 docker CLI（短命跑腿进程） | 第 4 课【叫人】 |
+| `_create()` | `docker create ... sleep infinity` + `start` | 第 3 课（睡觉保活）+ 第 4 课（备料/开机两步） |
+| `_ensure_alive()` | inspect 体检 → 活着就过；停了就 start；没了就重建 | 第 5 课（自愈三分支） |
+| `execute()` | `docker exec sh -lc 命令`，stdout+stderr 合并 | 第 3 课（递纸条） |
+| `_READ_SCRIPT` / `_WRITE_SCRIPT` | 两段纸条脚本（字符串！） | 第 6 课 |
+| `_pipe_script()` | JSON → base64 → stdin → 容器 python3 | 第 6 课（避转义/避 ARG_MAX） |
+| `IMAGE = python:3.12-slim` | 兜底镜像必须是 python | 插问 1 |
+| `--cpus 1 --memory 512m` | 资源"信用卡额度" | 插问 2 |
+| `WORKDIR = "/tmp"` | 真实项目是 /workspace，由挂载目录自动产生 | 第 8 课（还没讲） |
+
+## 和真实项目的差距（= 剩下的课程表）
+
+这个 100 行的玩具离生产级还差的东西，**恰好就是接下来几课**：
+
+| 缺什么 | 后果断 | 讲在哪 |
+|---|---|---|
+| 没挂载宿主机目录 | 容器一删文件就没了（demo 里 destroy 后 analyze.py 就消失了） | 第 8 课 |
+| 没有清理程序 | 容器会无限堆积 | 第 9 课 |
+| 没有锁 | 并发下体检/重建会打架 | 第 5 课提过 |
+| 没有 token 注入、没有按用户分目录 | 多用户场景没法用 | 第 7、8 课 |
+| 镜像是现成的 python，不是瑞士军刀 | 干不了文档/浏览器/检索的活 | 插问 1 |
+
+也就是说：**你已经拥有了一个概念完整的沙箱，剩下的课都是在往这个骨架上钉零件。**
+
+---
+
+把实战记录追加进博客（完整代码 + 真实输出 + 代码地图）：
+
+🔧 **老师操作**：博客追加实战记录，更新记忆。
+
+博客已追加完整的实战记录（两个文件的完整代码 + 真实输出 + 代码地图）。
+
+你电脑上现在有了一个自己拥有的沙箱：`F:\code\Python\sandbox-lab\`，随时可以改它、玩它、拆它。而且说实话——你刚才没答检查题，但直接要了完整代码还能看懂结构，这比答题更能证明第 6 课通了。
+
+一个小实验留给你自己（5 分钟，选做）：
+
+> 把 demo.py 第 4 步的 `docker stop` 改成 `docker rm -f`（模拟"容器被删"），再跑一遍，观察 `[4]` 的输出有什么不同——为什么这次 `analyze.py` 不见了？（提示：工作台 vs 仓库，第 5 课）
+
+没问题说继续，进 **第 7 课：会话怎么对应容器**——现在的 `Sandbox(session_id="demo001")` 里那个 session_id 是我们手动传的，真实系统里"谁在传、什么时候传、传了之后怎么避免重复建容器"，就是下一课的全部内容。
+
+---
+
+---
+
+## 对话 17
+
+**🧑‍🎓 学生：** 不是，你写完了代码后，也想要我解释下都需要什么啊，另外，我们之间的对话，特别是我主动说的东西，都要记录下来
+
+**🧑‍🏫 老师：**
+
+两件事都对，我一件件补。先审计一下博客里你的发言记录情况：
+
+🔧 **老师操作**：grep 博客中所有学生发言标记，结果：13 条 🧑‍🎓 发言（镜像、休眠、"因为主要是执行 python 文件"、subprocess、sock 细节、HTTP、create 全过程、"不要直接用现有代码"、90 分复述、满分答案、"看不懂"、完整代码……）。
+
+审计结果：你的 13 条主动发言**都在**（上面 grep 的每一行）。真正漏记的是三类小东西：两句"没问题"、你说"保留真实名称"那条博客指令、以及你**正在说的这条反馈本身**。这暴露了一个真问题——我的记录标准是"记录有教学价值的发言"，而你要的是**完整对话实录**。标准从现在起改：你的每一句话都原文入册。
+
+先补第一件事——**跑通这套代码到底需要什么**（这是我上次确实欠的账）：
+
+---
+
+## 插问 7：跑通这套代码，都需要准备什么？
+
+### 需要的清单（就 4 样）
+
+| # | 需要什么 | 为什么需要 | 我们机器上的情况 |
+|---|---|---|---|
+| 1 | **Docker**（能执行 docker 命令的环境） | sandbox.py 的每个动作，最终都是 subprocess 去调 docker CLI。没有它，一切免谈 | WSL 里有 |
+| 2 | **Python 3.7+** 解释器 | 跑 sandbox.py / demo.py 本身 | WSL 里的 python3 |
+| 3 | **python:3.12-slim 镜像** | 沙箱容器的"安装盘"。本地没有也行——docker create 会自动去 Docker Hub 拉（那一刻才需要网络） | 本地已有 |
+| 4 | **那两个 .py 文件** | 沙箱本体 + 演示 | `F:\code\Python\sandbox-lab\` |
+
+**一个容易忽略的零**：代码只用了 Python 标准库（`base64`、`json`、`subprocess`）——**零第三方依赖，不需要 pip install 任何东西**。这也是"纸条方案"的好处之一：主程序侧薄到几乎没有依赖。
+
+### 关键选择：代码在哪跑？
+
+`demo.py` 扮演的是**主程序**（真实项目里主容器的角色）。它自己不需要任何特权，**只需要能连上 docker**。所以有两种跑法：
+
+- **WSL 里跑**（我们用的方式，因为 docker 在 WSL）：`python3 demo.py`
+- **Windows 上跑也行**（前提是 Docker Desktop）：`python demo.py` 一样通——subprocess 会找到 `docker.exe`，命令完全相同
+
+### 三层角色对照（和真实系统的对应关系）
+
+```
+跑 demo.py 的 python3     ←→  真实系统的主容器（指挥）
+WSL 的 dockerd            ←→  宿主机管家
+python:3.12-slim 容器     ←→  沙箱
+```
+
+### 复刻步骤（给别人/给未来的你）
+
+```bash
+docker version                 # ① 确认 docker 可用
+docker pull python:3.12-slim   # ② （可选）提前拉镜像，避免首跑等待
+cd sandbox-lab && python3 demo.py   # ③ 跑
+```
+
+---
+
+现在把三处补记 + 本节写进博客，并把我该改的记录规则记进长期记忆：
+
+🔧 **老师操作**：博客补记两句"没问题"与"保留真实名称"指令、追加插问 7；更新长期记忆（完整实录规则）。
+
+全部补齐了。总结一下这次修正的三件事：
+
+1. **环境清单**（上面正文 + 博客"插问 7"）：Docker、Python 3.7+、镜像、两个文件——外加"零第三方依赖"和"在哪跑"的说明。
+2. **补记**：两句"没问题"、"保留真实名称"指令，都已按原文入册。
+3. **规则固化**：博客定位从"有教学价值的摘录"升级为**完整对话实录**——你每一句话（包括打断、纠正、甚至"没问题"）都原文记录。这条规则也写进了我的长期记忆，以后每次开口前都会照此执行。
+
+---
+
+现在状态：随时可以进 **第 7 课：会话怎么对应容器**（从 `Sandbox(session_id="demo001")` 这个手动传参出发，讲真实系统里"谁在传、怎么缓存复用、怎么注入用户身份"）。
+
+另外上次留的选做实验还挂着：把 demo.py 第 4 步的 `docker stop` 改成 `docker rm -f` 再跑，观察 `analyze.py` 为什么不见了。做了告诉我结果，没做也没关系，不阻塞下一课。
+
+---
+
+## 对话 18
+
+**🧑‍🎓 学生：** 讲解一下这两个python文件代码
+
+**🧑‍🏫 老师：**
+
+好，这就是最好的复习——**逐段拆解，每段说清"是什么、为什么这么写、对应哪一课"**。你写过 Java，我会随手给 Java 对照。
+
+---
+
+## 插问 8：逐段讲解 sandbox.py 和 demo.py
+
+### 两个文件的关系
+
+```
+sandbox.py = 工具库（一个类）
+demo.py    = 使用者（像 Java 里的 main 测试类）
+```
+
+demo.py 第一行 `from sandbox import Sandbox`，等价于 Java 的 `import`。
+
+---
+
+# 一、sandbox.py
+
+## ① 文件头：三个 import
+
+```python
+import base64      # 编码/解码（纸条"安全字母"化）
+import json        # 参数打包/解析
+import subprocess  # 第 4 课【叫人】：启动 docker CLI
+```
+
+全是 Python **自带**标准库——这就是"零第三方依赖"的实体：整个沙箱的主动作只靠这三样。
+
+## ② 常量区（配置）
+
+```python
+IMAGE = "python:3.12-slim"   # 沙箱安装盘（插问 1：必须带 python3）
+WORKDIR = "/tmp"             # 容器内工作目录（真实项目是 /workspace，第 8 课）
+CPU = "1"                    # 信用卡额度（插问 2）
+MEM = "512m"
+EXEC_TIMEOUT = 30            # 命令最多跑 30 秒——agent 写出死循环时保命
+```
+
+相当于 Java 的 `static final` 常量。集中放顶部的好处：换镜像、改配额只动一行。
+
+## ③ 两段"纸条脚本"（本文件最特殊的部分）
+
+```python
+_READ_SCRIPT = """
+import base64, json, sys
+d = json.loads(base64.b64decode(sys.stdin.read()))
+...
+"""
+```
+
+先建立一个**最重要的认知**：这段代码**不在你的机器上运行**。它是三引号字符串（Python 的多行字符串），作为**数据**被递进容器、由**容器里的 python3** 执行——第 6 课"纸条"的实体就是它。
+
+`_READ_SCRIPT` 逐行（在容器里执行时）：
+
+| 行 | 在干什么 |
+|---|---|
+| `d = json.loads(base64.b64decode(sys.stdin.read()))` | 三连：读管道喂进来的纸条 → base64 解码 → JSON 解析。得到的 `d` 是个字典（Java 的 Map），`d['path']` 取值 |
+| `lines = open(d['path'], ...).read().splitlines()` | 打开目标文件，读全文，切成一行一行的列表 |
+| `for i, line in enumerate(lines[切片])` | 按参数切片（跳过 offset 行、取 limit 行）遍历，同时拿到序号 |
+| `print(f"{行号:6d}\t{行}")` | f-string 格式化（Java 的 `String.format`）：行号占 6 格右对齐 + tab + 内容。**print 出来的东西就是回程的"货物"** |
+| `except FileNotFoundError: sys.exit(1)` | 文件不存在 → 打印错误 + 退出码 1（退出码是给主程序看的信号灯） |
+
+`_WRITE_SCRIPT` 同理，多了一个 `os.makedirs(..., exist_ok=True)`（父目录不存在就顺手创建），最后 `print('OK')` 当回执。
+
+## ④ Sandbox 类：字段和构造器
+
+```python
+def __init__(self, session_id: str):        # __init__ = Java 构造器
+    self.session_id = session_id            # self = Java 的 this（Python 必须显式写）
+    self.name = f"mylab-sandbox-{session_id}"   # 容器名 = 会话 ID（第 5 课：按名找回）
+    self.container_id = None                # 关键！
+```
+
+`self.container_id = None` 是**懒加载的开关**：构造时**什么都不发生**——不建容器、不连 docker。第一次真正用到时才创建（第 5 课精修①）。`demo.py` 里 `sb = Sandbox("demo001")` 这行执行完，系统毫无动静。
+
+顺带：方法名前的 `_`（如 `_run`、`_create`）是 Python 的**约定**——"这是内部方法，外部别调用"（Python 没有真正的 private，全靠自觉）。
+
+## ⑤ `_run()`：所有 docker 命令的唯一出口
+
+```python
+def _run(self, cmd, input_bytes=None, timeout=None):
+    return subprocess.run(
+        cmd,                    # 注意：是列表，不是字符串！
+        input=input_bytes,      # 往子进程 stdin 喂数据——纸条的入口
+        capture_output=True,    # 把子进程的输出收进结果对象（不然直接打到屏幕）
+        timeout=timeout,        # 超时掐掉
+        check=False,            # 命令失败不抛异常，让我们自己看 returncode
+    )
+```
+
+三个要点：
+
+1. **cmd 是列表** `["docker", "create", "--name", ...]` 而不是拼好的长字符串——列表形式天然避免空格、引号歧义（Java 的 `ProcessBuilder` 也是传 List，同一个道理）；
+2. **返回的 CompletedProcess** 里有 `.stdout` / `.stderr`（**bytes 类型**，所以后面到处要 `.decode()`）和 `.returncode`；
+3. 所有 docker 调用都走这一个函数——以后想加日志、重试、计时，改这一处就够。
+
+## ⑥ `_ensure_alive()`：体检 + 自愈（第 5 课三分支的代码化）
+
+```python
+if self.container_id is None:                # 分支 0：从没建过
+    self._create()
+    return
+
+r = self._run(["docker", "inspect", "-f",
+               "{{.State.Running}}", self.container_id])
+if r.returncode == 0 and r.stdout.decode().strip() == "true":
+    return                                   # 99% 的日常：活着，直接走
+
+rs = self._run(["docker", "start", self.container_id])
+if rs.returncode != 0:                       # start 都失败 = 容器没了
+    self.container_id = None                 # 把 ID 清空
+    self._create()                           # → 走"从没建过"的逻辑重建
+```
+
+两处细节：
+
+- `docker inspect -f "{{.State.Running}}"`：`-f` 是格式化模板，让 inspect 只回答一个词：`true` 或 `false`（那个 `{{}}` 是 Docker 内置的 Go 模板语法，背下来即可）；
+- `r.stdout.decode().strip() == "true"`：stdout 是 `b"true\n"` 这样的 bytes——decode 成字符串、strip 掉换行，才能比较；
+- 最后那个"清空 ID → 重新 create"是个小巧劲：**复用分支 0 的现成逻辑**，不写重复代码。
+
+## ⑦ `_create()`：备料 + 开机（第 3/4 课）
+
+```python
+r = self._run([
+    "docker", "create",
+    "--name", self.name,
+    "-w", WORKDIR,              # 工作目录
+    "--cpus", CPU, "--memory", MEM,
+    IMAGE,
+    "sleep", "infinity",        # 主进程：睡觉保活（第 3 课）
+])
+if r.returncode != 0:
+    raise RuntimeError(f"docker create 失败: {r.stderr.decode()}")
+self.container_id = r.stdout.decode().strip()    # stdout 里就是容器 ID
+self._run(["docker", "start", self.container_id])
+```
+
+- 为什么这里 `raise`（Java 的 throw）而 `_run` 里 check=False？——**create 失败就没法继续了**，必须让上层立刻知道；而 exec 失败可能只是命令本身报错，输出对调用方还有用；
+- `r.stdout.decode().strip()`：docker create 成功时唯一输出就是那 64 位十六进制 ID，去掉换行直接存。
+
+## ⑧ `execute()`：递纸条（第 3 课）
+
+```python
+def execute(self, command: str, timeout=None):
+    self._ensure_alive()                     # 先体检
+    r = self._run(
+        ["docker", "exec", "-w", WORKDIR,
+         self.container_id, "sh", "-lc", command],
+        timeout=timeout or EXEC_TIMEOUT,     # 没传就用默认（or 的巧用）
+    )
+    output = (r.stdout or b"") + (r.stderr or b"")   # 输出+报错合并
+    return output.decode(errors="replace"), r.returncode
+```
+
+- `sh -lc`：`-c` = 后面字符串当命令执行；`-l` = login shell（加载环境配置，PATH 完整）；
+- stdout + stderr 拼接：像真终端一样混排（第 3 课讲过为什么）；
+- `errors="replace"`：遇到解不开的字节（agent 可能输出二进制）用替代符而不是整个崩掉。
+
+## ⑨ 文件三兄弟：`read_file` / `write_file` / `_pipe_script`（第 6 课）
+
+```python
+def read_file(self, path, offset=0, limit=2000):
+    payload = json.dumps({"path": path, "offset": offset, "limit": limit})
+    return self._pipe_script(_READ_SCRIPT, payload)
+
+def _pipe_script(self, script, payload_json):
+    self._ensure_alive()
+    b64 = base64.b64encode(payload_json.encode()).decode()
+    r = self._run(
+        ["docker", "exec", "-i", self.container_id,   # -i 是关键！
+         "python3", "-c", script],
+        input_bytes=b64.encode(),
+    )
+    return (r.stdout or b"").decode(errors="replace"), r.returncode
+```
+
+- 前两个方法只做"翻译"：Python 参数 → JSON 字符串；
+- `_pipe_script` 做递送：JSON → base64 → 从 stdin 喂给容器里的 `python3 -c 脚本`；
+- **`-i` 是命门**：它把 stdin 接进容器。没有它，管道里的纸条根本进不去（真实项目里 read() 重写，根子就是这个坑）；
+- `python3 -c 脚本`：`-c` 表示"把后面这段字符串当程序执行"——纸条的正确打开方式。
+
+## ⑩ `destroy()`：收尾
+
+```python
+self._run(["docker", "rm", "-f", self.name])
+```
+
+`-f` = force（运行中也直接删）。注意用的是 `self.name` 而不是 container_id——**容器重建后 ID 会变，但名字不变**，按名删更稳。
+
+---
+
+# 二、demo.py：五步演示的真相
+
+```python
+sb = Sandbox(session_id="demo001")     # 此刻什么都没发生！（懒加载）
+```
+
+| 步 | 代码 | 背后发生的完整链 |
+|---|---|---|
+| [1] | `sb.write_file(...)` | 打包 JSON → 体检（首次：create + start）→ base64 → exec -i 递纸条 → 容器里 python3 写文件 → "OK" 回程 |
+| [2] | `sb.read_file(..., limit=2)` | 同上（容器已活，体检一问即过）→ 读文件纸条 → 行号化内容回程 |
+| [3] | `sb.execute("python3 analyze.py")` | 体检 → exec 递命令 → 真正的 Python 算出 sum=31 |
+| [4] | 手动 `docker stop` 后再 execute | **有人绕过类直接动了容器**——体检发现 Running=false → start 拉起 → 照常执行（这就是"自愈"的现场） |
+| [5] | `sb.destroy()` | rm -f，现场清理 |
+
+第 [4] 步特别值得品：demo 用自己的 subprocess 直接 `docker stop`（模拟"外部世界杀了容器"），Sandbox 类毫不知情，但下一次操作前的体检让它扛住了——**类不需要预防所有意外，只需要每次动手前看一眼**。
+
+---
+
+## 检查题
+
+> **`_run()` 的 cmd 为什么用列表 `["docker", "create", ...]`，而不拼成一个长字符串？**（提示：想想文件名里有空格会怎样）
+
+记录进博客：
+
+🔧 **老师操作**：博客追加插问 8，更新记忆。
+
+讲解完毕，已入册博客（插问 8）。
+
+如果哪个段落还是模糊，指出来我单独再拆。没问题就答检查题：
+
+> **`_run()` 的 cmd 为什么用列表，而不拼成一个长字符串？**
+
+答完进第 7 课。
+
+---
+
+---
+
+## 对话 19
+
+**🧑‍🎓 学生：** 讲解代码的时候，先贴出代码片段，然后进行讲解，然后再贴出代码，再次讲解
+
+**🧑‍🏫 老师：**
+
+明白，这个格式确实更好——**代码先行，讲解殿后，一段一停**。以后讲代码都用这个节奏（已记入规则）。重新来：
+
+---
+
+# sandbox.py 逐段讲解
+
+## 段 1：文件头（说明书 + 三个 import）
+
+```python
+"""最小可用沙箱：把第 1-6 课的知识点拼成能跑的代码。
+
+用法见 demo.py。依赖：本机能执行 docker 命令，本地有 python:3.12-slim 镜像。
+"""
+import base64
+import json
+import subprocess
+```
+
+**讲解**：开头三引号字符串是 docstring（模块说明书，`sb.__doc__` 能取到）。三个 import 全是 Python 自带标准库：`base64` 负责纸条"安全字母化"，`json` 负责参数打包，`subprocess` 负责第 4 课的【叫人】——启动 docker CLI。零第三方依赖就是指这里：**不需要 pip install 任何东西**。
+
+## 段 2：常量区（配置）
+
+```python
+IMAGE = "python:3.12-slim"   # 兜底镜像必须是 python（第 6 课：所有纸条都是 Python 写的）
+WORKDIR = "/tmp"             # 真实项目是 /workspace，由挂载的宿主机目录自动产生（第 8 课）
+CPU = "1"                    # 资源"信用卡额度"（插问 2）
+MEM = "512m"
+EXEC_TIMEOUT = 30            # 递进去的命令最多跑 30 秒，防死循环
+```
+
+**讲解**：相当于 Java 的 `static final`。集中放顶部的好处：换镜像、改配额只动一行。注意每个值都背着前面的课——IMAGE 是插问 1 的结论，CPU/MEM 是插问 2 的"额度不是预存款"，`EXEC_TIMEOUT` 是保命阀：agent 写出死循环时 30 秒后被掐掉。
+
+## 段 3：纸条之一 `_READ_SCRIPT`
+
+```python
+_READ_SCRIPT = """
+import base64, json, sys
+d = json.loads(base64.b64decode(sys.stdin.read()))
+try:
+    lines = open(d['path'], encoding='utf-8').read().splitlines()
+except FileNotFoundError:
+    print('ERROR: file not found'); sys.exit(1)
+for i, line in enumerate(lines[d['offset']:d['offset']+d['limit']]):
+    print(f"{d['offset']+i+1:6d}\t{line}")
+"""
+```
+
+**讲解**：最重要的认知——**这段代码不在你的机器上跑**。三引号 = 多行字符串，它的身份是**数据**，会被递进容器、由容器里的 python3 执行。以容器视角逐行：
+
+- 第 2 行三连招：`sys.stdin.read()` 读入管道喂来的 base64 纸条 → `b64decode` 解码 → `json.loads` 解析成字典 `d`（Java 的 Map，`d['path']` 取值）；
+- 第 3-7 行：打开目标文件读全文、切成行列表；文件不存在就打印错误、`sys.exit(1)`——**退出码 1 是给主程序的信号灯**；
+- 第 8-10 行：`enumerate` 遍历时同时拿序号；切片 `lines[offset:offset+limit]` 实现分页；`f"{n:6d}\t"` 是格式化（行号占 6 格右对齐 + tab）。**print 出来的内容就是回程的货物**。
+
+## 段 4：纸条之二 `_WRITE_SCRIPT`
+
+```python
+_WRITE_SCRIPT = """
+import base64, json, os, sys
+d = json.loads(base64.b64decode(sys.stdin.read()))
+os.makedirs(os.path.dirname(d['path']) or '.', exist_ok=True)
+with open(d['path'], 'w', encoding='utf-8') as f:
+    f.write(d['content'])
+print('OK')
+"""
+```
+
+**讲解**：结构同上，三个新面孔：
+
+- `os.makedirs(..., exist_ok=True)`：目标文件的父目录不存在就顺手创建（写 `/workspace/a/b/c.txt` 时不用先建目录）；
+- `with open(...) as f`：Java 的 try-with-resources——块结束时自动关文件；
+- `print('OK')`：回执。主程序看到 "OK" 就知道写成功了。
+
+## 段 5：类头 + 构造器
+
+```python
+class Sandbox:
+    """一场对话（会话）对应一个容器。"""
+
+    def __init__(self, session_id: str):
+        self.session_id = session_id
+        self.name = f"mylab-sandbox-{session_id}"   # 容器名 = 会话 ID（第 5 课：按名找回）
+        self.container_id = None                     # None = 还没创建 → 懒加载
+```
+
+**讲解**：`__init__` 就是 Java 的构造器；`self` 就是 `this`（Python 必须显式写在参数里）。三个字段：会话 ID 原样存着；容器名用它拼出来（名字含会话 ID，第 5 课"按名找回"的根基）；**`container_id = None` 是懒加载开关**——执行完 `Sandbox("demo001")`，系统毫无动静，容器还不存在。
+
+## 段 6：`_run`——所有 docker 命令的唯一出口
+
+```python
+    def _run(self, cmd, input_bytes=None, timeout=None):
+        return subprocess.run(
+            cmd, input=input_bytes, capture_output=True,
+            timeout=timeout, check=False,
+        )
+```
+
+**讲解**：整个类对 docker 的所有调用都挤过这个漏斗——以后想加日志、重试、计时，改这一处就够。四个参数：`cmd` 是**列表**不是字符串（避免空格引号歧义，Java 的 ProcessBuilder 同理）；`input=input_bytes` 往子进程 stdin 喂数据——**纸条的入口**；`capture_output=True` 把输出收进结果对象（不然直接打到屏幕）；`check=False` 失败不抛异常，让我们自己看 returncode。返回的 CompletedProcess 带 `.stdout/.stderr`（**bytes**，所以后面到处 `.decode()`）和 `.returncode`。
+
+## 段 7：`_ensure_alive`——体检 + 自愈
+
+```python
+    def _ensure_alive(self):
+        if self.container_id is None:
+            self._create()                          # 第一次（懒加载）
+            return
+        r = self._run(["docker", "inspect", "-f",
+                       "{{.State.Running}}", self.container_id])
+        if r.returncode == 0 and r.stdout.decode().strip() == "true":
+            return                                  # 99% 的日常：活着，直接走
+        rs = self._run(["docker", "start", self.container_id])
+        if rs.returncode != 0:                      # start 失败 = 容器没了 → 重建
+            self.container_id = None
+            self._create()
+```
+
+**讲解**：第 5 课三分支的代码化。第一分支：ID 是 None 说明从没建过，直接建。第二分支：`docker inspect -f "{{.State.Running}}"` 是问管家一句话（`{{}}` 是 Docker 内置的 Go 模板语法），只答 true/false——stdout 是 `b"true\n"`，所以 `decode().strip()` 后才能比较。第三分支的小巧劲：start 失败说明容器整个没了，把 ID 置回 `None`，**复用第一分支的现成逻辑**重建，不写重复代码。
+
+## 段 8：`_create`——备料 + 开机
+
+```python
+    def _create(self):
+        r = self._run([
+            "docker", "create",
+            "--name", self.name,
+            "-w", WORKDIR,
+            "--cpus", CPU, "--memory", MEM,
+            IMAGE,
+            "sleep", "infinity",                    # 主进程：睡觉保活
+        ])
+        if r.returncode != 0:
+            raise RuntimeError(f"docker create 失败: {r.stderr.decode()}")
+        self.container_id = r.stdout.decode().strip()
+        self._run(["docker", "start", self.container_id])
+```
+
+**讲解**：create 参数前面课全讲过：名字、工作目录、额度、镜像、睡觉主进程。两个新细节：①这里 `raise`（Java 的 throw）而 `_run` 里 check=False——因为 **create 失败就没法继续**，必须立刻通知上层，并把 stderr 带在异常消息里；②`docker create` 成功时 stdout 里**唯一的内容**就是那 64 位十六进制容器 ID，`strip()` 去换行直接存。最后一行 start：开机。
+
+## 段 9：`execute`——递纸条
+
+```python
+    def execute(self, command: str, timeout=None):
+        self._ensure_alive()
+        r = self._run(
+            ["docker", "exec", "-w", WORKDIR,
+             self.container_id, "sh", "-lc", command],
+            timeout=timeout or EXEC_TIMEOUT,
+        )
+        output = (r.stdout or b"") + (r.stderr or b"")   # 输出+报错合并，像真终端
+        return output.decode(errors="replace"), r.returncode
+```
+
+**讲解**：第一行先体检（每次动手前看一眼）。`sh -lc`：`-c` = 后面的字符串当命令执行，`-l` = login shell（加载环境配置，PATH 完整）。stdout + stderr 拼接：像真终端按时间序混排（第 3 课）。`errors="replace"`：agent 可能输出二进制，解不开的字节用替代符，不崩。`timeout or EXEC_TIMEOUT`：调用方没传就用默认值。返回两个值（输出，退出码）——Python 函数可以返回多个值，Java 得封装成对象。
+
+## 段 10：文件三兄弟
+
+```python
+    def read_file(self, path, offset=0, limit=2000):
+        payload = json.dumps({"path": path, "offset": offset, "limit": limit})
+        return self._pipe_script(_READ_SCRIPT, payload)
+
+    def write_file(self, path, content):
+        payload = json.dumps({"path": path, "content": content})
+        return self._pipe_script(_WRITE_SCRIPT, payload)
+
+    def _pipe_script(self, script, payload_json):
+        self._ensure_alive()
+        b64 = base64.b64encode(payload_json.encode()).decode()
+        r = self._run(
+            ["docker", "exec", "-i", self.container_id,
+             "python3", "-c", script],
+            input_bytes=b64.encode(),
+        )
+        return (r.stdout or b"").decode(errors="replace"), r.returncode
+```
+
+**讲解**：前两个方法只做"翻译"——把 Python 参数打包成 JSON 字符串，配上各自的纸条，交给 `_pipe_script`。`_pipe_script` 做递送：JSON → base64 → 从 stdin 喂给容器里的 `python3 -c 脚本`（`-c` = 把字符串当程序执行）。**`-i` 是命门**：把 stdin 接进容器，没有它管道里的纸条根本进不去——真实项目里 read() 被重写，根子就是这个坑。
+
+## 段 11：`destroy`——收尾
+
+```python
+    def destroy(self):
+        self._run(["docker", "rm", "-f", self.name])
+        self.container_id = None
+```
+
+**讲解**：`-f` = force，运行中也直接删。注意删的是 `self.name` 不是 container_id——**容器重建后 ID 会变，名字永远不变**，按名删更稳。删完把 ID 置回 None，这个对象就回到了"从没建过"的状态。
+
+---
+
+# demo.py 逐段讲解
+
+## 段 1：开场
+
+```python
+"""演示：像 agent 一样使用沙箱——完整走一遍第 1-6 课的知识点。"""
+import subprocess
+
+from sandbox import Sandbox
+
+sb = Sandbox(session_id="demo001")          # 一场对话开始
+```
+
+**讲解**：`from sandbox import Sandbox` 等价 Java 的 import。最后一行执行完**什么都没发生**——没有容器、没有 docker 调用（懒加载）。这个对象此刻只是一张"空头支票"：记着名字，等第一次使用时才兑现。
+
+## 段 2：三步正常操作
+
+```python
+# 1. 第 6 课：写文件 = 递一张"写文件"纸条
+out, code = sb.write_file("/tmp/analyze.py",
+    "data = [3, 1, 4, 1, 5, 9, 2, 6]\n"
+    "print('sum =', sum(data))\n"
+    "print('avg =', sum(data)/len(data))\n")
+print("[1] 写文件:", out.strip(), "| 退出码:", code)
+
+# 2. 第 6 课：读文件 = 递一张"读文件"纸条（limit=2 只取前 2 行）
+out, code = sb.read_file("/tmp/analyze.py", limit=2)
+print("[2] 读回前 2 行:")
+print(out)
+
+# 3. 第 3 课：执行命令 = 递纸条
+out, code = sb.execute("python3 analyze.py")
+print("[3] 执行结果:")
+print(out, "| 退出码:", code)
+```
+
+**讲解**：相邻的两个字符串 `"data = ...\n" "print(...)\n"` 会自动拼接（Python 特性，写长文本不用加号）。三步各自的完整链：[1] 是全程序**第一次动手**——write_file → 体检（发现 ID 是 None）→ create + start → 递写文件纸条 → "OK" 回程；[2] 体检一问即过（容器活着），递读文件纸条，`limit=2` 生效；[3] 递命令纸条，容器里**真正的 Python** 算出 `sum = 31`。注意 `out, code = ...` 接住了方法返回的两个值。
+
+## 段 3：自愈演示 + 收尾
+
+```python
+# 4. 第 5 课：自愈——手动停掉容器，再执行，依然成功
+subprocess.run(["docker", "stop", sb.name], capture_output=True)
+print("[4] 容器已被手动停止，再次执行:")
+out, code = sb.execute("echo revived && ls")
+print(out, "| 退出码:", code)
+
+# 5. 清理
+sb.destroy()
+print("[5] 容器已删除，演示结束")
+```
+
+**讲解**：第 4 步是全 demo 的戏眼：demo **绕过 Sandbox 类**、用自己的 subprocess 直接 `docker stop`——模拟"外部世界杀了容器"，类毫不知情。下一次 `execute` 前的体检发现 `Running=false`，自动 `docker start` 拉起，命令照常执行（输出里 `revived` 和 `analyze.py` 都在——文件没丢，因为容器只是停了没删）。这就是第 5 课那句话的代码形态：**类不需要预防所有意外，只需要每次动手前看一眼**。第 5 步 destroy 清理现场。
+
+---
+
+新检查题（这道题直接通向第 7 课）：
+
+> **假设同时建两个对象：`Sandbox("aaa")` 和 `Sandbox("bbb")`，各自 write_file、execute。它们会互相干扰吗？为什么？**（提示：看容器名和容器隔离）
+
+记录进博客：
+
+🔧 **老师操作**：博客追加格式重讲版，更新长期记忆（"先贴代码再讲解"固化为标准节奏）。
+
+重讲完毕，格式规则已固化（博客 + 我的长期记忆都记了：以后讲代码一律"贴片段 → 讲解 → 贴片段 → 讲解"）。
+
+检查题等你——这道题答完，第 7 课等于已经开了一半：
+
+> **同时建 `Sandbox("aaa")` 和 `Sandbox("bbb")`，各自 write_file、execute——它们会互相干扰吗？为什么？**
+
+---
+
+（逐字实录重建中：对话 20 起待回填。）
+
+
+
 
 
 
