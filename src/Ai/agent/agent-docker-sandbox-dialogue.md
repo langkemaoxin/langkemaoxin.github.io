@@ -1093,45 +1093,134 @@ analyze.py
 
 ---
 
-## 插问 7：跑通这套代码，都需要准备什么？
+ 
 
-**🧑‍🎓 学生：** 你写完了代码后，也要解释下都需要什么啊。另外，我们之间的对话——特别是我主动说的东西——都要记录下来。
+---
 
-**🧑‍🏫 老师：** 两件事都对。第二件从现在起严格执行：此前本实录按"有教学价值"筛选学生发言，标准改为**完整对话实录、学生每句话原文入册**（本次已补记此前省略的确认语；另有一条博客编辑指令——"保留真实名称，不脱敏"——也补记于此）。
+## 第 7 课：会话怎么对应容器
 
-### 需要的清单（就 4 样）
+> **课堂检查回放**（上题：同时建 `Sandbox("aaa")` 和 `Sandbox("bbb")` 会互相干扰吗？学生答"继续"未作答，老师公布）
+>
+> 不会干扰：容器名不同 → 两个不同容器 → namespace 隔离，各自文件系统、进程互不可见。**但这问题藏着一把刀：如果两个对象用了同一个会话 ID 呢？——就是本课要撞的墙。**
 
-| # | 需要什么 | 为什么需要 | 本机情况 |
-|---|---|---|---|
-| 1 | **Docker**（能执行 docker 命令的环境） | sandbox.py 的每个动作，最终都是 subprocess 调 docker CLI | WSL 里有 |
-| 2 | **Python 3.7+** 解释器 | 跑 sandbox.py / demo.py 本身 | WSL 里的 python3 |
-| 3 | **python:3.12-slim 镜像** | 沙箱的"安装盘"。本地没有也行——docker create 会自动从 Docker Hub 拉（那时才需要网络） | 本地已有 |
-| 4 | **两个 .py 文件** | 沙箱本体 + 演示 | `F:\code\Python\sandbox-lab\` |
+**🧑‍🎓 学生：** 继续。
 
-**一个容易忽略的零**：代码只用 Python 标准库（base64、json、subprocess）——**零第三方依赖，不用 pip install 任何东西**。这也是"纸条方案"的好处之一：主程序侧薄到几乎没有依赖。
+**🧑‍🏫 老师：**
 
-### 关键选择：代码在哪跑？
+### 玩具版的两个缺口
 
-demo.py 扮演**主程序**（真实项目里主容器的角色）。它自己不需要任何特权，**只需要能连上 docker**。两种跑法：
+① `Sandbox("demo001")` 的会话 ID 是手动传的——真实系统谁传、何时传？② 裸构造 `Sandbox(...)`——真实系统里同一会话有**很多轮请求**，每轮都 new 一个吗？
 
-- **WSL 里跑**（本文方式，docker 在 WSL）：`python3 demo.py`
-- **Windows 上跑也行**（前提 Docker Desktop）：`python demo.py` 一样通——subprocess 会找到 docker.exe，命令完全相同
+### 实验：同名冲突与缓存修复（demo7.py，WSL 实测）
 
-### 三层角色对照
+```python
+"""demo7.py：第 7 课实验——两个同名会话的冲突，以及缓存修复。"""
+from sandbox import Sandbox
+
+print("=== 实验一：没有缓存时的同名冲突 ===")
+a = Sandbox("demo7a")
+out, _ = a.execute("echo from-a")
+print(out.strip())
+
+b = Sandbox("demo7a")              # 新对象，对 a 一无所知
+try:
+    out, _ = b.execute("echo from-b")
+    print(out.strip())
+except RuntimeError as e:
+    print("第二个对象执行失败：", e)
+
+print()
+print("=== 实验二：加缓存后的效果 ===")
+_cache = {}
+def get_sandbox(session_id):
+    if session_id not in _cache:
+        _cache[session_id] = Sandbox(session_id)
+    return _cache[session_id]
+
+sb1 = get_sandbox("demo7b")
+print("第一次拿到对象：", id(sb1))
+sb2 = get_sandbox("demo7b")
+print("第二次拿到对象：", id(sb2))
+print("是同一个对象吗？", sb1 is sb2)
+out, _ = sb2.execute("echo from-cache")
+print(out.strip())
+
+# 清理
+a.destroy()
+get_sandbox("demo7b").destroy()
+```
+
+真实输出：
 
 ```
-跑 demo.py 的 python3     ←→  真实系统的主容器（指挥）
-WSL 的 dockerd            ←→  宿主机管家
-python:3.12-slim 容器     ←→  沙箱
+=== 实验一：没有缓存时的同名冲突 ===
+from-a
+第二个对象执行失败： docker create 失败: Error response from daemon: Conflict.
+The container name "/mylab-sandbox-demo7a" is already in use by container
+"c127e2578b94...". You have to remove (or rename) that container to be able
+to reuse that name.
+
+=== 实验二：加缓存后的效果 ===
+第一次拿到对象： 125970391210144
+第二次拿到对象： 125970391210144
+是同一个对象吗？ True
+from-cache
 ```
 
-### 复刻步骤
+### 实验一解读：撞墙了
 
-```bash
-docker version                       # ① 确认 docker 可用
-docker pull python:3.12-slim         # ② （可选）提前拉镜像
-cd sandbox-lab && python3 demo.py    # ③ 跑
+管家原话翻译："这间房已经有人住了，想用这名字，要么让他退房，要么换名字。" 为什么撞：a 和 b 是两个独立对象，各自的 `container_id` 都是 None，互相一无所知；但它们共享同一个管家，而**容器名在管家那里全局唯一**。b 以为自己从没建过容器，理直气壮 create，管家翻开登记簿：重名，拒办。
+
+放到真实系统：Web 服务里张三在会话 A 聊 10 轮，**每轮都是独立的 HTTP 请求**（无状态）。处理第 3 轮的代码不天然记得第 2 轮干过什么。每轮裸 `Sandbox(thread_id)` → **第 2 轮就撞墙**。必须有人记住"会话 A 的沙箱早建好了"。
+
+### 实验二解读：缓存 = 前台花名册
+
+一个字典（会话 ID → 沙箱对象）。第一次来登记开房；之后来直接发**同一个对象**（`sb1 is sb2 == True`，连内存地址都一样——同一把钥匙）。同一会话永远复用同一容器，撞墙消失。
+
+### 缓存的天敌：进程重启
+
+`_cache` 在内存里，主程序一重启就清零。张三的会话再来：cache miss → 裸建 → create 同名 → 又撞墙。**但撞墙恰恰说明容器还活着**（管家知道名字被占）。出路是撞之前先问一句——按名找回：
+
+```python
+# 按名找回：create 之前先 inspect 一下名字
+r = _run(["docker", "inspect", "-f", "{{.Id}}", self.name])
+if r.returncode == 0:      # 名字存在 → 容器还在世上 → 直接复用
+    self.container_id = r.stdout.decode().strip()
+else:                       # 真不存在 → 才 create
+    self._create()
 ```
+
+**两层记忆**：进程内缓存（快，重启失忆）+ 容器名（存在管家那里，永不失忆）——内存管热路径，名字管跨重启。真实项目按名找回时还**校验 label**（容器贴着 `aegra.thread_id=xxx`，对得上才敢用，防同名异物拿错房）。
+
+### 对照真实项目：backend.py
+
+```python
+cache = {}                                    # ← 花名册
+
+def factory(runtime):                         # ← DeepAgents 每次 run 时调它要沙箱
+    configurable = runtime.config["configurable"]
+    thread_id = configurable.get("thread_id")   # 哪场对话
+    user_id   = configurable.get("user_id")     # 谁在聊
+    graph_id  = configurable.get("graph_id")    # 哪个 agent
+
+    if thread_id in cache:                      # 命中 → 同一把钥匙
+        return cache[thread_id]
+
+    ...按 thread_id/user_id/graph_id 拼容器名、labels、环境变量...
+    cache[thread_id] = Sandbox(...)
+    return cache[thread_id]
+```
+
+- **runtime**：LangGraph 每次 run 时递进来的"上下文包裹"，factory 的活 = 挖身份 → 查花名册 → 发钥匙。会话 ID 不再手动传——**每轮请求自动带着**（前端每次都带 thread_id，像每次进酒店刷同一张房卡）。
+- **身份三件套**：
+
+| 身份 | 变成容器的什么 | 意义 |
+|---|---|---|
+| thread_id | 容器名 + label | 一场对话一个沙箱 |
+| user_id | label + 注入 JZFZ_TOKEN 环境变量 | 沙箱里的代码以张三的身份调内部 API——"**沙箱内的代码 = 该用户身份**" |
+| graph_id | label + skill 挂载位置 | 第 8 课伏笔 |
+
+- **DNS**：`--dns 192.168.0.50 --dns-search jzfz.local`——沙箱里的代码能解析公司内网域名（光有 token 不够，还得找得到门）。
 
 ---
 

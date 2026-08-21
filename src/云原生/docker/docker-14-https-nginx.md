@@ -214,6 +214,116 @@ default via 172.22.208.1 dev eth0 proto kernel
 
 ---
 
+## 第 2 课：解剖一张真网站的证件
+
+**🧑‍🏫 老师：**
+
+空讲证件长什么样没意思，我们先去**偷看一张真网站的证件**——连上百度，把它出示的证书抓下来：
+
+```bash
+echo | openssl s_client -connect www.baidu.com:443 -servername www.baidu.com 2>/dev/null \
+    | openssl x509 -noout -subject -issuer -dates -ext subjectAltName
+```
+
+（管道开头的 `echo |` 是喂一个回车让命令别挂着等输入，照抄即可。）`openssl s_client` 的角色是「冒充浏览器」——去做一次 TLS 握手，把对方递出来的证件原件抓下来；`openssl x509` 把它翻译成人能读的字段。本机真实输出：
+
+```text
+subject=C=CN, ST=Beijing, L=Beijing, O=Beijing Baidu Netcom Science Technology Co., Ltd., CN=baidu.com
+issuer=C=BE, O=GlobalSign nv-sa, CN=GlobalSign RSA OV SSL CA 2018
+notBefore=Jul  9 02:32:55 2026 GMT
+notAfter=Jan 24 02:32:55 2027 GMT
+X509v3 Subject Alternative Name:
+    DNS:baidu.com, DNS:click.hm.baidu.com, DNS:baifubao.com, DNS:www.baidu.cn, DNS:www.baidu.com.cn, DNS:mct.y.nuomi.com, DNS:apollo.auto, DNS:dwz.cn, DNS:update.pan.baidu.com, DNS:wn.pos.baidu.com, DNS:cm.pos.baidu.com, DNS:log.hm.baidu.com, DNS:*.baidu.com, DNS:*.baifubao.com, DNS:*.baidustatic.com, DNS:*.bdstatic.com, DNS:*.bdimg.com, DNS:*.hao123.com, DNS:*.nuomi.com, DNS:*.chuanke.com, DNS:*.trustgo.com, DNS:*.bce.baidu.com, DNS:*.eyun.baidu.com, DNS:*.map.baidu.com, DNS:*.mbd.baidu.com, DNS:*.fanyi.baidu.com, DNS:*.baidubce.com, DNS:*.mipcdn.com, DNS:*.news.baidu.com, DNS:*.baidupcs.com, DNS:*.aipage.com, DNS:*.aipage.cn, DNS:*.bcehost.com, DNS:*.safe.baidu.com, DNS:*.im.baidu.com, DNS:*.baiducontent.com, DNS:*.dlnel.com, DNS:*.dlnel.org, DNS:*.dueros.baidu.com, DNS:*.su.baidu.com, DNS:*.91.com, DNS:*.hao123.baidu.com, DNS:*.apollo.auto, DNS:*.xueshu.baidu.com, DNS:*.bj.baidubce.com, DNS:*.gz.baidubce.com, DNS:*.smartapps.cn, DNS:*.bdtjrcv.com, DNS:*.hao222.com, DNS:*.haokan.com, DNS:*.pae.baidu.com, DNS:*.vd.bdstatic.com, DNS:*.cloud.baidu.com
+```
+
+（SAN 实际一长串共几十个域名，此处节选。）逐块读这张真证件，它就是「证书」这个词的活样本：
+
+**`subject`——证件是给谁办的。** 拆开：国家 CN、城市 Beijing、公司「北京百度网讯科技」、最关键的 **`CN = baidu.com`：这张证绑定 baidu.com**。subject 就是「持证人」。
+
+**`issuer`——章是谁盖的。** 盖章的是一家比利时公司 **GlobalSign**——第 1 课说的 CA，这就是它活的样子。注意细节：**subject ≠ issuer**，持证人和盖章人不是同一个——这是「由 CA 签发」的铁证。等做自签证书时，你会看到两者一模一样——自己给自己盖章。
+
+**`Verify return code: 0 (ok)`——「绿」在命令行里的样子。**（抓证书时顺带输出）本机信任名单里有 GlobalSign，验证通过。记住这个 `0 (ok)`，以后会看到它不是 0 的时候长什么样。
+
+**有效期。** `notBefore` / `notAfter` 之间才算数，浏览器每次都拿当前时间对一遍，不在区间内就红页——你见过的「网站的安全证书已过期」就是它到期了。
+
+**SAN——真正绑定域名的字段。** 两个看点：一张证可以绑很多域名；`*.baidu.com` 这种通配符罩住所有子域名。
+
+这里有个**重要的坑**：`CN = baidu.com`，但 `www.baidu.com` 并没有单独写在 CN 里——因为**现代浏览器验域名只看 SAN、完全无视 CN**（Chrome 58 起）。CN 成了摆设，SAN 才是干活的字段。以后自己造证书时 SAN 忘了写，证书照样能生成、照样能配进 nginx，但浏览器一律报「域名不匹配」——这个坑后面会亲手踩一遍。
+
+留个伏笔：这张证件里还躺着一样东西没展示——**百度站点的公钥**，它是「信封」机制的零件。下一课自己动手：生成一对钥匙、给自己签一张证书、喂给 nginx，亲眼看看红页和 `curl -k` 的真身。
+
+一句话总结本课：
+
+> **证书 = 「我是谁（SAN 域名清单）+ 我的公钥 + 有效期」，外加一个章（issuer 的 CA 签名）；浏览器验的是 SAN 和章，不看 CN。**
+
+---
+
+## 插问 4：证书里面，哪里有 SAN？
+
+**🧑‍🎓 学生：** 证书里面，哪里有 SAN？我在输出里找不到这三个字母。
+
+**🧑‍🏫 老师：**
+
+因为它藏在全称里——输出这行的全称就是 SAN：
+
+```text
+X509v3 Subject Alternative Name:
+    DNS:baidu.com, ...
+```
+
+**SAN = Subject Alternative Name 的缩写**，中文叫「主体备用名称」。再把证书的内部结构抓出来看它住在哪一层：
+
+```bash
+echo | openssl s_client -connect www.baidu.com:443 -servername www.baidu.com 2>/dev/null \
+    | openssl x509 -noout -text | grep -A4 "X509v3 extensions"
+```
+
+```text
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+                  URI:http://crl.globalsign.com/gsrsaovsslca2018.crl
+            X509v3 Subject Alternative Name:
+                DNS:baidu.com, DNS:click.hm.baidu.com, ..., DNS:*.cloud.baidu.com
+            X509v3 Extended Key Usage: ...
+```
+
+SAN 住在证书的**「扩展区」**里，整张证书的结构钉成一张图：
+
+```text
+一张 X.509 证书
+├── 基本区（v1 时代就有，固定栏目）
+│     ├── Subject        ← 持证人：CN = baidu.com（老的"名字"栏）
+│     ├── Issuer         ← 盖章的 CA：GlobalSign
+│     ├── Validity       ← 有效期
+│     └── 公钥            ← 百度站点的公钥
+│
+└── X509v3 extensions（扩展区，v3 版才加的）
+      ├── Key Usage            ← 这把钥匙的用途（签名/加密）
+      ├── Basic Constraints    ← CA:FALSE（这张证不是用来当 CA 的）
+      ├── Subject Alternative Name  ← ★ SAN：域名清单
+      │       DNS:baidu.com, DNS:*.baidu.com, ...
+      └── ...
+```
+
+三个点说透：
+
+**「X509v3」是什么。** X.509 是证书的格式标准——就像「身份证的规格由公安部定」，证书长什么样、有哪些栏位，由 X.509 定。v1/v2 时代只有「基本区」那几个固定栏目；v3 引入了**扩展（extensions）机制**——标准栏位不够用的，都往扩展区里加。SAN 就是 v3 补进来的，所以每行扩展都顶个 `X509v3` 前缀。
+
+**为什么域名清单放进扩展、不直接用 CN？** CN 只能写**一个**名字，而且历史上被塞过公司名、邮箱等各种东西，语义早就不干净。v3 干脆新开一个专门字段放「这个证到底拥有哪些域名」——能列一长串、还能写通配符。**旧栏位（CN）留着但不再信，新栏位（SAN）说了算**——典型的「历史包袱不好删，就开新字段」设计。
+
+**30 秒自己看到它。** 浏览器随便进个 https 网站 → 点地址栏锁图标 →「证书」→ 详细信息里翻到**「主题备用名称」**——那就是 SAN 的中文界面版。
+
+埋个伏笔：下一课自己签证书时，命令里的 `-addext "subjectAltName=DNS:lab.test"` 干的就是往这个扩展区里写 SAN，而且你会亲手看到**不写它会发生什么**。
+
+> 一句话收口：**SAN = Subject Alternative Name（主体备用名称），住在证书的 X509v3 扩展区里；浏览器验域名只认它。**
+
+---
+
 ## 待续
 
-课程进行中，后面的内容（解剖证书、自签 HTTPS、报错地图、自建 CA、Compose 反代、生产证书）讲完会持续追加到本文。
+课程进行中，后面的内容（自签证书实操、报错地图、301 跳转、自建 CA、Compose 反代、生产证书）讲完会持续追加到本文。
+
+
