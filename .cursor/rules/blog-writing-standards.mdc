@@ -6,7 +6,7 @@ alwaysApply: false
 
 # 博客写作通用规范
 
-撰写或修改 `src/` 下任意文章时，必须遵守以下规范。专项规则在其上叠加，不互相覆盖：结构用滚雪球（`blog-snowball-tutorial.mdc`），权限系列另见 `windows-permissions-writing.mdc`。
+撰写或修改 `src/` 下任意文章时，必须遵守以下规范。专项规则在其上叠加，不互相覆盖：结构用师生对话实录（`blog-dialogue-transcript.mdc`），权限系列另见 `windows-permissions-writing.mdc`。
 
 ## 1. 问题驱动
 
@@ -24,7 +24,7 @@ alwaysApply: false
 
 ## 3. 深入浅出、循序渐进
 
-- 从已知到未知，一次只推进一层；章节骨架见滚雪球专项
+- 从已知到未知，一次只推进一层；章节骨架见师生对话实录专项
 - 先直觉与例子，再抽象与术语
 - 读者应能顺着一条线读完，而不是跳着啃碎片
 - 动手实验与概念综述都走滚雪球：同一场景/产物长大，不换一套互不相关的例子
@@ -53,4 +53,4 @@ alwaysApply: false
 - 读者都是小白用户
 
 
-最重要的：先极简案例、再一层层加因素。落笔时按 `blog-snowball-tutorial.mdc` 的开头 / 每一球 / 章末四件套执行。
+最重要的：先极简案例、再一层层加因素。落笔时按 `blog-dialogue-transcript.mdc` 的「写在前面 / 第 N 课 / 插问 / 课堂检查回放 / 章末」执行。
