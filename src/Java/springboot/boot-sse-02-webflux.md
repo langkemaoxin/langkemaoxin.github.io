@@ -39,7 +39,7 @@ description: "对比 MVC SseEmitter 与 WebFlux Flux 两种 SSE 实现，讲解 
 
 ---
 
-## 二、Flux<ServerSentEvent> 代码 walkthrough
+## 二、`Flux<ServerSentEvent>` 代码 walkthrough
 
 ### 2.1 依赖（Boot 4.1.0）
 

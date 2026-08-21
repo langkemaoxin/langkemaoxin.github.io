@@ -32,7 +32,7 @@ description: 从「mitm 解不出小区单价」接着往下滚：每次只加�
 2. Network 里偶见 `fxt-api.huanjutang.com`，响应仍可能是业务加密，所以根本就无法从网页请求链接中看到什么数据
 3. Elements 里的 `page-frame.html` 壳上也几乎没有单价字段。
 
-![image-20260820101607939](E:\MyGithub\langkemaoxin.github.io\src\Notes\img\wechat-miniprogram-fangxiaotuan-wmpfdebugger-cdp-runtime\image-20260820101607939.png)
+![image-20260820101607939](../img/wechat-miniprogram-fangxiaotuan-wmpfdebugger-cdp-runtime/image-20260820101607939.png)
 
 所以爬虫进度就陷入了停滞。接口的返回结果是加密的，页面上也无法获取什么内容，没法使用Dom解析。
 
