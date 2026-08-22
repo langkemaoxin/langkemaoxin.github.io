@@ -490,3 +490,453 @@ c88cb4c6fe5f   rabbitmq-cluster_default   bridge    local
 答我两问：通/不通；**为什么宿主机能、同事不能**——用前三课学过的概念把推理链说出来。
 
 ---
+
+## 【2026-08-22 · 第 4 次对话（插播问答）】
+
+### 学生原话
+
+> 你怎么知道 docker0的？为什一上来就直接 ip addr show docker0
+
+### 操作记录（"还原现场"实验，全部真机执行）
+
+1. 宿主机 `ip -br addr`（无参数撒网）→ 全部网卡：`lo`、`eth0`（172.22.212.111/20，WSL 真网卡）、`docker0`（172.17.0.1/16）、`docker_gwbridge`（172.23.0.1/16，DOWN）、`br-c88cb4c6fe5f`（172.20.0.1/16，DOWN）、`br-d4438b6fccbf`（172.18.0.1/16，DOWN）、`br-232b31f9d168`（172.19.0.1/16，DOWN）、veth ×5（UP）。
+2. `docker network inspect bridge`（截取前 2000 字符）→ 账本 Options 里白纸黑字：`"com.docker.network.bridge.name": "docker0"`、`"com.docker.network.bridge.default_bridge": "true"`、**`"com.docker.network.bridge.enable_ip_masquerade": "true"`**（第 5 课 NAT 魔术的官方预告）、IPAM：`Subnet 172.17.0.0/16, Gateway 172.17.0.1`。
+3. 名册核对 `docker network inspect bridge`（Containers 全量）→ 业主 5 名：jzfz-pg(.2)、jzfz-redis(.3)、lab-net-web(.4)、s-net-web(.5)、s-net-db(.6)——**box1/box2 不在册**，与第 3 课"box1 拿着 172.17.0.7 且 ping 通"矛盾。
+4. 对质 `docker inspect box1` → `NetworkMode=bridge`，但 `Networks.bridge` 的 `EndpointID=""`、`IPAddress=""`——endpoint 是空壳：上次课的容器经历过环境重启，Docker 账本已注销该连接，内核里 veth38 还插在 docker0 上（所以能 ping）。
+5. 本对话实录追加进本文件。
+
+### 老师原文（插播问答：知识从哪来）
+
+（以下与控制台输出一字不差）
+
+---
+
+这个问题的质量，比你前三道答题都高。答题是"验证你听懂了没有"，这个问题是"**老师的东西是哪来的**"——这是从学生往大师走的那个岔路口。我分层诚实回答。
+
+## 第一层（老实话）：我是先知道答案，再去看的
+
+docker0 不是我"发现"的，是我"背过"的。它是 Docker 的**官方固定默认行为**：装完 Docker 必有这块网卡、名字必然叫 docker0、默认必然是 172.17.0.1/16——写死在官方文档里，全世界的工程师都背过。所以我上课"一上来就直接 `ip addr show docker0`"，那是**确认**，不是**发现**。你看到我行云流水，不是因为我会算命，是因为我备过课。
+
+承认这个很重要：**"知道答案的人"没什么了不起，了不起的是"不知道时知道怎么找"**。所以第二层才是这节课真正要教你的。
+
+## 第二层：如果你不知道，你怎么自己找到它——三板斧
+
+### 第一板斧：撒网（无参数命令，先看全貌）
+
+`ip addr` 不带任何参数，就是把宿主机**所有网卡一网打尽**。我真机跑了（`ip -br addr` 是它的紧凑版）：
+
+```
+$ ip -br addr
+lo               UNKNOWN        127.0.0.1/8 ::1/128
+eth0             UP             172.22.212.111/20 fe80::215:5dff:fe83:83a2/64
+docker0          UP             172.17.0.1/16 fe80::64c5:efff:fec2:a788/64
+docker_gwbridge  DOWN           172.23.0.1/16
+br-c88cb4c6fe5f  DOWN           172.20.0.1/16
+br-d4438b6fccbf  DOWN           172.18.0.1/16
+br-232b31f9d168  DOWN           172.19.0.1/16
+veth5efa696@if2  UP             fe80::6036:9bff:fec5:6fc5/64
+vethb08adfc@if2  UP             fe80::a843:2eff:fe99:4227/64
+...（共 5 根 UP 的 veth）
+```
+
+一台"干净"的 Linux，网卡应该只有 `lo` 和 `eth0` 两个。多出来的每一块都是"嫌疑人"。看名单——`docker0` 这名字自己都招了：**docker 前缀**，"0"是编号。旁边的 `br-c88cb4c6fe5f` 三个 `br-` 开头的，是第 3 课 `docker network ls` 里那几个自定义小区的交换机（`br-` + 网络 ID 前缀拼的设备名，第 8 课细讲）。**撒网的收获：嫌疑人名单 + 名字里的线索。**
+
+### 第二板斧：对暗号（两个观察对上了，就不是巧合）
+
+撒网看到 docker0 的 IP 是 `172.17.0.1`——这个数字眼熟吗？**第 2 课容器里的网关就是它**。容器说"我的大门是 172.17.0.1"，宿主机上恰好有块网卡的 IP 是 172.17.0.1。两个独立观察撞在一起，就不是巧合，是同一件事的两面。
+
+### 第三板斧：查账（回到权威源头求证）
+
+猜测要拿证据坐实。Docker 自己的账本——`docker network inspect bridge`——我真机跑了，节选：
+
+```
+"Driver": "bridge",
+"IPAM": { "Config": [ { "Subnet": "172.17.0.0/16", "Gateway": "172.17.0.1" } ] },
+"Options": {
+  "com.docker.network.bridge.default_bridge": "true",
+  "com.docker.network.bridge.name": "docker0",
+  "com.docker.network.bridge.enable_ip_masquerade": "true",
+  ...
+}
+```
+
+白纸黑字：`"com.docker.network.bridge.name": "docker0"`——Docker 亲口承认，bridge 小区绑定的内核设备就是 docker0。查账完毕，铁证。
+
+顺手给你指个金矿：注意 Options 里那行 **`enable_ip_masquerade: true`**——"启用 IP 伪装"。这是第 5 课那个魔术的**官方预告片**，Docker 账本里自己写着的。到时候回来重读这一行，你会拍腿。
+
+## 课堂意外（白送的第四板斧：账本和现实打架时，对质）
+
+今天查账时撞出一个真意外，正好当教材。Docker 的业主名册里，bridge 小区在册的只有 5 个容器——**box1、box2 不在册**！但第 3 课我们明明 ping 通了 box1（172.17.0.7）。账本和现实打架了。
+
+接着查 box1 自己的档案：`NetworkMode=bridge` 没错，但网络条目里 `EndpointID` 和 `IPAddress` **全是空的**——这是个空壳记录。定性：box1 是上次课遗留的容器，中间这台机器的环境重启过，Docker 重启后**账本上把这条连接注销了，但内核里那根 veth38 还插在 docker0 上、IP 还挂着**，所以照常能 ping。
+
+给你一句能用十年的话：**内核才是现实，Docker 只是记账员。账本会脱节，现实不会撒谎。** 所以第四板斧是：当两条证据矛盾时，别急着信任何一方，继续往下查到它们汇合为止——今天"ping 得通"（内核现实）和"不在册"（Docker 账本）就是这样汇合的。
+
+## 本课小结
+
+你问"我怎么知道 docker0"，我给你的答案是一套**可复制的探索流程**：
+
+1. **撒网**：无参数命令看全貌（`ip addr`），找陌生脸，读名字里的线索
+2. **对暗号**：新观察和旧观察撞上了，就不是巧合
+3. **查账**：回到权威源头（`docker network inspect`）拿铁证
+4. **对质**：证据矛盾时，查到汇合为止；内核是现实，账本是记录
+
+老师比你多的不是"知道 docker0"这个事实，是这四板斧。从下节课起，你也可以开始用它——下次你在任何陌生机器上看到一块叫 `br-` 什么的陌生网卡，你就已经知道怎么把它查个底掉了。
+
+---
+
+上一课的思考题还挂着：**同事的电脑 ping 172.17.0.7，通不通？为什么宿主机能、同事不能？** 答完它，我们进第 4 课。
+
+---
+
+## 【2026-08-22 · 第 5 次对话（插播问答二）】
+
+### 学生原话
+
+> ip link show type veth 这个究竟什么？
+
+### 操作记录（全部真机执行）
+
+1. 三连对照实验首跑：`ip -br link` / `ip -br link type veth` / `ip -br link type bridge` → 后两条报错 `Command "type" is unknown`（此版本 iproute2 不接受 `-br` 与 `type` 过滤组合）；全量清单正常：11 块（eth0、docker0、docker_gwbridge、br-×3、veth×5）。
+2. 正确语法重跑：`ip link show type veth`（grep 编号行）→ **只剩 5 根** veth，全部 `master docker0`；`ip link show type bridge` → **5 台交换机**（docker0、docker_gwbridge、br-c88/br-d44/br-232）。
+3. 新意外：第 3 课同样命令出 7 根 veth，现在 5 根——box1/box2 的 38/39 号 veth 消失。验证三连：宿主机 `ping 172.17.0.7` → 100% 丢包；`docker exec box1` → `Error: container ... is not running`；`docker ps -a --filter name=box` → **box1/box2 均 Exited (0)，24 分钟前退出**。
+4. 结论：撤销第 4 次对话中"环境重启导致账本脱节"的定性。真相：busybox 容器跑的命令结束、正常退出；退出时容器网络空间销毁 → veth 成对拆除 → Docker 账本除名。ping 由通变不通、名册除名、endpoint 空壳，全部是**正常清理流程**，不是脱节。
+5. 本对话实录追加进本文件。
+
+### 老师原文（命令拆解 + 当堂纠错）
+
+（以下与控制台输出一字不差）
+
+---
+
+你问的这条命令，是第 3 课实验二的"取材命令"。它值得单独拆一课，因为拆完它，`ip` 命令**全家**你都会读了——那是你以后在网络世界天天用的瑞士军刀。
+
+## 一、逐词拆解：`ip link show type veth`
+
+先给你一个语法公式，Linux 的 `ip` 命令全家族都长这样：
+
+```
+ip   <对象>   <动作>   [筛选条件]
+     link     show     type veth
+     ↓        ↓        ↓
+   操作谁？  干什么？  只挑哪些？
+```
+
+- **`ip`**：工具本身。Linux 网络的一切物件——网卡、地址、路由——都用它查看和配置。
+- **`link`**：对象。"link"指链路层设备，说白了就是**网卡这个物件本身**。它有两个亲兄弟，你前几课全见过：`ip addr`（看网卡上挂的 IP 地址）和 `ip route`（看路由表）。**link 管物件，addr 管门牌，route 管出门规则**——三兄弟各管一层。
+- **`show`**：动作，"显示"。不写它也默认是 show（`ip link` = `ip link show`）。
+- **`type veth`**：筛选条件，**只显示"型号"为 veth 的设备**。这是今天的核心，下面细讲。
+
+## 二、核心概念：网卡是一"大类"，每块都有型号
+
+很多人以为"网卡"就是一种东西。错——网卡是一**大类设备**，每块网卡都有一个**型号（type）**，就像"车"是大类，下面分轿车、卡车、公交。
+
+你这台宿主机上，此刻就跑着好几种型号。我做了一组对照实验（全量 vs 按型号筛）：
+
+**A. 全量——所有网卡一网打尽：**
+
+```
+$ ip -br link
+eth0             UP             00:15:5d:83:83:a2 ...
+docker0          UP             66:c5:ef:c2:a7:88 ...
+docker_gwbridge  DOWN           2a:d8:8b:59:c0:e9 ...
+br-c88cb4c6fe5f  DOWN           d6:29:9c:72:82:85 ...
+br-d4438b6fccbf  DOWN           66:d2:84:73:7b:61 ...
+br-232b31f9d168  DOWN           5e:64:53:2c:a7:32 ...
+veth5efa696@if2  UP             62:36:9b:c5:6f:c5 ...
+vethb08adfc@if2  UP             aa:43:2e:99:42:27 ...
+...（veth 共 5 根）
+```
+
+**B. 只看 veth 型号——`ip link show type veth`：**
+
+```
+15: veth5efa696@if2: ... master docker0 state UP ...
+16: vethb08adfc@if2: ... master docker0 state UP ...
+31: veth2476840@if2: ... master docker0 state UP ...
+32: veth917df32@if2: ... master docker0 state UP ...
+33: veth1d30c12@if2: ... master docker0 state UP ...
+```
+
+**C. 只看 bridge 型号——`ip link show type bridge`：**
+
+```
+4: docker0:          ... state UP ...
+5: docker_gwbridge:  ... state DOWN ...
+7: br-c88cb4c6fe5f:  ... state DOWN ...
+8: br-d4438b6fccbf:  ... state DOWN ...
+9: br-232b31f9d168:  ... state DOWN ...
+```
+
+看出规律了吗：**A = B + C + eth0**（物理网卡）。`type` 过滤器就像文件管理器里"只显示 PDF"——网卡清单按型号分拣，每次只捞一种。
+
+你机器上现有的三种型号，正好就是 Docker 网络世界的三种积木：
+
+| 型号（type） | 是什么 | Docker 里的角色 |
+| --- | --- | --- |
+| `eth0`（物理/虚拟网卡） | 普通网卡，有门牌能上网 | 宿主机联外网的腿 |
+| `bridge` | 软件交换机 | docker0、br-xxx 小区的交换机 |
+| `veth` | 成对网线 | 容器插交换机的那根线 |
+
+**第 3 课的全景图，翻译成今天的型号语言就是：用 veth（网线）把容器和 bridge（交换机）连起来，交换机再通过物理网卡（腿）出门。Docker 网络 = 三种积木的拼装。**
+
+所以当时为什么用 `type veth`：宿主机上十来块网卡，veth 混在里面，按型号一筛，"网线的另一半们"全部现形，还每根都标着 `master docker0`（插在哪台交换机上）。撒网技术第二式：**按型号捞**。
+
+## 三、课堂意外终章：veth 从 7 根变 5 根，以及老师的错误
+
+你看到了：第 3 课这条命令输出 **7 根** veth，今天只剩 **5 根**。box1/box2 的 38、39 号网线，没了。我顺手做了验证：
+
+```
+$ ping -c 2 -W 1 172.17.0.7
+2 packets transmitted, 0 received, 100% packet loss    ← 第 3 课还是 0% 丢包！
+
+$ docker exec box1 ip -br link
+Error response from daemon: container ... is not running
+
+$ docker ps -a --filter name=box
+box2   Exited (0)   24 minutes ago
+box1   Exited (0)   24 minutes ago
+```
+
+真相：box1/box2 里跑的命令结束了，**两个容器 24 分钟前正常退出**。容器一退出：它的网络空间销毁 → veth 这根"成对网线"一端报废、整对拆除 → IP 还回号码池 → Docker 账本除名。所以 veth 少两根、ping 不通、名册除名、endpoint 空壳——**全是正常清理流程，环环自洽**。
+
+现在说我的错误。上一堂课（第 4 次对话），我看到"名册除名 + endpoint 空壳"，结合"这台 WSL 以前杀过容器"的记忆，给你讲了一个"环境重启导致账本脱节"的故事。**那个定性是错的。** 真相平凡得多：容器就是退出了。我错在哪？**我当时没跑 `docker ps -a`**——一条十秒钟的命令就能看到"Exited (0) 24 minutes ago"，我却停在了一个"讲得通"的故事上。这恰好违反了我自己教你的第四板斧：查到证据链闭合为止。
+
+所以今天给你的金句，比上一课那句更狠：
+
+> **讲得通的解释 ≠ 对的解释。证据链没闭合之前，任何"合理的故事"都只是嫌疑犯。**
+
+这个错误我留着不改（实录里原样放着），因为它比一百次正确更有教学价值——你以后也会犯同样的错：脑补一个顺滑的解释，然后停止查证。记住今天的 box1。
+
+## 本课小结
+
+- `ip` 语法公式：`ip <对象> <动作> [筛选条件]`；三兄弟 `link`（物件）/ `addr`（门牌）/ `route`（出门规则）
+- 网卡分型号：`type` 过滤 = 文件管理器的"按类型筛选"
+- Docker 网络三种积木：物理网卡（腿）、bridge（交换机）、veth（网线）
+- 容器退出 → veth 成对拆除 → IP 回池 → 账本除名，全链自动
+- 老师当堂纠错：证据链闭合前，别信"讲得通"的故事
+
+---
+
+**思考题更新**：box1 已退房，题目例子换成在册住户 **jzfz-pg（172.17.0.2）**——你的宿主机 ping 它通，**同事的电脑** ping 172.17.0.2 通不通？为什么宿主机能、同事不能？答完进第 4 课。
+
+---
+
+## 【2026-08-22 · 第 6 次对话】
+
+### 学生原话
+
+> 根据刚刚学到的 veth虚拟网线，容器和宿主机是有一条网线相连的，但是容器和容器之间没有网线相连，所以容器之间不能ping得通
+
+### 操作记录（第 4 课实验，全部真机执行）
+
+1. 起两个新容器：`docker run -d --name lab-a busybox sleep 1800`、`lab-b` 同款 → lab-a 得 `172.17.0.8`、lab-b 得 `172.17.0.9`（首次取 IP 的模板 `.NetworkSettings.IPAddress` 报错 map no entry，换 `{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}` 成功）。
+2. 互 ping：`lab-a ping 172.17.0.9` → 2 发 2 收 0% 丢包（0.083ms avg）；`lab-b ping 172.17.0.8` → 同样 0% 丢包（0.085ms avg）。**双向全通。**
+3. `docker exec lab-a cat /proc/net/arp` → ARP 表里有一条：`172.17.0.9 → f6:b1:0e:b7:a8:97`（lab-b 的 MAC）。
+4. 数 veth：`ip link show type veth` 编号行 `grep -c` → **8 根**。预期 5+2=7，对不上 → 查 `docker ps`：8 个容器在跑——**box1 复活了**（Up 9 minutes）。查 restart 策略：`box1 RestartPolicy=no`，`StartedAt=2026-08-21T23:58:13Z`（北京 07:58，与 Up 9min 吻合）→ 是被某种方式手动 start 的，非策略自动拉起；谁拉的现有证据查不到，到此为止。8 容器 ↔ 8 根 veth，账平。
+5. 本对话实录追加进本文件。
+
+### 老师原文（判卷 + 第 4 课）
+
+（以下与控制台输出一字不差）
+
+---
+
+**先判卷。**
+
+你的推理链：veth 连着容器和宿主机 → 容器之间没有直连网线 → 所以容器之间 ping 不通。
+
+推理的**形式**很漂亮——用刚学的概念做预测，这正是学网络该有的姿势。前半句对了一半，结论**错**。错在哪？一句话：**你把"交换机"当成了"宿主机"本身。**
+
+修正模型：veth 这根网线，不是插在"宿主机"上的，是插在 **docker0（那台软件交换机）**上的。docker0 确实长在宿主机身上，但它的角色是**交换机**，不是网线的终点。而交换机存在的意义、它天生的本职工作就是一件事：**让插在它身上的所有设备互通**。
+
+换个类比：宿主机是一栋办公楼，docker0 是楼里机房的那台交换机，veth 是每个工位到机房的网线。工位 A 和工位 B 之间确实没有直连网线——**你这半句说对了**——但它们的线都插在同一台交换机上。在同一个交换机上的设备，就是同一间屋里的邻居，喊一嗓子彼此都听得见。
+
+不用信我嘴说。60 秒实验，让事实判卷。
+
+## 第 4 课：默认 bridge 实战——两个容器用 IP 互 ping
+
+### 实验设计
+
+起两个新容器，用最土的办法验证你的预测：
+
+```
+$ docker run -d --name lab-a busybox sleep 1800
+$ docker run -d --name lab-b busybox sleep 1800
+$ docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" lab-a   → 172.17.0.8
+$ docker inspect -f "..." lab-b                                                        → 172.17.0.9
+```
+
+你的预测：ping 不通。开牌：
+
+```
+$ docker exec lab-a ping -c 2 -W 2 172.17.0.9
+64 bytes from 172.17.0.9: seq=0 ttl=64 time=0.097 ms
+64 bytes from 172.17.0.9: seq=1 ttl=64 time=0.070 ms
+--- 172.17.0.9 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+
+$ docker exec lab-b ping -c 2 -W 2 172.17.0.8
+2 packets transmitted, 2 packets received, 0% packet loss
+```
+
+**双向全通，0% 丢包，0.09 毫秒。** 你的预测被实验打脸了——恭喜，这是学实验科学最好的时刻。
+
+### 铁证：lab-a 的 ARP 邻居表
+
+光"通"还不够，我再给你一个更硬的证据。查 lab-a 内心深处的邻居记录：
+
+```
+$ docker exec lab-a cat /proc/net/arp
+IP address       HW type     Flags       HW address            Mask     Device
+172.17.0.9       0x1         0x2         f6:b1:0e:b7:a8:97     *        eth0
+```
+
+解释一下你看到什么了：网络底层不认 IP 认 MAC（第 2 课那个"网卡出厂编号"）。同一根线路段上的设备互相通信前，会先**广播喊话**："谁是 172.17.0.9？把你的 MAC 报给我！"——这种喊话**只有同一链路段上的设备听得到**（它不会被转发到网关外面去）。lab-a 的表里清清楚楚记着 lab-b 的 MAC `f6:b1:0e:b7:a8:97`——说明 lab-a 是通过"同一根线路段上的广播"直接找到 lab-b 的。**它俩在同一个链路段上，中间没有任何网关。**这就是"插在同一台交换机上"的铁证。
+
+### 第 2 课伏笔兑现：什么叫"邻居"
+
+还记得第 2 课路由表那两行吗？
+
+```
+default via 172.17.0.1 dev eth0          ← 其余的，交大门
+172.17.0.0/16 dev eth0 scope link ...    ← 邻居，直接喊话
+```
+
+当时我说"邻居 = 同小区住户"，含糊带过。今天可以给出精确版了：**"邻居"就是"插在同一台交换机上的设备"**。lab-a ping lab-b，路由表一查：目的地 172.17.0.9 在 172.17.0.0/16 里 → 走第二条规则 → 直接从 eth0 喊话（ARP 广播找 MAC）→ docker0 这台交换机把喊话转给 lab-b 的网线 → 完成。**全程没碰大门，没出小区。**
+
+### 包的完整旅程（全景图升级）
+
+```
+lab-a                                  lab-b
+┌──────────┐                          ┌──────────┐
+│ eth0     │                          │ eth0     │
+│ 172.17.0.8│                         │ 172.17.0.9│
+└────┬─────┘                          └────▲─────┘
+     │ veth（网线的一半）                   │
+     ▼                                    │ veth
+┌─────────────────────────────────────────────┐
+│                docker0 交换机                  │  ← 在宿主机肚子里
+└─────────────────────────────────────────────┘
+```
+
+包从 lab-a 的 eth0 出发 → 顺着 veth 网线滑到 docker0 → docker0 查着 MAC 把它从另一根 veth 转给 lab-b → lab-b 的 eth0 收到。**容器之间确实没有直连网线，但交换机替它们"接了头"。**
+
+### 官方文档佐证 + 一颗延时炸弹
+
+官方文档原话（意译）：*默认配置下，默认 bridge 上的容器之间可以用**容器 IP 地址**无限制地互相访问。它们**不能通过名字互相访问**。*
+
+前半句今天兑现了。后半句请抄在便签上贴显示器边：**"不能用名字互访"**——这是默认 bridge 最大的坑，第 7 课它将引爆一场真实事故，第 8 课用它换来自定义网络的真谛。
+
+### 课堂支线：veth 为什么数出 8 根
+
+实验时我数 veth：预期 5 旧 + 2 新 = 7 根，实际 **8 根**。按第 5 次对话立的规矩，数字对不上就查——`docker ps` 一看：8 个容器，其中 **box1 复活了**（Up 9 minutes）。查它的重启策略是 `no`，说明不是自动拉起，是被某种方式重新 start 的（谁拉的，现有证据查不到，到此为止，不编故事）。重要的是事实链完整：**8 个容器 ↔ 8 根 veth，一一对应，账平了**。顺带这也实证了上一课的逆过程：**容器启动 → veth 自动重建 → 重新入册**。
+
+## 本课小结
+
+- 容器 ↔ 宿主机之间**没有**点对点网线；veth 是"容器 ↔ docker0 交换机"的网线
+- 同一 bridge 网络上的容器 = 同一台交换机上的邻居 = 同一链路段 → **用 IP 互 ping 通**（实测双向 0% 丢包）
+- ARP 表是"同一链路段"的铁证：里面有对方 MAC = 广播直呼过 = 没过网关
+- 第 2 课"邻居直呼"规则兑现：邻居 = 同一台交换机上的设备
+- 官方文档：默认 bridge 容器间**IP 互访无限制**、**名字互访不行**（第 7 课炸弹）
+
+## 课后思考题（第 5 课的门票）
+
+lab-a 现在能和 lab-b 互通了。那它能不能出门？在 lab-a 里 `ping 223.5.5.5`（阿里 DNS，公网地址），你觉得通不通？
+
+更关键的是第二问：**如果通了**——lab-a 发出的包裹，寄件人地址写的是 `172.17.0.8`。可是 172.17.x.x 这种门牌在互联网上**根本不存在**（它是"私网门牌"，出了小区没人认识）。那阿里的回程包裹，是怎么一路找到这台小电脑的？
+
+提示：答案就藏在第 4 次对话查账时你见过的那一行 Docker 账本里。
+
+---
+
+## 【2026-08-22 · 第 7 次对话（插播问答三）】
+
+### 学生原话
+
+> root@pc3507:~# docker exec box1 ip addr show eth0
+> 2: eth0@if50: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+>     link/ether 0a:da:f1:d1:9f:9c brd ff:ff:ff:ff:ff:ff
+>     inet 172.17.0.7/16 brd 172.17.255.255 scope global eth0
+>        valid_lft forever preferred_lft forever
+> root@pc3507:~# ip link show type veth
+> 15: veth5efa696@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
+>     link/ether 62:36:9b:c5:6f:c5 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+> 16: vethb08adfc@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
+>     link/ether aa:43:2e:99:42:27 brd ff:ff:ff:ff:ff:ff link-netnsid 1
+> 31: veth2476840@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
+>     link/ether 42:1a:96:83:b7:82 brd ff:ff:ff:ff:ff:ff link-netnsid 2
+> 32: veth917df32@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
+>     link/ether c2:28:43:92:ca:27 brd ff:ff:ff:ff:ff:ff link-netnsid 3
+> 33: veth1d30c12@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
+>     link/ether 4e:ac:7f:b6:0c:ed brd ff:ff:ff:ff:ff:ff link-netnsid 4
+> 50: veth1a7c2fb@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
+>     link/ether 3e:05:ac:2c:11:56 brd ff:ff:ff:ff:ff:ff link-netnsid 5
+>
+> 你刚刚不是说容器里面是 eth0,然后和对应编号的什么绑定在一起了么，和docker0有什么关系
+
+（学生首次**自主上机**，在同一台 PC3507 的 WSL 环境跑了两条课上的命令）
+
+
+
+### 老师原文（veth 的两层关系） 
+
+---
+
+先记一笔：**这是你第一次自己上机拿证据来问问题，而不是听我讲。**这个转折比这个问题的答案重要十倍——你已经开始用第 4 次对话那套"撒网—对暗号"了。而且运气极好：你这两条输出里，正好藏着你要的答案，还藏着两个连我都没安排的彩蛋。逐个拆。
+
+## 你混淆的：一根线上的两层关系
+
+你的疑问其实是："eth0@if50 这个'编号绑定'，跟 docker0 是什么关系？"
+
+答案是：**它们是两层完全不同的关系，在你自己的输出里用两种不同的标记写着，你把它们看成一层了。**
+
+### 第一层：`@if50` / `@if2` ——网线**内部**的事（跟 docker0 无关）
+
+看你自己抓到的这对：
+
+```
+容器 box1 里：2: eth0@if50          ← "我是 2 号，我的另一半是 50 号"
+宿主机上：  50: veth1a7c2fb@if2     ← "我是 50 号，我的另一半是 2 号"
+```
+
+`@ifN` 是 veth 网线**两半互相报对方编号**——纯粹是这一对内部的事。一对 veth 生来就连通：从一端塞进去的包，会原封不动从另一端掉出来，**哪怕这根线哪儿都没插**。这层关系里，docker0 没有任何戏份。
+
+### 第二层：`master docker0` ——网线**插上交换机**的事
+
+再看你的每根 veth 后面都拖着的那半句：`master docker0`。这句话的主语是**宿主机那半根线**（veth1a7c2fb），意思是："我把自己插在了 docker0 这台交换机的端口上。"——这才是"和 docker0 的关系"。
+
+### 合起来：一条完整的链
+
+```
+   box1 容器                                  宿主机
+┌───────────────────┐
+│ 2: eth0@if50       │ ← 网线的一半（容器侧）
+└─────────┬─────────┘
+          │ ══════ veth pair（@if50 与 @if2 互相报对方编号）══════
+┌─────────▼─────────┐
+│ 50: veth1a7c2fb@if2│ ← 网线的另一半（宿主机侧）
+│    master docker0  │ ← 这一半插在交换机上
+└─────────┬─────────┘
+          ▼
+    ┌───────────┐
+    │  docker0  │  ← 交换机（bridge 型号）
+    └───────────┘
+```
+
+一句话总结：**`@ifN` 是线自己的两根芯，`master docker0` 是线插上了哪台机器。容器里的 eth0 从头到尾不认识 docker0——它只认识自己手里那根线，线那头通到哪，是 Docker 布线时决定的。**
+
+ 
+
+## 本课小结
+
+- veth 两层关系两层标记：`@ifN` = 线的两半互报编号（线的内部）；`master docker0` = 线插上交换机（线与交换机）
+- 容器 eth0 不直接认识 docker0，只认识自己的网线
+- 容器重启 = 拆旧线、做新线、重租门牌（IP 可能相同可能不同，不保证）
+- 从 veth 清清单可以反推容器存活数——账本会说话
+
+---
+
+第 6 课的思考题还挂着：**lab-a 里 ping 223.5.5.5 通不通？公网不认识 172.17.0.8 这个私网门牌，回程包裹是怎么找到它的？**——提示再看一眼：第 4 次对话 Docker 账本里的那一行。答完进第 5 课。
+
+---
