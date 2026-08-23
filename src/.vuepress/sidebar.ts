@@ -9,6 +9,15 @@ export default sidebar({
   "/Ai/": [
     "",
     {
+      text: "学习路线",
+      icon: "route",
+      prefix: "roadmap/",
+      collapsible: true,
+      children: [
+        "aicon-2026-roadmap",
+      ],
+    },
+    {
       text: "自动化 / Playwright",
       icon: "robot",
       prefix: "playwright/",
@@ -328,6 +337,15 @@ export default sidebar({
       collapsible: true,
       children: [
         "yt-dlp的使用",
+      ],
+    },
+    {
+      text: "网络抓包",
+      icon: "folder",
+      prefix: "tcpdump/",
+      collapsible: true,
+      children: [
+        "tcpdump-classroom-dialogue",
       ],
     },
   ],

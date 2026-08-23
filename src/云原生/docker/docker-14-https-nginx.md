@@ -322,8 +322,363 @@ SAN 住在证书的**「扩展区」**里，整张证书的结构钉成一张图
 
 ---
 
+## 第 3 课：亲手签一张自签证书
+
+**🧑‍🏫 老师：**
+
+动手之前，先兑现第 2 课埋的伏笔——**证书里的「公钥」是干什么用的**。这需要一对钥匙：
+
+- **私钥**：你手里唯一的一把钥匙，打死不给别人；
+- **公钥**：由私钥推导出来的「挂锁」，可以无限复制、随便发。
+
+寄密件的流程就变成：**任何人**拿一把你的挂锁，「咔哒」一锁（用公钥加密）——锁上容易、人人会锁；但全程**只有你的私钥能打开**。所以公钥可以印在名片上满世界发（证书里放的就是它），私钥必须自己藏着。
+
+那证书和挂锁什么关系？**证书 = 挂锁（公钥）+ 身份信息 + CA 的章**。光有挂锁，别人不知道「这锁真是你家的」；章就是防伪标签。这就是为什么生成证书时总会产出**两个文件**——马上就见。
+
+**第一步：给实验域名安个家。** 我们在宿主机上进行实验，实验用 `lab.test` 这个域名（`.test` 是专门保留给测试的顶级域，永远撞不上真网站）。浏览器访问 `lab.test` 得先知道它对应的 IP——本机有本「私账」`/etc/hosts`，写一行就够：
+
+```bash
+mkdir -p /root/https-lab/nginx/conf.d /root/https-lab/nginx/certs /root/https-lab/app
+echo "127.0.0.1 lab.test" >> /etc/hosts
+grep lab.test /etc/hosts
+```
+
+```text
+127.0.0.1 lab.test
+```
+
+（`hosts` 比 DNS 查询优先级高，本机自己认账。生产环境这个活由 DNS 负责，思路一样。）
+
+**第二步：一条命令，签一张自签证书。** 这个证书存放在本机上
+
+```bash
+openssl req -x509 -newkey rsa:2048 -nodes -days 30 \
+    -keyout /root/https-lab/nginx/certs/lab.test.key \
+    -out    /root/https-lab/nginx/certs/lab.test.crt \
+    -subj "/CN=lab.test" \
+    -addext "subjectAltName=DNS:lab.test"
+```
+
+（执行时会刷几屏 `....+++`——生成随机数的进度点，正常噪音。）逐段拆解：
+
+| 段 | 含义 |
+|----|------|
+| `openssl req` | 造证书的子命令（req = request） |
+| `-x509` | 不走「向 CA 申请」的流程，直接输出一张成品自签证书。（不加它输出的是 CSR 申请表——第 7 课自建 CA 时会用到，先埋个伏笔） |
+| `-newkey rsa:2048` | 顺手生成一对 2048 位 RSA 钥匙——公钥进证书，私钥单独存文件 |
+| `-nodes` | 私钥**不**加密存储（no DES）。加了密的话，nginx 每次启动都要人工输一遍口令——生产上没人这么干 |
+| `-days 30` | 有效期 30 天，写进 notBefore/notAfter |
+| `-keyout` / `-out` | 私钥落 `.key` 文件，证书落 `.crt` 文件。后缀只是约定，内容都是 PEM 格式的文本 |
+| `-subj "/CN=lab.test"` | 持证人信息，免交互问答直接填。CN 顺手写上（第 2 课说了它只是摆设） |
+| `-addext "subjectAltName=..."` | **往 X509v3 扩展区写 SAN**——上一课讲的那个字段，浏览器真正验的东西 |
+
+**第三步：验货。** 先看产物：
+
+```bash
+ls -l /root/https-lab/nginx/certs/
+```
+
+```text
+-rw-r--r-- 1 root root 1139 Aug 22 17:50 lab.test.crt
+-rw------- 1 root root 1704 Aug 22 17:50 lab.test.key
+```
+
+两个文件、两种待遇：**证书 `.crt` 是 644（谁都可读）——它本来就是拿给别人看的；私钥 `.key` 是 600（仅 root）——钥匙嘛**。和挂锁模型完全对上。
+
+再用第 2 课学的读法，读我们自己的证件：
+
+```bash
+openssl x509 -in /root/https-lab/nginx/certs/lab.test.crt -noout \
+    -subject -issuer -dates -ext subjectAltName
+```
+
+```text
+subject=CN = lab.test
+issuer=CN = lab.test
+notBefore=Aug 22 09:50:36 2026 GMT
+notAfter=Sep 21 09:50:36 2026 GMT
+X509v3 Subject Alternative Name:
+    DNS:lab.test
+```
+
+和百度的证件对照着读，一处相同、一处天差地别：
+
+- **相同**：SAN 都乖乖写在扩展区——`DNS:lab.test`，这张证绑定 `lab.test`；有效期也在。
+- **天差地别**：`subject` 和 `issuer` **一模一样**——持证人就是盖章人。百度的章是 GlobalSign 盖的（subject ≠ issuer）；我们的章是「lab.test 自己」盖的。**这就是「自签」二字的铁证**，也是浏览器红页的根源——没有任何一个 CA 为它背书。
+
+一句话总结本课：
+
+> **自签 = 自己生成钥匙对、自己给自己盖章发证；证件内容齐全（SAN/公钥/有效期），唯独章不被别人信任。**
+
+---
+
+## 第 4 课：把证件喂给 nginx——红页的真身
+
+**🧑‍🏫 老师：**
+
+**先看配置。** 写进 `/root/https-lab/nginx/conf.d/default.conf` 的内容：
+
+<u>当前的Https的配置</u>
+
+```nginx
+server {
+    listen      443 ssl;
+    server_name lab.test;
+
+    ssl_certificate     /etc/nginx/certs/lab.test.crt;
+    ssl_certificate_key /etc/nginx/certs/lab.test.key;
+
+    location / {
+        root  /usr/share/nginx/html;
+        index index.html;
+    }
+}
+```
+
+整个配置里，HTTP 和 HTTPS 的差别其实只有**两处**：`listen 443 ssl` 里的 `ssl` 参数（这个端口用 TLS 接客），和 `ssl_certificate` 两行（出示哪张证、钥匙在哪）。其余和[第 11 篇](/云原生/docker/docker-11-network)跑过的 HTTP 站点一模一样。
+
+注意一个细节：证书路径写的是 `/etc/nginx/certs/...`——**容器内**的路径，不是宿主机的 `/root/https-lab/...`。因为证书躺在宿主机上，得靠 [第 12 篇](/云原生/docker/docker-12-data-persistence)的 bind 挂进去：
+
+| 宿主机（真身） | 容器内（nginx 视角） | 装什么 |
+|---|---|---|
+| `…/nginx/conf.d` | `/etc/nginx/conf.d` | 配置（盖住镜像默认配置） |
+| `…/nginx/certs` | `/etc/nginx/certs` | 证书 + 私钥 |
+| `…/app` | `/usr/share/nginx/html` | 网页 |
+
+另外准备一个html文件
+
+```shell
+root@pc3507:~# cat /root/https-lab/app/index.html
+https-lab page v1
+```
+
+**起容器：**
+
+```bash
+docker run -d --name https-lab-nginx \
+    -p 443:443 \
+    -v /root/https-lab/nginx/conf.d:/etc/nginx/conf.d:ro \
+    -v /root/https-lab/nginx/certs:/etc/nginx/certs:ro \
+    -v /root/https-lab/app:/usr/share/nginx/html:ro \
+    --restart always \
+    nginx:latest
+```
+
+（`-p 443:443` 发布 HTTPS 门面；三个 `-v …:ro` 就是上面那张映射表，`:ro` 只读——回头专门验证它防什么。）
+
+这里的ro其实就是readonly
+
+```nginx
+-v /root/https-lab/nginx/conf.d:/etc/nginx/conf.d:ro
+```
+
+等价于
+
+```nginx
+-v /root/https-lab/nginx/conf.d:/etc/nginx/conf.d:readonly
+```
+
+这是容器启动后的结果
+
+```text
+Up 2 seconds | 80/tcp, 0.0.0.0:443->443/tcp, [::]:443->443/tcp
+```
+
+容器活了，nginx 实测 1.31.3。顺便记一个细节：PORTS 列里 `80/tcp` **没有箭头**（`443->443` 才有）——这个悬念下节课拆。
+
+**然后是本课的主菜，三连验证。** 同一个站点，三种「查不查证件」的态度：
+
+```bash
+curl -k -s https://lab.test/          
+# ① 跳过查证件 
+# -k 忽略 SSL 证书验证（允许自签名证书或过期证书）
+# -s 静默模式（不显示进度条和错误信息）
+
+================= 执行结果  ================= 
+https-lab page v1
+============================================  
+
+
+curl -sS https://lab.test/            
+# ② 老老实实查
+# -s 静默模式（不显示进度条）
+# -S 显示错误信息（与 -s 配合使用）
+
+================= 执行结果  ================= 
+root@pc3507:~# curl -sS https://lab.test/
+curl: (60) SSL certificate problem: self-signed certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+============================================  
+
+
+
+echo | openssl s_client -connect lab.test:443 2>/dev/null | grep -E 'subject=|issuer=|Verify return code'
+# ③ 命令行版的「浏览器视角」
+# openssl s_client : OpenSSL 的 SSL/TLS 客户端工具
+# -connect lab.test:443 : 连接到目标服务器的 443 端口
+# 2>/dev/null : 将错误输出（stderr）丢弃，只保留正常输出
+# | grep -E : 用扩展正则表达式过滤
+# 'subject=|issuer=|Verify return code' : 匹配包含这三个关键词的行
+
+================= 执行结果  ================= 
+root@pc3507:~# echo | openssl s_client -connect lab.test:443 2>/dev/null | grep -E 'subject=|issuer=|Verify return code'
+subject=CN = lab.test
+issuer=CN = lab.test
+Verify return code: 18 (self-signed certificate)
+============================================ 
+```
+
+ 逐个读，这三段合起来才是完整的真相：
+
+**① `-k` 拿到了页面。** 插问 2 结尾埋过一句话——`-k` 就是命令行版的「高级 → 仍要访问」。它跳过查证件，但**其余一切照常**：TLS 握手完成、密钥协商完成、数据加密传输。页面 `https-lab page v1` 原样到达。这证明了一件重要的事：**我们的加密通道从头到尾都是好的。**
+
+**② 不带 `-k`，curl 拒绝了。** 报错把病根说得明明白白：`self-signed certificate`——章是自己盖的。这就是浏览器红页的命令行版：**不是连不上，是「我不信你，内容不给你看」**。
+
+**③ `Verify return code: 18`。** 第 2 课看百度时它是 `0 (ok)`——同一个字段，两种命运。18 是「自签证书」的编号，0 是「完全信任」。以后排障 HTTPS，看到这串数字就知道信到哪一步断了——这是排障地图的第一块拼图，后面还会看到 21。
+
+三连拼起来的结论：
+
+> **红页 ≠ 站点坏了。加密、握手、传输全都是好的；坏的只有「信任」这一环——章不被信任，仅此而已。**
+
+## OpenSSL s_client Verify return code 常见值
+
+| 场景                                             | 典型返回码 |
+| ------------------------------------------------ | ---------- |
+| 正规 CA 签发的证书（Let's Encrypt、DigiCert 等） | **0** ✅    |
+| 自签名证书（测试环境）                           | **18** ⚠️   |
+| 证书已过期                                       | **10** ❌   |
+| 证书尚未生效                                     | **9** ❌    |
+| 访问的域名与证书 CN/SAN 不匹配                   | **61** ❌   |
+| 证书被吊销                                       | **23** ❌   |
+| 缺少中间证书（证书链不完整）                     | **20** ❌   |
+
+---
+
+## 第 5 课：80 端口只做一件事——永久搬家通知
+
+**🧑‍🏫 老师：**
+
+先兑现上节课的悬念：PORTS 列里 `80/tcp` 为什么没有箭头？
+
+因为 `EXPOSE` 只是**声明**。nginx 官方镜像的 Dockerfile 里写了 `EXPOSE 80`——意思是「我这个镜像里的程序会在 80 上说话」，这是说明书上的参数表，**不是开门**。真正把宿主机的门打开的是 `-p`。所以 `docker ps` 里：`80/tcp` = 只是声明；`0.0.0.0:80->80/tcp` = 真开了门。
+
+**然后是本课要解决的现实问题。** 用户在浏览器敲 `lab.test`，不带协议、不带端口——浏览器会自动补 `http://`，去敲 **80 号门**。我们 443 上的站点再好，80 没人应答，用户看到的就是「打不开」。
+
+**意外紧接着来。** 重建容器，这次把 80 也发布了（`-p 80:80 -p 443:443`）
+
+docker ps 展示如下 `0.0.0.0:80->80/tcp, [::]:80->80/tcp, 0.0.0.0:443->443/tcp, [::]:443->443/tcp`
+
+然后再进行curl，发现出问题了
+
+```text
+root@pc3507:~# curl lab.test
+curl: (56) Recv failure: Connection reset by peer
+```
+
+还是不通？——[第 11 篇](/云原生/docker/docker-11-network)讲过这条链路：`-p` 只负责「宿主 → 容器」的转发，**容器内得有进程在听**。
+
+真正的原因是：我们的配置里写的是 `listen 443 ssl`，容器里根本没人听 80。**发布了 ≠ 有人听**，两件事各管一半。
+
+在这里，我们**补上 80 的 server 块**——它只干一件事，发永久搬家通知：
+
+```nginx
+server {
+    listen      80;
+    server_name lab.test;
+    return 301 https://$host$request_uri;
+}
+server {
+    listen      443 ssl;
+    server_name lab.test;
+
+    ssl_certificate     /etc/nginx/certs/lab.test.crt;
+    ssl_certificate_key /etc/nginx/certs/lab.test.key;
+
+    location / {
+        root  /usr/share/nginx/html;
+        index index.html;
+    }
+}
+```
+
+主要加上了这个东西
+
+```nginx
+server {
+    listen      80;
+    server_name lab.test;
+    return 301 https://$host$request_uri;
+}
+```
+
+- **`301`**：永久重定向。区别于 302（临时）：浏览器和搜索引擎会**记住** 301——以后敲这个域名直接走 https，不再来 80 问路。这正是生产站点的标准姿势。
+- **`$host` / `$request_uri`**：nginx 的变量——域名照旧、路径照旧，只把协议换成 https。用户访问 `http://lab.test/article/1`，会被精确地领到 `https://lab.test/article/1`。
+- **`return`**：直接应答，不进 location 匹配，最轻量的跳转写法。
+
+
+
+ 当我们改完配置后，执行下面这一句，这里的 `-t` 意味着检查配置，如果配置有问题，就会报错，如果没有问题则进行重新启动 nginx
+
+```shell
+docker exec https-lab-nginx nginx -t && docker exec https-lab-nginx nginx -s reload
+```
+
+运行后的结果
+
+```shell
+root@pc3507:~# docker exec https-lab-nginx nginx -t && docker exec https-lab-nginx nginx -s reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+2026/08/23 09:15:50 [notice] 33#33: signal process started
+```
+
+**验证，两种问法：**
+
+```bash
+curl -sI http://lab.test/          
+# -I 只拿响应头
+# -s 静默模式
+
+================= 执行结果  ================= 
+root@pc3507:~# curl -sI http://lab.test/
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.31.3
+Date: Sun, 23 Aug 2026 09:18:12 GMT
+Content-Type: text/html
+Content-Length: 169
+Connection: keep-alive
+Location: https://lab.test/
+=============================================
+
+
+curl -k -sL http://lab.test/       
+# -L 跟随重定向（Location 跳转）
+# 如果不加-L 如果碰到301 只会告诉你跳转到了新地址，但是不会自动访问新地址 
+# 如果加上了-L 如果碰到301 则直接访问到新地址
+# -k 忽略 SSL 证书验证（对 HTTP 无效，但无害）
+# -s 静默模式
+================= 执行结果  ================= 
+https-lab page v1
+=============================================
+```
+
+`-I` 看到 80 的应答就是一纸通知：301 + `Location: https://lab.test/`；
+
+`-L` 自动跟着 Location 走到 443，最终拿到页面。第 4 课的 `Connection reset` 从此变成 301。
+
+一句话总结本课：
+
+> **EXPOSE 是声明、-p 才是开门；发布了还得有人听。80 上只放一条 301，把所有人永久领去 https。**
+
+---
+
 ## 待续
 
-课程进行中，后面的内容（自签证书实操、报错地图、301 跳转、自建 CA、Compose 反代、生产证书）讲完会持续追加到本文。
+课程进行中，后面的内容（`:ro` 核对、自建 CA、Compose 反代、生产证书）讲完会持续追加到本文。
+
 
 

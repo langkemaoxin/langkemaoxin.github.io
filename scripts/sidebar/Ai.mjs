@@ -1,5 +1,10 @@
 /** @type {Record<string, { title?: string, icon?: string, order?: number }>} */
 export default {
+  roadmap: {
+    title: "学习路线",
+    icon: "route",
+    order: 0,
+  },
   playwright: {
     title: "自动化 / Playwright",
     icon: "robot",
