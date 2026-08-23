@@ -359,8 +359,6 @@ openssl req -x509 -newkey rsa:2048 -nodes -days 30 \
     -addext "subjectAltName=DNS:lab.test"
 ```
 
-（执行时会刷几屏 `....+++`——生成随机数的进度点，正常噪音。）逐段拆解：
-
 | 段 | 含义 |
 |----|------|
 | `openssl req` | 造证书的子命令（req = request） |
@@ -493,6 +491,7 @@ curl -k -s https://lab.test/
 # ① 跳过查证件 
 # -k 忽略 SSL 证书验证（允许自签名证书或过期证书）
 # -s 静默模式（不显示进度条和错误信息）
+# 注意看，这里使用的是Https，所以走的端口是是443
 
 ================= 执行结果  ================= 
 https-lab page v1
@@ -538,11 +537,9 @@ Verify return code: 18 (self-signed certificate)
 
 **② 不带 `-k`，curl 拒绝了。** 报错把病根说得明明白白：`self-signed certificate`——章是自己盖的。这就是浏览器红页的命令行版：**不是连不上，是「我不信你，内容不给你看」**。
 
-**③ `Verify return code: 18`。** 第 2 课看百度时它是 `0 (ok)`——同一个字段，两种命运。18 是「自签证书」的编号，0 是「完全信任」。以后排障 HTTPS，看到这串数字就知道信到哪一步断了——这是排障地图的第一块拼图，后面还会看到 21。
+**③ `Verify return code: 18`。** 第 2 课看百度时它是 `0 (ok)`——同一个字段，两种命运。**18 是「自签证书」的编号**，0 是「完全信任」。以后排障 HTTPS，看到这串数字就知道信到哪一步断了——这是排障地图的第一块拼图，后面还会看到 21。
 
-三连拼起来的结论：
-
-> **红页 ≠ 站点坏了。加密、握手、传输全都是好的；坏的只有「信任」这一环——章不被信任，仅此而已。**
+当前的这个小章节演示的效果是，自己给自己的颁发了一个证书，并且在nginx中进行了使用。
 
 ## OpenSSL s_client Verify return code 常见值
 
@@ -569,6 +566,19 @@ Verify return code: 18 (self-signed certificate)
 **然后是本课要解决的现实问题。** 用户在浏览器敲 `lab.test`，不带协议、不带端口——浏览器会自动补 `http://`，去敲 **80 号门**。我们 443 上的站点再好，80 没人应答，用户看到的就是「打不开」。
 
 **意外紧接着来。** 重建容器，这次把 80 也发布了（`-p 80:80 -p 443:443`）
+
+```
+docker run -d --name https-lab-nginx \
+    -p 443:443 \
+    -p 80:80 \
+    -v /root/https-lab/nginx/conf.d:/etc/nginx/conf.d:ro \
+    -v /root/https-lab/nginx/certs:/etc/nginx/certs:ro \
+    -v /root/https-lab/app:/usr/share/nginx/html:ro \
+    --restart always \
+    nginx:latest
+```
+
+
 
 docker ps 展示如下 `0.0.0.0:80->80/tcp, [::]:80->80/tcp, 0.0.0.0:443->443/tcp, [::]:443->443/tcp`
 
@@ -624,7 +634,7 @@ server {
  当我们改完配置后，执行下面这一句，这里的 `-t` 意味着检查配置，如果配置有问题，就会报错，如果没有问题则进行重新启动 nginx
 
 ```shell
-docker exec https-lab-nginx nginx -t && docker exec https-lab-nginx nginx -s reload
+    docker exec https-lab-nginx nginx -t && docker exec https-lab-nginx nginx -s reload
 ```
 
 运行后的结果
@@ -642,6 +652,8 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 curl -sI http://lab.test/          
 # -I 只拿响应头
 # -s 静默模式
+# 注意看，这里是http，而不是https
+
 
 ================= 执行结果  ================= 
 root@pc3507:~# curl -sI http://lab.test/
@@ -676,9 +688,263 @@ https-lab page v1
 
 ---
 
-## 待续
+## 第 6 课：自建 CA——把信任装进去
 
-课程进行中，后面的内容（`:ro` 核对、自建 CA、Compose 反代、生产证书）讲完会持续追加到本文。
+**🧑‍🏫 老师：**
+
+先清第 4 课挂的账：`:ro` 到底防什么。模拟「容器被攻破后攻击者想篡改私钥」——从容器里改挂载的三个目录：
+
+```text
+== 容器内三连改（模拟被攻破后的篡改）：
+sh: 1: cannot create /etc/nginx/certs/lab.test.key: Read-only file system
+sh: 1: cannot create /etc/nginx/conf.d/default.conf: Read-only file system
+sh: 1: cannot create /usr/share/nginx/html/index.html: Read-only file system
+== 宿主机侧改同一份文件（热更新）：
+https-lab page v2 (hot update)
+```
+
+`:ro` 把「从容器里改挂载文件」这条路焊死了（内核 `EROFS`），宿主机照常能改、改完立即生效（热更新，不用动容器）。**私钥就该享受这个待遇**：就算容器被打穿，攻击者也带不走、改不了钥匙。
+
+**然后是本课的正题。** 第 4 课结束时我们卡在：<u>章是「lab.test 自己」盖的，没人信</u>。
+
+目前使用https访问网站就会报错(提示这个证书是自己签的 **self-signed certificate**)：
+
+```shell
+root@pc3507:~/https-lab/nginx/certs# curl https://lab.test
+curl: (60) SSL certificate problem: self-signed certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+```
+
+那么如何做呢？破解思路不是把每张服务器证书塞进每台客户机——而是 **自建 CA**：
+
+```text
+   自签（现在的困境）                自建 CA（这一课）
+                                 信任名单: [Lab Test Root CA] ✓
+   ┌─────────────┐               ┌─────────────┐
+   │ lab.test 证书 │ ←章是自己盖的│ lab.test 证书 │ ←章是 CA 盖的
+   └─────────────┘               └─────────────┘
+   谁都不认识你 → 18                名单里认识盖章的 CA → 0
+```
+
+这正是 Let's Encrypt、企业内网 root CA 共同的原理——区别只在于它们的根早就预装（或被管理员统一装）进了信任库。
+
+所以这里的问题是：如何浏览器把当这个网站当做真的网站？总共有三步
+
+```
+1、造一个自己的 CA（自己当公安局局长）
+2、给你的网站颁发一张证书（给自己网站办身份证）
+3、自己电脑信任这个公安局（把公安局的公章样存进电脑）
+```
+
+先提前透露整个流程：申请 -> 签发流程
+
+```shell
+# 进入指定的ca生成目录
+cd /root/https-lab/ca
+
+# 第 1 步：生成私钥（藏好，不给任何人）
+openssl genrsa -out server.key 2048
+
+# 第 2 步：生成 CSR（申请表，可以公开给别人）
+openssl req -new -key server.key -subj "/CN=lab.test" -out server.csr
+
+# 第 3 步：把 CSR 交给 CA（CA 用它的私钥在上面盖章）
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -out server.crt
+
+# 第 4 步：拿回盖了章的证书（server.crt），配置到 Nginx
+```
+
+<u>所有命令的执行位置：**/root/https-lab/ca	**</u>
+
+第一步：我要当公安局局长，相当于自己造一个CA
+
+```shell
+openssl genrsa -out ca.key 2048
+openssl req -x509 -new -nodes -key ca.key -subj "/CN=Lab Test Root CA" -days 3650 -out ca.crt
+
+# 第一句命令：
+# openssl genrsa：调用 OpenSSL 工具生成 RSA 私钥。
+# -out ca.key：将生成的私钥保存到当前目录下的 ca.key 文件中。
+# 2048：指定密钥长度为 2048 位（目前行业标准，安全性足够）
+
+# 第二句命令：
+# openssl req：调用证书请求和生成工具。
+# -x509：告诉 OpenSSL 直接输出自签名的 X.509 格式证书，而不是生成证书签名请求（CSR）。
+# -new：生成一个新的证书请求（这里配合 -x509 表示直接生成新证书）。
+# -nodes（No DES）：不对私钥进行加密（即不设置密码保护）。如果不加此参数，每次启动服务（如 Nginx）需要手动输入密码，通常内部测试环境为了方便会加上。
+# -key ca.key：指定使用刚才生成的 ca.key 私钥来签发这个证书。
+# -subj "/CN=Lab Test Root CA"：指明了证书的持有者是谁，当前是 Lab Test Root CA
+# -days 3650：证书有效期设为 3650 天（约 10 年）。根证书通常作为信任锚点，有效期较长。
+# -out ca.crt：将生成的根证书保存为 ca.crt 文件
+
+
+
+执行完上述两条命令后，你会在当前目录得到一对文件：
+- ca.key（私钥）：用于签发下级证书（如服务器证书、客户端证书），或吊销证书。
+- ca.crt（公钥证书）：包含你的公钥和身份信息。需要将此证书安装到客户端（浏览器、操作系统）的“受信任的根证书颁发机构”列表中，那么所有由该 CA 签发的子证书才会被系统信任。
+
+```
+
+第二步：生成服务器的私钥 + 申请表，生成了一张申请表，不过没有法律效应
+
+```shell
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -subj "/CN=lab.test" -out server.csr
+
+## 第一条命令 生成服务器私钥
+# openssl genrsa：生成 RSA 私钥。
+# -out server.key：保存为 server.key 文件。
+# 2048：密钥长度 2048 位。
+结果：得到服务器专用的私钥 server.key。这个密钥与根 CA 的私钥（ca.key）是分开的，遵循密钥分离的安全原则——根 CA 私钥应离线保存，而服务器私钥仅用于该特定服务器。
+
+
+
+## 第二条命令 生成证书签名请求（CSR）
+# openssl req：调用证书请求管理工具。
+# -new：生成一个新的证书签名请求。
+# -key server.key：指定使用 server.key 私钥来生成 CSR。OpenSSL 会从私钥中提取公钥信息并嵌入到 CSR 中。
+# -subj "/CN=lab.test"：免交互设置主题信息。这里只设置了 CN（Common Name，通用名称） 为 lab.test。
+# 	对于服务器证书，CN 必须与访问时的域名完全匹配（例如 lab.test 或 *.lab.test 通配符）。
+# 	如果是 IP 访问，需要额外在 SAN（Subject Alternative Name）扩展中指定，仅靠 CN 已不推荐（Chrome 等浏览器已弃用 CN 匹配）。
+# -out server.csr：将生成的 CSR 保存为 server.csr 文件
+
+
+结果：得到 server.csr 文件——这是一个尚未签名的证书申请文件，包含了公钥和身份信息，但还没有被任何 CA 签名，因此本身不是有效证书。
+```
+
+第三步：CA 在申请表上盖章（签发证书）
+
+```shell
+printf 'subjectAltName=DNS:lab.test\n' > san.ext
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial \
+    -out server.crt -days 825 -sha256 -extfile san.ext
+    
+# openssl x509 -req	以"请求签名"模式运行，将 CSR 转换为 X.509 证书
+# -in server.csr	输入文件：之前生成的证书签名请求
+# -CA ca.crt	指定签发者的证书（根CA证书）
+# -CAkey ca.key	指定签发者的私钥（根CA私钥）
+# -CAcreateserial	自动创建序列号文件 ca.srl，每次签发递增，确保每个证书有唯一序列号
+# -out server.crt	输出文件：最终生成的服务器证书
+# -days 825	有效期 825天（约2年3个月），比常见的365天稍长
+# -sha256	使用 SHA-256 哈希算法签名（安全，取代已弃用的 SHA-1）
+# -extfile san.ext	引用外部扩展文件，将 SAN 信息嵌入到证书中
+
+使用公安局局长的证书和私钥进行签名，最终签发证书
+```
+
+
+
+首先这里讲明白，加 `-x509`和不加的区别是什么
+
+带`-x509` :直接生成一张**成品证书**——"我给自己发一张证书"
+
+不带`-x509` :生成一个**申请文件（CSR）**——"我要申请一张证书，这是我的信息"
+
+<u>什么是申请文件（CSR）？</u>
+
+**CSR = Certificate Signing Request = 证书签名请求**
+
+它是一个**文本文件**，里面装着你申请证书时需要的"申请信息"。
+
+使用这个命令来查看一下CSR里面有什么 `openssl req -text -noout -in server.csr`
+
+```shell
+Certificate Request:
+    Subject: CN=lab.test          # ① 域名：我要给哪个网站申请证书
+    Subject Public Key Info:       # ② 我的公钥（配对的私钥在我自己手里）
+        Public Key: (2048 bit)
+            04:7b:3f:a2:...
+    Attributes:
+        (none)
+    Signature Algorithm: sha256WithRSAEncryption
+        28:1f:5a:...              # ③ 数字签名：证明这个申请确实是我发的
+        
+
+域名（CN）	"我要给 lab.test 申请证书"
+公钥	我的公钥，CA 要用它来加密证书里的内容
+签名	用我的私钥签的，证明这个申请确实是我发的
+注意：CSR 里没有私钥！ 私钥永远只留在你自己手里
+```
+
+
+
+所有命令的执行完后，查看一下目录，发现已经有很多东西
+
+````shell
+root@pc3507:~/https-lab/ca# ls
+ca.crt  ca.key  san.ext  server.crt  server.csr  server.key
+````
+
+然后我们来查看一下两种证书有什么区别
+
+```shell
+# 进入ca证书的目录
+cd /root/https-lab/ca
+ 
+# 查看一下根证书有什么内容  ca.crt
+root@pc3507:~/https-lab/ca# openssl x509 -in ca.crt -text -noout | grep -E "Subject:|Issuer:"
+        Issuer: CN = Lab Test Root CA
+        Subject: CN = Lab Test Root CA ← 根：自己给自己签（天经地义）
+
+# 查看一下服务器证书有什么内容 server.crt
+root@pc3507:~/https-lab/ca# openssl x509 -in server.crt -text -noout | grep -E "Subject:|Issuer:"
+        Issuer: CN = Lab Test Root CA
+        Subject: CN = lab.test ← 换人了！章是 CA 盖的
+```
+
+ 现在我们把新证书和私钥复制到 Nginx 挂载的证书目录,并且重新启动nginx
+
+```shell
+cp /root/https-lab/ca/server.crt /root/https-lab/nginx/certs/lab.test.crt
+cp /root/https-lab/ca/server.key /root/https-lab/nginx/certs/lab.test.key
+
+docker exec https-lab-nginx nginx -s reload
+```
+
+再次进行 `curl -sS https://lab.test/`后，却再次发生了异常，提示如下：
+
+```shell
+root@pc3507:/usr/local/share/ca-certificates# curl -sS https://lab.test/
+curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+```
+
+这个错误是：**curl 找不到能验证 `lab.test` 服务器证书的上级 CA 证书**
+
+所以我们需要做的，就是 把你自己创建的"公安局"（CA）正式登记到操作系统的"可信机构名单"里**
+
+```bash
+cd /root/https-lab/ca
+
+cp ca.crt /usr/local/share/ca-certificates/lab-test-root-ca.crt
+#/usr/local/share/ca-certificates/ 系统专门存放"用户自定义根证书"的文件夹 
+
+update-ca-certificates	
+# 扫描 /usr/local/share/ca-certificates/ 文件夹里所有的 .crt 文件
+# 把它们全部加载到系统的全局信任库 /etc/ssl/certs/ca-certificates.crt 中
+# 从此系统里的所有程序（curl、wget、openssl、apt 等）都认这个 CA
+```
+
+**最终验证：**
+
+```text
+root@pc3507:~# curl -sS https://lab.test/
+https-lab page v1
+```
+
+
+
+待续
+
+课程进行中，后面的内容（Compose + 反代收尾、生产证书从哪来、实验清理）讲完会持续追加到本文。
 
 
 
