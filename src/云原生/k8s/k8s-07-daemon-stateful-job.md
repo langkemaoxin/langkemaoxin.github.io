@@ -15,7 +15,7 @@ tag:
 description: DaemonSet、StatefulSet、Job/CronJob 的适用场景、DNS 与调度容忍配置。
 ---
 
-> **Kubernetes 系列 · 第 7/30 篇**  
+> **Kubernetes 系列 · 第 7/35 篇**  
 > 上一篇：[《Deployment 与副本控制——灰度更新、RC 与 ReplicaSet》](/云原生/k8s/k8s-06-deployment-rs) · 下一篇：[《HPA 自动伸缩与 CRI/CNI/CSI/CRD 扩展点》](/云原生/k8s/k8s-08-hpa-cri-crd)
 
 ---
@@ -507,7 +507,7 @@ spec:
       app: myapp
 ```
 
-有了它，`kubectl drain` 一次只会赶掉预算允许的数量，等副本补齐再继续——**滚动运维（升级节点、缩容）前先给有状态/核心服务配 PDB**，这是[发布策略篇](/云原生/k8s/k8s-13-release-strategies)之外另一条「不把可用性交给运气」的保险。
+有了它，`kubectl drain` 一次只会赶掉预算允许的数量，等副本补齐再继续——**滚动运维（升级节点、缩容）前先给有状态/核心服务配 PDB**，这是[发布策略篇](/云原生/k8s/k8s-15-release-strategies)之外另一条「不把可用性交给运气」的保险。
 
 ---
 
@@ -517,4 +517,4 @@ spec:
 - **StatefulSet**：稳定身份 + Headless DNS + 有序生命周期；中间件首选。
 - **Job**：跑完即停；**CronJob**：定时批处理，注意幂等与 concurrencyPolicy。
 
-下一篇进入 **HPA 自动伸缩** 与 **CRI/CNI/CSI/CRD** 扩展体系。
+> ➡️ 下一篇：[《Secret、ConfigMap 与常见部署排障》](/云原生/k8s/k8s-12-secret-configmap)

@@ -28,7 +28,7 @@ description: 不先背名词：跟着容器里一条 ping 223.5.5.5 的旅程滚
 Subnet=172.17.0.0/16 Gateway=172.17.0.1
 ```
 
-容器 IP 是 `172.17.0.5`。很多人卡在「地址池」「`/16`」「网关」这几个词上，索性整段跳过——结果读 [Docker 第 11 篇](/云原生/docker/docker-11-network) 的 bridge、veth 时步步踩坑。
+容器 IP 是 `172.17.0.5`。很多人卡在「地址池」「`/16`」「网关」这几个词上，索性整段跳过——结果读 [Docker 第 11 篇](/云原生/docker/docker-15-network) 的 bridge、veth 时步步踩坑。
 
 根因一句话：**不是 Docker 太难，是这条路上「门牌、小区、大门」几块牌子没认过——IP 常识缺了一小块**。本篇不先背概念：全程跟着这同一条 ping 的旅程滚 **13 球**，**每球只解开一块牌子、只回答一个问题**。读完你能用人话解释 `Subnet` / `Gateway` / 容器 IP 的关系，说清 `/16` 这种写法的含义，并回答两个方向的访问问题——为什么外人不能直接访问容器 IP，容器却能上网。
 
@@ -353,7 +353,7 @@ Gateway 172.17.0.1     →  池子的门 / docker0 的门牌
 
 > Docker 在宿主机上划了一片私有网段当地址池；docker0 占网关号；每个新容器从池里领 IP，并把默认路由指到网关——于是容器既能跟同网段其它容器说话，又能经网关 + NAT 出网；而外人要进来，得靠宿主机上显式开的 `-p` 端口门。
 
-顺带一眼：容器里这张网卡叫 `eth0@if88`——`@if88` 暗示它是**一对虚拟网线（veth）的一端**，另一头插在宿主机侧。这根线怎么接、网桥怎么转，正是 [Docker 第 11 篇](/云原生/docker/docker-11-network)的正菜，本文不展开。
+顺带一眼：容器里这张网卡叫 `eth0@if88`——`@if88` 暗示它是**一对虚拟网线（veth）的一端**，另一头插在宿主机侧。这根线怎么接、网桥怎么转，正是 [Docker 第 11 篇](/云原生/docker/docker-15-network)的正菜，本文不展开。
 
 ---
 
@@ -410,7 +410,7 @@ Gateway 172.17.0.1     →  池子的门 / docker0 的门牌
 | [第 3 篇 tcpdump](/Linux/basics/linux-03-tcpdump) | 下一篇：把第 12 球那条 ping 拍成包给你看 |
 | [第 4 篇 NAT](/Linux/basics/linux-04-nat) | 第 4、12 球只说了结论的「换头术」，在那篇逐条拆开 |
 | [第 5 篇 netns/veth/iptables](/Linux/basics/linux-05-netns-iptables) | `eth0@if88` 的谜底；手搓容器网络的两块地基 |
-| [Docker 第 11 篇](/云原生/docker/docker-11-network) | 本文的直接服务对象：bridge、`-p`、用名字互访 |
+| [Docker 第 11 篇](/云原生/docker/docker-15-network) | 本文的直接服务对象：bridge、`-p`、用名字互访 |
 
 读 Docker 第 11 篇时，把这张对照带在身上：
 
@@ -419,7 +419,7 @@ Gateway 172.17.0.1     →  池子的门 / docker0 的门牌
 3. 看见 `-p 18080:80` → 外人进不来这片私有池（第 12 球），所以在宿主机上开的显式端口门
 4. 看见 `eth0@if88`、`veth` → 一对虚拟网线的两端，Docker 网络的物理底座
 
-更深的东西不必直接跳 Docker 系列——本板块已经铺好进阶路：[第 3 篇](/Linux/basics/linux-03-tcpdump) 把包拍给你看，[第 4 篇](/Linux/basics/linux-04-nat) 拆「换头术」，[第 5 篇](/Linux/basics/linux-05-netns-iptables) 手搓容器网络的两块地基（上面那个 `@if88` 的谜底就在那篇）。顺完这条线再进 [Docker 第 11 篇](/云原生/docker/docker-11-network) 最稳；本文只保证**数字读得懂**。
+更深的东西不必直接跳 Docker 系列——本板块已经铺好进阶路：[第 3 篇](/Linux/basics/linux-03-tcpdump) 把包拍给你看，[第 4 篇](/Linux/basics/linux-04-nat) 拆「换头术」，[第 5 篇](/Linux/basics/linux-05-netns-iptables) 手搓容器网络的两块地基（上面那个 `@if88` 的谜底就在那篇）。顺完这条线再进 [Docker 第 11 篇](/云原生/docker/docker-15-network) 最稳；本文只保证**数字读得懂**。
 
 ---
 

@@ -14,8 +14,8 @@ tag:
 description: Volume、PV/PVC 生命周期、静态/动态供给与 StorageClass。
 ---
 
-> **Kubernetes 系列 · 第 11/30 篇**  
-> 上一篇：[《Underlay/Overlay 网络与集群 DNS 解析》](/云原生/k8s/k8s-10-network-dns/) · 下一篇：[《Ingress 七层流量分发——原理、部署模式与动态域名》](/云原生/k8s/k8s-12-ingress-l7/)
+> **Kubernetes 系列 · 第 11/35 篇**  
+> 上一篇：[《Underlay/Overlay 网络与集群 DNS 解析》](/云原生/k8s/k8s-10-network-dns) · 下一篇：[《Secret、ConfigMap 与常见部署排障》](/云原生/k8s/k8s-12-secret-configmap)
 
 ---
 
@@ -533,7 +533,7 @@ spec:
 | Dynamic | StorageClass + Provisioner 按需创建 |
 | 回收 | Retain / Delete；Released PV 需人工处理才能复用 |
 
-下一篇进入 **Ingress 七层路由** 与 Controller 部署模式。
+> ➡️ 下一篇：[《分布式存储方案——Longhorn 与 GlusterFS》](/云原生/k8s/k8s-24-storage-longhorn-glusterfs)
 
 ---
 

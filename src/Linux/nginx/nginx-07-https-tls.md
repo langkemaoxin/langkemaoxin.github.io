@@ -16,7 +16,7 @@ description: 在 Ubuntu 上为 Nginx 配置 TLS 证书、HTTP 跳转 HTTPS、安
 > **Nginx 系列 · 第 7/12 篇**  
 > 上一篇：[《负载均衡》](/Linux/nginx/nginx-06-load-balancing) · 下一篇：[《location 与 rewrite》](/Linux/nginx/nginx-08-location-rewrite)  
 > 参考：[Configuring HTTPS servers](https://nginx.org/en/docs/http/configuring_https_servers.html)、[QUIC and HTTP/3](https://nginx.org/en/docs/quic.html)  
-> 容器证书挂载另见：[HTTPS Nginx——从浏览器红页滚到本机全绿](/云原生/docker/docker-14-https-nginx)
+> 容器证书挂载另见：[HTTPS Nginx——从浏览器红页滚到本机全绿](/云原生/docker/docker-17-https-nginx)
 
 ---
 

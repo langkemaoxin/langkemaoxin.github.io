@@ -12,7 +12,7 @@ tag:
 description: 从 CNCF 定义、四要素与时间轴讲清云原生，并引出 Service Mesh 与 Istio 的背景。
 ---
 
-> **Kubernetes 系列 · 第 1/30 篇**  
+> **Kubernetes 系列 · 第 1/35 篇**  
 > 建议先读完 [Docker 系列](/云原生/docker/docker-01-what-is-docker)；下一篇：[《穿透 K8S 八大宏观架构——Master、Worker 与数据流》](/云原生/k8s/k8s-02-macro-architecture)
 
 ---
@@ -379,4 +379,4 @@ Istio 能力概览：
 - **Linkerd** 开创 Mesh 品类；**Istio** 补齐控制面，与 K8s 深度结合。
 - 学 K8s 之前，建议已理解 Docker 镜像与容器运行时（见 Docker 系列）。
 
-下一篇从**八大宏观架构图**穿透 K8s：Master、Worker、APIServer、kubelet 与数据流如何协作。
+> ➡️ 下一篇：[《穿透 K8S 八大宏观架构——Master、Worker 与数据流》](/云原生/k8s/k8s-02-macro-architecture)

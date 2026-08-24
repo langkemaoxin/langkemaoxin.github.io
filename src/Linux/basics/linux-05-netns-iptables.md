@@ -17,7 +17,7 @@ description: 像滚雪球一样手搓迷你 Docker 网络：ip netns 建独立�
 > **Linux 板块 · 第 5 篇**  
 > 上一篇：[《NAT 现场实录》](/Linux/basics/linux-04-nat)（MASQUERADE/DNAT 的场景与抓包）  
 > 下一篇：[《bind 挂载实操》](/Linux/basics/linux-06-bind-mount)（系列从网络转向文件系统：Docker `-v` 的内核层前置）  
-> 读完可接着看：[《Docker 网络——从 localhost 不通滚到能用名字互访》](/云原生/docker/docker-11-network)（本文是它雪球 3「拆穿」框的直接前置）
+> 读完可接着看：[《Docker 网络——从 localhost 不通滚到能用名字互访》](/云原生/docker/docker-15-network)（本文是它雪球 3「拆穿」框的直接前置）
 
 ---
 
@@ -125,7 +125,7 @@ br-c88cb4c6fe5f  DOWN           172.20.0.1/16
 
 **为什么要有它**：这是容器网络隔离的基石。所谓「容器有自己的 IP、自己的 localhost、自己的路由」，本质就是**进程被塞进了一间独立的 netns**。Docker 替你自动建房；今天手动建，看清每块砖。
 
-**背景知识**：netns 只是 Linux 六种 namespace（pid、net、mnt、uts、ipc、user）之一，其余几种管进程号、文件系统挂载等的隔离，[Docker 第 18 篇](/云原生/docker/docker-18-namespace)系统展开，本文只管网络这一种。
+**背景知识**：netns 只是 Linux 六种 namespace（pid、net、mnt、uts、ipc、user）之一，其余几种管进程号、文件系统挂载等的隔离，[Docker 第 18 篇](/云原生/docker/docker-20-namespace)系统展开，本文只管网络这一种。
 
 ---
 
@@ -409,8 +409,8 @@ ip netns list          # 空
 | [第 4 篇：NAT 白话拆解](/Linux/basics/linux-04-nat) | 雪球 4 解剖的那条 DNS 规则两篇都抓到过；雪球 5 等于把第 4 篇的 DNAT 搬进 netns 的 OUTPUT 关口 |
 | [第 1 篇：nsenter 前置](/Linux/basics/linux-01-nsenter-prerequisites) | 收官的 `nsenter -t PID -n` |
 | [第 6 篇：bind 挂载](/Linux/basics/linux-06-bind-mount) | 下一篇：网络地基完工，系列转向文件系统 |
-| [Docker 第 11 篇：网络](/云原生/docker/docker-11-network) | 开头那段「拆穿」出自它 4.4；读完本文回头看它的雪球 3 |
-| [Docker 第 18 篇：namespace](/云原生/docker/docker-18-namespace) | 雪球 1 的六种 namespace 全家福 |
+| [Docker 第 11 篇：网络](/云原生/docker/docker-15-network) | 开头那段「拆穿」出自它 4.4；读完本文回头看它的雪球 3 |
+| [Docker 第 18 篇：namespace](/云原生/docker/docker-20-namespace) | 雪球 1 的六种 namespace 全家福 |
 
 ---
 

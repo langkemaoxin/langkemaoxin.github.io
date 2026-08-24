@@ -14,8 +14,8 @@ tag:
 description: 从两行 alpine + echo 开始，每次只加一种能力：COPY 静态页、分层、ENTRYPOINT、先清单后代码、多阶段构建，像滚雪球一样学会自制镜像。
 ---
 
-> **Docker 系列 · 第 9/24 篇**
-> 上一篇：[《Docker 本地镜像载入与载出——离线环境的镜像搬运工》](/云原生/docker/docker-08-image-transfer) · 下一篇：[《Harbor 安装》](/云原生/docker/docker-10-harbor)
+> **Docker 系列 · 第 9/33 篇**
+> 上一篇：[《Docker 本地镜像载入与载出——离线环境的镜像搬运术》](/云原生/docker/docker-08-image-transfer) · 下一篇：[《构建进阶——同一个镜像从 1.44GB 滚到 20MB》](/云原生/docker/docker-10-build-advanced)
 
 ---
 
@@ -38,7 +38,7 @@ description: 从两行 alpine + echo 开始，每次只加一种能力：COPY �
 | **7** | .NET：同一套路，产物是目录 | `curl :8083/hello`；989MB SDK → 158MB |
 | **8** | tag / 推仓库 / 流水线边界 | 配方进 Git；自动化是升级不是必须 |
 
-第一次读走 **1～4** 就有「会做镜像」的手感；5～7 是同一四步套路在真实语言里加厚。多阶段缓存深挖见[第 23 篇](/云原生/docker/docker-23-build-advanced)。
+第一次读走 **1～4** 就有「会做镜像」的手感；5～7 是同一四步套路在真实语言里加厚。多阶段缓存深挖见[第 10 篇](/云原生/docker/docker-10-build-advanced)。
 
 输出均来自本机：WSL2 Ubuntu-22.04 + Docker Engine **29.1.3**（传统构建器，`Step n/m` 格式）。官方：[Dockerfile reference](https://docs.docker.com/reference/dockerfile/)、[docker build](https://docs.docker.com/reference/cli/docker/build/)、[Best practices](https://docs.docker.com/build/building/best-practices/)。
 
@@ -157,7 +157,7 @@ curl -sS http://127.0.0.1:8088/
 
 官方最佳实践：**多数情况用 `COPY`**。`ADD` 会自动解压本地 tar、还能拉远程 URL，读者看不懂「到底拷了什么」。远程文件更推荐在 `RUN` 里 `curl`/`wget` 并校验。本球只有一个 HTML → `COPY` 足够。思考题会再问一次 `ADD`。
 
-`VOLUME` 用来声明数据目录挂载点。静态站不需要；真正挂载仍靠 `run -v`，见[第 12 篇雪球 6](/云原生/docker/docker-12-data-persistence)。
+`VOLUME` 用来声明数据目录挂载点。静态站不需要；真正挂载仍靠 `run -v`，见[第 14 篇雪球 6](/云原生/docker/docker-14-data-persistence)。
 
 跑完可 `docker rm -f lab-web`。下一球还要用这张 `lab-web:1.0` 看层。
 
@@ -189,7 +189,7 @@ IMAGE          CREATED BY                            SIZE
 …              ADD alpine-minirootfs-…               8.5MB
 ```
 
-多数会改文件系统的指令产生**一层**；层可缓存、可复用。`EXPOSE` / `CMD` 往往是 0B——只改了元数据。原理见[第 17 篇](/云原生/docker/docker-17-unionfs)；怎么让「改一行代码重建飞快」，雪球 5 用 FastAPI 当场看见，深挖留给第 23 篇。
+多数会改文件系统的指令产生**一层**；层可缓存、可复用。`EXPOSE` / `CMD` 往往是 0B——只改了元数据。原理见[第 22 篇](/云原生/docker/docker-22-unionfs)；怎么让「改一行代码重建飞快」，雪球 5 用 FastAPI 当场看见，深挖留给第 10 篇。
 
 验收：build 成功 → 容器 Up → curl 出你的 HTML → history 里能看到 `COPY`。
 
@@ -334,7 +334,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 | `COPY requirements.txt .` | **先只拷依赖清单，不拷代码** |
 | `RUN pip install --no-cache-dir -r …` | 按清单装依赖；`--no-cache-dir` 不留 pip 缓存 |
 | `COPY main.py .` | 清单装完才拷代码 |
-| `CMD [… "--host", "0.0.0.0" …]` | **必须听 0.0.0.0**：默认只听 127.0.0.1，`-p` 进来的流量到不了容器回环（[第 11 篇](/云原生/docker/docker-11-network)） |
+| `CMD [… "--host", "0.0.0.0" …]` | **必须听 0.0.0.0**：默认只听 127.0.0.1，`-p` 进来的流量到不了容器回环（[第 15 篇](/云原生/docker/docker-15-network)） |
 
 ```bash
 docker build -t fastapi-app:1.0 .
@@ -582,7 +582,7 @@ hello from aspnet
 aspnet-app:1.0 158MB
 ```
 
-最终镜像与运行时底座**同尺寸**——模板级产物小到几乎不占；对比构建期 989MB SDK，这是多阶段收益最极端的一例。.NET 8 起 ASP.NET 默认听 **8080**（不再是 80）。`COPY . .` 会把骨架生成的 `obj/` 也带进构建阶段，真实项目应配 `.dockerignore` 排除 `bin/`、`obj/`（[第 23 篇](/云原生/docker/docker-23-build-advanced) 还实测过它能拦住 `.env`）。
+最终镜像与运行时底座**同尺寸**——模板级产物小到几乎不占；对比构建期 989MB SDK，这是多阶段收益最极端的一例。.NET 8 起 ASP.NET 默认听 **8080**（不再是 80）。`COPY . .` 会把骨架生成的 `obj/` 也带进构建阶段，真实项目应配 `.dockerignore` 排除 `bin/`、`obj/`（[第 10 篇](/云原生/docker/docker-10-build-advanced) 还实测过它能拦住 `.env`）。
 
 三个栈走完，公因数四条：
 
@@ -597,7 +597,7 @@ aspnet-app:1.0 158MB
 
 ## 雪球 8：构建完放哪、要不要 Jenkins？
 
-本地验证通过后，打上私有仓前缀再推（Harbor 见[第 10 篇](/云原生/docker/docker-10-harbor)，tag / push 见[使用篇](/云原生/docker/docker-10-harbor-usage)）：
+本地验证通过后，打上私有仓前缀再推（Harbor 见[第 12 篇](/云原生/docker/docker-12-harbor)，tag / push 见[使用篇](/云原生/docker/docker-13-harbor-usage)）：
 
 ```bash
 docker tag lab-web:1.0 harbor.daemon.io/demo/lab-web:1.0
@@ -612,8 +612,8 @@ Jenkins / GitLab CI / GitHub Actions **不是必须，是升级**。它们回答
 | 层 | 回答的问题 | 本系列落点 |
 |------|------|------|
 | Dockerfile（本篇） | 镜像**怎么做**出来 | `docker build` |
-| Registry | 镜像**放哪** | [第 10 篇](/云原生/docker/docker-10-harbor) |
-| 部署 | **在哪跑**一整套 | [第 13 篇](/云原生/docker/docker-13-compose) |
+| Registry | 镜像**放哪** | [第 12 篇](/云原生/docker/docker-12-harbor) |
+| 部署 | **在哪跑**一整套 | [第 16 篇](/云原生/docker/docker-16-compose) |
 | CI/CD | **何时做**、做完**送哪**、**谁来验** | Jenkins / GitLab CI / GitHub Actions |
 
 单人本地：手敲 `build`/`run` 够。团队协作、一天多次发布、构建后要自动测——再上流水线。最小示意（本篇未实测）：
@@ -658,11 +658,11 @@ jobs:
 |------|--------|
 | `docker commit` | 临时留存实验现场；不作为交付（第 5 篇） |
 | **Dockerfile + build**（本篇） | 可复现的日常交付 |
-| 多阶段 / BuildKit 缓存调优 | 镜像过大、构建太慢 → [第 23 篇](/云原生/docker/docker-23-build-advanced) |
-| 分层与 UnionFS | [第 17 篇](/云原生/docker/docker-17-unionfs) |
+| 多阶段 / BuildKit 缓存调优 | 镜像过大、构建太慢 → [第 10 篇](/云原生/docker/docker-10-build-advanced) |
+| 分层与 UnionFS | [第 22 篇](/云原生/docker/docker-22-unionfs) |
 
 **包袱一**：`EXPOSE` 不替你在宿主机开端口，真正开门的是 `run -p`（雪球 2）。  
-**包袱二**：多数情况不要用 `ADD`；远程 URL 不要 `ADD https://…`。`VOLUME` 只声明挂载点，不会帮你建好命名卷（[第 12 篇](/云原生/docker/docker-12-data-persistence)）。
+**包袱二**：多数情况不要用 `ADD`；远程 URL 不要 `ADD https://…`。`VOLUME` 只声明挂载点，不会帮你建好命名卷（[第 14 篇](/云原生/docker/docker-14-data-persistence)）。
 
 ---
 
@@ -671,11 +671,11 @@ jobs:
 | 相关篇 | 在这一路上出现的位置 |
 |------|----------------------|
 | [第 5 篇](/云原生/docker/docker-05-container-and-image) | 开头：`commit` vs 配方 |
-| [第 11 篇](/云原生/docker/docker-11-network) | 雪球 5：必须听 `0.0.0.0` |
-| [第 12 篇](/云原生/docker/docker-12-data-persistence) | `VOLUME` 只声明；真正挂靠 `-v` |
-| [第 13 篇](/云原生/docker/docker-13-compose) | 雪球 7：`build:` 现场构建 |
-| [第 10 篇](/云原生/docker/docker-10-harbor) | 雪球 8：镜像放哪 |
-| [第 17 / 23 篇](/云原生/docker/docker-17-unionfs) | 层的原理；缓存与瘦身 |
+| [第 15 篇](/云原生/docker/docker-15-network) | 雪球 5：必须听 `0.0.0.0` |
+| [第 14 篇](/云原生/docker/docker-14-data-persistence) | `VOLUME` 只声明；真正挂靠 `-v` |
+| [第 16 篇](/云原生/docker/docker-16-compose) | 雪球 7：`build:` 现场构建 |
+| [第 12 篇](/云原生/docker/docker-12-harbor) | 雪球 8：镜像放哪 |
+| [第 17 / 23 篇](/云原生/docker/docker-22-unionfs) | 层的原理；缓存与瘦身 |
 
 ---
 
@@ -702,7 +702,7 @@ docker rm -f lab-web fastapi-demo springboot-demo aspnet-demo 2>/dev/null
 
 **思考题**：若把 `COPY index.html …` 写成 `ADD index.html …`，构建结果通常一样吗？什么情况下你才会故意用 `ADD`？（提示：雪球 2。）
 
-下一篇：[《Harbor 安装》](/云原生/docker/docker-10-harbor)。
+下一篇：[《Harbor 安装》](/云原生/docker/docker-12-harbor)。
 
 ---
 

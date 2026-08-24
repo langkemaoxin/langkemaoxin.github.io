@@ -358,7 +358,7 @@ LISTEN 0      511          0.0.0.0:80         0.0.0.0:*
 ```
 
 - `0.0.0.0:80`：Nginx 在容器里听 80——和宿主上 docker-proxy 听的 18080 是两回事，一个是容器内的真实监听，一个是宿主上的发布端口
-- `127.0.0.11:46533`：这是谁？——Docker 的**内嵌 DNS**（[Docker 系列 11 篇](/云原生/docker/docker-11-network)里容器互相用名字访问，靠的就是它；第 5 篇会亲手复刻它的把戏）
+- `127.0.0.11:46533`：这是谁？——Docker 的**内嵌 DNS**（[Docker 系列 11 篇](/云原生/docker/docker-15-network)里容器互相用名字访问，靠的就是它；第 5 篇会亲手复刻它的把戏）
 - Process 列（表头最后的 `Process`，下面两行都空着）：**查到了端口，却显示不出进程名**——现象先记下，拆完命令就解释
 
 现在把整条命令拆成四个零件，每个都能对应到某一球：
@@ -417,8 +417,8 @@ nsenter   -t 5308     -n               ss -tln
 | 相关篇 | 在这一路上出现的位置 |
 |--------|----------------------|
 | [Docker 07：进入 Docker 容器的四种方式](/云原生/docker/docker-07-enter-container) | 雪球 7 的完整实战与排障故事 |
-| [Docker 11：Docker 网络](/云原生/docker/docker-11-network) | 雪球 7 的 docker0、发布端口 18080、内嵌 DNS |
-| [Docker 18：Namespace 隔离](/云原生/docker/docker-18-namespace) | 雪球 4 的 8 种 ns 在 Docker 里怎么落地 |
+| [Docker 11：Docker 网络](/云原生/docker/docker-15-network) | 雪球 7 的 docker0、发布端口 18080、内嵌 DNS |
+| [Docker 18：Namespace 隔离](/云原生/docker/docker-20-namespace) | 雪球 4 的 8 种 ns 在 Docker 里怎么落地 |
 | [Linux 02：IP、网段与网关](/Linux/basics/linux-02-ip-subnet-gateway) | 雪球 7 的 172.17.0.0/16、default via 网关 |
 | [Linux 05：netns 与 iptables 实操](/Linux/basics/linux-05-netns-iptables) | 雪球 7 的 eth0@if63 veth、内嵌 DNS 复刻；雪球 5 的继续深挖 |
 

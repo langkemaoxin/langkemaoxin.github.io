@@ -112,7 +112,7 @@ main
 | 07–10 | HTTPS、rewrite、缓存压缩、限流鉴权 |
 | 11–12 | 日志排障、性能与生产检查清单 |
 
-容器里跑 Nginx、证书挂卷的做法见云原生系列：[《HTTPS Nginx——从浏览器红页滚到本机全绿》](/云原生/docker/docker-14-https-nginx)。本系列聚焦 **Ubuntu 宿主机上的 Nginx 本体**。
+容器里跑 Nginx、证书挂卷的做法见云原生系列：[《HTTPS Nginx——从浏览器红页滚到本机全绿》](/云原生/docker/docker-17-https-nginx)。本系列聚焦 **Ubuntu 宿主机上的 Nginx 本体**。
 
 ---
 

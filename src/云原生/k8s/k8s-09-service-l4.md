@@ -13,8 +13,8 @@ tag:
 description: Service 类型、kube-proxy 的 iptables/IPVS，以及四类 Port 与会话保持。
 ---
 
-> **Kubernetes 系列 · 第 9/30 篇**  
-> 上一篇：[《HPA 自动伸缩与 CRI/CNI/CSI/CRD 扩展点》](/云原生/k8s/k8s-08-hpa-cri-crd/) · 下一篇：[《Underlay/Overlay 网络与集群 DNS 解析》](/云原生/k8s/k8s-10-network-dns/)
+> **Kubernetes 系列 · 第 9/35 篇**  
+> 上一篇：[《HPA 自动伸缩与 CRI/CNI/CSI/CRD 扩展点》](/云原生/k8s/k8s-08-hpa-cri-crd) · 下一篇：[《Underlay/Overlay 网络与集群 DNS 解析》](/云原生/k8s/k8s-10-network-dns)
 
 ---
 
@@ -400,7 +400,7 @@ spec:
 | 四类 Port | nodePort（Node 外）→ port（ClusterIP）→ targetPort（Pod）→ containerPort（声明） |
 | 会话保持 | `sessionAffinity: ClientIP` |
 
-下一篇进入 **CNI 网络模型**（Underlay/Overlay、VXLAN/IPIP）与 **集群 DNS** 解析规则。
+> ➡️ 下一篇：[《Underlay/Overlay 网络与集群 DNS 解析》](/云原生/k8s/k8s-10-network-dns)
 
 ---
 

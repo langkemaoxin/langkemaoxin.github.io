@@ -23,7 +23,7 @@ description: CI 对接 Harbor——推镜像与权限边界；安装见 Docker �
 
 Harbor 装好、网页能登录，CI 仍常失败在：HTTP/HTTPS 证书、项目名、Robot 权限、`--password-stdin` 写错。本篇不重复安装步骤——安装与第一次手工 `push` 见：
 
-→ [Docker 系列 · Harbor 私有仓库](/云原生/docker/docker-10-harbor)
+→ [Docker 系列 · Harbor 私有仓库](/云原生/docker/docker-12-harbor)
 
 这里只解决：**流水线如何稳定、安全地对接 Harbor**。
 

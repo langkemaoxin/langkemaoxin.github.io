@@ -12,7 +12,7 @@ tag:
 description: 容器与镜像——类与实例、读写层与生命周期
 ---
 
-> **Docker 系列 · 第 5/24 篇**
+> **Docker 系列 · 第 5/33 篇**
 > 上一篇：[《Docker 安装三种方式——离线、在线与现成虚拟机》](/云原生/docker/docker-04-install) · 下一篇：[《容器日常命令——run、ps、stop、exec 与常用运维》](/云原生/docker/docker-06-container-commands)
 
 ---
@@ -191,7 +191,7 @@ IMAGE          CREATED        CREATED BY                                       S
 <missing>      4 months ago   ADD alpine-minirootfs-3.21.7-x86_64.tar.gz /…   8.5MB     buildkit.dockerfile.v0
 ```
 
-每一行大致对应一层变化。为何能分层复用、UnionFS 如何挂载，见**第 17 篇**；这里先建立「镜像不是单文件黑盒」的直觉。
+每一行大致对应一层变化。为何能分层复用、UnionFS 如何挂载，见**第 22 篇**；这里先建立「镜像不是单文件黑盒」的直觉。
 
 ### 4.5 `tag`：给同一 ID 挂新门牌
 
@@ -254,7 +254,7 @@ docker history mylab/alpine:committed
 | 命令 | 去哪看 |
 |------|--------|
 | `docker save` / `docker load` | 第 8 篇：离线搬运 |
-| `docker push` + 私有仓 | 第 10 篇 Harbor |
+| `docker push` + 私有仓 | 第 12 篇 Harbor |
 | `docker build` + Dockerfile | 第 9 篇 |
 
 ---
@@ -758,6 +758,6 @@ stateDiagram-v2
 - 镜像分发，容器运行；一对多，可写层隔离——**删容器 ≠ 删镜像，改容器 ≠ 改镜像**。
 - 镜像日常：`pull` → `images` → `inspect`/`history` → `tag` → `rmi`；`commit` 能救急，生产线优先 Dockerfile。
 - 容器 `inspect`：按块对照完整 JSON（身份 → State → HostConfig → Config → NetworkSettings…）；Desktop 下 IP 看 `Networks`，端口看 `Ports`。
-- 容器怎么跑、怎么停、怎么清 → **第 6 篇**；离线打包 → 第 8 篇；分层原理 → 第 17 篇。
+- 容器怎么跑、怎么停、怎么清 → **第 6 篇**；离线打包 → 第 8 篇；分层原理 → 第 22 篇。
 
 下一篇见 🐳

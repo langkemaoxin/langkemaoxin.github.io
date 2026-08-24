@@ -16,7 +16,7 @@ description: 容器运行时 Docker（课程笔记附录）——低层/高层 r
 
 > **Docker 附录 · 第 1/2 篇**
 >
-> 课程笔记整理；主线阅读请按 [Docker 系列](/云原生/docker/docker-01-what-is-docker/) 顺序。与主线第 3 篇（Engine 地图）、第 21 篇（Daemon 与 runtime）有内容重叠，建议学完主线后再作补充阅读。
+> 课程笔记整理；主线阅读请按 [Docker 系列](/云原生/docker/docker-01-what-is-docker/) 顺序。与主线第 3 篇（Engine 地图）、第 23 篇（Daemon 与 runtime）有内容重叠，建议学完主线后再作补充阅读。
 >
 > 来源课程笔记整理优化；插图已迁入博客静态目录。
 

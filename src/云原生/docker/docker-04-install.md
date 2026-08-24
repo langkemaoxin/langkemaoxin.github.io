@@ -12,7 +12,7 @@ tag:
 description: Docker 安装三种方式——离线、在线与现成虚拟机
 ---
 
-> **Docker 系列 · 第 4/24 篇**
+> **Docker 系列 · 第 4/33 篇**
 > 上一篇：[《Docker Engine 与平台架构——Client、daemon、containerd、runc 怎么协作》](/云原生/docker/docker-03-engine-platform) · 下一篇：[《容器与镜像——类与实例、读写层与生命周期》](/云原生/docker/docker-05-container-and-image)
 
 ---
@@ -231,8 +231,8 @@ docker pull alpine:3.21
 
 #### 和后续文章的关系
 
-- 装 **Harbor**（[第 10 篇](/云原生/docker/docker-10-harbor)）前，请先完成本节验收；在线安装包很小，慢通常慢在 `install.sh` 拉镜像。  
-- `daemon.json` 其它项（live-restore、日志等）见[第 24 篇](/云原生/docker/docker-24-daemon-ops)。
+- 装 **Harbor**（[第 12 篇](/云原生/docker/docker-12-harbor)）前，请先完成本节验收；在线安装包很小，慢通常慢在 `install.sh` 拉镜像。  
+- `daemon.json` 其它项（live-restore、日志等）见[第 28 篇](/云原生/docker/docker-28-daemon-ops)。
 
 ### 启动与验证
 
@@ -282,6 +282,6 @@ Docker 与 K8s 学习栈涉及 Linux 内核、存储、网络等多方面配置�
 - **离线**：静态 tgz → `/usr/bin` → systemd unit → `systemctl start`。  
 - **在线**：yum/apt + CE 源 → `docker-ce` → **建议立刻**配 `registry-mirrors` 并用 `docker info` 验收。  
 - **现成 VM/云镜像**：跳过基建，适合快速上手与 K8s 联调；仍建议确认加速是否已配。  
-- 后面装 Harbor（第 10 篇）若 `install.sh` 拉镜像很慢，先回到本节把加速跑通。
+- 后面装 Harbor（第 12 篇）若 `install.sh` 拉镜像很慢，先回到本节把加速跑通。
 
 下一篇讲 **容器与镜像** 的关系：只读镜像层、可写容器层，以及「类与实例」模型。

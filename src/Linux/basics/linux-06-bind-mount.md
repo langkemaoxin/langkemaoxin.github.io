@@ -15,13 +15,13 @@ description: 从一块 tmpfs 盖布滚起，每次只加一个因素：bind 双�
 
 > **Linux 板块 · 第 6 篇**  
 > 上一篇：[《手搓迷你容器网络》](/Linux/basics/linux-05-netns-iptables)（netns/veth/iptables；本篇起从网络转向文件系统）  
-> 读完可接着看：[《数据持久化——从容器一删库没了，滚到三种挂载》](/云原生/docker/docker-12-data-persistence)（本文是它雪球 3 Bind Mount 的直接前置）｜[《Docker 的 Namespace》](/云原生/docker/docker-18-namespace)（mnt namespace 的系统展开）
+> 读完可接着看：[《数据持久化——从容器一删库没了，滚到三种挂载》](/云原生/docker/docker-14-data-persistence)（本文是它雪球 3 Bind Mount 的直接前置）｜[《Docker 的 Namespace》](/云原生/docker/docker-20-namespace)（mnt namespace 的系统展开）
 
 ---
 
 ## 开头：三笔账，一条雪球滚到底
 
-Docker 系列[第 12 篇](/云原生/docker/docker-12-data-persistence)讲 Bind Mount 时，说过三句很有底气的话：
+Docker 系列[第 12 篇](/云原生/docker/docker-14-data-persistence)讲 Bind Mount 时，说过三句很有底气的话：
 
 > 「bind mount 挂进去的就是宿主机目录本身……不存在复制、也不存在延迟」
 > 「拒绝发生在**内核文件系统层**（EROFS），不是 Docker 模拟的报错」
@@ -81,7 +81,7 @@ underneath.txt                       # ← 原内容完好归来；in-tmpfs.txt 
 
 | 段 | 本例 | 是什么 |
 |----|------|--------|
-| `-t tmpfs` | 文件系统**类型** | **tmpfs = 基于内存的临时文件系统**：不占磁盘、挂上即是一块空白「内存盘」、卸载即清空——不用准备磁盘分区就能演示挂载，所以拿它当教具（Docker 的 `docker run --tmpfs` 就是让 Docker 替你执行了这条 mount，见[第 12 篇雪球 5](/云原生/docker/docker-12-data-persistence)） |
+| `-t tmpfs` | 文件系统**类型** | **tmpfs = 基于内存的临时文件系统**：不占磁盘、挂上即是一块空白「内存盘」、卸载即清空——不用准备磁盘分区就能演示挂载，所以拿它当教具（Docker 的 `docker run --tmpfs` 就是让 Docker 替你执行了这条 mount，见[第 12 篇雪球 5](/云原生/docker/docker-14-data-persistence)） |
 | `tmpfs6` | **「设备」位** | 真磁盘挂载这里放设备（如 `/dev/sdb1`）；tmpfs **没有设备**——这个位置只是给这块内存盘起的**名字**（随便取），之后 `df`、`/proc/self/mountinfo` 里靠它辨认 |
 | `/tmp/lab6-mp` | **挂载点** | 把新文件系统的**根**接到这个目录上；即刻起这个路径显示的就是新文件系统的内容 |
 
@@ -348,7 +348,7 @@ $ echo x > /tmp/lab6-ro/try.txt
 bash: /tmp/lab6-ro/try.txt: Read-only file system
 ```
 
-这句报错就是开头第二笔账的答案：内核 VFS 层直接返回 **`EROFS`**（errno 30，显示为 `Read-only file system`），bash 只是转述——报错发生在**内核**，任何进程绕不过去。它和 Docker 系列[第 12 篇雪球 4](/云原生/docker/docker-12-data-persistence) 里容器内写 `:ro` 挂载收到的报错一字不差，因为是**同一个内核在同一个层**拒绝的——**账②销掉**。而同一时刻，从**源路径**这条挂载写入毫无障碍：
+这句报错就是开头第二笔账的答案：内核 VFS 层直接返回 **`EROFS`**（errno 30，显示为 `Read-only file system`），bash 只是转述——报错发生在**内核**，任何进程绕不过去。它和 Docker 系列[第 12 篇雪球 4](/云原生/docker/docker-14-data-persistence) 里容器内写 `:ro` 挂载收到的报错一字不差，因为是**同一个内核在同一个层**拒绝的——**账②销掉**。而同一时刻，从**源路径**这条挂载写入毫无障碍：
 
 ```bash
 $ echo 'still-writable' >> /tmp/lab6-src/a.txt && echo OK
@@ -402,7 +402,7 @@ $ mount --bind /tmp/lab6-src/app.conf /tmp/lab6-conf-dir
 mount: /tmp/lab6-conf-dir: mount(2) system call failed: Not a directory.
 ```
 
-内核返回 `ENOTDIR`：**源和挂载点类型必须一致**——文件挂到文件上、目录挂到目录上。这里正好和 Docker 系列[第 12 篇雪球 4](/云原生/docker/docker-12-data-persistence) 坑②对上：`-v` 打错路径时 Docker 自动创建的永远是**目录**——想挂单个文件而目标不存在，得到的是目录、类型对不上。所以 Docker 注入 `/etc/hosts` 的姿势必然是「先在容器里放好这个文件，再 bind」——雪球 8 进容器验证这一手。
+内核返回 `ENOTDIR`：**源和挂载点类型必须一致**——文件挂到文件上、目录挂到目录上。这里正好和 Docker 系列[第 12 篇雪球 4](/云原生/docker/docker-14-data-persistence) 坑②对上：`-v` 打错路径时 Docker 自动创建的永远是**目录**——想挂单个文件而目标不存在，得到的是目录、类型对不上。所以 Docker 注入 `/etc/hosts` 的姿势必然是「先在容器里放好这个文件，再 bind」——雪球 8 进容器验证这一手。
 
 ---
 
@@ -477,7 +477,7 @@ $ docker run --rm -v /tmp/lab6-src:/src busybox grep ' /src ' /proc/self/mountin
 | 设备号 | `8:48` | `8:48`——**同一块盘** |
 | root | `/tmp/lab6-src` | `/tmp/lab6-src`——**同一棵子树** |
 | 挂载点 | `/tmp/lab6-dst` | `/src`——只是换成了容器内路径 |
-| 父挂载 | `80`（`/` 所在挂载） | `946`（容器的 overlay 根，见[Docker 系列 17 篇](/云原生/docker/docker-17-unionfs)） |
+| 父挂载 | `80`（`/` 所在挂载） | `946`（容器的 overlay 根，见[Docker 系列 17 篇](/云原生/docker/docker-22-unionfs)） |
 
 inode 跨过容器边界仍然同号：
 
@@ -605,9 +605,9 @@ ln -s /mnt/c/Users/chengongyi/Projects/baidu-forgery-detection-trial/trufor-depl
 
 | 相关篇 | 在这条雪球路上的位置 |
 |--------|---------------------|
-| [Docker 第 12 篇](/云原生/docker/docker-12-data-persistence) 持久化 | 开头三笔账的出处；其雪球 3（bind）在雪球 2/8 内核层复现，其雪球 4 的 `:ro` 与坑①坑②分别在雪球 5、雪球 1、雪球 6 对上 |
-| [Docker 第 18 篇](/云原生/docker/docker-18-namespace) | 雪球 7 的 mnt namespace 系统展开 |
-| [Docker 第 17 篇](/云原生/docker/docker-17-unionfs) | 雪球 8 容器 mountinfo 里的父挂载 `946` 就是 overlay 根 |
+| [Docker 第 12 篇](/云原生/docker/docker-14-data-persistence) 持久化 | 开头三笔账的出处；其雪球 3（bind）在雪球 2/8 内核层复现，其雪球 4 的 `:ro` 与坑①坑②分别在雪球 5、雪球 1、雪球 6 对上 |
+| [Docker 第 18 篇](/云原生/docker/docker-20-namespace) | 雪球 7 的 mnt namespace 系统展开 |
+| [Docker 第 17 篇](/云原生/docker/docker-22-unionfs) | 雪球 8 容器 mountinfo 里的父挂载 `946` 就是 overlay 根 |
 | [Linux 第 1 篇](/Linux/basics/linux-01-nsenter-prerequisites) | `/proc/self`（组块 1）、思考题 2 的能力模型（组块 5）、`unshare -m` 的前置 |
 | [Linux 第 5 篇](/Linux/basics/linux-05-netns-iptables) | 雪球 7「视图类资源跟命名空间走」的类比；雪球 8 的 `127.0.0.11` 嵌入式 DNS |
 

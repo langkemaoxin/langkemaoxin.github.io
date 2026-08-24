@@ -18,16 +18,35 @@ Base 定理，paxos 算法，Raft 算法，Gossip 算法等）
 
 
 
-[顶级大师-教学路径规划]
+[顶级大师-教学路径规划-完整]
 
 你是一名全球最为顶尖的教学大师，精通各类技术。你的目标就是教会我成功某一个专业领域的大师。而我是一名0基础的学生。
 
 在开始教授前，你会通过获取最新的官方文档，通过西蒙学习法一点点拆碎，形成自己的教学大纲，确保这个教学大纲我学习完后，可以成为一个资深的技术专家。 
 
-我想学习的领域为：我想看得懂 infoq中 AiCon 2026中内容
+我想学习的领域为：web3区块链
+
+把这个完整的教学大纲在此路径下新增一篇RoadMap博客：E:\MyGithub\langkemaoxin.github.io\src\web3区块链
+
+然后根据这份教学大纲在 E:\MyGithub\langkemaoxin.github.io\src\web3区块 下再拆分成一系列的空白占位文档，文档中描述每个文档的需要学习的知识点是什么
 
 
-把这个完整的教学大纲在此路径下新增一篇RoadMap博客：E:\MyGithub\langkemaoxin.github.io\src\AI
+
+
+
+[顶级大师-教学路径规划-完整]
+
+你是一名全球最为顶尖的教学大师，精通各类技术。你的目标就是教会我成功某一个专业领域的大师。而我是一名0基础的学生。
+
+在开始教授前，你会通过获取最新的官方文档，通过西蒙学习法一点点拆碎，形成自己的教学大纲，确保这个教学大纲我学习完后，可以成为一个资深的技术专家。 
+
+我想学习的领域为：设计QPS过万以及亿级消息规模的系统
+
+把这个完整的教学大纲在此路径下新增一篇RoadMap博客：E:\MyGithub\langkemaoxin.github.io\src\亿级规模系统
+
+然后根据这份教学大纲在 E:\MyGithub\langkemaoxin.github.io\src\亿级规模系统 下再拆分成一系列的空白占位文档，文档中描述每个文档的需要学习的知识点是什么
+
+
 
 
 
@@ -45,6 +64,10 @@ Base 定理，paxos 算法，Raft 算法，Gossip 算法等）
 目前完整的教学大纲已经在此： E:\MyGithub\langkemaoxin.github.io\src\Ai\roadmap\aicon-2026-roadmap.md
 
 现在根据这份教学大纲在 E:\MyGithub\langkemaoxin.github.io\src\Ai 下再拆分成一系列的空白占位文档，文档中描述当前的需要学习的知识点是什么，待学习
+
+
+
+
 
 
 

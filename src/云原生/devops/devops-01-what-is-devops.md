@@ -109,7 +109,7 @@ GitOps      08 环境规划 → 09–11 Argo CD 与清单
 进阶        15 多集群与回滚
 ```
 
-你已有 Docker / K8s 基础时，可把重点放在「流水线怎么产出镜像」和「集群状态怎么跟 Git 对齐」。Harbor 安装细节见 [Docker 系列 · Harbor](/云原生/docker/docker-10-harbor)，本系列只讲**如何接入 CI/CD**。
+你已有 Docker / K8s 基础时，可把重点放在「流水线怎么产出镜像」和「集群状态怎么跟 Git 对齐」。Harbor 安装细节见 [Docker 系列 · Harbor](/云原生/docker/docker-12-harbor)，本系列只讲**如何接入 CI/CD**。
 
 ---
 

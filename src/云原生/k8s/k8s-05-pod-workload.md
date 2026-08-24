@@ -14,7 +14,7 @@ tag:
 description: Pod 生命周期、Pause/Init/临时容器、探针与静态 Pod，打好工作负载基础。
 ---
 
-> **Kubernetes 系列 · 第 5/30 篇**  
+> **Kubernetes 系列 · 第 5/35 篇**  
 > 上一篇：[《Kubernetes 基本概念与 kubectl——对象模型与常用命令》](/云原生/k8s/k8s-04-objects-kubectl) · 下一篇：[《Deployment 与副本控制——灰度更新、RC 与 ReplicaSet》](/云原生/k8s/k8s-06-deployment-rs)
 
 ---
@@ -221,7 +221,7 @@ spec:
 | 退出顺序 | —— | Pod 终止时**先停主容器**，sidecar 最后退（可先 flush 日志/上报） |
 | 所在容器列表 | initContainers | initContainers（调度与资源占用按常驻算） |
 
-> 💡 这是 [14 Service Mesh 篇](/云原生/k8s/k8s-14-service-mesh-istio)里「手工注入 Envoy sidecar」的官方替代方向——Istio 等已支持用原生 sidecar 承载代理，避免「Pod 已 Running 但代理未就绪」的窗口期。
+> 💡 这是 [14 Service Mesh 篇](/云原生/k8s/k8s-30-service-mesh-istio)里「手工注入 Envoy sidecar」的官方替代方向——Istio 等已支持用原生 sidecar 承载代理，避免「Pod 已 Running 但代理未就绪」的窗口期。
 
 ---
 
@@ -582,4 +582,4 @@ volumes:
 - **liveness** 保活重启，**readiness** 控流量，**startup** 解耦慢启动。
 - **临时容器** 用于生产排错；**静态 Pod** 由 kubelet 本地 manifest 驱动。
 
-下一篇进入 **Deployment 与 ReplicaSet**，看副本控制与滚动/灰度发布。
+> ➡️ 下一篇：[《Deployment 与副本控制——灰度更新、RC 与 ReplicaSet》](/云原生/k8s/k8s-06-deployment-rs)

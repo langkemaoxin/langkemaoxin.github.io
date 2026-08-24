@@ -15,7 +15,7 @@ tag:
 description: HPA 与 Metrics API，以及 OCI/CRI/CNI/CSI/CRD 扩展点与创建流程。
 ---
 
-> **Kubernetes 系列 · 第 8/30 篇**  
+> **Kubernetes 系列 · 第 8/35 篇**  
 > 上一篇：[《DaemonSet、StatefulSet、Job 与 CronJob》](/云原生/k8s/k8s-07-daemon-stateful-job) · 下一篇：[《Service 四层流量分发——iptables、IPVS 与四类 Port》](/云原生/k8s/k8s-09-service-l4)
 
 ---
@@ -342,4 +342,4 @@ kubectl delete fruit apple
 - **OCI → runc → CRI → Kubelet** 是容器运行链路；**CNI / CSI** 分别扩展网络与存储。
 - **CRD + Controller** 扩展 Kubernetes API，CR 是具体实例。
 
-下一篇进入 **Service 四层流量分发**——iptables、IPVS 与四类 Port。
+> ➡️ 下一篇：[《基于 QPS 的动态扩缩容——Prometheus Operator 与 Adapter》](/云原生/k8s/k8s-16-prometheus-hpa)

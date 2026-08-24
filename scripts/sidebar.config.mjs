@@ -18,6 +18,8 @@ import Microservices from "./sidebar/微服务.mjs";
 import SourceAnalysis from "./sidebar/源码剖析.mjs";
 import MiniProgram from "./sidebar/微信小程序.mjs";
 import Frontend from "./sidebar/前端.mjs";
+import Scale from "./sidebar/亿级规模系统.mjs";
+import Web3 from "./sidebar/web3区块链.mjs";
 /**
  * @typedef {{ title?: string, icon?: string, order?: number }} FolderMeta
  * @typedef {{ path: string, dir: string }} SidebarModuleConfig
@@ -46,6 +48,8 @@ export const modules = [
   { path: "/源码剖析/", dir: "源码剖析" },
   { path: "/微信小程序/", dir: "微信小程序" },
   { path: "/前端/", dir: "前端" },
+  { path: "/亿级规模系统/", dir: "亿级规模系统" },
+  { path: "/web3区块链/", dir: "web3区块链" },
 ];
 
 /**
@@ -89,6 +93,8 @@ export const folders = {
   ...prefix("源码剖析", SourceAnalysis),
   ...prefix("微信小程序", MiniProgram),
   ...prefix("前端", Frontend),
+  ...prefix("亿级规模系统", Scale),
+  ...prefix("web3区块链", Web3),
 };
 
 /** 未单独配置 icon 时的默认图标 */

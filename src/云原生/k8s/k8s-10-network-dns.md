@@ -13,8 +13,8 @@ tag:
 description: Underlay/Overlay、IPVLAN 与集群内外 DNS 解析规律。
 ---
 
-> **Kubernetes 系列 · 第 10/30 篇**  
-> 上一篇：[《Service 四层流量分发——iptables、IPVS 与四类 Port》](/云原生/k8s/k8s-09-service-l4/) · 下一篇：[《应用持久化存储——Volume、PV 与 PVC》](/云原生/k8s/k8s-11-pv-pvc/)
+> **Kubernetes 系列 · 第 10/35 篇**  
+> 上一篇：[《Service 四层流量分发——iptables、IPVS 与四类 Port》](/云原生/k8s/k8s-09-service-l4) · 下一篇：[《应用持久化存储——Volume、PV 与 PVC》](/云原生/k8s/k8s-11-pv-pvc)
 
 ---
 
@@ -342,11 +342,11 @@ spec:
 
 | 要点 | 说明 |
 |------|------|
-| **必须 CNI 支持** | NetworkPolicy 由 **CNI 插件实现**（Calico、Cilium 等），Flannel 等不支持时写了也不生效——先确认插件（[Cilium 部署](/云原生/k8s/k8s-28-advanced-network/)） |
+| **必须 CNI 支持** | NetworkPolicy 由 **CNI 插件实现**（Calico、Cilium 等），Flannel 等不支持时写了也不生效——先确认插件（[Cilium 部署](/云原生/k8s/k8s-29-advanced-network/)） |
 | 默认全通 → 先加「deny all」 | 常见起步：给 namespace 加一条「禁止所有入站」的策略，再逐条放行 |
 | 命名空间间隔离 | `from` 里用 `namespaceSelector` 可按 ns 放行/禁止 |
 
-> 💡 Service 层面的访问控制是 RBAC（管 API），**数据面**的访问控制就是 NetworkPolicy——一个管「能不能操作对象」，一个管「包能不能过去」，二者互补，见 [16 篇安全节](/云原生/k8s/k8s-16-secret-configmap)。
+> 💡 Service 层面的访问控制是 RBAC（管 API），**数据面**的访问控制就是 NetworkPolicy——一个管「能不能操作对象」，一个管「包能不能过去」，二者互补，见 [16 篇安全节](/云原生/k8s/k8s-12-secret-configmap)。
 
 ---
 
@@ -361,7 +361,7 @@ spec:
 | Pod DNS | `<ip-dashed>.<ns>.pod.cluster.local` |
 | 访问范围 | Service DNS **仅集群内**有效 |
 
-下一篇讲解 **Volume、PV、PVC** 与 StorageClass 动态供给。
+> ➡️ 下一篇：[《Ingress 七层流量分发——原理、部署模式与动态域名》](/云原生/k8s/k8s-13-ingress-l7)
 
 ---
 

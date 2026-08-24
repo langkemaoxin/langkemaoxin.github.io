@@ -14,7 +14,7 @@ tag:
 description: Deployment 与 ReplicaSet/RC 关系、滚动更新与灰度发布操作要点。
 ---
 
-> **Kubernetes 系列 · 第 6/30 篇**  
+> **Kubernetes 系列 · 第 6/35 篇**  
 > 上一篇：[《工作负载核心：Pod 生命周期、Pause、Init 与探针》](/云原生/k8s/k8s-05-pod-workload) · 下一篇：[《DaemonSet、StatefulSet、Job 与 CronJob》](/云原生/k8s/k8s-07-daemon-stateful-job)
 
 ---
@@ -324,4 +324,4 @@ kubectl scale replicaset nginx-gateway-rs --replicas 1
 - **灰度发布** 可结合 pause、分阶段改镜像、rollout undo 实现。
 - **RC** 已过时；**RS** 增强 selector；生产直接用 **Deployment**。
 
-下一篇讲解 **DaemonSet、StatefulSet、Job 与 CronJob**，覆盖每节点守护进程、有状态副本集与批处理任务。
+> ➡️ 下一篇：[《DaemonSet、StatefulSet、Job 与 CronJob》](/云原生/k8s/k8s-07-daemon-stateful-job)

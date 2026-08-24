@@ -12,7 +12,7 @@ tag:
 description: Kubernetes 对象模型、YAML 结构、Namespace/Label，以及 kubectl 常用命令速查。
 ---
 
-> **Kubernetes 系列 · 第 4/30 篇**  
+> **Kubernetes 系列 · 第 4/35 篇**  
 > 上一篇：[《K8s 运行时实操——Minikube 安装、排障与 Helm》](/云原生/k8s/k8s-03-minikube-runtime)  
 > 下一篇：[《工作负载核心：Pod 生命周期、Pause、Init 与探针》](/云原生/k8s/k8s-05-pod-workload)
 
@@ -723,4 +723,4 @@ kubectl get pvc my-pvc -o jsonpath='{.metadata.finalizers}'
 | 隔离 | Namespace 隔离对象；Label/Selector 筛选 |
 | 工具 | kubectl 操作集群；Minikube 仅提供环境 |
 
-下一篇深入 **Pod**：Pause 容器、Init 容器、探针与生命周期——工作负载的第一块「硬骨头」。
+> ➡️ 下一篇：[《工作负载核心：Pod 生命周期、Pause、Init 与探针》](/云原生/k8s/k8s-05-pod-workload)
