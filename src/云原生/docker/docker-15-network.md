@@ -3,1522 +3,915 @@ title: Docker 网络——从 localhost 不通滚到能用名字互访
 sidebarGroup: Docker 系列
 shortTitle: 15 Docker 网络
 order: 15
-date: 2026-08-22T00:00:00.000Z
+date: 2026-08-25T00:00:00.000Z
 category: 云原生
 tag:
   - Docker
   - 云原生
   - Docker系列
+  - 网络
+  - 对话实录
 description: 师生对话实录课：0 基础学生与教学大师的 Docker Network 控制台逐字稿，从「为什么 localhost 不通」一路滚到「能用名字互访」，实验全部 WSL 实机真跑。
 ---
 
 > **Docker 系列 · 第 15/33 篇**
-> 上一篇：[《数据持久化——从容器一删库没了，滚到三种挂载》](/云原生/docker/docker-14-data-persistence) · 下一篇：[《Docker Compose 编排——从一个 Nginx 滚成一整栈》](/云原生/docker/docker-16-compose)
+> 上一篇：[《数据持久化——从容器一删数据就没，滚到三种挂载（师生对话实录）》](/云原生/docker/docker-14-data-persistence) · 下一篇：[《Docker Compose 编排——从一个 Nginx 滚成一整栈》](/云原生/docker/docker-16-compose)
+>
+> 本篇是阶段 4「网络」的主课：容器不是孤岛，流量怎么进出、容器怎么互访，一条链路拆到底。下一篇 Compose 里服务名互访，用的就是这一篇的机制。
 
 ---
 
-# 课堂实录（控制台逐字稿）
+## 写在前面
 
-> **体例说明**：本文是师生对话的**控制台回放逐字稿**，按时间顺序记录——学生原话、老师原文（与控制台输出一字不差）、操作记录（实验、建文件），不加整理。环境：Windows 10 + WSL 里跑 Docker，所有实验真机执行，输出不造假。
+前面几篇里，容器已经会跑、会存数据了。但真实应用从来不是单个容器：Web 要连数据库，数据库要连缓存——一对上「容器之间怎么通信」，我就开始到处撞墙：
 
----
+- 容器里 `curl localhost:8080` 明明宿主机能访问，容器里就是不通；
+- 两个容器互相 ping，IP 能通，换名字就 `bad address`；
+- `-p 8080:80` 敲了无数遍，流量到底怎么进容器的，完全说不清。
 
-## 【2026-08-22 · 第 1 次对话】
+所以这篇继续用老办法：**让 AI 当老师，我当学生，每课只讲一个概念，我有问题就打断，没问题就继续**。从一个「localhost 不通」的现场开始，一路滚到「能用名字互访」，最后把 `-p` 背后的整条链路亲手拆开。
 
-### 学生原话
+课程路线图（走到哪算哪）：
 
-> [互动式教学-教室场景模拟]
->
-> 你是一名全球最为顶尖的教学大师，精通各类技术。你的目标就是培养我某一个专业领域的大师。而我是一名0基础的学生。
->
-> 在开始教授前，你会通过获取最新的官方文档，通过西蒙学习法一点点拆碎，形成自己的教学大纲，确保这个教学大纲我学习完后，可以成为一个资深的技术专家。
-> 然后你使用费曼技巧，给我讲解最为基本的知识块，而你每次只会给我讲解一个概念，如果我有问题，我就会提出来问你，如果没有问题则继续讲解。
->
-> ## 要求：
-> 1、我们之间的所有对话记录都要保留下来，做成那种课堂问答的形式。每次我们对话完，都要及时的写入文件中。
-> 2、我的要的是控制台回放的逐字稿：学生原话、老师原文（含控制台里那版完整的开场白）、操作记录（实验、建文件），全部按时间顺序，不加整理。
->
-> 我们需要学习的内容是 [docker的Network]
-> 把记录保存在，覆盖这篇文中 [E:\MyGithub\langkemaoxin.github.io\src\云原生\docker\docker-15-network.md]
->
-> 开始教学
+> ① localhost 为什么不通 → ② 容器的 IP 从哪来（docker0 与 veth）→ ③ 默认 bridge 的名与不通 → ④ 自定义网络送你一个 DNS → ⑤ 别名与多网络 → ⑥ `-p` 背后的 DNAT → ⑦ 安全边界与 DOCKER-USER → ⑧ host 与 none → ⑨ container 模式（K8s Pod 的原型）→ ⑩ macvlan 认脸与驱动选型
 
-### 操作记录（课前备课，按时间顺序）
-
-1. 读 `E:\MyGithub\langkemaoxin.github.io\src\云原生\docker\docker-15-network.md` → 空文件（仅两行空行），确认可覆盖，无旧内容丢失。
-2. WebFetch 抓 `https://docs.docker.com/engine/network/` → 被网络策略拦截（"Unable to verify if domain docs.docker.com is safe to fetch"）。
-3. 改用 webReader 成功抓取官方 Networking overview 全文（页面元数据 `og:updated_time: 2026-07-21`，即 2026 年 7 月 21 日更新的现行版）。
-4. `ls src/云原生/docker/` 摸清系列结构（24 篇闭环 + 2 附录）；读 `docker-14-data-persistence.md` 头部确认 frontmatter 与前后篇导航格式，本篇标题沿用《Docker 网络——从 localhost 不通滚到能用名字互访》以保持导航一致。
-5. 读目录下历史残留 `_lab_net_out.txt` → 内容是一次失败的 WSL 实验脚本报错（`set: pipefail: invalid option name`，PowerShell→wsl 的 `\r` 换行符坑），与本次课程无关，留档未删。
-6. 建本文件，写入第 1 次对话实录。
-
-### 老师原文（控制台开场白 + 教学大纲 + 第 1 课）
-
-（以下与控制台输出一字不差）
+环境：WSL2 Ubuntu-22.04（root）+ Docker Engine 29.1.3，防火墙后端 iptables（默认）。所有输出都是本机实跑的真实结果，不是文档抄写。官方入口：[Networking](https://docs.docker.com/engine/network/)、[Bridge driver](https://docs.docker.com/engine/network/drivers/bridge/)、[Packet filtering](https://docs.docker.com/engine/network/packet-filtering-firewalls/)。
 
 ---
 
-同学，你好。我是这门课的老师。
+## 第 1 课：localhost 不是同一个 localhost
 
-在开讲之前，我先交代一下我是怎么备这门课的，你可以把它当成这门课的"入学须知"：
+**🧑‍🏫 老师：**
 
-我备课的方式是这样的——先去把 Docker 官方文档里 Networking 的全部内容拉下来通读（我拿到的是 2026 年 7 月 21 日更新的现行版，不是道听途说的旧版），然后用西蒙学习法把它拆碎：官方文档是按"参考手册"组织 的，适合查，不适合学；我会把它的知识重新排成一条"从已知到未知"的线，每一课只新增一个知识点，后面的课只建立在前面讲过的东西上。等这条线走完，你手里就有了官方文档的全部内容，而且是按"人脑能吸收"的顺序排好的。
+今天从你撞过的那堵墙开始。起一个 nginx，把它的 80 端口发布到宿主机的 8080：
 
-讲的方式是费曼技巧：我每节课只讲**一个**概念，用大白话讲，讲完就停。你有问题就问，没问题我们就进下一课。课里的每个实验我都会在这台机器上真跑，你看到的每一行输出都是真的——这台机器上跑不了的，我会明说是演示，绝不编造输出。
-
-下面是教学大纲，一共 20 课，四个阶段，难度是一条上坡路：
-
-## 教学大纲（依据 docs.docker.com/engine/network，2026-07-21 版拆解）
-
-**阶段一：默认网络——先看清"容器为什么是台小电脑"**
-
-1. 为什么容器需要网络——三个问题一根线（今天这课）
-2. 容器眼里的网络——网卡、IP、网关、路由表、DNS 五件套
-3. docker0 与默认 bridge——宿主机上到底多了什么东西（实验）
-4. 默认 bridge 实战——两个容器用 IP 互 ping（实验）
-5. 容器怎么上网——masquerading（NAT 伪装）
-6. 端口发布 `-p`——外面的世界怎么进来（实验）
-
-**阶段二：自定义网络——生产环境真正的用法**
-
-7. 默认 bridge 的痛——只能用 IP，不能用名字（实验）
-8. 自定义网络与内嵌 DNS（127.0.0.11）——用名字互访（实验）
-9. 网络即隔离墙——两个网络之间为什么不通
-10. 一个容器连多个网络——`docker network connect`
-
-**阶段三：其他网络驱动——换掉"虚拟交换机"这个方案本身**
-
-11. `none`——彻底断网给谁用
-12. `host`——不要小电脑的网络了，直接用宿主机的
-13. `container:` 模式——两个容器共用一副网络
-14. `macvlan` / `ipvlan`——容器伪装成一台物理设备
-15. `overlay`——跨主机的容器大网（概念课）
-
-**阶段四：运维进阶——管网络的人**
-
-16. 网络命令全家桶——`ls` / `inspect` / `create` / `rm` / `prune`
-17. 子网规划与 `default-address-pools`
-18. DNS 进阶——`--dns` / `--hostname` / `--alias` / `gw-priority`
-19. IPv6 网络开关
-20. 毕业设计——综合实战串讲
-
----
-
-好，现在开始第一课。深呼吸，我们从零开始。
-
-# 第 1 课：为什么容器需要网络？
-
-## 从一个你会立刻撞上的问题讲起
-
-假设你已经在自己电脑上跑起来了两个容器（跑的命令现在不用管，后面课里会教）：
-
-- 一个 **Nginx** 容器——网页服务器
-- 一个 **Redis** 容器——数据库
-
-它们就跑在同一台电脑上，肩并肩。现在 Nginx 想把数据存进 Redis，问题来了：**它俩怎么"说话"？**
-
-你的第一反应多半是：同一台电脑嘛，用 `localhost`（也就是 `127.0.0.1`）连过去呗。这个直觉非常自然，但在容器世界**恰好是错的**。
-
-## 心智模型：每个容器是一台配了网卡的独立小电脑
-
-为什么错？回想一下你已经学过的容器知识（隔离）：每个容器都是一个被隔离出来的环境——有自己的文件系统、自己的进程空间。今天我要在这个模型上**加一块砖**：容器还有**自己的网卡、自己的 IP 地址**。
-
-所以更准确的心智模型是：
-
-> 你的电脑不是一台电脑，而是"一台真电脑 + N 台迷你小电脑"。每台小电脑都有自己的一块网卡，插在 Docker 给你装的"虚拟交换机"上。
-
-带着这个模型再看 `localhost`：`localhost` 的意思是"**我自己这台电脑**"。Nginx 容器里的 localhost，指的是 **Nginx 这台小电脑自己**——不是宿主机，更不是隔壁的 Redis。所以在 Nginx 容器里连 `localhost:6379`，等于在小电脑里自己跟自己握 手，Redis 根本听不见。
-
-这就是容器网络要解决的第一个问题：**隔离出来的小电脑们，怎么互相联网？**
-
-## 三个问题一根线
-
-光解决"互相联网"还不够。把容器网络想全，一共三个问题，也是我们这门课的骨架：
-
-1. **容器 ↔ 容器**：Nginx 怎么访问 Redis？（用 IP？用名字？）
-2. **外界 → 容器**：你的浏览器在真电脑上，Nginx 在小电脑里，浏览器怎么打开 Nginx 的网页？——剧透：默认也**进不去**，需要"端口发布"（第 6 课）。
-3. **容器 → 外界**：容器里想 `apt-get install` 装个软件、想调外网 API，能出去吗？——这个默认**可以**，Docker 偷偷帮你做了"伪装上网"（第 5 课）。
-
-一门 20 课的课，其实就是把这三个问题一层层剥开。
-
-## 官方文档的第一句话
-
-Docker 官方文档对容器网络的定义就一句话（我直译）：
-
-> Container networking refers to the ability for containers to connect to and communicate with each other, and with non-Docker network services.
->
-> 容器网络，指的是容器之间、以及容器与非 Docker 的网络服务之间，建立连接并通信的能力。
-
-注意后半句"与非 Docker 服务通信"——不只是容器互连，容器还要能跟你局域网里的 MySQL、能跟互联网上的 API 说话。三个问题对应上了。
-
-还有一个反直觉但极其重要的事实，官方原话是：
-
-> A container has no information about what kind of network it's attached to, or whether its network peers are also Docker containers.
->
-> 容器根本不知道自己连的是什么网络，也不知道对面那台是不是容器。
-
-那容器能看到什么？官方的清单是：**一块网络接口（网卡）+ 一个 IP 地址 + 一个网关 + 一张路由表 + DNS 服务**。就这些。
-
-翻译成人话：容器开机后看到的东西，和你给一台真电脑插上网线后看到的东西**一模一样**。为什么这么设计？因为容器的整个承诺就是"应用不用改，搬进容器照样跑"。如果容器里的程序还要写特殊代码才能上网，这个承诺就破了。所以 Docker 把网络也伪装成"一台普通电脑该有的样子"——这是整个容器网络设计的**第一性原理**，后面 19 课的所有设计都从这句话推出来。
-
-## 本课小结
-
-- 心智模型：一台真电脑 + N 台带独立网卡的迷你小电脑
-- `localhost` 在容器里 = 小电脑自己，不是宿主机
-- 三个问题一根线：容器↔容器、外界→容器、容器→外界
-- 第一性原理：容器眼里，网络就长成"一台普通电脑"的样子
-
-## 课后思考题（不查资料，凭直觉答我）
-
-你在宿主机的浏览器里访问 `http://localhost:80`，Nginx 容器里确实监听着 80 端口。**默认情况下，网页能打开吗？为什么？**
-
-把你的答案和理由告诉我——答对答错都没关系，我要看的是你的直觉走到哪了。然后我们进第 2 课。
-
----
-
-## 【2026-08-22 · 第 2 次对话】
-
-### 学生原话
-
-> 默认是打不开的，因为如果不做任何设置，我打开的http://localhost:80只是打开我本机的地址，和Docker容器没有关系
-
-### 操作记录（第 2 课课前实验，全部真机执行，环境：Windows 10 + WSL 内 Docker Engine 29.1.3）
-
-1. `wsl -e bash -lc 'docker version --format "Server: {{.Server.Version}}"'` → `Server: 29.1.3`（daemon 在线）
-2. `docker run --rm alpine ip addr` → 输出 `lo: 127.0.0.1/8` 与 `eth0@if40: 172.17.0.9/16, link/ether f2:a5:bb:9e:02:ca`
-3. `docker run --rm alpine ip route` → 输出两条路由：`default via 172.17.0.1 dev eth0` 与 `172.17.0.0/16 dev eth0 scope link src 172.17.0.9`
-4. `docker run --rm alpine cat /etc/resolv.conf` → `nameserver 223.5.5.5 / 114.114.114.114 / 8.8.8.8`，头部注释含 `Generated by Docker Engine.` 与 `Based on host file: '/etc/resolv.conf' (legacy)`
-5. `docker run --rm alpine hostname` → `516d68c0d34d`（容器 ID 短哈希）
-6. 本对话实录追加进本文件。
-
-### 老师原文（判卷 + 第 2 课）
-
-（以下与控制台输出一字不差）
-
----
-
-**先判卷。**
-
-结论：**对**，默认打不开。✓
-
-理由：**对了一半**。你说"localhost 是我本机的地址"——这部分完全正确。但"和 Docker 容器没有关系"这句，把墙说得太厚了。
-
-精确版是这样的：浏览器访问 `localhost:80`，找的是**宿主机自己的 80 端口**。而宿主机的 80 端口上，没有任何进程在监听——Nginx 监听的是**另一台"小电脑"的 80 端口**。注意这里的坑：**每台"电脑"有自己独立的一套端口空间**。宿主机的 80 号房间是空的，Nginx 坐在容器那台小电脑的 80 号房间里，两间房门牌号一样，但根本不是同一间房。
-
-另外给你留个钩子：宿主机和容器之间其实**有一扇半开的门**，比你想象的近得多——第 3 课你会亲眼看到。现在先记住：默认打不开，因为敲门敲错了门。
-
-80 分。比我带过的大多数初学者的第一答好——多数人答"能打开，因为就在本机"。
-
-那我们进第 2 课。
-
----
-
-# 第 2 课：容器眼里的网络——五件套
-
-上一课官方文档说了，容器能看到的东西只有五样：**一块网卡、一个 IP、一个网关、一张路由表、DNS 服务**。
-
-当时我说这是"容器网络的全部地基"。今天我们就把这五样挨个打开看——而且不是看我画图，是看**真容器里跑出来的真输出**。我刚在这台机器上跑了四条命令（命令本身你先不用背，先看懂输出）：
-
-## 实验一：网卡——`ip addr`
-
-```
-$ docker run --rm alpine ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1000
-    link/loopback 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host
-       valid_lft forever preferred_lft forever
-2: eth0@if40: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue state UP
-    link/ether f2:a5:bb:9e:02:ca brd ff:ff:ff:ff:ff:ff
-    inet 172.17.0.9/16 brd 172.17.255.255 scope global eth0
-       valid_lft forever preferred_lft forever
+```bash
+docker run -d --name n15-web -p 8080:80 nginx:alpine
 ```
 
-这台小电脑开机后一共有**两块网卡**：
+在宿主机上访问，一切正常：
 
-- `lo`——"自言自线路"。挂在上面的地址就是 `127.0.0.1`。**上一课的 localhost 谜底就在这**：容器里的 localhost，就是这个 lo，绕一圈回到自己，永远出不了这台小电脑。
-- `eth0`——真正的对外网口，插在 Docker 那台"虚拟交换机"上。它有三个看点：
-  - **IP 地址 `172.17.0.9`**：门牌号。注意，我们**从没申请过 IP**，容器一开机它就自动有了——是 Docker 从一个"号码池"里动态租给它的。
-  - **MAC 地址 `f2:a5:bb:9e:02:ca`**：网卡的出厂编号，顺带认识一下，本文不展开。
-  - **名字后面的 `@if40`**：现在你只需要记住这个彩蛋存在——eth0 不是一根线，是一根**线的一半**，另一半在宿主机上，编号 40。第 3 课揭晓它。
+```bash
+curl -s -o /dev/null -w 'HTTP %{http_code}\n' http://localhost:8080
 
-还有一个细节值得停下来看一眼：为什么是 `172.17.0.9`，不是 `172.17.0.2`？——因为这台机器的 Docker 网络里已经有别的容器先占了坑。**IP 是先到先得动态分配的**，容器重启后号码还可能变。现在把这个事实放兜里，第 7 课它会变成一场事故。
-
-## 实验二：路由表与网关——`ip route`
-
+# -s (silent 静默模式)：不显示请求过程中的进度条和错误信息，让输出更干净
+# -o /dev/null (output)：将下载的响应内容（HTML/JSON等）丢弃到“黑洞”文件（/dev/null）中，因为这里只关心状态码，不关心具体内容。
+# -w 'HTTP %{http_code}\n' (write-out)：在请求结束后，按照自定义格式打印变量。这里打印 HTTP 加上数字状态码（如 200），并换行。
 ```
-$ docker run --rm alpine ip route
+
+```text
+HTTP 200
+```
+
+现在换个地方访问。**再起一个全新容器，在容器里面**访问同一个地址：
+
+```bash
+docker run --rm busybox wget -q -O /dev/null --timeout=3 http://localhost:8080
+
+# BusyBox 将上百个常用的 Linux 命令（如 ls、cp、cat、echo、wget、ping 等）打包成一个单一的可执行文件，通过不同的调用名称来执行不同功能。
+```
+
+```text
+wget: can't connect to remote host (127.0.0.1): Connection refused
+```
+
+连接被拒绝。同一个「localhost:8080」，宿主机一敲就通，容器里一敲就死——为什么？
+
+因为 **`localhost` 的意思是「我这台机器自己」**。宿主机敲 `localhost:8080`，指的是宿主机；容器里敲，指的是**容器自己**。而容器里 8080 端口上什么都没有——那个 nginx 跑在**另一个容器**里，不在「这里」。
+
+这背后是 Linux 内核的一个机制：**网络命名空间（network namespace，简称 netns）**。Docker 每起一个容器，就给它分配一个独立的 netns——里面有自己的一套网卡、自己的 IP、自己的路由表、自己的端口空间。两个容器即使跑在同一台宿主机上，在网络的世界里也像两台独立的机器。
+
+你可以把第 5 篇讲过的「容器 = 被限制了视角的普通进程」在这里再体会一遍：网络视角也被限制了。容器看得到的网卡，只有它自己的。
+
+一句话总结本课：
+
+> **容器有自己独立的网络世界；`localhost` 永远指向「当前这个网络世界」自己，所以跨容器用 localhost 必然不通。**
+
+那容器和容器之间、容器和宿主机之间，到底靠什么连起来？这就是下一课。
+
+---
+
+## 第 2 课：容器的 IP 从哪来——docker0 网桥
+
+**🧑‍🏫 老师：**
+
+既然每个容器是一台「独立机器」，它总得有网卡和 IP 才能上网。去容器里看一眼：
+
+```bash
+docker exec n15-web ip -4 addr show eth0
+
+# ip：Linux 网络配置工具
+# -4：只显示 IPv4 地址（忽略 IPv6）
+# addr show：显示网络地址信息
+# eth0：网卡名称（容器默认的主网卡）
+```
+
+```bash
+2: eth0@if19: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue state UP
+    inet 172.17.0.4/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+
+# ======================================================================================
+# 2: eth0@if19: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue state UP
+# ======================================================================================
+# 字段	值	含义
+# 接口索引	2:	容器内第 2 个网络接口
+# 接口名	eth0	容器的主网卡
+# @if19	@if19	表示该虚拟网卡对端是宿主机上的第 19 号接口（即 veth pair 的另一半）
+# 标志位	BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN	UP=已启用；LOWER_UP=物理层连接正常；M-DOWN（多播已关闭，较新内核标识）
+# MTU	1500	以太网标准最大传输单元（字节），影响网络包大小
+# 排队规则	qdisc noqueue	无队列规则（快速转发，无流量整形）
+# state	UP	✅ 网卡处于激活状态（关键指标）
+
+# ======================================================================================
+# inet 172.17.0.4/16 brd 172.17.255.255 scope global eth0      
+# ======================================================================================
+# 字段	值	含义
+# IP 地址	172.17.0.4	容器的内部 IP（Docker 默认 bridge 网络分配）
+# 子网掩码	/16	网络前缀，对应 255.255.0.0，该网段最多 65534 个地址
+# 广播地址	172.17.255.255	该子网的广播地址，发送到该 IP 会广播给网段内所有设备
+# 作用域	scope global	全局有效（相对于 scope host 仅本机有效）       
+
+
+# ======================================================================================
+# valid_lft forever preferred_lft forever
+# ======================================================================================
+# 表示这个 IP 永不过期（DHCP 动态分配的 IP 会显示具体秒数，如 valid_lft 86399）
+```
+
+容器里有一块叫 `eth0` 的网卡，IP 是 `172.17.0.4/16`。再看它的路由表：
+
+```bash
+docker exec n15-web ip route
+
+# 显示该容器的IP 路由表（数据包该往哪儿走）
+```
+
+```text
 default via 172.17.0.1 dev eth0
-172.17.0.0/16 dev eth0 scope link  src 172.17.0.9
+172.17.0.0/16 dev eth0 scope link  src 172.17.0.4
 ```
 
-整张表就两行，但这两行就是这台小电脑**所有出门决策的全部规则**：
+默认网关是 `172.17.0.1`——这个地址不在容器里，在哪？在宿主机上。回到宿主机看：
 
-- 第二行先看（更具体的规则优先）：**目的地在 `172.17.0.0/16` 这个网段里的（也就是同小区的邻居），直接从 eth0 喊话**，不用经过任何人。`scope link` 的意思就是"近到一根线直接连着"。
-- 第一行兜底规则 `default`：**其余的一切目的地，交给 `172.17.0.1`，从 eth0 出去**。
-
-而 `172.17.0.1` 这个地址，就是**网关（gateway）**——小区大门。它是谁？它是 Docker 那台"虚拟交换机"在宿主机一侧的地址。所有出小区的流量（上互联网、去别的网段）都从它手里过。第 3 课我们会站在宿主机上亲眼看到这扇门。
-
-路由表和网关的关系一句话总结：**路由表是规则清单，网关是清单里那条兜底规则指定的收件人。**
-
-## 实验三：DNS——`cat /etc/resolv.conf`
-
+```bash
+ip -4 addr show docker0
 ```
-$ docker run --rm alpine cat /etc/resolv.conf
+
+```text
+6: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+```
+
+宿主机上有一块 `docker0`，IP 正是 `172.17.0.1/16`。Docker 装好那一刻，它就在了——**`docker0` 是 Docker 在宿主机里造的一台虚拟交换机（Linux bridge）**。
+
+容器怎么「插」到这台交换机上？靠一种成对的虚拟网线：**veth（virtual ethernet）pair**。它总是成对出现，从一端塞进去的包会从另一端出来。Docker 的接法是：一端放进容器的 netns（容器里看到的 `eth0`），另一端留在宿主机、插在 docker0 上。刚才容器里那行输出 `eth0@if19` 的 `@if19` 就是线索——它在对你说「我的另一头是 19 号设备」。宿主机上一查：
+
+```bash
+ip link | grep veth
+```
+
+```text
+11: veth4a69d63@if2: <...> master docker0 state UP ...
+...
+19: vethbb9c124@if2: <...> master docker0 state UP ...
+```
+
+19 号设备 `vethbb9c124@if2`，`master docker0`——插在交换机上的网线头，它的 `@if2` 对应容器里的 2 号设备 `eth0`。两头互指，这根网线就找到了。
+
+把整幅画拼起来：
+
+```text
+┌─容器 n15-web 的 netns──┐      ┌─宿主机───────────────────────┐
+│ eth0 = 172.17.0.4      │      │                              │
+│   │ (if2)      ┌───────┼──────┼──────────┐                   │
+└───┼────────────┘ veth  │ 网线 │          │                   │
+    └────────────────────┼──────┘          ▼                   │
+                         │            docker0 = 172.17.0.1     │
+                         │            （虚拟交换机）           │
+                         │                 │                   │
+                         │              eth0 ──── 互联网       │
+                         └─────────────────────────────────────┘
+```
+
+- 同一台「交换机」上的容器（172.17.0.x）可以直接互访；
+- 容器出网走默认网关 `172.17.0.1`，也就是 docker0。
+
+一句话总结本课：
+
+> **bridge 模式 = 宿主机里一台虚拟交换机（docker0），每个容器用一根 veth 网线插上去，同网段的容器天然互通。**
+
+---
+
+## 插问 1：这台「交换机」是谁造的？为什么用 `docker network ls` 看不到 veth？
+
+**🧑‍🎓 学生：** 等等，docker0 这台交换机，跟我 `docker network ls` 里看到的那个叫 `bridge` 的网络是什么关系？还有，veth 这么重要的东西，为什么 Docker 的命令里从来没让我看过它？
+
+**🧑‍🏫 老师：**
+
+两个问题都问到点子上了。
+
+第一个：**`docker network ls` 里的 `bridge`，就是 docker0 这台交换机的「Docker 视角的名字」**。Docker 的网络对象叫 `bridge`，它落到操作系统层面就是那块 `docker0` 接口。注意我这个宿主机上 Docker 已经跑过别的项目了，所以列表比教科书的长：
+
+```text
+NETWORK ID     NAME              DRIVER    SCOPE
+0acaac1ed9d1   bridge            bridge    local
+de3d35e41f61   host              host      local
+6494333c3c80   none              null      local
+696d4e583de2   labnet            bridge    local
+...
+```
+
+`docker network inspect bridge` 能看到它的网段、网关、连了哪些容器——本质上就是把 docker0 的账本翻译给你看。所有**没有指定 `--network` 的容器**，默认都插到这台交换机上，所以它有个正式名字：**默认 bridge 网络**。
+
+第二个问题更关键：**veth 是内核层面的实现细节，Docker 故意不把它暴露给你**。Docker 官方文档专门有一句提醒：创建网络、连接容器时，Docker 在底层做的事（加桥设备、配 iptables 规则）都属于实现细节，应该让 Docker 自己管，别手动碰。你在 Docker 命令层操作的是「网络对象」，veth、网桥、iptables 是它替你干活的工具。今天带你下到这一层，是为了排障时你看得懂现场——不是让你绕过 Docker 手工配网。
+
+一句话收口：
+
+> **`docker network ls` 的 `bridge` = docker0 的 Docker 名字；veth/网桥/iptables 是内核层实现，Docker 管理它们但不让你插手。**
+
+---
+
+## 第 3 课：默认 bridge 上，ping IP 通、ping 名字不通
+
+**🧑‍🏫 老师：**
+
+现在做今天最重要的一组对照实验。在默认 bridge 上起两个 busybox 容器：
+
+```bash
+docker run -d --name n15-a busybox sleep 300
+docker run -d --name n15-b busybox sleep 300
+```
+
+查一下两人分到的 IP：
+
+```bash
+docker inspect -f '{{.Name}} -> {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' n15-a n15-b
+```
+
+```text
+/n15-a -> 172.17.0.5
+/n15-b -> 172.17.0.6
+```
+
+同一台「交换机」上的邻居。从 n15-a 去 ping n15-b 的 IP：
+
+```bash
+docker exec n15-a ping -c1 -W2 172.17.0.6
+```
+
+```text
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.084/0.084/0.084 ms
+```
+
+通，而且快得像本机。现在换名字试试——容器明明就叫 `n15-b`：
+
+```bash
+docker exec n15-a ping -c1 -W2 n15-b
+```
+
+```text
+ping: bad address 'n15-b'
+```
+
+**IP 通，名字不通。** 这不是故障，是默认 bridge 的设计——它不提供名字解析。
+
+为什么名字重要？因为 **IP 是会变的**。容器删了重建、换了启动顺序、换了机器，`172.17.0.6` 就可能换人。你的应用配置里如果写死了数据库的容器 IP，等于把炸弹埋进配置文件。生产上的正确姿势永远是：应用连「db」这个名字，名字背后对应当前活着的那个容器。
+
+那默认 bridge 为什么不带这个能力？官方文档现在说得很直白：默认 bridge 网络「是 Docker 的一个历史遗留细节，**不推荐用于生产**」。早年 Docker 只有它，后来设计的自定义网络补上了 DNS 等一堆能力，但为了不破坏老用法，默认 bridge 一直保持原样。
+
+一句话总结本课：
+
+> **默认 bridge：同网段 IP 互访没问题，但没有名字解析；它是历史遗留，别在生产用它。**
+
+---
+
+## 插问 2：容器能 ping 通外网，宿主机能 ping 通容器——这些路是谁修的？
+
+**🧑‍🎓 学生：** 你说容器像独立机器，那它访问外网（比如 `apt install` 要连软件源）的流量怎么出去的？外面也没人认识 172.17.0.5 这种私网 IP 啊。
+
+**🧑‍🏫 老师：**
+
+好问题。这两条路其实机制不同，分开看。先看「宿主机 → 容器」——不需要任何人修路，docker0 本来就是宿主机的一块网卡：
+
+```bash
+ping -c1 -W2 172.17.0.4
+```
+
+```text
+1 packets transmitted, 1 received, 0% packet loss
+rtt min/avg/max/mdev = 0.061/0.061/0.061/0.000 ms
+```
+
+宿主机直接 ping 容器 IP，通——因为在宿主机看来，172.17.0.4 就挂在自家 docker0 网段上，路由表认识它。
+
+再看「容器 → 外网」这条路，才需要 Docker 动手修。先验证容器确实能出网：
+
+```bash
+docker run --rm busybox ping -c1 -W3 223.5.5.5
+```
+
+```text
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 5.657/5.657/5.657 ms
+```
+
+能通。但 223.5.5.5 是公网 DNS，它回包时得知道「回给谁」。而 172.17.0.0/16 是私网地址，公网上不可能有它的路由——所以一定有人在半路**把源地址改成了宿主机的公网身份**。这个手法叫 **SNAT**，Docker 用的是它的动态版本：**MASQUERADE（伪装）**。证据在宿主机的 iptables 里：
+
+```bash
+iptables-save -t nat | grep -i masq | grep 172.17
+```
+
+```text
+-A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+```
+
+翻译成人话：**凡是源地址来自 172.17.0.0/16、且不是发往 docker0 自身（`! -o docker0`）的包，出网卡前都把源地址伪装成宿主机网卡的地址**。于是外面的世界只看到宿主机在收发包，容器藏在它身后——和家里路由器让全家设备共享一个公网 IP 是同一招。
+
+回程的包到了宿主机，iptables 再按连接记录把目标地址翻译回 172.17.0.x，送回 docker0，交换机按 MAC 找到对应 veth，进容器。一来一回，容器就「能上网」了。
+
+顺带把这块拼图的位置摆正：你现在已经知道三类流量各自的通道——
+
+| 流量 | 走哪条路 |
+|------|----------|
+| 同一 bridge 上的容器互访 | docker0 二层交换，不出去 |
+| 宿主机 → 容器 | 宿主机直连 docker0 网段，天然通 |
+| 容器 → 外网 | docker0 → MASQUERADE 伪装成宿主机 → eth0 |
+| 外网 → 容器的服务 | 第 6 课再说，`-p` 修的路 |
+
+一句话收口：
+
+> **容器出网 = 源地址伪装（MASQUERADE）；规则就躺在 iptables 的 POSTROUTING 链里，`-s 172.17.0.0/16` 一眼可认。**
+
+---
+
+## 第 4 课：自定义网络——Docker 送你一个 DNS
+
+**🧑‍🏫 老师：**
+
+默认 bridge 的药方，就是别用它。造一个自己的网络：
+
+```bash
+docker network create n15-net
+```
+
+Docker 会从地址池里给它分一个独立网段，还会在宿主机上再造一台专属交换机（这次不叫 docker0，叫 `br-<网络ID前缀>`）。查账本：
+
+```bash
+docker network inspect n15-net --format 'subnet={{range .IPAM.Config}}{{.Subnet}} gw={{.Gateway}}{{end}}'
+```
+
+```text
+subnet=172.26.0.0/16 gw=172.26.0.1
+```
+
+注意网段是 **172.26**，和默认 bridge 的 172.17 不是一块地盘——不同网络之间默认隔离，这一点第 5 课做实验。把 web 容器接进来，再起个新容器指定同一个网络：
+
+```bash
+docker network connect n15-net n15-web
+docker run -d --name n15-box --network n15-net busybox sleep 300
+```
+
+重头戏来了——在 n15-box 里，**用名字**访问 n15-web：
+
+```bash
+docker exec n15-box ping -c1 -W2 n15-web
+```
+
+```text
+PING n15-web (172.26.0.2): 56 data bytes
+64 bytes from 172.26.0.2: seq=0 ttl=64 time=0.083 ms
+```
+
+名字解析成了，`n15-web` → `172.26.0.2`（这是 n15-web 在 n15-net 上的新 IP）。再直接按名字发个 HTTP 请求：
+
+```bash
+docker exec n15-box wget -q -O /dev/null --timeout=3 http://n15-web
+```
+
+```text
+（无输出，exit 0 —— 请求成功）
+```
+
+这条路就是标题里说的「能用名字互访」。谁在替它解析名字？看容器里的 DNS 配置：
+
+```bash
+docker exec n15-box cat /etc/resolv.conf
+```
+
+```text
 # Generated by Docker Engine.
 # This file can be edited; Docker Engine will not make further changes once it
 # has been modified.
 
-nameserver 223.5.5.5
-nameserver 114.114.114.114
-nameserver 8.8.8.8
+nameserver 127.0.0.11
+options ndots:0
 
-# Based on host file: '/etc/resolv.conf' (legacy)
-# Overrides: [nameservers]
+# Based on host file: '/etc/resolv.conf' (internal resolver)
+# ExtServers: [223.5.5.5 114.114.114.114 8.8.8.8]
 ```
 
-网络世界只认 IP，但人只记得住名字。所以需要**查号台**：你报 `www.baidu.com`，它告诉你 IP。`nameserver` 开头的三行就是查号台的三个号码。
+`nameserver 127.0.0.11`——容器自己的 netns 里跑着一个 Docker 内置的 DNS 服务，固定监听 127.0.0.11。它的解析顺序：**先查本 Docker 网络里的容器名/别名，查不到再转发给 ExtServers（从宿主机 resolv.conf 继承来的上游 DNS）**。所以容器里既能 `ping n15-web`，也能 `ping baidu.com`，一个 resolver 全包了。
 
-这里有个**藏得很深的官方文档证据**，最后那行注释：`Based on host file: '/etc/resolv.conf' (legacy)`——默认 bridge 网络上的容器，用的是**宿主机 DNS 配置的一个拷贝**。我这台机器（WSL）配了三个查号台：223.5.5.5（阿里）、114.114.114.114、8.8.8.8（谷歌），容器照单全收。
+一句话总结本课：
 
-把"默认 bridge = 拷贝宿主机的 DNS"这句话放兜里，第 8 课你会发现自定义网络里这个文件会**彻底变样**（变成一个 Docker 自己的神秘地址），那是容器网络最好玩的一幕之一。
+> **自定义 bridge 网络 = 默认 bridge 的全部能力 + 内置 DNS（127.0.0.11）+ 网络间隔离；互访一律用名字，IP 变了也不怕。**
 
-## 实验四（附赠）：hostname
-
-```
-$ docker run --rm alpine hostname
-516d68c0d34d
-```
-
-这台小电脑的名字是一串乱码？——它就是**容器 ID**。官方文档原话：容器的 hostname 默认就是容器 ID。也就是说，小电脑出厂时顶着一个"身份证号"当名字，没有人类友好名。这也放兜里：第 8 课我们会看到名字在容器网络里扮演的核心角色。
-
-## 五件套全家福
-
-| 件 | 在哪看到的 | 是什么（一句话） |
-| --- | --- | --- |
-| 网卡 | `eth0@if40` | 对外网口，插在虚拟交换机上 |
-| IP | `172.17.0.9` | 动态租来的门牌号，会变 |
-| 网关 | `172.17.0.1` | 小区大门，所有出小区流量的收件人 |
-| 路由表 | `ip route` 两行 | 出门决策规则：邻居直呼，其余交大门 |
-| DNS | `resolv.conf` | 查号台，名字换 IP |
-
-回头看第 1 课那句第一性原理——"容器眼里，网络就长成一台普通电脑的样子"——现在你有实证了：这五件套，跟一台插了网线的真电脑**一模一样**，一件不多，一件不少。
-
-## 本课小结
-
-- localhost 谜底：容器里的 `127.0.0.1` 挂在 `lo` 网卡上，永远出不了小电脑
-- IP 是 Docker 动态租的（`.9` 而不是 `.2` 就是证据），**别把 IP 写死**——第 7 课见
-- 路由表两行规则：同网段直连，其余交给网关 `172.17.0.1`
-- 默认 bridge 的 DNS = 宿主机配置的拷贝
-- 容器默认 hostname = 容器 ID
-
-## 课后思考题（不查资料，用今天学的五件套推理）
-
-在容器里执行 `curl http://www.baidu.com`，**五件套被用到几件、按什么顺序、各干了什么活**？把你能推出来说的都说给我听。
+补一个官方文档里的细节，很容易踩：内置 DNS 解析的是**自定义容器名**——你显式 `--name` 起的名字。完全自动生成的名字（`angry_bell` 之类）不在解析范围内。反正生产上你也该给容器起正经名字。
 
 ---
 
-## 【2026-08-22 · 第 3 次对话】
+## 插问 3：为什么默认 bridge 就不能有 DNS？加一个很难吗？
 
-### 学生原话
+**🧑‍🎓 学生：** 既然内置 DNS 是 Docker 自己实现的，塞给默认 bridge 不就行了？故意不给，是有什么讲究吗？
 
-> 第一步应该是把百度的域名，通过DNS去换取IP地址，然后通过路由表一看，这个IP不是令居，然后再把这个请求去交给网关，网关把这个请求，顺着网卡，转发到了宿主机上。宿主机再通过自己的网卡把请求转发出去
+**🧑‍🏫 老师：**
 
-### 操作记录（第 3 课课前实验，全部真机执行）
+不是技术上做不到，是**不敢给**。想想默认 bridge 的定位：所有没指定网络的容器全插在上面——你跑个临时 busybox、同事起个测试 Redis、某个老项目没配网络，全都挤在同一台「交换机」上。这时候如果名字能互相解析，意味着：
 
-1. 宿主机 `ip addr show docker0` → `inet 172.17.0.1/16`，MAC `66:c5:ef:c2:a7:88`——第 2 课网关之谜的答案浮出水面。
-2. `docker ps` → 机器上现存 7 个容器：`box1`、`box2`（busybox，上次课遗留，Up 42 分钟）、`s-net-db`（redis:alpine）、`s-net-web`、`lab-net-web`（nginx:alpine）、`jzfz-redis`（redis:7）、`jzfz-pg`（postgres:15）——第 2 课"为什么新容器拿到 .9"的答案。
-3. `docker exec box1 ip addr show eth0` → `2: eth0@if38 ... inet 172.17.0.7/16`（容器内 ifindex=2）。
-4. 宿主机 `ip link show type veth` → 7 根 `vethXXXXXX@if2`，全部 `master docker0`，其中第 38 号 `vetha5b2c4c@if2` 与 box1 的 `eth0@if38` 编号互指——7 容器恰好 7 根线。
-5. 宿主机 `ping -c 2 -W 1 172.17.0.7` → 2 发 2 收，0% 丢包，rtt 0.095ms——"半开的门"验证通过。
-6. `docker network ls` → `bridge` / `host` / `none` 三个默认网络 + 本机遗留的 4 个自定义网络（`docker_gwbridge`、`new-api_new-api-network`、`rabbitmq-cluster_default`、`rabbitmq_default`）。
-7. 本对话实录追加进本文件。box1/box2 保留不删，留作第 4 课互 ping 实验用。
+1. **任何容器都能按名字找到任何容器**——DNS 是「目录」，目录里全是人，就没有隔离可言。你在第 5 课会看到，自定义网络之间默认不通，这是安全边界；默认 bridge 是个大杂院，边界无从谈起。
+2. **名字会撞车**。大杂院里两个项目都起了叫 `db` 的容器，DNS 听谁的？自定义网络按网络划地盘，`db` 在 A 项目网络里指 A 的数据库、在 B 网络里指 B 的，互不干扰。
 
-### 老师原文（判卷 + 第 3 课）
+所以官方的推荐非常明确，就写在 bridge 文档开头：**用户自定义 bridge 网络优于默认 bridge**，并列了五条理由（自动 DNS、更好的隔离、运行中动态接入/摘除、每个网络独立配置、避免 `--link` 这种遗留机制）。默认 bridge 只保留「向后兼容」的使命。
 
-（以下与控制台输出一字不差）
+实践中你只需要养成一个反射：**`docker run` 永远带 `--network`**。要么指定自己建的网络，要么明确知道自己在干什么。后面第 16 篇的 Compose 更干脆——它每个工程自动建专属网络，你连想都不用想。
 
----
+一句话收口：
 
-**先判卷。**
-
-你的推理链：**DNS 换 IP → 查路由表 → 不是邻居 → 交网关 → 网关转到宿主机 → 宿主机网卡转发出去**。
-
-顺序全对，五件套用上了四件（lo 确实用不上）。88 分。今天我要在这条链上给你拧三个升级螺栓：
-
-**螺栓一（嵌套）**：你说"第一步是 DNS 换 IP"——但查号台 `223.5.5.5` 自己就**不在小区里**！它也是外网地址。所以"问 DNS"这一步，自己就要先走一遍"查路由表 → 不是邻居 → 交网关"。也就是说你描述的流程发生了**两轮**：第一轮问路（DNS 查询出门），第二轮才是真正的 HTTP 请求。DNS 不是流程外的准备动作，它本身就是第一个出门的包。
-
-**螺栓二（措辞）**：你说"网关把请求**转发到了**宿主机上"——今天实验会给你修正：网关不是把包转交给宿主机，**网关就是宿主机本人**。`172.17.0.1` 这扇"小区大门"，其实是一块**长在宿主机身上的网卡**。门不是通向宿主机的门，门就是宿主机。
-
-**螺栓三（魔术预告）**：你说"宿主机通过自己的网卡把请求转发出去"——大方向对，但"转发"这个词里藏着整个容器出网最大的一个魔术：宿主机**不是原样转发的**，它在出门前偷偷改了包裹上的寄件人。改成了谁？为什么不改就收不到回信？第 5 课专门拆这个魔术。
-
-好，三个螺栓都拧在第 3、5 课的位置上。现在进第 3 课。
+> **默认 bridge 不给 DNS 不是抠门，是大杂院里给不了「按名找人」的安全保证；答案永远是自建网络。**
 
 ---
 
-# 第 3 课：docker0 与默认 bridge——宿主机上到底多了什么
+## 第 5 课：一个容器可以同时插在多个网络上
 
-## 视角切换
+**🧑‍🏫 老师：**
 
-前两课我们一直**站在容器小电脑里**往外看：看到了五件套、看到了大门 172.17.0.1、看到了一根"有另一半的网线" eth0@if40。
-
-今天我们爬出小电脑，**站到宿主机（真电脑）上**，回答一个问题：Docker 装好、跑起来之后，宿主机上**多了哪些东西**？
-
-## 实验一：小区大门的真身
-
-在宿主机上执行（我真机跑了）：
-
-```
-$ ip addr show docker0
-4: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
-    link/ether 66:c5:ef:c2:a7:88 brd ff:ff:ff:ff:ff:ff
-    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
-```
-
-看到了吗——宿主机上有一块网卡，名字叫 **docker0**，IP 是 **172.17.0.1**。
-
-第 2 课容器里看到的"小区大门 172.17.0.1"，谜底揭晓：**它就是宿主机上的 docker0 这块网卡**。大门不是通往宿主机的门，大门就是宿主机伸进小区的一只手。
-
-## 是什么：bridge（网桥）
-
-那 docker0 这块网卡是什么东西？它的类型是 **bridge（网桥）**。
-
-是什么：网桥是 Linux 内核自带的一个功能——**用软件模拟出来的交换机**。物理交换机你可能在机房见过：一排网口，插几根网线进去，插在上面的设备就互通。网桥就是同样功能的软件版：一块"虚拟网卡"，别的网卡可以"插"在它上面，插上的设备彼此互通。
-
-为什么 Docker 要用它：容器一台一台地起、一删就没，你不可能真去插拔物理网线。软件交换机可以随时创建虚拟网口、随时拔掉，天生为容器的"用完即走"设计。
-
-Docker 出厂自带的第一台软件交换机，就叫 **docker0**。而官方文档说的"**默认 bridge 网络**"，就是指"插在 docker0 这台交换机上的那个小区"——我们前两课里的所有容器，住的都 是这个小区。
-
-顺带解一个旧案：为什么第 2 课新容器拿到的是 `172.17.0.9` 而不是 `.2`？我在宿主机上跑 `docker ps` 看了一眼——这台机器上正跑着 **7 个容器**（上次课遗留的 box1、box2，还有别的项目留下的 redis、nginx、postgres）。7 个业主先占了门牌，新房客只能从 `.9` 开始拿号。
-
-## 实验二：网线的另一半（第 2 课彩蛋兑现）
-
-第 2 课我说 eth0 名字里的 `@if40` 是彩蛋，"另一半在宿主机上"。今天兑现。我在容器 box1 里和宿主机上**各看了一眼网卡**：
-
-```
-# 容器 box1 里：
-$ docker exec box1 ip addr show eth0
-2: eth0@if38: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
-    link/ether a6:bf:2e:dd:55:d7 brd ff:ff:ff:ff:ff:ff
-    inet 172.17.0.7/16 brd 172.17.255.255 scope global eth0
-
-# 宿主机上（节选）：
-$ ip link show type veth
-15: veth5efa696@if2: ... master docker0 ...
-16: vethb08adfc@if2: ... master docker0 ...
-31: veth2476840@if2: ... master docker0 ...
-38: vetha5b2c4c@if2: ... master docker0 ...
-...（共 7 根）
-```
-
-两个关键读法：
-
-1. **编号互指**：容器里 box1 的网卡叫 `eth0@if38`——它在说"我的另一半，是宿主机上的 38 号接口"。宿主机上恰好在第 38 号位置有一根 `vetha5b2c4c@if2`——它在说"我的另一半，是那边的 2 号接口"（box1 容器内 eth0 的编号正是 2）。一根线的两半，互相报出对方的编号。
-2. **`master docker0`**：宿主机上这 7 根 veth，全部标注 `master docker0`——意思是"插在 docker0 这台交换机上"。7 个容器，恰好 7 根线，一根不多。
-
-这个东西有个名字：**veth pair（虚拟以太网设备对）**——一对总是成对出现的虚拟网卡，**从一头进去的数据包，会原封不动地从另一头出来**。Docker 的用法是：生一对，一半塞进容器当 eth0，另一半插在 docker0 上。容器于是"插上了交换机的网线"。
-
-## 全景图（前 3 课的总装）
-
-```
-              宿主机（真电脑）
-  ┌─────────────────────────────────────────┐
-  │        docker0 = 软件交换机 (172.17.0.1)  │── 物理网卡 eth0 ──→ 互联网
-  │          │       │       │   ...        │
-  │        veth38  veth15  veth16  （7 根）  │
-  └──────────┼───────┼───────┼──────────────┘
-             │       │       │      ← veth pair：一根虚拟网线的两半
-         ┌───┴──┐ ┌──┴───┐ ┌─┴─────┐
-         │ box1 │ │ box2 │ │ jzfz… │   容器 = 小电脑
-         │ eth0 │ │ eth0 │ │ eth0  │   （每台有独立五件套）
-         │ .0.7 │ │      │ │       │
-         └──────┘ └──────┘ └───────┘
-```
-
-到今天为止你学到的所有零散事实——五件套、大门 172.17.0.1、@if40、默认 bridge——现在全部装进这一张图里了。
-
-## 实验三：半开的门（第 1 课钩子兑现）
-
-第 1 课我说"宿主机和容器之间有一扇半开的门"。现在站在宿主机上，直接 ping 容器 box1 的门牌：
-
-```
-$ ping -c 2 -W 1 172.17.0.7
-PING 172.17.0.7 (172.17.0.7) 56(84) bytes of data.
-64 bytes from 172.17.0.7: icmp_seq=1 ttl=64 time=0.095 ms
-64 bytes from 172.17.0.7: icmp_seq=2 ttl=64 time=0.037 ms
-
---- 172.17.0.7 ping statistics ---
-2 packets transmitted, 2 received, 0% packet loss
-```
-
-通了。0.095 毫秒——比任何互联网延迟快几千倍，因为它压根没出过这台机器。
-
-为什么宿主机能 ping 通"另一台电脑"？因为 **docker0 就长在宿主机身上**——宿主机自己也是小区的业主，跟容器是邻居，走的是第 2 课路由表里那条"邻居直呼"的规则。这就是"半开"的意思：**宿主机 ↔ 容器是通的，外界 ↔ 容器是不通的**。哪半边开着、哪半边关着，就是这个模块后面所有戏的来源。
-
-## 实验四（认个脸）：docker network ls
-
-```
-$ docker network ls
-NETWORK ID     NAME                       DRIVER    SCOPE
-7a200f8e3db9   bridge                     bridge    local
-ac4fc42e94be   docker_gwbridge            bridge    local
-de3d35e41f61   host                       host      local
-d4438b6fccbf   new-api_new-api-network    bridge    local
-6494333c3c80   none                       null      local
-c88cb4c6fe5f   rabbitmq-cluster_default   bridge    local
-232b31f9d168   rabbitmq_default           bridge    local
-```
-
-这是"小区清单"。三个是 Docker 出厂自带的：`bridge`（就是 docker0 小区）、`host`、`none`——后两个是第 11、12 课的主角，先混个脸熟。另外四个是我这台机器上别的项目（rabbitmq 集群等）留下的自定义小区——**自定义小区长什么样，是第 8 课的大戏**。命令细节第 16 课统一讲，今天只认脸。
-
-## 本课小结
-
-- `docker0` = 宿主机上一块 bridge 类型的网卡 = 软件交换机 = 第 2 课那个网关 `172.17.0.1`
-- "默认 bridge 网络" = 插在 docker0 上的小区；Docker 出厂自带
-- **veth pair** = 成对虚拟网卡，一头在容器里当 eth0，一头插在 docker0 上；`@ifN` 是两半互相报出的对方编号
-- 半开的门：宿主机 ↔ 容器**通**（docker0 是宿主机自己的网卡），外界 ↔ 容器**不通**
-- `docker network ls`：默认三件套 bridge / host / none
-
-## 课后思考题（不查资料，用前三课推）
-
-同一个 box1，门牌 `172.17.0.7`：
-
-- 你的宿主机 ping 它，**通**（今天实测）；
-- 你办公室**同事的电脑** ping `172.17.0.7`，通不通？
-
-答我两问：通/不通；**为什么宿主机能、同事不能**——用前三课学过的概念把推理链说出来。
-
----
-
-## 【2026-08-22 · 第 4 次对话（插播问答）】
-
-### 学生原话
-
-> 你怎么知道 docker0的？为什一上来就直接 ip addr show docker0
-
-### 操作记录（"还原现场"实验，全部真机执行）
-
-1. 宿主机 `ip -br addr`（无参数撒网）→ 全部网卡：`lo`、`eth0`（172.22.212.111/20，WSL 真网卡）、`docker0`（172.17.0.1/16）、`docker_gwbridge`（172.23.0.1/16，DOWN）、`br-c88cb4c6fe5f`（172.20.0.1/16，DOWN）、`br-d4438b6fccbf`（172.18.0.1/16，DOWN）、`br-232b31f9d168`（172.19.0.1/16，DOWN）、veth ×5（UP）。
-2. `docker network inspect bridge`（截取前 2000 字符）→ 账本 Options 里白纸黑字：`"com.docker.network.bridge.name": "docker0"`、`"com.docker.network.bridge.default_bridge": "true"`、**`"com.docker.network.bridge.enable_ip_masquerade": "true"`**（第 5 课 NAT 魔术的官方预告）、IPAM：`Subnet 172.17.0.0/16, Gateway 172.17.0.1`。
-3. 名册核对 `docker network inspect bridge`（Containers 全量）→ 业主 5 名：jzfz-pg(.2)、jzfz-redis(.3)、lab-net-web(.4)、s-net-web(.5)、s-net-db(.6)——**box1/box2 不在册**，与第 3 课"box1 拿着 172.17.0.7 且 ping 通"矛盾。
-4. 对质 `docker inspect box1` → `NetworkMode=bridge`，但 `Networks.bridge` 的 `EndpointID=""`、`IPAddress=""`——endpoint 是空壳：上次课的容器经历过环境重启，Docker 账本已注销该连接，内核里 veth38 还插在 docker0 上（所以能 ping）。
-5. 本对话实录追加进本文件。
-
-### 老师原文（插播问答：知识从哪来）
-
-（以下与控制台输出一字不差）
-
----
-
-这个问题的质量，比你前三道答题都高。答题是"验证你听懂了没有"，这个问题是"**老师的东西是哪来的**"——这是从学生往大师走的那个岔路口。我分层诚实回答。
-
-## 第一层（老实话）：我是先知道答案，再去看的
-
-docker0 不是我"发现"的，是我"背过"的。它是 Docker 的**官方固定默认行为**：装完 Docker 必有这块网卡、名字必然叫 docker0、默认必然是 172.17.0.1/16——写死在官方文档里，全世界的工程师都背过。所以我上课"一上来就直接 `ip addr show docker0`"，那是**确认**，不是**发现**。你看到我行云流水，不是因为我会算命，是因为我备过课。
-
-承认这个很重要：**"知道答案的人"没什么了不起，了不起的是"不知道时知道怎么找"**。所以第二层才是这节课真正要教你的。
-
-## 第二层：如果你不知道，你怎么自己找到它——三板斧
-
-### 第一板斧：撒网（无参数命令，先看全貌）
-
-`ip addr` 不带任何参数，就是把宿主机**所有网卡一网打尽**。我真机跑了（`ip -br addr` 是它的紧凑版）：
-
-```
-$ ip -br addr
-lo               UNKNOWN        127.0.0.1/8 ::1/128
-eth0             UP             172.22.212.111/20 fe80::215:5dff:fe83:83a2/64
-docker0          UP             172.17.0.1/16 fe80::64c5:efff:fec2:a788/64
-docker_gwbridge  DOWN           172.23.0.1/16
-br-c88cb4c6fe5f  DOWN           172.20.0.1/16
-br-d4438b6fccbf  DOWN           172.18.0.1/16
-br-232b31f9d168  DOWN           172.19.0.1/16
-veth5efa696@if2  UP             fe80::6036:9bff:fec5:6fc5/64
-vethb08adfc@if2  UP             fe80::a843:2eff:fe99:4227/64
-...（共 5 根 UP 的 veth）
-```
-
-一台"干净"的 Linux，网卡应该只有 `lo` 和 `eth0` 两个。多出来的每一块都是"嫌疑人"。看名单——`docker0` 这名字自己都招了：**docker 前缀**，"0"是编号。旁边的 `br-c88cb4c6fe5f` 三个 `br-` 开头的，是第 3 课 `docker network ls` 里那几个自定义小区的交换机（`br-` + 网络 ID 前缀拼的设备名，第 8 课细讲）。**撒网的收获：嫌疑人名单 + 名字里的线索。**
-
-### 第二板斧：对暗号（两个观察对上了，就不是巧合）
-
-撒网看到 docker0 的 IP 是 `172.17.0.1`——这个数字眼熟吗？**第 2 课容器里的网关就是它**。容器说"我的大门是 172.17.0.1"，宿主机上恰好有块网卡的 IP 是 172.17.0.1。两个独立观察撞在一起，就不是巧合，是同一件事的两面。
-
-### 第三板斧：查账（回到权威源头求证）
-
-猜测要拿证据坐实。Docker 自己的账本——`docker network inspect bridge`——我真机跑了，节选：
-
-```
-"Driver": "bridge",
-"IPAM": { "Config": [ { "Subnet": "172.17.0.0/16", "Gateway": "172.17.0.1" } ] },
-"Options": {
-  "com.docker.network.bridge.default_bridge": "true",
-  "com.docker.network.bridge.name": "docker0",
-  "com.docker.network.bridge.enable_ip_masquerade": "true",
-  ...
-}
-```
-
-白纸黑字：`"com.docker.network.bridge.name": "docker0"`——Docker 亲口承认，bridge 小区绑定的内核设备就是 docker0。查账完毕，铁证。
-
-顺手给你指个金矿：注意 Options 里那行 **`enable_ip_masquerade: true`**——"启用 IP 伪装"。这是第 5 课那个魔术的**官方预告片**，Docker 账本里自己写着的。到时候回来重读这一行，你会拍腿。
-
-## 课堂意外（白送的第四板斧：账本和现实打架时，对质）
-
-今天查账时撞出一个真意外，正好当教材。Docker 的业主名册里，bridge 小区在册的只有 5 个容器——**box1、box2 不在册**！但第 3 课我们明明 ping 通了 box1（172.17.0.7）。账本和现实打架了。
-
-接着查 box1 自己的档案：`NetworkMode=bridge` 没错，但网络条目里 `EndpointID` 和 `IPAddress` **全是空的**——这是个空壳记录。定性：box1 是上次课遗留的容器，中间这台机器的环境重启过，Docker 重启后**账本上把这条连接注销了，但内核里那根 veth38 还插在 docker0 上、IP 还挂着**，所以照常能 ping。
-
-给你一句能用十年的话：**内核才是现实，Docker 只是记账员。账本会脱节，现实不会撒谎。** 所以第四板斧是：当两条证据矛盾时，别急着信任何一方，继续往下查到它们汇合为止——今天"ping 得通"（内核现实）和"不在册"（Docker 账本）就是这样汇合的。
-
-## 本课小结
-
-你问"我怎么知道 docker0"，我给你的答案是一套**可复制的探索流程**：
-
-1. **撒网**：无参数命令看全貌（`ip addr`），找陌生脸，读名字里的线索
-2. **对暗号**：新观察和旧观察撞上了，就不是巧合
-3. **查账**：回到权威源头（`docker network inspect`）拿铁证
-4. **对质**：证据矛盾时，查到汇合为止；内核是现实，账本是记录
-
-老师比你多的不是"知道 docker0"这个事实，是这四板斧。从下节课起，你也可以开始用它——下次你在任何陌生机器上看到一块叫 `br-` 什么的陌生网卡，你就已经知道怎么把它查个底掉了。
-
----
-
-上一课的思考题还挂着：**同事的电脑 ping 172.17.0.7，通不通？为什么宿主机能、同事不能？** 答完它，我们进第 4 课。
-
----
-
-## 【2026-08-22 · 第 5 次对话（插播问答二）】
-
-### 学生原话
-
-> ip link show type veth 这个究竟什么？
-
-### 操作记录（全部真机执行）
-
-1. 三连对照实验首跑：`ip -br link` / `ip -br link type veth` / `ip -br link type bridge` → 后两条报错 `Command "type" is unknown`（此版本 iproute2 不接受 `-br` 与 `type` 过滤组合）；全量清单正常：11 块（eth0、docker0、docker_gwbridge、br-×3、veth×5）。
-2. 正确语法重跑：`ip link show type veth`（grep 编号行）→ **只剩 5 根** veth，全部 `master docker0`；`ip link show type bridge` → **5 台交换机**（docker0、docker_gwbridge、br-c88/br-d44/br-232）。
-3. 新意外：第 3 课同样命令出 7 根 veth，现在 5 根——box1/box2 的 38/39 号 veth 消失。验证三连：宿主机 `ping 172.17.0.7` → 100% 丢包；`docker exec box1` → `Error: container ... is not running`；`docker ps -a --filter name=box` → **box1/box2 均 Exited (0)，24 分钟前退出**。
-4. 结论：撤销第 4 次对话中"环境重启导致账本脱节"的定性。真相：busybox 容器跑的命令结束、正常退出；退出时容器网络空间销毁 → veth 成对拆除 → Docker 账本除名。ping 由通变不通、名册除名、endpoint 空壳，全部是**正常清理流程**，不是脱节。
-5. 本对话实录追加进本文件。
-
-### 老师原文（命令拆解 + 当堂纠错）
-
-（以下与控制台输出一字不差）
-
----
-
-你问的这条命令，是第 3 课实验二的"取材命令"。它值得单独拆一课，因为拆完它，`ip` 命令**全家**你都会读了——那是你以后在网络世界天天用的瑞士军刀。
-
-## 一、逐词拆解：`ip link show type veth`
-
-先给你一个语法公式，Linux 的 `ip` 命令全家族都长这样：
-
-```
-ip   <对象>   <动作>   [筛选条件]
-     link     show     type veth
-     ↓        ↓        ↓
-   操作谁？  干什么？  只挑哪些？
-```
-
-- **`ip`**：工具本身。Linux 网络的一切物件——网卡、地址、路由——都用它查看和配置。
-- **`link`**：对象。"link"指链路层设备，说白了就是**网卡这个物件本身**。它有两个亲兄弟，你前几课全见过：`ip addr`（看网卡上挂的 IP 地址）和 `ip route`（看路由表）。**link 管物件，addr 管门牌，route 管出门规则**——三兄弟各管一层。
-- **`show`**：动作，"显示"。不写它也默认是 show（`ip link` = `ip link show`）。
-- **`type veth`**：筛选条件，**只显示"型号"为 veth 的设备**。这是今天的核心，下面细讲。
-
-## 二、核心概念：网卡是一"大类"，每块都有型号
-
-很多人以为"网卡"就是一种东西。错——网卡是一**大类设备**，每块网卡都有一个**型号（type）**，就像"车"是大类，下面分轿车、卡车、公交。
-
-你这台宿主机上，此刻就跑着好几种型号。我做了一组对照实验（全量 vs 按型号筛）：
-
-**A. 全量——所有网卡一网打尽：**
-
-```
-$ ip -br link
-eth0             UP             00:15:5d:83:83:a2 ...
-docker0          UP             66:c5:ef:c2:a7:88 ...
-docker_gwbridge  DOWN           2a:d8:8b:59:c0:e9 ...
-br-c88cb4c6fe5f  DOWN           d6:29:9c:72:82:85 ...
-br-d4438b6fccbf  DOWN           66:d2:84:73:7b:61 ...
-br-232b31f9d168  DOWN           5e:64:53:2c:a7:32 ...
-veth5efa696@if2  UP             62:36:9b:c5:6f:c5 ...
-vethb08adfc@if2  UP             aa:43:2e:99:42:27 ...
-...（veth 共 5 根）
-```
-
-**B. 只看 veth 型号——`ip link show type veth`：**
-
-```
-15: veth5efa696@if2: ... master docker0 state UP ...
-16: vethb08adfc@if2: ... master docker0 state UP ...
-31: veth2476840@if2: ... master docker0 state UP ...
-32: veth917df32@if2: ... master docker0 state UP ...
-33: veth1d30c12@if2: ... master docker0 state UP ...
-```
-
-**C. 只看 bridge 型号——`ip link show type bridge`：**
-
-```
-4: docker0:          ... state UP ...
-5: docker_gwbridge:  ... state DOWN ...
-7: br-c88cb4c6fe5f:  ... state DOWN ...
-8: br-d4438b6fccbf:  ... state DOWN ...
-9: br-232b31f9d168:  ... state DOWN ...
-```
-
-看出规律了吗：**A = B + C + eth0**（物理网卡）。`type` 过滤器就像文件管理器里"只显示 PDF"——网卡清单按型号分拣，每次只捞一种。
-
-你机器上现有的三种型号，正好就是 Docker 网络世界的三种积木：
-
-| 型号（type） | 是什么 | Docker 里的角色 |
-| --- | --- | --- |
-| `eth0`（物理/虚拟网卡） | 普通网卡，有门牌能上网 | 宿主机联外网的腿 |
-| `bridge` | 软件交换机 | docker0、br-xxx 小区的交换机 |
-| `veth` | 成对网线 | 容器插交换机的那根线 |
-
-**第 3 课的全景图，翻译成今天的型号语言就是：用 veth（网线）把容器和 bridge（交换机）连起来，交换机再通过物理网卡（腿）出门。Docker 网络 = 三种积木的拼装。**
-
-所以当时为什么用 `type veth`：宿主机上十来块网卡，veth 混在里面，按型号一筛，"网线的另一半们"全部现形，还每根都标着 `master docker0`（插在哪台交换机上）。撒网技术第二式：**按型号捞**。
-
-## 三、课堂意外终章：veth 从 7 根变 5 根，以及老师的错误
-
-你看到了：第 3 课这条命令输出 **7 根** veth，今天只剩 **5 根**。box1/box2 的 38、39 号网线，没了。我顺手做了验证：
-
-```
-$ ping -c 2 -W 1 172.17.0.7
-2 packets transmitted, 0 received, 100% packet loss    ← 第 3 课还是 0% 丢包！
-
-$ docker exec box1 ip -br link
-Error response from daemon: container ... is not running
-
-$ docker ps -a --filter name=box
-box2   Exited (0)   24 minutes ago
-box1   Exited (0)   24 minutes ago
-```
-
-真相：box1/box2 里跑的命令结束了，**两个容器 24 分钟前正常退出**。容器一退出：它的网络空间销毁 → veth 这根"成对网线"一端报废、整对拆除 → IP 还回号码池 → Docker 账本除名。所以 veth 少两根、ping 不通、名册除名、endpoint 空壳——**全是正常清理流程，环环自洽**。
-
-现在说我的错误。上一堂课（第 4 次对话），我看到"名册除名 + endpoint 空壳"，结合"这台 WSL 以前杀过容器"的记忆，给你讲了一个"环境重启导致账本脱节"的故事。**那个定性是错的。** 真相平凡得多：容器就是退出了。我错在哪？**我当时没跑 `docker ps -a`**——一条十秒钟的命令就能看到"Exited (0) 24 minutes ago"，我却停在了一个"讲得通"的故事上。这恰好违反了我自己教你的第四板斧：查到证据链闭合为止。
-
-所以今天给你的金句，比上一课那句更狠：
-
-> **讲得通的解释 ≠ 对的解释。证据链没闭合之前，任何"合理的故事"都只是嫌疑犯。**
-
-这个错误我留着不改（实录里原样放着），因为它比一百次正确更有教学价值——你以后也会犯同样的错：脑补一个顺滑的解释，然后停止查证。记住今天的 box1。
-
-## 本课小结
-
-- `ip` 语法公式：`ip <对象> <动作> [筛选条件]`；三兄弟 `link`（物件）/ `addr`（门牌）/ `route`（出门规则）
-- 网卡分型号：`type` 过滤 = 文件管理器的"按类型筛选"
-- Docker 网络三种积木：物理网卡（腿）、bridge（交换机）、veth（网线）
-- 容器退出 → veth 成对拆除 → IP 回池 → 账本除名，全链自动
-- 老师当堂纠错：证据链闭合前，别信"讲得通"的故事
-
----
-
-**思考题更新**：box1 已退房，题目例子换成在册住户 **jzfz-pg（172.17.0.2）**——你的宿主机 ping 它通，**同事的电脑** ping 172.17.0.2 通不通？为什么宿主机能、同事不能？答完进第 4 课。
-
----
-
-## 【2026-08-22 · 第 6 次对话】
-
-### 学生原话
-
-> 根据刚刚学到的 veth虚拟网线，容器和宿主机是有一条网线相连的，但是容器和容器之间没有网线相连，所以容器之间不能ping得通
-
-### 操作记录（第 4 课实验，全部真机执行）
-
-1. 起两个新容器：`docker run -d --name lab-a busybox sleep 1800`、`lab-b` 同款 → lab-a 得 `172.17.0.8`、lab-b 得 `172.17.0.9`（首次取 IP 的模板 `.NetworkSettings.IPAddress` 报错 map no entry，换 `{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}` 成功）。
-2. 互 ping：`lab-a ping 172.17.0.9` → 2 发 2 收 0% 丢包（0.083ms avg）；`lab-b ping 172.17.0.8` → 同样 0% 丢包（0.085ms avg）。**双向全通。**
-3. `docker exec lab-a cat /proc/net/arp` → ARP 表里有一条：`172.17.0.9 → f6:b1:0e:b7:a8:97`（lab-b 的 MAC）。
-4. 数 veth：`ip link show type veth` 编号行 `grep -c` → **8 根**。预期 5+2=7，对不上 → 查 `docker ps`：8 个容器在跑——**box1 复活了**（Up 9 minutes）。查 restart 策略：`box1 RestartPolicy=no`，`StartedAt=2026-08-21T23:58:13Z`（北京 07:58，与 Up 9min 吻合）→ 是被某种方式手动 start 的，非策略自动拉起；谁拉的现有证据查不到，到此为止。8 容器 ↔ 8 根 veth，账平。
-5. 本对话实录追加进本文件。
-
-### 老师原文（判卷 + 第 4 课）
-
-（以下与控制台输出一字不差）
-
----
-
-**先判卷。**
-
-你的推理链：veth 连着容器和宿主机 → 容器之间没有直连网线 → 所以容器之间 ping 不通。
-
-推理的**形式**很漂亮——用刚学的概念做预测，这正是学网络该有的姿势。前半句对了一半，结论**错**。错在哪？一句话：**你把"交换机"当成了"宿主机"本身。**
-
-修正模型：veth 这根网线，不是插在"宿主机"上的，是插在 **docker0（那台软件交换机）**上的。docker0 确实长在宿主机身上，但它的角色是**交换机**，不是网线的终点。而交换机存在的意义、它天生的本职工作就是一件事：**让插在它身上的所有设备互通**。
-
-换个类比：宿主机是一栋办公楼，docker0 是楼里机房的那台交换机，veth 是每个工位到机房的网线。工位 A 和工位 B 之间确实没有直连网线——**你这半句说对了**——但它们的线都插在同一台交换机上。在同一个交换机上的设备，就是同一间屋里的邻居，喊一嗓子彼此都听得见。
-
-不用信我嘴说。60 秒实验，让事实判卷。
-
-## 第 4 课：默认 bridge 实战——两个容器用 IP 互 ping
-
-### 实验设计
-
-起两个新容器，用最土的办法验证你的预测：
-
-```
-$ docker run -d --name lab-a busybox sleep 1800
-$ docker run -d --name lab-b busybox sleep 1800
-$ docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" lab-a   → 172.17.0.8
-$ docker inspect -f "..." lab-b                                                        → 172.17.0.9
-```
-
-你的预测：ping 不通。开牌：
-
-```
-$ docker exec lab-a ping -c 2 -W 2 172.17.0.9
-64 bytes from 172.17.0.9: seq=0 ttl=64 time=0.097 ms
-64 bytes from 172.17.0.9: seq=1 ttl=64 time=0.070 ms
---- 172.17.0.9 ping statistics ---
-2 packets transmitted, 2 packets received, 0% packet loss
-
-$ docker exec lab-b ping -c 2 -W 2 172.17.0.8
-2 packets transmitted, 2 packets received, 0% packet loss
-```
-
-**双向全通，0% 丢包，0.09 毫秒。** 你的预测被实验打脸了——恭喜，这是学实验科学最好的时刻。
-
-### 铁证：lab-a 的 ARP 邻居表
-
-光"通"还不够，我再给你一个更硬的证据。查 lab-a 内心深处的邻居记录：
-
-```
-$ docker exec lab-a cat /proc/net/arp
-IP address       HW type     Flags       HW address            Mask     Device
-172.17.0.9       0x1         0x2         f6:b1:0e:b7:a8:97     *        eth0
-```
-
-解释一下你看到什么了：网络底层不认 IP 认 MAC（第 2 课那个"网卡出厂编号"）。同一根线路段上的设备互相通信前，会先**广播喊话**："谁是 172.17.0.9？把你的 MAC 报给我！"——这种喊话**只有同一链路段上的设备听得到**（它不会被转发到网关外面去）。lab-a 的表里清清楚楚记着 lab-b 的 MAC `f6:b1:0e:b7:a8:97`——说明 lab-a 是通过"同一根线路段上的广播"直接找到 lab-b 的。**它俩在同一个链路段上，中间没有任何网关。**这就是"插在同一台交换机上"的铁证。
-
-### 第 2 课伏笔兑现：什么叫"邻居"
-
-还记得第 2 课路由表那两行吗？
-
-```
-default via 172.17.0.1 dev eth0          ← 其余的，交大门
-172.17.0.0/16 dev eth0 scope link ...    ← 邻居，直接喊话
-```
-
-当时我说"邻居 = 同小区住户"，含糊带过。今天可以给出精确版了：**"邻居"就是"插在同一台交换机上的设备"**。lab-a ping lab-b，路由表一查：目的地 172.17.0.9 在 172.17.0.0/16 里 → 走第二条规则 → 直接从 eth0 喊话（ARP 广播找 MAC）→ docker0 这台交换机把喊话转给 lab-b 的网线 → 完成。**全程没碰大门，没出小区。**
-
-### 包的完整旅程（全景图升级）
-
-```
-lab-a                                  lab-b
-┌──────────┐                          ┌──────────┐
-│ eth0     │                          │ eth0     │
-│ 172.17.0.8│                         │ 172.17.0.9│
-└────┬─────┘                          └────▲─────┘
-     │ veth（网线的一半）                   │
-     ▼                                    │ veth
-┌─────────────────────────────────────────────┐
-│                docker0 交换机                  │  ← 在宿主机肚子里
-└─────────────────────────────────────────────┘
-```
-
-包从 lab-a 的 eth0 出发 → 顺着 veth 网线滑到 docker0 → docker0 查着 MAC 把它从另一根 veth 转给 lab-b → lab-b 的 eth0 收到。**容器之间确实没有直连网线，但交换机替它们"接了头"。**
-
-### 官方文档佐证 + 一颗延时炸弹
-
-官方文档原话（意译）：*默认配置下，默认 bridge 上的容器之间可以用**容器 IP 地址**无限制地互相访问。它们**不能通过名字互相访问**。*
-
-前半句今天兑现了。后半句请抄在便签上贴显示器边：**"不能用名字互访"**——这是默认 bridge 最大的坑，第 7 课它将引爆一场真实事故，第 8 课用它换来自定义网络的真谛。
-
-### 课堂支线：veth 为什么数出 8 根
-
-实验时我数 veth：预期 5 旧 + 2 新 = 7 根，实际 **8 根**。按第 5 次对话立的规矩，数字对不上就查——`docker ps` 一看：8 个容器，其中 **box1 复活了**（Up 9 minutes）。查它的重启策略是 `no`，说明不是自动拉起，是被某种方式重新 start 的（谁拉的，现有证据查不到，到此为止，不编故事）。重要的是事实链完整：**8 个容器 ↔ 8 根 veth，一一对应，账平了**。顺带这也实证了上一课的逆过程：**容器启动 → veth 自动重建 → 重新入册**。
-
-## 本课小结
-
-- 容器 ↔ 宿主机之间**没有**点对点网线；veth 是"容器 ↔ docker0 交换机"的网线
-- 同一 bridge 网络上的容器 = 同一台交换机上的邻居 = 同一链路段 → **用 IP 互 ping 通**（实测双向 0% 丢包）
-- ARP 表是"同一链路段"的铁证：里面有对方 MAC = 广播直呼过 = 没过网关
-- 第 2 课"邻居直呼"规则兑现：邻居 = 同一台交换机上的设备
-- 官方文档：默认 bridge 容器间**IP 互访无限制**、**名字互访不行**（第 7 课炸弹）
-
-## 课后思考题（第 5 课的门票）
-
-lab-a 现在能和 lab-b 互通了。那它能不能出门？在 lab-a 里 `ping 223.5.5.5`（阿里 DNS，公网地址），你觉得通不通？
-
-更关键的是第二问：**如果通了**——lab-a 发出的包裹，寄件人地址写的是 `172.17.0.8`。可是 172.17.x.x 这种门牌在互联网上**根本不存在**（它是"私网门牌"，出了小区没人认识）。那阿里的回程包裹，是怎么一路找到这台小电脑的？
-
-提示：答案就藏在第 4 次对话查账时你见过的那一行 Docker 账本里。
-
----
-
-## 【2026-08-22 · 第 7 次对话（插播问答三）】
-
-### 学生原话
-
-> root@pc3507:~# docker exec box1 ip addr show eth0
-> 2: eth0@if50: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
->     link/ether 0a:da:f1:d1:9f:9c brd ff:ff:ff:ff:ff:ff
->     inet 172.17.0.7/16 brd 172.17.255.255 scope global eth0
->        valid_lft forever preferred_lft forever
-> root@pc3507:~# ip link show type veth
-> 15: veth5efa696@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
->     link/ether 62:36:9b:c5:6f:c5 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-> 16: vethb08adfc@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
->     link/ether aa:43:2e:99:42:27 brd ff:ff:ff:ff:ff:ff link-netnsid 1
-> 31: veth2476840@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
->     link/ether 42:1a:96:83:b7:82 brd ff:ff:ff:ff:ff:ff link-netnsid 2
-> 32: veth917df32@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
->     link/ether c2:28:43:92:ca:27 brd ff:ff:ff:ff:ff:ff link-netnsid 3
-> 33: veth1d30c12@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
->     link/ether 4e:ac:7f:b6:0c:ed brd ff:ff:ff:ff:ff:ff link-netnsid 4
-> 50: veth1a7c2fb@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default
->     link/ether 3e:05:ac:2c:11:56 brd ff:ff:ff:ff:ff:ff link-netnsid 5
->
-> 你刚刚不是说容器里面是 eth0,然后和对应编号的什么绑定在一起了么，和docker0有什么关系
-
-（学生首次**自主上机**，在同一台 PC3507 的 WSL 环境跑了两条课上的命令）
-
-
-
-### 老师原文（veth 的两层关系） 
-
----
-
-先记一笔：**这是你第一次自己上机拿证据来问问题，而不是听我讲。**这个转折比这个问题的答案重要十倍——你已经开始用第 4 次对话那套"撒网—对暗号"了。而且运气极好：你这两条输出里，正好藏着你要的答案，还藏着两个连我都没安排的彩蛋。逐个拆。
-
-## 你混淆的：一根线上的两层关系
-
-你的疑问其实是："eth0@if50 这个'编号绑定'，跟 docker0 是什么关系？"
-
-答案是：**它们是两层完全不同的关系，在你自己的输出里用两种不同的标记写着，你把它们看成一层了。**
-
-### 第一层：`@if50` / `@if2` ——网线**内部**的事（跟 docker0 无关）
-
-看你自己抓到的这对：
-
-```
-容器 box1 里：2: eth0@if50          ← "我是 2 号，我的另一半是 50 号"
-宿主机上：  50: veth1a7c2fb@if2     ← "我是 50 号，我的另一半是 2 号"
-```
-
-`@ifN` 是 veth 网线**两半互相报对方编号**——纯粹是这一对内部的事。一对 veth 生来就连通：从一端塞进去的包，会原封不动从另一端掉出来，**哪怕这根线哪儿都没插**。这层关系里，docker0 没有任何戏份。
-
-### 第二层：`master docker0` ——网线**插上交换机**的事
-
-再看你的每根 veth 后面都拖着的那半句：`master docker0`。这句话的主语是**宿主机那半根线**（veth1a7c2fb），意思是："我把自己插在了 docker0 这台交换机的端口上。"——这才是"和 docker0 的关系"。
-
-### 合起来：一条完整的链
-
-```
-   box1 容器                                  宿主机
-┌───────────────────┐
-│ 2: eth0@if50       │ ← 网线的一半（容器侧）
-└─────────┬─────────┘
-          │ ══════ veth pair（@if50 与 @if2 互相报对方编号）══════
-┌─────────▼─────────┐
-│ 50: veth1a7c2fb@if2│ ← 网线的另一半（宿主机侧）
-│    master docker0  │ ← 这一半插在交换机上
-└─────────┬─────────┘
-          ▼
-    ┌───────────┐
-    │  docker0  │  ← 交换机（bridge 型号）
-    └───────────┘
-```
-
-一句话总结：**`@ifN` 是线自己的两根芯，`master docker0` 是线插上了哪台机器。容器里的 eth0 从头到尾不认识 docker0——它只认识自己手里那根线，线那头通到哪，是 Docker 布线时决定的。**
-
----
-
-第 6 课的思考题还挂着：**lab-a 里 ping 223.5.5.5 通不通？公网不认识 172.17.0.8 这个私网门牌，回程包裹是怎么找到它的？**——提示再看一眼：第 4 次对话 Docker 账本里的那一行。答完进第 5 课。
-
----
-
-## 【2026-08-22 · 第 8 次对话】
-
-### 学生原话
-
-> 继续
-
-### 操作记录（第 5 课实验，全部真机执行）
-
-1. 环境检查：lab-a 已 Exited（sleep 1800 到期）→ `docker start lab-a lab-b` 重新拉起。**lab-a 重启后拿到 `172.17.0.7`，不再是上次的 .8**（box1 于 9 小时前退出、.7 回池，lab-a 租到）——"重启换门牌"的活证据。tcpdump 检查：已安装（`/usr/bin/tcpdump`）。
-2. 容器 ping 公网：`docker exec lab-a ping -c 3 223.5.5.5` → **3 发 3 收，0% 丢包**，rtt 5.5~6.6ms。
-3. 双点抓包对比（同一个 ping）：`tcpdump -ni docker0 icmp` → `172.17.0.7 > 223.5.5.5`；`tcpdump -ni eth0 "icmp and host 223.5.5.5"` → **`172.22.212.111 > 223.5.5.5`**（WSL 宿主机 IP）。同一只包裹，出门前后寄件人不同。
-4. 抓改写者：`iptables -t nat -S POSTROUTING` → 第一条即 `-A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE`；`-L -n -v` 显示该规则 pkts>0（确实命中过；计数细节涉连接跟踪机制，本课不展开）。
-5. 本对话实录追加进本文件。
-
-### 老师原文（第 5 课）
-
-（以下与控制台输出一字不差）
-
----
-
-思考题你按了跳过，没关系——这种题本来就该用实验揭晓，不该用嘴揭晓。顺便说一句：你离开教室的这 9 个小时里，机房悄悄换了一茬住户（box1 退房、lab-a 重启换了个门牌），课程开始以来你见过的所有"意外"，今天还会再送你一个大的。
-
-# 第 5 课：容器怎么上网——masquerading（NAT 伪装）
-
-## 先揭晓第一问：通不通？
-
-在这个实验中主要的内容是：
-
-1、容器内部 去ping三次外网的包
-
-2、监控docker0上的流量
-
-3、监控etho0上面的流量
-
-
-
-在 lab-a（门牌已换成 172.17.0.7）里 ping 公网地址（进入到lab-a容器中，ping）：
-
-`-c 3` 发送 3 个 ICMP 请求包
-
-`-W 2`  每个包的**等待超时时间为 2 秒**
-
-```
-$ docker exec lab-a ping -c 3 -W 2 223.5.5.5 
-64 bytes from 223.5.5.5: seq=0 ttl=113 time=5.530 ms
-64 bytes from 223.5.5.5: seq=1 ttl=113 time=6.006 ms
-64 bytes from 223.5.5.5: seq=2 ttl=113 time=6.596 ms
---- 223.5.5.5 ping statistics ---
-3 packets transmitted, 3 packets received, 0% packet loss
-```
-
-**通，而且只要 6 毫秒。**容器这个"小电脑"没做任何配置，开箱就能上公网。
-
-## 第二问才是本课的主菜：回程包裹怎么找到它的？
-
-回顾谜面：lab-a 发的包裹，寄件人写的是 `172.17.0.7`。可 172.17.x.x 是**私网门牌**（小区内部门牌，互联网上没人认识，就像"3 号楼 2 单元"在全中国不唯一）。阿里的服务器回件时，照着寄件人地址 `172.17.0.7` 寄——这个包裹应该永远到不了。但它到了。**有人在途中改了寄件人。**
-
-抓贼的办法：同一只 ping，我在**两个检查点**同时架了摄像头（tcpdump 抓包）——一个在小区内（docker0），一个在小区大门外的马路（物理网卡 eth0）。
-
-**检查点一：docker0 上（包裹刚出容器）：**
-
-```
-$ tcpdump -ni docker0 icmp
-17:45:33.808257 IP 172.17.0.7 > 223.5.5.5: ICMP echo request
-17:45:33.813642 IP 223.5.5.5 > 172.17.0.7: ICMP echo reply
-```
-
-寄件人：`172.17.0.7`。正常，这是容器自己。
-
-**检查点二：eth0 上（包裹即将冲出宿主机）：**
-
-```
-$ tcpdump -ni eth0 "icmp and host 223.5.5.5"
-17:45:51.634601 IP 172.22.212.111 > 223.5.5.5: ICMP echo request
-17:45:51.640702 IP 223.5.5.5 > 172.22.212.111: ICMP echo reply
-```
-
-寄件人变成了 **`172.22.212.111`**——这是谁？查一下宿主机自己的门牌（第 4 次对话撒网时你见过）：**WSL 宿主机的 eth0 IP**。
-
-**同一个 ping、同一秒内、两块网卡上，寄件人从 172.17.0.7 变成了 172.22.212.111。**贼抓到了：改寄件人的人，就是宿主机（准确说：宿主机内核）。
-
-## 抓到规则原文：贼是自己招供的
-
-宿主机内核里有一张"改写规则表"（iptables 的 NAT 表），我真机查了：
-
-```
-$ iptables -t nat -S POSTROUTING
--A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
-```
-
-`iptables -t nat -S POSTROUTING ` 究竟是什么呢？
-
-想象一下这个场景：
-
-> 你家住在某个小区（**容器**），你想点一份外卖（**访问外网 223.5.5.5**）。
->
-> 但外卖小哥不认识你家的具体门牌号（**容器的私有 IP**，比如 172.17.0.2），他只认大门口（**宿主机的物理网卡 IP**）。
->
-> **POSTROUTING 这条规则就相当于小区门口的门卫大爷**：
-> - 当你的外卖从小区里送出去时，门卫大爷会把外卖单上的“**你家门牌号**”撕掉，改成“**小区大门地址**”。
-> - 这样外卖小哥就能顺利把外卖送到小区门口。
-> - 外卖送到后，门卫大爷再根据记录，把外卖转交给你。
-
----
-
-### 对应到你的命令
-
-你之前执行了这个命令：
+上一课埋了个伏笔：不同网络之间默认隔离。现在验证，顺便展示自定义网络的另两个能力。再造一个网络，往里放一个带**别名**的容器：
 
 ```bash
-docker exec lab-a ping 223.5.5.5
+docker network create n15-net2
+docker run -d --name n15-svc --network n15-net2 --network-alias db busybox sleep 300
 ```
 
-这个命令就是**容器 lab-a 想点一份外卖（发一个 ping 包）给 223.5.5.5**。
+`--network-alias db` 的意思是：这个容器在 n15-net2 里登记的名字不止 `n15-svc`，还有个外号叫 `db`——应用连它的时候就可以写 `db`，不用管容器真名。
 
-但问题是：
-- 容器的 IP 是 `172.17.0.2`（这是**私有地址**，外网不认识）
-- 外卖小哥（路由器）只认你家的**大门地址**（宿主机的真实 IP）
-
----
-
-### 这时候 POSTROUTING 就出手了
-
-你刚才查的那条规则：
-
-```text
--A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
-```
-
-翻译成人话就是：
-
-> **凡是来自 Docker 容器（-s 172.17.0.0/16）并且要出大门（! -o docker0，不是去 docker0 内部）的数据包，门卫大爷（MASQUERADE）都会把它的“发件人地址”从容器 IP 改成宿主机 IP。**
-
----
-
-### 所以这条命令是干嘛的？
-
-**`iptables -t nat -S POSTROUTING` 就是让你看看门卫大爷手里的“规矩本”上写了哪些规则。**
-
-- 看了之后你就知道：**门卫到底有没有帮你改地址？**
-- 如果这条规则不存在，你的外卖就送不出去（容器 ping 不通外网），因为外网不认识你家的私有地址。
-
----
-
-### 一句话总结
-
-> **POSTROUTING 就是“出门换门牌号”的地方。**
->
-> 这个命令就是让你**查看“换门牌号”的规则到底有没有配好**。
-
----
-
-### 如果还觉得抽象，再打个比方
-
-| 现实世界                   | 技术世界                                      |
-| -------------------------- | --------------------------------------------- |
-| 你家门牌号（外人看不到）   | 容器 IP（172.17.0.2）                         |
-| 小区大门地址（外人看得到） | 宿主机真实 IP                                 |
-| 门卫大爷帮你改门牌号       | **POSTROUTING 链做 MASQUERADE（源地址转换）** |
-| 你查门卫的规矩本           | **`iptables -t nat -S POSTROUTING`**          |
-
-具体的参数如下
-
-- iptables ：Linux 内核的防火墙/网络地址转换工具
-- -t nat： 指定操作 **nat 表**（Network Address Translation，网络地址转换表）
-- -S ：**Show** 的缩写，以规则命令格式显示当前所有规则（便于复制和备份）
-- POSTROUTING ：指定链名，这是数据包**离开本机之前**经过的最后一个钩子点
-
-
-
-
-
-逐词翻译这行规则：
-
-- `-s 172.17.0.0/16`：如果包裹的**寄件人**是 docker 小区住户（172.17 网段）
-- `! -o docker0`：而且它**不是要回小区**的（是要出门的）
-- `-j MASQUERADE`：那么——**伪装**：把寄件人改写成出口网卡的 IP
-
-谁写的这条规则？Docker。证据就在第 4 次对话的账本里：`"com.docker.network.bridge.enable_ip_masquerade": "true"`——当时我说这是第 5 课魔术的预告片，今天兑现：**那行账本，就是这条内核规则的出生证明。**
-
-
-
-## 是什么：MASQUERADE（伪装式 NAT）
-
-首先用**最最通俗的大白话**给你讲清楚 **MASQUERADE** 到底是什么。
-
-**MASQUERADE** 翻译成中文叫 **“伪装”**。
-
-在 iptables 里，你可以把它直接理解为：**“套个马甲”** 或者 **“换掉发件人地址”**
-
-### 举个生活中的例子
-
-想象你在学校（**容器网络**）里，想给校外的朋友（**外网**）寄一封信。
-
-- **你的真实身份**：初二(3)班 小明（**容器 IP：172.17.0.2**）
-- **学校的收发室**：XX市第一中学（**宿主机真实 IP**）
-
-问题来了：
-- 校外的人**不认识**“初二(3)班 小明”这个地址，信寄不回来。
-- 但所有人都**认识**“XX市第一中学”这个地址。
-
----
-
-### MASQUERADE 做了什么？
-
-当你的信经过学校收发室（**POSTROUTING 链**）时，收发室大叔（**MASQUERADE**）会做一件事：
-
-> **把信封上的“发件人：初二(3)班 小明”涂掉，改成“发件人：XX市第一中学”**
-
-这样：
-1. 校外朋友收到信时，看到发件人是“XX市第一中学”，就能回信。
-2. 回信寄到学校后，收发室大叔记得这封信是小明寄的，于是转交给初二(3)班的小明。
-
----
-
-### 对应到你的 Docker 场景
-
-| 现实例子               | Docker 技术                           |
-| ---------------------- | ------------------------------------- |
-| 初二(3)班 小明         | 容器 lab-a（IP：172.17.0.2）          |
-| XX市第一中学           | 宿主机（真实 IP，比如 192.168.1.100） |
-| 寄信给校外朋友         | 容器执行 `ping 223.5.5.5`             |
-| 收发室大叔改发件人地址 | **MASQUERADE 做源地址转换（SNAT）**   |
-
----
-
-### 为什么叫“伪装”？
-
-因为：
-- **对外人看来**：这封信就是“XX市第一中学”寄的，完全看不出是“初二(3)班 小明”寄的。
-- 外面的世界**不知道**背后有一个容器在访问它。
-
-所以这个词翻译得很贴切——**伪装成宿主机的身份出去**。
-
----
-
-### MASQUERADE 和普通 SNAT 的区别
-
-|          | **SNAT**（普通）                    | **MASQUERADE**（伪装）                |
-| -------- | ----------------------------------- | ------------------------------------- |
-| 怎么做   | 手动指定换成哪个 IP                 | **自动**换成宿主机当前的外网 IP       |
-| 适合场景 | 宿主机 IP 固定不变                  | 宿主机 IP 会变（比如 DHCP、拨号上网） |
-| 例子     | `-j SNAT --to-source 192.168.1.100` | `-j MASQUERADE`                       |
-
-**Docker 为什么用 MASQUERADE？**
-因为宿主机的 IP 可能随时变化（比如重启路由器），用 MASQUERADE 就不用操心这些，它会自动适配。
-
----
-
-### 终极一句话
-
-> **MASQUERADE = 自动把你的私有 IP 伪装成宿主机的公网 IP，让外面的人能把数据包回传给你。**
-
----
-
-### 验证一下
-
-你之前执行的：
-```bash
-docker exec lab-a ping 223.5.5.5
-```
-
-能 ping 通，就是因为这条规则在工作：
-
-```text
--A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
-```
-
-如果删掉这条规则，你的容器就**彻底上不了外网**了。
-
-
-
-下面再使用专业术语进行解释:
-
-**NAT（Network Address Translation，网络地址转换）**：包裹经过时，改写包裹上地址的技术。MASQUERADE 是 NAT 的一种（"伪装"），特点是：改成"出口网卡当前的 IP"——出口 IP 会变也无所谓，动态跟随。
-
-但改寄件人只解决了**一半**问题：回件写的是 172.22.212.111，宿主机收到后，怎么知道该转交给 lab-a（而不是同在上网的 lab-b）？
-
-答案是前台的**登记簿**（内核里叫"连接跟踪表"，conntrack）：lab-a 出门时，前台记一笔——"连接 X，寄件人是 172.17.0.7，我替它改写成了我自己"；回件到达，前台查登记簿，把**收件人改回** 172.17.0.7，转交。一对改写，一来一回，严丝合缝。
-
-**conntrack 记录了什么？**
-
-```
-原始方向：src=172.17.0.2  dst=223.5.5.5
-回复方向：src=223.5.5.5  dst=宿主机IP（经过 MASQUERADE 改成了这个）
-```
-
-当回包 `223.5.5.5 → 宿主机IP` 到达时，内核查 conntrack 表，发现：
-
-> "哦，这个回包对应的原始请求是容器 172.17.0.2 发出去的"
-
-于是自动做 **DNAT**（目的地址转换），把 `dst=宿主机IP` 改回 `dst=172.17.0.2`，然后从 `docker0` 网桥转发给容器。
-
-那么 多个容器同时上网怎么区分？前台给每个连接分配不同的**源端口**当"取件码"——lab-a 的连接用 50001，lab-b 的用 50002，回件看端口就知道给谁。这就是为什么你常听人说 NAT 是"四元组"（源 IP、源端口、目标 IP、目标端口）——今天先记比喻，细节在应用层课程再见。，
-
-### 套娃彩蛋
-
-再看你 eth0 抓包的寄件人：`172.22.212.111`——**这仍是私网门牌**（172.16~172.31 都是私网段）！因为 WSL 本身就躲在 Windows 的 NAT 后面。也就是说你刚才那只 ping 的寄件人至少被改写了**两次**：Docker 改一次（172.17.0.7→172.22.212.111），WSL/Windows 再改一次（→你的局域网 IP），出公司路由器可能还有第三次。**整个互联网的日常，就是一层层前台互相代收发快递。**你家里的宽带、手机 4G，全都这么干的。
-
-## 为什么这么设计：一举三得
-
-1. **容器零配置上网**：应用不用知道自己躲在 NAT 后——第 1 课的承诺"应用不用改"再次兑现
-2. **私网门牌够用**：172.17 一个 /16 段有 6 万多个号，所有小区都用私网门牌，公网 IP 一点不浪费
-3. **安全副产品**：外界无法主动进入——见下。
-
-## 半开的门，至此完全解释清楚
-
-还记得第 3 课那扇门吗？现在你有全部零件了：
-
-- **出方向（容器 → 外界）通**：容器主动出门 → 前台登记 → 回件按登记转交 ✓
-- **入方向（外界 → 容器）不通**：外界的包裹主动飞来 → 前台**查无登记** → 不知道转给谁 → 丢弃 ✗
-
-NAT 是"你先找我，我才能找你"的机制。这扇门为什么半开、哪半边开——技术根源就是 NAT 的**方向性**。
-
-那你的浏览器（在宿主机上）算"外界"吗？同事的电脑呢？如果就是想让外界进来，怎么办？——下一课，端口发布 `-p`，我们给前台贴一张**收件人对照表**。
-
-## 本课小结
-
-- 容器出网 = NAT 伪装：寄件人 `172.17.0.7` → 出门时被内核改写为宿主机 IP（双点抓包实测）
-- 改写规则在 `iptables -t nat` 的 POSTROUTING 链，Docker 自动写入；账本 `enable_ip_masquerade: true` 是其出生证明
-- 回程靠连接跟踪表（前台登记簿）：出站登记、入站按簿改回收件人
-- NAT 天然单向：没登记的入站包一律丢弃 → "半开的门"的根源
-- lab-a 重启后 .8→.7：重启会换门牌，第 7 课的伏笔（第三次提醒）
-
-## 课后思考题（第 6 课的门票）
-
-第 3 课实测过：宿主机 ping 容器 IP **通**（半开门的内侧）。那么：
-
-在宿主机上执行 `curl http://172.17.0.7`（lab-a），和把 Nginx 容器跑起来后用浏览器访问它，分别会发生什么？如果想让**同事的电脑**（真正的外界）也能打开这个网页，Docker 需要提供什么机制？
-
-提示：想想前台的"收件人对照表"该贴在哪、写什么。
-
----
-
-## 【2026-08-22 · 第 9 次对话】
-
-### 学生原话
-
-> Docker需要一个转发机制
-
-### 操作记录（第 6 课实验，全部真机执行）
-
-1. 起不发布的 nginx：`docker run -d --name lab-web-hidden nginx:alpine` → 拿 `172.17.0.7`（lab-a 三小时前已 Exited，.7 又回池——**今天 .7 已三易其主：box1 → lab-a → hidden nginx**）。首次 `curl http://172.17.0.7/` → **HTTP 000**；16 秒后重测 → **HTTP 200**（第一次是容器刚 Up、nginx 尚未监听——"容器 Up ≠ 应用就绪"的活坑）。
-2. 发布前 `curl 127.0.0.1:8899` → 不通（宿主机 8899 无人监听）。
-3. 起发布的 nginx：`docker run -d --name lab-web-pub -p 8899:80 nginx:alpine` → `curl 127.0.0.1:8899` → **HTTP 200**；`ss -tlnp | grep 8899` → **docker-proxy 进程**监听 `0.0.0.0:8899`（IPv4/IPv6 两条）。
-4. `iptables -t nat -S DOCKER | grep 8899` → `-A DOCKER ! -i docker0 -p tcp --dport 8899 -j DNAT --to-destination 172.17.0.8:80`。
-5. **Windows 侧跨层验证**：`curl.exe http://172.22.212.111:8899/`（Windows→WSL，跨一层 NAT）→ **HTTP 200**。
-6. 清理 `docker rm -f lab-web-hidden lab-web-pub`，机房回到 5 个基础容器。
-7. 本对话实录追加进本文件。
-
-### 老师原文（判卷 + 第 6 课）
-
-（以下与控制台输出一字不差）
-
----
-
-**先判卷。**
-
-"需要一个转发机制"——方向对，但只有骨架没有血肉。70 分。今天这课就是把你这四个字展开成精确的机制：**贴在哪（宿主机）、写什么（端口对照）、谁来执行（两个实体）**。展开之后，你就拿到了生产环境里每天都在用的那个东西。
-
-另外你这次离开教室 3 小时，回来时 lab-a/lab-b 又到点退房了——这门牌流转今天已经疯狂到值得记一笔总账，第 7 课开门见山要用它。
-
-# 第 6 课：端口发布 `-p`——外面的世界怎么进来
-
-## 实验一：一藏一放，两个 Nginx
-
-我起了两个 Nginx 容器，唯一的区别是一个"藏着"、一个"发布"：
-
-```
-$ docker run -d --name lab-web-hidden nginx:alpine        ← 不带 -p
-$ docker run -d --name lab-web-pub -p 8899:80 nginx:alpine ← 带 -p 8899:80
-```
-
-然后从三个位置分别访问，结果一览：
-
-| 访问位置 | 目标 | 结果 |
-| --- | --- | --- |
-| 宿主机（WSL） | `http://172.17.0.7/`（hidden 容器 IP） | **HTTP 200** ✓ |
-| 宿主机（WSL） | `http://127.0.0.1:8899/`（发布前） | 不通 ✗（无人监听） |
-| 宿主机（WSL） | `http://127.0.0.1:8899/`（发布后） | **HTTP 200** ✓ |
-| Windows 侧（跨一层 NAT） | `http://172.22.212.111:8899/` | **HTTP 200** ✓ |
-
-逐行解读，每行都是前面某课的伏笔兑现：
-
-**第一行**：宿主机 curl 容器 IP，200。这就是"半开的门"的内侧——宿主机是小区自己人（第 3 课）。注意一个插曲：我**第一次** curl 时拿到 `HTTP 000`（失败），16 秒后重测才 200。为什么？容器状态 `Up` 只说明**容器**活了，容器里的 nginx 进程还在初始化，端口还没开始监听。**"容器 Up ≠ 应用就绪"**——这是生产环境排障的头号常见坑，今天免费送你。以后你会学到健康检查（healthcheck）就是治它的。
-
-**第二行**：发布前，宿主机自己的 8899 端口上空无一人，curl 被拒。
-
-**第三行**：加了 `-p 8899:80` 之后，同一个 127.0.0.1:8899 变成 200——前台把包裹转交给了容器里的 nginx。
-
-**第四行**：我从 Windows 侧发起访问（Windows 和 WSL 之间还隔着一层 NAT，第 5 课的套娃彩蛋）——照样 200。**跨了一层 NAT 的"准外界"成功打进来了。**这就是你思考题里"同事的电脑"的实验环境近似版：外界不找容器的私网门牌，外界只找**宿主机的门牌+端口**。
-
-## 机制：-p 到底做了什么
-
-`-p 8899:80` 读作："把宿主机的 8899 端口，映射到容器的 80 端口"。Docker 为这句话干了**两件事**，我在宿主机上都抓到了实体：
-
-### 实体一：内核的对照表（DNAT 规则）
-
-```
-$ iptables -t nat -S DOCKER | grep 8899
--A DOCKER ! -i docker0 -p tcp --dport 8899 -j DNAT --to-destination 172.17.0.8:80
-```
-
-
-
-`iptables -t nat -S DOCKER`这个命令是**查看 Docker 在 NAT 表中自定义的 `DOCKER` 链的所有规则**。
-
----
-
-### 先理解 `DOCKER` 链是什么
-
-Docker 在 iptables 里创建了自己的专用链，用来管理容器的网络规则。这样做的好处是：
-
-- **隔离**：Docker 的规则都放在自己的链里，不会和系统其他规则混在一起
-- **便于管理**：创建/删除容器时，Docker 只需要增删自己链里的规则，不影响其他
-
-`DOCKER` 链主要负责**端口映射（DNAT）**——也就是把访问宿主机某个端口的流量，转发到对应容器的端口上。
-
----
-
-### 典型输出及解读
-
-执行后可能会看到类似这样的输出：
-
-```text
--N DOCKER
--A DOCKER -i docker0 -j RETURN
--A DOCKER ! -i docker0 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 172.17.0.2:80
--A DOCKER ! -i docker0 -p tcp -m tcp --dport 443 -j DNAT --to-destination 172.17.0.3:443
-```
-
-逐条解读：
-
-| 规则                                                         | 含义                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `-N DOCKER`                                                  | 创建一个名为 `DOCKER` 的新链                                 |
-| `-A DOCKER -i docker0 -j RETURN`                             | 如果数据包是从 `docker0` 网桥进来的，直接返回（不处理，避免死循环） |
-| `-A DOCKER ! -i docker0 -p tcp --dport 8080 -j DNAT --to-destination 172.17.0.2:80` | **核心规则**：访问宿主机 8080 端口的 TCP 流量，转发到容器 `172.17.0.2` 的 80 端口 |
-| `-A DOCKER ! -i docker0 -p tcp --dport 443 -j DNAT --to-destination 172.17.0.3:443` | 访问宿主机 443 端口的流量，转发到容器 `172.17.0.3` 的 443 端口 |
-
----
-
-### 对应到你的实际场景
-
-假设你启动容器时用了端口映射：
+先看隔离。n15-box 在 n15-net 上，n15-svc 在 n15-net2 上，两边不同网：
 
 ```bash
-docker run -d -p 8080:80 nginx
+docker exec n15-box ping -c1 -W2 n15-svc
 ```
-
-Docker 就会自动在 `DOCKER` 链里添加一条规则：
 
 ```text
--A DOCKER ! -i docker0 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 172.17.0.2:80
+ping: bad address 'n15-svc'
 ```
 
-**效果**：
-- 外网用户访问 `宿主机IP:8080` 时
-- 数据包经过 PREROUTING → 跳转到 DOCKER 链
-- DOCKER 链把目的地址改成 `172.17.0.2:80`
-- 流量被转发到容器的 80 端口（Nginx 服务）
+连解析都不给——隔离是从 DNS 这一刀就切下去的。而现在，**不停容器**，把 n15-box 在线接入第二个网络：
+
+```bash
+docker network connect n15-net2 n15-box
+```
+
+再试：
+
+```bash
+docker exec n15-box ping -c1 -W2 n15-svc
+```
+
+```text
+PING n15-svc (172.27.0.2): 56 data bytes
+64 bytes from 172.27.0.2: seq=0 ttl=64 time=0.064 ms
+```
+
+通了。别名也生效：
+
+```bash
+docker exec n15-box ping -c1 -W2 db
+```
+
+```text
+PING db (172.27.0.2): 56 data bytes
+64 bytes from 172.27.0.2: seq=0 ttl=64 time=0.054 ms
+```
+
+`db` 和 `n15-svc` 解析到同一个 IP。看一下 n15-box 现在的家底：
+
+```bash
+docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}={{$v.IPAddress}} {{end}}' n15-box
+```
+
+```text
+n15-net=172.26.0.3 n15-net2=172.27.0.3
+```
+
+**一个容器，两张网卡，两个网段各有一个 IP**。这在架构上很有用：比如一台监控探针，接进每个被监控的网络；或者一台前置网关，一边接「前端网络」、一边接「后端网络」，让两个本该隔离的网络只能通过它中转。反向操作 `docker network disconnect` 同样在线可用——而默认 bridge 上的容器想换网络，只能删了重建。
+
+一句话总结本课：
+
+> **容器可以热插拔地接入多个网络（一网一网卡一 IP）；网络之间默认不通，互通只能靠「把容器接进同一个网络」。**
 
 ---
 
-### `DOCKER` 链在整体流程中的位置
+## 第 6 课：`-p 8080:80` 之后，流量到底走了哪几步
 
+**🧑‍🏫 老师：**
+
+前面解决的都是「容器之间」。还剩最后一条路：**外部世界怎么访问容器**。第 1 课那个 nginx 用的 `-p 8080:80`，现在把它解剖开。
+
+先看宿主机上有什么。8080 这个端口，谁在监听？
+
+```bash
+ss -tlnp | grep -E ':8080\b' | grep docker-proxy
 ```
-外网访问宿主机 8080 端口
-        ↓
-   PREROUTING 链（数据包刚进入）
-        ↓
-   跳转到 DOCKER 链（专门处理端口映射）
-        ↓
-   DNAT：目的地址 宿主机IP:8080 → 容器IP:80
-        ↓
-   路由决策（发现目的地址是容器，走 docker0）
-        ↓
-   FORWARD 链（转发）
-        ↓
-   POSTROUTING 链（出去前做 SNAT/MASQUERADE）
-        ↓
-   到达容器
+
+```text
+LISTEN 0 4096  0.0.0.0:8080  0.0.0.0:*  users:(("docker-proxy",pid=10601,fd=7))
+LISTEN 0 4096  [::]:8080     [::]:*      users:(("docker-proxy",pid=10608,fd=7))
 ```
+
+一个叫 docker-proxy 的进程在监听。但主通道不是它——**主通道是内核里的 NAT 规则**。`iptables-save` 里搜 8080：
+
+```bash
+iptables-save -t nat | grep 8080
+```
+
+```text
+-A DOCKER ! -i docker0 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 172.17.0.4:80
+```
+
+这条规则值得逐词翻译：
+
+- `-A DOCKER`：挂在 nat 表的 DOCKER 链上（Docker 自己的专用链）；
+- `! -i docker0`：**进来方向不是 docker0** 才匹配——即来自外部网卡的流量；容器之间的流量不走这条；
+- `-p tcp --dport 8080`：目标是 TCP 8080；
+- `-j DNAT --to-destination 172.17.0.4:80`：**目的地址改写**——把「发往宿主机:8080」的包，原地改成「发往容器 172.17.0.4:80」，然后交给内核路由。
+
+改写发生在内核收包的第一站（PREROUTING 链），早于任何路由决策。所以改完目的地址，内核自然把包从 docker0 送进容器——对流量来说，「访问宿主机 8080」从第一步起就是「访问容器 80」。
+
+DNAT 只管进，回包怎么走？内核为每条连接记了账（conntrack）：回包自动做反向地址翻译，容器发出的「172.17.0.4:80 → 客户端」被改回「宿主机:8080 → 客户端」。客户端全程无感。
+
+把全链路画出来：
+
+```text
+浏览器
+  │ ① 访问 宿主机IP:8080
+  ▼
+宿主机 eth0
+  │ ② PREROUTING：DNAT 改写目的地址 → 172.17.0.4:80
+  ▼
+（路由决策：目的地在 docker0 网段 → 走 docker0）
+  │ ③ FORWARD 链过闸（DOCKER-USER → DOCKER-FORWARD → 放行）
+  ▼
+docker0 虚拟交换机
+  │ ④ 按 veth 找到容器
+  ▼
+容器 eth0 → nginx 进程（它看到的请求就是发给自己的 :80）
+  │ ⑤ 回包：conntrack 自动反向改写源地址 → 宿主机:8080
+  ▼
+浏览器收到响应
+```
+
+这条链上每一跳都可能断：端口没发布、DNAT 规则没生成、FORWARD 链被防火墙吞了、容器自己没监听。排障时顺着图一格格摸，就是阶段 4 要求的「流量路径图」。
+
+一句话总结本课：
+
+> **`-p` 的主通道是内核 DNAT：进包改目的地址送进容器，回包由 conntrack 自动改回；docker-proxy 只是辅助（下一课细说）。**
 
 ---
 
-### `-S` 和前面命令的区别
+## 插问 4：既然 DNAT 是主通道，docker-proxy 那个进程是多余的？
 
-| 命令                             | 查看范围                                                     |
-| -------------------------------- | ------------------------------------------------------------ |
-| `iptables -t nat -S POSTROUTING` | 只看 **POSTROUTING 链**（主要负责 SNAT/伪装，让容器上网）    |
-| `iptables -t nat -S DOCKER`      | 只看 **DOCKER 链**（主要负责 DNAT/端口映射，让外网访问容器） |
+**🧑‍🎓 学生：** 你说主通道是内核里的 DNAT，可 `ss` 里明明看到 docker-proxy 在监听 8080。一个端口两套机制，不打架吗？干脆只留一个行不行？
 
-一个负责**出**（容器访问外网），一个负责**进**（外网访问容器）。
+**🧑‍🏫 老师：**
+
+不打架，它们是**分工**，不是竞争。DNAT 快（内核态改个地址字段），但有覆盖不到的角落：
+
+1. **`127.0.0.1` 的流量不走常规入站路径**。DNAT 规则挂在 PREROUTING，处理的是「从网卡进来」的包；而宿主机上 `curl localhost:8080` 的包是本机进程发出的，走的是另一条路（OUTPUT），那条路上的地址改写有兼容性坑。docker-proxy 是个普通用户态进程，监听 8080，收到连接后**自己充当客户端**连到容器——对本机回环流量，这条路永远成立。
+2. **IPv6 客户端访问 IPv4-only 容器**这类协议转换场景，内核 NAT 写起来费劲，用户态代理顺手就做了。
+
+所以 Docker 的完整方案是两条腿：内核 DNAT 扛外部流量（快），docker-proxy 兜住回环等边角（稳）。代价是多两个进程、性能略低，可以通过 daemon.json 的 `"userland-proxy": false` 关掉——关掉后本机 `localhost:8080` 这类访问可能就不通了，一般没人动它。
+
+这个「内核快路径 + 用户态兜底」的双层设计，你在第 21 篇 cgroups、第 23 篇 daemon 架构里还会反复见到同款思路。
+
+一句话收口：
+
+> **DNAT 扛大流量，docker-proxy 兜回环和协议转换；两者并存是性能与兼容的折中。**
+
+---
+
+## 第 7 课：安全边界——`-p` 默认把门开给了全世界
+
+**🧑‍🏫 老师：**
+
+今天最后一块硬骨头，也是生产上最容易忽视的一条：**`-p 8080:80` 到底把端口开给了谁**。
+
+回头看第 6 课的 `ss` 输出，监听地址是 `0.0.0.0:8080` 和 `[::]:8080`——**宿主机的所有 IPv4 和所有 IPv6 地址**。官方文档写得明确：不指定宿主 IP 时，默认绑定所有地址。也就是说，只要宿主机本身能被外部访问到（云服务器公网 IP、办公室局域网），这个 8080 就对那整个网络敞开——不管你 ufw/安全组怎么配。注意 ufw 这点后面插问会说，这里先记住事实。
+
+生产上很多事故的剧本是：开发者本意「自己调试用」，`-p 6379:6379` 起了个 Redis，没设密码——在公网机器上，这就是一个开放的数据库，扫描器十分钟内到访。
+
+想只开给本机，显式写绑定地址：
+
+```bash
+docker run -d --name n15-web2 -p 127.0.0.1:8081:80 nginx:alpine
+```
+
+对比两行的监听差异：
+
+```bash
+ss -tlnp | grep -E ':(8080|8081)\b' | grep docker-proxy
+```
+
+```text
+LISTEN 0 4096 0.0.0.0:8080   0.0.0.0:*  users:(("docker-proxy",...))
+LISTEN 0 4096 [::]:8080      [::]:*      users:(("docker-proxy",...))
+LISTEN 0 4096 127.0.0.1:8081 0.0.0.0:*  users:(("docker-proxy",...))
+```
+
+验证行为——回环地址访问 8081 成功，换成宿主机对外 IP 就拒绝：
+
+```bash
+curl -s -o /dev/null -w 'HTTP %{http_code}\n' http://127.0.0.1:8081
+```
+
+```text
+HTTP 200
+```
+
+```bash
+curl -s -o /dev/null -w 'HTTP %{http_code}\n' --max-time 3 http://172.22.212.111:8081
+```
+
+```text
+HTTP 000
+（连接被拒绝）
+```
+
+连 DNAT 规则都长不一样——回环发布的规则多了 `-d 127.0.0.1/32` 这个目的地址限定：
+
+```text
+-A DOCKER -d 127.0.0.1/32 ! -i br-xxxx -p tcp -m tcp --dport 8088 -j DNAT ...
+```
+
+一句话总结本课：
+
+> **`-p 容器端口` 这种短写法 = 对宿主机所有地址开放；只想本机访问，必须写全 `-p 127.0.0.1:宿主端口:容器端口`。**
 
 ---
 
-### 为什么会有 `-i docker0 -j RETURN` 这条规则？
+## 插问 5：我想对容器的流量加自己的防火墙规则，动哪里？
 
-这是为了防止死循环：
+**🧑‍🎓 学生：** 你说 ufw 管不住 Docker 的端口，那我有正经需求——比如只允许某个网段访问这个发布端口——规则该加在哪？总不能直接改 Docker 生成的那些规则吧？
 
-- 容器内部访问宿主机的映射端口（比如容器内访问 `宿主机IP:8080`）
-- 如果不加这条，数据包从 `docker0` 进来 → 又被 DNAT 转回自己 → 死循环
-- 加了之后，从 `docker0` 进来的包直接跳过 DOCKER 链的 DNAT 规则
+**🧑‍🏫 老师：**
+
+问到运维的命根子上了。先说纪律：**Docker 生成的规则（DOCKER 链、DOCKER-FORWARD 链那些）一个都不要碰**——它们是容器网络正常工作的地基，而且 Docker 重建网络时会重写它们，你改了也白改。官方给普通用户留的口子只有一个：**DOCKER-USER 链**。
+
+看它长在哪。宿主机的 FORWARD 链（所有「经过本机转发的流量」都要过这里）：
+
+```bash
+iptables -S FORWARD | head -6
+```
+
+```text
+-P FORWARD DROP
+-A FORWARD -j DOCKER-USER
+-A FORWARD -j DOCKER-FORWARD
+```
+
+三行信息量很大：默认策略是 DROP（不认识的转发一律丢弃，这是 Docker 设的安全基线）；第一个跳转就是 DOCKER-USER，**排在 Docker 自己的 DOCKER-FORWARD 之前**——你的规则先生效，Docker 的规则后放行。这就是它名字的含义：给用户预留的前置检查站。
+
+做个真刀真枪的实验。模拟一个「外部客户端」：用另一个网络里的容器（第 5 课那种跨网访问，走的正是「DNAT → FORWARD」完整路径）去访问宿主机 172.22.212.111:8080：
+
+```bash
+docker exec n15-box wget -q -O /dev/null --timeout=3 http://172.22.212.111:8080 && echo 'HTTP OK'
+```
+
+```text
+HTTP OK
+```
+
+现在加规则：禁止 n15-box 所在网段访问这个容器——注意匹配的是**容器 IP**：
+
+```bash
+iptables -I DOCKER-USER -s 172.26.0.0/16 -d 172.17.0.4 -j DROP
+```
+
+再访问：
+
+```bash
+docker exec n15-box wget -q -O /dev/null --timeout=3 http://172.22.212.111:8080 && echo 'HTTP OK' || echo 'BLOCKED'
+```
+
+```text
+BLOCKED
+```
+
+删掉规则，立刻恢复：
+
+```bash
+iptables -D DOCKER-USER -s 172.26.0.0/16 -d 172.17.0.4 -j DROP
+# 再 wget —— HTTP OK again
+```
+
+顺便坦白一个我第一次做这个实验时踩的坑，正好是知识点：我最初写的规则是 `--dport 8080`，**没拦住**。原因是第 6 课讲过的——流量到 DOCKER-USER 时，DNAT **已经发生**，包的目的端口已经是容器的 80，不是 8080。所以要么按容器 IP/容器端口匹配，要么用 `-m conntrack --ctorigdstport 8080` 匹配「原始目的端口」。这个坑几乎每个第一次写 DOCKER-USER 规则的人都会踩。
+
+至于 ufw 为什么管不住：Docker 的端口发布走 nat 表（PREROUTING 的 DNAT），包在做路由决策前就被改了目的地、转去 FORWARD 链了——而 ufw 的规则主要作用于 INPUT/OUTPUT 链，位置靠后，根本轮不到它发言。官方文档专门有一节「Docker and ufw」讲这个不兼容。云主机的安全组能管住（因为它在宿主机外面拦），但同一宿主机内的隔离，还是得靠 DOCKER-USER 或网络拓扑设计。
+
+一句话收口：
+
+> **自定义规则只加 DOCKER-USER 链（FORWARD 第一站，优先于 Docker 规则）；匹配条件要按 DNAT 之后的地址写——容器 IP 和容器端口。**
 
 ---
 
-### 如果端口映射不生效，怎么排查？
+## 第 8 课：两个极端——host 与 none
 
-1. 先确认规则是否存在：
-   ```bash
-   iptables -t nat -S DOCKER | grep 8080
-   ```
+**🧑‍🏫 老师：**
 
-2. 如果规则存在但还是不通，检查：
-   - 容器是否真的在监听 80 端口
-   - FORWARD 链是否允许转发（`iptables -S FORWARD`）
-   - 容器是否有默认路由
+bridge 之外，还有五个网络驱动。这课先看两个极端，各用一条命令看透。
 
+**host：不要隔离，直接用宿主机的网络。** 对照看——host 模式容器里看到的 eth0，和宿主机的是同一块：
 
-
-
-
-逐词翻译：
-
-- `! -i docker0`：不是从 docker0 进来的包（即从**外面**进来的——容器之间的流量不走这张表）
-- `-p tcp --dport 8899`：目标端口是 8899 的 TCP 包
-- `-j DNAT --to-destination 172.17.0.8:80`：**把收件人改写为 172.17.0.8 的 80 端口**
-
-看出对称美了吗？**第 5 课的 MASQUERADE 改寄件人（出站），今天的 DNAT 改收件人（入站）。**前台的两本账：一本管"出门的包裹替你署名"，一本管"进门的包裹替你分拣"。
-
-### 实体二：门口的接待员（docker-proxy 进程）
-
-```
-$ ss -tlnp | grep 8899
-LISTEN 0 4096 0.0.0.0:8899 ... users:(("docker-proxy",pid=32128,...))
+```bash
+docker run --rm --network host busybox ip -4 addr show eth0 | grep inet
 ```
 
-宿主机的 8899 端口上，真有一个叫 **docker-proxy** 的进程在站岗接待。它是用户态的兜底路径（内核 DNAT 是快路径主路径；某些内核 DNAT 照顾不到的场景，比如 localhost 访问的特殊情况，由它转发）。0 基础阶段你只需记住：**两条路都通向同一个容器，一快一稳。**
-
-## 流量全景（发布后，外界进来的完整路径）
-
-```
-外界（Windows/同事）
-   │ 找宿主机门牌：172.22.212.111:8899
-   ▼
-宿主机 8899 端口（docker-proxy 站岗 / DNAT 查表）
-   │ DNAT 改收件人：→ 172.17.0.8:80
-   ▼
-docker0 交换机 → veth 网线 → 容器 eth0:80 → nginx 应答
-   │ 应答沿路返回，前台再把寄件人改回宿主机（连接跟踪表）
-   ▼
-外界收到 200
+```text
+    inet 172.22.212.111/20 brd 172.22.223.255 scope global eth0
 ```
 
-**容器从头到尾不知道有 -p 这回事。**它照常在自己的 80 端口监听，就像一台普通电脑上的普通服务——第 1 课"应用不用改"的承诺，第三次兑现。
+```bash
+# 宿主机自己看
+ip -4 addr show eth0 | grep inet
+```
 
-## -p 语法全家福（官方）
+```text
+    inet 172.22.212.111/20 brd 172.22.212.255 ... scope global eth0
+```
 
-| 写法 | 含义 | 常用度 |
-| --- | --- | --- |
-| `-p 8899:80` | 宿主机所有网卡的 8899 → 容器 80 | ★★★ |
-| `-p 127.0.0.1:8899:80` | **只有本机**能访问（只绑回环） | ★★（数据库类常用） |
-| `-p 80:80` | 同号直通 | ★★ |
-| `-P`（大写） | 让 Docker 自选宿主机高位端口，发布所有 EXPOSE 端口 | ★ |
-| `-p 8000-8002:80-82` | 范围发布 | ★ |
+同一个 IP。host 模式下容器**不创建自己的 netns**，直接和宿主机共用一套网络栈：容器里起的 nginx 就是占用宿主机的 80 端口，**不需要 `-p`**：
 
-生产环境高频操作：数据库容器用第二种（只许本机访问），Web 服务用第一种。
+```bash
+docker run -d --name n15-hostweb --network host nginx:alpine
+curl -s -o /dev/null -w 'HTTP %{http_code}\n' http://localhost:80
+```
 
-## 本课小结
+```text
+HTTP 200
+```
 
-- 不带 `-p`：容器对宿主机可见（半开门内侧 200），对外界**隐形**
-- `-p 宿主端口:容器端口` = 前台贴对照表：外界找宿主机端口 → DNAT 改收件人 → 转交容器
-- 两个实体：内核 DNAT 规则（快路径）+ docker-proxy 进程（兜底），均实测可见
-- 与第 5 课对称：出站 MASQUERADE 改寄件人，入站 DNAT 改收件人
-- 坑：容器 Up ≠ 应用就绪（HTTP 000 → 200 的 16 秒）
-- 本环境套娃提醒：这台机器最外层前台是 Windows；真要让隔壁工位访问，WSL 之上还需 Windows 层转发——机制不影响理解，环境差异如实说明
+`ss` 里监听 80 的进程是 nginx 本尊，**没有 docker-proxy，也没有 DNAT**——少了两层转发，性能最好，但代价是：端口会和宿主机进程打架（80 被占了就起不来）、容器失去网络隔离（能看到的网络就是宿主机的网络）。高性能代理、需要抓宿主机流量的网络工具偶尔用它。
 
-## 课后思考题（第 7 课的门票，也是本模块下半场的引信）
+**none：连网络都不要，真·孤岛。**
 
-今天的门牌总账，你看完应该脊背发凉：
+```bash
+docker run --rm --network none busybox ip addr
+```
 
-- `172.17.0.7` 今天的主人换了**三任**：box1 → lab-a → hidden nginx
-- `172.17.0.8` 也换过：lab-b → lab-a → pub nginx
+```text
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host lo
+```
 
-假设你有个应用，配置文件里写着"我的 Redis 在 `172.17.0.7:6379`"。今天下午它会发生什么？——连是能连上的（有人接电话），**但接电话的是谁？**
+只有回环设备，别的什么都没有。试着出网：
 
-第 7 课我们把这个事故在实验里完整重演一遍，然后你会理解为什么 Docker 需要发明"自定义网络"。
+```bash
+docker run --rm --network none busybox ping -c1 -W2 223.5.5.5
+```
+
+```text
+PING 223.5.5.5 (223.5.5.5): 56 data bytes
+ping: sendto: Network is unreachable
+```
+
+连路由表都是空的。适合什么？批处理任务（离线解压、文件转换）、密钥生成——一切「有 CPU 和文件系统就够，网络纯属风险」的场景。
+
+一句话总结本课：
+
+> **host = 借用宿主机网络栈（快、无隔离、免 `-p`）；none = 彻底断网（最安全的默认）。bridge 夹在中间：隔离与互通兼得。**
 
 ---
+
+## 第 9 课：container 模式——K8s Pod 的原型
+
+**🧑‍🏫 老师：**
+
+还有一个模式平时少见，但它是理解 Kubernetes 的钥匙：**container 模式——新容器不建自己的 netns，直接搬进指定容器的 netns 一起住**。
+
+先起一个「房主」容器：
+
+```bash
+docker run -d --name n15-pause busybox sleep 300
+```
+
+再起一个容器，声明「我要和 n15-pause 共用网络」，让它在共享的 8080 端口上起个 tiny web 服务：
+
+```bash
+docker run -d --name n15-sidecar --network container:n15-pause \
+  busybox sh -c 'echo pod-ok > /tmp/index.html; httpd -f -p 8080 -h /tmp'
+```
+
+现在第三个容器也搬进同一个 netns，在它里面访问 `localhost:8080`：
+
+```bash
+docker run --rm --network container:n15-pause \
+  busybox wget -q -O- --timeout=3 http://localhost:8080
+```
+
+```text
+pod-ok
+```
+
+回味一下第 1 课的结论「跨容器用 localhost 必然不通」——**在 container 模式下被打破了**。三个容器在同一个 netns 里，`localhost` 指的是同一个网络世界：同享一块 eth0、同一个 IP、同一套端口空间。sidecar 里监听的 8080，隔壁容器用 localhost 直达。
+
+这正是 Kubernetes 里 Pod 的网络模型：**一个 Pod 里的所有容器共享一个 netns**，彼此 localhost 互访，「Pod」对外是一个 IP。K8s 集群里每个 Pod 背后都有一个常驻的 pause 容器当「房主」，业务容器都以 container 模式搬进去——名字就是从这来的。你今天用 `--network container:` 手动搭出来的，就是 K8s 网络的地基原型。
+
+一句话总结本课：
+
+> **container 模式 = 多个容器共用一个 netns，localhost 互通——K8s Pod「一 Pod 一 IP、容器间 localhost 互访」的原型。**
+
+---
+
+## 第 10 课：macvlan 认脸，六种驱动收口
+
+**🧑‍🏫 老师：**
+
+最后一课认个脸：**macvlan——让容器直接活在物理网络里，像一台真实的独立主机**。它不用网桥、不用 NAT：在宿主机物理网卡（parent）上开出一个子接口，容器直接拿物理网络的 IP 和 MAC。
+
+```bash
+docker network create -d macvlan \
+  --subnet 172.16.29.0/24 --gateway 172.16.29.1 \
+  -o parent=eth0 n15-mac
+
+docker run -d --name n15-macbox --network n15-mac busybox sleep 300
+```
+
+看容器网卡：
+
+```bash
+docker exec n15-macbox ip link show eth0 | grep link/ether
+```
+
+```text
+    link/ether 7a:8b:1c:33:0f:8e brd ff:ff:ff:ff:ff:ff
+```
+
+**容器有自己的 MAC 地址**（bridge 模式的 veth 也有 MAC，但那是在虚拟网线两端；macvlan 的容器是直接以独立 MAC 身份出现在物理网络上）。宿主机 ping 它试试：
+
+```bash
+ping -c1 -W2 172.16.29.2
+```
+
+```text
+1 packets transmitted, 0 received, 100% packet loss
+```
+
+不通——这是 macvlan 的经典限制：**宿主机默认无法直接访问自己的 macvlan 容器**（发包走的是 eth0 原始路径，不经 macvlan 子接口）。要通得再修一条 macvlan 接口当桥。WSL2 这种 NAT 环境里它也拿不到真实局域网身份，所以这次只求认脸：知道什么场景找它——容器需要**以独立主机身份出现在物理网络**（直连局域网、跑 DHCP、低延迟收发包）时，macvlan/ipvlan 才登场，而且通常先想到的是「是不是其实用 bridge 就够了」。
+
+到此六条路全部认完，收口成一张选型表：
+
+| 驱动 | 一句话 | 什么时候用 |
+|------|--------|-----------|
+| **bridge**（自定义） | 虚拟交换机 + 内置 DNS，网络间隔离 | **90% 场景的默认答案**，`--network` 必带 |
+| host | 直接用宿主机网络栈 | 高性能代理、网络排障工具 |
+| none | 只有 lo，彻底断网 | 批处理、密钥生成等无网任务 |
+| container | 搬进别的容器的 netns | 自建「Pod」；理解 K8s 网络 |
+| macvlan / ipvlan | 容器以独立身份活在物理网络 | 要直连局域网、独立 MAC/IP 的特殊场景 |
+| overlay | 跨多台宿主机组一张网 | Swarm/K8s 多机容器互访（[第 29 篇](/云原生/docker/docker-29-swarm)） |
+
+一句话总结本课：
+
+> **驱动选型先问「要多少隔离、要不要跨机」：不确定就用自定义 bridge；跨机才轮到 overlay；物理网络身份才轮到 macvlan。**
+
+---
+
+## 小结
+
+从一个「localhost 不通」的现场出发，把 Docker 网络的整张地图走完了：
+
+1. **netns**：每个容器一套独立网络世界，`localhost` 只指自己——跨容器访问必须走「别人的 IP/名字」。
+2. **docker0/veth**：默认 bridge = 宿主机里的虚拟交换机，容器用 veth 网线插上去；`eth0@ifN` 和宿主机 `N: vethXXX@ifM` 互指。
+3. **出网**：MASQUERADE 把容器源地址伪装成宿主机，规则在 POSTROUTING 链里。
+4. **默认 bridge 无 DNS**：IP 通、名字不通；官方已把它定为历史遗留，生产禁用。
+5. **自定义网络**：内置 DNS（127.0.0.11）按容器名/别名解析，上游转发宿主机 DNS；网络间默认隔离。
+6. **多网络**：容器可热插拔接入多个网络，一网一网卡一 IP；别名让应用连 `db` 不连真名。
+7. **`-p` 的主通道**：内核 DNAT（`--to-destination 容器IP:容器端口`），回包 conntrack 自动还原；docker-proxy 兜回环与协议转换。
+8. **安全边界**：`-p` 短写法绑定所有地址、对全网开放；只给本机用必须 `-p 127.0.0.1:...`。
+9. **DOCKER-USER**：自定义防火墙规则唯一合法入口，排在 Docker 规则前；匹配条件要按 DNAT 之后的容器 IP/端口写。
+10. **host/none/container/macvlan**：借用宿主栈、彻底断网、共享 netns（Pod 原型）、物理网络独立身份——外加跨机的 overlay。
+
+**思考题**：一台公网服务器上，同事用 `-p 3306:3306` 起了个 MySQL 且没设密码。不重启容器、不动安全组，你有哪些办法立刻把这个口子收窄到只允许本机访问？（提示：第 7 课的绑定地址要重建容器才生效；DOCKER-USER 能不能对已发布端口「事后收紧」？）
+
+下一篇：[《Docker Compose 编排——从一个 Nginx 滚成一整栈》](/云原生/docker/docker-16-compose)。手动 `--network` 连网络的活儿，Compose 会替你自动化：每个工程一个专属网络、服务名就是 DNS 名——今天这套机制，到那边就是默认待遇。
+
+---
+
+## 参考资料
+
+- [Docker Docs · Networking](https://docs.docker.com/engine/network/) — 网络总览与驱动入口
+- [Bridge network driver](https://docs.docker.com/engine/network/drivers/bridge/)（2026-02 版）：自定义优于默认 bridge 的五条理由、`-p` 默认绑定所有地址、内置 DNS 只解析自定义容器名
+- [Packet filtering and firewalls](https://docs.docker.com/engine/network/packet-filtering-firewalls/)（2025-12 版）：iptables 默认后端与 `firewall-backend` 选项、FORWARD 默认 DROP、Docker 与 ufw 不兼容的机制
+- [Docker with iptables](https://docs.docker.com/engine/network/firewall-iptables/) — DOCKER-USER 链的官方用法与示例规则
+- [Host](https://docs.docker.com/engine/network/drivers/host/) / [None](https://docs.docker.com/engine/network/drivers/none/) / [Macvlan](https://docs.docker.com/engine/network/drivers/macvlan/) 驱动手册
+- 本机：WSL2 Ubuntu-22.04 + Docker Engine 29.1.3（iptables 后端），全部输出实跑于 2026-08-25

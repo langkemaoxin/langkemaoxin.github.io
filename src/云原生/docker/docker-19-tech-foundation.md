@@ -1,327 +1,574 @@
 ---
-title: Docker 技术底座——沿着「又轻又像一台机器」逐层解开 Namespace、Cgroups 与 UnionFS
+title: Docker 技术底座——容器凭什么又轻又像一台机器（师生对话实录）
 sidebarGroup: Docker 系列
 shortTitle: 19 技术底座总览
 order: 19
-date: 2026-08-20T00:00:00.000Z
+date: 2026-08-25T00:00:00.000Z
 category: 云原生
 tag:
   - Docker
   - 云原生
   - Docker系列
-description: 概念综述也滚雪球：抓着「容器凭什么又轻又像一台机器」这一句话，一节只解开一层——进程本质、三张视图、三根支柱、LXC 公式与 runtime 演进，为第 17～21 篇原理篇铺路。
+  - 底层原理
+  - 对话实录
+description: 师生对话实录课：0 基础学生与教学大师逐词拆解「容器 = 看起来像独立的小机器，实际上只是宿主机上的进程 + 内核级隔离与限额」，每个论断都在 WSL 实机跑出证据。
 ---
 
 > **Docker 系列 · 第 19/33 篇**
 > 上一篇：[《Compose 现代特性——watch 热更、profiles 分组与 init 容器》](/云原生/docker/docker-18-compose-modern) · 下一篇：[《Namespace 隔离——从一个容器里的怪现象滚穿六大命名空间》](/云原生/docker/docker-20-namespace)
 >
-> 本篇起进入**底层原理**阶段：先总览地图，再分篇深入 Namespace → Cgroups → UnionFS → Daemon/runtime → 进程视角排障。
+> 本篇起进入**底层原理**阶段：先总览地图，再分篇深入 Namespace → Cgroups → UnionFS → Daemon/runtime → 进程视角。
 
 ---
 
-## 开头：容器凭什么又轻又像一台机器
+## 写在前面
 
-你在生产环境跑过几十个 Java 微服务后，会有一个直观感受：**虚拟机太重，裸进程又太裸**——「隔离」和「轻快」好像天生只能二选一。
+Docker 系列学到第 19 篇，命令、镜像、网络、卷、Compose 都用熟了。但每次有人问「容器到底是什么」，我只能背一句网上抄来的话：**看起来像独立的小机器，实际上只是宿主机上的进程，加上内核级的隔离与限额。**
 
-Docker 给出的中间路线，一句话就能说完：
+这句话第一遍读像广告——「又轻又隔离」在我经验里是矛盾的：像机器的东西从来不轻（虚拟机），轻的东西从来不隔离（裸进程）。容器凭什么两头都占？Namespace、Cgroups、UnionFS 这三个词更是只闻其名。
 
-> **看起来像独立的小机器，实际上只是宿主机上的进程，加上内核级的隔离与限额。**
+所以继续用对话的老办法：**让 AI 当老师，我当学生，每课只讲一个概念，我有问题就打断，没问题就继续**。整场对话就抓着那一句话，一课解开一个词，而且这回每个论断都在本机跑出证据——看完你会和我一样发现：这句话不是广告，是账本。
 
-这句话读第一遍像广告，读第二遍是个悖论：**像一台机器**，意味着有自己的进程表、自己的根目录、自己的网卡；**又轻**，意味着不装新系统、秒级启动、镜像还能共享。经验里「像机器的东西从来不轻，轻的东西从来不隔离」——容器凭什么两头都占？
+课程路线图（走到哪算哪）：
 
-本篇不先背概念。整篇就抓着上面这一句话，**每一节只解开其中一个词**，一路解到 Linux 的三根支柱跟前：
+> ① 两难的账本 → ② 「轻」：它真是进程 → ③ 共享同一个内核 → ④ 机器感 = 三张视图 + 一道限额 → ⑤ 视图一/三：A 看不到 B → ⑥ 视图二：自己的根文件系统 → ⑦ 一道限额：能用多少 → ⑧ 道具全是内核现成的 → ⑨ 第一代配方：LXC + AUFS → ⑩ 配方会老，底座不老
 
-| 节 | 这一节解开的 | 读完能回答的 |
-|----|--------------|--------------|
-| 1 | 为什么需要第三条路 | VM 和裸进程各自败在哪笔账上 |
-| 2 | 「轻」的一半：它真是进程 | 容器为什么不是小 VM |
-| 3 | 「机器感」的一半：三张视图 + 一道限额 | 一句话定义里每个词各指什么 |
-| 4 | 戏法道具全是内核现成的 | 三根支柱各管什么，Docker 发明了什么 |
-| 5 | 第一张视图：看得见什么 | A 容器为什么看不到 B 容器 |
-| 6 | 第二张视图：自己的根文件系统 | 镜像为什么一层层、可写层是什么 |
-| 7 | 隔离的另一半：能用多少 | 视图隔开了，资源为什么还得限额 |
-| 8 | 第一代配方：Docker ≈ LXC + AUFS | LXC 拼了什么，Docker 又加了什么 |
-| 9 | 配方会老，底座不老 | K8s 里 Docker 为什么淡出、什么没变 |
-
-贯穿全文的「那条故事」不是某个实验目录，而是**这句话本身**：每节解开一个词，谜面就少一块；读到第 9 节再回头看，整句话应该已经不神秘了。具体的动手与深挖分给后面四篇（第 17～20 篇）和第 23 篇，文末有分工表。官方出处：[Docker overview — The underlying technology](https://docs.docker.com/get-started/overview/)。
+环境：WSL2 Ubuntu-22.04（root）+ Docker Engine 29.1.3。官方出处：[Docker overview — The underlying technology](https://docs.docker.com/get-started/overview/)。
 
 ---
 
-## 第 1 节：两难的账本——VM 太重，裸进程太裸
+## 第 1 课：两难的账本——VM 太重，裸进程太裸
 
-先把选择权的两边算清楚。几十个微服务摆在你面前，传统上只有两条路：
+**🧑‍🏫 老师：**
 
-- 每个服务若独占一台 VM：内存、启动时间、镜像体积都是成本
-- 若全部跑在宿主机上：端口冲突、依赖版本、进程互相可见，运维噩梦
+先把你那句「经验里矛盾」的经验，算成一笔账。
 
-第一条路的病根，[第 2 篇](/云原生/docker/docker-02-container-vs-vm)算过账：VM 要虚拟化整套硬件、引导一个完整的 Guest OS，「重」是**架构性**的，省不掉。第二条路的病根更直白：所有进程共享同一份系统视图——一张进程表、一张端口表、一套系统库，几十个服务挤在一起必然互相踩。
+几十个微服务要部署，传统上只有两条路。**第一条：每个服务一台虚拟机。** VM 要虚拟化整套硬件——CPU、内存、网卡全是模拟出来的，然后在这套假硬件上引导一个完整的 Guest OS，你的服务才能开机。重是**架构性**的（[第 2 篇](/云原生/docker/docker-02-container-vs-vm)算过详细账）：每个 VM 吃掉一份内存给 Guest OS，开机要等引导，镜像动辄几个 GB。
 
-所以要找的第三条路，得**同时**满足两件事：
+**第二条：全部跑在宿主机上，当裸进程。** 轻是轻了，但几十个服务共享同一份系统视图——一张进程表、一张端口表、一套系统库。A 服务要 libc 2.31、B 服务要 2.35；A 占了 8080、B 也想监听 8080；`ps` 一看全是别人的进程。互相踩，运维噩梦。
 
-1. 隔离到「像各用各的机器」——互看不见、互不挤占
-2. 又轻到「只是进程」——不起动一个新的操作系统
+所以 Docker 卖的其实是一条**中间路线**：隔离到「像各用各的机器」，又轻到「只是进程」。开头那句话拆到最后，就是这条路线的实现说明书。
 
-这正是开头那句话要拆的东西。读完这节你能回答：Docker 卖的不是「更快的 VM」，也不是「管进程的脚本」，而是这条中间路线本身。
+> 一句话收口：**VM 隔离但重（虚拟化整套硬件 + Guest OS），裸进程轻但互相踩（共享一张系统视图）；容器要同时拿下两头。**
 
 ---
 
-## 第 2 节：先解「轻」的一半——它是宿主机进程，不是小 VM
+## 插问 1：VM 到底重在哪？「快不起来」是因为什么？
 
-那句话里最反直觉的是后半句：「**实际上只是宿主机上的进程**」。
+**🧑‍🎓 学生：** 你说 VM 的重是「架构性」的——意思是不能靠加钱解决吗？我把 VM 内存加到 64G、换成 NVMe，它还是慢怎么办？
 
-容器不是完整的虚拟机：它**共享宿主机内核**；VM 则虚拟化整套硬件与内核——这是 Docker 与 KVM 虚拟机的根本差异。完整对比在[第 2 篇](/云原生/docker/docker-02-container-vs-vm)，这里只记两条：
+**🧑‍🏫 老师：**
 
-- VM 启动要引导 Guest OS；容器启动只是**起一个（或一组）进程**
-- 不虚拟化硬件，就没有硬件模拟这层开销
+加钱能解决「资源不够」，解决不了「流程冗长」。VM 启动慢的根源不在硬件性能，而在**它必须完整走一遍「开机」**：
 
-「轻」到这一步解掉了一半：快、省内存，都因为它是进程。「轻」的另一半——几百 MB 的镜像为什么能十台机器共享、改一行代码不用全量重传——先按下不表，第 6 节的「分层」来解。
+```text
+VM 开机 = 上电 → BIOS/UEFI → 引导加载器 → 内核解压初始化 → 挂根文件系统
+          → 起各类系统服务 → 你的应用
 
-顺带一条证据链：既然只是进程，容器里的「PID 1」在宿主机上就该另有一个号。[第 24 篇](/云原生/docker/docker-24-process-view)会真的跑给你看——同一个 nginx，容器里是 1 号，宿主机上是 10420 号。
+容器启动 = 内核直接创建进程（进程自己带好视图）
+```
+
+VM 的这条链是给「一台真正的机器」设计的，一步都省不掉，每步都在为「它以为自己是一台独立计算机」付出代价。容器跳过整条链：宿主机内核已经跑起来了，直接**起进程**就行——这就是后面第 2 课要眼见为实的「轻」。
+
+也正因为如此，加钱能缩短 VM 开机时间（从 40 秒到 8 秒），但缩短不到容器的量级（毫秒级起进程）。量级差距来自架构，不来自配置。
+
+> 一句话收口：**VM 慢在「必须完整开机」这条链，架构决定的，加钱只能优化常数，改不了量级。**
 
 ---
 
-## 第 3 节：再解「机器感」的一半——一句话定义里的三张视图、一道限额
+## 第 2 课：先解「轻」——它就是宿主机上的一个进程
 
-「只是进程」成立，那「看起来像独立的小机器」从哪来？把定义的正式版本摆上来，答案就藏在里面：
+**🧑‍🏫 老师：**
+
+那句话里最反直觉的是后半句：「实际上只是宿主机上的进程」。空口无凭，当场验证。起一个最无聊的容器——跑 `sleep`：
+
+```bash
+docker run -d --name tf-sleep busybox sleep infinity
+```
+
+如果容器真的「只是一个进程」，那我应该能在**宿主机**的进程表里直接找到它。两个视角各看一眼：
+
+```bash
+docker top tf-sleep
+ps -eo pid,ppid,comm,args | grep 'sleep infinity' | grep -v grep
+```
+
+```text
+UID    PID    PPID  C  STIME  TTY  TIME     CMD
+root  39988  39964  2  15:34   ?   00:00:00 sleep infinity
+
+  PID  PPID COMMAND  ARGS
+39988 39964 sleep    sleep infinity
+```
+
+`docker top` 是 Docker 替你查的宿主机进程表，`ps` 是你自己查的——**同一个进程，宿主机 PID 39988**。它不在什么「虚拟机里」，就躺在宿主机的进程表里，跟你的 bash、sshd 排一张表。
+
+再进容器里面看：
+
+```bash
+docker exec tf-sleep ps
+```
+
+```text
+PID   USER     TIME  COMMAND
+    1 root      0:00 sleep infinity
+    7 root      0:00 ps
+```
+
+同一个 `sleep infinity`，容器里看是 **1 号进程**，宿主机看是 **39988 号**。同一个进程，两套编号——这套戏法是第 5 课的 pid namespace 变的，先把现象记住。
+
+所以「轻」的前一半解掉了：容器启动快、省内存，因为它**根本不起动新的操作系统，只是创建进程**——`docker run` 干的事，内核视角就是 fork 出一个带特殊配置的进程。
+
+> 一句话收口：**容器 = 宿主机进程表里的一行；容器里 PID 1、宿主机里 39988，是同一个进程的两套编号。**
+
+---
+
+## 第 3 课：共享同一个内核
+
+**🧑‍🎓 学生：** 等等，如果只是个进程，那容器里的「操作系统」哪去了？busybox 里也有自己的内核吗？
+
+**🧑‍🏫 老师：**
+
+问到关键了：**没有自己的内核，全体共享宿主机这一个。** 证据随手就能跑——`uname -r` 报告内核版本，两边各跑一次：
+
+```bash
+echo -n "宿主机:    "; uname -r
+echo -n "容器内: "; docker run --rm busybox uname -r
+```
+
+```text
+宿主机:    6.6.87.2-microsoft-standard-WSL2
+容器内: 6.6.87.2-microsoft-standard-WSL2
+```
+
+一模一样，连 `-microsoft-standard-WSL2` 这种宿主机的「胎记」都带进去了——因为内核就是同一个，`uname` 只是问内核「你是谁」。对比 VM：Guest OS 有自己的内核，`uname -r` 报的是 Guest 自己的版本号。
+
+这也解释了两件事：
+
+- **为什么镜像那么小**：镜像里只装应用和它要的用户态库（busybox 才几 MB），内核这个大家伙不用带——宿主机有；
+- **为什么容器离不开 Linux 内核**：第 8 课会看到，隔离和限额的工具全是 Linux 内核提供的。Windows / macOS 上的 Docker Desktop 其实**藏了一台 Linux 小虚拟机**在替你跑内核那部分——本实验的 WSL2 就是这台「机器」本身。
+
+> 一句话收口：**容器内没有独立内核，全体共用宿主机那一个；镜像小、启动快，都是这句话的赠品。**
+
+---
+
+## 插问 2：共享内核，那容器里能跑 Windows 程序吗？
+
+**🧑‍🎓 学生：** 既然共享宿主机内核——我在 Linux 上跑个容器，里面装 Windows 的 exe，行不行？
+
+**🧑‍🏫 老师：**
+
+不行，而且败因恰好能帮你巩固「共享内核」这句话。
+
+一个程序要跑起来，光是「有文件」不够，它要**不停呼叫内核**：打开文件（open）、收发网络（send/recv）、申请内存（mmap）、创建进程（fork）……这些呼叫走的是**系统调用**，而系统调用的「接口方言」是内核定的。
+
+Windows 的 exe 说的是 NT 内核的方言（Win32 API），Linux 内核只听得懂 POSIX 方言。共享内核意味着：exe 在容器里发出的每一次系统调用，Linux 内核都听不懂——不是「慢」，是「语言不通」。
+
+所以规则可以记成一句：**镜像可以随便换用户态（alpine、debian、甚至带 glibc 的东西），内核没得选——宿主机是什么内核，容器就用什么内核。** Linux 容器要跑在 Windows/macOS 上，就得先垫一台 Linux 内核（Docker Desktop 的隐藏 VM / WSL2），等于「借一个听得懂方言的内核」。
+
+（想跑 Windows 容器也有——Windows 内核原生容器，跑 Windows Server 内核 + Windows 镜像，那是另一套体系，和本系列说的 Linux 容器平行。）
+
+> 一句话收口：**共享内核 = 共享系统调用方言；Linux 容器里跑不了 Windows 程序，因为内核听不懂它的呼叫。**
+
+---
+
+## 第 4 课：机器感的定义——三张视图 + 一道限额
+
+**🧑‍🏫 老师：**
+
+「轻」解完了。现在拆前半句：「看起来像独立的小机器」从哪来。把容器的正式定义摆上来，机器感的零件全在里面：
 
 > **容器的本质**：被 Namespaces 和 Cgroups 约束、拥有逻辑上独立文件系统与网络命名空间的一个（或一组）进程。
 
-逐词拆开，正好四样东西：
+逐词拆，正好四样东西：
 
-- **一个（或一组）进程**——第 2 节已解，主体就是它
-- **Namespaces 约束**——给进程换一副「眼镜」：看见自己的进程表、自己的网卡（第 5 节）
-- **Cgroups 约束**——给进程上一道「额度」：CPU、内存用到哪封顶（第 7 节）
-- **逻辑上独立的文件系统与网络命名空间**——注意「逻辑上」三个字：磁盘和网线都没有多出来，变的只是内核给这个进程的**视图**（第 6 节）
+- **一个（或一组）进程**——第 2 课已验证，主体就是它；
+- **Namespaces 约束**——给进程换一副「眼镜」：看见自己的进程表、自己的网卡（第 5 课）；
+- **Cgroups 约束**——给进程上一道「额度」：CPU、内存用到哪封顶（第 7 课）；
+- **逻辑上独立的文件系统与网络命名空间**——注意「逻辑上」三个字：磁盘和网线**没有多出来一根**，变的只是内核给这个进程的**视图**。
 
-也就是说，机器感不是「多了一台机器」，而是**同一个进程被换了三张视图，外加一道限额**。钉成一张小图，后面六节都在填它：
-
-```text
-宿主机上的一个进程
-├── 视图一：进程 / 主机名 / 挂载点……    ← Namespaces（第 5 节）
-├── 视图二：根文件系统（自己的 /）      ← UnionFS 只读层 + 可写层（第 6 节）
-├── 视图三：独立网络栈（自己的网卡）    ← Namespaces 里的 net（第 5 节）
-└── 一道限额：CPU / 内存 / I/O 上限    ← Cgroups（第 7 节）
-```
-
-和 VM 一对照，本质区别就一句话：**容器 = 受限进程 + 联合文件系统视图 + 独立网络栈**，不是一套虚拟化的硬件。
-
----
-
-## 第 4 节：戏法的道具全是内核现成的——三根支柱认个脸
-
-三张视图、一道限额，没有一样是 Docker 造的。支撑 Docker 核心实现的，是 Linux 上的三大底层技术——它们也是容器技术能在 **2013 年后爆发**的根本原因：
-
-| 技术 | 解决什么问题 | Docker 中的角色 |
-|------|--------------|-----------------|
-| **Namespaces** | 视图隔离：进程、网络、挂载点等 | 让容器 A 看不到容器 B |
-| **Cgroups** | 物理资源限额与统计 | 限制 CPU、内存、I/O 等 |
-| **UnionFS** | 多层目录联合挂载 | 镜像分层、写时复制的基础 |
-
-对照第 3 节那张小图：三行正好分别接管视图一/三（Namespaces）、限额（Cgroups）、视图二（UnionFS）。
-
-Docker 主要利用的 Linux 底层能力，官方文档列的就是这三样：
-
-- **Namespaces**：隔离 PID、NET、IPC、MNT、UTS（以及 User、Cgroup 等）
-- **Control groups**：资源限制与用量统计
-- **Union file systems**：Container 与 Image 的分层存储
-
-注意主语：**全是 Linux 内核**。Docker 的贡献不在发明这些机制，而在**封装**——把它们拼成顺手的产品，再配上镜像生态（第 8 节看这段封装史）。也正因如此，容器离不开 Linux 内核：Windows / macOS 上的 Docker Desktop，其实藏了一台 Linux 虚拟机在替你跑这些机制（[第 24 篇](/云原生/docker/docker-24-process-view)做实验时能看见它）。
-
----
-
-## 第 5 节：第一张视图——A 容器为什么看不到 B（Namespaces）
-
-命名空间是容器隔离的基础，保证 **A 容器看不到 B 容器**。Docker Engine 使用的 Linux 隔离技术，常用的是这六类：
-
-| Namespace | 隔离内容 |
-|-----------|----------|
-| **pid** | 进程 ID 空间 |
-| **net** | 网络设备、协议栈、端口 |
-| **ipc** | System V IPC、POSIX 消息队列 |
-| **mnt** | 文件系统挂载点 |
-| **uts** | 主机名、NIS 域名 |
-| **user** | UID/GID 映射 |
-
-此外还有 **cgroup** namespace（隔离 cgroup 根目录视图）和较新的 **time** namespace 等。
-
-逐行对着「机器感」读，每行都能对上一个你见过的现象：
-
-- **pid**：容器里 `ps` 只有寥寥几个进程，业务进程常常就是 1 号——「自己的进程表」（两套 PID 的对照实验在[第 24 篇](/云原生/docker/docker-24-process-view)）
-- **net**：独立网卡、IP、端口——两个容器各自监听 80 也不打架；bridge、veth、端口映射的实操在[第 15 篇](/云原生/docker/docker-15-network)
-- **mnt / uts**：自己的挂载点、自己的主机名——进容器发现 `hostname` 变了，就是 uts 在起作用
-- **ipc / user**：进程间通信队列各用各的；UID/GID 各有一套编号，容器里的 root 和宿主机上的 root 未必是同一个
-
-分工说清楚：怎么**进**容器去看这些视图（`exec` / `attach` / `nsenter`）见[第 7 篇](/云原生/docker/docker-07-enter-container)；Namespace 的**实现原理**（`clone()` flags、源码路径、chroot / pivot_root）见[第 20 篇](/云原生/docker/docker-20-namespace)。本篇只到「每张视图隔离什么」为止，不抢它们的活。
-
----
-
-## 第 6 节：第二张视图——自己的根文件系统怎么来（UnionFS）
-
-视图一解决「看见哪些进程」，视图三解决「用哪套网络」，中间还缺一块：容器里 `ls /` 看到的那套目录、自己的 libc、自己的 `/etc`，从哪来？
-
-答案是**镜像不是单一 tarball**，而是**一层层只读 Layer + 容器可写层**的联合挂载：
-
-- 底层通常是 Base Image（如 `debian`、`alpine`）
-- Dockerfile 每条指令产生一层
-- 运行时在最上层叠加可写 Container Layer
-
-这个结构同时解开了悖论的两头：
-
-- **机器感**：容器进程被「盖」上一套自己的根文件系统，看到的就是 `debian` 或 `alpine` 那套目录——视图二到位
-- **轻的另一半**：层是只读的、可共享的——十台机器跑同一镜像，Base 层在磁盘上只存一份；改一行代码只多一层，不重传整个镜像
-
-[第 5 篇](/云原生/docker/docker-05-container-and-image)早就用过这套心智模型的运维面（镜像=类、容器=实例、删容器丢的是可写层），[第 9 篇](/云原生/docker/docker-09-dockerfile)写 Dockerfile 时你也在一层层堆它。**怎么**联合挂载（AUFS 的 company/home 实验）、build 缓存怎么复用，是[第 22 篇](/云原生/docker/docker-22-unionfs)的主场。
-
----
-
-## 第 7 节：隔离的另一半——视图隔开了，资源还在抢（Cgroups）
-
-Namespaces 解决「看见谁」，**Cgroups 解决「能用多少」**。
-
-这两件事必须分开：视图隔离只是「假装看不见对方」，CPU、内存、磁盘还是同一颗、同一块——第 5 节的隔离再干净，一个内存泄漏的容器照样能把整机拖垮。
-
-常用子系统包括：`cpu`、`memory`、`blkio`、`devices`、`freezer` 等。Docker 为每个容器在 `/sys/fs/cgroup/.../docker/<容器ID>/` 下创建对应 cgroup，通过修改 `cpu.cfs_quota_us`、`memory.limit_in_bytes` 等文件限制资源。
-
-两个落点，帮你把日常参数和这些文件对上：
-
-- `docker run --cpus=0.5 -m 512m` 这类参数，最终就是写进上面这类文件（[第 16 篇](/云原生/docker/docker-16-compose)雪球 8 里 `docker inspect` 出的 `NanoCpus=500000000`，落点就在这里）
-- 老资料里 `/sys/fs/cgroup/memory/docker/<id>/` 这类路径多是 **cgroup v1** 的布局；本机是 v1 还是 v2，路径不一样，以实际为准（[第 24 篇](/云原生/docker/docker-24-process-view)、[第 21 篇](/云原生/docker/docker-21-cgroups)都有本机验证）
-
-子系统的展开、配额怎么算、超限了 OOM 怎么触发，详见[第 21 篇](/云原生/docker/docker-21-cgroups)。
-
----
-
-## 第 8 节：第一代配方——Docker ≈ LXC + AUFS
-
-三根支柱认完脸，一句老话回头看得更清。早期常听到的概括，**至今仍然有助于建立整体图景**：
+也就是说，机器感不是「多了一台机器」，而是**同一个进程被换了三张视图、外加一道限额**：
 
 ```text
-Docker ≈ LXC（Linux Containers）+ AUFS（Advanced UnionFS）
+宿主机上的一个进程（第 2 课：宿主机 PID 39988）
+├── 视图一：自己的进程表、主机名……   ← Namespaces（第 5 课）
+├── 视图二：自己的根文件系统 /       ← UnionFS 只读层+可写层（第 6 课）
+├── 视图三：自己的网络栈、网卡       ← Namespaces 里的 net（第 5 课）
+└── 一道限额：CPU / 内存 / I/O 上限  ← Cgroups（第 7 课）
 ```
 
-把右边再拆细一层，正好是「内核 → 中间层 → 产品」的三级台阶：
+接下来四课，每课填一行，每行都有本机实验。
+
+> 一句话收口：**机器感 = 三张视图 + 一道限额；磁盘网线没多，变的全是内核给进程看的「图」。**
+
+---
+
+## 第 5 课：视图一和视图三——A 容器为什么看不到 B（Namespaces）
+
+**🧑‍🏫 老师：**
+
+第 2 课留下一个悬案：同一个 `sleep`，容器里是 1 号、宿主机是 39988 号。现在揭底：内核给每个容器进程发了一副**专用眼镜**（namespace），眼镜里重编号。耳听为虚，直接去 `/proc` 里看眼镜本体——每个进程的 `/proc/<pid>/ns/` 目录下挂着它所有 namespace 的「编号牌」：
+
+```bash
+docker inspect tf-sleep --format '{{.State.Pid}}'
+# → 39988（容器主进程在宿主机的 PID，第 2 课查过）
+
+for ns in pid mnt net uts; do
+  echo -n "host-init : "; readlink /proc/1/ns/$ns
+  echo -n "container : "; readlink /proc/39988/ns/$ns
+done
+```
+
+```text
+--- pid
+  host-init : pid:[4026532219]
+  container : pid:[4026532582]
+--- mnt
+  host-init : mnt:[4026532217]
+  container : mnt:[4026532579]
+--- net
+  host-init : net:[4026531840]
+  container : net:[4026532584]
+--- uts
+  host-init : uts:[4026532218]
+  container : uts:[4026532580]
+```
+
+四组编号**全不一样**——宿主机的 1 号进程和容器进程，戴着四副不同的眼镜。namespace 的本质就是这些编号牌：编号相同 = 同一副眼镜（看见同一个世界）；编号不同 = 各看各的。
+
+再拿三个现象对号入座，全是这副眼镜变的戏法。
+
+**主机名不同（uts）**：
+
+```bash
+echo -n "host: "; hostname
+echo -n "container: "; docker exec tf-sleep hostname
+```
+
+```text
+host: pc3507
+container: 09c5dd7d6c56
+```
+
+**进程表互不可见（pid）**——再起两个容器，各自 `ps`：
+
+```bash
+docker run -d --name tf-a busybox sleep infinity
+docker run -d --name tf-b nginx:alpine
+docker exec tf-a ps
+```
+
+```text
+PID   USER     TIME  COMMAND
+    1 root      0:00 sleep infinity
+    7 root      0:00 ps
+```
+
+tf-a 里只有自己（和 ps）。tf-b 里跑一遍 `ps`，看到的全是 nginx 自己那窝进程——**两个容器互相看不见对方的进程**，尽管它们在宿主机进程表里比邻而居。
+
+**网卡各自一张（net）**：
+
+```bash
+docker exec tf-a ip addr show eth0 | grep inet
+docker exec tf-b ip addr show eth0 | grep inet
+```
+
+```text
+    inet 172.17.0.5/16 brd 172.17.255.255 scope global eth0
+    inet 172.17.0.6/16 brd 172.17.255.255 scope global eth0
+```
+
+一人一张 eth0、一个 IP——所以两个容器各自监听 80 也不打架（bridge、veth 的机制细节是[第 15 篇](/云原生/docker/docker-15-network)的活）。
+
+Docker 常用的 namespace 一共六类，每类隔离一样东西：
+
+| Namespace | 隔离内容 | 你见过的现象 |
+|-----------|----------|--------------|
+| **pid** | 进程编号 | 容器里业务进程是 1 号 |
+| **net** | 网卡、协议栈、端口 | 各有 eth0、都监听 80 不打架 |
+| **mnt** | 挂载点 | 第 14 篇的挂载「盖住」 |
+| **uts** | 主机名 | hostname 是容器 ID |
+| **ipc** | 进程间通信队列 | 信号量、消息队列各用各的 |
+| **user** | UID/GID 编号 | 容器里的 root ≠ 宿主机 root（可配置） |
+
+此外还有 **cgroup**、较新的 **time** 等。注意主语：**namespace 是 Linux 内核的机制**，Docker 只是给每个容器进程配齐了这套眼镜。每副眼镜怎么造出来（`clone()` 的 flags、`unshare`）、怎么自己动手写一个「迷你容器」，是[第 20 篇](/云原生/docker/docker-20-namespace)的主场。
+
+> 一句话收口：**Namespaces = 每进程一副「眼镜」，编号牌在 `/proc/<pid>/ns/`；A 看不到 B，不是 B 不存在，是 A 的眼镜里没有它。**
+
+---
+
+## 第 6 课：视图二——自己的根文件系统怎么来（UnionFS）
+
+**🧑‍🎓 学生：** 视图一和三我看到证据了。可还有一块：我进容器 `ls /`，看到一整套目录、自己的 `/etc`——进程视图里哪来的这套文件？总不能是给我复制了一份系统吧？
+
+**🧑‍🏫 老师：**
+
+复制一份就又不「轻」了。答案是**联合挂载**：镜像不是一个大 tarball，而是**一层层只读目录叠起来，再在最上面盖一层可写层**，联合呈现成 `/`。证据同样在 `/proc` 里——容器主进程的挂载表：
+
+```bash
+grep -m1 overlay /proc/39988/mountinfo
+```
+
+```text
+998 796 0:93 / / rw,relatime - overlay overlay rw,\
+lowerdir=/var/lib/containerd/.../snapshots/1692/fs:/var/lib/containerd/.../snapshots/113/fs,\
+upperdir=/var/lib/containerd/.../snapshots/1693/fs,\
+workdir=/var/lib/containerd/.../snapshots/1693/work
+```
+
+这行就是根文件系统的全部秘密，逐段读：
+
+- **`lowerdir=1692/fs:113/fs`**——两层**只读**目录（镜像层），冒号隔开，从左往右一层层往下垫；
+- **`upperdir=1693/fs`**——**可写层**，容器里写的所有东西落在这里（[第 14 篇](/云原生/docker/docker-14-data-persistence)讲过：rm 容器丢的就是它）；
+- **`workdir`**——overlay 自己的工作目录，不用管；
+- 联合起来挂到 `/`（`/ / rw` 那段）——容器里 `ls /` 看到的，就是这几层叠出来的结果。
+
+往哪一层里写了什么，`docker history` 从镜像侧看得更清楚（nginx:alpine 为例）：
+
+```bash
+docker history nginx:alpine --format '{{.Size}}\t{{.CreatedBy}}' | head -5
+```
+
+```text
+51.8MB	RUN /bin/sh -c set -x && apkArch="$(cat …
+0B	ENV ACME_VERSION=0.4.1
+0B	ENV ACME_VERSION=0.4.1
+0B	ENV NJS_RELEASE=1
+0B	ENV NJS_VERSION=1.0.0
+```
+
+每条 Dockerfile 指令一层，大小一栏就是这层的体积——`RUN` 装包的层 51.8MB，`ENV`、`CMD` 只是元数据 0B。
+
+这个结构同时解了「机器感」和「轻」的另一半：
+
+- **机器感**：进程被盖上一套自己的根文件系统，看到的就是 alpine/debian 那套目录——视图二到位；
+- **轻的另一半**：层是**只读、可共享**的——十台机器跑同一镜像，base 层磁盘上只存一份；改一行代码只新增一层，不重传整个镜像（[第 9 篇](/云原生/docker/docker-09-dockerfile)的构建缓存就是它在干活）。
+
+（上面 mountinfo 里目录前缀是 `/var/lib/containerd/...` 而不是老教程说的 `/var/lib/docker/overlay2/...`，因为本机启用了 containerd image store，存储驱动是 `overlayfs`——语义完全一样，这是[第 23 篇](/云原生/docker/docker-23-daemon-runtime)的伏笔。）
+
+> 一句话收口：**根文件系统 = 只读镜像层叠罗汉 + 顶上可写层，`mountinfo` 里 lowerdir/upperdir 白纸黑字；分层可共享，是「轻」的另一半。**
+
+---
+
+## 第 7 课：一道限额——视图隔开了，资源还在抢（Cgroups）
+
+**🧑‍🏫 老师：**
+
+三张视图齐了，但只解决「**看见**什么」。还剩一个物理问题：CPU 还是同一颗、内存还是同一块——视图隔离只是「假装看不见对方」，一个内存泄漏的容器照样能把整机拖垮。所以需要第二类约束：**Cgroups，管「能用多少」**。
+
+马上验证限额真的存在、真的写在内核文件里。起一个限了额的容器——半个 CPU、16MB 内存：
+
+```bash
+docker run -d --name tf-lim --cpus 0.5 --memory 16m busybox sleep infinity
+docker inspect tf-lim --format 'NanoCpus={{.HostConfig.NanoCpus}} Memory={{.HostConfig.Memory}}'
+```
+
+```text
+NanoCpus=500000000 Memory=16777216
+```
+
+`--cpus 0.5` 被换算成 5 亿纳秒，16m 换算成字节数。然后去内核的 cgroup 文件系统里找落点——每个容器在 `/sys/fs/cgroup/` 下有自己的目录，`docker run` 的限额参数最终就是写进这里的普通文件：
+
+```bash
+CG=/sys/fs/cgroup/system.slice/docker-f9611c2856cc…8bc8.scope   # tf-lim 的 cgroup 目录
+cat $CG/cpu.max
+cat $CG/memory.max
+```
+
+```text
+50000 100000
+16777216
+```
+
+逐个读：
+
+- `cpu.max = 50000 100000`：每 **100000 微秒**的周期里，最多给这个容器跑 **50000 微秒**——正好一半，`--cpus 0.5` 的真身；
+- `memory.max = 16777216`：16MB 硬顶，超了内核直接 OOM kill。
+
+对照组——没限额的 tf-sleep，同一个文件长这样：
+
+```bash
+cat /sys/fs/cgroup/system.slice/docker-09c5dd7d…380.scope/cpu.max
+```
+
+```text
+max 100000
+```
+
+`max` = 不限。同一种文件、两个值，限额与否一目了然。
+
+两个落点帮你把日常和内核对上：`docker run --cpus` / `-m` 这类参数（[第 16 篇](/云原生/docker/docker-16-compose) Compose 里写 `cpus:`、`mem_limit:` 同理）落点就在这；老资料里的路径多是 cgroup **v1** 布局（本机 `stat -fc %T /sys/fs/cgroup` 输出 `cgroup2fs`，是 **v2**），路径长得不一样，思想不变。超限之后内核怎么掐（OOM、CPU 节流）是[第 21 篇](/云原生/docker/docker-21-cgroups)的主场。
+
+> 一句话收口：**Namespace 管看见什么，Cgroup 管能用多少；`--cpus 0.5` 最终就是 cgroup 目录里 cpu.max 文件里的两个数字。**
+
+---
+
+## 插问 3：只有 Namespace 不限额，会出什么事？
+
+**🧑‍🎓 学生：** 我在想一个组合问题：如果一台机器上的容器只配了 Namespace、没配 Cgroup，会发生什么？反过来只有 Cgroup 呢？
+
+**🧑‍🏫 老师：**
+
+好问题，这两个「半残容器」各有一个典型死法。
+
+**只有 Namespace、没有 Cgroups：** 视图上大家井水不犯河水，但 CPU、内存是**同一颗同一块**。一个容器里写了死循环狂吃 CPU，或内存泄漏——`docker stats` 一看它在宿主机层面吃得欢，其他容器跟着卡顿、整机 OOM。更麻烦的是排查：**限额也是计量**，没有 cgroup 的统计，你连「是谁吃的」都要靠猜。死法：**一个容器拖垮整机，其他人陪葬**。
+
+**只有 Cgroups、没有 Network Namespace（其它同理）：** 资源倒是有边了，但所有容器看**同一张端口表**——A 监听了 80，B 再监听 80 直接 `Address already in use`；还看同一张进程表、同一个根文件系统，隔离基本归零。死法：**限额了个寂寞，容器们在一张桌子上抢端口**。
+
+合起来正好说明这两类约束**正交、缺一不可**：Namespace 划「地盘」（谁看不见谁），Cgroups 分「口粮」（各自能用多少）。Docker 默认两者都配齐——本机跑的每个容器，第 5 课那几张 ns 编号牌和第 7 课那个 cgroup 目录，都是 `docker run` 一起发下来的。
+
+> 一句话收口：**Namespace = 地盘，Cgroups = 口粮；只给地盘会被饿死邻居，只给口粮会同桌抢碗。**
+
+---
+
+## 第 8 课：戏法道具全是内核现成的——Docker 发明了什么
+
+**🧑‍🎓 学生：** 到这里我有点震惊：namespace 是内核的，cgroup 是内核的，overlay 也是内核的——那 Docker 到底发明了什么？
+
+**🧑‍🏫 老师：**
+
+这个震惊值得。把三根支柱列成表，主语一栏看清楚：
+
+| 支柱 | 解决什么 | 谁的 | 诞生时间 |
+|------|----------|------|----------|
+| **Namespaces** | 视图隔离 | Linux 内核 | 2002 年起陆续合入 |
+| **Cgroups** | 资源限额与统计 | Linux 内核 | 2007 年（Google 捐入） |
+| **UnionFS/OverlayFS** | 分层联合挂载 | Linux 内核/文件系统 | overlayfs 2014 年合入 |
+
+这三样在 Docker 出现（2013 年）之前**全都在内核里躺了好几年**。容器技术能在 2013 年后爆发，不是内核突然进化了，而是有人把现成道具**拼成了顺手的产品**。
+
+拼装的历史一句话版本，也是你会在老资料里反复见到的一个公式：
+
+```text
+Docker ≈ LXC + AUFS
+```
+
+拆成三级台阶看：
 
 | 层次 | 组成 | 职责 |
 |------|------|------|
-| **Cgroup** | Linux 内核 | 底层落实 CPU、内存、blkio 等资源管理 |
-| **LXC** | Cgroup + Namespace + Chroot + veth + 脚本 | 用户态容器运行时中间层 |
-| **Docker** | 在 LXC 之上再封装 | 镜像管理、API、CLI、生态 |
+| 内核 | Namespace + Cgroup | 落实地盘与口粮 |
+| **LXC**（用户态工具集） | 内核能力 + chroot + veth + 脚本 | 第一次把道具拼成「拿来能用的容器」 |
+| **Docker** | LXC 之上再封装 | **镜像管理、Registry、CLI/API、可移植性** |
 
-LXC 这一层，可以粗略记成：
+LXC 在 2008 年就把「容器」拼出来了，但用起来是运维专家的玩具。Docker 早期直接借 LXC 起步，真正的贡献是上面那层：**把「一个容器」变成「一份可以在任何机器复现的镜像」**——Dockerfile、分层镜像、Registry 生态。道具是内核的，**让道具人人会用**，才是产品化的那一步。
+
+> 一句话收口：**三根支柱全是内核现成的；Docker 的发明不在隔离技术，而在镜像与生态——把专家工具变成人人能用的产品。**
+
+---
+
+## 第 9 课：第一代配方会老——runtime 演进
+
+**🧑‍🎓 学生：** 「Docker ≈ LXC + AUFS」这个公式今天还成立吗？
+
+**🧑‍🏫 老师：**
+
+当**历史公式**记，它已经全换过了。十几年过去，右边两项都退役：
+
+- **LXC 这一层**被 Docker 自家的运行时栈取代：`containerd`（管理容器生命周期）+ `runc`（真正调 `clone()` 创建进程的那个）。现行架构里没有 LXC 什么事了；
+- **AUFS** 没能进 Linux 主线内核，被 **OverlayFS** 取代——第 6 课 `docker info` 里那个 `overlayfs` 就是它（语义没变：只读层 + 可写层 + 写时复制）。
+
+更宏观的一轮换血发生在 K8s 那边：
 
 ```text
-LXC ≈ Cgroup + Namespace + Chroot + veth + 用户控制脚本
+早期 K8s：kubelet → CRI → docker-shim → Docker Engine → containerd → runc
+现在 K8s：kubelet → CRI → containerd（或 CRI-O）→ runc
 ```
 
-对着前几节读这张表：Cgroup 在内核里落实资源（第 7 节）；LXC 把 Cgroup、Namespace（第 5 节）、Chroot、veth 加上脚本，拼成「拿来就能用的容器」；Docker 在最上面补的，恰恰是第 6 节那块——**镜像管理、API、CLI、生态**。
+Docker 从 K8s 的默认路径里淡出了（2020 年前后，v1.24 移除 dockershim）。但看清楚换了什么：换的全是**上层封装**——谁提供 API、谁来编排。右边垫底的还是那几样：**Namespace + Cgroup + 联合文件系统**，而且被写成了开放标准（**OCI**：镜像格式规范 + 运行时规范），任何实现照着标准来就能互换。
 
-**没有 Cgroup，就没有 LXC；没有 LXC 的隔离思路，Docker 的容器模型也立不住。** 而镜像分层则依赖 UnionFS（早期 AUFS，它后来的下落见文末「历史包袱」）。Chroot 和 veth 各自怎么工作，留在[第 20 篇](/云原生/docker/docker-20-namespace)。
+所以才有那句结论：**容器「是什么」十四年没变——受限进程 + 分层文件系统 + 独立网络栈；变的只是谁来做 API 封装与编排。** 这也是开头那句话到今天依然成立的原因。`dockerd → containerd → shim → runc` 每一级干什么、怎么亲眼看到调用链，是[第 23 篇](/云原生/docker/docker-23-daemon-runtime)的主场。
 
----
-
-## 第 9 节：配方会老，底座不老——runtime 演进与 K8s
-
-「Docker ≈ LXC + AUFS」是 2013 年前后的配方。十几年过去，右边两项都换过了。换个角度，看看 K8s 里的容器运行时演进，你会发现**变的全是上层，底座没动**：
-
-- 早期：`kubelet` → CRI → `docker-shim` → Docker API → `containerd` → `runc`
-- 现在：Docker 已从 K8s 默认路径中淡出，**containerd / CRI-O** 直接对接 OCI 运行时
-- 但无论上层是 Docker 还是 containerd，**底层仍是 Namespace + Cgroup + 联合文件系统 + OCI 镜像规范**
-
-对照着读：公式里的 LXC，后来被 containerd / runc 这套运行时栈取代；AUFS 换成了 OverlayFS；可公式右边那**两类能力**——隔离（Namespace + Cgroup）和分层镜像（UnionFS）——一样没少，只是被写成了 OCI 标准。
-
-所以才有那句结论：**容器「是什么」没有变，变的只是谁来做编排与 API 封装。** 这也是开头那句话到今天仍然成立的原因。`dockerd → containerd → shim → runc` 的完整调用链见[第 23 篇](/云原生/docker/docker-23-daemon-runtime)。
-
-至此，九个词全部解完。
+> 一句话收口：**LXC 换成了 containerd/runc，AUFS 换成了 OverlayFS，上层换了三轮，底座三件套一根没动——还被 OCI 写成了标准。**
 
 ---
 
-## 怎么记：那句话的每个词，在哪一节解开
+## 插问 4：K8s 都不用 Docker 了，我们还在 docker build，矛盾吗？
 
-把开头那句话再摆一遍——「看起来像独立的小机器，实际上只是宿主机上的进程，加上内核级的隔离与限额」——现在每个词都有着落：
+**🧑‍🎓 学生：** 公司里流程是这样的：CI 用 `docker build` 打镜像，推到 Harbor，K8s 拉下来跑。可你刚说 K8s 淡出了 Docker——那我们这套流程是不是迟早要改？
 
-| 那句话里的词 | 在哪一节解开 | 落到哪根支柱 |
-|--------------|--------------|--------------|
-| 「只是宿主机上的进程」（轻的一半） | 第 2 节 | 无——正因为不是 VM |
-| 「像独立的小机器」：进程 / 主机名 / 挂载视图 | 第 5 节 | Namespaces |
-| 「像独立的小机器」：根文件系统 | 第 6 节 | UnionFS |
-| 「像独立的小机器」：网络栈 | 第 5 节（net 行） | Namespaces |
-| 「轻」的另一半：层可复用 | 第 6 节 | UnionFS |
-| 「隔离」 | 第 5 节 | Namespaces |
-| 「限额」 | 第 7 节 | Cgroups |
-| 这套拼法谁先拼的、Docker 加了什么 | 第 8 节 | LXC → Docker 封装 |
-| 今天谁在跑这套底座 | 第 9 节 | containerd / runc / OCI |
+**🧑‍🏫 老师：**
 
----
+不用改，因为「淡出」淡出的是**运行时**那一环，不是镜像。把链路拆开看：
 
-## 历史包袱
-
-- **AUFS**：公式里的 AUFS 后来**未进入 Linux 主线内核**，Linux 上常见 **OverlayFS / Device Mapper** 等替代方案。今天 `docker info` 里的 Storage Driver 多半是 `overlay2`（[第 22 篇](/云原生/docker/docker-22-unionfs)有同款查看命令）；但「只读层 + 可写层 + 写时复制」的语义一直没变。
-- **LXC**：「Docker ≈ LXC + AUFS」要当**历史/教学公式**记——Docker 早期确实借 LXC 起步，后来换成自己的运行时栈（containerd / runc，见第 9 节），现行架构里已经没有 LXC 这一层。
-- **docker-shim**：老教程里 `kubelet → docker-shim → Docker API` 的链路已成历史，K8s 现在由 containerd / CRI-O 直接对接 OCI 运行时（见第 9 节）。
-
----
-
-## 和系列其它篇（学习路线）
-
-本篇是原理阶段的地图：后面四篇各拿走一根支柱做实验，第 23 篇收调用链。
-
-```mermaid
-flowchart LR
-    A[16 技术底座总览] --> B[17 UnionFS 与分层]
-    A --> C[18 Namespace 隔离]
-    C --> D[19 进程视角]
-    A --> E[20 CGroups 限资源]
-    B --> F[21 Daemon 与 runtime]
-    D --> F
-    E --> F
+```text
+构建侧：docker build → 产出镜像（OCI 格式）→ push Harbor
+运行侧：kubelet → containerd → runc → 拉同一份镜像跑
 ```
 
-| 相关篇 | 在这一路上出现的位置 |
-|--------|----------------------|
-| [第 2 篇](/云原生/docker/docker-02-container-vs-vm) 容器 vs 虚拟机 | 第 1、2 节：VM 的账、共享内核 vs 虚拟化硬件 |
-| [第 5 篇](/云原生/docker/docker-05-container-and-image) 容器与镜像 | 第 6 节：镜像=类、容器=实例、可写层 |
-| [第 7 篇](/云原生/docker/docker-07-enter-container) 进入容器四法 | 第 5 节：进视图的手段（exec / attach / nsenter） |
-| [第 15 篇](/云原生/docker/docker-15-network) 网络模式 | 第 5 节：net 视图的 bridge / veth / 端口映射 |
-| [第 16 篇](/云原生/docker/docker-16-compose) Compose | 第 7 节：`NanoCpus` 落到 cgroup |
-| [第 22 篇](/云原生/docker/docker-22-unionfs) UnionFS、AUFS、镜像分层与 build 缓存 | 第 6 节：下一篇，填满视图二 |
-| [第 20 篇](/云原生/docker/docker-20-namespace) 进程/网络隔离、Libnetwork、Chroot | 第 5 节：填满视图一 |
-| [第 24 篇](/云原生/docker/docker-24-process-view) 容器内外 PID 对照 | 第 2、5、7 节：进程本质的证据 |
-| [第 21 篇](/云原生/docker/docker-21-cgroups) Cgroups 子系统与资源限制实操 | 第 7 节：填满限额 |
-| [第 23 篇](/云原生/docker/docker-23-daemon-runtime) Daemon 与 runtime | 第 9 节：调用链收尾 |
+关键在中间那份「合同」：**OCI 镜像规范**。Docker 构建出的镜像（准确说是 buildkit 构建的）就是 OCI 格式，containerd、CRI-O 全都按同一份规范解析。K8s 抛弃的是 dockershim 那段**多余的转发**——kubelet 本来要经由 Docker Engine 再到 containerd，两头 API 还要翻译；现在直连 containerd，链路短了，但**拉的还是同一个镜像仓库、同一份镜像**。
+
+所以你们的流程完全健康：`docker build` 在构建侧只是「一个生产 OCI 镜像的工具」，将来真想换，`podman build`、`buildah`、`nerdctl build` 产出的镜像直接通用。工具可换，**镜像格式是合同**——这正是 OCI 标准存在的意义。
+
+> 一句话收口：**K8s 淡出的是 Docker 运行时，不是 Docker 镜像；OCI 是合同，构建工具随便换，产物谁都能跑。**
 
 ---
 
 ## 小结
 
-把开头那句话重读一遍，这次每个词都有出处：
+把开头那句话最后摆一遍——这次每个词都有出处、有实验：
 
-> **看起来像独立的小机器**（第 5、6 节：三张视图）**，实际上只是宿主机上的进程**（第 2 节：不是 VM）**，加上内核级的隔离**（第 5 节 Namespaces）**与限额**（第 7 节 Cgroups）。
-
-按节收账：
-
-1. **第 1 节**：VM 太重、裸进程太裸；第三条路要「隔离得像机器，又轻得像进程」。  
-2. **第 2 节**：容器共享宿主机内核，是进程不是小 VM——「轻」的前一半。  
-3. **第 3 节**：一句话定义拆出三张视图 + 一道限额；机器感是视图，不是硬件。  
-4. **第 4 节**：三根支柱全是 Linux 内核现成能力，Docker 做的是封装与生态。  
-5. **第 5 节**：Namespaces 管「看得见什么」，六类常用命名空间，A 看不到 B。  
-6. **第 6 节**：UnionFS 管「根文件系统哪来」，只读层 + 可写层，也解了「轻」的后一半。  
-7. **第 7 节**：Cgroups 管「能用多少」，限额写进 `/sys/fs/cgroup/...` 下的文件。  
-8. **第 8 节**：Docker ≈ LXC + AUFS——Cgroup 内核落地，LXC 拼装，Docker 加镜像与生态。  
-9. **第 9 节**：LXC 换成 containerd / runc、AUFS 换成 OverlayFS，底座三件套没变。
+> **看起来像独立的小机器**（第 5、6 课：三张视图，ns 编号牌 + overlay mountinfo 眼见为实）**，实际上只是宿主机上的进程**（第 2 课：宿主机 ps 里那一行）**，共享同一个内核**（第 3 课：uname -r 一致）**，加上内核级的隔离**（第 5 课 Namespaces）**与限额**（第 7 课：cpu.max 里的 50000 100000）。
 
 一个词一句话（速查版）：
 
 | 概念 | 一句话 |
 |------|--------|
-| **Namespaces** | 隔离进程、网络、挂载等视图 |
-| **Cgroups** | 限制 CPU、内存、I/O 等物理资源 |
-| **UnionFS** | 多层目录联合，支撑镜像分层 |
-| **容器本质** | 受限进程 + 独立文件系统/网络视图 |
-| **Docker ≈ LXC + AUFS** | 资源管理 + 镜像管理的经典概括 |
+| **Namespaces** | 每进程一副眼镜：进程表、网卡、主机名、挂载点各看各的 |
+| **Cgroups** | 每进程一道口粮：CPU/内存上限写在 `/sys/fs/cgroup` 的文件里 |
+| **UnionFS/OverlayFS** | 只读层叠罗汉 + 可写层，根文件系统和镜像共享都靠它 |
+| **容器本质** | 受限进程 + 独立文件系统/网络视图，不是虚拟化硬件 |
+| **Docker ≈ LXC + AUFS** | 历史公式：内核道具是现成的，Docker 发明的是镜像与生态 |
+| **OCI** | 镜像与运行时的开放合同，上层随便换、底座不变 |
 
-**思考题**：若只启用 Namespace 而不配置 Cgroup，容器之间可能出现什么问题？若只配置 Cgroup 而不启用 Network Namespace 呢？（提示：分别回想第 5 节的「看不见 ≠ 不存在」和第 7 节的「限额管不了端口」。）欢迎在评论区写下你的分析。
+**思考题**：第 5 课的 namespace 编号牌里，两个容器的 `net:[...]` 编号不同、但都桥接到同一个 `docker0`——「网络视图隔离」和「网络能互通」矛盾吗？（提示：[第 15 篇](/云原生/docker/docker-15-network)的 veth 一头在容器、一头在桥上。）
 
-下一篇：[第 22 篇《UnionFS 与镜像分层》](/云原生/docker/docker-22-unionfs)——用 AUFS 的 `company/home` 实验理解联合挂载，再对照 Dockerfile 的 `build` 输出，看清 Layer 如何堆叠、缓存如何复用。
+下一篇：[《Namespace 隔离——从一个容器里的怪现象滚穿六大命名空间》](/云原生/docker/docker-20-namespace)——拿起本篇的第一根支柱，亲手用 `clone()` 造一个迷你容器。
+
+---
+
+## 学习路线：本篇在原理阶段的位置
+
+本篇是原理阶段的地图，后面四篇各拿走一根支柱做实验，第 23 篇收调用链：
+
+```mermaid
+flowchart LR
+    A[19 技术底座总览<br>本篇] --> B[20 Namespace]
+    A --> C[21 Cgroups]
+    A --> D[22 UnionFS]
+    B --> E[23 Daemon 与 runtime]
+    C --> E
+    D --> E
+    B --> F[24 进程视角]
+```
+
+| 相关篇 | 在这一路上出现的位置 |
+|--------|----------------------|
+| [第 2 篇](/云原生/docker/docker-02-container-vs-vm) 容器 vs 虚拟机 | 第 1、2 课：VM 的账、共享内核 vs 虚拟化硬件 |
+| [第 9 篇](/云原生/docker/docker-09-dockerfile) Dockerfile | 第 6 课：一条指令一层、构建缓存 |
+| [第 14 篇](/云原生/docker/docker-14-data-persistence) 数据持久化 | 第 6 课：可写层随容器生灭 |
+| [第 15 篇](/云原生/docker/docker-15-network) 网络 | 第 5 课：net 视图的 bridge / veth |
+| [第 20 篇](/云原生/docker/docker-20-namespace) Namespace 深入 | 第 5 课：填满视图一/三 |
+| [第 21 篇](/云原生/docker/docker-21-cgroups) Cgroups 深入 | 第 7 课：填满限额 |
+| [第 22 篇](/云原生/docker/docker-22-unionfs) UnionFS 深入 | 第 6 课：填满视图二 |
+| [第 23 篇](/云原生/docker/docker-23-daemon-runtime) Daemon 与 runtime | 第 9 课：调用链收尾 |
+| [第 24 篇](/云原生/docker/docker-24-process-view) 进程视角 | 第 2 课：两套 PID 对照 |
+
+---
+
+## 历史包袱
+
+- **AUFS**：未进 Linux 主线，被 OverlayFS 取代；「只读层 + 可写层 + 写时复制」语义未变。老教程里的 `/var/lib/docker/overlay2/` 路径，在 containerd image store 下变成 `/var/lib/containerd/.../snapshots/`（本篇第 6 课实测）。
+- **LXC**：Docker 早期借它起步，后换自研运行时栈（containerd/runc），现行架构里没有这一层。公式当历史/教学记。
+- **docker-shim**：`kubelet → docker-shim → Docker API` 链路已废弃（K8s v1.24 移除），现为 containerd/CRI-O 直连。
+
+---
+
+## 本篇实验清理（可照抄）
+
+```bash
+docker rm -f tf-sleep tf-a tf-b tf-lim
+```
 
 ---
 
@@ -331,4 +578,4 @@ flowchart LR
 - [What is a container?](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/)
 - [namespaces(7) — Linux manual page](https://man7.org/linux/man-pages/man7/namespaces.7.html)
 - [Control Groups v2 — Linux kernel docs](https://docs.kernel.org/admin-guide/cgroup-v2.html)
-- 本篇为概念综述，无本机实验输出；每个论断的实验验证分散在第 17～21 篇（系列实验环境：Docker 29.1.x）
+- 本机：WSL2 Ubuntu-22.04 + Docker Engine 29.1.3（cgroup v2、containerd image store）

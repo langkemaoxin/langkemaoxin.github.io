@@ -1,15 +1,17 @@
 ---
-title: 数据持久化——从容器一删库没了，滚到三种挂载
+title: 数据持久化——从容器一删数据就没，滚到三种挂载（师生对话实录）
 sidebarGroup: Docker 系列
 shortTitle: 14 数据持久化
 order: 14
-date: 2026-08-24T00:00:00.000Z
+date: 2026-08-25T00:00:00.000Z
 category: 云原生
 tag:
   - Docker
   - 云原生
   - Docker系列
-description: 从 MySQL 容器一删库没了开始，每次只加一种挂载：命名卷、bind、tmpfs、匿名卷与备份，像滚雪球一样看清数据凭什么还在。
+  - 数据持久化
+  - 对话实录
+description: 师生对话实录课：0 基础学生与教学大师的 Docker 数据持久化控制台逐字稿，从「容器一删数据就没」一路问到命名卷、bind、tmpfs、匿名卷与备份，实验全部 WSL 实机真跑。
 ---
 
 > **Docker 系列 · 第 14/33 篇**
@@ -17,43 +19,116 @@ description: 从 MySQL 容器一删库没了开始，每次只加一种挂载：
 
 ---
 
-## 开头：MySQL 容器一删，库没了
+## 写在前面
 
-你用容器跑了个 MySQL，测试数据灌了两周。某天升级镜像：`docker rm` 旧容器、`docker run` 新容器——**库没了，两周白干**。
+Docker 系列学到第 14 篇，容器命令、自制镜像都熟了，但有个问题一直没敢细想：我在容器里跑了个 MySQL，测试数据灌了两周。某天要升级镜像版本，按套路 `docker rm` 旧容器、`docker run` 新容器——**库没了，两周白干**。
 
-根因就一句：容器文件系统 = **只读镜像层 + 一层可写层**（[第 5 篇](/云原生/docker/docker-05-container-and-image/)）。可写层属于这个容器，容器一删，写在里面的数据就没了。要让数据活得比容器久，得把「数据所在的那条路径」挂到容器外面去。
+容器不是挺好用的吗，怎么数据说没就没？「把数据存到容器外面」这句话到处都能搜到，可 Volume、bind mount、tmpfs 这些名词我始终分不清谁是谁。
 
-本篇不先背 Volume / Bind / tmpfs 名词表。实验始终用 **busybox + `/data`** 当「库」的替身（镜像小、命令短），**同一份笔记一路长大**：
+所以继续用上一个办法：**让 AI 当老师，我当学生，每课只讲一个概念，我有问题就打断，没问题就继续**。这场对话从「容器里写的文件到底放在哪」开始，一路问到三种挂载各自的脾气、匿名卷怎么悄悄堆满磁盘、以及数据库的卷到底该怎么备份。
 
-| 雪球 | 你加上去的 | 当场能看见的效果 |
-|------|------------|------------------|
-| **1** | `-v mydata:/data` 命名卷 | 容器 `--rm` 没了，新容器里 `note.txt` 还在 |
-| **2** | `volume inspect` | 真身在 `/var/lib/docker/volumes/mydata/_data` |
-| **3** | bind 宿主目录 | 宿主机改文件，容器不重启就读到新行 |
-| **4** | `:ro` | 容器内写被 `Read-only file system` 拦住 |
-| **5** | `--tmpfs /scratch` | 写得进，容器一停就没了；`df` 能看到上限 |
-| **6** | 只写 `-v /data`（匿名卷） | `--rm` 带走；`rm` 不带 `-v` 变悬空；`prune` 只删匿名 |
-| **7** | 临时容器 + `tar` | 新卷里再 `cat` 出 `persist-me` |
-| **8** 🧗 | 空卷垫底、子路径、Image Mount、NFS 驱动 | 借工具、跨主机，不是主线三种挂载 |
+课程路线图（走到哪算哪）：
 
-第一次读只走 **1～7**。带 🧗 的用到再回头。
+> ① 容器里写的文件去哪了 → ② 命名卷：数据活得比容器久 → ③ 打开卷看真身 → ④ bind：宿主机和容器同一份文件 → ⑤ 只读与严格模式 → ⑥ 挂上去 = 盖住 → ⑦ tmpfs：不想落盘的数据 → ⑧ 匿名卷与 prune → ⑨ 备份与迁移 → ⑩ 进阶：借工具与换后端
 
-输出均来自本机：WSL2 Ubuntu-22.04 + 原生 Docker Engine **29.1.3**。官方：[Storage](https://docs.docker.com/engine/storage/)、[Volumes](https://docs.docker.com/engine/storage/volumes/)、[Bind mounts](https://docs.docker.com/engine/storage/bind-mounts/)、[tmpfs](https://docs.docker.com/engine/storage/tmpfs/)、[Image mounts](https://docs.docker.com/engine/storage/image-mounts/)。
-
-Linux 里「挂载是把一块东西盖到某条路径上」的内核版，见 [《bind mount 实操》](/Linux/basics/linux-06-bind-mount)。
+环境：WSL2 Ubuntu-22.04（root）+ Docker Engine 29.1.3。为了实验轻快，全程用 busybox + `/data` 里的一个 `note.txt` 当「数据库」的替身——镜像小、命令短，道理和数据完全一样。官方入口：[Storage](https://docs.docker.com/engine/storage/)。
 
 ---
 
-## 雪球 1：命名卷——容器没了，笔记还在
+## 第 1 课：容器里写的文件，第二天怎么没了
 
-这就是开头 MySQL 故事的解法。`--rm` 表示容器退出即删除——专门用来证明「容器没了，数据还在」。
+**🧑‍🏫 老师：**
+
+先把你丢数据的事故复现一遍，看清楚它到底是怎么丢的。
+
+起一个容器，往 `/tmp` 写一个文件：
+
+```bash
+docker run --name no-vol-demo busybox sh -c 'echo written-in-container > /tmp/note.txt && cat /tmp/note.txt'
+```
+
+```text
+written-in-container
+```
+
+文件写进去了，当场能读。现在删掉这个容器，再起一个全新的，去找同一个文件：
+
+```bash
+docker rm no-vol-demo
+docker run --rm busybox cat /tmp/note.txt
+```
+
+```text
+no-vol-demo
+cat: can't open '/tmp/note.txt': No such file or directory
+```
+
+没了。注意这两步里镜像都是同一个 busybox，变的只有容器。
+
+要解释这件事，得回到你在[第 5 篇](/云原生/docker/docker-05-container-and-image)学过的分层。容器的文件系统是两层叠出来的：
+
+```text
+┌─ 容器 ─────────────────────────────┐
+│  可写层（容器自己的、薄的）        │ ← 你 echo 进去的 note.txt 在这
+│────────────────────────────────────│
+│  只读镜像层（busybox 自带）         │ ← rm 容器不影响它
+└────────────────────────────────────┘
+```
+
+镜像层是只读的，谁都不许改。容器里写文件，实际落在**可写层**——这一层不属于镜像，属于**这个容器**。`docker rm` 删的就是容器，可写层跟着一起被删，写在里面的东西自然就没了。
+
+一句话总结本课：
+
+> **容器文件系统 = 只读镜像层 + 可写层；可写层随容器生灭。想让数据活得比容器久，就得在写的时候让它落到容器外面去。**
+
+接下来几课讲的就是「怎么落出去」。先讲最主流的一种：卷。
+
+---
+
+## 插问 1：镜像里的文件和我写的文件，到底什么关系？
+
+**🧑‍🎓 学生：** 你说镜像层只读、可写层是容器的——那我在容器里改一个镜像自带的文件，比如改 busybox 里的 `/etc/motd`，改的是镜像吗？会不会把镜像改坏？
+
+**🧑‍🏫 老师：**
+
+不会，镜像永远改不坏。这里有个机制叫**写时复制**（copy-on-write）：你第一次要改镜像层的某个文件时，Docker 先把它从镜像层复制一份到可写层，然后在副本上改。之后你再读这个路径，看到的都是可写层里那份副本，镜像里的原件被「盖」在下头，原封不动。
+
+所以同一个路径在容器里有两个身份：
+
+- 只**读**它 → 读到的是镜像层原件（还没被改过时）；
+- 一**写**它 → 触发复制，从此这个文件在可写层里有了自己的副本。
+
+验证只要一条命令：起两个容器，一个改 `/etc/motd`，另一个再去看——
+
+```bash
+docker run --rm busybox sh -c 'echo CHANGED > /etc/motd'
+docker run --rm busybox cat /etc/motd
+```
+
+第二个容器看到的还是原来的内容，因为第一个容器改的那份在它自己的可写层里，随它一起消失了。
+
+这也顺手解释了你的 MySQL 事故：数据库写入的是 `/var/lib/mysql`，路径在容器文件系统里，写的每一笔都落在可写层。`docker rm` 一执行，两周的数据跟着可写层一起被删。
+
+> 一句话收口：**写镜像里的文件 = 写时复制到可写层；镜像永远只读，可写层永远随容器生灭。**
+
+---
+
+## 第 2 课：命名卷——第一次让数据活得比容器久
+
+**🧑‍🏫 老师：**
+
+思路现在很直白：数据不能放可写层，那就换一个地方放。Docker 里这个地方叫**卷**（volume），由 Docker 统一保管，跟容器是分开的两样东西。
+
+先建一个卷，再让容器把 `/data` 指到这个卷上：
 
 ```bash
 docker volume create mydata
-docker run --rm -v mydata:/data busybox sh -c 'echo "persist-me" > /data/note.txt'
+docker run --rm -v mydata:/data busybox sh -c 'echo persist-me > /data/note.txt'
 ```
 
-一个全新容器挂上**同一个卷名**：
+`-v mydata:/data` 读作「把名为 mydata 的卷，挂到容器内的 `/data`」。冒号前是卷名，冒号后是容器内的路径。这条跑完容器就退出了（`--rm` 连容器都删了）。
+
+见证时刻——起一个全新容器，挂上**同一个卷**，去读：
 
 ```bash
 docker run --rm -v mydata:/data busybox cat /data/note.txt
@@ -63,43 +138,63 @@ docker run --rm -v mydata:/data busybox cat /data/note.txt
 persist-me
 ```
 
-容器是新的、镜像层是全新的，但 `note.txt` 还在——**数据跟着卷走，不跟着容器走**。MySQL 同理：`-v mysql-data:/var/lib/mysql`，之后随便删容器、换镜像版本，数据不动。
+还在。容器是新的、可写层是全新的，但 `note.txt` 活得好好的——因为上一容器写的时候，这个路径底下垫着的不是可写层，而是卷。
 
-`-v mydata:/data` 里第一段没有 `/`，Docker 认成**卷名**。脚本里引用一个还不存在的命名卷，`-v` 会静默创建：
-
-```bash
-docker run --rm -v autodata:/data busybox echo 'auto-created ok'
-docker volume ls | grep autodata
-```
-
-```text
-auto-created ok
-local     autodata
-```
-
-卷就这样被悄悄造出来了。拼错卷名时，应用会「看起来正常地」对着空卷丢数据。严格写法 `--mount` 放到雪球 3 和 bind 一起对照。
-
-现在回头看刚才发生的事，挂载才有着落：
+图钉成这样：
 
 ```text
 ┌─ 容器（会被 rm）──────────────────────┐
-│  只读镜像层                            │
-│  可写层  ← 不挂的话，笔记写在这里      │
-│  /data   ← 盖上之后，读写都落在卷上    │
+│  /data   ← 挂上之后，读写都落在卷上    │
 └──────────────┬─────────────────────────┘
-               │ 挂载点替换
-┌─ 宿主机（不受 rm 影响）─┴──────────────┐
-│  命名卷 mydata（Docker 保管）          │
-└────────────────────────────────────────┘
+               │
+┌─ Docker 保管（不受 rm 影响）─┴──────────┐
+│  命名卷 mydata                          │
+└─────────────────────────────────────────┘
 ```
 
-官方建议先记一句：**存数据用 Volume**。共享/开发文件、不想留在磁盘上的临时数据，后面几球再加。
+回到 MySQL：`-v mysql-data:/var/lib/mysql`，之后随便删容器、换镜像版本，数据不动。这就是解法。
+
+> 一句话收口：**命名卷 = Docker 替你保管的一块目录，容器生灭与它无关；`-v 卷名:容器路径` 把这块目录垫到路径下。**
 
 ---
 
-## 雪球 2：打开卷，看数据躺在哪
+## 插问 2：不先 `volume create`，直接 `-v` 行不行？
 
-**只多一条** `inspect`，还是那份 `note.txt`：
+**🧑‍🎓 学生：** 你刚才先跑了 `docker volume create mydata`，再 `-v mydata:/data`。我懒得记两步，直接 `-v` 一个没建过的卷名，会报错吗？
+
+**🧑‍🏫 老师：**
+
+不报错，而且这正是要小心的地方。`-v` 遇到不存在的卷名会**静默创建**：
+
+```bash
+docker run --rm -v autodata:/data busybox echo auto-created-ok
+docker volume ls | grep -E "autodata|mydata"
+```
+
+```text
+auto-created-ok
+local     autodata
+local     mydata
+```
+
+卷悄悄就被造出来了。方便是方便，但埋着一个坑：**卷名打错一个字母，Docker 不会提醒你**，它直接给你建个新的空卷，应用「看起来正常地」对着一个空库跑起来了。等你发现数据不对，可能已经写进去不少了。
+
+所以生产上的习惯是两个：
+
+- 脚本里显式 `docker volume create` 先建，再挂——卷的存在与否一目了然；
+- 或者用后面第 5 课讲的 `--mount` 严格写法，它对「不存在」的态度不一样。
+
+> 一句话收口：**`-v` 挂不存在的卷名会静默新建；拼错卷名不报错，是最常见的「数据好像丢了」现场。**
+
+---
+
+## 第 3 课：打开卷，看数据躺在哪
+
+**🧑‍🎓 学生：** 数据现在「在卷里」——可卷是什么？是内存？是云上的某个东西？我能不能亲眼看到那个 `note.txt` 现在存在哪？
+
+**🧑‍🏫 老师：**
+
+能看，一条 `inspect` 就把卷的底细翻出来：
 
 ```bash
 docker volume inspect mydata
@@ -108,7 +203,7 @@ docker volume inspect mydata
 ```text
 [
     {
-        "CreatedAt": "2026-08-14T13:14:01Z",
+        "CreatedAt": "2026-08-25T14:46:55+08:00",
         "Driver": "local",
         "Labels": null,
         "Mountpoint": "/var/lib/docker/volumes/mydata/_data",
@@ -119,39 +214,45 @@ docker volume inspect mydata
 ]
 ```
 
-`Mountpoint` 就是真身：`/var/lib/docker/volumes/<卷名>/_data`。再写一次并在宿主机直接读，对上同一份文件：
+盯住 `Mountpoint`：`/var/lib/docker/volumes/mydata/_data`。卷不是什么神秘空间，就是宿主机文件系统里的**一个普通目录**，由 Docker 起名、Docker 管理。
+
+验证同一份文件——容器里再补一行，宿主机直接去这个目录读：
 
 ```bash
-docker run --rm -v mydata:/data busybox sh -c 'echo "persist-me" > /data/note.txt && cat /data/note.txt'
+docker run --rm -v mydata:/data busybox sh -c 'echo second-line >> /data/note.txt'
 ls -l /var/lib/docker/volumes/mydata/_data/
 cat /var/lib/docker/volumes/mydata/_data/note.txt
 ```
 
 ```text
+total 4
+-rw-r--r-- 1 root root 23 Aug 25 14:47 note.txt
 persist-me
--rw-r--r-- 1 root root 11 Aug 14 21:14 note.txt
-persist-me
+second-line
 ```
 
-> ⚠️ 官方口径（Storage 总览，2026-07）：卷目录虽然在宿主机上、root 也确实读得到——上面就是这么演示的——但**直接访问/操作卷数据属于 unsupported、未定义行为**，可能把卷弄坏。本文这样演示是为了看清原理；生产里的正确姿势是雪球 7「挂进容器再 tar」。
+两行都在。所谓「挂载」，就是把这个宿主目录**盖**在容器内 `/data` 这条路径上：容器里对 `/data` 的读写，实际落在右边这个目录。
 
-`Driver: local` = 数据在本机这棵目录树里。换驱动落到 NFS/云盘，是雪球 8。
+不过这里必须马上泼一盆冷水。官方文档（Storage 总览）的原话是：直接访问或操作卷里的数据属于 **unsupported、未定义行为**，可能把卷或数据弄坏。上面这样直接 `cat`，是为了看清原理；生产里备份卷有专门的姿势，第 9 课讲。另外 `Driver: local` 表示数据落在本机磁盘——这个驱动还能换成 NFS、云盘，那是第 10 课的事。
+
+> 一句话收口：**卷 = `/var/lib/docker/volumes/<卷名>/_data` 这个 Docker 管的宿主目录；看得见，但生产里别直接伸手。**
 
 ---
 
-## 雪球 3：bind——宿主机改一行，容器立刻读到
+## 第 4 课：bind——宿主机和容器同一份文件
 
-命名卷把「数据存哪」交给 Docker，真身在 `_data` 深处。下面两个需求它反而不顺手：
+**🧑‍🏫 老师：**
 
-- **开发热更新**：改宿主机源码，容器不必重建镜像
-- **路径必须由我定**：配置、构建产物要落在工程目录，不能是哈希目录
+卷把「数据存哪」交给 Docker 保管，真身在 `_data` 深处，路径是哈希式的。但有两个很常见的需求它不顺手：
 
-`-v` 的第一段换成**以 `/` 开头的绝对路径**，Docker 就认成 bind。实验室目录：`/root/bind-demo`。
+- 开发时改宿主机上的源码，希望容器里**立刻**看到，不想重新构建镜像；
+- 配置文件、构建产物必须落在**我自己指定的路径**，比如工程目录里，不能藏到 Docker 的目录里去。
+
+这种时候用第二种挂载：**bind**。写法跟卷只差一点——`-v` 的第一段从「卷名」换成**以 `/` 开头的宿主机绝对路径**：
 
 ```bash
 mkdir -p /root/bind-demo
-echo 'host-file-content' > /root/bind-demo/host.txt
-
+echo host-file-content > /root/bind-demo/host.txt
 docker run --rm -v /root/bind-demo:/src busybox cat /src/host.txt
 ```
 
@@ -159,7 +260,7 @@ docker run --rm -v /root/bind-demo:/src busybox cat /src/host.txt
 host-file-content
 ```
 
-反过来，容器内写入也会落到宿主机：
+反过来，容器里写，宿主机上也能看到：
 
 ```bash
 docker run --rm -v /root/bind-demo:/src busybox sh -c 'echo data-by-container > /src/from-container.txt'
@@ -169,31 +270,19 @@ cat /root/bind-demo/from-container.txt
 
 ```text
 total 8
--rw-r--r-- 1 root root 18 Aug 17 20:19 from-container.txt
--rw-r--r-- 1 root root 18 Aug 17 20:19 host.txt
+-rw-r--r-- 1 root root 18 Aug 25 14:49 from-container.txt
+-rw-r--r-- 1 root root 18 Aug 25 14:48 host.txt
 data-by-container
 ```
 
-属主是 `root:root`——容器内默认 root 干活，落到宿主机也是 root。所谓「双向实时」，本质是**两边操作的是同一份磁盘文件**，不存在复制、也不存在延迟。
+两份文件躺在同一个目录里。注意 `from-container.txt` 的属主是 `root:root`——容器里默认 root 干活，写出来的东西落到宿主机也是 root 的，这个细节在多用户机器上偶尔会咬人。
 
-单文件也能挂（官方例子：把宿主机 `/etc/resolv.conf` 挂进每个容器做 DNS）：
-
-```bash
-echo 'nameserver 8.8.8.8' > /root/single.conf
-docker run --rm -v /root/single.conf:/etc/resolv.conf busybox cat /etc/resolv.conf
-rm /root/single.conf
-```
-
-```text
-nameserver 8.8.8.8
-```
-
-热更新：起一个**长驻**容器，宿主机改文件，不重启再看：
+再验「立刻看到」。起一个**长驻**容器，宿主机上追加一行，不重启容器，再进去读：
 
 ```bash
 docker run -d --name bind-live -v /root/bind-demo:/src busybox sleep infinity
 docker exec bind-live cat /src/host.txt
-echo 'hot-update-line' >> /root/bind-demo/host.txt
+echo hot-update-line >> /root/bind-demo/host.txt
 docker exec bind-live cat /src/host.txt
 docker rm -f bind-live
 ```
@@ -204,26 +293,54 @@ host-file-content
 hot-update-line
 ```
 
-容器**没重启**，第二次 `exec` 就读到了新行。把 `/root/bind-demo` 换成工程目录，就是本地开发的日常。[第 16 篇](/云原生/docker/docker-16-compose) 会写成 `./html:/usr/share/nginx/html`，这里会这一条 `-v` 就够了。
+容器没重启，第二次 `exec` 就读到了新行。所谓「双向实时」其实没有任何魔法：两边操作的是**同一份磁盘文件**，不存在复制，也就不存在延迟。这就是本地开发挂源码目录的原理，[第 16 篇](/云原生/docker/docker-16-compose)里它会写成 `./html:/usr/share/nginx/html`。
 
-`--mount` 是严格模式：源路径不存在，立刻失败，不会偷偷建目录：
+顺带说一句，bind 不只能挂目录，单个文件也能挂——官方文档举的例子就是把宿主机的 `/etc/resolv.conf` 挂进容器管 DNS：
 
 ```bash
-docker run --rm --mount type=bind,source=/root/no-such-dir,target=/src busybox echo hi
+echo 'nameserver 8.8.8.8' > /root/single.conf
+docker run --rm -v /root/single.conf:/etc/resolv.conf busybox cat /etc/resolv.conf
 ```
 
 ```text
-docker: Error response from daemon: invalid mount config for type "bind":
-bind source path does not exist: /root/no-such-dir
+nameserver 8.8.8.8
 ```
 
-> 🔑 脚本里推荐 `--mount`：拼错立刻报错。`-v` 打错路径会怎样，下一球对照。
+> 一句话收口：**bind = 把宿主机的一个路径原样盖进容器，两边同一份文件；开发热更新和「路径我说了算」用它在行。**
 
 ---
 
-## 雪球 4：只读，以及 bind 会盖住、会静默建目录
+## 插问 3：卷和 bind 都是「放到容器外面」，什么时候用哪个？
 
-共享配置给容器，但明确它不许改——加 `:ro`：
+**🧑‍🎓 学生：** 我看卷和 bind 好像干的是同一件事——都是把数据放到容器外面。那到底怎么选？
+
+**🧑‍🏫 老师：**
+
+判断标准就一条：**这块数据的「家」应该由谁定。**
+
+- 数据的家由 **Docker 定**（它起名、它管理、你只引用名字）→ 用卷。数据库的数据目录是典型：你不关心文件具体落在哪，只关心它别丢、别被随手改坏。
+- 数据的家由 **你定**（就是宿主机上某个具体路径）→ 用 bind。源码、配置文件是典型：它们本来就在工程目录里，进 Git、被编辑器打开，你不可能把它们搬进 `/var/lib/docker/volumes/` 的某个哈希目录。
+
+还有几条实际差别，列表对着记：
+
+| | 命名卷 | bind |
+|---|---|---|
+| 源由谁定 | Docker，路径带哈希 | 你，绝对路径 |
+| 换台机器 | 卷名照用，Docker 搬家 | 路径必须一模一样，否则对不上 |
+| 首次挂到非空路径 | 镜像内容先拷进卷（第 6 课看） | 宿主目录直接盖上去 |
+| 适合 | 数据库、中间件数据 | 源码热更新、共享配置 |
+
+官方的建议也简单：**存数据，优先卷**。bind 强耦合宿主机路径，把它留在开发机和配置分发这两个场景里。
+
+> 一句话收口：**数据的家 Docker 定 → 卷；的家你定 → bind；存数据优先卷。**
+
+---
+
+## 第 5 课：只读挂载，以及 `-v` 的一个静默坑
+
+**🧑‍🏫 老师：**
+
+挂配置文件给容器时经常有一个要求：容器只许读，不许改。加一个 `:ro` 就行：
 
 ```bash
 docker run --rm -v /root/bind-demo:/src:ro busybox sh -c 'echo x > /src/new.txt'
@@ -233,14 +350,12 @@ docker run --rm -v /root/bind-demo:/src:ro busybox sh -c 'echo x > /src/new.txt'
 sh: line 0: can't create /src/new.txt: Read-only file system
 ```
 
-拒绝发生在**内核文件系统层**（`EROFS`），不是 Docker 模拟的，容器内进程绕不过去。读不受影响。
+注意这个报错的名字：`Read-only file system`。拒绝发生在**内核的文件系统层**，不是 Docker 在用户态模拟的——容器里的进程无论怎么绕，都绕不过内核的这道拒绝。读完全不受影响。[第 17 篇](/云原生/docker/docker-17-https-nginx)里给 nginx 挂私钥时用的就是这个：就算容器被打穿，攻击者也改不了、偷不走钥匙。
 
-两种挂载都见过了，看这容器挂了什么：
+一个容器可以同时挂好几种东西，怎么看它到底挂了什么？`inspect` 里的 `Mounts` 字段是总账：
 
 ```bash
-mkdir -p /root/bind-demo
-docker run -d --name lab-mount-demo -v mydata:/data -v /root/bind-demo:/src:ro \
-    busybox sleep infinity
+docker run -d --name lab-mount-demo -v mydata:/data -v /root/bind-demo:/src:ro busybox sleep infinity
 docker inspect --format '{{json .Mounts}}' lab-mount-demo
 ```
 
@@ -248,21 +363,83 @@ docker inspect --format '{{json .Mounts}}' lab-mount-demo
 [{"Type":"volume","Name":"mydata","Source":"/var/lib/docker/volumes/mydata/_data","Destination":"/data","Driver":"local","Mode":"z","RW":true,"Propagation":""},{"Type":"bind","Source":"/root/bind-demo","Destination":"/src","Mode":"ro","RW":false,"Propagation":"rprivate"}]
 ```
 
-| 字段 | 卷那条 | bind 那条 |
-|------|--------|-----------|
-| `Type` | `volume` | `bind` |
-| `Name` / `Source` | 卷名 `mydata`；真身在 `_data` | 没有卷名，`Source` 就是宿主目录 |
-| `RW` | `true` | `false`——`:ro` 的铁证 |
+两条记录并排读：
 
-删卷前必查谁在用：`docker ps --filter volume=mydata`。本机：`lab-mount-demo`。演示完 `docker rm -f lab-mount-demo`。
+| 字段 | 第一条 | 第二条 |
+|------|--------|--------|
+| `Type` | `volume`（卷） | `bind`（bind 挂载） |
+| `Source` | 卷的真身目录 | 你指定的宿主路径 |
+| `RW` | `true` 可写 | `false`——`:ro` 的铁证 |
 
-**坑①：挂上去 = 盖住。** 还是 nginx 自带 html，bind 一个**空目录**：
+删卷之前先查「谁在用它」，一条过滤命令的事：
+
+```bash
+docker ps --filter volume=mydata --format '{{.Names}}'
+```
+
+```text
+lab-mount-demo
+```
+
+演示完删掉这个容器，接着说本课的坑。`-v` 对 bind 的源路径有个非常宽容的行为：**路径不存在时，它不报错，默默给你建一个空目录**。演示「想挂 `/root/no-such-dir`，但这个目录其实不存在」：
+
+```bash
+ls /root/no-such-dir
+docker run --rm -v /root/no-such-dir:/src busybox ls -A /src
+ls -ld /root/no-such-dir
+```
+
+```text
+ls: cannot access '/root/no-such-dir': No such file or directory
+（第二条命令没有任何输出——容器内 /src 是空的）
+drwxr-xr-x 2 root root 4096 Aug 25 14:49 /root/no-such-dir
+```
+
+三次输出连起来读：跑之前目录不存在；容器里的 `/src` 是空的、没有任何报错；跑完之后，宿主机上**多了一个空目录**。路径打错一个字母，你得到的就是这么一个「看似正常」的空挂载。
+
+想挂**文件**时这个坑更阴——文件名打错了，Docker 建不出文件，只会建目录：
+
+```bash
+docker run --rm -v /root/no-such.conf:/etc/app.conf busybox ls -ld /etc/app.conf
+```
+
+```text
+drwxr-xr-x    2 root     root        4096 Aug 25 06:48 /etc/app.conf
+```
+
+应用等的是配置文件，拿到的却是一个**空目录**，报出来的错误经常离题万里。
+
+所以脚本里推荐用严格写法 `--mount`，源路径不存在时**立刻报错**，绝不自作主张：
+
+```bash
+docker run --rm --mount type=bind,source=/root/no-such-dir,target=/src busybox echo hi
+```
+
+```text
+docker: Error response from daemon: invalid mount config for type "bind":
+bind source path does not exist: /root/no-such-dir
+
+Run 'docker run --help' for more information
+```
+
+`-v` 短、适合手敲；`--mount` 啰嗦、但每一段都显式（`type=bind`、`source=`、`target=`），写进脚本和文档里更不容易出事。
+
+> 一句话收口：**`:ro` 是内核级只读；`-v` 源路径不存在会静默建空目录，脚本里用 `--mount` 让它当场报错。**
+
+---
+
+## 第 6 课：挂上去 = 盖住
+
+**🧑‍🎓 学生：** 我刚才自己试了个东西：给 nginx 挂了个空目录到它的网页目录，结果网页打不开了，进去一看 `index.html` 都没了——镜像里明明自带的，怎么挂一下还把文件挂丢了？
+
+**🧑‍🏫 老师：**
+
+文件没丢，它只是被**盖住**了。这正是本课要讲的「遮蔽」。
+
+先看正常状态，nginx 镜像的网页目录里有两个文件：
 
 ```bash
 docker run --rm nginx:alpine ls -A /usr/share/nginx/html
-mkdir -p /root/empty-dir
-docker run --rm -v /root/empty-dir:/usr/share/nginx/html nginx:alpine ls -A /usr/share/nginx/html
-rm -rf /root/empty-dir
 ```
 
 ```text
@@ -270,52 +447,63 @@ rm -rf /root/empty-dir
 index.html
 ```
 
-第二下输出为空——`index.html` 不见了。官方类比：往 `/mnt` 挂 U 盘，看到的是 U 盘，原有内容被盖住而**不是被删**。
+现在按你说的，bind 一个**空目录**盖上去：
+
+```bash
+mkdir -p /root/empty-dir
+docker run --rm -v /root/empty-dir:/usr/share/nginx/html nginx:alpine ls -A /usr/share/nginx/html
+```
+
+```text
+（空——什么都没有）
+```
+
+`index.html` 不见了。但注意，它没有被删——挂载的本质是「把一块东西**盖**到某条路径上」，盖上去之后，这条路径看到的就是盖上的那块，底下原有的内容只是暂时看不见。官方文档的类比很形象：往 `/mnt` 挂一块 U 盘，你看到的是 U 盘的内容，磁盘上原有文件并没有被删。把挂载去掉（不挂直接跑），上面第一条命令证明了文件都好好的。
+
+有意思的对照来了。同样挂到这个路径，换成**空命名卷**：
+
+```bash
+docker volume create html-vol
+docker run --rm -v html-vol:/usr/share/nginx/html nginx:alpine ls -A /usr/share/nginx/html
+```
+
+```text
+50x.html
+index.html
+```
+
+文件**在**。因为卷有个特殊待遇：第一次把一个**空卷**挂到容器里**已有内容**的路径时，Docker 会先把这个路径下的镜像内容**拷贝进卷**（术语叫 pre-populate，垫底），再完成挂载。卷里面不是空的，所以看得到文件。甚至换个容器挂这个卷，文件还在：
+
+```bash
+docker run --rm -v html-vol:/x busybox ls -A /x
+```
+
+```text
+50x.html
+index.html
+```
+
+三行对照钉成一张表：
 
 | 挂载方式 | 挂到该路径后看到 | 为什么 |
 |------|------|------|
 | 不挂载 | `50x.html  index.html` | 镜像层自带 |
-| bind 一个空目录 | **空** | 宿主目录原样盖上去 |
-| 空命名卷 | `50x.html  index.html` | 首次挂载把镜像内容**先拷进卷**（雪球 8） |
+| bind 一个空目录 | 空 | 宿主目录原样盖上去，没有垫底 |
+| 空命名卷 | `50x.html  index.html` | 首次挂载先把镜像内容拷进卷 |
 
-**坑②：路径拼错不报错，`-v` 会静默建一个空目录。** 同一条 `/root/no-such-dir`，雪球 3 用 `--mount` 直接报错；换成 `-v`：
+所以你的 nginx 打不开，不是数据丢了，是空目录把 `index.html` 盖住了。反过来这个行为也能被利用：第 9 课备份、以及「想保留镜像默认配置再覆盖一部分」的场景，靠的就是卷的垫底。
 
-```bash
-ls /root/no-such-dir
-docker run --rm -v /root/no-such-dir:/src busybox ls -A /src
-ls -ld /root/no-such-dir
-rm -rf /root/no-such-dir
-```
-
-```text
-ls: cannot access '/root/no-such-dir': No such file or directory
-drwxr-xr-x 2 root root 4096 Aug 17 20:19 /root/no-such-dir
-```
-
-容器内 `/src` 是空的，且没有任何报错。官方 bind 文档（2026-07）：`--mount` 默认报错；确需自动创建，得显式加 `bind-create-src`。
-
-「永远是目录」在**挂文件**时尤其阴——想挂配置文件，名字打错了：
-
-```bash
-docker run --rm -v /root/no-such.conf:/etc/app.conf busybox ls -ld /etc/app.conf
-ls -ld /root/no-such.conf
-rm -rf /root/no-such.conf
-```
-
-```text
-drwxr-xr-x    2 root     root     4096 Aug 17 12:42 /etc/app.conf
-drwxr-xr-x 2 root root 4096 Aug 17 20:42 /root/no-such.conf
-```
-
-应用期望文件，拿到的却是**空目录**。
-
-**坑③：强耦合宿主机，且默认可写。** 源是这台机器的绝对路径，换台机器就对不上。生产数据用命名卷，bind 留给开发机的源码与配置——能只读就加 `:ro`。
+> 一句话收口：**挂载是「盖」不是「搬」：bind 原样盖住底下内容；空命名卷首次挂载会先把镜像内容拷进卷。**
 
 ---
 
-## 雪球 5：tmpfs——写进内存，停了就没了
+## 第 7 课：tmpfs——不想落盘的数据
 
-前几球的数据都想留在磁盘上。令牌、会话缓存恰恰相反——**不该写成任何磁盘文件**。tmpfs 给这类数据一块内存盘。
+**🧑‍🏫 老师：**
+
+前面所有数据的目标都是「留在磁盘上」。现在反过来看一类需求：有些数据**恰恰不该**写成任何磁盘文件——登录令牌、会话缓存、一次性的敏感中间结果。磁盘上的东西会进快照、进备份、被恢复软件翻出来，这类数据理想的家是**内存**。
+
+Docker 给的第三种挂载就是 tmpfs：
 
 ```bash
 docker run --rm --tmpfs /scratch busybox sh -c 'mount | grep scratch; echo hello > /scratch/f && cat /scratch/f'
@@ -326,19 +514,15 @@ tmpfs on /scratch type tmpfs (rw,nosuid,nodev,noexec,relatime)
 hello
 ```
 
-`--mount type=tmpfs,dst=/app` 同义。inspect 里 `Type` 为 `tmpfs`、`Source` 为空（内存挂载没有「源」）：
-
-```bash
-docker run -d --name tmp-demo --mount type=tmpfs,dst=/app nginx:alpine
-docker inspect tmp-demo --format '{{json .Mounts}}'
-docker rm -f tmp-demo
-```
+`mount` 的输出证明 `/scratch` 是一块真正的 tmpfs（内存文件系统），写得进、读得出。它也有 `--mount type=tmpfs,dst=/app` 的写法，`inspect` 里 `Type` 是 `tmpfs`、`Source` 为空——内存挂载没有「源」：
 
 ```text
 [{"Type":"tmpfs","Source":"","Destination":"/app","Mode":"","RW":true,"Propagation":""}]
 ```
 
-和 bind 一样会**遮蔽**挂载点原有内容——盖在 `/etc` 上：
+容器一停，这块内存随之回收，数据消失得干干净净——这正是这类数据想要的待遇。
+
+跟第 6 课呼应一下：tmpfs 盖上去同样会遮蔽原内容。盖在 `/etc` 上看一眼：
 
 ```bash
 docker run --rm --tmpfs /etc busybox ls -A /etc
@@ -350,9 +534,9 @@ hosts
 resolv.conf
 ```
 
-镜像自带的 passwd、group 被盖住了。剩下三个不是 tmpfs 里「原来就有」的，而是 Docker 挂完之后**重新注入**的网络文件。
+镜像自带的 `passwd`、`group` 都被盖住了。剩下的三个不是 tmpfs 里「原来就有」的，而是 Docker 挂完之后**重新注入**的网络文件。
 
-不传参数，容量上限 = **宿主机内存的 50%**：
+然后是两个必须知道的脾气。第一，不传参数时，tmpfs 的容量上限默认是**宿主机内存的一半**：
 
 ```bash
 free -m | head -2
@@ -360,13 +544,13 @@ docker run --rm --tmpfs /scratch busybox df -h /scratch
 ```
 
 ```text
-              total        used        free      shared  buff/cache  available
-Mem:            7942         505         7067           4         370        7276
+              total        used        free      shared  buff/cache   available
+Mem:            7942        1581        5651          35         709        6164
 Filesystem                Size      Used Available Use% Mounted on
 tmpfs                     3.9G         0      3.9G   0% /scratch
 ```
 
-7.9G 的一半。生产上不设限就是给容器留了「吃掉宿主一半内存」的口子。`size=1m` 再灌 3MiB：
+本机内存 7942MB，一半正好 3.9G。生产上不设限，等于给容器留了「吃掉宿主一半内存」的口子。用 `size=1m` 设硬上限，再故意灌 3MiB 撞墙：
 
 ```bash
 docker run --rm --tmpfs /scratch:size=1m busybox sh -c 'dd if=/dev/zero of=/scratch/f bs=1M count=3; ls -l /scratch'
@@ -376,18 +560,12 @@ docker run --rm --tmpfs /scratch:size=1m busybox sh -c 'dd if=/dev/zero of=/scra
 dd: error writing '/scratch/f': No space left on device
 2+0 records in
 1+0 records out
-1048576 bytes (1.0MB) copied, 0.000943 seconds, 1.0GB/s
--rw-r--r--    1 root     root     1048576 Aug 17 12:39 /scratch/f
+1048576 bytes (1.0MB) copied, 0.000992 seconds, 1008.1MB/s
+total 1024
+-rw-r--r--    1 root     1048576 Aug 25 06:50 f
 ```
 
-`dd` 按块复制：`bs × count` 计划写 3MiB，上限 1MiB，写到第 2 块撞上 `ENOSPC`。`size=` 是硬顶。
-
-| 参数 | 干什么 | 默认 |
-|------|------|------|
-| `size` | 容量上限 | 宿主内存 50% |
-| `mode` | 挂载点权限 | `1777`（`drwxrwxrwt`） |
-| `uid` / `gid` | 挂载点属主 | root(0) |
-| `noexec` | 禁止执行里面的二进制 | 允许执行 |
+`dd` 计划写 3 块×1MiB，写到第 2 块就撞上 `No space left on device`——`size` 是硬顶，不是建议。其它常用参数还有 `mode`（挂载点权限）、`uid`/`gid`（属主）、`noexec`（禁止执行里面的程序）：
 
 ```bash
 docker run --rm --tmpfs /scratch busybox ls -ld /scratch
@@ -396,97 +574,167 @@ docker run --rm --tmpfs /t:noexec busybox sh -c 'printf "#!/bin/sh\necho pwned\n
 ```
 
 ```text
-drwxrwxrwt    2 root     root            40 Aug 17 12:39 /scratch
-drwx------    2 1000     1000            40 Aug 17 12:39 /scratch
+drwxrwxrwt    2 root     root            40 Aug 25 06:50 /scratch
+drwx------    2 1000     1000            40 Aug 25 06:50 /scratch
 sh: line 0: /t/s: Permission denied
 ```
 
-三个限制：不能在容器间共享；仅 Linux；挂载点权限可能在重启后重置。另有一句流行说法要修正：tmpfs **不是**「绝不落盘」——内存吃紧时可能被换出到 swap（本机 `free -m` 里就躺着 4G swap）。「不写容器文件系统」永远成立；真有严格不落盘的需求，得从部署层面禁用 swap。
+第三个实验里，往 noexec 的 tmpfs 放了一个加过执行权限的脚本，照样被拒——临时目录拿来执行来路不明的二进制，这条路被焊死了。
+
+> 一句话收口：**tmpfs = 内存盘，容器停了就没了；默认能吃宿主一半内存，生产必设 `size=`。**
 
 ---
 
-## 雪球 6：匿名卷——prune 到底删什么
+## 插问 4：tmpfs 和「限了容量的小卷」，到底差在哪？
 
-不给卷名、只给容器内路径（`-v /data`），Docker 会生成一个 **64 位哈希名的匿名卷**。你叫不出名字。
+**🧑‍🎓 学生：** 既然 tmpfs 也是「一块空间、可限容量」，那我建个小容量的卷，效果不是一样吗？为什么不统一用卷？
 
-[第 9 篇](/云原生/docker/docker-09-dockerfile/) 的 `VOLUME /xxx` 只是**声明挂载点**。很多数据库官方镜像写了这句，你 `docker run` 时又没 `-v 卷名:…`，引擎就会自动挂一个匿名卷——数据仍在卷上，但不在你起的那个名字里。开头那个 MySQL，若从没挂命名卷，删容器时命运就取决于下面三种删法。
+**🧑‍🏫 老师：**
 
-> ⚠️ 下面的 `-v` 是 **`docker rm` 自己的旗标**（`--volumes`），意思是「删容器时，把它创建的匿名卷一起删」——和 `docker run -v` 的「挂载」**完全是两码事**。
+差在一个根本问题：**数据到底碰不碰磁盘**。
 
-**方式一：`--rm` 退出——匿名卷连带一起删**
+卷再小，也是磁盘上的目录（第 3 课看过真身），写入会落盘、会进快照和备份、容器删了也还在。tmpfs 的数据从头到尾在内存里，容器一停、内存一回收，什么都不剩——**这份「留不下」本身就是要的效果**。放令牌就是典型：你巴不得它消失得越干净越好。
+
+另外还有几条实际差别：
+
+- 性能方向相反：tmpfs 是内存速度，但吃内存预算；卷走磁盘，容量便宜；
+- tmpfs 只在 Linux 上有（Windows 容器没有）；
+- tmpfs 不能在容器之间共享——两个容器各挂各的，是两块不同的内存；卷挂同名就是同一份。
+
+一条流行说法顺手修正一下：tmpfs 常被讲成「绝不落盘」。严格说不对——内存吃紧时，tmpfs 里的页**可能被换出到 swap**（本机 `free -m` 就躺着 4096MB swap）。「不写容器文件系统」永远成立；真有「物理上绝不落盘」的硬需求，得从部署层面把 swap 关掉。
+
+> 一句话收口：**小卷 = 磁盘上小一块，还在；tmpfs = 内存里一块，消失是特性；严格不落盘还要看 swap。**
+
+---
+
+## 第 8 课：匿名卷——`prune` 到底删什么
+
+**🧑‍🏫 老师：**
+
+到目前为止，卷都是你起名字的。还有一种：只给容器内路径、不给卷名：
 
 ```bash
 docker run --rm -d --name anon-rm-demo -v /data busybox sleep 60
-docker inspect anon-rm-demo --format '{{range .Mounts}}type={{.Type}} name={{.Name}} dst={{.Destination}}{{println}}{{end}}'
-docker stop anon-rm-demo
-docker volume inspect 12aa00229028ff1ff4c71a66fe49d8b53811bcfb1b60782cfde410c9b7546291
+```
+
+`-v /data` 只有一段。Docker 会自动挂一个卷上去，名字是一串 64 位哈希——你叫不出它、也没打算复用它。这就是**匿名卷**。看它的档案：
+
+```bash
+docker inspect anon-rm-demo --format '{{json .Mounts}}'
 ```
 
 ```text
-type=volume name=12aa00229028ff1ff4c71a66fe49d8b53811bcfb1b60782cfde410c9b7546291 dst=/data
-[]
-Error response from daemon: get 12aa00229028ff1ff4c71a66fe49d8b53811bcfb1b60782cfde410c9b7546291: no such volume
+[{"Type":"volume","Name":"8663d0ce4637adce0a7d00ee02b0c483f1776ef5f3e478158a22f78e2baa2426","Source":"/var/lib/docker/volumes/8663d0ce4637adce0a7d00ee02b0c483f1776ef5f3e478158a22f78e2baa2426/_data","Destination":"/data","Driver":"local","Mode":"","RW":true,"Propagation":""}]
 ```
 
-**方式二：`docker rm`（不带 `-v`）——留下来，变成悬空卷**
+Type 还是 volume，Name 是哈希。为什么会有这种东西？因为很多官方镜像的 Dockerfile 里写了 `VOLUME /xxx`（[第 9 篇](/云原生/docker/docker-09-dockerfile)提过），它**声明**了「这个路径该挂卷」；你 `docker run` 时没给卷名，引擎就自动补一个匿名卷。开头那个 MySQL，如果一直没挂命名卷，数据其实一直躺在匿名卷里——而匿名卷的命运，取决于容器怎么被删。三种删法，三种命运。
+
+**一、`--rm` 退出：匿名卷连带一起删。** 就是最上面那个 `anon-rm-demo`，停掉它：
+
+```bash
+docker stop anon-rm-demo
+docker volume ls -f dangling=true
+```
+
+dangling（悬空）列表里**没有**那串哈希——容器退出时 `--rm` 把它的匿名卷一起带走了。
+
+**二、`docker rm` 不带 `-v`：卷留下来，变成悬空卷。**
 
 ```bash
 docker run --name anon-keep -v /data busybox sh -c 'echo keep > /data/f'
-docker inspect anon-keep --format '{{range .Mounts}}type={{.Type}} name={{.Name}} dst={{.Destination}}{{println}}{{end}}'
 docker rm anon-keep
 docker volume ls -f dangling=true
 ```
 
 ```text
-type=volume name=057fcecb958d190946c93b684407c9691213bc36d4848f584c984dc98bd2eb05 dst=/data
 DRIVER    VOLUME NAME
-local     057fcecb958d190946c93b684407c9691213bc36d4848f584c984dc98bd2eb05
+local     0bdca559ef5ae320af3135666bf559c26c509c4b237760a01dee192689c9b566
+local     4a050c9a131017852fed1f132c4555e44bda52f01ab82c61f2a5dead5c335383
+local     85a415343a779b7d5c80a1be465bcd710875b399f67c5eb45342041235a84d33
+local     890d9531d7279de5dcce30acaf6b70e99cb7893822a2f3ac4a2c380514508349
+local     autodata
+local     compose-lab_redis-data
+local     mydata
 ```
 
-容器没了、卷还在、再没有任何容器引用——这就是**悬空卷**。生产上真正堆出来的，正是这种日常用法。
+容器没了、卷还在、再没有任何容器引用它——这就是悬空卷。列表里那几串哈希就是这台机器日积月累攒下的（有我这次实验造的，也有更早留下的）。**生产机器磁盘悄悄变满，一大元凶就是它**：每次 `docker run` 一个带 `VOLUME` 的镜像再 `docker rm`，就多一个没人认领的哈希目录。
 
-**方式三：`docker rm -v`——手动连卷一起删**（和 `--rm` 效果一样，只是时机不同）：
+**三、`docker rm -v`：手动连卷一起删。**（和 `--rm` 效果一样，只是时机由你定）
 
 ```bash
 docker run --name lab-rmv-demo -v /data busybox sh -c 'echo x > /data/f'
-docker inspect lab-rmv-demo --format '{{range .Mounts}}{{.Name}}{{end}}'
 docker rm -v lab-rmv-demo
-docker volume inspect 4973a95b0df7d9fd1042eaf64d57c0d4aa4253976eb9dfa0088770f79f3d32b8
+```
+
+删完之后悬空列表里找不到它的哈希——卷被一并带走了。而命名卷哪怕遇到 `rm -v` 也**原样保留**：
+
+```bash
+docker run --name lab-named-rm -v mydata:/data busybox echo hi
+docker rm -v lab-named-rm
+docker volume inspect mydata --format 'mydata still alive: {{.Name}}'
 ```
 
 ```text
-4973a95b0df7d9fd1042eaf64d57c0d4aa4253976eb9dfa0088770f79f3d32b8
-Error response from daemon: get 4973a95b0df7…: no such volume
+mydata still alive: mydata
 ```
 
-两条安全边界：
+两条安全边界就齐了：`rm -v` 只连带**匿名**卷，数据库的命名卷不会被它误伤；想让匿名卷跟容器同生共死，要么 `run --rm`、要么 `rm -v`，两条都不做，悬空卷就攒下了。
 
-- `rm -v` **只连带匿名卷**；命名卷哪怕容器 `rm -v`，卷也原样保留——数据库命名卷不会被这个旗标误伤
-- 想让匿名卷跟容器一起走：要么 `run --rm`，要么 `rm -v`；两条都不做，悬空卷就攒下了
-
-`docker volume prune` 的边界（先显式建一个从未被使用的命名卷 `orphan`）：
+清悬空卷用 `prune`。先故意建一个从未被使用的命名卷 `orphan`，再 prune，看它敢删谁：
 
 ```bash
 docker volume create orphan
 docker volume prune -f
-docker volume ls | grep orphan
+docker volume ls | grep -E "orphan|mydata"
 ```
 
 ```text
 Deleted Volumes:
-057fcecb958d190946c93b684407c9691213bc36d4848f584c984dc98bd2eb05
+890d9531d7279de5dcce30acaf6b70e99cb7893822a2f3ac4a2c380514508349
+0bdca559ef5ae320af3135666bf559c26c509c4b237760a01dee192689c9b566
+85a415343a779b7d5c80a1be465bcd710875b399f67c5eb45342041235a84d33
+4a050c9a131017852fed1f132c4555e44bda52f01ab82c61f2a5dead5c335383
 
-Total reclaimed space: 5B
+Total reclaimed space: 89.9MB
+local     mydata
 local     orphan
 ```
 
-prune **只删了那个匿名悬空卷**；`orphan` 这个显式命名的卷哪怕从未被使用，也没被删。`docker volume prune --help` 写明：`-a, --all` 才会连未使用的命名卷一起删。生产慎用 `-a`。要删指定卷，用 `docker volume rm <卷名>`。
+prune 删掉了四个匿名悬空卷、回收 89.9MB；`orphan` 这个显式命名的卷哪怕从未被任何容器用过，**也没被删**。`--help` 里写明：要连未使用的命名卷一起删，得显式加 `-a`（`--all`）——生产上慎用，除非你很清楚机器上每个卷的来历。要删指定卷，永远用 `docker volume rm <卷名>`。
+
+> 一句话收口：**匿名卷 = 引擎自动挂的哈希卷；`--rm`/`rm -v` 连带删、`rm` 不带 `-v` 变悬空；`prune` 默认只清悬空匿名卷，`-a` 才动命名卷。**
 
 ---
 
-## 雪球 7：备份——临时容器 + tar，不抠宿主机目录
+## 插问 5：`docker run -v` 和 `docker rm -v`，同一个 v 是一个意思吗？
 
-雪球 2 看过真身路径，root 直接 `tar` 那个目录**能用，但官方说 unsupported**。换到 NFS 驱动后本地压根没有 `_data`。官方套路与存储位置无关：**起一个一次性容器，把卷挂进去，tar 到一个 bind 目录里带走**。继续用雪球 1 的 `mydata`。
+**🧑‍🎓 学生：** 这俩 `-v` 长得一模一样，我有点慌——不会哪天把挂载的卷误删了吧？
+
+**🧑‍🏫 老师：**
+
+慌得有道理，但结论先放心：**它俩是两个不同命令各自的旗标，只是恰好都选了字母 v**。
+
+- `docker run -v`：volume 挂载，**挂上**；
+- `docker rm -v`：`--volumes` 的缩写，删容器时**连带删掉它创建的匿名卷**。
+
+一个是「给」，一个是「带走」。而且刚才第三种删法验证过：`rm -v` 只带走匿名卷，`-v mydata:/data` 挂的命名卷毫发无损。所以「升级 MySQL 容器」的安全流程是成立的：
+
+```bash
+docker rm -v old-mysql            # 匿名卷（如果有）带走，命名卷不动
+docker run -v mysql-data:/var/lib/mysql ... mysql:new-tag   # 数据原样回来
+```
+
+真正要慌的不是 `rm -v`，而是两件事：`docker volume rm` 敲错卷名（它删卷是不商量的），以及 `docker volume prune -a`（连未使用的命名卷一起清）。这两个动手前先 `docker ps --filter volume=<名>` 确认没有容器在用。
+
+> 一句话收口：**`run -v` 是挂、`rm -v` 是删容器时带走匿名卷；命名卷对两者都免疫，怕的是 `volume rm` 和 `prune -a`。**
+
+---
+
+## 第 9 课：备份与迁移——临时容器 + tar
+
+**🧑‍🏫 老师：**
+
+第 3 课说过，直接去 `/var/lib/docker/volumes/…/_data` 里操作是官方 unsupported。那卷里的数据怎么备份、怎么搬到另一台机器？官方套路与存储位置无关：**起一个一次性容器，把卷挂进去，用 `tar` 打包到一个 bind 目录里带走**。继续用 `mydata` 开工：
 
 ```bash
 mkdir -p /root/backup
@@ -498,14 +746,17 @@ docker run --rm -v /root/backup:/backup busybox tar tvf /backup/mydata.tar
 ```text
 ./
 ./note.txt
--rw-r--r-- 1 root root 2560 Aug 17 20:21 mydata.tar
-drwxr-xr-x root/root         0 2026-08-17 12:21:05 ./
--rw-r--r-- root/root        11 2026-08-17 12:21:05 ./note.txt
+total 4
+-rw-r--r-- 1 root root 2560 Aug 25 14:53 mydata.tar
+drwxr-xr-x root/root         0 2026-08-25 06:46:58 ./
+-rw-r--r-- root/root         23 2026-08-25 06:47:23 ./note.txt
 ```
 
-三件事：`-v mydata:/data` 把要备份的卷挂进来；`-v /root/backup:/backup` 用雪球 3 的 bind 当出口；`tar … -C /data .` 先进 `/data` 再打包，归档里是 `./note.txt` 而不是绝对路径。`tar` 列出的是容器内 UTC，宿主机 `ls` 是本地时区，相差 8 小时——同一份文件。
+拆开看这条命令干了三件事：`-v mydata:/data` 把要备份的卷挂进来；`-v /root/backup:/backup` 用第 4 课的 bind 当出口；`tar cvf /backup/mydata.tar -C /data .` 先进 `/data` 再打包——所以归档里是 `./note.txt` 这种相对路径，恢复时不会拼出奇怪的绝对路径。
 
-恢复 = 空白新卷 + 把 `cvf` 换成 `xvf`：
+顺带一个时区细节：`tar` 列表里的时间（06:47）比宿主机 `ls`（14:53）小 8 小时——`tar` 显示的是容器内 UTC，宿主机是东八区，**同一份文件，两个时区的表**。在实验输出里看到时间对不上，先想起这一条。
+
+恢复 = 一个空白新卷 + 把 `cvf` 换成 `xvf`：
 
 ```bash
 docker volume create mydata-restored
@@ -517,96 +768,59 @@ docker run --rm -v mydata-restored:/data busybox cat /data/note.txt
 ./
 ./note.txt
 persist-me
+second-line
 ```
 
-跨主机：把 `mydata.tar` 拷到新机器，重复这三条。
+两行笔记原样回来了。跨主机迁移也就是把 `mydata.tar` 拷到新机器，重复这三条。
 
-真实数据库可能挂了好几个卷。`--volumes-from <容器>` 让新容器**原样继承**目标已经挂上的全部卷和 bind：
+真实容器可能挂了好几个卷，一个个卷名去查很烦。`--volumes-from <容器>` 让新容器**原样继承**目标容器挂着的全部卷和 bind：
 
 ```bash
 docker run -d --name db-like -v mydata:/var/lib/data busybox sleep infinity
 docker run -d --name helper --volumes-from db-like busybox sleep infinity
 docker inspect --format '{{range .Mounts}}{{.Type}}  {{.Source}} -> {{.Destination}}{{println}}{{end}}' helper
 docker exec helper cat /var/lib/data/note.txt
-docker rm -f helper
 ```
 
 ```text
 volume  /var/lib/docker/volumes/mydata/_data -> /var/lib/data
+
 persist-me
+second-line
 ```
 
-helper 的 `docker run` 里**一个 `-v` 都没写**。于是「备份某容器的全部数据」一行化：
+helper 的 `docker run` 里**一个 `-v` 都没写**，挂载却原样跟来了。于是「备份某个容器的全部数据」缩成一行：
 
 ```bash
 docker run --rm --volumes-from db-like -v /root/backup:/backup busybox tar cvf /backup/db-like.tar /var/lib/data
-docker rm -f db-like
 ```
 
 ```text
+tar: removing leading '/' from member names
 var/lib/data/
 var/lib/data/note.txt
 ```
 
-（`tar` 会去掉成员名开头的 `/`，属正常行为。）
+（`tar` 会把成员名开头的 `/` 去掉，提示属正常行为。）
+
+> 一句话收口：**备份 = 临时容器把卷挂进去、tar 到 bind 目录带走；恢复 = 空卷 + xvf；整容器用 `--volumes-from`。**
 
 ---
 
-## 雪球 8 🧗：空卷垫底、只挂子目录、借工具、换驱动
+## 第 10 课：进阶——借工具与换后端
 
-> 进阶块。主线三种挂载 + 备份已经够用。
+**🧑‍🎓 学生：** 主线三种挂载我会了。但我在别处还看到过两种说法：一种说可以把别的镜像「挂」进容器里当工具箱，一种说卷能落到 NFS 上——这两个是怎么回事？
 
-### 空命名卷会把镜像内容拷进去
+**🧑‍🏫 老师：**
 
-第一次把**空**命名卷挂到容器里**已有内容**的路径，Docker 会把镜像该路径先拷进卷（pre-populate）：
+两个都真实存在，各用一小节讲清边界，用到再回来查。
 
-```bash
-docker run --rm nginx:alpine ls -A /usr/share/nginx/html
-docker volume create html-vol
-docker run --rm -v html-vol:/usr/share/nginx/html nginx:alpine ls -A /usr/share/nginx/html
-docker run --rm -v html-vol:/x busybox ls -A /x
-docker volume rm html-vol
-```
+### Image Mount：把另一张镜像只读挂进来
 
-```text
-50x.html
-index.html
-50x.html
-index.html
-50x.html
-index.html
-```
-
-换 busybox 也看得到——文件是真的拷进了卷。对照雪球 4：bind **没有**这个垫底。不想要？`--mount` 加 `volume-nocopy`，或 `-v` 加 `:nocopy`，输出为空。
-
-### 只挂卷的一小块：`volume-subpath`
-
-仅 `--mount`。子目录必须先存在：
+[第 7 篇](/云原生/docker/docker-07-enter-container)排障靠 `docker exec … sh`，但有的镜像故意不带 shell。Image Mount 的思路是：把 busybox 这张镜像的内容**只读盖**进当前容器，原镜像一个字节不动：
 
 ```bash
-docker volume create logs-vol
-docker run --rm -v logs-vol:/data busybox mkdir /data/app1 /data/app2
-docker run --rm --mount type=volume,source=logs-vol,target=/var/log/app,volume-subpath=app1 \
-    busybox sh -c 'echo log-from-app1 > /var/log/app/run.log'
-docker run --rm -v logs-vol:/data busybox find /data -type f
-```
-
-```text
-/data/app1/run.log
-```
-
-子目录不存在时的报错会把真身路径暴露出来：
-
-```text
-cannot access path /var/lib/docker/volumes/logs-vol/_data/not-exist: lstat … no such file or directory
-```
-
-### Image Mount：把另一张镜像只读挂进来（不是持久化）
-
-排障靠 `docker exec … sh`（[第 7 篇](/云原生/docker/docker-07-enter-container/)）。有的镜像故意不装 `sh`。Image Mount 把 busybox 的文件盖到当前容器的 `/dbg`，强制只读，原镜像不动。
-
-```bash
-docker run --rm --mount type=image,source=busybox,dst=/dbg alpine ls /dbg/bin 2>/dev/null | head -6
+docker run --rm --mount type=image,source=busybox,dst=/dbg alpine ls /dbg/bin | head -6
 ```
 
 ```text
@@ -614,17 +828,25 @@ docker run --rm --mount type=image,source=busybox,dst=/dbg alpine ls /dbg/bin 2>
 [[
 acpid
 add-shell
+addgroup
 adduser
 ```
 
-（本机 29.1.3 每条 `type=image` 都会先打一行 `WARNING: Image mount is an experimental feature`，走 stderr。）
+busybox 的工具全在 `/dbg/bin` 下了（本机 29.1.3 上每次跑 `type=image` 还会先打一行 `WARNING: Image mount is an experimental feature`——实验特性，别上生产）。
 
-三条约束：只认 `--mount type=image`，没有 `-v` 写法（`-v busybox:/dbg` 会被解析成名为 busybox 的**命名卷**）；需要 containerd image store（本机 `docker info` 里 `driver-type: io.containerd.snapshotter.v1`）；源镜像不会自动 pull。
-
-文件看得见 ≠ 跑得动：默认 `busybox:latest` 按 glibc 构建，alpine 是 musl，直接跑 `/dbg/bin/echo` 会报误导性的 `no such file or directory`。换成 `busybox:musl`：
+马上撞一个坑：**文件看得见 ≠ 跑得动**。默认 `busybox:latest` 按 glibc 构建，alpine 是 musl libc，直接执行报错还特别误导：
 
 ```bash
-docker pull busybox:musl
+docker run --rm --mount type=image,source=busybox,dst=/dbg alpine /dbg/bin/echo hi
+```
+
+```text
+exec /dbg/bin/echo: no such file or directory
+```
+
+文件明明在，报的却是「没有这个文件」——musl 系统加载不了 glibc 二进制时的经典症状。换 musl 构建的 busybox 就好：
+
+```bash
 docker run --rm --mount type=image,source=busybox:musl,dst=/dbg alpine /dbg/bin/echo hello-from-mounted-image
 ```
 
@@ -632,19 +854,11 @@ docker run --rm --mount type=image,source=busybox:musl,dst=/dbg alpine /dbg/bin/
 hello-from-mounted-image
 ```
 
-只读由内核拒绝：`touch /dbg/x` → `Read-only file system`。`image-subpath=bin` 只挂子目录。本地没有该 tag：`No such image: busybox:no-such-tag`。
+只读同样是内核拒绝：`touch /dbg/x` → `Read-only file system`。还有三条边界：只认 `--mount type=image`，没有 `-v` 写法（`-v busybox:/dbg` 会被解析成名为 busybox 的**命名卷**）；需要 containerd image store（本机 `docker info` 已是）；源镜像不会自动 pull。注意它**不是持久化**——不产生任何数据，只是借工具。
 
-inspect 里 `Type` 是 `image`，`"RW":false`：
+### 卷驱动：数据不一定在本机磁盘
 
-```text
-[{"Type":"image","Name":"busybox:musl","Source":"/var/lib/docker/rootfs/overlayfs/6432…c6d","Destination":"/dbg","Mode":"","RW":false,"Propagation":"rprivate"}]
-```
-
-Compose 用长语法 `type: image`（`image.subpath` 需 Compose ≥ 2.35.0）。**这不是持久化**——不产生任何数据。
-
-### 卷驱动：数据不一定在本地磁盘
-
-`Driver: local` 换成 NFS 等，数据就可以落到别处。本节命令来自官方文档，**本机未接 NFS，没有实测输出**：
+第 3 课 `inspect` 里的 `Driver: local` 表示数据在本机目录树。换成 NFS 驱动，数据就能落到一台共享存储上（命令来自官方文档，本机没接 NFS，未实测）：
 
 ```bash
 docker volume create --driver local \
@@ -654,37 +868,41 @@ docker volume create --driver local \
   nfs-data
 ```
 
-之后 `docker run -v nfs-data:/data ...` 照常用。同一思路还能对接 CIFS、云盘、rclone。细节以[官方卷文档](https://docs.docker.com/engine/storage/volumes/)为准。
+之后 `-v nfs-data:/data` 照常用，容器无感。同一思路还能对接 CIFS、云盘。这也是第 9 课「备份不抠宿主机目录」的另一个理由：换了驱动之后，本机压根没有 `_data` 目录可抠。细节以[官方卷文档](https://docs.docker.com/engine/storage/volumes/)为准。
+
+> 一句话收口：**image mount 是借工具不是存数据（只读、实验特性、注意 glibc/musl）；卷驱动把「local 目录」换成 NFS 等远端，容器侧用法不变。**
 
 ---
 
-## 命令怎么记、两个历史包袱
+## 小结
 
-| 阶段 | 命令 | 你在哪一球用过 |
-|------|------|----------------|
-| 建 / 挂命名卷 | `volume create`、`run -v 卷名:/data` | 1 |
-| 查真身 | `volume inspect`、宿主机 `cat …/_data/`（仅演示） | 2 |
-| bind / 热更新 | `-v /宿主路径:容器路径` | 3 |
-| 只读 / 排障 | `:ro`、`inspect '{{json .Mounts}}'`、`ps --filter volume=` | 4 |
-| 内存盘 | `--tmpfs` / `--mount type=tmpfs` | 5 |
-| 匿名 / 清理 | `-v /data`、`rm -v`、`volume ls -f dangling=true`、`volume prune` | 6 |
-| 备份 | 临时容器 + `tar`、`--volumes-from` | 7 |
-| 严格挂载 | `--mount type=bind/volume/image/tmpfs` | 3、5、8 |
+十课连起来，其实是同一个问题「数据凭什么还在」的十层答案：
+
+| 课 | 你带走的 | 一句话 |
+|---|---|---|
+| 1 | 可写层 | 数据写在容器可写层，容器一删就没 |
+| 2 | 命名卷 | `-v 卷名:路径`，数据活得比容器久 |
+| 3 | 真身 | `/var/lib/docker/volumes/<名>/_data`，别直接伸手 |
+| 4 | bind | 宿主与容器同一份文件，热更新零延迟 |
+| 5 | `:ro` / `--mount` | 内核级只读；`-v` 打错路径会静默建空目录 |
+| 6 | 遮蔽 | 挂上去是盖住；空卷会先拷镜像内容垫底 |
+| 7 | tmpfs | 内存盘，默认上限宿主内存一半，设 `size=` |
+| 8 | 匿名卷 | `rm` 不带 `-v` 变悬空；`prune` 默认只清匿名 |
+| 9 | 备份 | 临时容器 + tar；整容器 `--volumes-from` |
+| 10 | 进阶 | image mount 借工具；卷驱动上 NFS |
+
+按需求选型的速查表：
 
 | 需求 | 用什么 |
 |------|--------|
 | 数据库/中间件数据目录 | 命名卷 |
 | 开发热更新、共享配置 | bind（开发机；能 `:ro` 就加） |
-| 密钥等临时数据 | tmpfs（记得 `size=`；严格不落盘还要看 swap） |
-| 容器里没有 shell，临时借工具 | image mount（不是持久化） |
-| 跨主机共享 | 卷驱动 |
-| 迁移/备份 | tar 套路 |
+| 令牌等不该落盘的数据 | tmpfs（记得 `size=`；严格不落盘看 swap） |
+| 容器里没有 shell，借工具 | image mount（不是持久化） |
+| 跨主机共享数据 | 卷驱动（NFS 等） |
+| 迁移/备份 | 临时容器 + tar |
 
-**包袱一**：`docker run -v` 是挂载；`docker rm -v` 是删匿名卷。同一个字母，两件事。
-
-**包袱二**：直接操作 `/var/lib/docker/volumes/…/_data` 是官方 unsupported；生产用雪球 7。`volume prune -a` 才会动命名卷。
-
-下一篇 Compose 里，本篇的挂载写成 YAML 长这样（现在认个脸即可）：
+下一篇 Compose 里，这篇的挂载写成 YAML 就长这样（认个脸即可，[第 16 篇](/云原生/docker/docker-16-compose)细讲）：
 
 ```yaml
 services:
@@ -698,53 +916,27 @@ volumes:
   db-data: {}
 ```
 
----
+**思考题**：为什么数据库镜像的 Dockerfile 要写 `VOLUME /var/lib/mysql`？不写会怎样？（提示：第 8 课——没挂命名卷时，数据落在哪、容器按哪种方式删除后，命运如何。）
 
-## 和系列其它篇
-
-| 相关篇 | 在这一路上出现的位置 |
-|------|----------------------|
-| [第 5 篇](/云原生/docker/docker-05-container-and-image/) 镜像与容器 | 开头：可写层随容器生灭 |
-| [第 9 篇](/云原生/docker/docker-09-dockerfile/) Dockerfile | 雪球 6：`VOLUME` 只声明挂载点 |
-| [第 15 篇](/云原生/docker/docker-15-network) 网络 | `inspect --format` 同款 |
-| [第 16 篇](/云原生/docker/docker-16-compose) Compose | 雪球 3 的 bind、雪球 1 的命名卷写成 YAML |
-| [Linux bind mount](/Linux/basics/linux-06-bind-mount) | 雪球 3、4 的内核版 |
+下一篇：[《Docker 网络——从 localhost 不通滚到能用名字互访》](/云原生/docker/docker-15-network)。
 
 ---
 
 ## 本篇实验清理（可照抄）
 
 ```bash
-docker rm -f lab-mount-demo bind-live tmp-demo img-demo helper db-like 2>/dev/null
-docker volume rm mydata autodata mydata-restored orphan html-vol logs-vol nocopy-vol 2>/dev/null
-rm -rf /root/bind-demo /root/backup
+docker rm -f lab-mount-demo bind-live tmp-demo anon-rm-demo anon-keep \
+    lab-rmv-demo lab-named-rm db-like helper 2>/dev/null
+docker volume rm mydata autodata mydata-restored orphan html-vol 2>/dev/null
+rm -rf /root/bind-demo /root/backup /root/empty-dir /root/single.conf
 ```
-
----
-
-## 小结
-
-从一个 `note.txt` 开始，每次只加一种能力：
-
-1. **命名卷**：容器删、数据在；`-v` 引用不存在的卷名会悄悄创建。
-2. **真身路径**：`/var/lib/docker/volumes/<名>/_data`；直接访问是 unsupported。
-3. **bind**：两边同一份文件；宿主机改、容器立刻读到。
-4. **`:ro`**：内核 EROFS；bind 会盖住镜像内容；`-v` 打错路径会静默建目录。
-5. **tmpfs**：停了就没了；默认上限宿主内存 50%；可能换出到 swap。
-6. **匿名卷**：`--rm` / `rm -v` 带走；`rm` 不带 `-v` 变悬空；`prune` 默认不删命名卷。
-7. **备份**：临时容器 + tar；整容器用 `--volumes-from`。
-8. **进阶**：空卷垫底、`volume-subpath`、Image Mount 借工具、卷驱动。
-
-**思考题**：为什么数据库镜像的 Dockerfile 要写 `VOLUME /var/lib/mysql`？不写会怎样？（提示：雪球 6——没挂命名卷时，数据落在哪、容器删除后命运如何。）
-
-下一篇：[《Docker Compose 编排——从一个 Nginx 滚成一整栈》](/云原生/docker/docker-16-compose)。
 
 ---
 
 ## 参考资料
 
-- [Docker Docs · Storage](https://docs.docker.com/engine/storage/) — 挂载类型总览（2026-07：五种挂载；直接访问卷数据 unsupported）
-- [Volumes](https://docs.docker.com/engine/storage/volumes/) — 生命周期、备份、卷驱动
-- [Bind mounts](https://docs.docker.com/engine/storage/bind-mounts/)（2026-07：遮蔽、`-v` 自动建目录与 `bind-create-src`）/ [tmpfs](https://docs.docker.com/engine/storage/tmpfs/)（默认 50% 内存、可能换出 swap）
-- [Image mounts](https://docs.docker.com/engine/storage/image-mounts/)（实验特性；前提 [containerd image store](https://docs.docker.com/engine/storage/containerd/)）
-- 本机：WSL2 Ubuntu-22.04 + Docker 29.1.3
+- [Docker Docs · Storage](https://docs.docker.com/engine/storage/) — 挂载类型总览；直接访问卷数据属 unsupported
+- [Volumes](https://docs.docker.com/engine/storage/volumes/) — 生命周期、备份套路、卷驱动
+- [Bind mounts](https://docs.docker.com/engine/storage/bind-mounts/) / [tmpfs mounts](https://docs.docker.com/engine/storage/tmpfs/) / [Image mounts](https://docs.docker.com/engine/storage/image-mounts/)（实验特性）
+- Linux 侧「挂载 = 盖上去」的内核版：[bind mount 实操](/Linux/basics/linux-06-bind-mount)
+- 本机：WSL2 Ubuntu-22.04 + Docker Engine 29.1.3
