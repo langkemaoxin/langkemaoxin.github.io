@@ -367,7 +367,26 @@ docker inspect --format '{{json .Mounts}}' lab-mount-demo
 ```
 
 ```text
-[{"Type":"volume","Name":"mydata","Source":"/var/lib/docker/volumes/mydata/_data","Destination":"/data","Driver":"local","Mode":"z","RW":true,"Propagation":""},{"Type":"bind","Source":"/root/bind-demo","Destination":"/src","Mode":"ro","RW":false,"Propagation":"rprivate"}]
+[
+    {
+        "Type": "volume",
+        "Name": "mydata",
+        "Source": "/var/lib/docker/volumes/mydata/_data",
+        "Destination": "/data",
+        "Driver": "local",
+        "Mode": "z",
+        "RW": true,
+        "Propagation": ""
+    },
+    {
+        "Type": "bind",
+        "Source": "/root/bind-demo",
+        "Destination": "/src",
+        "Mode": "ro",
+        "RW": false,
+        "Propagation": "rprivate"
+    }
+]
 ```
 
 两条记录并排读：
@@ -514,16 +533,42 @@ Docker 给的第三种挂载就是 tmpfs：
 
 ```bash
 docker run --rm --tmpfs /scratch busybox sh -c 'mount | grep scratch; echo hello > /scratch/f && cat /scratch/f'
+
+# --tmpfs /scratch	在容器内挂载一个 tmpfs 文件系统到 /scratch 目录	
 ```
 
-```text
+```bash
 tmpfs on /scratch type tmpfs (rw,nosuid,nodev,noexec,relatime)
 hello
+
+# 文件系统类型	tmpfs	这是一个内存文件系统
+# 挂载点	/scratch	挂载在容器内的这个目录
+# 类型	tmpfs	文件系统类型（再次确认）
+# 挂载选项	rw	读写：可读可写
+# nosuid	禁止 SUID/SGID：不允许设置特殊权限位，防止提权攻击
+# nodev	禁止设备文件：不能在此文件系统上创建设备节点（如 /dev/sda）
+# noexec	禁止执行：不能在此文件系统上运行任何二进制程序
+# relatime	相对更新时间：只在文件被修改或访问时间早于修改时间时更新访问时间戳，减少磁盘I/O
+# size=65536k	大小限制：此 tmpfs 最大为 64MB（65536 KB）
 ```
 
-`mount` 的输出证明 `/scratch` 是一块真正的 tmpfs（内存文件系统），写得进、读得出。它也有 `--mount type=tmpfs,dst=/app` 的写法，`inspect` 里 `Type` 是 `tmpfs`、`Source` 为空——内存挂载没有「源」：
+`mount` 的输出证明 `/scratch` 是一块真正的 tmpfs（内存文件系统），写得进、读得出。它也有 `--mount type=tmpfs,dst=/app` 的写法，如：
 
-```text
+```bash
+docker run --rm \
+  --mount type=tmpfs,destination=/scratch,tmpfs-size=128M,tmpfs-mode=1777 \
+  busybox sh -c 'df -h /scratch'
+```
+
+`inspect` 里 `Type` 是 `tmpfs`、`Source` 为空——内存挂载没有「源」,举个例子
+
+```bash
+# 先运行一个带有 tmpfs 的容器
+docker run -d --name test-tmpfs --tmpfs /app:size=128M busybox sleep 3600
+
+# 查看完整的 Mounts 信息
+docker inspect test-tmpfs --format='{{json .Mounts}}' | jq
+
 [{"Type":"tmpfs","Source":"","Destination":"/app","Mode":"","RW":true,"Propagation":""}]
 ```
 
@@ -548,6 +593,12 @@ resolv.conf
 ```bash
 free -m | head -2
 docker run --rm --tmpfs /scratch busybox df -h /scratch
+
+
+# free	显示系统内存使用情况
+# -m	以 MB 为单位显示（-m = megabytes）
+# |	管道符，将前一个命令的输出传递给后一个命令
+# head -2	只显示前 2 行（标题行 + 第一行数据）
 ```
 
 ```text
@@ -561,7 +612,13 @@ tmpfs                     3.9G         0      3.9G   0% /scratch
 
 ```bash
 docker run --rm --tmpfs /scratch:size=1m busybox sh -c 'dd if=/dev/zero of=/scratch/f bs=1M count=3; ls -l /scratch'
+
+
+# dd if=/dev/zero of=/scratch/f bs=1M count=3	
+# 关键操作：从 /dev/zero（无限空字符）读取数据，每次写 1MB（bs=1M），共写 3 次（count=3），目标文件是 /scratch/f
 ```
+
+结果返回如下：
 
 ```text
 dd: error writing '/scratch/f': No space left on device
@@ -576,14 +633,23 @@ total 1024
 
 ```bash
 docker run --rm --tmpfs /scratch busybox ls -ld /scratch
-docker run --rm --tmpfs /scratch:mode=700,uid=1000,gid=1000 busybox ls -ld /scratch
-docker run --rm --tmpfs /t:noexec busybox sh -c 'printf "#!/bin/sh\necho pwned\n" > /t/s && chmod +x /t/s && /t/s'
-```
-
-```text
+# =================================执行结果==================================
 drwxrwxrwt    2 root     root            40 Aug 25 06:50 /scratch
+# ===========================================================================
+
+
+
+# 挂载 tmpfs 到 /scratch，并设置权限模式为 700，所有者为 uid=1000，gid=1000
+docker run --rm --tmpfs /scratch:mode=700,uid=1000,gid=1000 busybox ls -ld /scratch
+# =================================执行结果==================================
 drwx------    2 1000     1000            40 Aug 25 06:50 /scratch
+# ===========================================================================
+
+
+docker run --rm --tmpfs /t:noexec busybox sh -c 'printf "#!/bin/sh\necho pwned\n" > /t/s && chmod +x /t/s && /t/s'
+# =================================执行结果==================================
 sh: line 0: /t/s: Permission denied
+# ===========================================================================
 ```
 
 第三个实验里，往 noexec 的 tmpfs 放了一个加过执行权限的脚本，照样被拒——临时目录拿来执行来路不明的二进制，这条路被焊死了。
@@ -631,7 +697,18 @@ docker inspect anon-rm-demo --format '{{json .Mounts}}'
 ```
 
 ```text
-[{"Type":"volume","Name":"8663d0ce4637adce0a7d00ee02b0c483f1776ef5f3e478158a22f78e2baa2426","Source":"/var/lib/docker/volumes/8663d0ce4637adce0a7d00ee02b0c483f1776ef5f3e478158a22f78e2baa2426/_data","Destination":"/data","Driver":"local","Mode":"","RW":true,"Propagation":""}]
+[
+    {
+        "Type": "volume",
+        "Name": "8663d0ce4637adce0a7d00ee02b0c483f1776ef5f3e478158a22f78e2baa2426",
+        "Source": "/var/lib/docker/volumes/8663d0ce4637adce0a7d00ee02b0c483f1776ef5f3e478158a22f78e2baa2426/_data",
+        "Destination": "/data",
+        "Driver": "local",
+        "Mode": "",
+        "RW": true,
+        "Propagation": ""
+    }
+]
 ```
 
 Type 还是 volume，Name 是哈希。为什么会有这种东西？因为很多官方镜像的 Dockerfile 里写了 `VOLUME /xxx`（[第 9 篇](/云原生/docker/docker-09-dockerfile)提过），它**声明**了「这个路径该挂卷」；你 `docker run` 时没给卷名，引擎就自动补一个匿名卷。开头那个 MySQL，如果一直没挂命名卷，数据其实一直躺在匿名卷里——而匿名卷的命运，取决于容器怎么被删。三种删法，三种命运。
@@ -732,6 +809,22 @@ docker run -v mysql-data:/var/lib/mysql ... mysql:new-tag   # 数据原样回来
 ```
 
 真正要慌的不是 `rm -v`，而是两件事：`docker volume rm` 敲错卷名（它删卷是不商量的），以及 `docker volume prune -a`（连未使用的命名卷一起清）。这两个动手前先 `docker ps --filter volume=<名>` 确认没有容器在用。
+
+```shell
+# 删除 名为 mydata的数据卷
+docker volume rm mydata
+
+# -f 或 --force：强制删除正在被容器使用的卷
+docker volume rm -f mydata
+
+# 清理所有没有被容器使用的卷
+docker volume prune
+
+# 强制清理，不提示确认
+docker volume prune -f
+```
+
+
 
 > 一句话收口：**`run -v` 是挂、`rm -v` 是删容器时带走匿名卷；命名卷对两者都免疫，怕的是 `volume rm` 和 `prune -a`。**
 
