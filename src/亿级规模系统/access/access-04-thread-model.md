@@ -39,7 +39,7 @@ description: "【占位待学】线程模型：从 BIO 到 NIO，百万连接的
 
 - 用 Java BIO 写一个 echo server，用脚本建立 1000 / 5000 / 10000 个连接，记录服务端线程数与内存占用
 - 用 Netty 重写同样的 echo server（主从 Reactor），重复实验对比
-- 用 ss -s 与 /proc/<pid>/status 观察两种模型的连接与线程数量
+- 用 ss -s 与 `/proc/<pid>/status` 观察两种模型的连接与线程数量
 
 ## 四、验收标准（全部通过才进入下一篇）
 

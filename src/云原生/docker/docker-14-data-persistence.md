@@ -124,6 +124,13 @@ docker run --rm busybox cat /etc/motd
 ```bash
 docker volume create mydata
 docker run --rm -v mydata:/data busybox sh -c 'echo persist-me > /data/note.txt'
+
+
+# =====================================================
+# docker volume create mydata
+# =====================================================
+# 作用：在宿主机上显式创建一个名为 mydata 的 Docker 卷。
+# 本质：Docker 会在宿主机（通常是 /var/lib/docker/volumes/mydata/_data）创建一个目录，由 Docker 托管，用于持久化数据。
 ```
 
 `-v mydata:/data` 读作「把名为 mydata 的卷，挂到容器内的 `/data`」。冒号前是卷名，冒号后是容器内的路径。这条跑完容器就退出了（`--rm` 连容器都删了）。

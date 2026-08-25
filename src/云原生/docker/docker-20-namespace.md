@@ -528,7 +528,7 @@ uid=0(root) gid=0(root) groups=0(root),10(wheel)
 
 ---
 
-## 第 10 课：一把尺量全部——/proc/<pid>/ns/ 的 inode 判同
+## 第 10 课：一把尺量全部——`/proc/<pid>/ns/` 的 inode 判同
 
 **🧑‍🏫 老师：**
 
