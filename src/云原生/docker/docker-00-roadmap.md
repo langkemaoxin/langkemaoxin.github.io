@@ -126,7 +126,7 @@ description: 以西蒙学习法拆碎 Docker 官方知识域：起步跑通 → 
 |------|-----------|
 | 缺口（已占位） | 占位篇 | 为什么要补 |
 |------|------|-----------|
-| 🈳 Compose 现代特性专篇 | [第 18 篇](./docker-18-compose-modern.md) | `compose watch` 热更、profiles、init 容器、provider services——旧文只覆盖到主线语法 |
+| ✅ Compose 现代特性专篇 | [第 18 篇](./docker-18-compose-modern.md) | `compose watch` 热更、profiles、init 容器、provider services——已按新大纲成文（2026-08-25） |
 | 🈳 buildx 多平台与 Bake 实操 | [第 11 篇](./docker-11-buildx-bake.md) | ARM 服务器 + Apple Silicon 时代，多平台构建已是交付标配；Bake 是官方编排式构建答案 |
 | 🈳 供应链安全篇 | [第 30 篇](./docker-30-supply-chain.md) | Scout 漏洞治理、镜像签名、Hardened Images——2026 年企业刚需，29.x 已把 DCT 移除、方向转向 cosign |
 | 🈳 rootless 模式实操 | [第 26 篇](./docker-26-rootless.md) | 多租户与公共 CI 场景的安全地基，官方 Security 板块主体之一 |
@@ -259,7 +259,7 @@ description: 以西蒙学习法拆碎 Docker 官方知识域：起步跑通 → 
 
 **阶段验收**：写一个含构建、健康检查、依赖顺序、数据卷的 compose.yaml，`docker compose up -d` 一键起一套 HTTPS 反代的 Web+DB 栈，重启宿主机后整套自愈。
 
-**弹药**：[Compose 编排](./docker-16-compose.md)、[HTTPS Nginx 实战](./docker-17-https-nginx.md)、[Compose 现代特性](./docker-18-compose-modern.md)（🈳 占位）。
+**弹药**：[Compose 编排](./docker-16-compose.md)、[HTTPS Nginx 实战](./docker-17-https-nginx.md)、[Compose 现代特性](./docker-18-compose-modern.md)（✅ 已成文，watch/profiles/include/pre_start 全实测）。
 
 ---
 
@@ -383,6 +383,6 @@ description: 以西蒙学习法拆碎 Docker 官方知识域：起步跑通 → 
 
 每个环节只有一个入口——前一个环节。从阶段 0 第一次 `docker run hello-world` 开始，走完这条线，Docker 对你不再是命令行的海洋和生态的乱麻，而是一张你能指出哪里扎实、哪里在偷懒的施工图。
 
-**本板块 33 篇主线已按新大纲重排完毕**：旧 24 篇教材归位为各阶段弹药，7 篇缺口已建占位（第 11/18/26/29/30/31/32 篇，篇内带计划大纲与实验清单），将按本大纲逐篇补齐正文（Compose 现代特性 / buildx 多平台与 Bake / 供应链安全 / rootless / Swarm 前传 / AI 表面 / Engine API）。
+**本板块 33 篇主线已按新大纲重排完毕**：旧 24 篇教材归位为各阶段弹药，7 篇缺口已建占位（第 11/18/26/29/30/31/32 篇），其中**第 18 篇 Compose 现代特性已成文**，其余 6 篇将按本大纲逐篇补齐正文（buildx 多平台与 Bake / 供应链安全 / rootless / Swarm 前传 / AI 表面 / Engine API）。
 
 下一步，从阶段 0 的第一个实验开始：[《Docker 是什么——从 jar 包部署到镜像一键上线》](./docker-01-what-is-docker.md)。

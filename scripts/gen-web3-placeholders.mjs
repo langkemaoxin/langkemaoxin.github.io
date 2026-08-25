@@ -10,16 +10,16 @@ const GUIDE = "/web3区块链/roadmap/web3-00-roadmap";
 
 // 文件夹 -> 侧边栏分组名（sidebarGroup 与 scripts/sidebar/web3区块链.mjs 的 title 一致）+ 默认 tag
 const FOLDERS = {
-  foundations: { group: "地基与密码学", tags: ["密码学", "区块链基础"] },
-  bitcoin: { group: "比特币", tags: ["比特币"] },
-  evm: { group: "以太坊核心", tags: ["以太坊", "EVM"] },
-  solidity: { group: "Solidity 与 Foundry", tags: ["Solidity", "Foundry"] },
-  tokens: { group: "代币标准", tags: ["代币标准", "OpenZeppelin"] },
-  dapp: { group: "DApp 全栈", tags: ["DApp", "前端"] },
-  security: { group: "安全攻防", tags: ["安全"] },
-  defi: { group: "DeFi 协议", tags: ["DeFi"] },
-  l2: { group: "共识与扩容", tags: ["Layer2", "扩容"] },
-  capstone: { group: "生态与毕业", tags: ["实战"] },
+  "00-foundations": { group: "地基与密码学", tags: ["密码学", "区块链基础"] },
+  "01-bitcoin": { group: "比特币", tags: ["比特币"] },
+  "02-evm": { group: "以太坊核心", tags: ["以太坊", "EVM"] },
+  "03-solidity": { group: "Solidity 与 Foundry", tags: ["Solidity", "Foundry"] },
+  "04-tokens": { group: "代币标准", tags: ["代币标准", "OpenZeppelin"] },
+  "05-dapp": { group: "DApp 全栈", tags: ["DApp", "前端"] },
+  "06-security": { group: "安全攻防", tags: ["安全"] },
+  "07-defi": { group: "DeFi 协议", tags: ["DeFi"] },
+  "08-l2": { group: "共识与扩容", tags: ["Layer2", "扩容"] },
+  "09-capstone": { group: "生态与毕业", tags: ["实战"] },
 };
 
 /** 57 篇文章数据（顺序 = 学习顺序 = 总纲阶段顺序）
@@ -30,7 +30,7 @@ const FOLDERS = {
 const A = [
   // ---------- 阶段 0：地基与密码学 ----------
   {
-    f: "foundations-01-why-blockchain", d: "foundations", st: "阶段 0 · 地基与密码学",
+    f: "foundations-01-why-blockchain", d: "00-foundations", st: "阶段 0 · 地基与密码学",
     t: "Web3 全景：区块链到底在解决什么问题", s: "01 Web3 全景",
     unit: "阶段 0 · 单元 0.1",
     p: "在没有中心化机构背书的情况下，两个互不信任的人怎么就「谁欠谁多少钱」达成一致？这是整个 Web3 存在的理由。先把问题、术语版图和学习靶子立起来，后面每一篇都在回答这一篇提出的问题。",
@@ -53,7 +53,7 @@ const A = [
     ],
   },
   {
-    f: "foundations-02-hash-merkle", d: "foundations", st: "阶段 0 · 地基与密码学",
+    f: "foundations-02-hash-merkle", d: "00-foundations", st: "阶段 0 · 地基与密码学",
     t: "哈希函数与默克尔树：区块链的指纹术", s: "02 哈希与默克尔树",
     unit: "阶段 0 · 单元 0.2",
     p: "区块链上任何内容（交易、区块、状态）都会被压缩成一串固定长度的「指纹」，篡改一个字符指纹就面目全非——哈希是区块链全部安全性的地基，而默克尔树让「证明某笔交易在某个区块里」不需要下载整个区块。",
@@ -76,7 +76,7 @@ const A = [
     ],
   },
   {
-    f: "foundations-03-keys-signatures", d: "foundations", st: "阶段 0 · 地基与密码学",
+    f: "foundations-03-keys-signatures", d: "00-foundations", st: "阶段 0 · 地基与密码学",
     t: "公私钥与数字签名：从私钥到地址", s: "03 公私钥与签名",
     unit: "阶段 0 · 单元 0.3",
     p: "为什么一个签名就能证明「这笔交易确实是这个地址的主人发起的」，而任何人都无法伪造、本人也无法抵赖？账户的「所有权」到底意味着什么？这一篇把区块链的身份体系拆开。",
@@ -99,7 +99,7 @@ const A = [
     ],
   },
   {
-    f: "foundations-04-wallets", d: "foundations", st: "阶段 0 · 地基与密码学",
+    f: "foundations-04-wallets", d: "00-foundations", st: "阶段 0 · 地基与密码学",
     t: "钱包与助记词：BIP-39/32/44", s: "04 钱包与助记词",
     unit: "阶段 0 · 单元 0.4",
     p: "12 个英文单词为什么能管理无数把私钥？丢了助记词会发生什么？硬件钱包凭什么更安全？这一篇讲清「钱包」的本质——它不是装钱的容器，而是密钥管理器。",
@@ -122,7 +122,7 @@ const A = [
     ],
   },
   {
-    f: "foundations-05-mini-blockchain", d: "foundations", st: "阶段 0 · 地基与密码学",
+    f: "foundations-05-mini-blockchain", d: "00-foundations", st: "阶段 0 · 地基与密码学",
     t: "手写 100 行迷你区块链", s: "05 手写迷你区块链",
     unit: "阶段 0 · 单元 0.5",
     p: "把前面所有零件（哈希、签名、区块结构、PoW）组装起来——亲手写一个能挖矿、能转账、能防篡改的迷你区块链。写完之后，「区块链」这个词对你不再是黑盒。",
@@ -153,7 +153,7 @@ const A = [
 
   // ---------- 阶段 1：比特币 ----------
   {
-    f: "bitcoin-01-utxo", d: "bitcoin", st: "阶段 1 · 比特币",
+    f: "bitcoin-01-utxo", d: "01-bitcoin", st: "阶段 1 · 比特币",
     t: "比特币白皮书精读与 UTXO 模型", s: "01 白皮书与 UTXO",
     unit: "阶段 1 · 单元 1.1",
     p: "中本聪 9 页论文怎么解决双花？UTXO「未花费输出」模型和银行账户模型差在哪？为什么这个设计让比特币「安全但难编程」？理解了它，才理解以太坊为什么换赛道。",
@@ -174,7 +174,7 @@ const A = [
     ],
   },
   {
-    f: "bitcoin-02-pow", d: "bitcoin", st: "阶段 1 · 比特币",
+    f: "bitcoin-02-pow", d: "01-bitcoin", st: "阶段 1 · 比特币",
     t: "挖矿、难度调整与最长链：51% 攻击推演", s: "02 挖矿与最长链",
     unit: "阶段 1 · 单元 1.2",
     p: "全世界几千个节点没有老板，怎么对「下一个区块是谁挖的」达成一致？难度调整为什么让出块稳定在 10 分钟左右？51% 攻击到底能做什么、不能做什么？",
@@ -195,7 +195,7 @@ const A = [
     ],
   },
   {
-    f: "bitcoin-03-script", d: "bitcoin", st: "阶段 1 · 比特币",
+    f: "bitcoin-03-script", d: "01-bitcoin", st: "阶段 1 · 比特币",
     t: "比特币脚本：一种故意不做完的编程语言", s: "03 比特币脚本",
     unit: "阶段 1 · 单元 1.3",
     p: "比特币其实也有「智能合约」，但它是故意设计成图灵不完备的——没有循环、没有复杂状态。为什么安全要靠「少做事」来换？P2PKH 脚本怎么一步步验证一笔花费？",
@@ -216,7 +216,7 @@ const A = [
     ],
   },
   {
-    f: "bitcoin-04-tradeoffs", d: "bitcoin", st: "阶段 1 · 比特币",
+    f: "bitcoin-04-tradeoffs", d: "01-bitcoin", st: "阶段 1 · 比特币",
     t: "比特币的取舍与现状：为什么需要以太坊", s: "04 比特币的取舍",
     unit: "阶段 1 · 单元 1.4",
     p: "比特币明明最安全，为什么「世界计算机」的重任落在了以太坊身上？区块大小战争、Taproot、减半时间表——理解比特币的取舍，就是理解所有后来者的设计起点。",
@@ -247,7 +247,7 @@ const A = [
 
   // ---------- 阶段 2：以太坊核心 ----------
   {
-    f: "evm-01-accounts", d: "evm", st: "阶段 2 · 以太坊核心",
+    f: "evm-01-accounts", d: "02-evm", st: "阶段 2 · 以太坊核心",
     t: "账户模型与状态机：以太坊的世界状态", s: "01 账户与状态机",
     unit: "阶段 2 · 单元 2.1",
     p: "以太坊是一个「全局状态机」——这句话到底是什么意思？EOA 和合约账户的边界在哪？EIP-7702 之后这条边界为什么变模糊了？本篇建立看懂后面一切的地基视角。",
@@ -268,7 +268,7 @@ const A = [
     ],
   },
   {
-    f: "evm-02-transactions", d: "evm", st: "阶段 2 · 以太坊核心",
+    f: "evm-02-transactions", d: "02-evm", st: "阶段 2 · 以太坊核心",
     t: "交易全解：类型、签名与 EIP-1559 费用", s: "02 交易与费用",
     unit: "阶段 2 · 单元 2.2",
     p: "一笔交易从 MetaMask 点确认到被打包，中间发生了什么？legacy / 2930 / 1559 / 4844 / 7702 五种类型怎么区分？baseFee 销毁和 priorityFee 给验证者——你的 Gas 费到底付给了谁？",
@@ -289,7 +289,7 @@ const A = [
     ],
   },
   {
-    f: "evm-03-evm-gas", d: "evm", st: "阶段 2 · 以太坊核心",
+    f: "evm-03-evm-gas", d: "02-evm", st: "阶段 2 · 以太坊核心",
     t: "EVM 执行模型与 Gas：逐条执行一笔交易", s: "03 EVM 与 Gas",
     unit: "阶段 2 · 单元 2.3",
     p: "EVM 是一台什么样的计算机？为什么每条指令都要收费？同样一个功能，为什么有人写花 50 万 Gas、有人只花 10 万？看懂这一篇，Solidity 的每个语法选择都有了价格标签。",
@@ -311,7 +311,7 @@ const A = [
     ],
   },
   {
-    f: "evm-04-nodes-rpc", d: "evm", st: "阶段 2 · 以太坊核心",
+    f: "evm-04-nodes-rpc", d: "02-evm", st: "阶段 2 · 以太坊核心",
     t: "节点与 JSON-RPC：亲手当一次客户端", s: "04 节点与 RPC",
     unit: "阶段 2 · 单元 2.4",
     p: "MetaMask 背后连的是谁的节点？eth_call 和 eth_sendRawTransaction 有什么本质区别？本地 anvil 与远程节点各适合什么场景？这一篇之后，你和链之间不再有中间商。",
@@ -332,7 +332,7 @@ const A = [
     ],
   },
   {
-    f: "evm-05-storage", d: "evm", st: "阶段 2 · 以太坊核心",
+    f: "evm-05-storage", d: "02-evm", st: "阶段 2 · 以太坊核心",
     t: "状态存储：MPT、RLP 与存储槽（了解级）", s: "05 状态存储",
     unit: "阶段 2 · 单元 2.5",
     p: "几百 GB 的「世界状态」到底存在什么结构里？为什么轻节点只下载区块头就能验证一笔交易？Solidity 里每个状态变量在存储里的位置怎么定？本篇为 Solidity 阶段的 gas 优化埋下地基。",
@@ -362,7 +362,7 @@ const A = [
 
   // ---------- 阶段 3：Solidity 与 Foundry ----------
   {
-    f: "solidity-01-foundry-setup", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-01-foundry-setup", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "Foundry 上手：forge、anvil、cast、chisel", s: "01 Foundry 上手",
     unit: "阶段 3 · 单元 3.1",
     xt: ["实战"],
@@ -385,7 +385,7 @@ const A = [
     ],
   },
   {
-    f: "solidity-02-syntax-basics", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-02-syntax-basics", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "Solidity 语法 I：合约骨架、值类型与函数", s: "02 语法 I 骨架与类型",
     unit: "阶段 3 · 单元 3.2",
     p: "一个 .sol 文件由什么组成？uint256 / address / bool 在 EVM 层面对应什么？public/private 与 view/pure 分别控制什么？——先写出第一个结构清晰的合约。（基准 Solidity 0.8.36）",
@@ -409,7 +409,7 @@ const A = [
     ],
   },
   {
-    f: "solidity-03-data-location", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-03-data-location", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "语法 II：引用类型与数据位置", s: "03 语法 II 数据位置",
     unit: "阶段 3 · 单元 3.3",
     p: "storage / memory / calldata 三个数据位置是 Solidity 新手的第一道坎，也是 Gas 优化的第一战场——同一个函数签名换一个位置，Gas 能差数倍。",
@@ -432,7 +432,7 @@ const A = [
     ],
   },
   {
-    f: "solidity-04-mappings-events", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-04-mappings-events", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "语法 III：映射、数组、结构体与事件", s: "04 语法 III 映射与事件",
     unit: "阶段 3 · 单元 3.4",
     p: "链上怎么存「谁存了多少钱」这样的表？事件日志为什么被称为「免费的只读数据库」？custom error 为什么比 revert 字符串省 Gas？——本篇是状态建模三件套 + 可观测性。",
@@ -455,7 +455,7 @@ const A = [
     ],
   },
   {
-    f: "solidity-05-oop", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-05-oop", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "继承、接口、库与抽象合约", s: "05 继承与接口",
     unit: "阶段 3 · 单元 3.5",
     p: "Solidity 的面向对象和 Java 有什么不同？多继承的线性化顺序为什么重要？为什么「接口」是与任意已部署合约对话的唯一方式？——本篇之后，你写的不再是孤立合约，而是能组合的组件。",
@@ -477,7 +477,7 @@ const A = [
     ],
   },
   {
-    f: "solidity-06-payable-eth", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-06-payable-eth", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "收付款实战：payable、fallback 与转账三种方式", s: "06 收付款实战",
     unit: "阶段 3 · 单元 3.6",
     p: "合约怎么收钱、怎么转钱、怎么「带着钱调用别人」？transfer/send/call 三兄弟为什么要背熟？——重入攻击的种子就在这一篇埋下（阶段 6 回来拆弹）。",
@@ -500,7 +500,7 @@ const A = [
     ],
   },
   {
-    f: "solidity-07-testing", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-07-testing", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "Foundry 测试：cheatcodes、fuzz 与 invariant", s: "07 测试三连",
     unit: "阶段 3 · 单元 3.7",
     xt: ["实战"],
@@ -523,7 +523,7 @@ const A = [
     ],
   },
   {
-    f: "solidity-08-deploy-verify", d: "solidity", st: "阶段 3 · Solidity 与 Foundry",
+    f: "solidity-08-deploy-verify", d: "03-solidity", st: "阶段 3 · Solidity 与 Foundry",
     t: "部署与验证：forge script、Sepolia 与 Etherscan", s: "08 部署与验证",
     unit: "阶段 3 · 单元 3.8",
     xt: ["实战", "部署"],
@@ -555,7 +555,7 @@ const A = [
 
   // ---------- 阶段 4：代币标准与合约工程 ----------
   {
-    f: "tokens-01-erc20", d: "tokens", st: "阶段 4 · 代币标准",
+    f: "tokens-01-erc20", d: "04-tokens", st: "阶段 4 · 代币标准",
     t: "ERC-20 与 OpenZeppelin：亲手发一个代币", s: "01 ERC-20",
     unit: "阶段 4 · 单元 4.1",
     xt: ["实战"],
@@ -579,7 +579,7 @@ const A = [
     ],
   },
   {
-    f: "tokens-02-erc721-1155", d: "tokens", st: "阶段 4 · 代币标准",
+    f: "tokens-02-erc721-1155", d: "04-tokens", st: "阶段 4 · 代币标准",
     t: "ERC-721 / ERC-1155：NFT 与元数据", s: "02 ERC-721/1155",
     unit: "阶段 4 · 单元 4.2",
     xt: ["实战"],
@@ -602,7 +602,7 @@ const A = [
     ],
   },
   {
-    f: "tokens-03-erc4626", d: "tokens", st: "阶段 4 · 代币标准",
+    f: "tokens-03-erc4626", d: "04-tokens", st: "阶段 4 · 代币标准",
     t: "ERC-4626 金库标准与通胀攻击", s: "03 ERC-4626",
     unit: "阶段 4 · 单元 4.3",
     p: "所有「存币生息」产品（yearn、Pendle……）都长一个样——ERC-4626 把金库接口标准化了。它也是「通胀攻击」这个经典漏洞的策源地：攻击者如何用第一笔存款偷走后续存款人的资产？",
@@ -623,7 +623,7 @@ const A = [
     ],
   },
   {
-    f: "tokens-04-upgradeable", d: "tokens", st: "阶段 4 · 代币标准",
+    f: "tokens-04-upgradeable", d: "04-tokens", st: "阶段 4 · 代币标准",
     t: "可升级合约：代理模式与存储槽", s: "04 可升级合约",
     unit: "阶段 4 · 单元 4.4",
     p: "合约部署后不可改，发现 bug 怎么办？「代理合约」让逻辑可换、存储不变——这是把 Web2 的迭代习惯搬进 Web3 的唯一通道，也是存储槽碰撞事故的高发区。",
@@ -645,7 +645,7 @@ const A = [
     ],
   },
   {
-    f: "tokens-05-patterns", d: "tokens", st: "阶段 4 · 代币标准",
+    f: "tokens-05-patterns", d: "04-tokens", st: "阶段 4 · 代币标准",
     t: "合约工程模式：工厂、多签与时间锁", s: "05 工程模式",
     unit: "阶段 4 · 单元 4.5",
     p: "真实项目的合约从来不是一个文件：用工厂批量部署、用多签管金库、用时间锁防作恶——工程模式是「能写」到「能上线」之间的一层。",
@@ -676,7 +676,7 @@ const A = [
 
   // ---------- 阶段 5：DApp 全栈 ----------
   {
-    f: "dapp-01-viem", d: "dapp", st: "阶段 5 · DApp 全栈",
+    f: "dapp-01-viem", d: "05-dapp", st: "阶段 5 · DApp 全栈",
     t: "客户端 API：viem/ethers 与 JSON-RPC 封装", s: "01 viem 客户端",
     unit: "阶段 5 · 单元 5.1",
     p: "前端怎么和链说话？viem（Wagmi 生态新一代，TypeScript 优先）如何把裸 JSON-RPC 封装成人类可读的 API？存量代码里的大量 ethers v6 又怎么读？",
@@ -698,7 +698,7 @@ const A = [
     ],
   },
   {
-    f: "dapp-02-wallet-connect", d: "dapp", st: "阶段 5 · DApp 全栈",
+    f: "dapp-02-wallet-connect", d: "05-dapp", st: "阶段 5 · DApp 全栈",
     t: "钱包连接：EIP-1193、EIP-6963 与多钱包", s: "02 钱包连接",
     unit: "阶段 5 · 单元 5.2",
     p: "「Connect Wallet」按钮背后发生了什么？为什么 2024 年后要换成 EIP-6963 多钱包发现？连接、断开、切链、加链的完整生命周期怎么处理才健壮？",
@@ -719,7 +719,7 @@ const A = [
     ],
   },
   {
-    f: "dapp-03-frontend-dapp", d: "dapp", st: "阶段 5 · DApp 全栈",
+    f: "dapp-03-frontend-dapp", d: "05-dapp", st: "阶段 5 · DApp 全栈",
     t: "DApp 前端实战：从 0 到 1 一个完整应用", s: "03 前端实战",
     unit: "阶段 5 · 单元 5.3",
     xt: ["实战"],
@@ -742,7 +742,7 @@ const A = [
     ],
   },
   {
-    f: "dapp-04-graph", d: "dapp", st: "阶段 5 · DApp 全栈",
+    f: "dapp-04-graph", d: "05-dapp", st: "阶段 5 · DApp 全栈",
     t: "链上数据与 The Graph 子图", s: "04 子图索引",
     unit: "阶段 5 · 单元 5.4",
     p: "「这个地址的全部历史交易」「全平台 NFT 持有分布」这类查询为什么不能靠 RPC 直接做？事件日志 + 索引器 = 链上数据库——The Graph 是这套范式的标准答案。",
@@ -763,7 +763,7 @@ const A = [
     ],
   },
   {
-    f: "dapp-05-storage", d: "dapp", st: "阶段 5 · DApp 全栈",
+    f: "dapp-05-storage", d: "05-dapp", st: "阶段 5 · DApp 全栈",
     t: "去中心化存储：IPFS 与 Arweave", s: "05 去中心化存储",
     unit: "阶段 5 · 单元 5.5",
     p: "NFT 的图片、DApp 的前端静态文件放哪？链上太贵、中心化服务器违背初衷——IPFS/Arweave 补上 Web3 存储版图的这块拼图。",
@@ -793,7 +793,7 @@ const A = [
 
   // ---------- 阶段 6：安全攻防 ----------
   {
-    f: "security-01-threat-model", d: "security", st: "阶段 6 · 安全攻防",
+    f: "security-01-threat-model", d: "06-security", st: "阶段 6 · 安全攻防",
     t: "攻击面与威胁模型：OWASP 智能合约 Top 10", s: "01 攻击面全景",
     unit: "阶段 6 · 单元 6.1",
     p: "智能合约「代码即法律」，但代码有 bug 就等于法律有漏洞——而且不可撤销、公开可攻击。先建立全景威胁模型，再逐个击破：这个领域的历史教训值几千亿美元。",
@@ -815,7 +815,7 @@ const A = [
     ],
   },
   {
-    f: "security-02-reentrancy", d: "security", st: "阶段 6 · 安全攻防",
+    f: "security-02-reentrancy", d: "06-security", st: "阶段 6 · 安全攻防",
     t: "重入攻击：从 The DAO 到今天的变体", s: "02 重入攻击",
     unit: "阶段 6 · 单元 6.2",
     p: "2016 年 The DAO 360 万 ETH 被盗，直接导致以太坊分叉出 ETC——根因只是一个「先转账、后改状态」。亲手复现它，再理解所有变体与所有防御。",
@@ -837,7 +837,7 @@ const A = [
     ],
   },
   {
-    f: "security-03-access-control", d: "security", st: "阶段 6 · 安全攻防",
+    f: "security-03-access-control", d: "06-security", st: "阶段 6 · 安全攻防",
     t: "访问控制漏洞：权限错置与签名滥用", s: "03 访问控制",
     unit: "阶段 6 · 单元 6.3",
     p: "「谁都能调的 mint」「校验签名不查 nonce」——权限类漏洞常年霸榜。Solidity 没有登录与中间件，权限全部要自己写对。",
@@ -859,7 +859,7 @@ const A = [
     ],
   },
   {
-    f: "security-04-arithmetic-oracle", d: "security", st: "阶段 6 · 安全攻防",
+    f: "security-04-arithmetic-oracle", d: "06-security", st: "阶段 6 · 安全攻防",
     t: "算术漏洞与预言机操纵", s: "04 算术与预言机",
     unit: "阶段 6 · 单元 6.4",
     p: "精度丢失让用户资产凭空蒸发；用 AMM 现货价做清算触发器，等于给攻击者发提款码。数字与价格，是两大高频赛车场。",
@@ -881,7 +881,7 @@ const A = [
     ],
   },
   {
-    f: "security-05-mev", d: "security", st: "阶段 6 · 安全攻防",
+    f: "security-05-mev", d: "06-security", st: "阶段 6 · 安全攻防",
     t: "MEV：抢跑、三明治与闪电贷攻击", s: "05 MEV 攻防",
     unit: "阶段 6 · 单元 6.5",
     p: "你的交易在内存池里是明文的，搜索者会抢在你前面买、再跟在你后面卖。MEV 是链的「物理规律」，不懂它就理解不了 Gas、滑点与交易为何总在区块顶部。",
@@ -903,7 +903,7 @@ const A = [
     ],
   },
   {
-    f: "security-06-tools", d: "security", st: "阶段 6 · 安全攻防",
+    f: "security-06-tools", d: "06-security", st: "阶段 6 · 安全攻防",
     t: "工具链：Slither、fuzz 与形式化验证", s: "06 安全工具链",
     unit: "阶段 6 · 单元 6.6",
     p: "人眼会累，机器不会。2026 年审计标配 = Slither 静态扫描 + Foundry fuzz/invariant + 人工复核；形式化验证在关键路径开始落地——工具的价值取决于你会不会读它的输出。",
@@ -926,7 +926,7 @@ const A = [
     ],
   },
   {
-    f: "security-07-audit-method", d: "security", st: "阶段 6 · 安全攻防",
+    f: "security-07-audit-method", d: "06-security", st: "阶段 6 · 安全攻防",
     t: "审计方法论：像审计师一样审查合约", s: "07 审计方法论",
     unit: "阶段 6 · 单元 6.7",
     p: "把前六篇的武器按流程串起来：威胁建模 → 架构信任边界 → 逐函数审查 → 攻击树 → PoC → 报告。对一个小型开源协议完成一次完整自查——这是安全阶段的毕业考。",
@@ -955,7 +955,7 @@ const A = [
 
   // ---------- 阶段 7：DeFi 协议 ----------
   {
-    f: "defi-01-landscape", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-01-landscape", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "DeFi 全景与可组合性", s: "01 DeFi 全景",
     unit: "阶段 7 · 单元 7.1",
     p: "没有银行、没有券商，一套自动执行的合约网络怎么长出存款、借贷、交易、保险？「乐高积木」为什么既是蜜糖也是毒药（风险传染）？",
@@ -976,7 +976,7 @@ const A = [
     ],
   },
   {
-    f: "defi-02-amm", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-02-amm", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "AMM 演进：恒定乘积到集中流动性到 hooks", s: "02 AMM 三代",
     unit: "阶段 7 · 单元 7.2",
     p: "Uniswap 用 x*y=k 干掉了做市商，v3 把资金效率提升数千倍，v4 把池子变成可编程平台——AMM 是 DeFi 的心脏，也是合约工程的巅峰教材。",
@@ -999,7 +999,7 @@ const A = [
     ],
   },
   {
-    f: "defi-03-lending", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-03-lending", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "借贷协议：Aave 的利率模型与清算", s: "03 借贷与清算",
     unit: "阶段 7 · 单元 7.3",
     p: "没有信用评估，凭什么敢借钱给陌生人？答案是超额抵押 + 机器人清算——借贷协议是理解「链上金融自稳性」的最佳样本。",
@@ -1021,7 +1021,7 @@ const A = [
     ],
   },
   {
-    f: "defi-04-stablecoins", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-04-stablecoins", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "稳定币三形态与监管（GENIUS Act 时代）", s: "04 稳定币",
     unit: "阶段 7 · 单元 7.4",
     p: "USDT 一家托管几千亿美元，DAI 靠超额抵押，UST 已死——三种稳定机制各有命门。2025 年美国 GENIUS Act 落地后，合规成了稳定币的新变量。",
@@ -1043,7 +1043,7 @@ const A = [
     ],
   },
   {
-    f: "defi-05-oracles-chainlink", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-05-oracles-chainlink", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "预言机：Chainlink 价格喂送实操", s: "05 预言机",
     unit: "阶段 7 · 单元 7.5",
     p: "链是封闭世界，外部价格怎么进来？Chainlink 的去中心化喂价网络是 DeFi 的隐形基础设施，也是安全篇「预言机操纵」的正面教材。",
@@ -1065,7 +1065,7 @@ const A = [
     ],
   },
   {
-    f: "defi-06-staking-restaking", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-06-staking-restaking", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "质押与再质押：从 ETH Staking 到 EigenLayer", s: "06 质押与再质押",
     unit: "阶段 7 · 单元 7.6",
     p: "PoS 之后 ETH 持有者怎么「存币生息」？再质押把同一份质押安全复用给别的协议（AVS）——收益叠加，风险也叠加：一份安全卖两次。",
@@ -1086,7 +1086,7 @@ const A = [
     ],
   },
   {
-    f: "defi-07-governance-dao", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-07-governance-dao", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "治理与 DAO：代币投票的工程实现", s: "07 治理与 DAO",
     unit: "阶段 7 · 单元 7.7",
     p: "「去中心化」的最后一公里是治理：谁有权改参数、升级合约、动金库？ERC-20 Votes + Governor + Timelock 是行业标配三件套——它也是阶段 4 可升级合约「谁能升级」的正式答案。",
@@ -1108,7 +1108,7 @@ const A = [
     ],
   },
   {
-    f: "defi-08-tokenomics", d: "defi", st: "阶段 7 · DeFi 协议",
+    f: "defi-08-tokenomics", d: "07-defi", st: "阶段 7 · DeFi 协议",
     t: "代币经济学：发行、分配与释放曲线", s: "08 代币经济学",
     unit: "阶段 7 · 单元 7.8",
     p: "同样的代码，不同的代币经济学，一个长成协议、一个归零。发行曲线、解锁悬崖、激励飞轮——这是工程与经济的交叉课，也是看懂项目的基本功。",
@@ -1138,7 +1138,7 @@ const A = [
 
   // ---------- 阶段 8：共识、扩容与 L2 ----------
   {
-    f: "l2-01-pos-consensus", d: "l2", st: "阶段 8 · 共识与扩容",
+    f: "l2-01-pos-consensus", d: "08-l2", st: "阶段 8 · 共识与扩容",
     t: "PoS 共识：验证者、罚没与 Gasper", s: "01 PoS 共识",
     unit: "阶段 8 · 单元 8.1",
     p: "The Merge 之后以太坊靠百万级验证者达成共识——没有矿机，质押和罚没怎么替代算力？这是理解 L2「安全性从哪来」的前提。",
@@ -1160,7 +1160,7 @@ const A = [
     ],
   },
   {
-    f: "l2-02-scaling-roadmap", d: "l2", st: "阶段 8 · 共识与扩容",
+    f: "l2-02-scaling-roadmap", d: "08-l2", st: "阶段 8 · 共识与扩容",
     t: "扩容路线图：Rollup-centric、blobs 与 PeerDAS", s: "02 扩容路线图",
     unit: "阶段 8 · 单元 8.2",
     p: "以太坊不自己扩容执行，而是把执行外包给 L2、自己专注做「数据可用性」——blobs（EIP-4844）与 Fusaka 的 PeerDAS 是怎么一步步走到今天的？Glamsterdam 又要带来什么？",
@@ -1182,7 +1182,7 @@ const A = [
     ],
   },
   {
-    f: "l2-03-optimistic-rollup", d: "l2", st: "阶段 8 · 共识与扩容",
+    f: "l2-03-optimistic-rollup", d: "08-l2", st: "阶段 8 · 共识与扩容",
     t: "Optimistic Rollup 与 OP Stack 实操", s: "03 Optimistic Rollup",
     unit: "阶段 8 · 单元 8.3",
     xt: ["实战"],
@@ -1205,7 +1205,7 @@ const A = [
     ],
   },
   {
-    f: "l2-04-zk-rollup", d: "l2", st: "阶段 8 · 共识与扩容",
+    f: "l2-04-zk-rollup", d: "08-l2", st: "阶段 8 · 共识与扩容",
     t: "ZK Rollup：零知识证明与有效性证明", s: "04 ZK Rollup",
     unit: "阶段 8 · 单元 8.4",
     p: "不用挑战期，每个状态根都附带一个数学证明——零知识证明是区块链里最「魔法」的数学。先建立直觉，再看工程落地。",
@@ -1227,7 +1227,7 @@ const A = [
     ],
   },
   {
-    f: "l2-05-bridges", d: "l2", st: "阶段 8 · 共识与扩容",
+    f: "l2-05-bridges", d: "08-l2", st: "阶段 8 · 共识与扩容",
     t: "跨链桥：机制与史上最大盗案群", s: "05 跨链桥",
     unit: "阶段 8 · 单元 8.5",
     p: "链与链之间没有原生通道，桥是所有跨链资产的命门，也是历史上被盗金额最大的品类（Ronin 6.2 亿、Wormhole 3.2 亿）——机制决定风险。",
@@ -1249,7 +1249,7 @@ const A = [
     ],
   },
   {
-    f: "l2-06-account-abstraction", d: "l2", st: "阶段 8 · 共识与扩容",
+    f: "l2-06-account-abstraction", d: "08-l2", st: "阶段 8 · 共识与扩容",
     t: "账户抽象：ERC-4337 与 EIP-7702", s: "06 账户抽象",
     unit: "阶段 8 · 单元 8.6",
     xt: ["实战"],
@@ -1281,7 +1281,7 @@ const A = [
 
   // ---------- 阶段 9：生态与毕业 ----------
   {
-    f: "capstone-01-multichain", d: "capstone", st: "阶段 9 · 生态与毕业",
+    f: "capstone-01-multichain", d: "09-capstone", st: "阶段 9 · 生态与毕业",
     t: "多链生态一瞥：Solana、Move 系与比特币 L2", s: "01 多链生态",
     unit: "阶段 9 · 单元 9.1",
     p: "以太坊之外的世界很大：Solana 的高吞吐单体、Move 系的资源模型、比特币 L2——了解它们与 EVM 的根本差异，架构选型时才不做井底之蛙。",
@@ -1302,7 +1302,7 @@ const A = [
     ],
   },
   {
-    f: "capstone-02-rwa", d: "capstone", st: "阶段 9 · 生态与毕业",
+    f: "capstone-02-rwa", d: "09-capstone", st: "阶段 9 · 生态与毕业",
     t: "RWA 与现实资产上链", s: "02 RWA",
     unit: "阶段 9 · 单元 9.2",
     p: "美债、私募信贷、房地产凭证正在代币化（2026-08 核验：六大类 RWA 已上线流通）——机构入场后，链上金融的边界在哪？合规与去中心化的张力如何调和？",
@@ -1324,7 +1324,7 @@ const A = [
     ],
   },
   {
-    f: "capstone-03-final-project", d: "capstone", st: "阶段 9 · 生态与毕业",
+    f: "capstone-03-final-project", d: "09-capstone", st: "阶段 9 · 生态与毕业",
     t: "毕业设计：全栈 DApp 从 0 到 1", s: "03 毕业设计",
     unit: "阶段 9 · 单元 9.3",
     xt: ["架构"],
@@ -1344,7 +1344,7 @@ const A = [
     ],
   },
   {
-    f: "capstone-04-self-check", d: "capstone", st: "阶段 9 · 生态与毕业",
+    f: "capstone-04-self-check", d: "09-capstone", st: "阶段 9 · 生态与毕业",
     t: "资深自检 30 问", s: "04 自检 30 问",
     unit: "阶段 9 · 单元 9.4",
     xt: ["面试"],

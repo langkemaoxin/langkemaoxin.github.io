@@ -522,6 +522,7 @@ export default sidebar({
       collapsible: true,
       children: [
         "技术专家10问自查清单",
+        "博客写作规范",
       ],
     },
     {
@@ -1684,7 +1685,7 @@ export default sidebar({
     {
       text: "地基与密码学",
       icon: "key",
-      prefix: "foundations/",
+      prefix: "00-foundations/",
       collapsible: true,
       children: [
         "foundations-01-why-blockchain",
@@ -1697,7 +1698,7 @@ export default sidebar({
     {
       text: "比特币",
       icon: "coins",
-      prefix: "bitcoin/",
+      prefix: "01-bitcoin/",
       collapsible: true,
       children: [
         "bitcoin-01-utxo",
@@ -1709,7 +1710,7 @@ export default sidebar({
     {
       text: "以太坊核心",
       icon: "microchip",
-      prefix: "evm/",
+      prefix: "02-evm/",
       collapsible: true,
       children: [
         "evm-01-accounts",
@@ -1722,7 +1723,7 @@ export default sidebar({
     {
       text: "Solidity 与 Foundry",
       icon: "code",
-      prefix: "solidity/",
+      prefix: "03-solidity/",
       collapsible: true,
       children: [
         "solidity-01-foundry-setup",
@@ -1738,7 +1739,7 @@ export default sidebar({
     {
       text: "代币标准",
       icon: "gem",
-      prefix: "tokens/",
+      prefix: "04-tokens/",
       collapsible: true,
       children: [
         "tokens-01-erc20",
@@ -1751,7 +1752,7 @@ export default sidebar({
     {
       text: "DApp 全栈",
       icon: "laptop-code",
-      prefix: "dapp/",
+      prefix: "05-dapp/",
       collapsible: true,
       children: [
         "dapp-01-viem",
@@ -1764,7 +1765,7 @@ export default sidebar({
     {
       text: "安全攻防",
       icon: "shield-halved",
-      prefix: "security/",
+      prefix: "06-security/",
       collapsible: true,
       children: [
         "security-01-threat-model",
@@ -1779,7 +1780,7 @@ export default sidebar({
     {
       text: "DeFi 协议",
       icon: "chart-line",
-      prefix: "defi/",
+      prefix: "07-defi/",
       collapsible: true,
       children: [
         "defi-01-landscape",
@@ -1795,7 +1796,7 @@ export default sidebar({
     {
       text: "共识与扩容",
       icon: "layer-group",
-      prefix: "l2/",
+      prefix: "08-l2/",
       collapsible: true,
       children: [
         "l2-01-pos-consensus",
@@ -1809,7 +1810,7 @@ export default sidebar({
     {
       text: "生态与毕业",
       icon: "graduation-cap",
-      prefix: "capstone/",
+      prefix: "09-capstone/",
       collapsible: true,
       children: [
         "capstone-01-multichain",

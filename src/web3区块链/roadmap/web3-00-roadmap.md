@@ -160,11 +160,11 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 0.1 | [Web3 全景：区块链到底在解决什么问题](/web3区块链/foundations/foundations-01-why-blockchain) | 拜占庭将军、双花、中心化 vs 分布式账本、术语版图 | 测试网第一笔转账 |
-| 0.2 | [哈希函数与默克尔树：区块链的指纹术](/web3区块链/foundations/foundations-02-hash-merkle) | 抗碰撞、雪崩效应、哈希链、默克尔证明 | 手写默克尔树 + SPV 证明 |
-| 0.3 | [公私钥与数字签名：从私钥到地址](/web3区块链/foundations/foundations-03-keys-signatures) | secp256k1、ECDSA、地址推导、ecrecover | 密钥生成 + 签名验证实验 |
-| 0.4 | [钱包与助记词：BIP-39/32/44](/web3区块链/foundations/foundations-04-wallets) | 助记词、派生路径、keystore、冷热钱包 | 助记词派生多地址验证 |
-| 0.5 | [手写 100 行迷你区块链](/web3区块链/foundations/foundations-05-mini-blockchain) | 区块结构、PoW 挖矿、最长链、篡改检测 | 能挖矿的迷你链 + 篡改实验 |
+| 0.1 | [Web3 全景：区块链到底在解决什么问题](/web3区块链/00-foundations/foundations-01-why-blockchain) | 拜占庭将军、双花、中心化 vs 分布式账本、术语版图 | 测试网第一笔转账 |
+| 0.2 | [哈希函数与默克尔树：区块链的指纹术](/web3区块链/00-foundations/foundations-02-hash-merkle) | 抗碰撞、雪崩效应、哈希链、默克尔证明 | 手写默克尔树 + SPV 证明 |
+| 0.3 | [公私钥与数字签名：从私钥到地址](/web3区块链/00-foundations/foundations-03-keys-signatures) | secp256k1、ECDSA、地址推导、ecrecover | 密钥生成 + 签名验证实验 |
+| 0.4 | [钱包与助记词：BIP-39/32/44](/web3区块链/00-foundations/foundations-04-wallets) | 助记词、派生路径、keystore、冷热钱包 | 助记词派生多地址验证 |
+| 0.5 | [手写 100 行迷你区块链](/web3区块链/00-foundations/foundations-05-mini-blockchain) | 区块结构、PoW 挖矿、最长链、篡改检测 | 能挖矿的迷你链 + 篡改实验 |
 
 **阶段验收**：脱稿画出「一笔交易从签名到上链」的全流程；口述哈希、签名、PoW 各自防住什么攻击。
 
@@ -176,10 +176,10 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 1.1 | [比特币白皮书精读与 UTXO 模型](/web3区块链/bitcoin/bitcoin-01-utxo) | 白皮书 9 页、UTXO 输入输出、找零 | 真实交易 UTXO 流向图 |
-| 1.2 | [挖矿、难度调整与最长链：51% 攻击推演](/web3区块链/bitcoin/bitcoin-02-pow) | 难度公式、临时分叉、双花时序 | 双花攻击纸面推演 |
-| 1.3 | [比特币脚本：一种故意不做完的编程语言](/web3区块链/bitcoin/bitcoin-03-script) | 栈式虚拟机、P2PKH 推演、P2SH/Taproot | 逐操作码执行 P2PKH |
-| 1.4 | [比特币的取舍与现状：为什么需要以太坊](/web3区块链/bitcoin/bitcoin-04-tradeoffs) | 结算层定位、扩容之争、2028 减半、量子议题 | 比特币 vs 以太坊取舍对比表 |
+| 1.1 | [比特币白皮书精读与 UTXO 模型](/web3区块链/01-bitcoin/bitcoin-01-utxo) | 白皮书 9 页、UTXO 输入输出、找零 | 真实交易 UTXO 流向图 |
+| 1.2 | [挖矿、难度调整与最长链：51% 攻击推演](/web3区块链/01-bitcoin/bitcoin-02-pow) | 难度公式、临时分叉、双花时序 | 双花攻击纸面推演 |
+| 1.3 | [比特币脚本：一种故意不做完的编程语言](/web3区块链/01-bitcoin/bitcoin-03-script) | 栈式虚拟机、P2PKH 推演、P2SH/Taproot | 逐操作码执行 P2PKH |
+| 1.4 | [比特币的取舍与现状：为什么需要以太坊](/web3区块链/01-bitcoin/bitcoin-04-tradeoffs) | 结算层定位、扩容之争、2028 减半、量子议题 | 比特币 vs 以太坊取舍对比表 |
 
 **阶段验收**：口述一笔比特币交易从钱包到最终确认的全旅程；说清 UTXO 与账户模型各自适合的应用形态。
 
@@ -191,11 +191,11 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 2.1 | [账户模型与状态机：以太坊的世界状态](/web3区块链/evm/evm-01-accounts) | 世界状态、EOA vs CA、EIP-7702 的影响 | EOA/CA 状态字段对比 |
-| 2.2 | [交易全解：类型、签名与 EIP-1559 费用](/web3区块链/evm/evm-02-transactions) | 交易字段、五种类型、baseFee/priorityFee | 逐字段解读真实交易 |
-| 2.3 | [EVM 执行模型与 Gas：逐条执行一笔交易](/web3区块链/evm/evm-03-evm-gas) | 栈/内存/存储、opcode、Gas 计费 | forge debug 单步跟踪 |
-| 2.4 | [节点与 JSON-RPC：亲手当一次客户端](/web3区块链/evm/evm-04-nodes-rpc) | 执行层/共识层、RPC 方法、anvil 分叉 | cast 直连 RPC 全流程 |
-| 2.5 | [状态存储：MPT、RLP 与存储槽](/web3区块链/evm/evm-05-storage) | 三棵树、RLP、slot 布局 | 真实合约 slot 推演验证 |
+| 2.1 | [账户模型与状态机：以太坊的世界状态](/web3区块链/02-evm/evm-01-accounts) | 世界状态、EOA vs CA、EIP-7702 的影响 | EOA/CA 状态字段对比 |
+| 2.2 | [交易全解：类型、签名与 EIP-1559 费用](/web3区块链/02-evm/evm-02-transactions) | 交易字段、五种类型、baseFee/priorityFee | 逐字段解读真实交易 |
+| 2.3 | [EVM 执行模型与 Gas：逐条执行一笔交易](/web3区块链/02-evm/evm-03-evm-gas) | 栈/内存/存储、opcode、Gas 计费 | forge debug 单步跟踪 |
+| 2.4 | [节点与 JSON-RPC：亲手当一次客户端](/web3区块链/02-evm/evm-04-nodes-rpc) | 执行层/共识层、RPC 方法、anvil 分叉 | cast 直连 RPC 全流程 |
+| 2.5 | [状态存储：MPT、RLP 与存储槽](/web3区块链/02-evm/evm-05-storage) | 三棵树、RLP、slot 布局 | 真实合约 slot 推演验证 |
 
 **阶段验收**：脱稿讲清一笔交易从钱包签名到 EVM 执行再到状态更新的完整旅程（含费用构成）。
 
@@ -207,14 +207,14 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 3.1 | [Foundry 上手：forge、anvil、cast、chisel](/web3区块链/solidity/solidity-01-foundry-setup) | 安装、项目结构、四件套分工 | 全流程走通第一个项目 |
-| 3.2 | [Solidity 语法 I：合约骨架、值类型与函数](/web3区块链/solidity/solidity-02-syntax-basics) | 0.8.36、值类型、可见性、view/pure | Bank 合约 + 第一个测试 |
-| 3.3 | [语法 II：引用类型与数据位置](/web3区块链/solidity/solidity-03-data-location) | storage/memory/calldata、赋值语义 | gas 差异实测 |
-| 3.4 | [语法 III：映射、数组、结构体与事件](/web3区块链/solidity/solidity-04-mappings-events) | mapping 遍历、事件日志、custom error | 存款排行合约 |
-| 3.5 | [继承、接口、库与抽象合约](/web3区块链/solidity/solidity-05-oop) | 线性化、super、ABI 与接口 | 用 IERC20 读任意代币 |
-| 3.6 | [收付款实战：payable、fallback 与转账三种方式](/web3区块链/solidity/solidity-06-payable-eth) | msg.value、transfer/send/call | 三种转账 gas 对比 |
-| 3.7 | [Foundry 测试：cheatcodes、fuzz 与 invariant](/web3区块链/solidity/solidity-07-testing) | vm.* 系列、性质测试、handler 模式 | fuzz 抓到自己埋的 bug |
-| 3.8 | [部署与验证：forge script、Sepolia 与 Etherscan](/web3区块链/solidity/solidity-08-deploy-verify) | 脚本部署、私钥管理、源码验证 | Sepolia 部署 + 验证通过 |
+| 3.1 | [Foundry 上手：forge、anvil、cast、chisel](/web3区块链/03-solidity/solidity-01-foundry-setup) | 安装、项目结构、四件套分工 | 全流程走通第一个项目 |
+| 3.2 | [Solidity 语法 I：合约骨架、值类型与函数](/web3区块链/03-solidity/solidity-02-syntax-basics) | 0.8.36、值类型、可见性、view/pure | Bank 合约 + 第一个测试 |
+| 3.3 | [语法 II：引用类型与数据位置](/web3区块链/03-solidity/solidity-03-data-location) | storage/memory/calldata、赋值语义 | gas 差异实测 |
+| 3.4 | [语法 III：映射、数组、结构体与事件](/web3区块链/03-solidity/solidity-04-mappings-events) | mapping 遍历、事件日志、custom error | 存款排行合约 |
+| 3.5 | [继承、接口、库与抽象合约](/web3区块链/03-solidity/solidity-05-oop) | 线性化、super、ABI 与接口 | 用 IERC20 读任意代币 |
+| 3.6 | [收付款实战：payable、fallback 与转账三种方式](/web3区块链/03-solidity/solidity-06-payable-eth) | msg.value、transfer/send/call | 三种转账 gas 对比 |
+| 3.7 | [Foundry 测试：cheatcodes、fuzz 与 invariant](/web3区块链/03-solidity/solidity-07-testing) | vm.* 系列、性质测试、handler 模式 | fuzz 抓到自己埋的 bug |
+| 3.8 | [部署与验证：forge script、Sepolia 与 Etherscan](/web3区块链/03-solidity/solidity-08-deploy-verify) | 脚本部署、私钥管理、源码验证 | Sepolia 部署 + 验证通过 |
 
 **阶段验收**：综合实验「众筹合约」——目标金额/截止时间/退款逻辑，fuzz + invariant 全覆盖，部署 Sepolia 并验证；口述数据位置与 Gas 的关系。
 
@@ -226,11 +226,11 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 4.1 | [ERC-20 与 OpenZeppelin：亲手发一个代币](/web3区块链/tokens/tokens-01-erc20) | 六函数二事件、approve 模型、decimals | 发行测试代币 + 授权转账 |
-| 4.2 | [ERC-721 / ERC-1155：NFT 与元数据](/web3区块链/tokens/tokens-02-erc721-1155) | tokenId、tokenURI、批量省 gas | NFT 合集铸造 |
-| 4.3 | [ERC-4626 金库标准与通胀攻击](/web3区块链/tokens/tokens-03-erc4626) | 份额会计、通胀攻击时序、防御 | 复现通胀攻击再防御 |
-| 4.4 | [可升级合约：代理模式与存储槽](/web3区块链/tokens/tokens-04-upgradeable) | EIP-1967/UUPS/Transparent、delegatecall | V1→V2 升级实验 |
-| 4.5 | [合约工程模式：工厂、多签与时间锁](/web3区块链/tokens/tokens-05-patterns) | CREATE2、Safe 多签、Timelock | 2/3 多签转账流程 |
+| 4.1 | [ERC-20 与 OpenZeppelin：亲手发一个代币](/web3区块链/04-tokens/tokens-01-erc20) | 六函数二事件、approve 模型、decimals | 发行测试代币 + 授权转账 |
+| 4.2 | [ERC-721 / ERC-1155：NFT 与元数据](/web3区块链/04-tokens/tokens-02-erc721-1155) | tokenId、tokenURI、批量省 gas | NFT 合集铸造 |
+| 4.3 | [ERC-4626 金库标准与通胀攻击](/web3区块链/04-tokens/tokens-03-erc4626) | 份额会计、通胀攻击时序、防御 | 复现通胀攻击再防御 |
+| 4.4 | [可升级合约：代理模式与存储槽](/web3区块链/04-tokens/tokens-04-upgradeable) | EIP-1967/UUPS/Transparent、delegatecall | V1→V2 升级实验 |
+| 4.5 | [合约工程模式：工厂、多签与时间锁](/web3区块链/04-tokens/tokens-05-patterns) | CREATE2、Safe 多签、Timelock | 2/3 多签转账流程 |
 
 **阶段验收**：「代币全家桶」——ERC-20 + 721 + 4626 金库，全部 fuzz + invariant 覆盖；口述 approve 竞态、通胀攻击、代理存储槽三大坑。
 
@@ -242,11 +242,11 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 5.1 | [客户端 API：viem/ethers 与 JSON-RPC 封装](/web3区块链/dapp/dapp-01-viem) | PublicClient/WalletClient、类型化读写 | viem 读写全流程 |
-| 5.2 | [钱包连接：EIP-1193、EIP-6963 与多钱包](/web3区块链/dapp/dapp-02-wallet-connect) | provider 标准、多钱包发现、切链 | 裸写钱包连接组件 |
-| 5.3 | [DApp 前端实战：从 0 到 1 一个完整应用](/web3区块链/dapp/dapp-03-frontend-dapp) | 状态同步策略、交易 UX、wagmi | 众筹 DApp 前端 |
-| 5.4 | [链上数据与 The Graph 子图](/web3区块链/dapp/dapp-04-graph) | eth_getLogs 局限、子图、GraphQL | 全链路索引查询 |
-| 5.5 | [去中心化存储：IPFS 与 Arweave](/web3区块链/dapp/dapp-05-storage) | 内容寻址、CID、pinning、永久存储 | NFT 元数据上 IPFS |
+| 5.1 | [客户端 API：viem/ethers 与 JSON-RPC 封装](/web3区块链/05-dapp/dapp-01-viem) | PublicClient/WalletClient、类型化读写 | viem 读写全流程 |
+| 5.2 | [钱包连接：EIP-1193、EIP-6963 与多钱包](/web3区块链/05-dapp/dapp-02-wallet-connect) | provider 标准、多钱包发现、切链 | 裸写钱包连接组件 |
+| 5.3 | [DApp 前端实战：从 0 到 1 一个完整应用](/web3区块链/05-dapp/dapp-03-frontend-dapp) | 状态同步策略、交易 UX、wagmi | 众筹 DApp 前端 |
+| 5.4 | [链上数据与 The Graph 子图](/web3区块链/05-dapp/dapp-04-graph) | eth_getLogs 局限、子图、GraphQL | 全链路索引查询 |
+| 5.5 | [去中心化存储：IPFS 与 Arweave](/web3区块链/05-dapp/dapp-05-storage) | 内容寻址、CID、pinning、永久存储 | NFT 元数据上 IPFS |
 
 **阶段验收**：众筹 DApp 完整体——合约 + 测试 + 前端 + 子图 + IPFS 元数据，本地全链路演示。
 
@@ -258,13 +258,13 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 6.1 | [攻击面与威胁模型：OWASP 智能合约 Top 10](/web3区块链/security/security-01-threat-model) | 三层攻击面、SCWE、盗币大案地图 | 历史十大盗案归因表 |
-| 6.2 | [重入攻击：从 The DAO 到今天的变体](/web3区块链/security/security-02-reentrancy) | CEI 破坏、只读重入、跨函数重入 | 攻击复现 + 双修复 |
-| 6.3 | [访问控制漏洞：权限错置与签名滥用](/web3区块链/security/security-03-access-control) | RBAC、签名重放、中心化风险 | 权限矩阵 + 重放复现 |
-| 6.4 | [算术漏洞与预言机操纵](/web3区块链/security/security-04-arithmetic-oracle) | 精度丢失、现货价操纵、TWAP | 闪电贷拉价操纵实验 |
-| 6.5 | [MEV：抢跑、三明治与闪电贷攻击](/web3区块链/security/security-05-mev) | 内存池、三明治、无本攻击 | 三明治 + 无本套利复现 |
-| 6.6 | [工具链：Slither、fuzz 与形式化验证](/web3区块链/security/security-06-tools) | 静态扫描、echidna、规格撰写 | 本地安全流水线 |
-| 6.7 | [审计方法论：像审计师一样审查合约](/web3区块链/security/security-07-audit-method) | 五维清单、攻击树、报告撰写 | 开源协议自查审计报告 |
+| 6.1 | [攻击面与威胁模型：OWASP 智能合约 Top 10](/web3区块链/06-security/security-01-threat-model) | 三层攻击面、SCWE、盗币大案地图 | 历史十大盗案归因表 |
+| 6.2 | [重入攻击：从 The DAO 到今天的变体](/web3区块链/06-security/security-02-reentrancy) | CEI 破坏、只读重入、跨函数重入 | 攻击复现 + 双修复 |
+| 6.3 | [访问控制漏洞：权限错置与签名滥用](/web3区块链/06-security/security-03-access-control) | RBAC、签名重放、中心化风险 | 权限矩阵 + 重放复现 |
+| 6.4 | [算术漏洞与预言机操纵](/web3区块链/06-security/security-04-arithmetic-oracle) | 精度丢失、现货价操纵、TWAP | 闪电贷拉价操纵实验 |
+| 6.5 | [MEV：抢跑、三明治与闪电贷攻击](/web3区块链/06-security/security-05-mev) | 内存池、三明治、无本攻击 | 三明治 + 无本套利复现 |
+| 6.6 | [工具链：Slither、fuzz 与形式化验证](/web3区块链/06-security/security-06-tools) | 静态扫描、echidna、规格撰写 | 本地安全流水线 |
+| 6.7 | [审计方法论：像审计师一样审查合约](/web3区块链/06-security/security-07-audit-method) | 五维清单、攻击树、报告撰写 | 开源协议自查审计报告 |
 
 **阶段验收**：把自己阶段 3~5 的全部合约按 6.7 流程审一遍（清单 + 报告 + 修复）；在本地主网分叉上成功复现一次完整攻击链（闪电贷 + 操纵 + 提取）。
 
@@ -276,14 +276,14 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 7.1 | [DeFi 全景与可组合性](/web3区块链/defi/defi-01-landscape) | 版图、乐高、级联风险 | 测试网组合链操作 |
-| 7.2 | [AMM 演进：恒定乘积到集中流动性到 hooks](/web3区块链/defi/defi-02-amm) | v2 公式、v3 tick、v4 hooks | 手推 swap + 无常损失 |
-| 7.3 | [借贷协议：Aave 的利率模型与清算](/web3区块链/defi/defi-03-lending) | utilization 曲线、健康因子、清算机器人 | 完整清算实验 |
-| 7.4 | [稳定币三形态与监管（GENIUS Act 时代）](/web3区块链/defi/defi-04-stablecoins) | 法币抵押/超额抵押/算法、合规 | 三类崩坏路径推演 |
-| 7.5 | [预言机：Chainlink 价格喂送实操](/web3区块链/defi/defi-05-oracles-chainlink) | 聚合流程、stale 检查、VRF | 安全价格读取合约 |
-| 7.6 | [质押与再质押：从 ETH Staking 到 EigenLayer](/web3区块链/defi/defi-06-staking-restaking) | 流动性质押、AVS、传染风险 | 风险传递图 |
-| 7.7 | [治理与 DAO：代币投票的工程实现](/web3区块链/defi/defi-07-governance-dao) | Votes、Governor、Timelock、治理攻击 | 提案→投票→执行全流程 |
-| 7.8 | [代币经济学：发行、分配与释放曲线](/web3区块链/defi/defi-08-tokenomics) | 供给、解锁、飞轮、价值捕获 | VestingWallet + 诊断表 |
+| 7.1 | [DeFi 全景与可组合性](/web3区块链/07-defi/defi-01-landscape) | 版图、乐高、级联风险 | 测试网组合链操作 |
+| 7.2 | [AMM 演进：恒定乘积到集中流动性到 hooks](/web3区块链/07-defi/defi-02-amm) | v2 公式、v3 tick、v4 hooks | 手推 swap + 无常损失 |
+| 7.3 | [借贷协议：Aave 的利率模型与清算](/web3区块链/07-defi/defi-03-lending) | utilization 曲线、健康因子、清算机器人 | 完整清算实验 |
+| 7.4 | [稳定币三形态与监管（GENIUS Act 时代）](/web3区块链/07-defi/defi-04-stablecoins) | 法币抵押/超额抵押/算法、合规 | 三类崩坏路径推演 |
+| 7.5 | [预言机：Chainlink 价格喂送实操](/web3区块链/07-defi/defi-05-oracles-chainlink) | 聚合流程、stale 检查、VRF | 安全价格读取合约 |
+| 7.6 | [质押与再质押：从 ETH Staking 到 EigenLayer](/web3区块链/07-defi/defi-06-staking-restaking) | 流动性质押、AVS、传染风险 | 风险传递图 |
+| 7.7 | [治理与 DAO：代币投票的工程实现](/web3区块链/07-defi/defi-07-governance-dao) | Votes、Governor、Timelock、治理攻击 | 提案→投票→执行全流程 |
+| 7.8 | [代币经济学：发行、分配与释放曲线](/web3区块链/07-defi/defi-08-tokenomics) | 供给、解锁、飞轮、价值捕获 | VestingWallet + 诊断表 |
 
 **阶段验收**：测试网组装「迷你 DeFi」——AMM swap + 借贷 + 价格 feed + 治理串成完整用例，并演示一次级联清算。
 
@@ -295,12 +295,12 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 8.1 | [PoS 共识：验证者、罚没与 Gasper](/web3区块链/l2/l2-01-pos-consensus) | FFG + LMD-GHOST、slashing、终局性 | 罚没场景推演 |
-| 8.2 | [扩容路线图：Rollup-centric、blobs 与 PeerDAS](/web3区块链/l2/l2-02-scaling-roadmap) | DA 问题、4844、Fusaka、Glamsterdam 展望 | blob 费用历史对比 |
-| 8.3 | [Optimistic Rollup 与 OP Stack 实操](/web3区块链/l2/l2-03-optimistic-rollup) | 欺诈证明、七日挑战期、Stage 分级 | 合约部署 OP Sepolia |
-| 8.4 | [ZK Rollup：零知识证明与有效性证明](/web3区块链/l2/l2-04-zk-rollup) | SNARK/STARK、zkEVM 类型学 | 最简 ZK 电路验证 |
-| 8.5 | [跨链桥：机制与史上最大盗案群](/web3区块链/l2/l2-05-bridges) | 三种桥形态、信任假设、Ronin/Wormhole | 盗案漏洞代码复盘 |
-| 8.6 | [账户抽象：ERC-4337 与 EIP-7702](/web3区块链/l2/l2-06-account-abstraction) | UserOperation 四组件、EOA 委托、Paymaster | 代付 gas + 批量交易 |
+| 8.1 | [PoS 共识：验证者、罚没与 Gasper](/web3区块链/08-l2/l2-01-pos-consensus) | FFG + LMD-GHOST、slashing、终局性 | 罚没场景推演 |
+| 8.2 | [扩容路线图：Rollup-centric、blobs 与 PeerDAS](/web3区块链/08-l2/l2-02-scaling-roadmap) | DA 问题、4844、Fusaka、Glamsterdam 展望 | blob 费用历史对比 |
+| 8.3 | [Optimistic Rollup 与 OP Stack 实操](/web3区块链/08-l2/l2-03-optimistic-rollup) | 欺诈证明、七日挑战期、Stage 分级 | 合约部署 OP Sepolia |
+| 8.4 | [ZK Rollup：零知识证明与有效性证明](/web3区块链/08-l2/l2-04-zk-rollup) | SNARK/STARK、zkEVM 类型学 | 最简 ZK 电路验证 |
+| 8.5 | [跨链桥：机制与史上最大盗案群](/web3区块链/08-l2/l2-05-bridges) | 三种桥形态、信任假设、Ronin/Wormhole | 盗案漏洞代码复盘 |
+| 8.6 | [账户抽象：ERC-4337 与 EIP-7702](/web3区块链/08-l2/l2-06-account-abstraction) | UserOperation 四组件、EOA 委托、Paymaster | 代付 gas + 批量交易 |
 
 **阶段验收**：把毕业项目的部署目标扩展到「L1 Sepolia + OP Sepolia」双链并用 CREATE2 保证合约地址一致；口述 Rollup 两条路线、桥的信任假设、账户抽象两条路径的对比。
 
@@ -312,10 +312,10 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 | 单元 | 篇目 | 主题 | 动手产出 |
 |------|------|------|----------|
-| 9.1 | [多链生态一瞥：Solana、Move 系与比特币 L2](/web3区块链/capstone/capstone-01-multichain) | SVM、资源模型、EVM 护城河 | Solana devnet 入门 + 对比笔记 |
-| 9.2 | [RWA 与现实资产上链](/web3区块链/capstone/capstone-02-rwa) | 六大类地图、SPV 架构、合规层 | RWA 协议信任链分析 |
-| 9.3 | [毕业设计：全栈 DApp 从 0 到 1](/web3区块链/capstone/capstone-03-final-project) | 全流程 checklist、作品集 | 完整交付 + 演示复盘 |
-| 9.4 | [资深自检 30 问](/web3区块链/capstone/capstone-04-self-check) | 十阶段全域覆盖、60 秒口述训练 | 闭卷自测 ≥ 27/30 |
+| 9.1 | [多链生态一瞥：Solana、Move 系与比特币 L2](/web3区块链/09-capstone/capstone-01-multichain) | SVM、资源模型、EVM 护城河 | Solana devnet 入门 + 对比笔记 |
+| 9.2 | [RWA 与现实资产上链](/web3区块链/09-capstone/capstone-02-rwa) | 六大类地图、SPV 架构、合规层 | RWA 协议信任链分析 |
+| 9.3 | [毕业设计：全栈 DApp 从 0 到 1](/web3区块链/09-capstone/capstone-03-final-project) | 全流程 checklist、作品集 | 完整交付 + 演示复盘 |
+| 9.4 | [资深自检 30 问](/web3区块链/09-capstone/capstone-04-self-check) | 十阶段全域覆盖、60 秒口述训练 | 闭卷自测 ≥ 27/30 |
 
 **阶段验收（= 毕业验收）**：交付四件套——代码仓库（含 CI 测试）、可演示应用、设计文档、安全自查报告；自检 30 问至少 27 问脱稿讲清。
 
@@ -342,4 +342,4 @@ description: 以西蒙学习法拆碎 Web3 区块链全领域：密码学地基 
 
 Web3 的学习曲线有个特点：**前三周最陡，之后越来越顺**——因为密码学与账本模型是「一次性成本」，啃下来之后，Solidity 不过是一门新语言，DeFi 不过是一堆合约组合，L2 不过是信任工程的排列。真正贯穿始终的只有一件事：**每个单元都亲手跑通**。
 
-本系列文章将严格按本大纲逐篇展开，每篇都先学习、先实验、再撰写；版本事实以各官方文档当前为准，过时做法一律标明「历史/兼容」语境。开工吧，从 [第一篇](/web3区块链/foundations/foundations-01-why-blockchain) 开始。
+本系列文章将严格按本大纲逐篇展开，每篇都先学习、先实验、再撰写；版本事实以各官方文档当前为准，过时做法一律标明「历史/兼容」语境。开工吧，从 [第一篇](/web3区块链/00-foundations/foundations-01-why-blockchain) 开始。
