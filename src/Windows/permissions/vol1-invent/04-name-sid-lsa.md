@@ -3,36 +3,45 @@ title: "第 3 讲：名字 ↔ SID——LSA 去哪里查"
 sidebarGroup: "卷一·发明权限"
 shortTitle: "第 3 讲：名字 ↔ SID"
 order: 4
-date: 2026-08-06
+date: 2026-08-26T00:00:00.000Z
 category: "Windows"
 tag:
   - "Windows"
   - "ACL"
-  - "NTFS"
-  - "Active Directory"
   - "权限"
   - "安全"
+  - "对话实录"
+description: 师生对话实录课：名字→SID 的翻译全流程——程序开口问、LSA 调度、答案从 SAM 或域控来；四级查找顺序（well-known → 本机 SAM → 主域 → 受信任域）用本机 Translate 实测印证，含反向翻译与失败异常的真实输出。
 ---
 
 # 第 3 讲：名字 ↔ SID——LSA 去哪里查
 
-### 麻烦
-
-你看到的都是**名字**——`jzfz\chengongyi`、`Everyone`、`PC3507\user`。但 Windows 内部、存在文件 ACL / 注册表 / 服务上的，是 **SID**（`S-1-5-21-...`）。
-
-所以每次都得做一次**翻译**：拿名字问系统「这对应哪个 SID」，或反过来。这一讲就专门讲清——**这个名字，到底是怎么变成 SID 的。**
+> **卷一 · 发明权限（共 15 讲）**
+> 师生对话实录课：AI 当老师、我当 0 基础学生，每讲只发明一个概念。
 
 ---
 
-### 名字 → SID：这一步究竟发生了什么
+## 开场
 
-先给一句话全景，再拆开：
+**🧑‍🏫 老师：**
+
+上一讲我们把身份锚在了 SID 上。但留了个缝：**你看到的都是名字**——`jzfz\chengongyi`、`Everyone`、`PC3507\LabUser1`；而 Windows 内部、真正存在文件 ACL / 注册表 / 服务上的，是 **SID**（`S-1-5-21-...`）。
+
+所以每次都得做一次**翻译**：拿名字问系统「这对应哪个 SID」，或反过来。这一讲就发明这个翻译机制——**一个名字，到底是怎么变成 SID 的。**
+
+一句话全景先立起来：
 
 > **你的程序开口问 → LSA 接手调度 → 答案从本机 SAM 或域控拿出来 → 还给程序。**
 
-关键是中间那句——**程序自己不去读 SAM，也不去连域控**。它只负责「开口问」，剩下的全交给 **LSA（Local Security Authority，本地安全机构）** 这个系统组件代劳。LSA 装在 `lsass.exe` 进程里，是所有安全相关请求的「总调度台」。来源：[Credentials processes in Windows authentication（Microsoft Learn）](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)
+关键是中间那句——**程序自己不去读 SAM，也不去连域控**。用户态程序没有资格直接读安全库，它只负责「开口问」，剩下的全交给 **LSA（Local Security Authority，本地安全机构）**——装在 `lsass.exe` 进程里的总调度台（[Microsoft Learn：认证中的凭证过程](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)）。
 
-以查 `jzfz\chengongyi` 的 SID 为例，完整走一遍（**这一节是本讲的核心，看懂它就懂了「翻译」**）：
+---
+
+## 第 1 课：翻译的六步全景
+
+**🧑‍🏫 老师：**
+
+以查 `jzfz\chengongyi` 的 SID 为例，完整走一遍（本讲核心，看懂它就懂了「翻译」）：
 
 ```text
 1. 程序调 Translate("jzfz\chengongyi")        ← 你的程序开口问
@@ -44,7 +53,7 @@ tag:
         ▼
 3. LSA 按顺序找：
      • 是 Everyone 这种固定名？ → 不是
-     • 本机 SAM 里有 chengongyi？ → 没有（本机只有 user、user1）
+     • 本机 SAM 里有 chengongyi？ → 没有（本机只有 LabUser1、user……）
      • → 判定要去域里找
         │
         ▼
@@ -60,21 +69,25 @@ tag:
 
 三个要点记牢：
 
-- **程序不开口以外啥也不干**——不读 SAM、不连域控，全由 LSA 代劳。
-- **答案有两个可能的来源**：本机账户在 **SAM**（`C:\Windows\System32\config\SAM`），域账户在**域控**（经 Netlogon 通道去问）。
-- **LSA 会缓存**——查到一次就记下，下次同名直接返回，不必再打扰域控。
+- **程序不开口以外啥也不干**——不读 SAM、不连域控，全由 LSA 代劳；
+- **答案有两个可能的来源**：本机账户在 SAM（`C:\Windows\System32\config\SAM`），域账户在域控（经 Netlogon 通道去问）；
+- **LSA 会缓存**——查到一次就记下，下次同名直接返回，不必再打扰域控（[LSA 查找缓存](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/lsa-lookup-performance-counters)）。所以「一次翻译」可能当场问域控，也可能命中本机缓存——但无论哪种，都不是你的程序自己去碰库。
 
-> 📎 图里还会出现 SSP（NTLM/Kerberos 等认证协议的「实现包」）、SRM（内核里做访问检查的组件）、LPC（程序和 LSA 的通信通道）这些组件——它们属于**登录与认证**的大图景，本讲讲「翻译」用不到细节，下一讲展开。要看全景，见 [Microsoft Learn 那张架构图](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)。
+> 图里还会出现 SSP（NTLM/Kerberos 等认证协议的实现包）、SRM（内核里做访问检查的组件）、LPC（程序和 LSA 的通信通道）——它们属于**登录与认证**的大图景，本讲用不到，下一讲展开。
 
 ---
 
-### 深挖一：LSA 按「四级顺序」找
+## 插问 1：第 3 步说「按顺序找」——具体什么顺序？
 
-上面第 3 步说「LSA 按顺序找」——具体是什么顺序？官方 [`LookupAccountName`](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-lookupaccountnamew) 的 Remarks 规定了四级：
+**🧑‍🎓 学生：** 第 3 步里 LSA「按顺序找」，先试固定名、再翻本机的、再去域里——这个顺序是谁定的？一共几级？
+
+**🧑‍🏫 老师：**
+
+官方 [`LookupAccountName`](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-lookupaccountnamew) 的 Remarks 规定了**四级**：
 
 ```mermaid
 flowchart TD
-  A["输入名字：<br/>Everyone / PC3507\user / jzfz\chengongyi"] --> B{"① Well-known 名?<br/>如 Everyone、SYSTEM"}
+  A["输入名字：<br/>Everyone / PC3507\LabUser1 / jzfz\chengongyi"] --> B{"① Well-known 名?<br/>如 Everyone、SYSTEM"}
   B -->|是| Z["直接返回固定 SID"]
   B -->|否| C{"② 本机 SAM 里有?<br/>本地账户"}
   C -->|是| Y["返回本机账户 SID"]
@@ -82,49 +95,38 @@ flowchart TD
   D -->|找到| X["返回域账户 SID"]
   D -->|否| E{"④ 受信任域里有?"}
   E -->|找到| X
-  E -->|否| F["失败 → ERROR_NONE_MAPPED<br/>（.NET 抛 IdentityNotMappedException）"]
+  E -->|否| F["失败 → ERROR_NONE_MAPPED<br/>（.NET 抛 IdentityNotMapped）"]
 ```
 
-四级是：
+四级从便宜到贵：**well-known**（`Everyone`=`S-1-1-0`、`SYSTEM`=`S-1-5-18`、`Administrators`=`S-1-5-32-544`，全 Windows 统一，不查任何库直接返回）→ **本机 SAM**（本机建的账户）→ **主域**（加域的机器去问域控）→ **受信任域**（林内有信任关系的其它域）。
 
-1. **Well-known SID**——全 Windows 统一的固定名，如 `Everyone`=`S-1-1-0`、`SYSTEM`=`S-1-5-18`、`Administrators`=`S-1-5-32-544`。**不查任何库**，直接返回。来源：[Well-known SIDs（Microsoft Learn）](https://learn.microsoft.com/en-us/windows/win32/secauthz/well-known-sids)
-2. **本机 SAM**——本机建的账户（如 `PC3507\user`）
-3. **主域**——加域的机器，去问域控（如 `jzfz\chengongyi`）
-4. **受信任域**——本域没有，继续到林内有信任关系的其它域找
-
-> 💡 **用完全限定名**（`域\用户`，如 `jzfz\chengongyi`）比光写 `chengongyi` 好——LSA 不用猜你指的是本机的还是域里的同名账户，更快也更准。
-
----
-
-### 深挖二：实机演示，印证四级顺序
-
-本机真实跑一遍名字→SID（用 .NET 的 `NTAccount.Translate`），看不同名字落在哪一级：
+空口无凭，本机把五个名字各翻译一遍（.NET `NTAccount.Translate`，真实输出）：
 
 ```text
-Everyone          -> S-1-1-0                                        ← 第 1 级（well-known）
-PC3507\user       -> S-1-5-21-3515524382-1810956650-2183447911-1001 ← 第 2 级（本机 SAM）
-jzfz\chengongyi   -> S-1-5-21-3977539503-3587586693-2971573549-279405 ← 第 3 级（域控）
-SYSTEM            -> S-1-5-18                                       ← 第 1 级（well-known）
-Administrators    -> S-1-5-32-544                                   ← 第 1 级（well-known）
+Everyone             -> S-1-1-0
+SYSTEM               -> S-1-5-18
+Administrators       -> S-1-5-32-544
+PC3507\LabUser1      -> S-1-5-21-3515524382-1810956650-2183447911-1009
+jzfz\chengongyi      -> S-1-5-21-3977539503-3587586693-2971573549-279405
 ```
 
-**同一个 `Translate` 调用，背后查的地方完全不同**：前三个 well-known 直接命中、本机的走 SAM、域账户走到域控。
-
-> 还能看出一件事：`PC3507\user`（本地账户）和 `jzfz\chengongyi`（域账户）的 SID 都是 `S-1-5-21-...` 开头，但**中间那三段「机器/域标识」完全不同**——本机的标识段是本机生成的（`...-3515524382-...`），域的标识段是域生成的（`...-3977539503-...`）。**SID 用「谁发的」区分本地还是域，不是看名字前缀。** 末尾的 RID（`-1001`、`-279405`）是账户在自己库里的序号。
+**同一个 `Translate` 调用，背后查的地方完全不同**：前三个是第 1 级 well-known 直接命中；`PC3507\LabUser1` 是第 2 级（本机 SAM）；`jzfz\chengongyi` 一路走到第 3 级（域控）。还能看出一件事：LabUser1 和 chengongyi 的 SID 都是 `S-1-5-21-...` 开头，但**中间三段「机器/域标识」完全不同**（`3515524382-...` vs `3977539503-...`）——上一讲说过：**SID 用「谁发的」区分本地还是域，不是看名字前缀。**
 
 ---
 
-### 上手：在代码里调用翻译
+## 第 2 课：代码里怎么调
 
-讲清了原理，看怎么在程序里用。三个层次的 API，从高到低：
+**🧑‍🏫 老师：**
+
+原理讲清了，上手。三层 API 从高到低：
 
 | 层次 | API | 用法 |
 |------|-----|------|
-| .NET（推荐） | `NTAccount.Translate` | 最简单，下面有例子 |
+| .NET（推荐） | `NTAccount.Translate` | 最简单 |
 | Win32 | [`LookupAccountName`](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-lookupaccountnamew) / `LookupAccountSid` | 名→SID / SID→名 |
 | 更底层 | `LsaLookupNames` / `LsaLookupSids` | LSA 原生接口，前两者底层都走它 |
 
-C# 例子（名字↔SID 双向）：
+C#（或 PowerShell）双向：
 
 ```csharp
 using System.Security.Principal;
@@ -139,28 +141,37 @@ var name = (NTAccount)sid.Translate(typeof(NTAccount));
 Console.WriteLine(name.Value);  // JZFZ\chengongyi
 ```
 
-`Translate` **不自己算 SID**，而是把请求发给 LSA（走的就是上面那 6 步）。找不到抛 `IdentityNotMappedException`。
+`Translate` **不自己算 SID**，而是把请求发给 LSA（走的就是第 1 课那 6 步）。反向翻译本机也实测了——拿 LabUser2 的 SID（上一讲记的 `-1010`）问名字：
+
+```text
+S-1-5-21-3515524382-1810956650-2183447911-1010  ->  PC3507\LabUser2
+```
+
+查不到的名字会怎样？实测翻译一个不存在的 `PC3507\NoSuchUser`：
+
+```text
+IdentityNotMappedException: 未能转换部分或所有标识引用。
+```
+
+四级全落空，报错收场——这个异常写 ACL 工具时总会遇到（第 32 讲 .NET 改 ACL 还会回来）。
+
+**🧑‍🎓 学生：** 那写名字时有什么讲究吗？我看有的地方写 `chengongyi`、有的写全的 `jzfz\chengongyi`。
+
+**🧑‍🏫 老师：**
+
+**用完全限定名**（`域\用户`）比裸名好——LSA 不用猜你指的是本机的还是域里的同名账户，更快也更准。裸名碰到本机和域里恰好都有 `chen` 这种账户时，解析结果可能不符合预期；而全限定名把答案钉死。这也是 SDDL、icacls 输出里都是 `机器\名字` 形态的原因。
 
 ---
 
-### 一个性能细节：缓存
-
-第 6 步提到「LSA 顺手存进缓存」——把名字翻译成 SID 可能要打网络问域控，代价不低，所以 LSA 维护了 **Name/SID 查找缓存**，命中就不必反复打扰域控。
-来源：[LSA Lookup performance counters（Microsoft Learn）](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/lsa-lookup-performance-counters)
-
-> 所以「一次翻译」**可能当场问域控，也可能命中本机缓存**——但无论哪种，都**不是你的程序自己去读 SAM 或 AD**，而是 LSA 代劳。
-
----
-
-### 收束
+## 收束
 
 **你现在会了：**
 
-- **名字→SID 的本质**：程序开口问 → **LSA** 调度 → 答案从 **SAM**（本地）或**域控**（域，经 Netlogon）拿来 → 还给程序。程序自己不碰库。
-- LSA 按**四级顺序**找：well-known → 本机 SAM → 主域 → 受信任域；用完全限定名 `域\用户` 更准更快。
+- **名字→SID 的本质**：程序开口问 → LSA 调度 → 答案从 SAM（本地）或域控（域，经 Netlogon）来 → 还给程序；程序自己不碰库。
+- 四级顺序：well-known → 本机 SAM → 主域 → 受信任域；失败抛 `IdentityNotMapped`。
 - 翻译有 **LSA 缓存**，不一定每次都打域控。
-- SID 用「谁发的」区分本地/域——本机和域账户的 `S-1-5-21-...` 标识段不同。
-- 代码里用 .NET `NTAccount.Translate`，或 Win32 `LookupAccountName` / `LookupAccountSid`。
+- SID 用「谁发的」区分本地/域；写名字用完全限定名更准。
+- 代码用 `NTAccount.Translate` 或 Win32 `LookupAccountName/Sid`。
 
 **下一讲才需要：** LSA 不只做翻译，登录时还要**验密码**——那时 SSP（NTLM/Kerberos）、SRM 这些组件才真正登场。
 

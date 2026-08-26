@@ -34,23 +34,25 @@ tag:
 
 ## 卷一·发明权限（第 0～14 讲）
 
+> ✅ 2026-08-26：卷一 15 讲已全部转为**师生对话实录课**（实验全部本机 C:\Lab 实跑，「待加厚」三讲已完成加厚）。
+
 | 章 | 状态 | 说明 |
 |----|------|------|
-| [第 0 讲](./vol1-invent/01-no-permission.md) | 已有 | 为何需要权限 |
-| [第 1 讲](./vol1-invent/02-account.md) | 已有 | 账户 |
-| [第 2 讲](./vol1-invent/03-sid.md) | 已有 | SID |
-| [第 3 讲](./vol1-invent/04-name-sid-lsa.md) | 已有 | 名字 ↔ SID |
-| [第 4 讲](./vol1-invent/05-logon-lsa.md) | 已有 | 登录与 LSA |
-| [第 5 讲](./vol1-invent/06-access-token.md) | 已有 | Access Token |
-| [第 6 讲](./vol1-invent/07-owner.md) | 已有 | Owner |
-| [第 7 讲](./vol1-invent/08-permission-bits.md) | 已有 | 权限位 |
-| [第 8 讲](./vol1-invent/09-groups.md) | 已有·待加厚 | 组 |
-| [第 9 讲](./vol1-invent/10-ace-dacl.md) | 已有 | ACE / DACL |
-| [第 10 讲](./vol1-invent/11-access-check.md) | 已有 | 访问检查与共享两道门 |
-| [第 11 讲](./vol1-invent/12-security-descriptor.md) | 已有·待加厚 | 安全描述符 |
-| [第 12 讲](./vol1-invent/13-inheritance.md) | 已有 | 继承 |
-| [第 13 讲](./vol1-invent/14-effective-permissions.md) | 已有 | 有效权限 |
-| [第 14 讲](./vol1-invent/15-sacl.md) | 已有·待加厚 | SACL |
+| [第 0 讲](./vol1-invent/01-no-permission.md) | 已有·对话实录 | 为何需要权限 |
+| [第 1 讲](./vol1-invent/02-account.md) | 已有·对话实录 | 账户 |
+| [第 2 讲](./vol1-invent/03-sid.md) | 已有·对话实录 | SID |
+| [第 3 讲](./vol1-invent/04-name-sid-lsa.md) | 已有·对话实录 | 名字 ↔ SID |
+| [第 4 讲](./vol1-invent/05-logon-lsa.md) | 已有·对话实录 | 登录与 LSA |
+| [第 5 讲](./vol1-invent/06-access-token.md) | 已有·对话实录 | Access Token |
+| [第 6 讲](./vol1-invent/07-owner.md) | 已有·对话实录 | Owner |
+| [第 7 讲](./vol1-invent/08-permission-bits.md) | 已有·对话实录 | 权限位 |
+| [第 8 讲](./vol1-invent/09-groups.md) | 已有·对话实录（已加厚） | 组 |
+| [第 9 讲](./vol1-invent/10-ace-dacl.md) | 已有·对话实录 | ACE / DACL |
+| [第 10 讲](./vol1-invent/11-access-check.md) | 已有·对话实录 | 访问检查与共享两道门 |
+| [第 11 讲](./vol1-invent/12-security-descriptor.md) | 已有·对话实录（已加厚） | 安全描述符 |
+| [第 12 讲](./vol1-invent/13-inheritance.md) | 已有·对话实录 | 继承 |
+| [第 13 讲](./vol1-invent/14-effective-permissions.md) | 已有·对话实录 | 有效权限 |
+| [第 14 讲](./vol1-invent/15-sacl.md) | 已有·对话实录（已加厚） | SACL |
 
 ## 卷二·网上的身份（第 15～19 讲）
 
