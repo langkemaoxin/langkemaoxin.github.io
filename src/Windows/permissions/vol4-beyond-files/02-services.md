@@ -3,135 +3,128 @@ title: "第 26 讲：服务与服务账户权限"
 sidebarGroup: "卷四·不只是文件"
 shortTitle: "第 26 讲：服务权限"
 order: 2
-date: 2026-08-06
+date: 2026-08-26T00:00:00.000Z
 category: "Windows"
 tag:
   - "Windows"
   - "ACL"
   - "权限"
-  - "书稿"
+  - "安全"
+  - "对话实录"
+description: 师生对话实录课：服务身份的两道关卡——「能不能作为服务登录」是权利（发令牌之前）、「能不能读文件」是 ACL（发令牌之后）。本机实拍 309 个服务的身份分布（195 个 LocalSystem）、Dhcp 服务的 SDDL 原文逐段解码、「作为服务登录」权利的虚拟账户账本。
 ---
 
 # 第 26 讲：服务与服务账户权限
 
-### 麻烦
+> **卷四·不只是文件（共 3 讲）**
+> 师生对话实录课：AI 当老师、我当 0 基础学生，每讲只发明一个概念。本机实测 2026-08-26。官方锚点：[Service Logon Types](https://learn.microsoft.com/en-us/windows/win32/services/service-logon-types)、[Service Security and Access Rights](https://learn.microsoft.com/en-us/windows/win32/services/service-security-and-access-rights)。
 
-新人小李照着文档把业务服务配成用域账户 `DOMAIN\svc_app` 启动，结果服务一启动就报「拒绝访问日志目录」「拒绝访问注册表」。他盯着服务的属性页发呆：账户明明填对了，密码也没改过，那个文件夹的「安全」选项卡里也确实列着 `svc_app` 这个名字——为什么还是读不了？
+---
 
-毛病出在他把两件事搅成了一件：「**这个账户能不能作为服务跑起来**」和「**这个账户能不能读那个文件**」，是两道完全不同的关卡。
+## 开场
 
-### 这一讲只发明：服务身份的两道关卡
+**🧑‍🏫 老师：**
 
-一个 Windows 服务，本质是 **服务控制管理器（SCM，`services.exe`）** 拉起来的一个进程。SCM 启动它之前，先得回答一个问题：**这个进程用谁的身份跑？**——这就是服务的**登录身份（Log On As）**。
+新人小李照文档把业务服务配成用域账户 `DOMAIN\svc_app` 启动，服务一启动就报「拒绝访问日志目录」「拒绝访问注册表」。他盯着属性页发呆：账户明明填对了、密码没改过、文件夹安全选项卡里也确实列着 svc_app——为什么还是读不了？
 
-这个答案一旦定下来，后面就有两道关卡要过：一道在登录时，一道在每次访问资源时。
+**🧑‍🎓 学生：** 他是不是把两件事搅成了一件？
 
-### 第一关：服务身份从哪来
+**🧑‍🏫 老师：**
 
-配置服务时选的那个账户，决定了 SCM 启动进程后挂上去的**访问令牌**——就是第 5 讲发明的那个令牌，原样搬过来用。常见四种选择：
+对：「**这个账户能不能作为服务跑起来**」和「**这个账户能不能读那个文件**」，是两道完全不同的关卡。一个 Windows 服务本质是**服务控制管理器（SCM，services.exe）**拉起来的进程；SCM 启动它之前先回答：**这个进程用谁的身份跑？**——服务的**登录身份（Log On As）**。答案定下后有两道关卡：一道在登录时，一道在每次访问资源时。
+
+---
+
+## 第 1 课：第一关——服务身份从哪来
+
+**🧑‍🏫 老师：**
+
+配置里选的账户，决定 SCM 启动进程后挂上去的**访问令牌**——第 5 讲那个令牌原样搬来。四种选择：
 
 | 登录身份 | 实际 SID | 说明 |
 |---|---|---|
-| **本地系统**（Local System） | `NT AUTHORITY\SYSTEM` | 本机权限最高；在域里以**本机计算机账户**身份对外 |
+| **本地系统**（Local System） | `NT AUTHORITY\SYSTEM` | 本机权限最高；域里以**本机计算机账户**身份对外 |
 | **本地服务**（Local Service） | `NT AUTHORITY\LOCAL SERVICE` | 权限极低；网络上相当于匿名 |
 | **网络服务**（Network Service） | `NT AUTHORITY\NETWORK SERVICE` | 本机低权限；网络上以**本机计算机账户**身份 |
-| **此账户**（某用户） | 该用户 SID | 要填密码，还要额外授一项权利（见下一关） |
+| **此账户**（某用户） | 该用户 SID | 要填密码，还要额外授一项权利（第二关） |
 
-来源：[Service Logon Types](https://learn.microsoft.com/en-us/windows/win32/services/service-logon-types)
+前三者是内置伪账户、密码系统管；只有「此账户」要你提供账密。**这台机器上 309 个服务的身份分布**（实测统计）：
 
-要点：**前三者是内置的伪账户，密码由系统管，你不用填**；只有选「此账户」时，你才要提供用户名密码，SCM 拿它创建登录会话、发令牌。
-
-> 口诀：**服务跑起来 = SCM 选账户 → LSA 登录 → 发令牌挂进程。**  
-> 令牌里的 SID、组、权利，和这个账户交互登录得到的基本一致。
-
-### 第二关：「作为服务登录」是一项权利，不是权限
-
-这是小李踩的第一个坑。当你把服务配成用 `DOMAIN\svc_app` 启动时，**这个账户必须拥有「作为服务登录」（SeServiceLogonRight）这项用户权利**，否则 SCM 一启动就报 **错误 1069**（登录失败），服务直接趴下。
-
-注意：这是**卷三讲过的「权利（Right）」**，不是 ACL——它是 LSA 在登录阶段做的检查，跟任何对象的「安全」选项卡都没关系。装某些软件时，安装包会顺手给账户加上这项权利，所以平时你没感觉；一旦手动换账户，这一关立刻露出来。
-
-来源：[Log on as a service（用户权利分配）](https://learn.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/log-on-as-a-service)
-
-### 第三关：读不读得了文件，看的还是对象 ACL
-
-服务过了第二关、令牌挂上去之后，它读目录、写注册表时做的访问检查，和你手动双击打开一个文件**一模一样**——拿令牌里的 SID，去比对象的 DACL。
-
-所以小李看到的「文件夹安全选项卡里有 `svc_app`」，如果只是名字列在那儿、却没勾上「读取和执行」「读取」，照样读不了。这就是**卷一、卷二、卷四一路在讲的 DACL**，和服务这件事没有任何特殊关系。
-
-> 口诀：**「能不能作为服务登录」是权利，在发令牌之前定生死；「能不能读文件」是 ACL，在令牌发出来之后才检查。**  
-> 一个是买票，一个是验票——两道关，别混。
-
-### 服务自己也是个对象（点到为止）
-
-容易忽略的一点：**服务本身也是一个可保护对象**。SCM 数据库里每条服务记录都有自己的安全描述符（SDDL），决定「谁能启动、停止、查询、改这个服务的配置」。这就是为什么普通用户能停某些服务、却停不了系统服务——不是账户不够格，是那条服务记录的 DACL 只授了管理员和 SYSTEM。
-
-来源：[Service Security and Access Rights](https://learn.microsoft.com/en-us/windows/win32/services/service-security-and-access-rights)
-
-这层一般不用日常摆弄，知道有这么一道就行。
-
-### 怎么看见
-
-**1. 看服务的登录身份**——`SERVICE_START_NAME` 那一行就是：
-
-```bat
-sc qc WinDefend
+```text
+195  LocalSystem                    ← 绝大多数系统服务：本机最高权
+ 71  NT AUTHORITY\LocalService      ← 低权限 + 网络匿名
+ 23  NT AUTHORITY\NetworkService    ← 低权限 + 以机器身份出网
+ 20  （驱动/特殊，StartName 为空）
+   0  普通域账户                     ← 一个都没有——「此账户」在这台机器上无人使用
 ```
 
-```
-SERVICE_NAME: WinDefend
-        BINARY_PATH_NAME   : "C:\ProgramData\Microsoft\Windows Defender\MsMpEng.exe"
-        SERVICE_TYPE       : 10  WIN32_OWN_PROCESS
+单看一个服务（本机实拍）：
+
+```text
+PS> sc qc Dhcp
+SERVICE_NAME: Dhcp
+        TYPE               : 20  WIN32_SHARE_PROCESS
         START_TYPE         : 2   AUTO_START
-        ...
-        SERVICE_START_NAME : LocalSystem
+        BINARY_PATH_NAME   : C:\windows\system32\svchost.exe -k LocalServiceNetworkRestricted -p
+        SERVICE_START_NAME : NT Authority\LocalService      ← 它的身份
 ```
 
-取值会是 `LocalSystem` / `NT AUTHORITY\NetworkService` / `NT AUTHORITY\LocalService`，或某个 `域\用户`。
-
-来源：[sc qc](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/sc-qc)
-
-**2. 看服务对象本身的 ACL（SDDL）**：
-
-```bat
-sc sdshow WinDefend
-```
-
-```
-D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)...
-```
-
-`SY`=SYSTEM、`BA`=Built-in Administrators，SDDL 完整语法见卷二附录。
-
-**3. 查「作为服务登录」权利授予了谁**（管理员 PowerShell）：
-
-```powershell
-secedit /export /cfg policy.cfg /areas USER_RIGHTS
-notepad policy.cfg     # 定位 SeServiceLogonRight 那一行
-del policy.cfg
-```
-
-**4. 服务读不了文件——三步联查**：
-
-```bat
-:: (a) 服务的登录身份是谁
-sc qc MyService
-
-:: (b) 这个身份的令牌里有什么（用 PsExec -s 以 SYSTEM 开 cmd，或 -u 域\账户 模拟登录）
-whoami /all
-
-:: (c) 文件夹对这个账户的实际授权
-icacls D:\AppLogs
-```
-
-来源：[icacls](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/icacls)
-
-### 收束
-
-**你现在会了：** 服务身份从哪来（SCM 选账户 → LSA 发令牌挂进程），「作为服务登录」是一项**权利**（卷三）而非权限，访问文件/注册表走的是**对象 ACL**（卷一/二/四），以及服务对象本身也有一层 DACL。下次遇到「服务读不了目录」，先看是 **1069 登录失败**、还是**访问被拒**——前者查权利，后者查 ACL。
-
-**下一讲才需要：** 域里的服务账户越积越多，谁有资格去改它们的配置？怎么把这种管理权**委派**给某个运维组，而不发完整域管账号？这就是 **AD 委派**（第 27 讲）。
+> **服务跑起来 = SCM 选账户 → LSA 登录 → 发令牌挂进程。**（第 18 讲的 LogonType 5——本机 4624 统计里那 97 条服务登录的实物。）
 
 ---
+
+## 第 2 课：第二关——「作为服务登录」是权利，不是权限
+
+**🧑‍🏫 老师：**
+
+小李踩的第一个坑在这：把服务配成 `DOMAIN\svc_app` 启动时，这个账户必须拥有**「作为服务登录」（SeServiceLogonRight）这项用户权利**，否则 SCM 一启动就报**错误 1069**（登录失败）。这是**卷三的权利**，不是 ACL——LSA 在登录阶段检查，跟任何对象的安全选项卡无关。装某些软件时安装包会顺手加上这项权利，所以平时没感觉；一换账户立刻露馅。
+
+本机权利账本实拍（secedit 导出的那行）：
+
+```text
+SeServiceLogonRight = *S-1-5-80-0, *S-1-5-82-1036420768-…（8 个 S-1-5-82-*）, *S-1-5-83-0
+```
+
+没有普通用户——全是**虚拟账户 SID**：`S-1-5-80`（NT SERVICE 一族）、`S-1-5-82`（IIS 应用池虚拟账户）、`S-1-5-83`（计划任务）。现代 Windows 的默认：真实账户想当服务跑，得有人**显式**把它的 SID 加进这行——这正是「虚拟账户/托管服务账户（MSA/gMSA）」被推崇的原因：它们自带服务登录资格，密码还系统管。
+
+---
+
+## 第 3 课：第三关——读不读得了文件，看的还是对象 ACL
+
+**🧑‍🏫 老师：**
+
+服务过了第二关、令牌挂上后，它读目录写注册表做的访问检查，和你手动双击文件**一模一样**——令牌 SID 对 DACL。小李看到的「安全选项卡里有 svc_app」，若只是名字列在那、没勾「读取和执行」，照样读不了。卷一的模型在这里没有任何特殊化。
+
+> **「能不能作为服务登录」是权利，在发令牌之前定生死；「能不能读文件」是 ACL，在令牌发出来之后才检查。一个是买票，一个是验票——两道关，别混。**
+
+排障口诀：**先看报错是 1069（登录失败→查权利）还是「访问被拒」（→查 ACL）**；三步联查 `sc qc MyService`（身份是谁）→ 该身份令牌里有什么 → `icacls` 那个目录的实际授权。
+
+---
+
+## 插问：服务自己也是个对象？
+
+**🧑‍🎓 学生：** 有没有反过来——谁能启动/停止/改配置某个服务，由什么决定？
+
+**🧑‍🏫 老师：**
+
+好问题——**服务本身就是可保护对象**：SCM 数据库里每条服务记录都有自己的安全描述符（SDDL），决定「谁能启动、停止、查询、改配置」。这就是为什么普通用户能停某些服务、停不了系统服务——不是账户不够格，是那条服务记录的 DACL 只授了管理员和 SYSTEM。本机实拍 Dhcp 服务的 SDDL 原文：
+
+```text
+PS> sc sdshow Dhcp
+D:(A;;CCLCSWLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;NO)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)
+ (A;;CCLCSWRPLOCRRC;;;S-1-2-1)(A;;CCLCSWRPWPDTLOCRRC;;;SY)
+S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)
+```
+
+用卷一第 9 讲的 SDDL 眼光逐段读：`D:` 段里 `AU`（Authenticated Users）拿到 `CC…RC`（连接/查询/读状态一串位）、`NO`（Network Operators）更多些、`BA`（Administrators）那一长串 `…SDRCWDWO` 含改配置和改所有者、`S-1-2-1`（**CONSOLE LOGON**——第 18 讲的门第组！坐在这台机器前的人可以启动/停止它）、`SY`（SYSTEM）；`S:` 段是 SACL（WD=Everyone 的失败审计）——**一张 SDDL 同时解码出五格里的 DACL 和 SACL**，卷一的知识在这全部接上了。
+
+---
+
+## 收束
+
+**你现在会了：** 服务身份从哪来（SCM 选账户 → LSA 发令牌挂进程；本机 195/71/23 的身份分布实测）；「作为服务登录」是**权利**（账本里全是虚拟账户）；访问文件/注册表走**对象 ACL**；服务对象本身也有一层 DACL（Dhcp 的 SDDL 逐段解码）。排障先分 1069 还是访问被拒。
+
+**下一讲才需要：** 域里的服务账户越积越多，谁有资格去改它们的配置？怎么把管理权**委派**给某个运维组、而不发完整域管账号——AD 委派。
 
 ---
 

@@ -1,91 +1,71 @@
 ---
 title: "第 17 讲：NTLM 与协商（Negotiate）"
 sidebarGroup: "卷二·网上的身份"
-shortTitle: "第 17 讲：NTLM 与协商"
+shortTitle: "第 17 讲：NTLM"
 order: 3
-date: 2026-08-06
+date: 2026-08-26T00:00:00.000Z
 category: "Windows"
 tag:
   - "Windows"
-  - "ACL"
   - "权限"
-  - "书稿"
+  - "安全"
   - "NTLM"
-  - "Negotiate"
+  - "对话实录"
+description: 师生对话实录课：现实里并不总走盖章换票——发明挑战-应答（NTLM）这张备用牌和负责挑牌的接待员（Negotiate）。本机 4624 日志统计：近 400 条登录全经 Negotiate、显式 Kerberos 86 条、裸 NTLM 零条——「协商统一入口」的活证据。
 ---
 
 # 第 17 讲：NTLM 与协商（Negotiate）
 
-上一章小王刚学会：[Kerberos](./02-kerberos.md) 用域控盖章，网上证明「我是谁」，不必把密码交给每台文件服务器。  
-本讲只发明一件事——**为什么现实里并不总是走盖章换票**。
+> **卷二·网上的身份（共 5 讲）**
+> 师生对话实录课：AI 当老师、我当 0 基础学生，每讲只发明一个概念。本机实测 2026-08-26。官方锚点：[NTLM Overview](https://learn.microsoft.com/en-us/windows-server/security/kerberos/ntlm-overview)。
 
 ---
 
-### 小王以为会了，现场却对不上
+## 开场：小王以为会了，现场却对不上
 
-他用域账户登录，`klist` 里能看到 TGT，访问 `\\文件服务器主机名\共享` 也顺利。  
-领导临时让他连另一台机器上的目录，地址写成了 **IP**：
+**🧑‍🏫 老师：**
 
-```text
-\\192.168.10.88\交换
-```
+上一讲你刚学会：Kerberos 用域控盖章，网上证明「我是谁」，不必把密码交给每台文件服务器。现在看一个现场：小王用域账户登录，`klist` 里能看到 TGT，访问 `\\文件服务器主机名\共享` 顺利。领导临时让他连另一台机器，地址写成了 **IP**：`\\192.168.10.88\交换`。目录能打开——但他习惯性再敲 `klist`，找不到「专门发给 192.168.10.88 的服务票」。同事随口说：安全日志里这次认证包写的是 **NTLM**。
 
-目录能打开。小王习惯性再敲一次 `klist`，却找不到「专门发给这台 192.168.10.88 的服务票」——至少不像上次看主机名共享时那么干净。
+**🧑‍🎓 学生：** 我也卡住了——不是说域里都用 Kerberos 吗？那上一讲学的还算数吗？
 
-同事随口说：安全日志里这次认证包写的是 **NTLM**。
+**🧑‍🏫 老师：**
 
-小王卡住了：
-
-> 不是说网上都用 Kerberos 票据吗？怎么又冒出个 NTLM？  
-> 那我上一章学的还算数吗？
-
-他的错觉是：
-
-> 「域里 = 永远只有 Kerberos 一种证明方式。」
+他的错觉是「域里 = 永远只有一种证明方式」。本讲只发明一件事：**为什么现实里并不总走盖章换票**。
 
 ---
 
-### 其实系统手里不止一张牌
+## 第 1 课：系统手里不止一张牌
 
-回想一下要解决的问题：**对方机器怎么相信你是小王**，同时尽量少把密码交给对方。
+**🧑‍🏫 老师：**
 
-盖章换票（Kerberos）是很漂亮的一种答法——但前提够多：找得到盖章处、对方服务有正确的名字可被认到、网络与信任关系允许走这条路，等等。  
-现场并不总满足这些前提。IP 访问、某些老路径、工作组机器、协商失败后的退路……系统还需要**另一套证明办法**，否则共享会直接全军覆没。
+要解决的问题不变：**对方机器怎么相信你是小王**，同时尽量少把密码交给对方。盖章换票（Kerberos）是很漂亮的答法，但前提够多：找得到盖章处、对方服务有正确的名字可被认到、网络与信任关系允许。现场并不总满足——IP 访问、某些老路径、工作组机器、协商失败后的退路……系统还需要**另一套证明办法**，否则共享会直接全军覆没。
 
-于是历史上留下了另一条路：**挑战—应答**。
+历史上留下的另一条路：**挑战—应答**。人话三步：
 
-用人话讲：
-
-1. 服务器出一道「题」（挑战）；  
-2. 你的机器用能证明「我知道密码」的方式算出「答案」（应答），**不把密码明文交出去**；  
+1. 服务器出一道「题」（**挑战**：一个随机数）；
+2. 你的机器用能证明「我知道密码」的方式算出「答案」（**应答**：拿密码哈希去算），**不把密码明文交出去**；
 3. 服务器（或它背后的域）核对答案，认不认你。
 
-这条路不依赖「先向 KDC 换一张只给这台服务的票」那种节奏，所以在 Kerberos 走不通时，常常还能干活。
+这条路不依赖「先向 KDC 换一张只给这台服务的票」那种节奏，所以 Kerberos 走不通时它常常还能干活。微软文档把它叫 **NTLM**：本质挑战—应答、较老的协议、新部署更推荐 Kerberos。和上一讲对照只记差别：
 
-微软文档把它叫做 **NTLM**：一种 Windows 认证协议，本质是挑战—应答；并写明它是较老的协议，新部署更推荐 Kerberos。  
-来源：[NTLM Overview](https://learn.microsoft.com/en-us/windows-server/security/kerberos/ntlm-overview)
-
-和上一章对照，只记差别，不背报文：
-
-| | Kerberos（上一章） | NTLM（本讲） |
+| | Kerberos（上一讲） | NTLM（本讲） |
 |--|-------------------|--------------|
-| 怎么证明 | 向盖章处换票，给服务器看票 | 挑战—应答 |
-| 典型依赖 | 域、KDC、服务名等 | 不靠「先换服务票」那条完整链路 |
+| 怎么证明 | 向盖章处换票，给服务器看票 | 挑战—应答（第 4 讲画过三方图：服务器验不了域账户时 pass-through 给域控代验） |
+| 典型依赖 | 域、KDC、服务名（SPN） | 不靠「先换服务票」那条链路 |
 | 文档态度 | 现代域环境的主力 | 遗留 / 兼容；新部署不优先 |
 
-所以：上一章没学错——**能走盖章时，优先盖章**；本讲补的是：**走不通时，系统还可能改用 NTLM**。
+所以上一讲没学错——**能走盖章时优先盖章；本讲补的是走不通时，系统还可能改用 NTLM**。
 
 ---
 
-### 那谁决定用哪一张牌？——协商
+## 第 2 课：谁决定用哪张牌——协商（Negotiate）
 
-小王又问：每次连共享，是人手工选 Kerberos 还是 NTLM 吗？
+**🧑‍🎓 学生：** 每次连共享，是人手工选协议吗？
 
-不是。客户端和服务器前面往往还有一层「先商量用哪种」的机制。  
-Windows 认证架构里，LSA 一侧有 **Negotiate（协商）**：在合适的安全包之间做选择，常见就是在 **Kerberos 与 NTLM** 之间判断走哪条。  
-来源：[Credentials processes in Windows authentication](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/credentials-processes-in-windows-authentication)（LSA / Negotiate）
+**🧑‍🏫 老师：**
 
-贴学名可以先收成三句：
+不是。客户端和服务器前面有一层「先商量用哪种」的机制：LSA 一侧的 **Negotiate（协商）**——在合适的安全包之间做选择，常见就是在 Kerberos 与 NTLM 之间判断（基于 SPNEGO，第 4 讲讲过）。三句收口：
 
 | 白话 | 常见叫法 |
 |------|----------|
@@ -93,48 +73,45 @@ Windows 认证架构里，LSA 一侧有 **Negotiate（协商）**：在合适的
 | 挑战—应答那一套 | **NTLM** |
 | 先商量、再选用其中一种 | **Negotiate（协商）** |
 
-直觉（够用即可）：
+> **Negotiate 尽量优先 Kerberos；条件不够时才落到 NTLM。** 看到「这次是 NTLM」，多半不是「域坏了」，而是这一次连接没走成盖章换票。
 
-> **Negotiate 常尽量优先 Kerberos；条件不够时，才落到 NTLM。**  
-> 你看到「这次是 NTLM」，多半不是「域坏了」，而是**这一次连接没走成盖章换票**。
+这不是纸面规则——本机 4624 登录事件的**认证包统计**（最近 400 条）：
 
-官方也写明：Negotiate 默认倾向 Kerberos；只有 Kerberos 用不上、或信息不够时，才会落到 NTLM。  
-NTLM 仍留着，是因为兼容路径：老系统、简单场景、以及 Kerberos 前提一时凑不齐时，还得有一条退路。  
-来源：[SSPI architecture · Negotiate SSP](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/security-support-provider-interface-architecture)、[NTLM Overview](https://learn.microsoft.com/en-us/windows-server/security/kerberos/ntlm-overview)
+```text
+Count Name
+----- ---------
+  127 Negotiate     ← 绝大多数网络登录从「协商」这个统一入口进来
+   86 Kerberos      ← 其中显式走到 Kerberos 的
+    0 NTLM          ← 近期没有裸 NTLM（经 Negotiate 落到 NTLM 时也常记 Negotiate）
+```
+
+**协商是统一入口、Kerberos 是常态**——数字和文档口径一致。而 NTLM 仍留着，是兼容路径：老系统、简单场景、Kerberos 前提凑不齐时的退路。
 
 ---
 
-### 程序并不直接「说协议」——SSPI 与办事员
+## 第 3 课：程序并不直接「说协议」——SSPI 与办事员
 
-小王又听见同事甩两个词：**SSPI**、**安全支持提供程序（SSP）**。  
-他以为又要背一整套新协议。其实只是把上一节的「协商」再往下拆一层：程序到底找谁办事。
+**🧑‍🏫 老师：**
 
-先发明，不贴英文：
+再拆一层：程序到底找谁办事。先发明，不贴英文：
 
-1. 文件共享客户端、浏览器、某段 C# 代码，通常**不想**自己拼 Kerberos / NTLM 报文；  
-2. 它们只走到操作系统门口，说：「帮我跟对面证明我是谁」；  
-3. 门后有一个**统一柜台**；柜台里坐着好几位**办事员**——有人擅长盖章换票，有人擅长挑战—应答，还有人管 TLS 一类事；  
-4. 有时你点名找某位办事员；更常见的是找一位**会挑人**的接待员——他先看条件，再决定派谁上场。
+1. 文件共享客户端、浏览器、某段 C# 代码，通常**不想**自己拼 Kerberos/NTLM 报文；
+2. 它们只走到操作系统门口说：「帮我跟对面证明我是谁」；
+3. 门后有个**统一柜台**；柜台里坐着好几位**办事员**——有人擅长盖章换票、有人擅长挑战—应答、有人管 TLS；
+4. 有时你点名找某位办事员；更常见的是找**会挑人的接待员**——先看条件再派谁上场。
 
-现在才贴学名（来源同上 [SSPI architecture](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/security-support-provider-interface-architecture)）：
+现在才贴学名（[SSPI architecture](https://learn.microsoft.com/en-us/windows-server/security/windows-authentication/security-support-provider-interface-architecture)）：
 
 | 刚才发明的东西 | 常见叫法 |
 |----------------|----------|
-| 统一柜台（应用调用的那套 API） | **SSPI**（Security Support Provider Interface） |
-| 柜台里的一位办事员 | **SSP**（Security Support Provider，安全支持提供程序） |
-| 会挑人的接待员 | **Negotiate SSP**（基于 SPNEGO；在 Windows 上常在 Kerberos 与 NTLM 之间选） |
-| 挑战—应答那位办事员 | **NTLM SSP**（实现落在 `%Windir%\System32\msv1_0.dll`） |
+| 统一柜台（应用调用的那套 API） | **SSPI** |
+| 柜台里的一位办事员 | **SSP** |
+| 会挑人的接待员 | **Negotiate SSP** |
+| 挑战—应答那位办事员 | **NTLM SSP**（`msv1_0.dll`） |
 
-回扣 [第 3 讲](../vol1-invent/04-name-sid-lsa.md) 那张 LSA 客户端架构图：黄框里排着 NTLM / Kerberos / Schannel…——那一排就是「办事员」。  
-第 3 讲只让你记住「本地路径常跟 NTLM↔SAM 有关、域路径常跟 Kerberos / 域控有关」；本讲补的是：**网上认人时，应用经 SSPI 找办事员；Negotiate 负责挑；挑中 NTLM 时，就是挑战—应答那条路。**
+回扣[第 3 讲](../vol1-invent/04-name-sid-lsa.md)那张 LSA 架构图：黄框里排着 NTLM/Kerberos/Schannel 的那一排就是「办事员」。文档还写明：NTLM SSP 不只服务登录对话框——**SMB 文件共享、HTTP Negotiate、RPC** 都用它。所以在共享路径上撞见 NTLM、和网页认证里出现 NTLM，往往是同一套办事员。
 
-文档还写明：NTLM SSP 不只服务「你以为的登录对话框」，**SMB 文件共享、HTTP Negotiate、RPC** 等场景都会用到它。  
-所以小王在共享路径上撞见 NTLM，和网页认证里出现 NTLM，往往是**同一套办事员**，不是两套互不相干的世界观。
-
-#### 在 HTTP / IIS 上怎么「看见」同一思想
-
-装站步骤不展开。只看一张菜单：很多 IIS 站点的 **Windows 身份验证** 提供者列表里，会同时挂着 **Negotiate** 与 **NTLM**——和本讲桌子上的「接待员 + 挑战—应答办事员」是同一幅地图。  
-配置形态大致是（示意，不是让你照抄去生产环境乱改）：
+**在 HTTP/IIS 上看见同一思想**：很多 IIS 站点的 Windows 身份验证提供者列表同时挂 **Negotiate** 与 **NTLM**：
 
 ```xml
 <windowsAuthentication enabled="true">
@@ -145,51 +122,34 @@ NTLM 仍留着，是因为兼容路径：老系统、简单场景、以及 Kerbe
 </windowsAuthentication>
 ```
 
-来源：[IIS on Nano Server · Windows authentication providers](https://learn.microsoft.com/en-us/windows-server/get-started/iis-on-nano-server)（`windowsAuthentication` / `providers`）
-
-读法只记一句：
-
-> 列表里的 **Negotiate** = 先商量（常优先 Kerberos）；**NTLM** = 允许直接或退到挑战—应答。  
-> 浏览器 / 反向代理最终谈成哪一种，仍取决于这一次的名字、信任与策略——和共享用 IP 掉到 NTLM 是同一类故事。
+列表里的 Negotiate = 先商量（常优先 Kerberos）；NTLM = 允许直接或退到挑战—应答——和「共享用 IP 掉到 NTLM」是同一类故事。
 
 ---
 
-### 小王怎么「看见」自己掉到了哪条路
+## 插问：怎么「看见」自己掉到了哪条路？
 
-不必会拆协议。现场用现象对齐地图就行：
+**🧑‍🎓 学生：** 现场怎么判断某次访问走的是哪张牌？
 
-**1. 先问：我是不是在用「主机名」走域内共享？**  
-`\\服务器主机名\共享` 且双方都在能聊到域控的环境里，更常看到 Kerberos 服务票。  
-改成纯 IP、或对方根本不在这条信任/命名路径上，协商失败后出现 NTLM 并不稀奇。
+**🧑‍🏫 老师：**
 
-**2. 再看口袋里的票。**  
+四步，用现象对齐地图，不必拆协议：
 
-```bat
-klist
-```
+1. **先问姿势**：是不是在用**主机名**走域内共享？`\\主机名\共享` 且双方都在能聊到域控的环境，更常看到 Kerberos 服务票；纯 IP、或对方不在信任/命名路径上，落到 NTLM 不稀奇（Kerberos 的票是发给**服务名**的——IP 对不上服务名，第 19 讲 SPN 展开）；
+2. **看口袋里的票**：`klist`——按理该有对应服务的票却对不上，而资源又确实打开了，就要怀疑「认证走了 NTLM，不是没有认证」；
+3. **安全日志的认证包名称**：4624 事件的 `AuthenticationPackageName` 字段（本机统计刚做过：Negotiate/Kerberos 字样直接可见）；
+4. **和权限别缠死**：NTLM 还是 Kerberos 解决**认人**；认完之后仍是令牌对 DACL、共享∩NTFS（[第 10 讲](../vol1-invent/11-access-check.md)）。能打开共享只说明认证+授权都过了；`klist` 空只说明可能不是靠那张服务票过的认证。
 
-若这次访问按理该有对应服务的 Kerberos 票，却怎么也对不上，而资源又确实打开了——就要怀疑：**认证可能走了 NTLM，不是「没有认证」。**
-
-**3. 安全日志里的认证包名称。**  
-在域控或相关机器的安全审核里，登录成功/失败事件常会写明用的是哪种程序包（界面语言不同，可能直接出现 Kerberos / NTLM 字样）。  
-小王的用法是：对照「同一次访问」的时间，看写的是哪一个——用来验证同事那句「这次是 NTLM」，而不是用来背事件 ID 表（事件 ID 留给附录）。
-
-**4. 和权限别缠死。**  
-NTLM 还是 Kerberos，解决的是**认人**；认完之后仍是令牌对 DACL、共享∩NTFS（卷一、[第 10 讲](../vol1-invent/11-access-check.md)）。  
-能打开共享，只说明认证+授权都过了；`klist` 空，只说明**可能不是靠那张服务票过的认证**。
+顺带一个本机现状：`HKLM\…\Control\Lsa` 的 `LmCompatibilityLevel` 键**未显式配置**（走系统默认——现代默认拒绝最弱的 LM 响应）。企业要收紧 NTLM 时，正是在这里及「NTLM 审计/限制」策略上做文章；本讲只建地图。
 
 ---
 
-### 收束
+## 收束
 
-**你现在会了：**  
-网上证明身份不只 Kerberos 一种；**NTLM** 是挑战—应答的另一条路；**Negotiate** 负责在合适时选用（常优先 Kerberos，否则可能落到 NTLM）。  
-应用通常经 **SSPI** 找「办事员（SSP）」；Negotiate 是会挑人的接待员；NTLM SSP 会出现在 SMB / HTTP Negotiate / RPC 等场景——和 IIS 提供者列表里同时挂 Negotiate、NTLM，是同一幅地图。  
-看到 NTLM，先问「这一次为什么盖章换票没走成」，不要推翻上一章。
+**你现在会了：** 网上证明身份不只 Kerberos——**NTLM** 是挑战—应答的备用牌；**Negotiate** 负责挑（常优先 Kerberos，本机 4624 统计：127 Negotiate / 86 Kerberos / 0 裸 NTLM）。应用经 **SSPI** 找办事员（SSP），NTLM SSP 出现在 SMB/HTTP Negotiate/RPC——和 IIS 提供者列表同幅地图。看到 NTLM 先问「这次为什么盖章换票没走成」，不要推翻上一讲。
 
-**下一章才需要：** 同一个人，「坐在屏幕前 / 访问共享 / 跑服务」——登录类型不同，令牌与可用能力也会不同。
+**下一讲才需要：** 同一个人「坐在屏幕前 / 访问共享 / 跑服务」——登录类型不同，令牌与可用能力也会不同。
 
-不写：如何故意逼出 NTLM、中继或哈希相关攻击步骤；也不展开 IIS 装站细则。运维上应减少对 NTLM 的依赖，那是策略与架构题，本讲只建立地图。
+（不写：如何故意逼出 NTLM、中继或哈希相关攻击步骤。运维上应减少 NTLM 依赖——那是策略与架构题，卷七再回。）
 
 ---
 

@@ -193,11 +193,21 @@ curl -s https://blockstream.info/api/block/000000000019d6689c085ae165831e934ff76
 ```
 
 ```text
-{"id":"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
- "height":0,"version":1,"timestamp":1231006505,"tx_count":1,"size":285,
- "merkle_root":"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
- "previousblockhash":null,"mediantime":1231006505,
- "nonce":2083236893,"bits":486604799,"difficulty":1.0}
+{
+    "id": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+    "height": 0,
+    "version": 1,
+    "timestamp": 1231006505,
+    "tx_count": 1,
+    "size": 285,
+    "weight": 1140,
+    "merkle_root": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+    "previousblockhash": null,
+    "mediantime": 1231006505,
+    "nonce": 2083236893,
+    "bits": 486604799,
+    "difficulty": 1.0
+}
 ```
 
 逐字段读几个：`height: 0`（第 0 块）、`previousblockhash: null`（它前面没有块——链的起点）、`difficulty: 1.0`（当年难度是 1）。这个块里只有一笔交易（挖矿奖励），交易的输入里塞了一段十六进制文本，解码：

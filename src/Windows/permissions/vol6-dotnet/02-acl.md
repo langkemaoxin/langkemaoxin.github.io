@@ -3,90 +3,83 @@ title: "第 32 讲：用 .NET 读写文件 ACL"
 sidebarGroup: "卷六·用代码改权限"
 shortTitle: "第 32 讲：.NET 改 ACL"
 order: 2
-date: 2026-08-06
+date: 2026-08-26T00:00:00.000Z
 category: "Windows"
 tag:
   - "Windows"
+  - ".NET"
   - "ACL"
   - "权限"
-  - "书稿"
+  - "对话实录"
+description: 师生对话实录课：把 ACL 当对象——FileSecurity 与 FileSystemAccessRule。本机实跑全套：读出第 28 讲配的 ProjLib DACL 逐条、代码加一条 ACE 后 icacls 立刻现身——「代码改权限、icacls 验权限」的互证闭环。
 ---
 
 # 第 32 讲：用 .NET 读写文件 ACL
 
-### 麻烦
+> **卷六·用代码改权限（共 3 讲）**
+> 师生对话实录课：AI 当老师、我当 0 基础学生，每讲只发明一个概念。本机实测 2026-08-26。官方锚点：[DirectorySecurity](https://learn.microsoft.com/dotnet/api/system.security.accesscontrol.directorysecurity)、[InheritanceFlags](https://learn.microsoft.com/dotnet/api/system.security.accesscontrol.inheritanceflags)。
 
-上一讲你学会用 `WindowsIdentity.GetCurrent()` 在代码里拿到当前进程是谁、在哪些组。可光有身份不够——你要做的事是**给某个文件夹加一条「项目组只读」规则**。命令行 `icacls` 能干，可一旦要嵌进 C# 程序、在几千个目录上按业务逻辑动态授权，`Process.Start("icacls ...")` 拼字符串就成了笑话。我们需要一套**能把 ACL 当对象操作**的 API。
+---
 
-### 这一讲只发明：把 ACL 当对象——FileSecurity 与 FileSystemAccessRule
+## 开场：拼 icacls 字符串是笑话
 
-.NET（`System.Security.AccessControl` 命名空间）把第 9 讲那套「DACL = 一串 ACE」映射成对象：
+**🧑‍🏫 老师：**
 
-- **`DirectorySecurity` / `FileSecurity`**：一个目录/文件的整张 DACL；
-- **`FileSystemAccessRule`**：一条 ACE——谁（`IdentityReference`）、能做什么（`FileSystemRights`）、允许还是拒绝（`AccessControlType`）、怎么往下传（`InheritanceFlags` / `PropagationFlags`）。
+上一讲你能在代码里拿到「我是谁」。可你要做的是**给某个文件夹加一条「项目组只读」**——命令行 `icacls` 能干，可要嵌进 C# 程序、在几千个目录上按业务逻辑动态授权，`Process.Start("icacls …")` 拼字符串就成了笑话。我们需要一套**能把 ACL 当对象操作**的 API。
 
-来源：[DirectorySecurity 类](https://learn.microsoft.com/zh-cn/dotnet/api/system.security.accesscontrol.directorysecurity)
+`.NET`（`System.Security.AccessControl`）把第 9 讲的「DACL = 一串 ACE」映射成对象：**`DirectorySecurity`/`FileSecurity`** = 整张 DACL；**`FileSystemAccessRule`** = 一条 ACE——谁（IdentityReference）、能做什么（FileSystemRights）、Allow 还是 Deny、怎么往下传（InheritanceFlags/PropagationFlags）。
 
-#### 1. 读 ACL
+---
 
-读出来，遍历每一条规则：
+## 第 1 课：读 ACL + 加 ACE——本机全流程实跑
+
+**🧑‍🏫 老师：**
+
+**读**：拿第 28 讲亲手配的 ProjLib 来读（PowerShell 实跑）：
 
 ```csharp
-using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
-
-var di = new DirectoryInfo(@"D:\Archive\项目A");
-DirectorySecurity sec = di.GetAccessControl();   // .NET 6+ Windows
-
+var di = new DirectoryInfo(@"C:\Lab\share\proj");
+DirectorySecurity sec = di.GetAccessControl();
 foreach (FileSystemAccessRule rule in
-         sec.GetAccessRules(includeExplicit: true,
-                            includeInherited: true,
-                            typeof(NTAccount)))
-{
-    Console.WriteLine($"{rule.AccessControlType,-6}" +
-        $" {rule.IdentityReference,-30} {rule.FileSystemRights}");
-}
+         sec.GetAccessRules(true, true, typeof(NTAccount)))
+    Console.WriteLine($"{rule.AccessControlType,-6} {rule.IdentityReference,-38} {rule.FileSystemRights}");
 ```
 
-输出大致这样：
-
-```
-Allow JZFZ\项目A-成员                  Modify, Synchronize
-Allow NT AUTHORITY\SYSTEM              FullControl
-Allow BUILTIN\Administrators           FullControl
-Deny  JZFZ\离职账号                      FullControl
+```text
+Allow  NT AUTHORITY\Authenticated Users   ReadAndExecute, Synchronize
+Allow  NT AUTHORITY\SYSTEM                FullControl
+Allow  BUILTIN\Administrators             FullControl
+Allow  PC3507\LabReaders                  Modify, Synchronize
 ```
 
-`GetAccessRules` 第三个参数 `typeof(NTAccount)` 表示「给我显示成 域\账号 名」；传 `typeof(SecurityIdentifier)` 则给 SID，正是第 5 讲令牌里那一串。  
-来源：[FileSystemSecurity.GetAccessRules](https://learn.microsoft.com/zh-cn/dotnet/api/system.security.accesscontrol.filesystemsecurity.getaccessrules)
+——第 28 讲用 icacls 配的四条，代码读出来**一字不差**。`GetAccessRules` 第三个参数传 `typeof(NTAccount)` 显示成名字、传 `typeof(SecurityIdentifier)` 给 SID。
 
-#### 2. 加一条 ACE
-
-构造规则、加进 DACL、再写回磁盘——**三步缺一不可**：
+**加**：构造规则、加进 DACL、写回磁盘——三步缺一不可（实跑）：
 
 ```csharp
-var account = new NTAccount(@"JZFZ\项目A-审计");
 var rule = new FileSystemAccessRule(
-    account,
-    FileSystemRights.Read | FileSystemRights.ExecuteFile,
-    AccessControlType.Allow);
-
+    new NTAccount(@"PC3507\LabUser2"),
+    FileSystemRights.Read, AccessControlType.Allow);
 sec.AddAccessRule(rule);     // 只改内存里的对象
 di.SetAccessControl(sec);    // 关键：写回磁盘才生效
 ```
 
-口诀：
+```text
+PS> icacls C:\Lab\share\proj
+… PC3507\LabUser2:(OI)(CI)(R)     ← 代码加的 ACE，icacls 立刻看得见
+```
 
-> **AddAccessRule 只改内存，SetAccessControl 才落盘。**
-> 忘了最后那行，程序不报错、权限也没动——最阴的 bug。
+> **AddAccessRule 只改内存，SetAccessControl 才落盘。** 忘了最后一行，程序不报错、权限也没动——最阴的 bug。**代码改权限，icacls 验权限，两边对得上才敢收工**（刚跑的互证闭环）。
 
-`FileSystemRights` 是位标志，能 `|` 组合：`Read | ExecuteFile` 就等于 GUI 里的「读取和执行」。  
-来源：[FileSystemRights 枚举](https://learn.microsoft.com/zh-cn/dotnet/api/system.security.accesscontrol.filesystemrights)
+---
 
-#### 3. 继承标志怎么传
+## 第 2 课：继承标志怎么传
 
-给**目录**加规则时，默认只影响这个目录本身，子项不继承。要让规则下传，得显式传 `InheritanceFlags`——它和第 12 讲的 Win32 标志、`icacls` 字母一一对应：
+**🧑‍🎓 学生：** 给目录加规则时，怎么让它像 icacls 那样 `(OI)(CI)` 往下传？
+
+**🧑‍🏫 老师：**
+
+默认只影响目录本身；下传要显式传 `InheritanceFlags`——和第 12 讲的 Win32 标志、icacls 字母一一对应：
 
 | GUI「应用于」 | `InheritanceFlags` | `PropagationFlags` | icacls 标记 |
 |---|---|---|---|
@@ -96,49 +89,15 @@ di.SetAccessControl(sec);    // 关键：写回磁盘才生效
 | 此文件夹和子文件夹 | `ContainerInherit` | `None` | `(CI)` |
 | 仅子文件夹和文件（不含本目录） | `ContainerInherit \| ObjectInherit` | `InheritOnly` | `(OI)(CI)(IO)` |
 
-构造时多带两个参数：
+名字别记反：「容器」装目录（`ContainerInherit` = 子目录继承），「对象」是叶子文件（`ObjectInherit` = 子文件继承）。`FileSystemRights` 是位标志能 `|` 组合（`Read | ExecuteFile` = GUI 的「读取和执行」）。
 
-```csharp
-var rule = new FileSystemAccessRule(
-    account,
-    FileSystemRights.Read,
-    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-    PropagationFlags.None,
-    AccessControlType.Allow);
-```
+---
 
-名字别记反：「容器」装的是目录（`ContainerInherit` = 子目录继承），「对象」是叶子文件（`ObjectInherit` = 子文件继承）。  
-来源：[InheritanceFlags 枚举](https://learn.microsoft.com/zh-cn/dotnet/api/system.security.accesscontrol.inheritanceflags)
+## 收束
 
-#### 4. 和 icacls 互证
+**你现在会了：** `DirectorySecurity`/`FileSecurity` 读 DACL（本机读出 ProjLib 四条一字不差）、`FileSystemAccessRule` 加 ACE（代码加、icacls 见——互证闭环）、`InheritanceFlags`/`PropagationFlags` 控继承（五档对照表）。
 
-代码改完，永远拿 `icacls` 对一遍，别「自己骗自己」：
-
-```bat
-icacls "D:\Archive\项目A"
-```
-
-```
-D:\Archive\项目A JZFZ\项目A-成员:(OI)(CI)(RX,W)
-                  JZFZ\项目A-审计:(OI)(CI)(RX)
-                  NT AUTHORITY\SYSTEM:(OI)(CI)(F)
-```
-
-`(OI)(CI)` 正对应代码里的 `ContainerInherit | ObjectInherit`，`(RX)` 是读取执行、`(F)` 是完全控制。能对上，说明那几行 C# 真的写对了。  
-来源：[icacls](https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/icacls)
-
-口诀：
-
-> **代码改权限，icacls 验权限。** 两边对得上，才敢收工。
-
-### 怎么看见
-
-把上面几段拼成最小脚本跑一次，再用 GUI 复核：右键文件夹 → 属性 → 安全 → 高级。每条 ACE 后面的「应用于」列，就是第 3 节那张表的图形版——你写 `(OI)(CI)`，它就显示「此文件夹、子文件夹和文件」。
-
-### 收束
-
-**你现在会了：** 用 `DirectorySecurity` / `FileSecurity` 读 DACL，用 `FileSystemAccessRule` 加 ACE，用 `InheritanceFlags` / `PropagationFlags` 控继承，并用 `icacls` 互证。  
-**下一讲才需要：** 改别人目录的 ACL 要有相应权限，可你的程序此刻跑在**你自己**的令牌下。要让程序以**另一个用户**的身份去操作——就得模拟（Impersonation）。
+**下一讲才需要：** 改别人目录的 ACL 要有相应权限，可你的程序此刻跑在**你自己**的令牌下。要让程序以**另一个用户**的身份操作——模拟（Impersonation）。
 
 ---
 

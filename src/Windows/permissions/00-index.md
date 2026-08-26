@@ -54,49 +54,51 @@ tag:
 | [第 13 讲](./vol1-invent/14-effective-permissions.md) | 已有·对话实录 | 有效权限 |
 | [第 14 讲](./vol1-invent/15-sacl.md) | 已有·对话实录（已加厚） | SACL |
 
+> ✅ 2026-08-26：卷二~卷七共 24 讲已全部转为**师生对话实录课**（实验全部本机实拍：LDAP 直查域账本、klist 票据、secedit 权利账本、DeviceGuard/BitLocker 现状等；域控侧不可实测处均如实标注）。
+
 ## 卷二·网上的身份（第 15～19 讲）
 
 | 章 | 状态 | 说明 |
 |----|------|------|
-| [第 15 讲](./vol2-identity/01-domain-dc.md) | 已有 | 域与域控 |
-| [第 16 讲](./vol2-identity/02-kerberos.md) | 已有 | Kerberos |
-| [第 17 讲](./vol2-identity/03-ntlm.md) | 已有 | NTLM 与协商 |
-| [第 18 讲](./vol2-identity/04-logon-types.md) | 已有 | 登录类型 |
-| [第 19 讲](./vol2-identity/05-spn.md) | 已有 | SPN |
+| [第 15 讲](./vol2-identity/01-domain-dc.md) | 已有·对话实录 | 域与域控 |
+| [第 16 讲](./vol2-identity/02-kerberos.md) | 已有·对话实录 | Kerberos |
+| [第 17 讲](./vol2-identity/03-ntlm.md) | 已有·对话实录 | NTLM 与协商 |
+| [第 18 讲](./vol2-identity/04-logon-types.md) | 已有·对话实录 | 登录类型 |
+| [第 19 讲](./vol2-identity/05-spn.md) | 已有·对话实录 | SPN |
 
 ## 卷三·权利与 UAC（第 20～24 讲）
 
 | 章 | 状态 | 说明 |
 |----|------|------|
-| [第 20 讲](./vol3-rights-uac/01-rights-uac.md) | 已有·待拆 | 权利与 UAC（合章） |
-| [第 21 讲](./vol3-rights-uac/02-user-rights.md) | 已有 | 用户权利专章 |
-| [第 22 讲](./vol3-rights-uac/03-uac.md) | 已有 | UAC 专章 |
-| [第 23 讲](./vol3-rights-uac/04-gpo-rights.md) | 已有 | GPO 权利分配 |
-| [第 24 讲](./vol3-rights-uac/05-adminsdholder.md) | 已有 | AdminSDHolder |
+| [第 20 讲](./vol3-rights-uac/01-rights-uac.md) | 已有·对话实录 | 权利与 UAC（合章） |
+| [第 21 讲](./vol3-rights-uac/02-user-rights.md) | 已有·对话实录 | 用户权利专章 |
+| [第 22 讲](./vol3-rights-uac/03-uac.md) | 已有·对话实录 | UAC 专章 |
+| [第 23 讲](./vol3-rights-uac/04-gpo-rights.md) | 已有·对话实录 | GPO 权利分配 |
+| [第 24 讲](./vol3-rights-uac/05-adminsdholder.md) | 已有·对话实录 | AdminSDHolder |
 
 ## 卷四·不只是文件（第 25～27 讲）
 
 | 章 | 状态 | 说明 |
 |----|------|------|
-| [第 25 讲](./vol4-beyond-files/01-registry.md) | 已有 | 注册表 ACL |
-| [第 26 讲](./vol4-beyond-files/02-services.md) | 已有 | 服务权限 |
-| [第 27 讲](./vol4-beyond-files/03-ad-delegation.md) | 已有 | AD 委派 |
+| [第 25 讲](./vol4-beyond-files/01-registry.md) | 已有·对话实录 | 注册表 ACL |
+| [第 26 讲](./vol4-beyond-files/02-services.md) | 已有·对话实录 | 服务权限 |
+| [第 27 讲](./vol4-beyond-files/03-ad-delegation.md) | 已有·对话实录 | AD 委派 |
 
 ## 卷五·排障与设计（第 28～30 讲）
 
 | 章 | 状态 | 说明 |
 |----|------|------|
-| [第 28 讲](./vol5-ops/01-share-design.md) | 已有 | 共享设计 |
-| [第 29 讲](./vol5-ops/02-effective-access-practice.md) | 已有 | 有效权限实战 |
-| [第 30 讲](./vol5-ops/03-troubleshooting-cases.md) | 已有 | 排障案例集 |
+| [第 28 讲](./vol5-ops/01-share-design.md) | 已有·对话实录 | 共享设计 |
+| [第 29 讲](./vol5-ops/02-effective-access-practice.md) | 已有·对话实录 | 有效权限实战 |
+| [第 30 讲](./vol5-ops/03-troubleshooting-cases.md) | 已有·对话实录 | 排障案例集 |
 
 ## 卷六·用代码改权限（第 31～33 讲）
 
 | 章 | 状态 | 说明 |
 |----|------|------|
-| [第 31 讲](./vol6-dotnet/01-identity.md) | 已有 | .NET 身份 |
-| [第 32 讲](./vol6-dotnet/02-acl.md) | 已有 | .NET 改 ACL |
-| [第 33 讲](./vol6-dotnet/03-impersonation.md) | 已有 | .NET 模拟 |
+| [第 31 讲](./vol6-dotnet/01-identity.md) | 已有·对话实录 | .NET 身份 |
+| [第 32 讲](./vol6-dotnet/02-acl.md) | 已有·对话实录 | .NET 改 ACL |
+| [第 33 讲](./vol6-dotnet/03-impersonation.md) | 已有·对话实录 | .NET 模拟 |
 
 ## 卷七·安全防护（第 34～38 讲）
 
@@ -104,11 +106,11 @@ tag:
 
 | 章 | 状态 | 说明 |
 |----|------|------|
-| [第 34 讲](./vol7-defense/01-windows-hello.md) | 已有 | Windows Hello 与无密码登录 |
-| [第 35 讲](./vol7-defense/02-credential-guard.md) | 已有 | Credential Guard |
-| [第 36 讲](./vol7-defense/03-vbs-hvci.md) | 已有 | VBS / HVCI / 内存完整性 |
-| [第 37 讲](./vol7-defense/04-app-control.md) | 已有 | 应用控制 WDAC / AppLocker |
-| [第 38 讲](./vol7-defense/05-bitlocker.md) | 已有 | BitLocker 与数据保护 |
+| [第 34 讲](./vol7-defense/01-windows-hello.md) | 已有·对话实录 | Windows Hello 与无密码登录 |
+| [第 35 讲](./vol7-defense/02-credential-guard.md) | 已有·对话实录 | Credential Guard |
+| [第 36 讲](./vol7-defense/03-vbs-hvci.md) | 已有·对话实录 | VBS / HVCI / 内存完整性 |
+| [第 37 讲](./vol7-defense/04-app-control.md) | 已有·对话实录 | 应用控制 WDAC / AppLocker |
+| [第 38 讲](./vol7-defense/05-bitlocker.md) | 已有·对话实录 | BitLocker 与数据保护 |
 
 ## 附录
 
