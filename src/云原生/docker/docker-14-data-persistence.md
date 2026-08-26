@@ -839,6 +839,13 @@ docker volume prune -f
 ```bash
 mkdir -p /root/backup
 docker run --rm -v mydata:/data -v /root/backup:/backup busybox tar cvf /backup/mydata.tar -C /data .
+# docker run --rm	运行一个一次性容器，执行完后自动删除
+# -v mydata:/data	把名为 mydata 的 Docker 卷挂载到容器内的 /data
+# -v /root/backup:/backup	把宿主机的 /root/backup 目录挂载到容器内的 /backup 
+# busybox	使用轻量级 Linux 镜像
+# tar cvf /backup/mydata.tar -C /data .	把 /data 目录下的所有内容打包成 /backup/mydata.tar
+
+
 ls -l /root/backup
 docker run --rm -v /root/backup:/backup busybox tar tvf /backup/mydata.tar
 ```
