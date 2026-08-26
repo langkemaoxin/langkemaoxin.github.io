@@ -1,0 +1,132 @@
+import _frozen_importlib # frozen
+import _imp # builtin
+import '_thread' # <class '_frozen_importlib.BuiltinImporter'>
+import '_warnings' # <class '_frozen_importlib.BuiltinImporter'>
+import '_weakref' # <class '_frozen_importlib.BuiltinImporter'>
+import '_io' # <class '_frozen_importlib.BuiltinImporter'>
+import 'marshal' # <class '_frozen_importlib.BuiltinImporter'>
+import 'posix' # <class '_frozen_importlib.BuiltinImporter'>
+import '_frozen_importlib_external' # <class '_frozen_importlib.FrozenImporter'>
+# installing zipimport hook
+import 'time' # <class '_frozen_importlib.BuiltinImporter'>
+import 'zipimport' # <class '_frozen_importlib.FrozenImporter'>
+# installed zipimport hook
+# /usr/lib/python3.10/encodings/__pycache__/__init__.cpython-310.pyc matches /usr/lib/python3.10/encodings/__init__.py
+# code object from '/usr/lib/python3.10/encodings/__pycache__/__init__.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/codecs.cpython-310.pyc matches /usr/lib/python3.10/codecs.py
+# code object from '/usr/lib/python3.10/__pycache__/codecs.cpython-310.pyc'
+import '_codecs' # <class '_frozen_importlib.BuiltinImporter'>
+import 'codecs' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb5cb2b0>
+# /usr/lib/python3.10/encodings/__pycache__/aliases.cpython-310.pyc matches /usr/lib/python3.10/encodings/aliases.py
+# code object from '/usr/lib/python3.10/encodings/__pycache__/aliases.cpython-310.pyc'
+import 'encodings.aliases' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c0880>
+import 'encodings' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb5cb070>
+# /usr/lib/python3.10/encodings/__pycache__/utf_8.cpython-310.pyc matches /usr/lib/python3.10/encodings/utf_8.py
+# code object from '/usr/lib/python3.10/encodings/__pycache__/utf_8.cpython-310.pyc'
+import 'encodings.utf_8' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb5cb010>
+import '_signal' # <class '_frozen_importlib.BuiltinImporter'>
+# /usr/lib/python3.10/__pycache__/io.cpython-310.pyc matches /usr/lib/python3.10/io.py
+# code object from '/usr/lib/python3.10/__pycache__/io.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/abc.cpython-310.pyc matches /usr/lib/python3.10/abc.py
+# code object from '/usr/lib/python3.10/__pycache__/abc.cpython-310.pyc'
+import '_abc' # <class '_frozen_importlib.BuiltinImporter'>
+import 'abc' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c0be0>
+import 'io' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c09d0>
+# /usr/lib/python3.10/__pycache__/site.cpython-310.pyc matches /usr/lib/python3.10/site.py
+# code object from '/usr/lib/python3.10/__pycache__/site.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/os.cpython-310.pyc matches /usr/lib/python3.10/os.py
+# code object from '/usr/lib/python3.10/__pycache__/os.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/stat.cpython-310.pyc matches /usr/lib/python3.10/stat.py
+# code object from '/usr/lib/python3.10/__pycache__/stat.cpython-310.pyc'
+import '_stat' # <class '_frozen_importlib.BuiltinImporter'>
+import 'stat' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c2e00>
+# /usr/lib/python3.10/__pycache__/_collections_abc.cpython-310.pyc matches /usr/lib/python3.10/_collections_abc.py
+# code object from '/usr/lib/python3.10/__pycache__/_collections_abc.cpython-310.pyc'
+import '_collections_abc' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c3160>
+# /usr/lib/python3.10/__pycache__/posixpath.cpython-310.pyc matches /usr/lib/python3.10/posixpath.py
+# code object from '/usr/lib/python3.10/__pycache__/posixpath.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/genericpath.cpython-310.pyc matches /usr/lib/python3.10/genericpath.py
+# code object from '/usr/lib/python3.10/__pycache__/genericpath.cpython-310.pyc'
+import 'genericpath' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3fd990>
+import 'posixpath' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c31f0>
+import 'os' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c1a20>
+# /usr/lib/python3.10/__pycache__/_sitebuiltins.cpython-310.pyc matches /usr/lib/python3.10/_sitebuiltins.py
+# code object from '/usr/lib/python3.10/__pycache__/_sitebuiltins.cpython-310.pyc'
+import '_sitebuiltins' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c2b00>
+Processing user site-packages
+Processing global site-packages
+Adding directory: '/usr/local/lib/python3.10/dist-packages'
+Adding directory: '/usr/lib/python3/dist-packages'
+# /usr/lib/python3.10/__pycache__/sitecustomize.cpython-310.pyc matches /usr/lib/python3.10/sitecustomize.py
+# code object from '/usr/lib/python3.10/__pycache__/sitecustomize.cpython-310.pyc'
+# /usr/lib/python3/dist-packages/__pycache__/apport_python_hook.cpython-310.pyc matches /usr/lib/python3/dist-packages/apport_python_hook.py
+# code object from '/usr/lib/python3/dist-packages/__pycache__/apport_python_hook.cpython-310.pyc'
+import 'apport_python_hook' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3fe320>
+import 'sitecustomize' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3fe080>
+import 'site' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3c13f0>
+Python 3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+# /usr/lib/python3.10/__pycache__/hashlib.cpython-310.pyc matches /usr/lib/python3.10/hashlib.py
+# code object from '/usr/lib/python3.10/__pycache__/hashlib.cpython-310.pyc'
+# extension module '_hashlib' loaded from '/usr/lib/python3.10/lib-dynload/_hashlib.cpython-310-x86_64-linux-gnu.so'
+# extension module '_hashlib' executed from '/usr/lib/python3.10/lib-dynload/_hashlib.cpython-310-x86_64-linux-gnu.so'
+import '_hashlib' # <_frozen_importlib_external.ExtensionFileLoader object at 0x77a1cb3ffa30>
+import '_blake2' # <class '_frozen_importlib.BuiltinImporter'>
+import 'hashlib' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3ffe50>
+# /usr/lib/python3.10/json/__pycache__/__init__.cpython-310.pyc matches /usr/lib/python3.10/json/__init__.py
+# code object from '/usr/lib/python3.10/json/__pycache__/__init__.cpython-310.pyc'
+# /usr/lib/python3.10/json/__pycache__/decoder.cpython-310.pyc matches /usr/lib/python3.10/json/decoder.py
+# code object from '/usr/lib/python3.10/json/__pycache__/decoder.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/re.cpython-310.pyc matches /usr/lib/python3.10/re.py
+# code object from '/usr/lib/python3.10/__pycache__/re.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/enum.cpython-310.pyc matches /usr/lib/python3.10/enum.py
+# code object from '/usr/lib/python3.10/__pycache__/enum.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/types.cpython-310.pyc matches /usr/lib/python3.10/types.py
+# code object from '/usr/lib/python3.10/__pycache__/types.cpython-310.pyc'
+import 'types' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb429390>
+import 'enum' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3fe3e0>
+# /usr/lib/python3.10/__pycache__/sre_compile.cpython-310.pyc matches /usr/lib/python3.10/sre_compile.py
+# code object from '/usr/lib/python3.10/__pycache__/sre_compile.cpython-310.pyc'
+import '_sre' # <class '_frozen_importlib.BuiltinImporter'>
+# /usr/lib/python3.10/__pycache__/sre_parse.cpython-310.pyc matches /usr/lib/python3.10/sre_parse.py
+# code object from '/usr/lib/python3.10/__pycache__/sre_parse.cpython-310.pyc'
+# /usr/lib/python3.10/__pycache__/sre_constants.cpython-310.pyc matches /usr/lib/python3.10/sre_constants.py
+# code object from '/usr/lib/python3.10/__pycache__/sre_constants.cpython-310.pyc'
+import 'sre_constants' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb42ae00>
+import 'sre_parse' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb42a5f0>
+import 'sre_compile' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb429d50>
+# /usr/lib/python3.10/__pycache__/functools.cpython-310.pyc matches /usr/lib/python3.10/functools.py
+# code object from '/usr/lib/python3.10/__pycache__/functools.cpython-310.pyc'
+# /usr/lib/python3.10/collections/__pycache__/__init__.cpython-310.pyc matches /usr/lib/python3.10/collections/__init__.py
+# code object from '/usr/lib/python3.10/collections/__pycache__/__init__.cpython-310.pyc'
+import 'itertools' # <class '_frozen_importlib.BuiltinImporter'>
+# /usr/lib/python3.10/__pycache__/keyword.cpython-310.pyc matches /usr/lib/python3.10/keyword.py
+# code object from '/usr/lib/python3.10/__pycache__/keyword.cpython-310.pyc'
+import 'keyword' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb483e20>
+# /usr/lib/python3.10/__pycache__/operator.cpython-310.pyc matches /usr/lib/python3.10/operator.py
+# code object from '/usr/lib/python3.10/__pycache__/operator.cpython-310.pyc'
+import '_operator' # <class '_frozen_importlib.BuiltinImporter'>
+import 'operator' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb483ee0>
+# /usr/lib/python3.10/__pycache__/reprlib.cpython-310.pyc matches /usr/lib/python3.10/reprlib.py
+# code object from '/usr/lib/python3.10/__pycache__/reprlib.cpython-310.pyc'
+import 'reprlib' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb483f10>
+import '_collections' # <class '_frozen_importlib.BuiltinImporter'>
+import 'collections' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb481a50>
+import '_functools' # <class '_frozen_importlib.BuiltinImporter'>
+import 'functools' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb42a3e0>
+import '_locale' # <class '_frozen_importlib.BuiltinImporter'>
+# /usr/lib/python3.10/__pycache__/copyreg.cpython-310.pyc matches /usr/lib/python3.10/copyreg.py
+# code object from '/usr/lib/python3.10/__pycache__/copyreg.cpython-310.pyc'
+import 'copyreg' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb2812a0>
+import 're' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3fefb0>
+# /usr/lib/python3.10/json/__pycache__/scanner.cpython-310.pyc matches /usr/lib/python3.10/json/scanner.py
+# code object from '/usr/lib/python3.10/json/__pycache__/scanner.cpython-310.pyc'
+# extension module '_json' loaded from '/usr/lib/python3.10/lib-dynload/_json.cpython-310-x86_64-linux-gnu.so'
+# extension module '_json' executed from '/usr/lib/python3.10/lib-dynload/_json.cpython-310-x86_64-linux-gnu.so'
+import '_json' # <_frozen_importlib_external.ExtensionFileLoader object at 0x77a1cb280850>
+import 'json.scanner' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb2809d0>
+import 'json.decoder' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3ff130>
+# /usr/lib/python3.10/json/__pycache__/encoder.cpython-310.pyc matches /usr/lib/python3.10/json/encoder.py
+# code object from '/usr/lib/python3.10/json/__pycache__/encoder.cpython-310.pyc'
+import 'json.encoder' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3ff0d0>
+import 'json' # <_frozen_importlib_external.SourceFileLoader object at 0x77a1cb3ffb80>
